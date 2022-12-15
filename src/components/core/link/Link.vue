@@ -38,8 +38,17 @@ withDefaults(
   color: rgba(var(--color-accent-1));
 }
 
+.primary {
+  color: rgb(var(--color-primary-1));
+}
+
 .md {
   @include text;
   font-weight: 600;
+}
+
+.sm {
+  @include textSm;
+  font-weight: 500;
 }
 </style>

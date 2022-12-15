@@ -42,7 +42,7 @@
           size="md"
         />
       </template>
-      <template #signUpLink>
+      <template #forgotPasswordLink>
         <Link
           :to="{
             name: 'auth-forgot-password',
@@ -61,8 +61,18 @@
           {{ t('auth.signIn.submit') }}
         </Button>
       </template>
-      <template>
-        footer
+      <template #signUpLink>
+        <SignUpLink />
+      </template>
+      <template #privacy>
+        {{ t('auth.signIn.privacy') }}
+      </template>
+      <template #support>
+        <Link
+          :to="{ name: 'support' }"
+          :label="t('auth.signIn.support')"
+          size="sm"
+        />
       </template>
     </SignInContainer>
   </Form>
@@ -84,6 +94,7 @@ import Checkbox from '@/components/core/checkbox/Checkbox.vue';
 import SignInContainer from '@/containers/signInContainer/SignInContainer.vue';
 import Link from '@/components/core/link/Link.vue';
 import Button from '@/components/core/button/Button.vue';
+import SignUpLink from '@/components/app/signUpLink/SignUpLink.vue';
 import { useSignIn } from '@/hooks/useSignIn';
 
 const { t } = useI18n();

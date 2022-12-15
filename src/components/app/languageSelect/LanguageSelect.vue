@@ -6,6 +6,7 @@
     >
       <button
         :class="$style.selectedLanguage"
+        type="button"
         @click="toggleDropdown"
       >
         {{ activeLocale.label }}

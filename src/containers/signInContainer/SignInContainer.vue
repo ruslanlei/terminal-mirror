@@ -29,15 +29,23 @@
           <slot name="rememberCheckbox" />
         </div>
         <div>
-          <slot name="signUpLink" />
+          <slot name="forgotPasswordLink" />
         </div>
       </div>
       <div :class="$style.submit">
         <slot name="submit" />
       </div>
+      <div :class="$style.signUpLink">
+        <slot name="signUpLink" />
+      </div>
     </div>
     <footer :class="$style.footer">
-      <slot name="footer" />
+      <div :class="$style.privacy">
+        <slot name="privacy" />
+      </div>
+      <div :class="$style.support">
+        <slot name="support" />
+      </div>
     </footer>
   </div>
 </template>
@@ -48,6 +56,7 @@
 .signInContainer {
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 
 .header {
@@ -96,7 +105,22 @@
   margin-top: 40px;
 }
 
+.signUpLink {
+  margin-top: 25px;
+  text-align: center;
+}
+
 .footer {
   margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
+
+.privacy {
+  @include textSm;
+  color: rgb(var(--color-accent-2));
+}
+
+.support {}
 </style>

@@ -1,4 +1,8 @@
 {
+  "validationError": {
+    "email": "Value is not valid email",
+    "required": "This is required field"
+  },
   "auth": {
     "signIn": {
       "description": "Crypto terminal blah blah blah la la lala framework and place of staff training require us to analyze.",
@@ -10,7 +14,11 @@
       },
       "rememberMe": "Remember me",
       "forgotPassword": "Forgot password?",
-      "submit": "Open"
+      "submit": "Open",
+      "signUpLink": "Don't have an account? {link}",
+      "register": "Register",
+      "privacy": "©Terminal, all rights reserved.",
+      "support": "Technical support"
     }
   }
 }

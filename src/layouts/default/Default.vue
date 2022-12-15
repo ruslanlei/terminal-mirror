@@ -11,9 +11,4 @@ import Header from '@/components/app/header/Header.vue';
 
 <style lang="scss" module>
 .root {}
-
-.header {
-  position: sticky;
-  top: 0;
-}
 </style>

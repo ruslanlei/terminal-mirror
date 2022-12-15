@@ -24,14 +24,18 @@ export const useSignIn = () => {
       .required(() => t('validationError.required')),
   });
 
+  const isLoading = ref(false);
   const handleSubmit = async () => {
+    isLoading.value = true;
     await sessionStore.login(model.value);
+    isLoading.value = false;
   };
 
   return {
     model,
     remember,
     validationSchema,
+    isLoading,
     handleSubmit,
   };
 };

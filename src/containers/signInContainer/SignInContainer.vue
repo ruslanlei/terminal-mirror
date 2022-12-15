@@ -11,9 +11,9 @@
     <div :class="$style.description">
       <slot name="description" />
     </div>
-    <h3 :class="$style.label">
+    <h1 :class="$style.label">
       <slot name="label" />
-    </h3>
+    </h1>
     <p :class="$style.greetings">
       <slot name="greetings" />
     </p>
@@ -73,7 +73,7 @@
 }
 
 .label {
-  @include h3;
+  @include h1;
   margin-top: 40px;
   color: rgb(var(--color-accent-1));
 }

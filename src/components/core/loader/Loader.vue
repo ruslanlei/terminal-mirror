@@ -1,33 +1,46 @@
 <template>
-  <LoaderIconDots
-    :class="[
-      $style.loader,
-      $style[size],
-    ]"
-  />
+  <div :class="[$style.loader, $style[size]]" />
 </template>
 
 <script setup lang="ts">
-import { PropType } from 'vue';
-import LoaderIconDots from '@/assets/icons/loader.svg';
+import { LoaderProps } from '@/components/core/loader/index';
 
-type sizes = 'md';
-
-defineProps({
-  size: {
-    type: String as PropType<sizes>,
-    default: 'md',
+withDefaults(
+  defineProps<LoaderProps>(),
+  {
+    size: 'md',
   },
-});
+);
 </script>
 
 <style lang="scss" module>
 .loader {
-  fill: currentColor;
-  stroke: currentColor;
-  &.md {
-    width: 36px !important;
-    height: 18px !important;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+.lg {
+  width: 48px;
+  height: 48px;
+  border-top: 3px solid #FFF;
+  border-right: 3px solid transparent;
+}
+
+.md {
+  width: 24px;
+  height: 24px;
+  border-top: 2px solid #FFF;
+  border-right: 2px solid transparent;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
 </style>

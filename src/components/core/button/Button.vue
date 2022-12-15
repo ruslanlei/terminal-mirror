@@ -8,18 +8,25 @@
       isDisabled && $style.disabled,
     ]"
   >
-    <slot />
+    <div :class="[$style.loaderCap, !isLoading && $style.hidden]">
+      <Loader />
+    </div>
+    <div :class="[$style.inner, isLoading && $style.hidden]">
+      <slot />
+    </div>
   </button>
 </template>
 
 <script setup lang="ts">
+import Loader from '@/components/core/loader/Loader.vue';
 import { ButtonProps } from './index';
 
 withDefaults(
   defineProps<ButtonProps>(),
   {
     state: 'primary',
-    disabled: false,
+    isDisabled: false,
+    isLoading: false,
   },
 );
 </script>
@@ -30,9 +37,29 @@ withDefaults(
 .button {
   width: 100%;
   display: block;
+  position: relative;
   &:not(.disabled) {
     cursor: pointer;
   }
+}
+
+.loaderCap {
+  opacity: 1;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: .15s opacity;
+}
+
+.inner {
+  transition: .15s opacity;
+}
+
+.hidden {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .primary {

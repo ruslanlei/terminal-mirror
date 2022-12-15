@@ -8,9 +8,9 @@
   --color-accent-1: #{extractRgb($mono-white)};
   --color-accent-2: #{extractRgb($grey1)};
 
-  --color-background-1: #{extractRgb($black1)};
-  --color-background-2: #{extractRgb($black2)};
-  --color-background-3: #{extractRgb($black3)};
+  --color-background-1: #{extractRgb($darkBlack)};
+  --color-background-2: #{extractRgb($lightBlack)};
+  --color-background-3: #{extractRgb($whiteBlack)};
   --color-background-4: #{extractRgb($black4)};
   --color-background-5: #{extractRgb($black5)};
 

@@ -57,6 +57,7 @@
         <Button
           size="lg"
           type="submit"
+          :is-loading="isLoading"
         >
           {{ t('auth.signIn.submit') }}
         </Button>
@@ -106,6 +107,7 @@ const {
   remember,
   validationSchema,
   handleSubmit,
+  isLoading,
 } = useSignIn();
 
 onMounted(() => {
@@ -135,7 +137,7 @@ onMounted(() => {
 }
 
 .label {
-  @include h3;
+  @include h1;
   margin-top: 40px;
   color: rgb(var(--color-accent-1));
 }

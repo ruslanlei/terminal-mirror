@@ -2,6 +2,7 @@
   <Form
     v-model="model"
     :validation-schema="validationSchema"
+    @submit="handleSubmit"
   >
     <SignInContainer>
       <template #logo>
@@ -30,6 +31,7 @@
         <FormInput
           name="password"
           :placeholder="t('auth.signIn.field.password')"
+          type="password"
         />
       </template>
       <template #rememberCheckbox>
@@ -92,6 +94,7 @@ const {
   model,
   remember,
   validationSchema,
+  handleSubmit,
 } = useSignIn();
 
 onMounted(() => {

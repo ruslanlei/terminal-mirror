@@ -4,6 +4,7 @@ import { defineStore } from 'pinia';
 import { router } from '@/router';
 import { useAuthToken } from '@/hooks/useAuthToken';
 import { RouteLocationRaw } from 'vue-router';
+import { signIn, SignInDTO } from '@/api/endpoints/auth/signIn';
 
 export const checkAuth = (
   isAuthorized: boolean,
@@ -56,7 +57,15 @@ export const useSessionStore = defineStore('session', () => {
     { deep: true, immediate: true },
   );
 
-  const logoutUser = () => {
+  const login = async (model: Omit<SignInDTO, 'username'>) => {
+    const { result, data } = await signIn(model);
+
+    if (result) {
+      console.log(data);
+    }
+  };
+
+  const logout = () => {
     removeToken();
     localStorage.clear();
     sessionStorage.clear();
@@ -67,6 +76,7 @@ export const useSessionStore = defineStore('session', () => {
     setToken,
     isAuthorized,
     checkAuth,
-    logoutUser,
+    login,
+    logout,
   };
 });

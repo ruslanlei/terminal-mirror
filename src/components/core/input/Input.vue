@@ -160,7 +160,7 @@ defineExpose({
       color: rgba(var(--color-danger), 1);
     }
     .field {
-      box-shadow: 0 0 0 1px rgba(var(--color-danger), 1);
+      border: 1px solid rgba(var(--color-danger), 1);
       & > input {
         &::placeholder {
           color: rgba(var(--color-danger), 1);

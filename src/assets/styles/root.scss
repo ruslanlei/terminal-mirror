@@ -1,0 +1,30 @@
+@import "variables";
+@import "utils";
+@import "custom-scrollbar";
+@import "themes";
+@import "../fonts/gilroy/index";
+
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  font: 400 16px 'Gilroy', sans-serif;
+  font-weight: normal;
+  height: 100vh;
+}
+
+@keyframes body {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+body {
+  animation: 0.5s body;
+  background-color: rgba(var(--color-background-1), 1);
+  @include useCustomScrollbar();
+}

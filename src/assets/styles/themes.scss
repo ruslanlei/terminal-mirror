@@ -1,0 +1,21 @@
+@import "utils";
+@import "variables";
+
+
+.dark {
+  --color-main-gradient: #{$mainGradient};
+
+  --color-accent-1: #{extractRgb($mono-white)};
+  --color-accent-2: #{extractRgb($grey1)};
+
+  --color-background-1: #{extractRgb($black1)};
+  --color-background-2: #{extractRgb($black2)};
+  --color-background-3: #{extractRgb($black3)};
+  --color-background-4: #{extractRgb($black4)};
+  --color-background-5: #{extractRgb($black5)};
+
+  --color-primary-1: #{extractRgb($blue)};
+
+  --color-danger: #{extractRgb($red1)};
+  --color-success: #{extractRgb($green1)};
+}

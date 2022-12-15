@@ -1,0 +1,44 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "strict": true,
+    "jsx": "preserve",
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "removeComments": true,
+    "importHelpers": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "noImplicitReturns": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "lib": ["esnext", "dom"],
+    "types": [
+      "vite/client",
+    ],
+    "paths": {
+      "/~/*": ["./src/assets/*"],
+      "@/*": ["./src/*"],
+      "@root/*": ["./*"],
+    }
+  },
+  "linterOptions": {
+    "exclude": ["src/**", "components/**"],
+  },
+  "include": [
+    "components.d.ts",
+    "components-global.d.ts",
+    "src/**/*.js",
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "documentation/**/*.md",
+    "src/**/*.svg"
+  ],
+  "exclude": ["bulma-colors.ts", "src/components/Header.vue"]
+}

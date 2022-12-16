@@ -8,7 +8,11 @@ export interface SignInDTO {
 
 export type SignInModel = Omit<SignInDTO, 'username'>;
 
-export const signIn = (model: SignInModel) => post('/auth/signIn', {
+export interface SingInResponse {
+  key: string,
+}
+
+export const signIn = (model: SignInModel) => post<SingInResponse>('/auth/login/', {
   ...model,
   username: model.email.replace('@', '_'),
 });

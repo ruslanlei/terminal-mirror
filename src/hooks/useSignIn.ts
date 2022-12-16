@@ -27,7 +27,7 @@ export const useSignIn = () => {
   const isLoading = ref(false);
   const handleSubmit = async () => {
     isLoading.value = true;
-    await sessionStore.login(model.value);
+    await sessionStore.login(model.value, remember.value);
     isLoading.value = false;
   };
 

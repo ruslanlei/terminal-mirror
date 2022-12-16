@@ -1,4 +1,5 @@
 import { createHttpTransport } from '@/api/httpTransport';
+import { isDev } from '@/utils/env';
 
 export const {
   get,
@@ -7,5 +8,7 @@ export const {
   patch,
   del,
 } = createHttpTransport({
-  url: String(import.meta.env.VITE_API_BASE_URL),
+  url: isDev
+    ? '/api'
+    : String(import.meta.env.VITE_API_BASE_URL),
 });

@@ -57,11 +57,13 @@ export const useSessionStore = defineStore('session', () => {
     { deep: true, immediate: true },
   );
 
-  const login = async (model: Omit<SignInDTO, 'username'>) => {
+  const login = async (model: Omit<SignInDTO, 'username'>, remember: boolean) => {
     const { result, data } = await signIn(model);
 
     if (result) {
-      console.log(data);
+      setToken(data.key, !remember);
+    } else {
+      console.log('Failed to sign in');
     }
   };
 

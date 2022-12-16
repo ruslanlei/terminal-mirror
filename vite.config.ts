@@ -25,4 +25,14 @@ export default defineConfig({
       '@root': path.resolve(__dirname, ''),
     },
   },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'https://tradejedizzz123.xyz',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+      },
+    },
+  },
 });

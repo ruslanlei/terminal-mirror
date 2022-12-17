@@ -4,12 +4,14 @@ import { useI18n } from 'vue-i18n';
 import { object, string } from 'yup';
 import { useSessionStore } from '@/stores/session';
 import { SignUpModel } from '@/api/endpoints/auth/signUp';
+import { useToastStore } from '@/stores/toasts';
 
 export const useSignUp = () => {
   const { t } = useI18n();
   const router = useRouter();
 
   const sessionStore = useSessionStore();
+  const toastStore = useToastStore();
 
   const model = ref<SignUpModel>({
     username: '',
@@ -32,14 +34,24 @@ export const useSignUp = () => {
 
   const isLoading = ref(false);
   const handleSubmit = async () => {
-    console.log('handleSubmit');
     if (!agreement.value) {
-      console.log('Agreement must be checked');
+      toastStore.showDanger({
+        text: t('auth.signUp.mustAcceptAgreement'),
+        duration: 2000,
+      });
       return;
     }
 
     isLoading.value = true;
-    const { result } = await sessionStore.register(model.value);
+    const { result, data } = await sessionStore.register(model.value);
+    if (!result && data?.non_field_errors) {
+      data.non_field_errors.forEach((error: string) => {
+        toastStore.showDanger({
+          text: error,
+          duration: 6000,
+        });
+      });
+    }
     isLoading.value = false;
 
     if (result) {

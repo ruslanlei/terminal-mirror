@@ -17,7 +17,12 @@
 <script lang="ts" setup>
 import { IconProps } from './index';
 
-const props = defineProps<IconProps>();
+const props = withDefaults(
+  defineProps<IconProps>(),
+  {
+    size: 24,
+  },
+);
 
 defineExpose(props);
 </script>
@@ -36,6 +41,7 @@ defineExpose(props);
 
 .source {
   fill: currentColor;
+  stroke: currentColor;
   position: relative;
   display: block;
   flex-grow: 1;

@@ -68,7 +68,10 @@ export const useSessionStore = defineStore('session', () => {
     if (result) {
       setToken(data.key, !remember);
     } else {
-      console.log('Failed to sign in');
+      toastStore.showDanger({
+        text: t('auth.signIn.failed'),
+        duration: 5000,
+      });
     }
   };
 
@@ -81,7 +84,10 @@ export const useSessionStore = defineStore('session', () => {
         duration: 5000,
       });
     } else {
-      console.log('Failed to sign up');
+      toastStore.showDanger({
+        text: t('auth.signUp.failed'),
+        duration: 5000,
+      });
     }
 
     return response;

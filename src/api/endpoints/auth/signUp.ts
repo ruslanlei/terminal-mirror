@@ -11,6 +11,10 @@ export type SignUpModel = Omit<SignUpDTO, 'password1' | 'password2'> & {
   password: string,
 }
 
+export interface SignUpResponse {
+  non_field_errors?: string[],
+}
+
 export const signUp = ({
   username,
   email,
@@ -23,5 +27,5 @@ export const signUp = ({
     password2: password,
   };
 
-  return post('/auth/signup/', dto);
+  return post<SignUpResponse>('/auth/signup/', dto);
 };

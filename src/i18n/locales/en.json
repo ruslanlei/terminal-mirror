@@ -26,13 +26,16 @@
       "rememberMe": "Remember me",
       "forgotPassword": "Forgot password?",
       "signUpLink": "Don't have an account? {link}",
-      "register": "Register"
+      "register": "Register",
+      "failed": "Incorrect email or password"
     },
     "signUp": {
       "signInLink": "Already have an account? {login}",
       "label": "Sign up",
       "login": "Sign in",
-      "emailSent": "Verification link successfully sent. Check email to activate account"
+      "emailSent": "Verification link successfully sent. Check email to activate account",
+      "failed": "Failed to sign up",
+      "mustAcceptAgreement": "You must accept agreement before sign up"
     }
   }
 }

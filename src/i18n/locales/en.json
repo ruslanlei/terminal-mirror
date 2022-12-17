@@ -44,5 +44,8 @@
       "emailSent": "Email with recovery link has been sent",
       "failed": "Failed to send recovery link"
     }
+  },
+  "profile": {
+    "failedToFetch": "Failed to fetch profile"
   }
 }

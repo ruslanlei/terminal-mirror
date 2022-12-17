@@ -4,7 +4,7 @@ export const requestOnResolve = (config: any) => {
   const sessionStore = useSessionStore();
 
   if (sessionStore.token) {
-    config.headers.Authorization = sessionStore.token;
+    config.headers.Authorization = `Token ${sessionStore.token}`;
   }
   return config;
 };

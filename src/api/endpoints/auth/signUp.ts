@@ -23,5 +23,5 @@ export const signUp = ({
     password2: password,
   };
 
-  return post('/auth/signup', dto);
+  return post('/auth/signup/', dto);
 };

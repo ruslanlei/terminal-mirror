@@ -72,7 +72,6 @@ const { t } = useI18n();
 }
 
 .content {
-  margin-top: 25px;
   & > * {
     height: 100%;
   }

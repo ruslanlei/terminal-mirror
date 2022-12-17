@@ -40,24 +40,8 @@
           type="password"
         />
       </template>
-      <template #rememberCheckbox>
-        <Checkbox
-          v-model="remember"
-          :label="t('auth.signIn.rememberMe')"
-          state="default"
-          size="md"
-        />
-      </template>
-      <template #forgotPasswordLink>
-        <Link
-          :to="{
-            name: 'auth-forgot-password',
-          }"
-          :label="t('auth.signIn.forgotPassword')"
-          state="default"
-          size="md"
-          :tab-index="-1"
-        />
+      <template #agreement>
+        <AgreementCheckbox />
       </template>
       <template #submit>
         <Button
@@ -97,8 +81,8 @@ import { useI18n } from 'vue-i18n';
 import Logo from '@/components/core/logo/Logo.vue';
 import LanguageSelect from '@/components/app/languageSelect/LanguageSelect.vue';
 import { Form, FormInput } from '@/components/form';
-import Checkbox from '@/components/core/checkbox/Checkbox.vue';
 import SignUpContainer from '@/containers/signUpContainer/SignUpContainer.vue';
+import AgreementCheckbox from '@/components/app/agreementCheckbox/AgreementCheckbox.vue';
 import Link from '@/components/core/link/Link.vue';
 import Button from '@/components/core/button/Button.vue';
 import SignUpLink from '@/components/app/signUpLink/SignUpLink.vue';

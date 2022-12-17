@@ -1,0 +1,50 @@
+<template>
+  <Checkbox
+    v-model="localValue"
+    :class="$style.agreementCheckbox"
+    label-alignment="top"
+  >
+    <template #label>
+      <i18n-t
+        keypath="auth.agreement.label"
+        tag="span"
+        :class="$style.label"
+      >
+        <template #conditions>
+          <Link
+            :to="{ name: 'auth-sign-up' }"
+            :label="t('auth.agreement.conditions')"
+            state="primary"
+          />
+        </template>
+        <template #privacy>
+          <Link
+            :to="{ name: 'auth-sign-up' }"
+            :label="t('auth.agreement.privacy')"
+            state="primary"
+          />
+        </template>
+      </i18n-t>
+    </template>
+  </Checkbox>
+</template>
+
+<script setup lang="ts">
+import { useI18n } from 'vue-i18n';
+import Link from '@/components/core/link/Link.vue';
+import Checkbox from '@/components/core/checkbox/Checkbox.vue';
+import { AgreementCheckboxEmits, AgreementCheckboxProps } from '@/components/app/agreementCheckbox/index';
+import { useLocalValue } from '@/hooks/useLocalValue';
+
+const { t } = useI18n();
+
+const props = defineProps<AgreementCheckboxProps>();
+
+const emit = defineEmits<AgreementCheckboxEmits>();
+
+const localValue = useLocalValue(props, emit, 'modelValue');
+</script>
+
+<style lang="scss" module>
+.agreementCheckbox {}
+</style>

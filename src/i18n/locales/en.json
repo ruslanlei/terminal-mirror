@@ -15,6 +15,11 @@
     "submit": "Open",
     "privacy": "©Terminal, all rights reserved.",
     "support": "Technical support",
+    "agreement": {
+      "label": "I agree to {conditions} and {privacy}",
+      "conditions": "Terms and Services",
+      "privacy": "Privacy Policy"
+    },
     "signIn": {
       "label": "Sign in",
       "rememberMe": "Remember me",

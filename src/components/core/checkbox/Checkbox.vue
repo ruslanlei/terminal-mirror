@@ -4,7 +4,9 @@
       [$style.checkbox]: true,
       [$style[state]]: true,
       [$style[size]]: true,
+      [$style[labelAlignment]]: true,
       [$style.active]: localValue,
+      [$style.disabled]: isDisabled,
       [$style.disabled]: isDisabled,
     }"
     :tabindex="(disableTabNavigation || isDisabled) ? -1 : tabIndex"
@@ -33,8 +35,8 @@
 
 <script setup lang="ts">
 import Icon from '@/components/core/icon/Icon.vue';
-import { computed } from 'vue';
-import { CheckboxProps } from './index';
+import { useLocalValue } from '@/hooks/useLocalValue';
+import { CheckboxEmits, CheckboxProps } from './index';
 
 const props = withDefaults(
   defineProps<CheckboxProps>(),
@@ -43,19 +45,12 @@ const props = withDefaults(
     tabIndex: 0,
     state: 'default',
     size: 'md',
+    labelAlignment: 'center',
   },
 );
-const emit = defineEmits([
-  'update:modelValue',
-  'toggle',
-  'focus',
-  'blur',
-]);
+const emit = defineEmits<CheckboxEmits>();
 
-const localValue = computed({
-  get: () => props.modelValue,
-  set: (value: boolean) => emit('update:modelValue', value),
-});
+const localValue = useLocalValue(props, emit, 'modelValue');
 
 const toggle = () => {
   if (props.isDisabled) return;
@@ -77,7 +72,6 @@ const onBlur = () => {
 
 .checkbox {
   display: flex;
-  align-items: center;
   &:not(.disabled) {
     cursor: pointer;
   }
@@ -99,8 +93,17 @@ const onBlur = () => {
   transition: .15s color;
 }
 
+.center {
+  align-items: center;
+}
+.top {
+  align-items: flex-start;
+}
+
 .md {
   .box {
+    width: 24px;
+    height: 24px;
     border-radius: 5px;
     border-width: 1.5px;
     border-style: solid;

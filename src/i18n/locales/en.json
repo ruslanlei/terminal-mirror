@@ -1,7 +1,8 @@
 {
   "validationError": {
     "email": "Value is not valid email",
-    "required": "This is required field"
+    "required": "This is required field",
+    "minLength": "This field must be at least {chars} characters long."
   },
   "placeholder": {
     "email": "Enter your email",

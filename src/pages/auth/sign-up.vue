@@ -35,13 +35,13 @@
       </template>
       <template #passwordField>
         <FormInput
-          name="password1"
+          name="password"
           :placeholder="t('placeholder.newPassword')"
           type="password"
         />
       </template>
       <template #agreement>
-        <AgreementCheckbox />
+        <AgreementCheckbox v-model="agreement" />
       </template>
       <template #submit>
         <Button
@@ -87,6 +87,7 @@ import Link from '@/components/core/link/Link.vue';
 import Button from '@/components/core/button/Button.vue';
 import SignInLink from '@/components/app/signInLink/SignInLink.vue';
 import { useSignIn } from '@/hooks/useSignIn';
+import { useSignUp } from '@/hooks/useSignUp';
 
 const { t } = useI18n();
 
@@ -94,11 +95,11 @@ const userNameField = ref();
 
 const {
   model,
-  remember,
+  agreement,
   validationSchema,
   handleSubmit,
   isLoading,
-} = useSignIn();
+} = useSignUp();
 
 onMounted(() => {
   userNameField.value.focus();

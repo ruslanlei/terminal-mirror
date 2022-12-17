@@ -5,6 +5,7 @@ import { router } from '@/router';
 import { useAuthToken } from '@/hooks/useAuthToken';
 import { RouteLocationRaw } from 'vue-router';
 import { signIn, SignInDTO } from '@/api/endpoints/auth/signIn';
+import { signUp, SignUpModel } from '@/api/endpoints/auth/signUp';
 
 export const checkAuth = (
   isAuthorized: boolean,
@@ -67,6 +68,16 @@ export const useSessionStore = defineStore('session', () => {
     }
   };
 
+  const register = async (model: SignUpModel) => {
+    const response = await signUp(model);
+
+    if (!response.result) {
+      console.log('Failed to sign up');
+    }
+
+    return response;
+  };
+
   const logout = () => {
     removeToken();
     localStorage.clear();
@@ -79,6 +90,7 @@ export const useSessionStore = defineStore('session', () => {
     isAuthorized,
     checkAuth,
     login,
+    register,
     logout,
   };
 });

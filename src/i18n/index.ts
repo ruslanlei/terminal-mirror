@@ -7,6 +7,10 @@ const messages = {
   ru,
 };
 export type AppLocale = keyof typeof messages;
+export const availableLanguages = Object.keys(messages);
+export const checkIfLanguageIsAvailable = (
+  language: string,
+) => availableLanguages.includes(language);
 
 export const i18n = createI18n({
   legacy: false,

@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.signUpContainer">
+  <div :class="$style.signInContainer">
     <header :class="$style.header">
       <div>
         <slot name="logo" />
@@ -18,6 +18,9 @@
       <slot name="greetings" />
     </p>
     <div>
+      <div :class="$style.field">
+        <slot name="userNameField" />
+      </div>
       <div :class="$style.field">
         <slot name="emailField" />
       </div>
@@ -53,7 +56,7 @@
 <style lang="scss" module>
 @import "@/assets/styles/utils";
 
-.signUpContainer {
+.signInContainer {
   display: flex;
   flex-direction: column;
   height: 100%;

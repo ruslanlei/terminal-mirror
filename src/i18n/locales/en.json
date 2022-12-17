@@ -3,22 +3,27 @@
     "email": "Value is not valid email",
     "required": "This is required field"
   },
+  "placeholder": {
+    "email": "Enter your email",
+    "password": "Enter password",
+    "newPassword": "Pick a password",
+    "username": "What is your name"
+  },
   "auth": {
+    "description": "Crypto terminal blah blah blah la la lala framework and place of staff training require us to analyze.",
+    "greetings": "Welcome to Terminal",
+    "submit": "Open",
+    "privacy": "©Terminal, all rights reserved.",
+    "support": "Technical support",
     "signIn": {
-      "description": "Crypto terminal blah blah blah la la lala framework and place of staff training require us to analyze.",
       "label": "Sign in",
-      "greetings": "Welcome to Terminal",
-      "field": {
-        "email": "Enter your email",
-        "password": "Enter password"
-      },
       "rememberMe": "Remember me",
       "forgotPassword": "Forgot password?",
-      "submit": "Open",
       "signUpLink": "Don't have an account? {link}",
-      "register": "Register",
-      "privacy": "©Terminal, all rights reserved.",
-      "support": "Technical support"
+      "register": "Register"
+    },
+    "signUp": {
+      "label": "Sign up"
     }
   }
 }

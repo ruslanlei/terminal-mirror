@@ -12,25 +12,25 @@
         <LanguageSelect />
       </template>
       <template #description>
-        {{ t('auth.signIn.description') }}
+        {{ t('auth.description') }}
       </template>
       <template #label>
         {{ t('auth.signIn.label') }}
       </template>
       <template #greetings>
-        {{ t('auth.signIn.greetings') }}
+        {{ t('auth.greetings') }}
       </template>
       <template #emailField>
         <FormInput
           ref="emailInput"
           name="email"
-          :placeholder="t('auth.signIn.field.email')"
+          :placeholder="t('placeholder.email')"
         />
       </template>
       <template #passwordField>
         <FormInput
           name="password"
-          :placeholder="t('auth.signIn.field.password')"
+          :placeholder="t('placeholder.password')"
           type="password"
         />
       </template>
@@ -59,19 +59,19 @@
           type="submit"
           :is-loading="isLoading"
         >
-          {{ t('auth.signIn.submit') }}
+          {{ t('auth.submit') }}
         </Button>
       </template>
       <template #signUpLink>
         <SignUpLink />
       </template>
       <template #privacy>
-        {{ t('auth.signIn.privacy') }}
+        {{ t('auth.privacy') }}
       </template>
       <template #support>
         <Link
           :to="{ name: 'support' }"
-          :label="t('auth.signIn.support')"
+          :label="t('auth.support')"
           size="sm"
         />
       </template>

@@ -27,6 +27,11 @@ withDefaults(
       width: 173px;
     }
   }
+  &.sm {
+    .logoFull {
+      width: 114px;
+    }
+  }
 }
 
 .logoFull {}

@@ -19,7 +19,7 @@
       <Icon
         :size="24"
         :class="$style.check"
-        icon="arrowDown"
+        icon="check"
       />
     </div>
     <div

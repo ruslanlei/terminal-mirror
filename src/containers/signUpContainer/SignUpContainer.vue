@@ -1,16 +1,5 @@
 <template>
   <div :class="$style.signInContainer">
-    <header :class="$style.header">
-      <div>
-        <slot name="logo" />
-      </div>
-      <div>
-        <slot name="languageSelect" />
-      </div>
-    </header>
-    <div :class="$style.description">
-      <slot name="description" />
-    </div>
     <h1 :class="$style.label">
       <slot name="label" />
     </h1>
@@ -37,14 +26,6 @@
         <slot name="signInLink" />
       </div>
     </div>
-    <footer :class="$style.footer">
-      <div :class="$style.privacy">
-        <slot name="privacy" />
-      </div>
-      <div :class="$style.support">
-        <slot name="support" />
-      </div>
-    </footer>
   </div>
 </template>
 
@@ -55,19 +36,6 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-}
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.description {
-  margin-top: 25px;
-  @include text;
-  font-weight: 500;
-  color: rgb(var(--color-accent-1));
 }
 
 .label {
@@ -101,18 +69,4 @@
   margin-top: 25px;
   text-align: center;
 }
-
-.footer {
-  margin-top: auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.privacy {
-  @include textSm;
-  color: rgb(var(--color-accent-2));
-}
-
-.support {}
 </style>

@@ -2,18 +2,10 @@
   <Form
     v-model="model"
     :validation-schema="validationSchema"
+    touch-by="input"
     @submit="handleSubmit"
   >
     <SignUpContainer>
-      <template #logo>
-        <Logo />
-      </template>
-      <template #languageSelect>
-        <LanguageSelect />
-      </template>
-      <template #description>
-        {{ t('auth.description') }}
-      </template>
       <template #label>
         {{ t('auth.signUp.label') }}
       </template>
@@ -55,16 +47,6 @@
       <template #signInLink>
         <SignInLink />
       </template>
-      <template #privacy>
-        {{ t('auth.privacy') }}
-      </template>
-      <template #support>
-        <Link
-          :to="{ name: 'support' }"
-          :label="t('auth.support')"
-          size="sm"
-        />
-      </template>
     </SignUpContainer>
   </Form>
 </template>
@@ -78,15 +60,11 @@ meta:
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import Logo from '@/components/core/logo/Logo.vue';
-import LanguageSelect from '@/components/app/languageSelect/LanguageSelect.vue';
 import { Form, FormInput } from '@/components/form';
 import SignUpContainer from '@/containers/signUpContainer/SignUpContainer.vue';
 import AgreementCheckbox from '@/components/app/agreementCheckbox/AgreementCheckbox.vue';
-import Link from '@/components/core/link/Link.vue';
 import Button from '@/components/core/button/Button.vue';
 import SignInLink from '@/components/app/signInLink/SignInLink.vue';
-import { useSignIn } from '@/hooks/useSignIn';
 import { useSignUp } from '@/hooks/useSignUp';
 
 const { t } = useI18n();

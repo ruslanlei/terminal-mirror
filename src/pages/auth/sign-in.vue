@@ -2,18 +2,10 @@
   <Form
     v-model="model"
     :validation-schema="validationSchema"
+    touch-by="input"
     @submit="handleSubmit"
   >
     <SignInContainer>
-      <template #logo>
-        <Logo />
-      </template>
-      <template #languageSelect>
-        <LanguageSelect />
-      </template>
-      <template #description>
-        {{ t('auth.description') }}
-      </template>
       <template #label>
         {{ t('auth.signIn.label') }}
       </template>
@@ -65,16 +57,6 @@
       <template #signUpLink>
         <SignUpLink />
       </template>
-      <template #privacy>
-        {{ t('auth.privacy') }}
-      </template>
-      <template #support>
-        <Link
-          :to="{ name: 'support' }"
-          :label="t('auth.support')"
-          size="sm"
-        />
-      </template>
     </SignInContainer>
   </Form>
 </template>
@@ -88,8 +70,6 @@ meta:
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import Logo from '@/components/core/logo/Logo.vue';
-import LanguageSelect from '@/components/app/languageSelect/LanguageSelect.vue';
 import { Form, FormInput } from '@/components/form';
 import Checkbox from '@/components/core/checkbox/Checkbox.vue';
 import SignInContainer from '@/containers/signInContainer/SignInContainer.vue';

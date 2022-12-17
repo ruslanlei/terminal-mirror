@@ -31,7 +31,8 @@
     "signUp": {
       "signInLink": "Already have an account? {login}",
       "label": "Sign up",
-      "login": "Sign in"
+      "login": "Sign in",
+      "emailSent": "Verification link successfully sent. Check email to activate account"
     }
   }
 }

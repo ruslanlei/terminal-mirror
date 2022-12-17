@@ -6,6 +6,8 @@ import { useAuthToken } from '@/hooks/useAuthToken';
 import { RouteLocationRaw } from 'vue-router';
 import { signIn, SignInDTO } from '@/api/endpoints/auth/signIn';
 import { signUp, SignUpModel } from '@/api/endpoints/auth/signUp';
+import { useToastStore } from '@/stores/toasts';
+import { useI18n } from 'vue-i18n';
 
 export const checkAuth = (
   isAuthorized: boolean,
@@ -34,7 +36,9 @@ export const checkAuth = (
 };
 
 export const useSessionStore = defineStore('session', () => {
+  const { t } = useI18n();
   const isAuthorized = ref(false);
+  const toastStore = useToastStore();
 
   const { token, setToken, removeToken } = useAuthToken();
 
@@ -71,7 +75,12 @@ export const useSessionStore = defineStore('session', () => {
   const register = async (model: SignUpModel) => {
     const response = await signUp(model);
 
-    if (!response.result) {
+    if (response.result) {
+      toastStore.showSuccess({
+        text: t('auth.signUp.emailSent'),
+        duration: 5000,
+      });
+    } else {
       console.log('Failed to sign up');
     }
 

@@ -1,35 +1,35 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
-import { Toast, toastType } from '@/types/toast';
 import { uuid } from '@/utils/uuid';
+import { IToast } from '@/components/core/toast';
 
 export const useToastStore = defineStore('toast', () => {
-  const list = ref<Toast[]>([]);
+  const list = ref<IToast[]>([]);
 
-  const showToast = (toast: Omit<Toast, 'id'>) => {
+  const showToast = (toast: Omit<IToast, 'id'>) => {
     list.value.push({
       id: uuid(),
       ...toast,
     });
   };
 
-  const showSuccess = (toast: Omit<Toast, 'id' | 'type'>) => {
+  const showSuccess = (toast: Omit<IToast, 'id' | 'type'>) => {
     list.value.push({
       id: uuid(),
-      type: toastType.SUCCESS,
+      type: 'success',
       ...toast,
     });
   };
 
-  const showDanger = (toast: Omit<Toast, 'id' | 'type'>) => {
+  const showDanger = (toast: Omit<IToast, 'id' | 'type'>) => {
     list.value.push({
       id: uuid(),
-      type: toastType.DANGER,
+      type: 'danger',
       ...toast,
     });
   };
 
-  const removeToast = (toastId: Toast['id']) => {
+  const removeToast = (toastId: IToast['id']) => {
     const toastIndex = list.value.findIndex((element) => element.id === toastId);
     list.value.splice(toastIndex, 1);
   };

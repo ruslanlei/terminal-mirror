@@ -1,63 +1,74 @@
 <template>
   <div
+    ref="toast"
     :class="[
-      $style.root,
-      $style[toast.type],
+      $style.toast,
+      $style[toastData.type],
     ]"
+    @click="closeToast"
   >
-    <div :class="$style.content">
-      <div :class="$style.label">
-        {{ toast.label }}
-      </div>
-      <div :class="$style.text">
-        {{ toast.text }}
-      </div>
+    <div :class="$style.text">
+      {{ toastData.text }}
     </div>
-    <button
-      :class="$style.close"
-      @click="closeModal"
-    >
-      close
-    </button>
   </div>
 </template>
 
 <script setup lang="ts">
-import { PropType, toRefs } from 'vue';
-import { Toast } from '@/types/toast';
+import { onMounted, ref, toRefs } from 'vue';
+import { playAnimation } from '@/utils/animation';
+import { ToastEmits, ToastProps } from './index';
 
-const props = defineProps({
-  toast: {
-    type: Object as PropType<Toast>,
-    required: true,
-  },
-});
-const emit = defineEmits(['close']);
+const props = defineProps<ToastProps>();
+const emit = defineEmits<ToastEmits>();
 
-const { toast } = toRefs(props);
-const duration = toast?.value.duration;
+const toast = ref();
 
-const closeModal = () => {
+const { toast: toastData } = toRefs(props);
+const duration = toastData?.value.duration;
+
+const closeToast = () => {
   emit('close');
 };
 
 if (duration) {
   setTimeout(() => {
-    closeModal();
+    closeToast();
   }, duration);
 }
+
+onMounted(() => {
+  if (props.smoothAppearance) {
+    playAnimation({
+      targets: toast.value,
+      translateY: [-40, 0],
+      opacity: [0, 1],
+      duration: 750,
+    });
+  }
+});
 </script>
 
 <style lang="scss" module>
 @import "src/assets/styles/utils";
 
-.root {}
+.toast {
+  padding: 20px 22px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 25px;
+  color: rgb(var(--color-accent-1));
+  @include title2;
+  background-color: rgba(var(--color-background-2));
+}
 
-.content {}
+.success {
+}
 
-.label {}
+.danger {
+}
 
-.text {}
-
-.close {}
+.text {
+}
 </style>

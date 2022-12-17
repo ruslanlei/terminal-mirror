@@ -3,6 +3,7 @@
     v-model="model"
     :validation-schema="validationSchema"
     touch-by="input"
+    @submit="handleSubmit"
   >
     <PasswordResetContainer>
       <template #label>
@@ -21,6 +22,7 @@
         <Button
           type="submit"
           size="lg"
+          :is-loading="isLoading"
         >
           {{ t('auth.forgotPassword.submit') }}
         </Button>
@@ -47,5 +49,7 @@ const { t } = useI18n();
 const {
   model,
   validationSchema,
+  isLoading,
+  handleSubmit,
 } = usePasswordReset();
 </script>

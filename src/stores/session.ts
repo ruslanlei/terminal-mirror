@@ -8,6 +8,7 @@ import { signIn, SignInDTO } from '@/api/endpoints/auth/signIn';
 import { signUp, SignUpModel } from '@/api/endpoints/auth/signUp';
 import { useToastStore } from '@/stores/toasts';
 import { useI18n } from 'vue-i18n';
+import { resetPassword, ResetPasswordDTO } from '@/api/endpoints/auth/resetPassword';
 
 export const checkAuth = (
   isAuthorized: boolean,
@@ -93,6 +94,24 @@ export const useSessionStore = defineStore('session', () => {
     return response;
   };
 
+  const handleResetPassword = async (model: ResetPasswordDTO) => {
+    const response = await resetPassword(model);
+
+    if (response.result) {
+      toastStore.showSuccess({
+        text: t('auth.forgotPassword.emailSent'),
+        duration: 5000,
+      });
+    } else {
+      toastStore.showDanger({
+        text: t('auth.forgotPassword.failed'),
+        duration: 5000,
+      });
+    }
+
+    return response;
+  };
+
   const logout = () => {
     removeToken();
     localStorage.clear();
@@ -105,6 +124,7 @@ export const useSessionStore = defineStore('session', () => {
     isAuthorized,
     checkAuth,
     login,
+    resetPassword: handleResetPassword,
     register,
     logout,
   };

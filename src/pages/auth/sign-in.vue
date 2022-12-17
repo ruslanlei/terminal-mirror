@@ -37,7 +37,7 @@
       <template #forgotPasswordLink>
         <Link
           :to="{
-            name: 'auth-forgot-password',
+            name: 'auth-reset-password',
           }"
           :label="t('auth.signIn.forgotPassword')"
           state="default"

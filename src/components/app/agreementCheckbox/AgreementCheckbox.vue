@@ -12,14 +12,14 @@
       >
         <template #conditions>
           <Link
-            :to="{ name: 'auth-sign-up' }"
+            :to="{ name: 'terms-and-conditions' }"
             :label="t('auth.agreement.conditions')"
             state="primary"
           />
         </template>
         <template #privacy>
           <Link
-            :to="{ name: 'auth-sign-up' }"
+            :to="{ name: 'privacy-policy' }"
             :label="t('auth.agreement.privacy')"
             state="primary"
           />

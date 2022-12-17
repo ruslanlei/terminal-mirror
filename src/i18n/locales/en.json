@@ -28,7 +28,9 @@
       "register": "Register"
     },
     "signUp": {
-      "label": "Sign up"
+      "signInLink": "Already have an account? {login}",
+      "label": "Sign up",
+      "login": "Sign in"
     }
   }
 }

@@ -1,13 +1,13 @@
 <template>
   <i18n-t
-    keypath="auth.signIn.signUpLink"
+    keypath="auth.signUp.signInLink"
     tag="div"
     :class="$style.link"
   >
-    <template #link>
+    <template #login>
       <Link
-        :to="{ name: 'auth-sign-up' }"
-        :label="t('auth.signIn.register')"
+        :to="{ name: 'auth-sign-in' }"
+        :label="t('auth.signUp.login')"
         state="primary"
       />
     </template>

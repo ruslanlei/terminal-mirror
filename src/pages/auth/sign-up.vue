@@ -52,8 +52,8 @@
           {{ t('auth.submit') }}
         </Button>
       </template>
-      <template #signUpLink>
-        <SignUpLink />
+      <template #signInLink>
+        <SignInLink />
       </template>
       <template #privacy>
         {{ t('auth.privacy') }}
@@ -85,7 +85,7 @@ import SignUpContainer from '@/containers/signUpContainer/SignUpContainer.vue';
 import AgreementCheckbox from '@/components/app/agreementCheckbox/AgreementCheckbox.vue';
 import Link from '@/components/core/link/Link.vue';
 import Button from '@/components/core/button/Button.vue';
-import SignUpLink from '@/components/app/signUpLink/SignUpLink.vue';
+import SignInLink from '@/components/app/signInLink/SignInLink.vue';
 import { useSignIn } from '@/hooks/useSignIn';
 
 const { t } = useI18n();

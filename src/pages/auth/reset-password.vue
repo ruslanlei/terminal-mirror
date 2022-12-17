@@ -14,6 +14,7 @@
       </template>
       <template #emailInput>
         <FormInput
+          ref="emailInput"
           name="email"
           :placeholder="t('placeholder.email')"
         />
@@ -43,6 +44,9 @@ import PasswordResetContainer from '@/containers/passwordResetContainer/Password
 import { Form, FormInput } from '@/components/form';
 import Button from '@/components/core/button/Button.vue';
 import { usePasswordReset } from '@/hooks/usePasswordReset';
+import { onMounted, ref } from 'vue';
+
+const emailInput = ref();
 
 const { t } = useI18n();
 
@@ -52,4 +56,8 @@ const {
   isLoading,
   handleSubmit,
 } = usePasswordReset();
+
+onMounted(() => {
+  emailInput.value.focus();
+});
 </script>

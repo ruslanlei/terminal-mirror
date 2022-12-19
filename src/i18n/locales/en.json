@@ -47,5 +47,11 @@
   },
   "profile": {
     "failedToFetch": "Failed to fetch profile"
+  },
+  "common": {
+    "marketType": {
+      "emulator": "Emulator",
+      "real": "Real"
+    }
   }
 }

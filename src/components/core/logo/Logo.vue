@@ -1,15 +1,25 @@
 <template>
   <div :class="[$style.wrapper, $style[size]]">
-    <LogoFull
+    <div :class="$style.logoIconWrapper">
+      <div ref="logoIcon">
+        <LogoIcon
+          :class="$style.logoIcon"
+        />
+      </div>
+    </div>
+    <LogoText
       v-if="type === 'full'"
-      :class="$style.logoFull"
+      :class="$style.logoText"
     />
   </div>
 </template>
 
 <script setup lang="ts">
-import { LogoProps } from '@/components/core/logo/index';
-import LogoFull from './assets/logoFull.svg';
+import { onMounted, ref } from 'vue';
+import { playAnimation } from '@/utils/animation';
+import { LogoProps } from './index';
+import LogoIcon from './assets/logoIcon.svg';
+import LogoText from './assets/logoText.svg';
 
 withDefaults(
   defineProps<LogoProps>(),
@@ -18,21 +28,58 @@ withDefaults(
     size: 'md',
   },
 );
+
+const logoIcon = ref();
+
+onMounted(() => {
+  playAnimation({
+    targets: logoIcon.value,
+    duration: 2000,
+    rotate: 360,
+    loop: true,
+    delay: 20000,
+  });
+});
 </script>
 
 <style lang="scss" module>
 .wrapper {
+  display: flex;
+  align-items: center;
   &.md {
-    .logoFull {
-      width: 173px;
+    .logoIconWrapper {
+      padding: 10px;
+    }
+
+    .logoIcon {
+      width: 22px;
+      height: 22px;
     }
   }
   &.sm {
-    .logoFull {
-      width: 114px;
+    .logoIconWrapper {
+      padding: 10px;
+    }
+
+    .logoIcon {
+      width: 22px;
+      height: 22px;
+    }
+
+    .logoText {
+      margin-left: 5px;
     }
   }
 }
 
-.logoFull {}
+.logoIconWrapper {
+  background-color: rgb(var(--color-background-3));
+  border-radius: 50%;
+}
+
+.logoIcon {
+  display: block;
+}
+
+.logoText {}
 </style>

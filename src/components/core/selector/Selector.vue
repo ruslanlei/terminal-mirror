@@ -22,12 +22,12 @@
           localValue === option.value && $style.active,
         ]"
         :data-value="option.value"
-        @click="onTabClick(option.value)"
+        @click="onOptionClick(option.value)"
       >
         <slot
           name="option"
           :option="option"
-          :active-tab="localValue"
+          :active-option="localValue"
         >
           {{ option.label }}
         </slot>
@@ -42,38 +42,40 @@
 
 <script setup lang="ts">
 import {
-  computed,
-  onBeforeUpdate,
-  onMounted,
   ref,
   watch,
+  onBeforeUpdate,
+  onMounted, onBeforeUnmount,
 } from 'vue';
-import { MultiSwitchEmits, MultiSwitchProps } from './index';
+import { useLocalValue } from '@/hooks/useLocalValue';
+import { SelectorProps, SelectorEmits, SelectorOption } from './index';
 
 const props = withDefaults(
-  defineProps<MultiSwitchProps>(),
+  defineProps<SelectorProps>(),
   {
     state: 'primary',
+    thickening: 4,
   },
 );
-const emit = defineEmits<MultiSwitchEmits>();
+const emit = defineEmits<SelectorEmits>();
 
 if (!props.modelValue) {
   throw new Error('MultiSwitch Error: modelValue is not passed (check v-model)');
 }
 
 const container = ref<HTMLElement>();
-const optionRefs = ref<Record<string, HTMLElement>>({});
+const optionRefs = ref<Record<SelectorOption['value'], HTMLElement>>({});
 onBeforeUpdate(() => {
   optionRefs.value = {};
 });
 
-const localValue = computed({
-  get: () => props.modelValue,
-  set: (value) => emit('update:modelValue', value),
-});
+const localValue = useLocalValue<string>(
+  props,
+  emit,
+  'modelValue',
+);
 
-const onTabClick = (value) => {
+const onOptionClick = (value: SelectorOption['value']) => {
   localValue.value = value;
 };
 
@@ -81,22 +83,40 @@ const computedGhostStyles = ref({
   width: '0px',
   height: 'auto',
   left: '0px',
+  top: '0px',
 });
+
 const findActiveTab = () => {
-  if (!container.value) return;
+  if (!container.value || !localValue.value) return;
 
   const activeTabElement = optionRefs.value[localValue.value];
 
   const { left: containerLeft } = container.value.getBoundingClientRect();
   const { width, height, left } = activeTabElement.getBoundingClientRect();
 
-  computedGhostStyles.value.width = `${width}px`;
-  computedGhostStyles.value.height = `${height}px`;
-  computedGhostStyles.value.left = `${left - containerLeft}px`;
+  const { thickening } = props;
+
+  computedGhostStyles.value.width = `${width + thickening}px`;
+  computedGhostStyles.value.height = `${height + thickening}px`;
+  computedGhostStyles.value.left = `${(left - containerLeft) - (thickening / 2)}px`;
+  computedGhostStyles.value.top = `${-(thickening / 2)}px`;
+};
+
+const setListeners = () => {
+  window.addEventListener('resize', findActiveTab);
+  window.addEventListener('orientationchange', findActiveTab);
+};
+const removeListeners = () => {
+  window.removeEventListener('resize', findActiveTab);
+  window.removeEventListener('orientationchange', findActiveTab);
 };
 
 watch(localValue, findActiveTab);
-onMounted(findActiveTab);
+onMounted(() => {
+  findActiveTab();
+  setListeners();
+});
+onBeforeUnmount(removeListeners);
 </script>
 
 <style lang="scss" module>
@@ -125,6 +145,7 @@ onMounted(findActiveTab);
 .options {
   position: relative;
   display: flex;
+  background-color: rgb(var(--color-background-3));
 }
 
 .item {
@@ -133,42 +154,41 @@ onMounted(findActiveTab);
   cursor: pointer;
   transition: .2s transform;
   user-select: none;
-  &:active {
-    opacity: 0.9;
-  }
 }
 
 .ghost {
   position: absolute;
-  transition: .4s left, .4s width;
+  transition: .3s left, .3s width;
   animation: options-ghost .7s ease-in-out;
+  border-radius: 30% 40% / 40% 30%
 }
 
 .primary {
   &.options {
-    border-radius: 30px;
+    border-radius: 5px;
   }
   .item {
-    padding: 10px 20px;
+    color: rgb(var(--color-accent-2));
+    @include title4;
+    padding: 8px 12px;
     min-width: 100px;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: red;
+    font-weight: 600;
     font-size: 14px;
-    font-weight: 400;
     height: 100%;
     top: 0;
     bottom: 0;
     transition: 300ms color;
     flex-grow: 1;
     &.active {
-      color: blue;
+      color: rgb(var(--color-accent-1));
     }
   }
   .ghost {
-    background-color: green;
-    border-radius: 20px;
+    background: var(--color-main-gradient);
+    border-radius: 5px;
   }
 }
 </style>

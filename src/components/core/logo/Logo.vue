@@ -35,7 +35,7 @@ onMounted(() => {
   playAnimation({
     targets: logoIcon.value,
     duration: 2000,
-    rotate: 360,
+    rotate: -360,
     loop: true,
     delay: 20000,
   });

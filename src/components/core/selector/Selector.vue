@@ -160,7 +160,7 @@ onBeforeUnmount(removeListeners);
   position: absolute;
   transition: .3s left, .3s width;
   animation: options-ghost .7s ease-in-out;
-  border-radius: 30% 40% / 40% 30%
+  border-radius: 5px;
 }
 
 .primary {
@@ -170,8 +170,7 @@ onBeforeUnmount(removeListeners);
   .item {
     color: rgb(var(--color-accent-2));
     @include title4;
-    padding: 8px 12px;
-    min-width: 100px;
+    padding: 4px 10px;
     display: flex;
     justify-content: center;
     align-items: center;

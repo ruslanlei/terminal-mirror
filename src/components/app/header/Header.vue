@@ -8,6 +8,14 @@
       :class="$style.divider"
     />
     <SelectedCurrencyStats :class="$style.currencyStats" />
+    <div :class="$style.profileBlock">
+      <Balance />
+      <Divider
+        type="vertical"
+        state="default"
+        :class="$style.divider"
+      />
+    </div>
   </div>
 </template>
 
@@ -17,6 +25,7 @@ import Logo from '@/components/core/logo/Logo.vue';
 import MarketTypeSelector from '@/components/app/marketTypeSelector/MarketTypeSelector.vue';
 import Divider from '@/components/core/divider/Divider.vue';
 import SelectedCurrencyStats from '@/components/app/selectedCurrencyStats/SelectedCurrencyStats.vue';
+import Balance from '@/components/app/balance/Balance.vue';
 
 const { t } = useI18n();
 </script>
@@ -41,5 +50,11 @@ const { t } = useI18n();
 
 .currencyStats {
   margin-left: 20px;
+}
+
+.profileBlock {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
 }
 </style>

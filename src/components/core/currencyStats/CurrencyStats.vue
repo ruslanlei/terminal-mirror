@@ -16,6 +16,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 import CurrencyLogo from '@/components/core/currencyLogo/CurrencyLogo.vue';
 import CurrencyStatsColumn from '@/components/app/currencyStatsColumn/CurrencyStatsColumn.vue';
 import { CurrencyStatsProps } from '@/components/core/currencyStats/index';
@@ -23,39 +24,41 @@ import { CurrencyStat } from '@/components/app/currencyStatsColumn';
 
 const props = defineProps<CurrencyStatsProps>();
 
+const { t } = useI18n();
+
 const computedCurrencyStats = computed<Array<CurrencyStat[]>>(() => [
   [
     {
-      label: 'Price',
+      label: t('currencyStats.price'),
       value: props.stats.price,
       valueState: 'positive',
     },
     {
-      label: 'Amount',
+      label: t('currencyStats.amount'),
       value: props.stats.amount,
       valueState: 'default',
     },
   ],
   [
     {
-      label: 'Change',
+      label: t('currencyStats.change'),
       value: props.stats.change,
       valueState: 'negative',
     },
     {
-      label: 'for 24h',
+      label: t('currencyStats.in24hours'),
       value: props.stats.changePercents,
       valueState: 'default',
     },
   ],
   [
     {
-      label: 'Max',
+      label: t('currencyStats.max'),
       value: props.stats.max,
       valueState: 'default',
     },
     {
-      label: 'Min',
+      label: t('currencyStats.min'),
       value: props.stats.min,
       valueState: 'default',
     },

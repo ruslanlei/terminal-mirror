@@ -48,10 +48,16 @@
   "profile": {
     "failedToFetch": "Failed to fetch profile"
   },
-  "common": {
-    "marketType": {
-      "emulator": "Emulator",
-      "real": "Real"
-    }
+  "marketType": {
+    "emulator": "Emulator",
+    "real": "Real"
+  },
+  "currencyStats": {
+    "price": "Price",
+    "amount": "Amount",
+    "change": "Change",
+    "in24hours": "in 24h",
+    "max": "Max",
+    "min": "Min"
   }
 }

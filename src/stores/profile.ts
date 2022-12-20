@@ -1,3 +1,4 @@
+import { ref } from 'vue';
 import { defineStore } from 'pinia';
 import { useI18n } from 'vue-i18n';
 import { useStorage } from '@vueuse/core';
@@ -9,6 +10,8 @@ export const useProfileStore = defineStore('profile', () => {
   const toastStore = useToastStore();
 
   const profile = useStorage<Profile | null>('profile', null);
+
+  const balance = ref(0);
 
   const handleGetProfile = async () => {
     const { result, data } = await getProfile();
@@ -26,5 +29,6 @@ export const useProfileStore = defineStore('profile', () => {
   return {
     profile,
     getProfile: handleGetProfile,
+    balance,
   };
 });

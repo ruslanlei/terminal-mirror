@@ -17,16 +17,19 @@ const stats = reactive<ICurrencyStats>(({
   min: 14203,
 }));
 
+// FIXME: for MVP
 setInterval(() => {
   stats.currency = stats.currency === 'btc'
     ? 'eth'
     : 'btc';
-  Object.entries(stats).forEach(([key, value]) => {
+  Object.entries(stats).forEach(([key, value], index) => {
     if (typeof value === 'number') {
-      stats[key] += 15;
+      setTimeout(() => {
+        stats[key] += 15;
+      }, 600 * index);
     }
   });
-}, 1000);
+}, 3000);
 </script>
 
 <style lang="scss">

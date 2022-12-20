@@ -19,7 +19,14 @@
           $style[currencyStat.valueState],
         ]"
       >
-        {{ currencyStat.value }}
+        <transition
+          name="valueAnimation"
+          mode="out-in"
+        >
+          <span style="display: block" :key="currencyStat.value">
+            {{ currencyStat.value }}
+          </span>
+        </transition>
       </div>
     </div>
   </div>
@@ -63,6 +70,26 @@ const props = defineProps<CurrencyStatsColumnProps>();
   }
   &.negative {
     color: rgba(var(--color-danger));
+  }
+}
+</style>
+
+<style lang="scss">
+.valueAnimation {
+  &-enter-active,
+  &-leave-active {
+    transition: transform 200ms, opacity 200ms;
+  }
+
+  &-enter-from, &-leave-to {
+    opacity: 0;
+  }
+
+  &-enter-from {
+    transform: translateX(-4px);
+  }
+  &-leave-to {
+    transform: translateX(4px);
   }
 }
 </style>

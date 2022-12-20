@@ -1,9 +1,14 @@
 <template>
   <div
-    :class="$style[state]"
+    :class="[$style.container, $style[state]]"
     :style="computedContainerStyles"
   >
-    <ComputedLogo />
+    <transition
+      name="currencyLogoAnimation"
+      mode="out-in"
+    >
+      <ComputedLogo :key="currency" />
+    </transition>
   </div>
 </template>
 
@@ -65,6 +70,10 @@ const computedContainerStyles = computed(() => ({
 </script>
 
 <style lang="scss" module>
+.container {
+  transition: 200ms background-color;
+}
+
 .circle {
   display: flex;
   justify-content: center;
@@ -85,5 +94,25 @@ const computedContainerStyles = computed(() => ({
   height: 40px;
   min-height: 40px;
   border-radius: 5px;
+}
+</style>
+
+<style lang="scss">
+.currencyLogoAnimation {
+  &-enter-active,
+  &-leave-active {
+    transition: transform 250ms, opacity 250ms;
+  }
+
+  &-enter-from, &-leave-to {
+    opacity: 0;
+  }
+
+  &-enter-from {
+    transform: rotate(-180deg) scale(1.5);
+  }
+  &-leave-to {
+    transform: rotate(180deg) scale(1.5);
+  }
 }
 </style>

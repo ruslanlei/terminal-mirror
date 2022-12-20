@@ -32,7 +32,19 @@
     </div>
   </template>
   <template v-else-if="state === 'default'">
-    default
+    <div :class="$style.languageList">
+      <button
+        v-for="localeOption in locales"
+        :key="localeOption.value"
+        :class="[
+          $style.listOption,
+          (localeOption.value === locale) && $style.active
+        ]"
+        @click="setLocale(localeOption.value)"
+      >
+        {{ localeOption.label }}
+      </button>
+    </div>
   </template>
 </template>
 
@@ -103,5 +115,21 @@ const setLocale = (newLocale: AppLocale) => {
   color: rgba(var(--color-accent-2));
   font-weight: 600;
   @include text;
+}
+
+.languageList {
+  display: flex;
+  gap: 10px;
+}
+
+.listOption {
+  @include textSm;
+  color: rgba(var(--color-accent-2));
+  font-weight: 600;
+  transition: 200ms color;
+  cursor: pointer;
+  &.active {
+    color: rgba(var(--color-accent-1));
+  }
 }
 </style>

@@ -9,6 +9,10 @@
           icon="verificationCircle"
         />
       </div>
+      <LanguageSelect
+        state="default"
+        :class="$style.languageSelect"
+      />
     </header>
   </Card>
 </template>
@@ -18,6 +22,7 @@ import { computed } from 'vue';
 import Card from '@/components/core/card/Card.vue';
 import Avatar from '@/components/core/avatar/Avatar.vue';
 import Icon from '@/components/core/icon/Icon.vue';
+import LanguageSelect from '@/components/app/languageSelect/LanguageSelect.vue';
 import { useProfileStore } from '@/stores/profile';
 import { storeToRefs } from 'pinia';
 
@@ -34,6 +39,7 @@ const avatar = computed(() => profile.value?.avatar);
 
 .profileSettings {
   padding: 20px;
+  width: 432px;
 }
 
 .header {
@@ -52,5 +58,9 @@ const avatar = computed(() => profile.value?.avatar);
 
 .verificationBadge {
   margin-left: 10px;
+}
+
+.languageSelect {
+  margin-left: auto;
 }
 </style>

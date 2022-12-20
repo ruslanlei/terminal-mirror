@@ -7,7 +7,7 @@ import { i18n } from '@/i18n';
 import '@/api';
 
 import { OutsideClickDirective } from '@/directives/outsideClick';
-import { maska } from 'maska';
+import { vMaska } from 'maska';
 
 const pinia = createPinia();
 
@@ -16,5 +16,5 @@ createApp(App)
   .use(router)
   .use(i18n)
   .directive('click-outside', OutsideClickDirective)
-  .directive('mask', maska)
+  .directive('mask', vMaska)
   .mount('#app');

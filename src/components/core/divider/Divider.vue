@@ -21,7 +21,9 @@ const props = withDefaults(
 </script>
 
 <style lang="scss" module>
-.divider {}
+.divider {
+  border-radius: 2px;
+}
 
 .default {
   background-color: rgb(var(--color-background-3));

@@ -1,5 +1,8 @@
 <template>
-  <div>
+  <div
+    :class="$style[state]"
+    :style="computedContainerStyles"
+  >
     <ComputedLogo />
   </div>
 </template>
@@ -19,7 +22,12 @@ import IotLogo from './assets/iot.svg';
 import LitecoinLogo from './assets/litecoin.svg';
 import TetherLogo from './assets/tether.svg';
 
-const props = defineProps<CurrencyLogoProps>();
+const props = withDefaults(
+  defineProps<CurrencyLogoProps>(),
+  {
+    state: 'circle',
+  },
+);
 
 const logoMap: Record<Currency, any> = {
   achain: AchainLogo,
@@ -35,8 +43,47 @@ const logoMap: Record<Currency, any> = {
   tether: TetherLogo,
 };
 
+const colorMap: Record<Currency, string> = {
+  achain: '#767DFF',
+  asch: '#FAA00D',
+  bnb: '#F3BA2F',
+  bread: '#FE5D86',
+  btc: '#F49D35',
+  cobinhood: '#13BF99',
+  dash: '#2573C2',
+  eth: '#627EEA',
+  iot: '#102044',
+  ltc: '#BEBEBE',
+  tether: '#26A17B',
+};
+
 const ComputedLogo = computed(() => logoMap[props.currency]);
+
+const computedContainerStyles = computed(() => ({
+  backgroundColor: colorMap[props.currency],
+}));
 </script>
 
 <style lang="scss" module>
+.circle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  min-width: 24px;
+  height: 24px;
+  min-height: 24px;
+  border-radius: 50%;
+}
+
+.square {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  min-width: 30px;
+  height: 40px;
+  min-height: 40px;
+  border-radius: 5px;
+}
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <Dropdown>
+  <Dropdown :distance="10">
     <template #trigger>
       <button
         type="button"
@@ -13,7 +13,7 @@
       </button>
     </template>
     <template #dropdown>
-      profile dropdown data
+      <ProfileSettings />
     </template>
   </Dropdown>
 </template>
@@ -23,6 +23,7 @@ import { computed } from 'vue';
 import Dropdown from '@/components/core/dropdown/Dropdown.vue';
 import Icon from '@/components/core/icon/Icon.vue';
 import Avatar from '@/components/core/avatar/Avatar.vue';
+import ProfileSettings from '@/components/app/profileSettings/ProfileSettings.vue';
 import { useProfileStore } from '@/stores/profile';
 
 const profileStore = useProfileStore();

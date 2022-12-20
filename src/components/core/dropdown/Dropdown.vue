@@ -1,7 +1,7 @@
 <template>
   <VDropdown
     :popper-class="$style.dropdown"
-    :distance="2"
+    :distance="distance"
     :arrow-overflow="false"
     :overflow-padding="16"
   >
@@ -13,6 +13,9 @@
 </template>
 
 <script setup lang="ts">
+import { DropdownProps } from './index';
+
+defineProps<DropdownProps>();
 </script>
 
 <style lang="scss" module>

@@ -9,6 +9,7 @@ import { signUp, SignUpModel } from '@/api/endpoints/auth/signUp';
 import { useToastStore } from '@/stores/toasts';
 import { useI18n } from 'vue-i18n';
 import { resetPassword, ResetPasswordDTO } from '@/api/endpoints/auth/resetPassword';
+import { useProfileStore } from '@/stores/profile';
 
 export const checkAuth = (
   isAuthorized: boolean,
@@ -40,6 +41,7 @@ export const useSessionStore = defineStore('session', () => {
   const { t } = useI18n();
   const isAuthorized = ref(false);
   const toastStore = useToastStore();
+  const profileStore = useProfileStore();
 
   const { token, setToken, removeToken } = useAuthToken();
 
@@ -68,6 +70,7 @@ export const useSessionStore = defineStore('session', () => {
 
     if (result) {
       setToken(data.key, !remember);
+      await profileStore.getProfile();
     } else {
       toastStore.showDanger({
         text: t('auth.signIn.failed'),

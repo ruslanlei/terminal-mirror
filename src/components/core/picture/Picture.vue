@@ -4,6 +4,7 @@
       $style.picture,
       loaded && $style.loaded
     ]"
+    :style="computedStyles"
     :src="src"
     :srcset="srcset"
     :alt="alt"
@@ -11,16 +12,31 @@
 </template>
 
 <script setup lang="ts">
-import { ref, toRefs, watch } from 'vue';
-import { PictureProps } from '@/components/core/picture/index';
+import {
+  ref,
+  computed,
+  toRefs,
+  watch,
+} from 'vue';
+import { PictureProps } from './index';
 
-const props = defineProps<PictureProps>();
+const props = withDefaults(
+  defineProps<PictureProps>(),
+  {
+    transitionDuration: 200,
+  },
+);
 const {
   src,
   srcset,
+  transitionDuration,
 } = toRefs(props);
 
 const loaded = ref(false);
+
+const computedStyles = computed(() => ({
+  transition: `opacity ${transitionDuration.value}ms`,
+}));
 
 const preload = () => {
   const img = document.createElement('img');
@@ -39,6 +55,7 @@ const preload = () => {
 
   document.documentElement.appendChild(img);
 };
+
 preload();
 
 watch([src, srcset], () => {
@@ -51,7 +68,6 @@ watch([src, srcset], () => {
 .picture {
   display: block;
   opacity: 0;
-  transition: .15s opacity;
   &.loaded {
     opacity: 1;
   }

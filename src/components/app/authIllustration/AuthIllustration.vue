@@ -6,6 +6,7 @@
     <Picture
       :src="WalletWebp"
       :srcset="walletSrcset"
+      :transition-duration="800"
     />
   </ImageBackgroundBlock>
 </template>

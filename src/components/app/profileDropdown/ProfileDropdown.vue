@@ -1,0 +1,43 @@
+<template>
+  <Dropdown>
+    <template #trigger>
+      <button
+        type="button"
+        :class="$style.trigger"
+      >
+        <Avatar :src="avatar" />
+        <Icon
+          :class="$style.triggerIcon"
+          icon="arrowDown"
+        />
+      </button>
+    </template>
+    <template #dropdown>
+      profile dropdown data
+    </template>
+  </Dropdown>
+</template>
+
+<script setup lang="ts">
+import { computed } from 'vue';
+import Dropdown from '@/components/core/dropdown/Dropdown.vue';
+import Icon from '@/components/core/icon/Icon.vue';
+import Avatar from '@/components/core/avatar/Avatar.vue';
+import { useProfileStore } from '@/stores/profile';
+
+const profileStore = useProfileStore();
+const avatar = computed(() => profileStore.profile?.avatar);
+</script>
+
+<style lang="scss" module>
+.trigger {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.triggerIcon {
+  margin-left: 12px;
+  color: rgb(var(--color-accent-2));
+}
+</style>

@@ -7,6 +7,7 @@
       :src="src"
       :srcset="srcset"
       alt=""
+      :transition-duration="1400"
     />
     <div :class="[contentClass, $style.content]">
       <slot />

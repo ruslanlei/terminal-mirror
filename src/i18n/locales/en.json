@@ -46,7 +46,13 @@
     }
   },
   "profile": {
-    "failedToFetch": "Failed to fetch profile"
+    "failedToFetch": "Failed to fetch profile",
+    "email": "Email: {email}",
+    "changeEmail": "Change email",
+    "theme": "Theme: {name}"
+  },
+  "themes": {
+    "purpleCat": "Purple cat"
   },
   "marketType": {
     "emulator": "Emulator",
@@ -62,12 +68,12 @@
   },
   "subscription": {
     "paid": {
-      "label": "Подписка активна",
-      "description": "закончится {endDate}"
+      "label": "Subscription active",
+      "description": "will end on {endDate}"
     },
     "unpaid": {
-      "label": "Подписка закончилась",
-      "description": "продлите подписку для работы"
+      "label": "Subscription ended",
+      "description": "renew your subscription for work"
     }
   }
 }

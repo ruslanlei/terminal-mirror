@@ -5,13 +5,13 @@ import { theme } from '@/types/theme';
 
 export const useCommonStore = defineStore('common', () => {
   // app theme
-  const activeTheme = ref<theme>('dark' as theme.DARK);
-  watch(activeTheme, (value) => {
+  const theme = ref<theme>('purpleCat' as theme.PURPLE_CAT);
+  watch(theme, (value) => {
     document.body.removeAttribute('class');
     document.body.classList.add(value);
   }, { immediate: true });
   const setTheme = (themeName: theme) => {
-    activeTheme.value = themeName;
+    theme.value = themeName;
   };
 
   // app height
@@ -21,7 +21,7 @@ export const useCommonStore = defineStore('common', () => {
   };
 
   return {
-    activeTheme,
+    theme,
     setTheme,
     vh,
     setVh,

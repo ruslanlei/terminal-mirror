@@ -35,4 +35,8 @@ withDefaults(
 .background2 {
   background-color: rgb(var(--color-background-2));
 }
+
+.background3 {
+  background-color: rgb(var(--color-background-3));
+}
 </style>

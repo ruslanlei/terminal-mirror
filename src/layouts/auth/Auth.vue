@@ -49,6 +49,8 @@ const { t } = useI18n();
 .authLayout {
   display: grid;
   grid-template-columns: 540px 1fr;
+  position: absolute;
+  inset: 0;
 }
 
 .sidebar {

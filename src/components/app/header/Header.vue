@@ -1,5 +1,8 @@
 <template>
-  <div :class="$style.header">
+  <header
+    :style="computedStyles"
+    :class="$style.header"
+  >
     <Logo size="sm" />
     <MarketTypeSelector :class="$style.marketSelector" />
     <Divider
@@ -17,7 +20,7 @@
       />
       <ProfileDropdown />
     </div>
-  </div>
+  </header>
 </template>
 
 <script setup lang="ts">
@@ -28,8 +31,14 @@ import Divider from '@/components/core/divider/Divider.vue';
 import SelectedCurrencyStats from '@/components/app/selectedCurrencyStats/SelectedCurrencyStats.vue';
 import Balance from '@/components/app/balance/Balance.vue';
 import ProfileDropdown from '@/components/app/profileDropdown/ProfileDropdown.vue';
+import { computed } from 'vue';
+import { size } from '@/enums/sizing';
 
 const { t } = useI18n();
+
+const computedStyles = computed(() => ({
+  height: `${size.HEADER}px`,
+}));
 </script>
 
 <style lang="scss" module>

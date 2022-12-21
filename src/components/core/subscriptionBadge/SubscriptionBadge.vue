@@ -1,20 +1,28 @@
 <template>
-  <div :class="[$style.subscriptionBadge, $style[state]]">
-    <CertificateImage :state="computedImageState" />
-    <div :class="$style.text">
-      <div :class="$style.label">
-        {{ computedLabel }}
+  <transition
+    name="subscriptionBadgeTransition"
+    mode="out-in"
+  >
+    <div
+      :key="state"
+      :class="[$style.subscriptionBadge, $style[state]]"
+    >
+      <CertificateImage :state="computedImageState" />
+      <div :class="$style.text">
+        <div :class="$style.label">
+          {{ computedLabel }}
+        </div>
+        <div :class="$style.description">
+          {{ computedDescription }}
+        </div>
       </div>
-      <div :class="$style.description">
-        {{ computedDescription }}
-      </div>
+      <Icon
+        v-if="to"
+        :class="$style.icon"
+        icon="arrowRight"
+      />
     </div>
-    <Icon
-      v-if="to"
-      :class="$style.icon"
-      icon="arrowRight"
-    />
-  </div>
+  </transition>
 </template>
 
 <script setup lang="ts">
@@ -88,5 +96,26 @@ const computedDescription = computed(() => ({
 .icon {
   margin-left: auto;
   color: rgb(var(--color-accent-1));
+}
+</style>
+
+<style lang="scss">
+.subscriptionBadgeTransition {
+  &-enter-active,
+  &-leave-active {
+    transition: transform 200ms, opacity 200ms;
+  }
+
+  &-enter-from,
+  &-leave-to {
+    opacity: 0;
+  }
+
+  &-enter-from {
+    transform: scale(1.025) translateY(-5px);
+  }
+  &-leave-to {
+    transform: scale(0.975) translateY(5px);
+  }
 }
 </style>

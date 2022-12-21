@@ -1,16 +1,9 @@
 <template>
-  <transition
-    name="certificateImageTransition"
-    mode="out-in"
-  >
-    <div :key="state">
-      <Picture
-        :src="computedSrc"
-        :srcset="computedSrcset"
-        :class="$style.certificatePicture"
-      />
-    </div>
-  </transition>
+  <Picture
+    :src="computedSrc"
+    :srcset="computedSrcset"
+    :class="$style.certificatePicture"
+  />
 </template>
 
 <script setup lang="ts">
@@ -43,26 +36,5 @@ const computedSrcset = computed(() => ({
 .certificatePicture {
   width: 80px;
   height: 80px;
-}
-</style>
-
-<style lang="scss">
-.certificateImageTransition {
-  &-enter-active,
-  &-leave-active {
-    transition: transform 250ms, opacity 250ms;
-  }
-
-  &-enter-from,
-  &-leave-to {
-    opacity: 0;
-  }
-
-  &-enter-from {
-    transform: translateY(-10px);
-  }
-  &-leave-to {
-    transform: translateY(10px);
-  }
 }
 </style>

@@ -22,6 +22,7 @@
           to: { name: 'subscription' }
         })
       }"
+      :class="$style.subscriptionBadge"
     />
   </Card>
 </template>
@@ -47,7 +48,7 @@ const testKey = ref(0);
 
 setInterval(() => {
   testKey.value = testKey.value ? 0 : 1;
-}, 2000);
+}, 50000);
 </script>
 
 <style lang="scss" module>
@@ -56,6 +57,7 @@ setInterval(() => {
 .profileSettings {
   padding: 20px;
   width: 432px;
+  overflow: hidden;
 }
 
 .header {
@@ -78,5 +80,9 @@ setInterval(() => {
 
 .languageSelect {
   margin-left: auto;
+}
+
+.subscriptionBadge {
+  margin-top: 20px;
 }
 </style>

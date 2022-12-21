@@ -4,6 +4,7 @@
 
 .dark {
   --color-main-gradient: #{$mainGradient};
+  --color-orange-gradient: #{$orangeGradient};
 
   --color-accent-1: #{extractRgb($mono-white)};
   --color-accent-2: #{extractRgb($grey1)};

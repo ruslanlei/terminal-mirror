@@ -14,17 +14,27 @@
         :class="$style.languageSelect"
       />
     </header>
+    <SubscriptionBadge
+      :state="testKey ? 'paid' : 'unpaid'"
+      paid-until="24.12.2023"
+      v-bind="{
+        ...(testKey ? {} : {
+          to: { name: 'subscription' }
+        })
+      }"
+    />
   </Card>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
+import { storeToRefs } from 'pinia';
 import Card from '@/components/core/card/Card.vue';
 import Avatar from '@/components/core/avatar/Avatar.vue';
 import Icon from '@/components/core/icon/Icon.vue';
 import LanguageSelect from '@/components/app/languageSelect/LanguageSelect.vue';
+import SubscriptionBadge from '@/components/core/subscriptionBadge/SubscriptionBadge.vue';
 import { useProfileStore } from '@/stores/profile';
-import { storeToRefs } from 'pinia';
 
 const profileStore = useProfileStore();
 const {
@@ -32,6 +42,12 @@ const {
 } = storeToRefs(profileStore);
 
 const avatar = computed(() => profile.value?.avatar);
+
+const testKey = ref(0);
+
+setInterval(() => {
+  testKey.value = testKey.value ? 0 : 1;
+}, 2000);
 </script>
 
 <style lang="scss" module>

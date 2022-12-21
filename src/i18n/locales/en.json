@@ -59,5 +59,15 @@
     "in24hours": "in 24h",
     "max": "Max",
     "min": "Min"
+  },
+  "subscription": {
+    "paid": {
+      "label": "Подписка активна",
+      "description": "закончится {endDate}"
+    },
+    "unpaid": {
+      "label": "Подписка закончилась",
+      "description": "продлите подписку для работы"
+    }
   }
 }

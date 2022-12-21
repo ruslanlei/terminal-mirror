@@ -1,7 +1,7 @@
 <template>
   <Card
     :class="$style.orderSettings"
-    state="background2"
+    state="background3"
   />
 </template>
 

@@ -46,6 +46,7 @@ const stickyElementStyles = computed(() => ({
 }
 
 .tools {
+  padding-bottom: 20px;
 }
 
 .main {

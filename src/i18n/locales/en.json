@@ -58,6 +58,11 @@
     "emulator": "Emulator",
     "real": "Real"
   },
+  "emulator": {
+    "player": {
+      "label": "Player"
+    }
+  },
   "currencyStats": {
     "price": "Price",
     "amount": "Amount",

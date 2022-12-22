@@ -7,13 +7,18 @@
       <div :class="$style.label">
         {{ t('emulator.player.label') }}
       </div>
+      <Datepicker v-model="date" />
     </header>
   </Card>
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Card from '@/components/core/card/Card.vue';
+import Datepicker from '@/components/core/datepicker/Datepicker.vue';
+
+const date = ref(new Date().toISOString());
 
 const { t } = useI18n();
 </script>

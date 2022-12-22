@@ -40,6 +40,9 @@ defineProps<DropdownProps>();
   top: 0;
   left: 0;
   outline: none;
+  .v-popper__inner {
+    overflow: visible;
+  }
   &.v-popper__popper--shown {
     visibility: visible;
     opacity: 1;

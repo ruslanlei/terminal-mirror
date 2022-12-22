@@ -1506,6 +1506,11 @@ flat-cache@^3.0.4:
     flatted "^3.1.0"
     rimraf "^3.0.2"
 
+flatpickr@^4.6.13:
+  version "4.6.13"
+  resolved "https://registry.yarnpkg.com/flatpickr/-/flatpickr-4.6.13.tgz#8a029548187fd6e0d670908471e43abe9ad18d94"
+  integrity sha512-97PMG/aywoYpB4IvbvUJi0RQi8vearvU0oov1WW3k0WZPBMrTQVqekSX5CjSG/M4Q3i6A/0FKXC7RyAoAUUSPw==
+
 flatted@^3.1.0:
   version "3.2.5"
   resolved "https://registry.yarnpkg.com/flatted/-/flatted-3.2.5.tgz#76c8584f4fc843db64702a6bd04ab7a8bd666da3"
@@ -2752,6 +2757,13 @@ vue-eslint-parser@^9.0.1:
     esquery "^1.4.0"
     lodash "^4.17.21"
     semver "^7.3.6"
+
+vue-flatpickr-component@^11:
+  version "11.0.1"
+  resolved "https://registry.yarnpkg.com/vue-flatpickr-component/-/vue-flatpickr-component-11.0.1.tgz#e24f7c730287b4e32b7cff33f5f823d6c47dc466"
+  integrity sha512-dbBDC5a7XhsapGeejGrE7r2dj9SALJFAwMXJf/IYvbJhqsUZ8LZbFcK80vwOB6zgoSOrbrtBiVas2IQySLp1+w==
+  dependencies:
+    flatpickr "^4.6.13"
 
 vue-i18n@^9.2.2:
   version "9.2.2"

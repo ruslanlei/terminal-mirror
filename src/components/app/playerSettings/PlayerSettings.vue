@@ -3,7 +3,7 @@
     :class="$style.playerSettings"
     state="background3"
   >
-    <header>
+    <header :class="$style.header">
       <div :class="$style.label">
         {{ t('emulator.player.label') }}
       </div>
@@ -29,6 +29,12 @@ const { t } = useI18n();
 .playerSettings {
   height: 100%;
   padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .label {

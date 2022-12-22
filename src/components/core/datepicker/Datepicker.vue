@@ -1,8 +1,13 @@
 <template>
   <Dropdown>
     <template #trigger>
-      <button>
+      <button :class="[$style.trigger, $style[state]]">
         {{ displayValue }}
+        <Icon
+          :class="$style.icon"
+          icon="calendar"
+          :size="24"
+        />
       </button>
     </template>
     <template #dropdown>
@@ -22,13 +27,19 @@ import english from 'flatpickr/dist/l10n/default';
 import { BaseOptions as FlatpickrConfig } from 'flatpickr/dist/types/options';
 import { useLocalValue } from '@/hooks/useLocalValue';
 import Dropdown from '@/components/core/dropdown/Dropdown.vue';
+import Icon from '@/components/core/icon/Icon.vue';
 import { computed, ref, watch } from 'vue';
 import { useI18nStore } from '@/stores/i18n';
 import { storeToRefs } from 'pinia';
 import { AppLocale } from '@/i18n';
 import { DatepickerEmits, DatepickerProps } from './index';
 
-const props = defineProps<DatepickerProps>();
+const props = withDefaults(
+  defineProps<DatepickerProps>(),
+  {
+    state: 'default',
+  },
+);
 
 const emit = defineEmits<DatepickerEmits>();
 
@@ -55,7 +66,7 @@ const computedIntl = computed(() => new Intl.DateTimeFormat(
   {
     weekday: 'short',
     day: 'numeric',
-    month: 'long',
+    month: 'short',
     year: 'numeric',
   },
 ));
@@ -70,9 +81,88 @@ watch([localValue, computedIntl], () => {
 </script>
 
 <style lang="scss" module>
+@import "src/assets/styles/utils";
+
 :global {
   .flatpickr-input {
-    visibility: hidden;
+    display: none;
+  }
+  .flatpickr-calendar {
+    background-color: rgb(var(--color-background-2));
+    box-shadow: none;
+    padding: 20px;
+    max-width: 100%;
+  }
+  .flatpickr-current-month {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .flatpickr-monthDropdown-months {
+      color: rgb(var(--color-accent-1));
+      background-color: rgb(var(--color-background-2)) !important;
+      border: none;
+      @include title2;
+    }
+    .numInputWrapper {
+      .numInput {
+        color: rgb(var(--color-accent-1));
+        @include title2;
+      }
+    }
+  }
+  .flatpickr-weekday {
+    color: rgb(var(--color-accent-1)) !important;
+    @include title3;
+    font-weight: 500 !important;
+  }
+  .flatpickr-day {
+    color: rgb(var(--color-accent-1));
+    border: none;
+    font-weight: 600;
+    &:hover {
+      color: rgb(var(--color-accent-1));
+      background-color: rgb(var(--color-background-1));
+    }
+    &.prevMonthDay, &.nextMonthDay {
+      color: rgba(var(--color-accent-1), 0.1);
+    }
+    &.selected {
+      background: var(--color-main-gradient);
+      transition: transform 150ms;
+      &:hover, &:focus {
+        background: var(--color-main-gradient);
+        transform: scale(1.1);
+      }
+    }
+    &.today {
+      &:hover {
+        background-color: rgb(var(--color-background-3));
+      }
+    }
+  }
+  .flatpickr-months  {
+    .flatpickr-prev-month, .flatpickr-next-month  {
+      fill: rgb(var(--color-accent-2));
+      color: rgb(var(--color-accent-2));
+    }
+  }
+}
+
+.trigger {
+  cursor: pointer;
+}
+
+.icon {
+  margin-left: 13px;
+}
+
+.default {
+  &.trigger {
+    display: flex;
+    align-items: center;
+    color: rgb(var(--color-accent-1));
+    @include title3;
+    font-weight: 500;
   }
 }
 </style>

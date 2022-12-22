@@ -1,6 +1,7 @@
 export interface DatepickerProps {
   modelValue: string,
   displayDataFormatter?: (unformattedDate: string) => string,
+  state?: 'default',
 }
 
 export interface DatepickerEmits {

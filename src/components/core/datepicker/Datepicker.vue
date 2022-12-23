@@ -90,7 +90,6 @@ watch([localValue, computedIntl], () => {
   .flatpickr-calendar {
     background-color: rgb(var(--color-background-2));
     box-shadow: none;
-    padding: 20px;
     max-width: 100%;
   }
   .flatpickr-current-month {

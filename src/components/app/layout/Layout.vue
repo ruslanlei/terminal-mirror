@@ -1,6 +1,6 @@
 <template>
-  <component
-    :is="currentLayout"
+  <Layout
+    v-if="Layout"
     :class="$style.layout"
   >
     <router-view v-slot="{ Component }">
@@ -11,16 +11,22 @@
         <component :is="Component" />
       </transition>
     </router-view>
-  </component>
+  </Layout>
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted } from 'vue';
+import {
+  computed,
+  defineAsyncComponent,
+  onBeforeUnmount,
+  onMounted,
+} from 'vue';
 import { useRoute } from 'vue-router';
-import DefaultLayout from '@/layouts/default/Default.vue';
-import BlankLayout from '@/layouts/blank/Blank.vue';
-import AuthLayout from '@/layouts/auth/Auth.vue';
 import { useCommonStore } from '@/stores/common';
+
+const DefaultLayout = defineAsyncComponent(() => import('@/layouts/default/Default.vue'));
+const BlankLayout = defineAsyncComponent(() => import('@/layouts/blank/Blank.vue'));
+const AuthLayout = defineAsyncComponent(() => import('@/layouts/auth/Auth.vue'));
 
 const route = useRoute();
 const commonStore = useCommonStore();
@@ -31,11 +37,11 @@ const layoutsMap: Record<string, any> = {
   auth: AuthLayout,
 };
 
-const currentLayout = computed(() => {
-  const layoutName: string = route.meta.layout
+const Layout = computed(() => {
+  const layoutName = route.meta.layout
     ? String(route.meta.layout)
-    : 'default';
-  return layoutsMap[layoutName];
+    : null;
+  return layoutName ? layoutsMap[layoutName] : null;
 });
 
 const handleBaseUnit = () => {

@@ -3,7 +3,7 @@ import vue from '@vitejs/plugin-vue';
 import eslintPlugin from 'vite-plugin-eslint';
 import pagesPlugin from 'vite-plugin-pages';
 import svgLoader from 'vite-svg-loader';
-import VueTypeImports from 'vite-plugin-vue-type-imports';
+import vueTypeImportsPlugin from 'vite-plugin-vue-type-imports';
 import path from 'path';
 
 // https://vitejs.dev/config/
@@ -16,8 +16,10 @@ export default defineConfig({
     svgLoader({
       svgo: false,
     }),
-    pagesPlugin(),
-    VueTypeImports(),
+    pagesPlugin({
+      importMode: 'async',
+    }),
+    vueTypeImportsPlugin(),
   ],
   resolve: {
     alias: {

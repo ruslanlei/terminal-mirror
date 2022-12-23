@@ -3,14 +3,14 @@
     v-if="Layout"
     :class="$style.layout"
   >
-    <router-view v-slot="{ Component }">
+    <RouterView v-slot="{ Component }">
       <transition
         name="layout-transition"
         mode="out-in"
       >
         <component :is="Component" />
       </transition>
-    </router-view>
+    </RouterView>
   </Layout>
 </template>
 
@@ -38,10 +38,10 @@ const layoutsMap: Record<string, any> = {
 };
 
 const Layout = computed(() => {
-  const layoutName = route.meta.layout
-    ? String(route.meta.layout)
-    : null;
-  return layoutName ? layoutsMap[layoutName] : null;
+  if (!route.meta.layout) return null;
+
+  const layoutName = String(route.meta.layout);
+  return layoutsMap[layoutName];
 });
 
 const handleBaseUnit = () => {

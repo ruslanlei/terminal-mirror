@@ -1,9 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { checkAuth, useSessionStore } from '@/stores/session';
 import NProgress from 'nprogress';
-import routes from '~pages';
-
 import 'nprogress/nprogress.css';
+import routes from '~pages';
 
 export const router = createRouter({
   history: createWebHistory(),

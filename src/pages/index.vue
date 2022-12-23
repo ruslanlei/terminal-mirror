@@ -1,15 +1,12 @@
 <template>
-  <MarketContainer>
-    <template #tools>
-      <MarketTools />
+  <Page>
+    <template #page>
+      <Market />
     </template>
-    <template #orderSettings>
-      <OrderSettings />
+    <template #skeleton>
+      <MarketSkeleton />
     </template>
-    <template #playerControls>
-      <PlayerSettings />
-    </template>
-  </MarketContainer>
+  </Page>
 </template>
 
 <route lang="yaml">
@@ -19,8 +16,9 @@ meta:
 </route>
 
 <script setup lang="ts">
-import MarketContainer from '@/containers/marketContainer/MarketContainer.vue';
-import OrderSettings from '@/components/app/orderSettings/OrderSettings.vue';
-import PlayerSettings from '@/components/app/playerSettings/PlayerSettings.vue';
-import MarketTools from '@/components/app/marketTools/MarketTools.vue';
+import { defineAsyncComponent } from 'vue';
+import Page from '@/components/core/page/Page.vue';
+import MarketSkeleton from '@/components/pages/market/MarketSkeleton.vue';
+
+const Market = defineAsyncComponent(() => import('@/components/pages/market/Market.vue'));
 </script>

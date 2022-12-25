@@ -1,7 +1,7 @@
 <template>
   <div
     :class="{
-      [$style.root]: true,
+      [$style.modalLayer]: true,
       [$style.active]: isActiveModals
     }"
   >
@@ -47,7 +47,7 @@ const closeModal = (modalId: Modal['id']) => {
 <style lang="scss" module>
 @import "src/assets/styles/utils";
 
-.root {
+.modalLayer {
   pointer-events: none;
   * {
     pointer-events: all;

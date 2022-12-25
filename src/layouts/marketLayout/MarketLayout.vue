@@ -1,18 +1,18 @@
 <template>
-  <div :class="$style.root">
+  <div :class="$style.marketLayout">
     <div :class="$style.header">
-      <Header />
+      <MarketHeader />
     </div>
     <slot />
   </div>
 </template>
 
 <script setup lang="ts">
-import Header from '@/components/app/header/Header.vue';
+import MarketHeader from '@/components/app/marketHeader/MarketHeader.vue';
 </script>
 
 <style lang="scss" module>
-.root {}
+.marketLayout {}
 
 .header {
   position: sticky;

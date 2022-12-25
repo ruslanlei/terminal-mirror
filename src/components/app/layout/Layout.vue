@@ -23,16 +23,16 @@ import {
 } from 'vue';
 import { useRoute } from 'vue-router';
 import { useCommonStore } from '@/stores/common';
+import BlankLayout from '@/layouts/blankLayout/BlankLayout.vue';
 
-const DefaultLayout = defineAsyncComponent(() => import('@/layouts/default/Default.vue'));
-const BlankLayout = defineAsyncComponent(() => import('@/layouts/blank/Blank.vue'));
-const AuthLayout = defineAsyncComponent(() => import('@/layouts/auth/Auth.vue'));
+const AuthLayout = defineAsyncComponent(() => import('@/layouts/authLayout/AuthLayout.vue'));
+const MarketLayout = defineAsyncComponent(() => import('@/layouts/marketLayout/MarketLayout.vue'));
 
 const route = useRoute();
 const commonStore = useCommonStore();
 
 const layoutsMap: Record<string, any> = {
-  default: DefaultLayout,
+  market: MarketLayout,
   blank: BlankLayout,
   auth: AuthLayout,
 };
@@ -40,7 +40,9 @@ const layoutsMap: Record<string, any> = {
 const Layout = computed(() => {
   if (!route.meta.layout) return null;
 
-  const layoutName = String(route.meta.layout);
+  const layoutName = route.meta?.layout
+    ? String(route.meta.layout)
+    : 'blank';
   return layoutsMap[layoutName];
 });
 

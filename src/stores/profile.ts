@@ -13,8 +13,11 @@ export const useProfileStore = defineStore('profile', () => {
 
   const balance = ref(0);
 
+  const isFetchingProfile = ref(false);
   const handleGetProfile = async () => {
+    isFetchingProfile.value = true;
     const { result, data } = await getProfile();
+    isFetchingProfile.value = false;
 
     if (result) {
       profile.value = {
@@ -31,6 +34,7 @@ export const useProfileStore = defineStore('profile', () => {
 
   return {
     profile,
+    isFetchingProfile,
     getProfile: handleGetProfile,
     balance,
   };

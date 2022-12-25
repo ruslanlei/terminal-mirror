@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.root">
+  <div :class="$style.iconsMap">
     <component
       :is="component"
       v-for="[icon, component] in icons"
@@ -26,7 +26,7 @@ const icons = (Object.entries(
 </script>
 
 <style lang="scss" module>
-.root {
+.iconsMap {
   position: fixed;
   top: -9999px;
   right: -9999px;

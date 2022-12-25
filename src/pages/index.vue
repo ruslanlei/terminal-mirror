@@ -1,23 +1,22 @@
 <template>
-  <Page>
-    <template #page>
+  <Suspense>
+    <template #default>
       <Market />
     </template>
-    <template #skeleton>
+    <template #fallback>
       <MarketSkeleton />
     </template>
-  </Page>
+  </Suspense>
 </template>
 
 <route lang="yaml">
 meta:
   authRequired: true
-  layout: default
+  layout: market
 </route>
 
 <script setup lang="ts">
 import { defineAsyncComponent } from 'vue';
-import Page from '@/components/core/page/Page.vue';
 import MarketSkeleton from '@/components/pages/market/MarketSkeleton.vue';
 
 const Market = defineAsyncComponent(() => import('@/components/pages/market/Market.vue'));

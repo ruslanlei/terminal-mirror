@@ -11,21 +11,21 @@
     transform: translateX(-150%);
     opacity: 0.2;
   }
-  10% {
-    opacity: 0.2;
+  5% {
+    opacity: 0.7;
   }
-  40% {
+  30% {
     opacity: 1;
   }
-  50% {
-    opacity: 0.2;
+  55% {
+    opacity: 0.7;
   }
-  80% {
-    transform: translateX(300%);
+  60% {
+    transform: translateX(150%);
     opacity: 0.2;
   }
   to {
-    transform: translateX(300%);
+    transform: translateX(150%);
     opacity: 0.2;
   }
 }
@@ -45,8 +45,8 @@
     height: 150%;
     position: absolute;
     background-color: rgba(#262938, 1);
-    animation: 1800ms skeletonHighlight infinite linear;
-    //filter: blur(2px);
+    animation: 2300ms skeletonHighlight infinite linear;
+    filter: blur(2px);
   }
 }
 </style>

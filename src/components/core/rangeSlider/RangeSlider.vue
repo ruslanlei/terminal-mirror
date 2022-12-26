@@ -61,7 +61,9 @@ const localValue = useLocalValue<number>(props, emit, 'modelValue');
 const calculateValueByPosition = (pointerLeft: number) => {
   localValue.value = Math.round(pointerLeft / computedStepSize.value);
 };
-const calculatePositionByValue = () => localValue.value * computedStepSize.value;
+const calculatePositionByValue = () => {
+  return localValue.value * computedStepSize.value;
+};
 
 // dragging point
 const activePointLeft = ref(0);
@@ -113,7 +115,9 @@ const {
   removeListeners,
 } = useEnvironmentObserver(() => {
   calculateSliderSizing();
-  calculateActivePointLeftByValue();
+  if (!isDragging.value) {
+    calculateActivePointLeftByValue();
+  }
 });
 onMounted(() => {
   calculateSliderSizing();

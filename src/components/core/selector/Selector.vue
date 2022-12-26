@@ -48,6 +48,7 @@ import {
   onMounted, onBeforeUnmount,
 } from 'vue';
 import { useLocalValue } from '@/hooks/useLocalValue';
+import { useEnvironmentObserver } from '@/hooks/useEnvironmentObserver';
 import { SelectorProps, SelectorEmits, SelectorOption } from './index';
 
 const props = withDefaults(
@@ -115,14 +116,10 @@ const findActiveTab = () => {
   computedGhostStyles.value.top = `${-(thickening / 2)}px`;
 };
 
-const setListeners = () => {
-  window.addEventListener('resize', findActiveTab);
-  window.addEventListener('orientationchange', findActiveTab);
-};
-const removeListeners = () => {
-  window.removeEventListener('resize', findActiveTab);
-  window.removeEventListener('orientationchange', findActiveTab);
-};
+const {
+  setListeners,
+  removeListeners,
+} = useEnvironmentObserver(findActiveTab);
 
 watch(localValue, findActiveTab);
 onMounted(() => {

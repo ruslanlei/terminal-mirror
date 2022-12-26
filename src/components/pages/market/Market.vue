@@ -4,10 +4,7 @@
       <MarketTools />
     </template>
     <template #main>
-      <RangeSlider
-        :max="10"
-        style="margin-top: 10px;"
-      />
+      main
     </template>
     <template #orderSettings>
       <OrderSettings />
@@ -23,6 +20,4 @@ import MarketContainer from '@/containers/marketContainer/MarketContainer.vue';
 import OrderSettings from '@/components/app/orderSettings/OrderSettings.vue';
 import PlayerSettings from '@/components/app/playerSettings/PlayerSettings.vue';
 import MarketTools from '@/components/app/marketTools/MarketTools.vue';
-
-import RangeSlider from '@/components/core/rangeSlider/RangeSlider.vue';
 </script>

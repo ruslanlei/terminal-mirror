@@ -14,11 +14,16 @@
         v-model="isPlaying"
         :class="$style.playButton"
       />
+      <RewindButton
+        :is-disabled="isPlaying"
+        :class="$style.rewindButton"
+      />
+      <RangeSlider
+        v-model="speed"
+        :class="$style.speedSlider"
+        :max="4"
+      />
     </div>
-    <RangeSlider
-      v-model="speed"
-      :max="4"
-    />
   </Card>
 </template>
 
@@ -27,8 +32,10 @@ import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Card from '@/components/core/card/Card.vue';
 import Datepicker from '@/components/core/datepicker/Datepicker.vue';
-import PlayButton from '@/components/core/playButton/PlayButton.vue';
 import RangeSlider from '@/components/core/rangeSlider/RangeSlider.vue';
+
+import PlayButton from './playButton/PlayButton.vue';
+import RewindButton from './rewindButton/RewindButton.vue';
 
 const { t } = useI18n();
 
@@ -61,9 +68,19 @@ const speed = ref(1);
 
 .controls {
   margin-top: 14px;
+  display: flex;
+  align-items: center;
 }
 
 .playButton {
   color: rgb(var(--color-accent-1));
+}
+
+.rewindButton {
+  margin-left: 5px;
+}
+
+.speedSlider {
+  margin-left: 12px;
 }
 </style>

@@ -5,7 +5,7 @@
     :class="$style.orderForm"
   >
     <template #tab(orders)>
-      <OrderFormPartOrders />
+      <OrdersPart />
     </template>
     <template #tab(couples)>
       couples
@@ -24,7 +24,7 @@ import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Tabs from '@/components/core/tabs/Tabs.vue';
 import { TabsProps } from '@/components/core/tabs';
-import OrderFormPartOrders from '@/components/app/orderFormPartOrders/OrderFormPartOrders.vue';
+import OrdersPart from './parts/orders/Orders.vue';
 
 const { t } = useI18n();
 

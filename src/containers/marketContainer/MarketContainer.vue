@@ -7,7 +7,7 @@
       <slot name="tools" />
     </div>
     <main :class="$style.main">
-      main
+      <slot name="main" />
     </main>
     <aside
       :style="stickyElementStyles"
@@ -50,8 +50,6 @@ const stickyElementStyles = computed(() => ({
 }
 
 .main {
-  border: 1px solid rgba(var(--color-accent-2), 0.1);
-  height: 130vh;
 }
 
 .sideBar {

@@ -15,6 +15,10 @@
         :class="$style.playButton"
       />
     </div>
+    <RangeSlider
+      v-model="speed"
+      :max="4"
+    />
   </Card>
 </template>
 
@@ -24,12 +28,15 @@ import { useI18n } from 'vue-i18n';
 import Card from '@/components/core/card/Card.vue';
 import Datepicker from '@/components/core/datepicker/Datepicker.vue';
 import PlayButton from '@/components/core/playButton/PlayButton.vue';
+import RangeSlider from '@/components/core/rangeSlider/RangeSlider.vue';
+
+const { t } = useI18n();
 
 const date = ref(new Date().toISOString());
 
 const isPlaying = ref(false);
 
-const { t } = useI18n();
+const speed = ref(1);
 </script>
 
 <style lang="scss" module>

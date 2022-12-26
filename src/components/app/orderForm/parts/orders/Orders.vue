@@ -1,9 +1,9 @@
 <template>
   <div :class="$style.orderFormPartOrders">
     <Selector
-      v-model="orderType"
-      :state="['defaultSize', 'secondaryColor5']"
-      :options="orderTypeOptions"
+      v-model="orderDirection"
+      :state="['mdSize', 'secondaryColor5']"
+      :options="orderDirectionOptions"
     >
       <template #option="{ option }">
         <div :class="$style.orderTypeOption">
@@ -12,6 +12,12 @@
         </div>
       </template>
     </Selector>
+    <Selector
+      v-model="orderType"
+      :options="orderTypeOptions"
+      :state="['primaryColor2', 'mdSize']"
+      :class="$style.orderTypeSelector"
+    />
   </div>
 </template>
 
@@ -24,20 +30,41 @@ import { SelectorProps } from '@/components/core/selector';
 
 const { t } = useI18n();
 
-const orderType = ref('long');
+const orderDirection = ref('long');
 
-const orderTypeOptions = computed<SelectorProps['options']>(() => [
+const orderDirectionOptions = computed<SelectorProps['options']>(() => [
   {
-    label: t('order.type.long'),
+    label: t('order.direction.long'),
     value: 'long',
     state: 'success',
     icon: 'trendingUp',
   },
   {
-    label: t('order.type.short'),
+    label: t('order.direction.short'),
     value: 'short',
     state: 'danger',
     icon: 'trendingDown',
+  },
+]);
+
+const orderType = ref('input');
+
+const orderTypeOptions = computed(() => [
+  {
+    label: t('order.type.input'),
+    value: 'input',
+  },
+  {
+    label: t('order.type.tp'),
+    value: 'tp',
+  },
+  {
+    label: t('order.type.sl'),
+    value: 'sl',
+  },
+  {
+    label: t('order.type.slx'),
+    value: 'slx',
   },
 ]);
 </script>
@@ -51,5 +78,9 @@ const orderTypeOptions = computed<SelectorProps['options']>(() => [
   display: flex;
   align-items: center;
   gap: 5px;
+}
+
+.orderTypeSelector {
+  margin-top: 24px;
 }
 </style>

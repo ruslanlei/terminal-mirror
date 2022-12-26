@@ -6,7 +6,9 @@ export type SelectorOption = {
 
 type SelectorState =
   'primaryColor'
+  | 'primaryColor2'
   | 'defaultSize'
+  | 'mdSize'
   | 'default'
   | 'tabsShape'
   | 'secondaryColor2';

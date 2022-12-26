@@ -89,9 +89,15 @@
       "glasses": "Glasses",
       "widget": "Widget"
     },
-    "type": {
+    "direction": {
       "long": "Long",
       "short": "Short"
+    },
+    "type": {
+      "input": "Input",
+      "tp": "TP",
+      "sl": "SL",
+      "slx": "SLX"
     }
   }
 }

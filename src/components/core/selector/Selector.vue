@@ -180,7 +180,6 @@ onBeforeUnmount(removeListeners);
 .options {
   position: relative;
   display: flex;
-  background-color: rgb(var(--color-background-3));
 }
 
 .item {
@@ -203,7 +202,7 @@ onBeforeUnmount(removeListeners);
   }
 }
 
-.primaryColor {
+.primaryColor, .primaryColor2 {
   &.options {
     border-radius: 5px;
   }
@@ -221,6 +220,14 @@ onBeforeUnmount(removeListeners);
   }
 }
 
+.primaryColor {
+  background-color: rgb(var(--color-background-3));
+}
+
+.primaryColor2 {
+  background-color: rgb(var(--color-background-2));
+}
+
 .defaultSize {
   &.options {
     border-radius: 5px;
@@ -228,6 +235,23 @@ onBeforeUnmount(removeListeners);
   .item {
     @include title4;
     padding: 4px 10px;
+    font-weight: 600;
+    font-size: 14px;
+    height: 100%;
+    flex-grow: 1;
+  }
+  .ghost {
+    border-radius: 5px;
+  }
+}
+
+.mdSize {
+  &.options {
+    border-radius: 5px;
+  }
+  .item {
+    @include title4;
+    padding: 5.5px 10px;
     font-weight: 600;
     font-size: 14px;
     height: 100%;

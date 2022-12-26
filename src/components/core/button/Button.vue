@@ -67,10 +67,22 @@ withDefaults(
   background: var(--color-main-gradient);
 }
 
+.secondary1 {
+  color: rgba(var(--color-accent-1));
+  background: rgb(var(--color-background-1));
+}
+
 .lg {
   padding: 15px;
   border-radius: 5px;
   @include text;
+  font-weight: 600;
+}
+
+.md {
+  padding: 8px;
+  border-radius: 5px;
+  @include title4;
   font-weight: 600;
 }
 </style>

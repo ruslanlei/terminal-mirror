@@ -1,6 +1,6 @@
 export interface ButtonProps {
-  state?: 'primary',
-  size: 'lg',
+  state?: 'primary' | 'secondary1',
+  size: 'md' | 'lg',
   isDisabled?: boolean,
   isLoading?: boolean,
 }

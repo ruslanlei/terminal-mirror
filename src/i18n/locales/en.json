@@ -60,7 +60,8 @@
   },
   "emulator": {
     "player": {
-      "label": "Player"
+      "label": "Player",
+      "prematureResult": "Calculate result"
     }
   },
   "currencyStats": {

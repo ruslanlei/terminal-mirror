@@ -14,7 +14,7 @@
 
 <script setup lang="ts">
 import Icon from '@/components/core/icon/Icon.vue';
-import { RewindButtonProps } from '@/components/app/playerSettings/rewindButton/index';
+import { RewindButtonProps } from '@/components/app/playerControls/rewindButton/index';
 
 withDefaults(
   defineProps<RewindButtonProps>(),

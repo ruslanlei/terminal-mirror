@@ -21,7 +21,7 @@
 
 <script setup lang="ts">
 import Icon from '@/components/core/icon/Icon.vue';
-import { PlayButtonEmits, PlayButtonProps } from '@/components/app/playerSettings/playButton/index';
+import { PlayButtonEmits, PlayButtonProps } from '@/components/app/playerControls/playButton/index';
 import { useLocalValue } from '@/hooks/useLocalValue';
 
 const props = defineProps<PlayButtonProps>();

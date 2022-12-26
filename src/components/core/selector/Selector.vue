@@ -10,7 +10,7 @@
       ref="container"
       :class="[
         $style.options,
-        $style[state],
+        ...states.map((s) => $style[s])
       ]"
     >
       <div
@@ -22,7 +22,7 @@
           localValue === option.value && $style.active,
         ]"
         :data-value="option.value"
-        @click="onOptionClick(option.value)"
+        @click="onOptionClick(option)"
       >
         <slot
           name="option"
@@ -34,7 +34,14 @@
       </div>
       <div
         :style="computedGhostStyles"
-        :class="$style.ghost"
+        :class="[
+          $style.ghost,
+          isGhostAppearAnimation && $style.animated,
+          ...[activeOption?.state
+            ? [$style[`${activeOption.state}Ghost`]]
+            : []
+          ]
+        ]"
       />
     </div>
   </div>
@@ -45,20 +52,26 @@ import {
   ref,
   watch,
   onBeforeUpdate,
-  onMounted, onBeforeUnmount,
+  onMounted,
+  onBeforeUnmount,
+  computed,
 } from 'vue';
 import { useLocalValue } from '@/hooks/useLocalValue';
 import { useEnvironmentObserver } from '@/hooks/useEnvironmentObserver';
+import { arrayFrom } from '@/utils/array';
 import { SelectorProps, SelectorEmits, SelectorOption } from './index';
 
 const props = withDefaults(
   defineProps<SelectorProps>(),
   {
-    state: 'primary',
+    state: 'primaryColor',
     thickening: 4,
+    isGhostAppearAnimation: true,
   },
 );
 const emit = defineEmits<SelectorEmits>();
+
+const states = computed(() => arrayFrom(props.state));
 
 if (!props.modelValue) {
   throw new Error('MultiSwitch Error: modelValue is not passed (check v-model)');
@@ -76,12 +89,22 @@ const localValue = useLocalValue<string>(
   'modelValue',
 );
 
-const onOptionClick = (value: SelectorOption['value']) => {
+const activeOption = ref<SelectorOption>();
+onMounted(() => {
+  const option = props.options.find(
+    (option: SelectorOption) => option.value === localValue.value,
+  );
+  if (option) {
+    activeOption.value = option;
+  }
+});
+
+const onOptionClick = (selectingOption: SelectorOption) => {
   const activeOptionIndex = props.options.findIndex(
     (option: SelectorOption) => option.value === localValue.value,
   );
   const nextOptionIndex = props.options.findIndex(
-    (option: SelectorOption) => option.value === value,
+    (option: SelectorOption) => option.value === selectingOption.value,
   );
   const isForward = activeOptionIndex < nextOptionIndex;
 
@@ -90,7 +113,9 @@ const onOptionClick = (value: SelectorOption['value']) => {
   } else {
     emit('selectPrev');
   }
-  localValue.value = value;
+
+  localValue.value = selectingOption.value;
+  activeOption.value = selectingOption;
 };
 
 const computedGhostStyles = ref({
@@ -162,33 +187,28 @@ onBeforeUnmount(removeListeners);
   position: relative;
   z-index: 2;
   cursor: pointer;
-  transition: .2s transform;
+  transition: color 300ms, transform 200s;
   user-select: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .ghost {
   position: absolute;
-  transition: .3s left, .3s width;
-  animation: options-ghost .7s ease-in-out;
+  transition: 300ms left, 300ms width, 360ms background-color;
   border-radius: 5px;
+  &.animated {
+    animation: options-ghost .7s ease-in-out;
+  }
 }
 
-.primary {
+.primaryColor {
   &.options {
     border-radius: 5px;
   }
   .item {
     color: rgb(var(--color-accent-2));
-    @include title4;
-    padding: 4px 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: 600;
-    font-size: 14px;
-    height: 100%;
-    top: 0;
-    bottom: 0;
     transition: 300ms color;
     flex-grow: 1;
     &.active {
@@ -201,32 +221,77 @@ onBeforeUnmount(removeListeners);
   }
 }
 
-.tabs {
+.defaultSize {
   &.options {
-    border-radius: 10px 10px 0 0;
+    border-radius: 5px;
+  }
+  .item {
+    @include title4;
+    padding: 4px 10px;
+    font-weight: 600;
+    font-size: 14px;
+    height: 100%;
+    flex-grow: 1;
+  }
+  .ghost {
+    border-radius: 5px;
+  }
+}
+
+.secondaryColor5 {
+  &.options {
     background-color: rgb(var(--color-background-2));
   }
   .item {
     color: rgb(var(--color-accent-2));
-    @include title4;
-    padding: 15px 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: 600;
-    font-size: 14px;
-    height: 100%;
-    top: 0;
-    bottom: 0;
-    transition: 300ms color;
     flex-grow: 1;
     &.active {
       color: rgb(var(--color-accent-1));
     }
   }
   .ghost {
+    background: rgb(var(--color-background-5));
+    border-radius: 5px;
+  }
+}
+
+.secondaryColor2 {
+  &.options {
+    background-color: rgb(var(--color-background-2));
+  }
+  .item {
+    color: rgb(var(--color-accent-2));
+    &.active {
+      color: rgb(var(--color-accent-1));
+    }
+  }
+  .ghost {
     background-color: rgb(var(--color-background-3));;
+  }
+}
+
+.tabsShape {
+  &.options {
     border-radius: 10px 10px 0 0;
   }
+  .item {
+    @include title4;
+    padding: 15px 0;
+    font-weight: 600;
+    font-size: 14px;
+    height: 100%;
+    flex-grow: 1;
+  }
+  .ghost {
+    border-radius: 10px 10px 0 0;
+  }
+}
+
+.successGhost {
+  background-color: rgb(var(--color-success)) !important;
+}
+
+.dangerGhost {
+  background-color: rgb(var(--color-danger)) !important;
 }
 </style>

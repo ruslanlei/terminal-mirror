@@ -5,7 +5,7 @@
     :class="$style.orderForm"
   >
     <template #tab(orders)>
-      orders
+      <OrderFormPartOrders />
     </template>
     <template #tab(couples)>
       couples
@@ -23,12 +23,14 @@
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Tabs from '@/components/core/tabs/Tabs.vue';
+import { TabsProps } from '@/components/core/tabs';
+import OrderFormPartOrders from '@/components/app/orderFormPartOrders/OrderFormPartOrders.vue';
 
 const { t } = useI18n();
 
 const activeTab = ref('orders');
 
-const tabs = computed(() => [
+const tabs = computed<TabsProps['tabs']>(() => [
   {
     label: t('order.tab.orders'),
     value: 'orders',
@@ -46,6 +48,7 @@ const tabs = computed(() => [
     value: 'widget',
   },
 ]);
+
 </script>
 
 <style lang="scss" module>

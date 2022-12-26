@@ -23,9 +23,17 @@
         :class="$style.speedSlider"
         :max="4"
       />
-      <div :class="$style.displaySpeed">
-        {{ displaySpeed }}
-      </div>
+      <transition
+        name="playerSpeedTransition"
+        mode="out-in"
+      >
+        <div
+          :key="displaySpeed"
+          :class="$style.displaySpeed"
+        >
+          {{ displaySpeed }}
+        </div>
+      </transition>
     </div>
     <Button
       state="secondary1"
@@ -115,5 +123,26 @@ const displaySpeed = computed(() => ({
 
 .prematureResultButton {
   margin-top: auto;
+}
+</style>
+
+<style lang="scss">
+.playerSpeedTransition {
+  &-enter-active,
+  &-leave-active {
+    transition: transform 160ms, opacity 160ms;
+  }
+
+  &-enter-from,
+  &-leave-to {
+    opacity: 0;
+  }
+
+  &-enter-from {
+    transform: translateY(6px);
+  }
+  &-leave-to {
+    transform: translateY(-6px);
+  }
 }
 </style>

@@ -88,6 +88,10 @@
       "couples": "Couples",
       "glasses": "Glasses",
       "widget": "Widget"
+    },
+    "type": {
+      "long": "Long",
+      "short": "Short"
     }
   }
 }

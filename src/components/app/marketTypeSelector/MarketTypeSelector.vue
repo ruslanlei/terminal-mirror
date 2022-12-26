@@ -2,6 +2,7 @@
   <Selector
     v-model="marketType"
     :options="marketVariants"
+    :state="['primaryColor', 'defaultSize']"
   >
     <template #option="{ option: { icon, label } }">
       <Icon

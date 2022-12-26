@@ -3,8 +3,9 @@
     <Selector
       v-model="localValue"
       :options="tabs"
-      state="tabs"
+      :state="['tabsShape', 'secondaryColor2']"
       :thickening="0"
+      :is-ghost-appear-animation="false"
       @select-next="onSelectNext"
       @select-prev="onSelectPrev"
     />
@@ -64,7 +65,7 @@ const onSelectPrev = () => {
 .tabsTransitionPrev {
   &-enter-active,
   &-leave-active {
-    transition: transform 200ms;
+    transition: transform 280ms;
   }
 
   &-enter-from {
@@ -78,7 +79,7 @@ const onSelectPrev = () => {
 .tabsTransitionNext {
   &-enter-active,
   &-leave-active {
-    transition: transform 200ms;
+    transition: transform 280ms;
   }
 
   &-enter-from {

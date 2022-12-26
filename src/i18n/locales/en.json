@@ -81,5 +81,13 @@
       "label": "Subscription ended",
       "description": "renew your subscription for work"
     }
+  },
+  "order": {
+    "tab": {
+      "orders": "Orders",
+      "couples": "Couples",
+      "glasses": "Glasses",
+      "widget": "Widget"
+    }
   }
 }

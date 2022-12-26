@@ -6,11 +6,13 @@ export type SelectorOption = {
 export interface SelectorProps {
   options: SelectorOption[],
   modelValue: string,
-  state?: 'primary' | 'primaryUnderline' | 'underline',
+  state?: 'primary' | 'tabs',
   label?: string,
   thickening?: number,
 }
 
 export interface SelectorEmits {
   (e: 'update:modelValue', value: string): void,
+  (e: 'selectNext'): void,
+  (e: 'selectPrev'): void,
 }

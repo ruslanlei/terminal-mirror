@@ -14,7 +14,7 @@
       :class="$style.sideBar"
     >
       <div :class="$style.orderSettings">
-        <slot name="orderSettings" />
+        <slot name="order" />
       </div>
       <div
         v-if="'playerControls' in $slots"

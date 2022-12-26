@@ -76,6 +76,19 @@ const localValue = useLocalValue<string>(
 );
 
 const onOptionClick = (value: SelectorOption['value']) => {
+  const activeOptionIndex = props.options.findIndex(
+    (option: SelectorOption) => option.value === localValue.value,
+  );
+  const nextOptionIndex = props.options.findIndex(
+    (option: SelectorOption) => option.value === value,
+  );
+  const isForward = activeOptionIndex < nextOptionIndex;
+
+  if (isForward) {
+    emit('selectNext');
+  } else {
+    emit('selectPrev');
+  }
   localValue.value = value;
 };
 
@@ -188,6 +201,35 @@ onBeforeUnmount(removeListeners);
   .ghost {
     background: var(--color-main-gradient);
     border-radius: 5px;
+  }
+}
+
+.tabs {
+  &.options {
+    border-radius: 10px 10px 0 0;
+    background-color: rgb(var(--color-background-2));
+  }
+  .item {
+    color: rgb(var(--color-accent-2));
+    @include title4;
+    padding: 15px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    font-size: 14px;
+    height: 100%;
+    top: 0;
+    bottom: 0;
+    transition: 300ms color;
+    flex-grow: 1;
+    &.active {
+      color: rgb(var(--color-accent-1));
+    }
+  }
+  .ghost {
+    background-color: rgb(var(--color-background-3));;
+    border-radius: 10px 10px 0 0;
   }
 }
 </style>

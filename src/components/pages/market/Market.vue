@@ -6,8 +6,8 @@
     <template #main>
       main
     </template>
-    <template #orderSettings>
-      <OrderSettings />
+    <template #order>
+      <OrderForm />
     </template>
     <template #playerControls>
       <PlayerControls />
@@ -17,7 +17,7 @@
 
 <script async setup lang="ts">
 import MarketContainer from '@/containers/marketContainer/MarketContainer.vue';
-import OrderSettings from '@/components/app/orderSettings/OrderSettings.vue';
 import PlayerControls from '@/components/app/playerControls/PlayerControls.vue';
 import MarketTools from '@/components/app/marketTools/MarketTools.vue';
+import OrderForm from '@/components/app/orderForm/OrderForm.vue';
 </script>

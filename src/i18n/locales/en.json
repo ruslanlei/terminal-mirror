@@ -93,11 +93,20 @@
       "long": "Long",
       "short": "Short"
     },
-    "type": {
+    "additionalSettings": {
       "input": "Input",
       "tp": "TP",
       "sl": "SL",
       "slx": "SLX"
-    }
+    },
+    "orderType": {
+      "label": "Order type",
+      "l": "L",
+      "m": "M",
+      "s": "S"
+    },
+    "price": "Price",
+    "amount": "Amount",
+    "volume": "Volume"
   }
 }

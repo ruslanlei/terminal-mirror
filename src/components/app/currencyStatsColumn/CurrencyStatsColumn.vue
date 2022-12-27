@@ -19,14 +19,10 @@
           $style[currencyStat.valueState],
         ]"
       >
-        <transition
-          name="valueAnimation"
-          mode="out-in"
-        >
-          <span style="display: block" :key="currencyStat.value">
-            {{ currencyStat.value }}
-          </span>
-        </transition>
+        <AnimatedText
+          :text="currencyStat.value"
+          animation-type="verticalBack"
+        />
       </div>
     </div>
   </div>
@@ -34,6 +30,7 @@
 
 <script setup lang="ts">
 import Divider from '@/components/core/divider/Divider.vue';
+import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
 import { CurrencyStatsColumnProps } from './index';
 
 const props = defineProps<CurrencyStatsColumnProps>();
@@ -70,26 +67,6 @@ const props = defineProps<CurrencyStatsColumnProps>();
   }
   &.negative {
     color: rgba(var(--color-danger));
-  }
-}
-</style>
-
-<style lang="scss">
-.valueAnimation {
-  &-enter-active,
-  &-leave-active {
-    transition: transform 200ms, opacity 200ms;
-  }
-
-  &-enter-from, &-leave-to {
-    opacity: 0;
-  }
-
-  &-enter-from {
-    transform: translateX(-4px);
-  }
-  &-leave-to {
-    transform: translateX(4px);
   }
 }
 </style>

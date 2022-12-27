@@ -65,7 +65,7 @@ const onSelectPrev = () => {
 .tabsTransitionPrev {
   &-enter-active,
   &-leave-active {
-    transition: transform 280ms;
+    transition: transform 220ms;
   }
 
   &-enter-from {
@@ -79,7 +79,7 @@ const onSelectPrev = () => {
 .tabsTransitionNext {
   &-enter-active,
   &-leave-active {
-    transition: transform 280ms;
+    transition: transform 220ms;
   }
 
   &-enter-from {

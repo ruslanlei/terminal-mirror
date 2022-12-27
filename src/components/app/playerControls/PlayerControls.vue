@@ -23,17 +23,11 @@
         :class="$style.speedSlider"
         :max="4"
       />
-      <transition
-        name="playerSpeedTransition"
-        mode="out-in"
-      >
-        <div
-          :key="displaySpeed"
-          :class="$style.displaySpeed"
-        >
-          {{ displaySpeed }}
-        </div>
-      </transition>
+      <AnimatedText
+        :text="displaySpeed"
+        :class="$style.displaySpeed"
+        animation-type="verticalBack"
+      />
     </div>
     <Button
       state="secondary1"
@@ -52,6 +46,7 @@ import Card from '@/components/core/card/Card.vue';
 import Datepicker from '@/components/core/datepicker/Datepicker.vue';
 import RangeSlider from '@/components/core/rangeSlider/RangeSlider.vue';
 import Button from '@/components/core/button/Button.vue';
+import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
 
 import PlayButton from './playButton/PlayButton.vue';
 import RewindButton from './rewindButton/RewindButton.vue';

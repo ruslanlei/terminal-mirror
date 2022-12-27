@@ -31,6 +31,12 @@
         @focus="onFocus"
         @blur="onBlur"
       >
+      <div
+        v-if="'append' in $slots"
+        :class="$style.append"
+      >
+        <slot name="append" />
+      </div>
     </div>
     <div
       v-if="error"
@@ -152,6 +158,30 @@ defineExpose({
   }
 }
 
+.sm {
+  .label {
+    & + .field {
+      margin-top: 6px;
+    }
+  }
+
+  .field {
+    border-radius: 5px;
+    & > input {
+      padding: 7px 10px;
+    }
+    & > input, .append {
+      @include title4;
+    }
+    & + .error {
+      margin-top: 6px;
+    }
+  }
+
+  .error {
+  }
+}
+
 // default styles
 .root {
   display: block;
@@ -174,10 +204,16 @@ defineExpose({
 .field {
   width: 100%;
   transition: .15s box-shadow;
+  display: flex;
+  align-items: center;
   & > input {
     height: 100%;
     width: 100%;
   }
+}
+
+.append {
+  margin-right: 10px;
 }
 
 .error {

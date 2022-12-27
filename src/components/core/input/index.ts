@@ -17,7 +17,7 @@ export interface InputProps {
   mask?: string,
   error?: string,
   state?: 'default',
-  size?: 'lg',
+  size?: 'sm' | 'lg',
 }
 
 export interface InputEmits {

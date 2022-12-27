@@ -133,6 +133,7 @@ onBeforeUnmount(removeListeners);
   position: relative;
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 
 .track {

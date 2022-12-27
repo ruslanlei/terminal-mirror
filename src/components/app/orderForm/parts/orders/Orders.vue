@@ -66,7 +66,7 @@
     <template #depositInput>
       <DepositInput
         v-model="deposit"
-        :balance="10000"
+        :balance="99222.222220"
       />
     </template>
   </OrderFormOrdersPartContainer>

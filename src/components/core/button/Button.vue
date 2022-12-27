@@ -38,6 +38,7 @@ withDefaults(
   width: 100%;
   display: block;
   position: relative;
+  transition: background-color 200ms;
   &:not(.disabled) {
     cursor: pointer;
   }
@@ -67,14 +68,19 @@ withDefaults(
   background: var(--color-main-gradient);
 }
 
+.colored {
+  color: rgba(var(--color-accent-1));
+  background-color: rgb(var(--color-primary-1));
+}
+
 .secondary1 {
   color: rgba(var(--color-accent-1));
-  background: rgb(var(--color-background-1));
+  background-color: rgb(var(--color-background-1));
 }
 
 .secondary2 {
   color: rgba(var(--color-accent-1));
-  background: rgb(var(--color-background-2));
+  background-color: rgb(var(--color-background-2));
 }
 
 .lg {

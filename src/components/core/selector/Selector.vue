@@ -65,7 +65,7 @@ const props = withDefaults(
   defineProps<SelectorProps>(),
   {
     state: 'primaryColor',
-    thickening: 4,
+    thickening: 2,
     isGhostAppearAnimation: true,
   },
 );
@@ -135,10 +135,12 @@ const findActiveTab = () => {
 
   const { thickening } = props;
 
-  computedGhostStyles.value.width = `${width + thickening}px`;
-  computedGhostStyles.value.height = `${height + thickening}px`;
-  computedGhostStyles.value.left = `${(left - containerLeft) - (thickening / 2)}px`;
-  computedGhostStyles.value.top = `${-(thickening / 2)}px`;
+  const normalized = thickening * 2;
+
+  computedGhostStyles.value.width = `${width + normalized}px`;
+  computedGhostStyles.value.height = `${height + normalized}px`;
+  computedGhostStyles.value.left = `${(left - containerLeft) - (normalized / 2)}px`;
+  computedGhostStyles.value.top = `${-(normalized / 2)}px`;
 };
 
 const {

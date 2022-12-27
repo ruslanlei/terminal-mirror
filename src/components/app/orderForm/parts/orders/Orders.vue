@@ -60,16 +60,23 @@
         </template>
       </Input>
     </template>
+    <template #depositLabel>
+      {{ t('order.deposit') }}
+    </template>
+    <template #depositInput>
+      <DepositInput />
+    </template>
   </OrderFormOrdersPartContainer>
 </template>
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
+import OrderFormOrdersPartContainer from '@/containers/orderFormOrdersPartContainer/OrderFormOrdersPartContainer.vue';
 import Selector from '@/components/core/selector/Selector.vue';
 import Icon from '@/components/core/icon/Icon.vue';
 import Input from '@/components/core/input/Input.vue';
-import OrderFormOrdersPartContainer from '@/containers/orderFormOrdersPartContainer/OrderFormOrdersPartContainer.vue';
+import DepositInput from '@/components/core/depositInput/DepositInput.vue';
 import { SelectorProps } from '@/components/core/selector';
 
 const { t } = useI18n();
@@ -117,10 +124,14 @@ const orderTypeOptions = computed(() => [
 @import "src/assets/styles/utils";
 
 .label {
-  @include title2;
+  @include title3;
   font-weight: 600;
   color: rgb(var(--color-accent-1));
 }
 
-.inputRow {}
+.inputRow {
+  @include title2;
+  font-weight: 500;
+  color: rgb(var(--color-accent-1));
+}
 </style>

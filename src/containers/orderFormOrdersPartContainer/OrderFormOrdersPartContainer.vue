@@ -10,7 +10,7 @@
       <slot name="additionalSettingsSelector" />
     </div>
     <div :class="$style.inputRow">
-      <div :class="$style.label">
+      <div :class="$style.inputLabel">
         <slot name="priceLabel" />
       </div>
       <div>
@@ -18,7 +18,7 @@
       </div>
     </div>
     <div :class="$style.inputRow">
-      <div :class="$style.label">
+      <div :class="$style.inputLabel">
         <slot name="amountLabel" />
       </div>
       <div>
@@ -26,12 +26,18 @@
       </div>
     </div>
     <div :class="$style.inputRow">
-      <div :class="$style.label">
+      <div :class="$style.inputLabel">
         <slot name="volumeLabel" />
       </div>
       <div>
         <slot name="volumeInput" />
       </div>
+    </div>
+    <div :class="[$style.label, $style.depositLabel]">
+      <slot name="depositLabel" />
+    </div>
+    <div :class="$style.depositInput">
+      <slot name="depositInput" />
     </div>
   </div>
 </template>
@@ -69,9 +75,23 @@
   }
 }
 
-.label {
-  @include title2;
+.inputLabel {
+  @include title3;
   font-weight: 500;
   color: rgb(var(--color-accent-1));
+}
+
+.label {
+  @include title2;
+  font-weight: 600;
+  color: rgb(var(--color-accent-1));
+}
+
+.depositLabel {
+  margin-top: 20px;
+}
+
+.depositInput {
+  margin-top: 10px;
 }
 </style>

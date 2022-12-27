@@ -64,7 +64,10 @@
       {{ t('order.deposit') }}
     </template>
     <template #depositInput>
-      <DepositInput />
+      <DepositInput
+        v-model="deposit"
+        :balance="10000"
+      />
     </template>
   </OrderFormOrdersPartContainer>
 </template>
@@ -118,6 +121,8 @@ const orderTypeOptions = computed(() => [
     value: 'slx',
   },
 ]);
+
+const deposit = ref(0);
 </script>
 
 <style lang="scss" module>

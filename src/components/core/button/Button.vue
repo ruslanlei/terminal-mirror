@@ -72,6 +72,11 @@ withDefaults(
   background: rgb(var(--color-background-1));
 }
 
+.secondary2 {
+  color: rgba(var(--color-accent-1));
+  background: rgb(var(--color-background-2));
+}
+
 .lg {
   padding: 15px;
   border-radius: 5px;
@@ -84,5 +89,12 @@ withDefaults(
   border-radius: 5px;
   @include title4;
   font-weight: 600;
+}
+
+.sm {
+  padding: 3.5px;
+  border-radius: 5px;
+  @include title5;
+  font-weight: 500;
 }
 </style>

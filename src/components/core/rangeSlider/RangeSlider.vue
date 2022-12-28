@@ -21,7 +21,7 @@ import {
   ref,
   computed,
   onMounted,
-  onBeforeUnmount,
+  onBeforeUnmount, watch,
 } from 'vue';
 import { useEnvironmentObserver } from '@/hooks/useEnvironmentObserver';
 import { useLocalValue } from '@/hooks/useLocalValue';
@@ -61,15 +61,14 @@ const localValue = useLocalValue<number>(props, emit, 'modelValue');
 const calculateValueByPosition = (pointerLeft: number) => {
   localValue.value = Math.round(pointerLeft / computedStepSize.value);
 };
-const calculatePositionByValue = () => localValue.value * computedStepSize.value;
 
 // dragging point
 const activePointLeft = ref(0);
 const computedDraggingPointStyles = computed(() => ({
   transform: `translateX(${activePointLeft.value}px)`,
 }));
-const calculateActivePointLeftByValue = () => {
-  activePointLeft.value = calculatePositionByValue();
+const calculatePositionByValue = () => {
+  activePointLeft.value = localValue.value * computedStepSize.value;
 };
 const isDragging = ref(false);
 const onMouseMove = (event: MouseEvent) => {
@@ -88,9 +87,14 @@ const onMouseMove = (event: MouseEvent) => {
 
   calculateValueByPosition(activePointLeft.value);
 };
+watch(localValue, () => {
+  if (!isDragging.value) {
+    calculatePositionByValue();
+  }
+});
 const onMouseUp = () => {
   isDragging.value = false;
-  calculateActivePointLeftByValue();
+  calculatePositionByValue();
   window.removeEventListener('mousemove', onMouseMove);
   window.removeEventListener('mouseup', onMouseUp);
 };
@@ -100,7 +104,7 @@ const onMouseDown = (event: MouseEvent) => {
   window.addEventListener('mousemove', onMouseMove);
   window.addEventListener('mouseup', onMouseUp);
 };
-onMounted(calculateActivePointLeftByValue);
+onMounted(calculatePositionByValue);
 
 // progress
 const computedProgressStyles = computed(() => ({
@@ -114,7 +118,7 @@ const {
 } = useEnvironmentObserver(() => {
   calculateSliderSizing();
   if (!isDragging.value) {
-    calculateActivePointLeftByValue();
+    calculatePositionByValue();
   }
 });
 onMounted(() => {

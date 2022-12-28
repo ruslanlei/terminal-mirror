@@ -1,7 +1,7 @@
 import { ref, watch } from 'vue';
 import { defineStore } from 'pinia';
 
-import { theme } from '@/types/theme';
+import { theme } from '@/enums/theme';
 
 export const useCommonStore = defineStore('common', () => {
   // app theme

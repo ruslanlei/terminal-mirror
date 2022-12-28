@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-import { teleportTargets } from '@/types/teleport';
+import { teleportTargets } from '@/enums/teleport';
 </script>
 
 <style lang="scss" module>

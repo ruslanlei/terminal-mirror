@@ -1,7 +1,16 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
 import { uuid } from '@/utils/uuid';
-import { Modal, modalType } from '@/types/modal';
+
+export enum modalType {
+  CONFIRM = 'confirm',
+}
+
+export type Modal = {
+  id: string,
+  type: modalType,
+  payload?: Record<any, any>,
+}
 
 export const useModalStore = defineStore('modal', () => {
   const list = ref<Modal[]>([]);

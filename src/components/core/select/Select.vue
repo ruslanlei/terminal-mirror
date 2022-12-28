@@ -134,7 +134,7 @@ import {
   onBeforeUpdate,
 } from 'vue';
 import Icon from '@/components/core/icon/Icon.vue';
-import { teleportTargets } from '@/types/teleport';
+import { teleportTargets } from '@/enums/teleport';
 import { useSelect } from '@/hooks/useSelect';
 import { useEnvironmentObserver } from '@/hooks/useEnvironmentObserver';
 import {

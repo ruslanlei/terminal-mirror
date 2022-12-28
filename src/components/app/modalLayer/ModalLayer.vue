@@ -21,8 +21,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { useModalStore } from '@/stores/modals';
-import { Modal, modalType } from '@/types/modal';
+import { useModalStore, Modal, modalType } from '@/stores/modals';
 import ConfirmModal from '@/components/app/confirmModal/ConfirmModal.vue';
 
 const modalsStore = useModalStore();

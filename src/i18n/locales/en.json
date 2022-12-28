@@ -108,6 +108,7 @@
     "price": "Price",
     "amount": "Amount",
     "volume": "Volume",
-    "deposit": "Deposit"
+    "deposit": "Deposit",
+    "leverage": "Leverage size"
   }
 }

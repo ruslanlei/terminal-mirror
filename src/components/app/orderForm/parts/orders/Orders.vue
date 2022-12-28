@@ -52,6 +52,7 @@
     </template>
     <template #volumeInput>
       <Input
+        v-model="deposit"
         type="number"
         size="sm"
       >
@@ -66,8 +67,11 @@
     <template #depositInput>
       <DepositInput
         v-model="deposit"
-        :balance="99222.222220"
+        :balance="3208"
       />
+    </template>
+    <template #leverageLabel>
+      {{ t('') }}
     </template>
   </OrderFormOrdersPartContainer>
 </template>

@@ -39,6 +39,9 @@
     <div :class="$style.depositInput">
       <slot name="depositInput" />
     </div>
+    <div :class="[$style.label, $style.leverageLabel]">
+      <slot name="leverageLabel" />
+    </div>
   </div>
 </template>
 
@@ -93,5 +96,9 @@
 
 .depositInput {
   margin-top: 10px;
+}
+
+.leverageLabel {
+  margin-top: 22px;
 }
 </style>

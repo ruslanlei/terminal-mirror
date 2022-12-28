@@ -4,7 +4,7 @@
       <Button
         v-for="option in options"
         :key="option.percents"
-        :state="isValueEqualToPercent(option.percents) ? 'colored' : 'secondary2'"
+        :state="checkIsValueEqualToPercent(option.percents) ? 'colored' : 'secondary2'"
         size="sm"
         :class="$style.option"
         @click="setPercentOfBalance(option.percents)"
@@ -18,13 +18,13 @@
           :class="$style.icon"
           icon="creditCard"
         />
-        <div :class="$style.displayValue">
-          {{ displayValue }}
+        <div :class="$style.balance">
+          {{ balance }}
         </div>
       </div>
       <RangeSlider
-        v-model="localValue"
-        :max="balance"
+        v-model="localValueInPercents"
+        :max="100"
       />
       <div :class="$style.inputWrapper">
         <NumberInput
@@ -50,21 +50,30 @@ import Icon from '@/components/core/icon/Icon.vue';
 import RangeSlider from '@/components/core/rangeSlider/RangeSlider.vue';
 import NumberInput from '@/components/core/numberInput/NumberInput.vue';
 import { useLocalValue } from '@/hooks/useLocalValue';
+import { roundToDecimalPoint } from '@/utils/number';
 import { DepositInputEmits, DepositInputProps } from './index';
 
-const props = defineProps<DepositInputProps>();
+const props = withDefaults(
+  defineProps<DepositInputProps>(),
+  {
+    decimals: 2,
+  },
+);
 
 const emit = defineEmits<DepositInputEmits>();
 
 const localValue = useLocalValue<number>(props, emit, 'modelValue');
-const displayValue = computed(() => localValue.value.toFixed(6));
 
 const onePercentOfBalance = computed(() => props.balance / 100);
+
+const percentsToValue = (
+  percents: number,
+) => roundToDecimalPoint(onePercentOfBalance.value * percents, props.decimals);
 
 const localValueInPercents = computed({
   get: () => localValue.value / onePercentOfBalance.value,
   set: (percents: number) => {
-    localValue.value = onePercentOfBalance.value * percents;
+    localValue.value = percentsToValue(percents);
   },
 });
 
@@ -74,9 +83,9 @@ const setPercentOfBalance = (
   localValueInPercents.value = percents;
 };
 
-const isValueEqualToPercent = (
+const checkIsValueEqualToPercent = (
   percents: number,
-) => localValue.value === (onePercentOfBalance.value * percents);
+) => localValue.value === percentsToValue(percents);
 
 const options = computed(() => [
   {
@@ -127,7 +136,7 @@ const options = computed(() => [
   margin-top: 10px;
   align-items: center;
   display: grid;
-  grid-template-columns: 1fr 1fr 65px;
+  grid-template-columns: 1fr 1fr 70px;
   gap: 10px;
 }
 
@@ -136,11 +145,15 @@ const options = computed(() => [
   align-items: center;
 }
 
-.displayValue {
+.balance {
   @include title5;
   color: rgb(var(--color-accent-1));
   text-align: right;
   margin-left: 15px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 .input {

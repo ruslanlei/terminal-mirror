@@ -69,7 +69,6 @@ const props = withDefaults(
     type: 'text' as inputType.TEXT,
     autocomplete: undefined,
     inputmode: undefined,
-    mask: '',
     state: 'default',
     size: 'lg',
   },

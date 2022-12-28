@@ -20,7 +20,7 @@
         />
         <div :class="$style.balance">
           <AnimatedText
-            animation-type="verticalBack"
+            animation-type="verticalAuto"
             :class="$style.realBalance"
             :text="balance"
           />
@@ -30,7 +30,7 @@
               :class="$style.leveragedBalanceWrapper"
             >
               <AnimatedText
-                animation-type="verticalBack"
+                animation-type="verticalAuto"
                 :class="$style.leveragedBalance"
                 :text="leveragedBalance"
               />

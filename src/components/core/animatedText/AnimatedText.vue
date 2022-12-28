@@ -1,6 +1,6 @@
 <template>
   <transition
-    :name="animationType"
+    :name="computedAnimationType"
     mode="out-in"
   >
     <div
@@ -13,9 +13,35 @@
 </template>
 
 <script setup lang="ts">
+import { ref, toRefs, watch } from 'vue';
 import { AnimatedTextProps } from './index';
 
 const props = defineProps<AnimatedTextProps>();
+const {
+  text,
+} = toRefs(props);
+
+const computedAnimationType = ref('');
+
+watch(text, (value, oldValue) => {
+  if (props.animationType === 'verticalAuto') {
+    computedAnimationType.value = 'verticalForward';
+
+    if (typeof value === 'string') {
+      value = Number(value.replace(/\D/g, ''));
+    }
+
+    if (typeof oldValue === 'string') {
+      oldValue = Number(oldValue.replace(/\D/g, ''));
+    }
+
+    if (value > (oldValue || 0)) {
+      computedAnimationType.value = 'verticalForward';
+    } else {
+      computedAnimationType.value = 'verticalBack';
+    }
+  }
+}, { immediate: true });
 </script>
 
 <style lang="scss" module>
@@ -23,24 +49,6 @@ const props = defineProps<AnimatedTextProps>();
 </style>
 
 <style lang="scss">
-.verticalBack {
-  &-enter-active,
-  &-leave-active {
-    transition: transform 200ms, opacity 200ms;
-  }
-
-  &-enter-from, &-leave-to {
-    opacity: 0;
-  }
-
-  &-enter-from {
-    transform: translateX(-4px);
-  }
-  &-leave-to {
-    transform: translateX(4px);
-  }
-}
-
 .verticalBack {
   &-enter-active,
   &-leave-active {
@@ -57,6 +65,24 @@ const props = defineProps<AnimatedTextProps>();
   }
   &-leave-to {
     transform: translateY(-6px);
+  }
+}
+.verticalForward {
+  &-enter-active,
+  &-leave-active {
+    transition: transform 160ms, opacity 160ms;
+  }
+
+  &-enter-from,
+  &-leave-to {
+    opacity: 0;
+  }
+
+  &-enter-from {
+    transform: translateY(-6px);
+  }
+  &-leave-to {
+    transform: translateY(6px);
   }
 }
 </style>

@@ -26,7 +26,7 @@
       <AnimatedText
         :text="displaySpeed"
         :class="$style.displaySpeed"
-        animation-type="verticalBack"
+        animation-type="verticalAuto"
       />
     </div>
     <Button

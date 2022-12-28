@@ -8,7 +8,7 @@
           state="default"
           :class="[$style.divider, $style.dividerLeft]"
         />
-        <SelectedCurrencyStats :class="$style.currencyStats" />
+<!--        <SelectedCurrencyStats :class="$style.currencyStats" />-->
       </div>
     </template>
     <template #rightColumn>

@@ -1,4 +1,6 @@
 export interface AnimatedTextProps {
   text: string | number,
-  animationType?: 'horizontalForward' | 'verticalBack',
+  animationType?: 'verticalAuto'
+    | 'verticalBack'
+    | 'verticalForward',
 }

@@ -70,8 +70,13 @@ const percentsToValue = (
   percents: number,
 ) => roundToDecimalPoint(onePercentOfBalance.value * percents, props.decimals);
 
+const valueToPercents = (value: number) => roundToDecimalPoint(
+  value / onePercentOfBalance.value,
+  props.decimals,
+);
+
 const localValueInPercents = computed({
-  get: () => localValue.value / onePercentOfBalance.value,
+  get: () => valueToPercents(localValue.value),
   set: (percents: number) => {
     localValue.value = percentsToValue(percents);
   },

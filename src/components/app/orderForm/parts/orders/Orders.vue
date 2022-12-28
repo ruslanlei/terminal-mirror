@@ -52,7 +52,7 @@
     </template>
     <template #volumeInput>
       <Input
-        v-model="deposit"
+        v-model="depositWithLeverage"
         type="number"
         size="sm"
       >
@@ -66,8 +66,9 @@
     </template>
     <template #depositInput>
       <DepositInput
-        v-model="deposit"
-        :balance="3208"
+        v-model="depositWithLeverage"
+        :balance="balance"
+        :leveraged-balance="leveragedBalance"
       />
     </template>
     <template #leverageLabel>
@@ -142,9 +143,20 @@ const orderTypeOptions = computed(() => [
   },
 ]);
 
+const balance = ref(3208);
+
 const deposit = ref(0);
 
 const leverage = ref(1);
+
+const depositWithLeverage = computed({
+  get: () => deposit.value * leverage.value,
+  set: (value: number) => {
+    deposit.value = value / leverage.value;
+  },
+});
+
+const leveragedBalance = computed(() => balance.value * leverage.value);
 </script>
 
 <style lang="scss" module>

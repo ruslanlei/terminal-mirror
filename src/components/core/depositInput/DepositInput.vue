@@ -19,7 +19,23 @@
           icon="creditCard"
         />
         <div :class="$style.balance">
-          {{ balance }}
+          <AnimatedText
+            animation-type="verticalBack"
+            :class="$style.realBalance"
+            :text="balance"
+          />
+          <transition name="depositInputLeverageBalance">
+            <div
+              v-if="showLeveragedBalance"
+              :class="$style.leveragedBalanceWrapper"
+            >
+              <AnimatedText
+                animation-type="verticalBack"
+                :class="$style.leveragedBalance"
+                :text="leveragedBalance"
+              />
+            </div>
+          </transition>
         </div>
       </div>
       <RangeSlider
@@ -49,6 +65,7 @@ import Button from '@/components/core/button/Button.vue';
 import Icon from '@/components/core/icon/Icon.vue';
 import RangeSlider from '@/components/core/rangeSlider/RangeSlider.vue';
 import NumberInput from '@/components/core/numberInput/NumberInput.vue';
+import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
 import { useLocalValue } from '@/hooks/useLocalValue';
 import { roundToDecimalPoint } from '@/utils/number';
 import { DepositInputEmits, DepositInputProps } from './index';
@@ -62,9 +79,11 @@ const props = withDefaults(
 
 const emit = defineEmits<DepositInputEmits>();
 
+const showLeveragedBalance = computed(() => props.balance !== props.leveragedBalance);
+
 const localValue = useLocalValue<number>(props, emit, 'modelValue');
 
-const onePercentOfBalance = computed(() => props.balance / 100);
+const onePercentOfBalance = computed(() => props.leveragedBalance / 100);
 
 const percentsToValue = (
   percents: number,
@@ -151,18 +170,30 @@ const options = computed(() => [
 }
 
 .balance {
-  @include title5;
-  color: rgb(var(--color-accent-1));
-  text-align: right;
   margin-left: 15px;
   width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
 }
 
-.input {
+.realBalance,
+.leveragedBalance {
+  @include title5;
+  line-height: 110%;
 }
+
+.realBalance {
+  color: rgb(var(--color-accent-1));
+}
+
+.leveragedBalance {
+  color: rgb(var(--color-accent-2));
+  height: 13px;
+}
+
+.leveragedBalanceWrapper {
+  height: 13px;
+}
+
+.input {}
 
 .inputWrapper {
   display: flex;
@@ -173,5 +204,20 @@ const options = computed(() => [
   margin-left: 6px;
   @include title5;
   color: rgb(var(--color-accent-2));
+}
+</style>
+
+<style lang="scss">
+.depositInputLeverageBalance {
+  &-enter-active,
+  &-leave-active {
+    transition: height 200ms, opacity 200ms;
+  }
+
+  &-enter-from,
+  &-leave-to {
+    height: 0;
+    opacity: 0;
+  }
 }
 </style>

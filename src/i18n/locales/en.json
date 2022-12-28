@@ -109,6 +109,6 @@
     "amount": "Amount",
     "volume": "Volume",
     "deposit": "Deposit",
-    "leverage": "Leverage size"
+    "leverageSize": "Leverage size"
   }
 }

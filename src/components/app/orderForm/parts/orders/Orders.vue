@@ -71,7 +71,22 @@
       />
     </template>
     <template #leverageLabel>
-      {{ t('') }}
+      {{ t('order.leverageSize') }}
+    </template>
+    <template #leverageInput>
+      <NumberInput
+        v-model="leverage"
+        :class="$style.input"
+        :state="['defaultColor', 'smSize']"
+        type="number"
+        :min="1"
+      />
+    </template>
+    <template #leverageLiquidationPrice>
+      11
+    </template>
+    <template #leveragePositionMargin>
+      1
     </template>
   </OrderFormOrdersPartContainer>
 </template>
@@ -84,6 +99,7 @@ import Selector from '@/components/core/selector/Selector.vue';
 import Icon from '@/components/core/icon/Icon.vue';
 import Input from '@/components/core/input/Input.vue';
 import DepositInput from '@/components/core/depositInput/DepositInput.vue';
+import NumberInput from '@/components/core/numberInput/NumberInput.vue';
 import { SelectorProps } from '@/components/core/selector';
 
 const { t } = useI18n();
@@ -127,6 +143,8 @@ const orderTypeOptions = computed(() => [
 ]);
 
 const deposit = ref(0);
+
+const leverage = ref(1);
 </script>
 
 <style lang="scss" module>

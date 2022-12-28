@@ -42,10 +42,36 @@
     <div :class="[$style.label, $style.leverageLabel]">
       <slot name="leverageLabel" />
     </div>
+    <div :class="$style.leverageRow">
+      <div>
+        <slot name="leverageInput" />
+      </div>
+      <div :class="$style.leverageLiquidationPrice">
+        <Icon
+          :size="20"
+          :class="$style.icon"
+          icon="lock"
+        />
+        <div :class="$style.label">
+          <slot name="leverageLiquidationPrice" />
+        </div>
+      </div>
+      <div :class="$style.leveragePositionMargin">
+        <Icon
+          :size="20"
+          :class="$style.icon"
+          icon="fire"
+        />
+        <div :class="$style.label">
+          <slot name="leveragePositionMargin" />
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import Icon from '@/components/core/icon/Icon.vue';
 </script>
 
 <style lang="scss" module>
@@ -100,5 +126,37 @@
 
 .leverageLabel {
   margin-top: 22px;
+}
+
+.leverageRow {
+  display: grid;
+  grid-template-columns: 65px 1.5fr 1fr;
+  gap: 15px;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.leverageLiquidationPrice,
+.leveragePositionMargin {
+  display: flex;
+  align-items: center;
+  .label {
+    color: rgb(var(--color-accent-1));
+    @include title4;
+    margin-left: 5px;
+    font-weight: 500;
+  }
+}
+
+.leverageLiquidationPrice {
+  .icon {
+    color: rgb(var(--color-primary-1));
+  }
+}
+
+.leveragePositionMargin {
+  .icon {
+    color: rgb(var(--color-danger));
+  }
 }
 </style>

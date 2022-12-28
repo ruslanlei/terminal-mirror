@@ -1,14 +1,5 @@
 <template>
   <div :class="$style.orderFormOrdersPartContainer">
-    <div :class="$style.orderSideSelector">
-      <slot
-        name="orderSideSelector"
-        :order-side-option-class="$style.orderSideOption"
-      />
-    </div>
-    <div :class="$style.additionalSettingsSelector">
-      <slot name="additionalSettingsSelector" />
-    </div>
     <div :class="$style.inputRow">
       <div :class="$style.inputLabel">
         <slot name="priceLabel" />
@@ -78,20 +69,6 @@ import Icon from '@/components/core/icon/Icon.vue';
 @import "src/assets/styles/utils";
 
 .orderFormOrdersPartContainer {
-  padding: 22px;
-}
-
-.orderSideSelector {
-}
-
-.orderSideOption {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.additionalSettingsSelector {
-  margin-top: 22px;
 }
 
 .inputRow {

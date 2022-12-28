@@ -3,23 +3,25 @@
     <Selector
       v-model="localValue"
       :options="tabs"
-      :state="['tabsShape', 'secondaryColor2']"
       :thickening="0"
       :is-ghost-appear-animation="false"
+      v-bind="selectorProps"
       @select-next="onSelectNext"
       @select-prev="onSelectPrev"
     />
-    <transition
-      :name="computedTransitionName"
-      mode="out-in"
-    >
-      <div
-        :key="localValue"
-        :class="$style.tabContent"
+    <div :class="[$style.contentWrapper, contentClass]">
+      <transition
+        :name="computedTransitionName"
+        mode="out-in"
       >
-        <slot :name="`tab(${localValue})`" />
-      </div>
-    </transition>
+        <div
+          :key="localValue"
+          :class="$style.tabContent"
+        >
+          <slot :name="`tab(${localValue})`" />
+        </div>
+      </transition>
+    </div>
   </div>
 </template>
 
@@ -29,7 +31,14 @@ import Selector from '@/components/core/selector/Selector.vue';
 import { useLocalValue } from '@/hooks/useLocalValue';
 import { TabsEmits, TabsProps } from './index';
 
-const props = defineProps<TabsProps>();
+const props = withDefaults(
+  defineProps<TabsProps>(),
+  {
+    selectorProps: {
+      state: ['tabsShape', 'secondaryColor2'],
+    },
+  },
+);
 
 const emit = defineEmits<TabsEmits>();
 
@@ -52,12 +61,16 @@ const onSelectPrev = () => {
 
 <style lang="scss" module>
 .tabs {
-  border-radius: 10px;
-  overflow: hidden;
+  //border-radius: 10px;
+  //overflow: hidden;
   background-color: rgb(var(--color-background-3));
 }
 
 .tabContent {
+}
+
+.contentWrapper {
+  overflow: hidden;
 }
 </style>
 

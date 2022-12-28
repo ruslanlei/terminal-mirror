@@ -54,5 +54,6 @@ const tabs = computed<TabsProps['tabs']>(() => [
 <style lang="scss" module>
 .orderForm {
   height: 100%;
+  border-radius: 10px;
 }
 </style>

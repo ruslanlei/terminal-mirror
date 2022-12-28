@@ -299,6 +299,7 @@ onBeforeUnmount(removeListeners);
 .tabsShape {
   &.options {
     border-radius: 10px 10px 0 0;
+    overflow: hidden;
   }
   .item {
     @include title4;

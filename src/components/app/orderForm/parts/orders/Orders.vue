@@ -1,106 +1,113 @@
 <template>
-  <OrderFormOrdersPartContainer>
-    <template #orderSideSelector="{ orderSideOptionClass }">
-      <Selector
-        v-model="orderDirection"
-        :state="['mdSize', 'secondaryColor5']"
-        :options="orderDirectionOptions"
-      >
-        <template #option="{ option }">
-          <div :class="orderSideOptionClass">
-            <Icon :icon="option.icon" />
-            {{ option.label }}
-          </div>
-        </template>
-      </Selector>
-    </template>
-    <template #additionalSettingsSelector>
-      <Selector
-        v-model="orderType"
-        :options="orderTypeOptions"
-        :state="['primaryColor2', 'mdSize']"
-      />
-    </template>
-    <template #priceLabel>
-      {{ t('order.price') }}
-    </template>
-    <template #priceInput>
-      <Input
-        type="number"
-        size="sm"
-      >
-        <template #append>
-          USDT
-        </template>
-      </Input>
-    </template>
-    <template #amountLabel>
-      {{ t('order.amount') }}
-    </template>
-    <template #amountInput>
-      <Input
-        type="number"
-        size="sm"
-      >
-        <template #append>
-          BTC
-        </template>
-      </Input>
-    </template>
-    <template #volumeLabel>
-      {{ t('order.volume') }}
-    </template>
-    <template #volumeInput>
-      <Input
-        v-model="depositWithLeverage"
-        type="number"
-        size="sm"
-      >
-        <template #append>
-          USDT
-        </template>
-      </Input>
-    </template>
-    <template #depositLabel>
-      {{ t('order.deposit') }}
-    </template>
-    <template #depositInput>
-      <DepositInput
-        v-model="depositWithLeverage"
-        :balance="balance"
-        :leveraged-balance="leveragedBalance"
-      />
-    </template>
-    <template #leverageLabel>
-      {{ t('order.leverageSize') }}
-    </template>
-    <template #leverageInput>
-      <NumberInput
-        v-model="leverage"
-        :class="$style.input"
-        :state="['defaultColor', 'smSize']"
-        type="number"
-        :min="1"
-      />
-    </template>
-    <template #leverageLiquidationPrice>
-      11
-    </template>
-    <template #leveragePositionMargin>
-      1
-    </template>
-  </OrderFormOrdersPartContainer>
+  <div :class="$style.ordersForm">
+    <Selector
+      v-model="orderDirection"
+      :state="['mdSize', 'secondaryColor5']"
+      :options="orderDirectionOptions"
+    >
+      <template #option="{ option }">
+        <div :class="$style.orderSideOption">
+          <Icon :icon="option.icon" />
+          {{ option.label }}
+        </div>
+      </template>
+    </Selector>
+    <Tabs
+      v-model="settingsActiveTab"
+      :tabs="settingsTabs"
+      :selector-props="{
+        state: ['primaryColor2', 'mdSize'],
+        thickening: 2,
+      }"
+      :content-class="$style.settingsTabsContent"
+      :class="$style.tabs"
+    >
+      <template #tab(input)>
+        <OrderFormInputPartContainer :class="$style.tab">
+          <template #priceLabel>
+            {{ t('order.price') }}
+          </template>
+          <template #priceInput>
+            <Input
+              type="number"
+              size="sm"
+            >
+              <template #append>
+                USDT
+              </template>
+            </Input>
+          </template>
+          <template #amountLabel>
+            {{ t('order.amount') }}
+          </template>
+          <template #amountInput>
+            <Input
+              type="number"
+              size="sm"
+            >
+              <template #append>
+                BTC
+              </template>
+            </Input>
+          </template>
+          <template #volumeLabel>
+            {{ t('order.volume') }}
+          </template>
+          <template #volumeInput>
+            <Input
+              v-model="depositWithLeverage"
+              type="number"
+              size="sm"
+            >
+              <template #append>
+                USDT
+              </template>
+            </Input>
+          </template>
+          <template #depositLabel>
+            {{ t('order.deposit') }}
+          </template>
+          <template #depositInput>
+            <DepositInput
+              v-model="depositWithLeverage"
+              :balance="balance"
+              :leveraged-balance="leveragedBalance"
+            />
+          </template>
+          <template #leverageLabel>
+            {{ t('order.leverageSize') }}
+          </template>
+          <template #leverageInput>
+            <NumberInput
+              v-model="leverage"
+              :class="$style.input"
+              :state="['defaultColor', 'smSize']"
+              type="number"
+              :min="1"
+            />
+          </template>
+          <template #leverageLiquidationPrice>
+            11
+          </template>
+          <template #leveragePositionMargin>
+            1
+          </template>
+        </OrderFormInputPartContainer>
+      </template>
+    </Tabs>
+  </div>
 </template>
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
-import OrderFormOrdersPartContainer from '@/containers/orderFormOrdersPartContainer/OrderFormOrdersPartContainer.vue';
+import OrderFormInputPartContainer from '@/containers/orderFormInputPartContainer/OrderFormInputPartContainer.vue';
 import Selector from '@/components/core/selector/Selector.vue';
 import Icon from '@/components/core/icon/Icon.vue';
 import Input from '@/components/core/input/Input.vue';
 import DepositInput from '@/components/core/depositInput/DepositInput.vue';
 import NumberInput from '@/components/core/numberInput/NumberInput.vue';
+import Tabs from '@/components/core/tabs/Tabs.vue';
 import { SelectorProps } from '@/components/core/selector';
 
 const { t } = useI18n();
@@ -122,9 +129,9 @@ const orderDirectionOptions = computed<SelectorProps['options']>(() => [
   },
 ]);
 
-const orderType = ref('input');
+const settingsActiveTab = ref('input');
 
-const orderTypeOptions = computed(() => [
+const settingsTabs = computed(() => [
   {
     label: t('order.additionalSettings.input'),
     value: 'input',
@@ -162,15 +169,25 @@ const leveragedBalance = computed(() => balance.value * leverage.value);
 <style lang="scss" module>
 @import "src/assets/styles/utils";
 
-.label {
-  @include title3;
-  font-weight: 600;
-  color: rgb(var(--color-accent-1));
+.ordersForm {
+  padding: 22px;
 }
 
-.inputRow {
-  @include title2;
-  font-weight: 500;
-  color: rgb(var(--color-accent-1));
+.tabs {
+  margin-top: 22px;
+}
+
+.tab {
+  padding: 22px;
+}
+
+.orderSideOption {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.settingsTabsContent {
+  margin: 0 -22px;
 }
 </style>

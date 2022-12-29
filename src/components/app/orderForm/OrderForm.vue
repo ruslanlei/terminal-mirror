@@ -32,6 +32,9 @@
         <template #tab(input)>
           <OrderFormInputPart />
         </template>
+        <template #tab(tp)>
+          <OrderFormTakeProfitPart />
+        </template>
       </Tabs>
     </template>
   </OrderFromContainer>
@@ -45,7 +48,9 @@ import Icon from '@/components/core/icon/Icon.vue';
 import Tabs from '@/components/core/tabs/Tabs.vue';
 import { SelectorProps } from '@/components/core/selector';
 import OrderFromContainer from '@/containers/orderFormContainer/OrderFormContainer.vue';
-import OrderFormInputPart from '@/components/app/orderForm/parts/orderFormInputPart/OrderFormInputPart.vue';
+
+import OrderFormInputPart from './parts/orderFormInputPart/OrderFormInputPart.vue';
+import OrderFormTakeProfitPart from './parts/orderFromTakeProfitPart/OrderFromTakeProfitPart.vue';
 
 const { t } = useI18n();
 

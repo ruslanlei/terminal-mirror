@@ -110,7 +110,7 @@ const leveragedBalance = computed(() => balance.value * leverage.value);
 
 <style lang="scss" module>
 .tab {
-  padding: 22px;
+  padding: 0 22px 22px 22px;
   height: 100%;
   display: flex;
   flex-direction: column;

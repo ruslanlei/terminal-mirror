@@ -1,0 +1,129 @@
+<template>
+  <OrderFormInputPartContainer :class="$style.tab">
+    <template #priceLabel>
+      {{ t('order.price') }}
+    </template>
+    <template #priceInput>
+      <Input
+        type="number"
+        size="sm"
+      >
+        <template #append>
+          USDT
+        </template>
+      </Input>
+    </template>
+    <template #amountLabel>
+      {{ t('order.amount') }}
+    </template>
+    <template #amountInput>
+      <Input
+        type="number"
+        size="sm"
+      >
+        <template #append>
+          BTC
+        </template>
+      </Input>
+    </template>
+    <template #volumeLabel>
+      {{ t('order.volume') }}
+    </template>
+    <template #volumeInput>
+      <Input
+        v-model="depositWithLeverage"
+        type="number"
+        size="sm"
+      >
+        <template #append>
+          USDT
+        </template>
+      </Input>
+    </template>
+    <template #depositLabel>
+      {{ t('order.deposit') }}
+    </template>
+    <template #depositInput>
+      <DepositInput
+        v-model="depositWithLeverage"
+        :balance="balance"
+        :leveraged-balance="leveragedBalance"
+      />
+    </template>
+    <template #leverageLabel>
+      {{ t('order.leverageSize') }}
+    </template>
+    <template #leverageInput>
+      <NumberInput
+        v-model="leverage"
+        :class="$style.input"
+        :state="['defaultColor', 'smSize']"
+        type="number"
+        :min="1"
+      />
+    </template>
+    <template #leverageLiquidationPrice>
+      11
+    </template>
+    <template #leveragePositionMargin>
+      1
+    </template>
+    <template #submit>
+      <Button
+        type="submit"
+        state="primary"
+        size="md"
+        :class="$style.submit"
+      >
+        {{ t('order.submit') }}
+      </Button>
+    </template>
+  </OrderFormInputPartContainer>
+</template>
+
+<script setup lang="ts">
+import { useI18n } from 'vue-i18n';
+import OrderFormInputPartContainer from '@/containers/orderFormInputPartContainer/OrderFormInputPartContainer.vue';
+import Input from '@/components/core/input/Input.vue';
+import Button from '@/components/core/button/Button.vue';
+import NumberInput from '@/components/core/numberInput/NumberInput.vue';
+import DepositInput from '@/components/core/depositInput/DepositInput.vue';
+import { computed, ref } from 'vue';
+
+const { t } = useI18n();
+
+const balance = ref(3208);
+
+const deposit = ref(0);
+
+const leverage = ref(1);
+
+const depositWithLeverage = computed({
+  get: () => deposit.value * leverage.value,
+  set: (value: number) => {
+    deposit.value = value / leverage.value;
+  },
+});
+
+const leveragedBalance = computed(() => balance.value * leverage.value);
+</script>
+
+<style lang="scss" module>
+.tab {
+  padding: 22px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.orderSideOption {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.settingsTabsContent {
+  margin: 0 -22px;
+}
+</style>

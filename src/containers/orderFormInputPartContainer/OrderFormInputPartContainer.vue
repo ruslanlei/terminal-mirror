@@ -77,7 +77,6 @@ import Icon from '@/components/core/icon/Icon.vue';
 .inputRow {
   display: grid;
   grid-template-columns: 1fr 140px;
-  margin-top: 22px;
   align-items: center;
   &:not(:first-child) {
     margin-top: 10px;

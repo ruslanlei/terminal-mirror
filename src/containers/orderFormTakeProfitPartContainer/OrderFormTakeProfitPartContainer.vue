@@ -4,6 +4,9 @@
       <div :class="$style.label">
         <slot name="profit" />
       </div>
+      <div>
+        <slot name="profitSwitch" />
+      </div>
     </div>
   </div>
 </template>
@@ -24,5 +27,8 @@
   color: rgb(var(--color-accent-1));
 }
 
-.profit {}
+.profit {
+  display: flex;
+  justify-content: space-between;
+}
 </style>

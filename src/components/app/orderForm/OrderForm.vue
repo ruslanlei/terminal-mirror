@@ -50,7 +50,7 @@ import { SelectorProps } from '@/components/core/selector';
 import OrderFromContainer from '@/containers/orderFormContainer/OrderFormContainer.vue';
 
 import OrderFormInputPart from './parts/orderFormInputPart/OrderFormInputPart.vue';
-import OrderFormTakeProfitPart from './parts/orderFromTakeProfitPart/OrderFromTakeProfitPart.vue';
+import OrderFormTakeProfitPart from './parts/orderFormTakeProfitPart/OrderFormTakeProfitPart.vue';
 
 const { t } = useI18n();
 

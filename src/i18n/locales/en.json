@@ -110,6 +110,10 @@
     "volume": "Volume",
     "deposit": "Deposit",
     "leverageSize": "Leverage size",
-    "submit": "Open"
+    "submit": "Open",
+    "takeProfit": {
+      "profit": "Profit",
+      "amountOrOrders": "Amount of orders"
+    }
   }
 }

@@ -10,10 +10,7 @@
       @select-prev="onSelectPrev"
     />
     <div :class="[$style.contentWrapper, contentClass]">
-      <transition
-        :name="computedTransitionName"
-        mode="out-in"
-      >
+      <transition :name="computedTransitionName">
         <div
           :key="localValue"
           :class="$style.tabContent"
@@ -72,16 +69,21 @@ const onSelectPrev = () => {
 }
 
 .contentWrapper {
+  position: relative;
   overflow: hidden;
   flex-grow: 1;
 }
 </style>
 
 <style lang="scss">
+$transitionDuration: 210ms;
+
 .tabsTransitionPrev {
   &-enter-active,
   &-leave-active {
-    transition: transform 220ms;
+    transition: transform $transitionDuration ease;
+    position: absolute;
+    inset: 0;
   }
 
   &-enter-from {
@@ -95,7 +97,9 @@ const onSelectPrev = () => {
 .tabsTransitionNext {
   &-enter-active,
   &-leave-active {
-    transition: transform 220ms;
+    transition: transform $transitionDuration ease;
+    position: absolute;
+    inset: 0;
   }
 
   &-enter-from {

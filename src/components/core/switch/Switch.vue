@@ -49,7 +49,7 @@ const toggle = () => {
   }
 }
 
-$transitionDuration: 170ms;
+$transitionDuration: 140ms;
 
 .circle {
   width: 16px;

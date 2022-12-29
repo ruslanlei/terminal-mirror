@@ -109,6 +109,7 @@
     "amount": "Amount",
     "volume": "Volume",
     "deposit": "Deposit",
-    "leverageSize": "Leverage size"
+    "leverageSize": "Leverage size",
+    "submit": "Open"
   }
 }

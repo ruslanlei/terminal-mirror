@@ -58,6 +58,9 @@
         </div>
       </div>
     </div>
+    <div :class="$style.submit">
+      <slot name="submit" />
+    </div>
   </div>
 </template>
 
@@ -135,5 +138,11 @@ import Icon from '@/components/core/icon/Icon.vue';
   .icon {
     color: rgb(var(--color-danger));
   }
+}
+
+.submit {
+  width: 100%;
+  line-height: 20px;
+  margin-top: auto;
 }
 </style>

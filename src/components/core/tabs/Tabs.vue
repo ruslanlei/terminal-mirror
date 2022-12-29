@@ -61,16 +61,19 @@ const onSelectPrev = () => {
 
 <style lang="scss" module>
 .tabs {
-  //border-radius: 10px;
-  //overflow: hidden;
   background-color: rgb(var(--color-background-3));
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 }
 
 .tabContent {
+  height: 100%;
 }
 
 .contentWrapper {
   overflow: hidden;
+  flex-grow: 1;
 }
 </style>
 

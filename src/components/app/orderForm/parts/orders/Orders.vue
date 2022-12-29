@@ -92,6 +92,16 @@
           <template #leveragePositionMargin>
             1
           </template>
+          <template #submit>
+            <Button
+              type="submit"
+              state="primary"
+              size="md"
+              :class="$style.submit"
+            >
+              {{ t('order.submit') }}
+            </Button>
+          </template>
         </OrderFormInputPartContainer>
       </template>
     </Tabs>
@@ -108,6 +118,7 @@ import Input from '@/components/core/input/Input.vue';
 import DepositInput from '@/components/core/depositInput/DepositInput.vue';
 import NumberInput from '@/components/core/numberInput/NumberInput.vue';
 import Tabs from '@/components/core/tabs/Tabs.vue';
+import Button from '@/components/core/button/Button.vue';
 import { SelectorProps } from '@/components/core/selector';
 
 const { t } = useI18n();
@@ -170,15 +181,24 @@ const leveragedBalance = computed(() => balance.value * leverage.value);
 @import "src/assets/styles/utils";
 
 .ordersForm {
+  height: 100%;
   padding: 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 }
 
 .tabs {
   margin-top: 22px;
+  flex-grow: 1;
 }
 
 .tab {
   padding: 22px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 }
 
 .orderSideOption {

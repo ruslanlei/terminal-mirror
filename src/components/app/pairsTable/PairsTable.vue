@@ -1,22 +1,46 @@
 <template>
   <Table
+    v-model:sort-by="sortBy"
+    v-model:sort-direction="sortDirection"
     :columns="columns"
     :records="computedRecords"
   >
-    <template></template>
+    <template
+      #column(pairs)="{
+        isSortedBy,
+        sortDirection,
+        label,
+      }"
+    >
+      <div :class="$style.columnPairsLabel">
+        <TrendingIcon
+          :is-visible="isSortedBy"
+          :direction="({ asc: 'up', desc: 'down' }[sortDirection])"
+        />
+        <div :class="$style.text">
+          {{ label }}
+        </div>
+      </div>
+    </template>
+    <template #cell(pairs)="{ data: { base, quote } }">
+      <CurrencyLogo :currency="base" />
+    </template>
   </Table>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Table from '@/components/core/table/Table.vue';
+import TrendingIcon from '@/components/core/trendingIcon/TrendingIcon.vue';
+import CurrencyLogo from '@/components/core/currencyLogo/CurrencyLogo.vue';
 import {
   PairsTableColumn,
   PairsTableProps,
   PairsTableRecord,
 } from '@/components/app/pairsTable/index';
 import { Pair } from '@/api/endpoints/marketdata/stats';
+import { SortDirection } from '@/components/core/table';
 
 const props = defineProps<PairsTableProps>();
 
@@ -26,12 +50,19 @@ const columns = computed<PairsTableColumn[]>(() => [
   {
     label: t('pairs.table.pairs'),
     slug: 'pairs',
+    sortable: true,
+    size: 1,
   },
   {
     label: t('pairs.table.priceAndVolume'),
     slug: 'priceAndVolume',
+    size: 1,
   },
 ]);
+
+const sortBy = ref(null);
+
+const sortDirection = ref(SortDirection.ASC);
 
 const computedRecords = computed<PairsTableRecord[]>(
   () => props.pairs.map((pair: Pair) => ({
@@ -50,4 +81,11 @@ const computedRecords = computed<PairsTableRecord[]>(
 </script>
 
 <style lang="scss" module>
+.columnPairsLabel {
+  display: flex;
+  align-items: center;
+  .text {
+    margin-left: 5px;
+  }
+}
 </style>

@@ -15,7 +15,7 @@
       </Input>
     </template>
     <template #list>
-      list
+      <PairsTable :pairs="pairs" />
     </template>
   </PairsSelectContainer>
 </template>
@@ -26,10 +26,16 @@ import { useMarketStore } from '@/stores/market';
 import PairsSelectContainer from '@/containers/pairsSelectContainer/PairsSelectContainer.vue';
 import Input from '@/components/core/input/Input.vue';
 import Icon from '@/components/core/icon/Icon.vue';
+import PairsTable from '@/components/app/pairsTable/PairsTable.vue';
+import { storeToRefs } from 'pinia';
 
 const { t } = useI18n();
 
 const marketStore = useMarketStore();
+const {
+  pairs,
+} = storeToRefs(marketStore);
+
 marketStore.getPairs();
 </script>
 

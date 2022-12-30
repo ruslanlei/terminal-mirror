@@ -35,6 +35,11 @@ export enum tableType {
   GRID = 'grid',
 }
 
+export enum SortDirection {
+  ASC = 'asc',
+  DESC = 'desc',
+}
+
 export interface TableProps {
   type: tableType,
   columns: TableColumn[],
@@ -42,4 +47,6 @@ export interface TableProps {
   selectedRecords?: SelectedRecords,
   isSelectable?: boolean,
   gridColumns?: number,
+  sortBy?: TableColumn['slug'] | null,
+  sortDirection?: SortDirection,
 }

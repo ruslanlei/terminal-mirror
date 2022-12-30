@@ -1,7 +1,7 @@
 <template>
   <div
     :class="[
-      $style.root,
+      $style.table,
       $style[type],
     ]"
     :style="computedRootStyles"
@@ -17,8 +17,9 @@
           :class="[
             $style.column,
             $style[column.align],
+            (column.sortable || column.isSelect) && $style.clickable,
           ]"
-          @click="onColumnClick(column.slug, column.isSelect)"
+          @click="onColumnClick(column)"
         >
           <slot
             :name="`column(${column.slug})`"
@@ -26,6 +27,10 @@
             :label="column.label"
             :slug="column.slug"
             :is-all-records-selected="isAllRecordsSelected"
+            :is-sorted-by="sortBy === column.slug"
+            :sort-direction="sortDirection"
+            :is-sorted-asc="sortBy === column.slug && sortDirection === 'asc'"
+            :is-sorted-desc="sortBy === column.slug && sortDirection === 'desc'"
           >
             {{ column.label }}
           </slot>
@@ -134,7 +139,7 @@ const {
 <style lang="scss" module>
 @import "src/assets/styles/utils";
 
-.root {
+.table {
   color: white;
   background-color: rgb(var(--color-black-2));
   border-radius: 10px;
@@ -153,6 +158,12 @@ const {
         background-color: rgb(var(--color-black-3));
       }
       .recordColumn {}
+    }
+    .column {
+      &.clickable {
+        cursor: pointer;
+        user-select: none;
+      }
     }
     .column, .recordColumn {
       display: flex;

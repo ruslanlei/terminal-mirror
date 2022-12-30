@@ -36,6 +36,7 @@ export const useMarketStore = defineStore('market', () => {
   };
 
   return {
+    pairs,
     marketType,
     activePair,
     activePairData,

@@ -13,6 +13,8 @@
 </script>
 
 <style lang="scss" module>
+@import "src/assets/styles/utils";
+
 .pairsSelectContainer {
   padding: 22px;
 }

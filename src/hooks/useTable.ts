@@ -1,11 +1,6 @@
-import { computed } from 'vue';
-import {
-  InnerTableRecord,
-  TableColumn,
-  TableProps,
-  TableRecord,
-} from '@/components/core/table';
-import { useLocalValue } from '@/hooks/useLocalValue';
+import {computed} from 'vue';
+import {InnerTableRecord, SortDirection, TableColumn, TableProps, TableRecord,} from '@/components/core/table';
+import {useLocalValue} from '@/hooks/useLocalValue';
 
 export const useTable = (
   props: TableProps,
@@ -17,7 +12,7 @@ export const useTable = (
     'selectedRecords',
   );
   const isAllRecordsSelected = computed(
-    () => localSelectedRecords.value.length === props.records.length,
+    () => localSelectedRecords.value?.length === props.records.length,
   );
 
   const toggleSelectAll = () => {
@@ -28,9 +23,23 @@ export const useTable = (
     }
   };
 
-  const onColumnClick = (slug: TableColumn['slug'], isSelect: TableColumn['isSelect']) => {
-    if (isSelect) {
+  const localSortBy = useLocalValue<TableProps['sortBy']>(props, emit, 'sortBy');
+  const localSortDirection = useLocalValue<TableProps['sortDirection']>(props, emit, 'sortDirection');
+
+  const onColumnClick = (column: TableColumn) => {
+    if (column.isSelect) {
       toggleSelectAll();
+    }
+    if (column.sortable) {
+      if (localSortBy.value === null) {
+        localSortBy.value = column.slug;
+        localSortDirection.value = SortDirection.ASC;
+      } else if (localSortDirection.value === SortDirection.ASC) {
+        localSortDirection.value = SortDirection.DESC;
+      } else {
+        localSortBy.value = null;
+        localSortDirection.value = SortDirection.ASC;
+      }
     }
   };
 

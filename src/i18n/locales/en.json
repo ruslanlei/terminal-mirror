@@ -1,4 +1,7 @@
 {
+  "common": {
+    "search": "Search"
+  },
   "validationError": {
     "email": "Value is not valid email",
     "required": "This is required field",
@@ -54,9 +57,12 @@
   "themes": {
     "purpleCat": "Purple cat"
   },
-  "marketType": {
-    "emulator": "Emulator",
-    "real": "Real"
+  "market": {
+    "type": {
+      "emulator": "Emulator",
+      "real": "Real"
+    },
+    "failedToGetPairs": "Failed to get pairs"
   },
   "emulator": {
     "player": {
@@ -114,6 +120,12 @@
     "takeProfit": {
       "profit": "Profit",
       "amountOrOrders": "Amount of orders"
+    }
+  },
+  "pairs": {
+    "type": {
+      "standard": "Standard",
+      "market": "Market"
     }
   }
 }

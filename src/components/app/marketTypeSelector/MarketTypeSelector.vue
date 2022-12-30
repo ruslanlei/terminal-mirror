@@ -34,12 +34,12 @@ const {
 
 const marketVariants = computed<MarketTypeSelectorOption[]>(() => [
   {
-    label: t('marketType.emulator'),
+    label: t('market.type.emulator'),
     value: 'emulator',
     icon: 'cube',
   },
   {
-    label: t('marketType.real'),
+    label: t('market.type.real'),
     value: 'real',
     icon: 'sword',
   },

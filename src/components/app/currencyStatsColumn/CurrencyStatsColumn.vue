@@ -21,7 +21,7 @@
       >
         <AnimatedText
           :text="currencyStat.value"
-          animation-type="verticalBack"
+          animation-type="verticalAuto"
         />
       </div>
     </div>

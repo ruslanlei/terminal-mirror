@@ -5,6 +5,7 @@ import { useProfileStore } from '@/stores/profile';
 import { useTitleStore } from '@/stores/title';
 import { useI18nStore } from '@/stores/i18n';
 import { useCommonStore } from '@/stores/common';
+import { useMarketStore } from '@/stores/market';
 
 export const useApp = () => {
   const route = useRoute();
@@ -12,6 +13,7 @@ export const useApp = () => {
   useCommonStore();
   useTitleStore();
   useI18nStore();
+  const marketStore = useMarketStore();
   const sessionStore = useSessionStore();
   const profileStore = useProfileStore();
 
@@ -25,6 +27,7 @@ export const useApp = () => {
   onMounted(() => {
     if (sessionStore.token) {
       profileStore.getProfile();
+      marketStore.getPairs();
     }
   });
 };

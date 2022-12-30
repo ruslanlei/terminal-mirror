@@ -8,7 +8,7 @@
       <OrderForm />
     </template>
     <template #tab(couples)>
-      couples
+      <PairSelect />
     </template>
     <template #tab(glasses)>
       glasses
@@ -25,6 +25,7 @@ import { useI18n } from 'vue-i18n';
 import Tabs from '@/components/core/tabs/Tabs.vue';
 import { TabsProps } from '@/components/core/tabs';
 import OrderForm from '@/components/app/orderForm/OrderForm.vue';
+import PairSelect from '@/components/app/pairsSelect/PairsSelect.vue';
 
 const { t } = useI18n();
 

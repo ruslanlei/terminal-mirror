@@ -1,15 +1,4 @@
-export type Currency =
-  'btc'
-  | 'tether'
-  | 'dash'
-  | 'achain'
-  | 'bread'
-  | 'asch'
-  | 'eth'
-  | 'ltc'
-  | 'bnb'
-  | 'iot'
-  | 'cobinhood'
+import { Currency } from '@/api/endpoints/marketdata/stats';
 
 export interface CurrencyLogoProps {
   currency: Currency,

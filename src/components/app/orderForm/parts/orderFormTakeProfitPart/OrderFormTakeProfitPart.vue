@@ -14,6 +14,7 @@
         v-model="amountOfOrders"
         size="sm"
         :min="1"
+        :max="12"
         :state="['smSize', 'defaultColor']"
       />
     </template>

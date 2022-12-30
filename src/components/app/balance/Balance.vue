@@ -21,8 +21,8 @@ const profileStore = useProfileStore();
 const marketStore = useMarketStore();
 
 const computedLabel = computed(() => ({
-  emulator: t('marketType.emulator'),
-  real: t('marketType.real'),
+  emulator: t('market.type.emulator'),
+  real: t('market.type.real'),
 }[marketStore.marketType]));
 
 const balance = computed(() => `$ ${profileStore.balance}`);

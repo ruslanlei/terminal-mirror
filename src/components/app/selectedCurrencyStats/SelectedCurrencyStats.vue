@@ -3,12 +3,16 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive } from 'vue';
+import { reactive } from 'vue';
 import CurrencyStats from '@/components/core/currencyStats/CurrencyStats.vue';
 import { ICurrencyStats } from '@/components/core/currencyStats';
+import { Currency } from '@/api/endpoints/marketdata/stats';
+import { useMarketStore } from '@/stores/market';
+
+const marketStore = useMarketStore();
 
 const stats = reactive<ICurrencyStats>(({
-  currency: 'btc',
+  currency: marketStore.activePairData?.base || Currency.BTC,
   price: 16788,
   amount: '8990M',
   change: 890,
@@ -19,9 +23,9 @@ const stats = reactive<ICurrencyStats>(({
 
 // FIXME: for MVP
 setInterval(() => {
-  stats.currency = stats.currency === 'btc'
-    ? 'eth'
-    : 'btc';
+  stats.currency = stats.currency === Currency.BTC
+    ? Currency.BTC
+    : Currency.ETH;
   Object.entries(stats).forEach(([key, value], index) => {
     if (typeof value === 'number') {
       setTimeout(() => {

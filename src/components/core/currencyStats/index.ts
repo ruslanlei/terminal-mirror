@@ -1,4 +1,4 @@
-import { Currency } from '@/components/core/currencyLogo';
+import { Currency } from '@/api/endpoints/marketdata/stats';
 
 export interface ICurrencyStats {
   currency: Currency,

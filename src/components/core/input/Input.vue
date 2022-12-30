@@ -18,6 +18,12 @@
       </slot>
     </span>
     <div :class="$style.field">
+      <div
+        v-if="'prepend' in $slots"
+        :class="$style.prepend"
+      >
+        <slot name="prepend" />
+      </div>
       <input
         ref="input"
         v-model="localValue"
@@ -135,6 +141,38 @@ defineExpose({
   }
 }
 
+.secondary2 {
+  .prepend, .append {
+    color: rgb(var(--color-accent-2));
+    transition: color 200ms;
+  }
+  &.focus {
+    .field {
+    }
+    .prepend, .append {
+      color: rgb(var(--color-accent-1));
+    }
+  }
+  .label {
+    color: rgba(var(--color-primary-1), 1);
+  }
+  .field {
+    color: rgba(var(--color-accent-1), 1);
+    background-color: rgb(var(--color-background-2));
+    transition: .15s border-color;
+    @include text;
+    font-weight: 500;
+    & > input {
+      &::placeholder {
+        color: rgba(var(--color-accent-2), 1);
+        font-weight: 500;
+      }
+    }
+    &:hover {
+    }
+  }
+}
+
 // sizes
 .lg {
   .label {
@@ -147,6 +185,30 @@ defineExpose({
     border-radius: 10px;
     & > input {
       padding: 18px 20px;
+    }
+    & + .error {
+      margin-top: 6px;
+    }
+  }
+
+  .error {
+  }
+}
+
+.md {
+  .label {
+    & + .field {
+      margin-top: 6px;
+    }
+  }
+
+  .field {
+    border-radius: 10px;
+    & > input {
+      padding: 9px;
+    }
+    & > input, .append {
+      @include title3;
     }
     & + .error {
       margin-top: 6px;
@@ -209,6 +271,10 @@ defineExpose({
     height: 100%;
     width: 100%;
   }
+}
+
+.prepend {
+  margin-left: 10px;
 }
 
 .append {

@@ -35,28 +35,28 @@ const props = withDefaults(
 );
 
 const logoMap: Record<Currency, any> = {
+  BTC: BtcLogo,
+  ETH: EthLogo,
+  bnb: BnbLogo,
   achain: AchainLogo,
   asch: AschLogo,
-  bnb: BnbLogo,
   bread: BreadLogo,
-  btc: BtcLogo,
   cobinhood: CobinhoodLogo,
   dash: DashLogo,
-  eth: EthLogo,
   iot: IotLogo,
   ltc: LitecoinLogo,
   tether: TetherLogo,
 };
 
 const colorMap: Record<Currency, string> = {
+  BTC: '#F49D35',
+  ETH: '#627EEA',
+  bnb: '#F3BA2F',
   achain: '#767DFF',
   asch: '#FAA00D',
-  bnb: '#F3BA2F',
   bread: '#FE5D86',
-  btc: '#F49D35',
   cobinhood: '#13BF99',
   dash: '#2573C2',
-  eth: '#627EEA',
   iot: '#102044',
   ltc: '#BEBEBE',
   tether: '#26A17B',

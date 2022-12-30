@@ -14,7 +14,8 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { Currency, CurrencyLogoProps } from './index';
+import { Currency } from '@/api/endpoints/marketdata/stats';
+import { CurrencyLogoProps } from './index';
 import AchainLogo from './assets/achain.svg';
 import AschLogo from './assets/asch.svg';
 import BnbLogo from './assets/bnb.svg';
@@ -37,12 +38,12 @@ const props = withDefaults(
 const logoMap: Record<Currency, any> = {
   BTC: BtcLogo,
   ETH: EthLogo,
-  bnb: BnbLogo,
+  BNB: BnbLogo,
+  DASH: DashLogo,
   achain: AchainLogo,
   asch: AschLogo,
   bread: BreadLogo,
   cobinhood: CobinhoodLogo,
-  dash: DashLogo,
   iot: IotLogo,
   ltc: LitecoinLogo,
   tether: TetherLogo,
@@ -51,12 +52,12 @@ const logoMap: Record<Currency, any> = {
 const colorMap: Record<Currency, string> = {
   BTC: '#F49D35',
   ETH: '#627EEA',
-  bnb: '#F3BA2F',
+  BNB: '#F3BA2F',
+  DASH: '#2573C2',
   achain: '#767DFF',
   asch: '#FAA00D',
   bread: '#FE5D86',
   cobinhood: '#13BF99',
-  dash: '#2573C2',
   iot: '#102044',
   ltc: '#BEBEBE',
   tether: '#26A17B',

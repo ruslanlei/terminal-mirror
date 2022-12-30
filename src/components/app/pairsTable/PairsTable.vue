@@ -4,6 +4,8 @@
     v-model:sort-direction="sortDirection"
     :columns="columns"
     :records="computedRecords"
+    :state="state"
+    @record-click="onRecordClick"
   >
     <template
       #column(pairs)="{
@@ -23,7 +25,27 @@
       </div>
     </template>
     <template #cell(pairs)="{ data: { base, quote } }">
-      <CurrencyLogo :currency="base" />
+      <button
+        type="button"
+        :class="$style.addToFavorites"
+      >
+        <Icon
+          :size="24"
+          icon="star"
+        />
+      </button>
+      <CurrencyLogo
+        :currency="base"
+        :class="$style.currencyLogo"
+      />
+      <div :class="$style.pairName">
+        <div :class="$style.base">
+          {{ base }}
+        </div>
+        <div :class="$style.quote">
+          {{ quote }}
+        </div>
+      </div>
     </template>
   </Table>
 </template>
@@ -34,6 +56,7 @@ import { useI18n } from 'vue-i18n';
 import Table from '@/components/core/table/Table.vue';
 import TrendingIcon from '@/components/core/trendingIcon/TrendingIcon.vue';
 import CurrencyLogo from '@/components/core/currencyLogo/CurrencyLogo.vue';
+import Icon from '@/components/core/icon/Icon.vue';
 import {
   PairsTableColumn,
   PairsTableProps,
@@ -57,6 +80,7 @@ const columns = computed<PairsTableColumn[]>(() => [
     label: t('pairs.table.priceAndVolume'),
     slug: 'priceAndVolume',
     size: 1,
+    align: 'right',
   },
 ]);
 
@@ -78,14 +102,47 @@ const computedRecords = computed<PairsTableRecord[]>(
     },
   })),
 );
+
+const onRecordClick = (id: Pair['id']) => {
+  console.log(id);
+};
 </script>
 
 <style lang="scss" module>
+@import "src/assets/styles/utils";
+
 .columnPairsLabel {
   display: flex;
   align-items: center;
   .text {
     margin-left: 5px;
   }
+}
+
+.currencyLogo {
+  margin-left: 10px;
+}
+
+.pairName {
+  margin-left: 10px;
+}
+
+.addToFavorites {
+  color: rgb(var(--color-accent-2));
+  transition: color 200ms;
+  cursor: pointer;
+  &:hover {
+    color: rgb(var(--color-accent-1));
+  }
+}
+
+.base {
+  @include title3;
+  font-weight: 600;
+}
+
+.quote {
+  @include title7;
+  color: rgb(var(--color-accent-2));
 }
 </style>

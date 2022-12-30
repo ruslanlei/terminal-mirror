@@ -1,9 +1,3 @@
-export enum TableAlign {
-  LEFT = 'left',
-  RIGHT = 'right',
-  CENTER = 'center',
-}
-
 export type TableColumn<S = string> = {
   label: string,
   slug: S,
@@ -13,7 +7,7 @@ export type TableColumn<S = string> = {
   // For example { size: '10px' } or { size: 1 }
   size?: string | number,
   sortable?: boolean,
-  align?: TableAlign,
+  align?: 'left' | 'center' | 'right',
 }
 
 export type TableRecord<
@@ -40,6 +34,8 @@ export enum SortDirection {
   DESC = 'desc',
 }
 
+export type TableState = 'scrollable' | 'defaultSize' | 'tinySize';
+
 export interface TableProps {
   type: tableType,
   columns: TableColumn[],
@@ -49,4 +45,5 @@ export interface TableProps {
   gridColumns?: number,
   sortBy?: TableColumn['slug'] | null,
   sortDirection?: SortDirection,
+  state?: TableState | TableState[],
 }

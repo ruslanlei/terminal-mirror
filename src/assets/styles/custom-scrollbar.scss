@@ -1,4 +1,4 @@
-@mixin useCustomScrollbar() {
+@mixin scrollbarDefault() {
   &::-webkit-scrollbar-track {
     background: rgb(var(--color-background-2));
   }
@@ -7,6 +7,21 @@
     outline: none;
   }
   &::-webkit-scrollbar {
-    width: 13px;
+    width: 12px;
+  }
+}
+
+@mixin scrollbarSecondary($width: 12px, $borderRadius: 6px) {
+  &::-webkit-scrollbar-track {
+    background: rgb(var(--color-background-2));
+    border-radius: $borderRadius;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: rgb(var(--color-background-4));
+    outline: none;
+    border-radius: $borderRadius;
+  }
+  &::-webkit-scrollbar {
+    width: $width;
   }
 }

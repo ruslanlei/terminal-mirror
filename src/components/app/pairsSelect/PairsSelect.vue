@@ -14,8 +14,12 @@
         </template>
       </Input>
     </template>
-    <template #list>
-      <PairsTable :pairs="pairs" />
+    <template #list="{ tableClass }">
+      <PairsTable
+        :class="tableClass"
+        :pairs="pairs"
+        :state="['scrollable', 'tinySize']"
+      />
     </template>
   </PairsSelectContainer>
 </template>

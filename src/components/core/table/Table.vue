@@ -3,6 +3,7 @@
     :class="[
       $style.table,
       $style[type],
+      ...computedStates.map((s) => $style[s]),
     ]"
     :style="computedRootStyles"
   >
@@ -85,6 +86,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useTable } from '@/hooks/useTable';
+import { arrayFrom } from '@/utils/array';
 import {
   tableType,
   TableRecord,
@@ -127,6 +129,8 @@ const computedRootStyles = computed(() => ({
   } : {}),
 }));
 
+const computedStates = computed(() => arrayFrom(props.state));
+
 const {
   isAllRecordsSelected,
   onColumnClick,
@@ -139,24 +143,17 @@ const {
 <style lang="scss" module>
 @import "src/assets/styles/utils";
 
+// default state
 .table {
   color: white;
-  background-color: rgb(var(--color-black-2));
-  border-radius: 10px;
   &.list {
     .head {
       display: grid;
-      padding: 16px;
     }
-    .records {
-      padding: 14px 0;
-    }
+    .records {}
     .record {
       display: grid;
-      padding: 16px;
-      &.selected {
-        background-color: rgb(var(--color-black-3));
-      }
+      &.selected {}
       .recordColumn {}
     }
     .column {
@@ -181,11 +178,56 @@ const {
   }
   &.grid {
     display: grid;
-    grid-gap: 16px;
-    padding: 16px;
     .gridItem {}
   }
 }
 
 .recordColumn {}
+
+// states
+.scrollable {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  .records {
+    flex-grow: 1;
+    overflow-y: auto;
+    @include scrollbarSecondary();
+  }
+}
+
+.defaultSize {
+  border-radius: 10px;
+  &.list {
+    .head {
+      padding: 16px;
+    }
+    .records {
+      padding: 14px 0;
+    }
+    .record {
+      padding: 16px;
+    }
+  }
+  &.grid {
+    grid-gap: 16px;
+    padding: 16px;
+  }
+}
+
+.tinySize {
+  &.list {
+    &.scrollable {
+      .records {
+        @include scrollbarSecondary(6px, 3px);
+      }
+    }
+    .records {
+      margin-top: 15px;
+    }
+    .record {
+      padding: 5px 0;
+    }
+  }
+}
 </style>

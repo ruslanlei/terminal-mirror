@@ -65,7 +65,7 @@ const closeModal = (modalId: Modal['id']) => {
   justify-content: center;
   align-items: center;
   min-height: 100%;
-  @include useCustomScrollbar();
+  @include scrollbarDefault();
 }
 
 .module {

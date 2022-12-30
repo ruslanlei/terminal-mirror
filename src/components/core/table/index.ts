@@ -4,9 +4,9 @@ export enum TableAlign {
   CENTER = 'center',
 }
 
-export type TableColumn = {
+export type TableColumn<S = string> = {
   label: string,
-  slug: string,
+  slug: S,
   isSelect?: boolean,
   // string when value in or rems
   // and number when value equals to count of 'fr' (css fractions grid column).
@@ -16,10 +16,16 @@ export type TableColumn = {
   align?: TableAlign,
 }
 
-export type TableRecord = {
-  id: string,
+export type TableRecord<
+  Columns extends string = string,
+  Data = Record<Columns, any>,
+> = {
+  id: string | number,
+  data: Data,
+}
+
+export type InnerTableRecord = TableRecord & {
   isSelected?: boolean,
-  data: Record<string, TableColumn['slug']>
 }
 
 export type SelectedRecords = Array<TableRecord['id']>

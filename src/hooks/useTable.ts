@@ -1,16 +1,21 @@
 import { computed } from 'vue';
 import {
-  SelectedRecords, TableColumn, TableProps, TableRecord,
+  InnerTableRecord,
+  TableColumn,
+  TableProps,
+  TableRecord,
 } from '@/components/core/table';
+import { useLocalValue } from '@/hooks/useLocalValue';
 
 export const useTable = (
   props: TableProps,
   emit: any,
 ) => {
-  const localSelectedRecords = computed({
-    get: () => props.selectedRecords || [],
-    set: (value: SelectedRecords) => emit('update:selectedRecords', value),
-  });
+  const localSelectedRecords = useLocalValue<Array<TableRecord['id']>>(
+    props,
+    emit,
+    'selectedRecords',
+  );
   const isAllRecordsSelected = computed(
     () => localSelectedRecords.value.length === props.records.length,
   );
@@ -29,7 +34,7 @@ export const useTable = (
     }
   };
 
-  const toggleRecordSelect = (id: TableRecord['id']) => {
+  const toggleRecordSelect = (id: InnerTableRecord['id']) => {
     if (!props.isSelectable) return;
     const isSelected = localSelectedRecords.value.includes(id);
 
@@ -42,7 +47,7 @@ export const useTable = (
     }
   };
   const onCellClick = (
-    id: TableRecord['id'],
+    id: InnerTableRecord['id'],
     isSelectColumn: TableColumn['isSelect'],
   ) => {
     if (isSelectColumn) {
@@ -50,7 +55,7 @@ export const useTable = (
     }
   };
 
-  const computedRecords = computed<TableRecord[]>(() => props.records.map(
+  const computedRecords = computed<InnerTableRecord[]>(() => props.records.map(
     (record) => ({
       ...record,
       ...(props.isSelectable ? {

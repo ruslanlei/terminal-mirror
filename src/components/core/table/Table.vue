@@ -141,7 +141,6 @@ const {
   &.list {
     .head {
       display: grid;
-      border-bottom: 1px solid rgb(var(--color-primary-3));
       padding: 16px;
     }
     .records {

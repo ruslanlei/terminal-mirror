@@ -126,6 +126,10 @@
     "type": {
       "standard": "Standard",
       "market": "Market"
+    },
+    "table": {
+      "pairs": "Pairs",
+      "priceAndVolume": "Price/Volume"
     }
   }
 }

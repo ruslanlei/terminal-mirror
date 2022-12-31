@@ -229,7 +229,7 @@ const {
 .tinySize {
   &.list {
     &.scrollable {
-      @include scrollbarPrimary(6px, 3px);
+      @include scrollbarPrimary(4px, 2px);
       padding-right: 10px;
     }
     .column {

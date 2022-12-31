@@ -11,7 +11,7 @@ export type PairsTableRecord = TableRecord<PairsTableColumnSlug, {
     quote: Pair['quote'],
   },
   priceAndVolume: {
-    totalTrades: Pair['total_trades'],
+    totalTrades: Pair['total_trades'] | string,
   }
 }>;
 

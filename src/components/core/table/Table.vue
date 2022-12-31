@@ -189,10 +189,15 @@ const {
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  overflow-y: auto;
+  @include scrollbarPrimary();
+  .head {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
   .records {
     flex-grow: 1;
-    overflow-y: auto;
-    @include scrollbarSecondary();
   }
 }
 
@@ -218,9 +223,8 @@ const {
 .tinySize {
   &.list {
     &.scrollable {
-      .records {
-        @include scrollbarSecondary(6px, 3px);
-      }
+      @include scrollbarPrimary(6px, 3px);
+      padding-right: 10px;
     }
     .column {
       @include title4;

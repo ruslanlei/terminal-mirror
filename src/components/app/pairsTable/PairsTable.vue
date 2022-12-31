@@ -47,6 +47,9 @@
         </div>
       </div>
     </template>
+    <template #cell(priceAndVolume)="{ data: { totalTrades } }">
+      {{ totalTrades }}
+    </template>
   </Table>
 </template>
 
@@ -64,6 +67,7 @@ import {
 } from '@/components/app/pairsTable/index';
 import { Pair } from '@/api/endpoints/marketdata/stats';
 import { SortDirection } from '@/components/core/table';
+import { humanizeNumber } from '@/utils/number';
 
 const props = defineProps<PairsTableProps>();
 
@@ -97,7 +101,7 @@ const computedRecords = computed<PairsTableRecord[]>(
         quote: pair.quote,
       },
       priceAndVolume: {
-        totalTrades: pair.total_trades,
+        totalTrades: humanizeNumber(pair.total_trades),
       },
     },
   })),

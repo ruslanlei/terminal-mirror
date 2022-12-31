@@ -11,13 +11,13 @@
   }
 }
 
-@mixin scrollbarSecondary($width: 12px, $borderRadius: 6px) {
+@mixin scrollbarPrimary($width: 12px, $borderRadius: 6px) {
   &::-webkit-scrollbar-track {
-    background: rgb(var(--color-background-2));
+    background-color: rgb(var(--color-background-2));
     border-radius: $borderRadius;
   }
   &::-webkit-scrollbar-thumb {
-    background-color: rgb(var(--color-background-4));
+    background: var(--color-main-gradient);
     outline: none;
     border-radius: $borderRadius;
   }

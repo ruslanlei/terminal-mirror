@@ -1,6 +1,12 @@
-import {computed} from 'vue';
-import {InnerTableRecord, SortDirection, TableColumn, TableProps, TableRecord,} from '@/components/core/table';
-import {useLocalValue} from '@/hooks/useLocalValue';
+import { computed } from 'vue';
+import {
+  InnerTableRecord,
+  SortDirection,
+  TableColumn,
+  TableProps,
+  TableRecord,
+} from '@/components/core/table';
+import { useLocalValue } from '@/hooks/useLocalValue';
 
 export const useTable = (
   props: TableProps,
@@ -74,6 +80,8 @@ export const useTable = (
   ));
 
   const onRowClick = (id: TableRecord['id']) => {
+    if (!props.isRowsClickable) return;
+
     emit('record-click', id);
   };
 

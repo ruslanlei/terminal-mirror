@@ -3,6 +3,7 @@
     :class="[
       $style.table,
       $style[type],
+      isRowsClickable && $style.rowsClickable,
       ...computedStates.map((s) => $style[s]),
     ]"
     :style="computedRootStyles"
@@ -151,6 +152,11 @@ const {
       display: grid;
     }
     .records {}
+    &.rowsClickable {
+      .records {
+        cursor: pointer;
+      }
+    }
     .record {
       display: grid;
       &.selected {}

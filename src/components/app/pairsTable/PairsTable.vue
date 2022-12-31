@@ -5,6 +5,7 @@
     :columns="columns"
     :records="computedRecords"
     :state="state"
+    :is-rows-clickable="true"
     @record-click="onRecordClick"
   >
     <template
@@ -48,7 +49,14 @@
       </div>
     </template>
     <template #cell(priceAndVolume)="{ data: { totalTrades } }">
-      {{ totalTrades }}
+      <div>
+        <div :class="$style.price">
+          {{ totalTrades }}
+        </div>
+        <div :class="$style.volume">
+          {{ totalTrades }}
+        </div>
+      </div>
     </template>
   </Table>
 </template>
@@ -148,5 +156,17 @@ const onRecordClick = (id: Pair['id']) => {
 .quote {
   @include title7;
   color: rgb(var(--color-accent-2));
+}
+
+.price {
+  @include title5;
+  color: rgb(var(--color-accent-1));
+  text-align: right;
+}
+
+.volume {
+  @include title5;
+  color: rgb(var(--color-accent-2));
+  text-align: right;
 }
 </style>

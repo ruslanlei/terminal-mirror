@@ -46,4 +46,5 @@ export interface TableProps {
   sortBy?: TableColumn['slug'] | null,
   sortDirection?: SortDirection,
   state?: TableState | TableState[],
+  isRowsClickable?: boolean,
 }

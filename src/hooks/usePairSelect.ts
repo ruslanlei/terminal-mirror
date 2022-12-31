@@ -12,13 +12,13 @@ export const usePairSelect = () => {
 
   const query = ref<string>('');
 
-  const computedPairs = ref<Pair[]>([]);
+  const computedPairs = ref<Pair[]>(pairs.value);
 
   watch(query, debounce(async () => {
     computedPairs.value = pairs.value.filter(
       (pair) => pair.alias.toLowerCase().includes(query.value.toLowerCase()),
     );
-  }, 300), { immediate: true });
+  }, 300));
 
   return {
     query,

@@ -37,7 +37,7 @@ const tabs = computed<TabsProps['tabs']>(() => [
     value: 'orders',
   },
   {
-    label: t('order.tab.couples'),
+    label: t('order.tab.pairs'),
     value: 'couples',
   },
   // {

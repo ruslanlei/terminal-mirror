@@ -10,6 +10,7 @@ import { useToastStore } from '@/stores/toasts';
 import { useI18n } from 'vue-i18n';
 import { resetPassword, ResetPasswordDTO } from '@/api/endpoints/auth/resetPassword';
 import { useProfileStore } from '@/stores/profile';
+import { verifyEmail, VerifyEmailDTO } from '@/api/endpoints/auth/verifyEmail';
 
 export const checkAuth = (
   isAuthorized: boolean,
@@ -121,6 +122,8 @@ export const useSessionStore = defineStore('session', () => {
     sessionStorage.clear();
   };
 
+  const handleVerifyEmail = async (key: VerifyEmailDTO['key']) => verifyEmail({ key });
+
   return {
     token,
     setToken,
@@ -130,5 +133,6 @@ export const useSessionStore = defineStore('session', () => {
     resetPassword: handleResetPassword,
     register,
     logout,
+    verifyEmail: handleVerifyEmail,
   };
 });

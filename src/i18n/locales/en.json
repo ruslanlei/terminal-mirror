@@ -46,6 +46,12 @@
       "submit": "Send code",
       "emailSent": "Email with recovery link has been sent",
       "failed": "Failed to send recovery link"
+    },
+    "verifyEmail": {
+      "error": {
+        "noToken": "Token is not provided",
+        "badToken": "Provided token is invalid"
+      }
     }
   },
   "profile": {

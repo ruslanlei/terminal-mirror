@@ -1,5 +1,10 @@
 <template>
-  <div :class="[$style.wrapper, $style[size]]">
+  <div
+    :class="[
+      $style.wrapper,
+      state.map((s) => $style[s])
+    ]"
+  >
     <div :class="$style.logoIconWrapper">
       <div ref="logoIcon">
         <LogoIcon
@@ -15,8 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
-import { playAnimation } from '@/utils/animation';
+import { ref } from 'vue';
 import { LogoProps } from './index';
 import LogoIcon from './assets/logoIcon.svg';
 import LogoText from './assets/logoText.svg';
@@ -25,55 +29,57 @@ withDefaults(
   defineProps<LogoProps>(),
   {
     type: 'full',
-    size: 'md',
+    state: () => ['mdSize', 'defaultState2'],
   },
 );
 
 const logoIcon = ref();
-
-onMounted(() => {
-  playAnimation({
-    targets: logoIcon.value,
-    duration: 2000,
-    rotate: -360,
-    loop: true,
-    delay: 20000,
-  });
-});
 </script>
 
 <style lang="scss" module>
 .wrapper {
   display: flex;
   align-items: center;
-  &.md {
-    .logoIconWrapper {
-      padding: 10px;
-    }
+}
 
-    .logoIcon {
-      width: 22px;
-      height: 22px;
-    }
+.mdSize {
+  .logoIconWrapper {
+    padding: 10px;
   }
-  &.sm {
-    .logoIconWrapper {
-      padding: 10px;
-    }
 
-    .logoIcon {
-      width: 22px;
-      height: 22px;
-    }
+  .logoIcon {
+    width: 22px;
+    height: 22px;
+  }
+}
+.smSize {
+  .logoIconWrapper {
+    padding: 10px;
+  }
 
-    .logoText {
-      margin-left: 5px;
-    }
+  .logoIcon {
+    width: 20px;
+    height: 28px;
+  }
+
+  .logoText {
+    margin-left: 5px;
+  }
+}
+
+.defaultState {
+  .logoIconWrapper {
+    background-color: rgb(var(--color-background-2));
+  }
+}
+
+.defaultState2 {
+  .logoIconWrapper {
+    background-color: rgb(var(--color-background-3));
   }
 }
 
 .logoIconWrapper {
-  background-color: rgb(var(--color-background-3));
   border-radius: 50%;
 }
 
@@ -81,5 +87,7 @@ onMounted(() => {
   display: block;
 }
 
-.logoText {}
+.logoText {
+  margin-left: 15px;
+}
 </style>

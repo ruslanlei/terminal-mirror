@@ -1,4 +1,6 @@
+export type LogoState = 'smSize' | 'mdSize' | 'defaultState' | 'defaultState2';
+
 export interface LogoProps {
   type: 'slim' | 'full',
-  size: 'sm' | 'md',
+  state?: LogoState | LogoState[],
 }

@@ -6,7 +6,7 @@
           :class="$style.logo"
           :to="{ name: 'auth-sign-in' }"
         >
-          <Logo />
+          <Logo :state="['mdSize', 'defaultState']" />
         </Link>
         <LanguageSelect />
       </header>

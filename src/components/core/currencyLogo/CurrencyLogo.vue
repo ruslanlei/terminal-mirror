@@ -40,12 +40,12 @@ const logoMap: Record<Currency, any> = {
   ETH: EthLogo,
   BNB: BnbLogo,
   DASH: DashLogo,
+  LTC: LitecoinLogo,
   achain: AchainLogo,
   asch: AschLogo,
   bread: BreadLogo,
   cobinhood: CobinhoodLogo,
   iot: IotLogo,
-  ltc: LitecoinLogo,
   tether: TetherLogo,
 };
 
@@ -54,12 +54,12 @@ const colorMap: Record<Currency, string> = {
   ETH: '#627EEA',
   BNB: '#F3BA2F',
   DASH: '#2573C2',
+  LTC: '#BEBEBE',
   achain: '#767DFF',
   asch: '#FAA00D',
   bread: '#FE5D86',
   cobinhood: '#13BF99',
   iot: '#102044',
-  ltc: '#BEBEBE',
   tether: '#26A17B',
 };
 

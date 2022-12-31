@@ -20,6 +20,7 @@
         :class="tableClass"
         :pairs="pairs"
         :state="['scrollable', 'tinySize']"
+        @select-pair="setPair"
       />
     </template>
   </PairsSelectContainer>
@@ -39,6 +40,7 @@ const {
   query,
   pairs,
   getPairs,
+  setPair,
 } = usePairSelect();
 
 getPairs();

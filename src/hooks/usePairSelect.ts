@@ -20,9 +20,14 @@ export const usePairSelect = () => {
     );
   }, 300));
 
+  const setPair = (id: Pair['id']) => {
+    marketStore.setPair(id);
+  };
+
   return {
     query,
     pairs: computedPairs,
     getPairs: marketStore.getPairs,
+    setPair,
   };
 };

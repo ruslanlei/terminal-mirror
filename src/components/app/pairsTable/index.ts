@@ -19,3 +19,7 @@ export interface PairsTableProps {
   pairs: Pair[],
   state?: TableProps['state'],
 }
+
+export interface PairsTableEmits {
+  (e: 'selectPair', value: Pair['id']): void,
+}

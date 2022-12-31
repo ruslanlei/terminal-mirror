@@ -1,9 +1,9 @@
 <template>
-  <CurrencyStats :stats="stats" />
+  <CurrencyStats :stats="computedStats" />
 </template>
 
 <script setup lang="ts">
-import { reactive } from 'vue';
+import { computed, reactive } from 'vue';
 import CurrencyStats from '@/components/core/currencyStats/CurrencyStats.vue';
 import { ICurrencyStats } from '@/components/core/currencyStats';
 import { Currency } from '@/api/endpoints/marketdata/stats';
@@ -11,14 +11,18 @@ import { useMarketStore } from '@/stores/market';
 
 const marketStore = useMarketStore();
 
-const stats = reactive<ICurrencyStats>(({
-  currency: marketStore.activePairData?.base || Currency.BTC,
+const stats = reactive<Omit<ICurrencyStats, 'currency'>>(({
   price: 16788,
   amount: '8990M',
   change: 890,
   changePercents: '2.33%',
   max: 22990,
   min: 14203,
+}));
+
+const computedStats = computed(() => ({
+  ...stats,
+  currency: marketStore.activePairData?.base || Currency.BTC,
 }));
 
 // FIXME: for MVP

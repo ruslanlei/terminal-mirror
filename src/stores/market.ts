@@ -18,6 +18,10 @@ export const useMarketStore = defineStore('market', () => {
 
   const activePair = useStorage<Pair['id']>('activePair', 1);
 
+  const setPair = (pairId: Pair['id']) => {
+    activePair.value = pairId;
+  };
+
   const activePairData = computed(() => pairs.value.find(
     (pair) => pair.id === activePair.value,
   ));
@@ -39,6 +43,7 @@ export const useMarketStore = defineStore('market', () => {
     pairs,
     marketType,
     activePair,
+    setPair,
     activePairData,
     getPairs: handleGetPairs,
   };

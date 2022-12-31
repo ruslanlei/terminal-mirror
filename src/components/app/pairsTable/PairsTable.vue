@@ -69,7 +69,7 @@ import TrendingIcon from '@/components/core/trendingIcon/TrendingIcon.vue';
 import CurrencyLogo from '@/components/core/currencyLogo/CurrencyLogo.vue';
 import Icon from '@/components/core/icon/Icon.vue';
 import {
-  PairsTableColumn,
+  PairsTableColumn, PairsTableEmits,
   PairsTableProps,
   PairsTableRecord,
 } from '@/components/app/pairsTable/index';
@@ -78,6 +78,8 @@ import { SortDirection } from '@/components/core/table';
 import { humanizeNumber } from '@/utils/number';
 
 const props = defineProps<PairsTableProps>();
+
+const emit = defineEmits<PairsTableEmits>();
 
 const { t } = useI18n();
 
@@ -116,7 +118,7 @@ const computedRecords = computed<PairsTableRecord[]>(
 );
 
 const onRecordClick = (id: Pair['id']) => {
-  console.log(id);
+  emit('selectPair', id);
 };
 </script>
 

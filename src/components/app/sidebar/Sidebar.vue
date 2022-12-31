@@ -10,12 +10,12 @@
     <template #tab(couples)>
       <PairSelect />
     </template>
-    <template #tab(glasses)>
-      glasses
-    </template>
-    <template #tab(widget)>
-      widget
-    </template>
+    <!--    <template #tab(glasses)>-->
+    <!--      glasses-->
+    <!--    </template>-->
+    <!--    <template #tab(widget)>-->
+    <!--      widget-->
+    <!--    </template>-->
   </Tabs>
 </template>
 
@@ -40,14 +40,14 @@ const tabs = computed<TabsProps['tabs']>(() => [
     label: t('order.tab.couples'),
     value: 'couples',
   },
-  {
-    label: t('order.tab.glasses'),
-    value: 'glasses',
-  },
-  {
-    label: t('order.tab.widget'),
-    value: 'widget',
-  },
+  // {
+  //   label: t('order.tab.glasses'),
+  //   value: 'glasses',
+  // },
+  // {
+  //   label: t('order.tab.widget'),
+  //   value: 'widget',
+  // },
 ]);
 
 </script>

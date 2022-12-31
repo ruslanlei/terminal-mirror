@@ -25,7 +25,7 @@ import { useI18n } from 'vue-i18n';
 import Tabs from '@/components/core/tabs/Tabs.vue';
 import { TabsProps } from '@/components/core/tabs';
 import OrderForm from '@/components/app/orderForm/OrderForm.vue';
-import PairSelect from '@/components/app/pairsSelect/PairsSelect.vue';
+import PairSelect from '@/components/app/pairSelect/PairSelect.vue';
 
 const { t } = useI18n();
 

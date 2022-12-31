@@ -17,28 +17,29 @@
       {{ t('order.amount') }}
     </template>
     <template #amountInput>
-      <Input
+      <NumberInput
         type="number"
-        size="sm"
+        :state="['defaultColor', 'smSize']"
+        :min="0.000001"
       >
         <template #append>
           BTC
         </template>
-      </Input>
+      </NumberInput>
     </template>
     <template #volumeLabel>
       {{ t('order.volume') }}
     </template>
     <template #volumeInput>
-      <Input
+      <NumberInput
         v-model="depositWithLeverage"
-        type="number"
-        size="sm"
+        :state="['defaultColor', 'smSize']"
+        :min="1"
       >
         <template #append>
           USDT
         </template>
-      </Input>
+      </NumberInput>
     </template>
     <template #depositLabel>
       {{ t('order.deposit') }}
@@ -94,7 +95,7 @@ const { t } = useI18n();
 
 const balance = ref(3208);
 
-const deposit = ref(0);
+const deposit = ref(1);
 
 const leverage = ref(1);
 

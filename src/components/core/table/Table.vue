@@ -222,6 +222,10 @@ const {
         @include scrollbarSecondary(6px, 3px);
       }
     }
+    .column {
+      @include title4;
+      font-weight: 600;
+    }
     .records {
       margin-top: 15px;
     }

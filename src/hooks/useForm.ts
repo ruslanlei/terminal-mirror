@@ -46,10 +46,15 @@ export const useForm = (
 
   // errors
   const errorsList = ref<Array<{ path: string, message: string }>>([]);
-  const errorsMap = computed(() => errorsList.value.reduce((map, error) => ({
+  const errorsMap = computed<{}>(() => errorsList.value.reduce((map, error) => ({
     ...map,
     [error.path]: error.message,
   }), {}));
+
+  const computedErrorsMap = computed<{}>(() => ({
+    ...errorsMap,
+    ...props.externalErrors,
+  }));
 
   const isFormValid = computed(() => !errorsList.value.length);
 
@@ -119,7 +124,7 @@ export const useForm = (
   provide<FormProvide>(getFormInjectKey(props.formKey), {
     model,
     isValidated,
-    errorsMap,
+    errorsMap: computedErrorsMap,
     touchedMap,
     touchBy: props.touchBy,
     permanentValidate,
@@ -142,7 +147,7 @@ export const useForm = (
     touchAll,
     clearTouchedMap,
     errorsList,
-    errorsMap,
+    errorsMap: computedErrorsMap,
     isFormValid,
     touchedMap,
     handleSubmit,

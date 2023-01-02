@@ -12,11 +12,13 @@
 import {
   ref,
   VueElement,
-  defineProps,
 } from 'vue';
 import { useForm } from '@/hooks/useForm';
 import {
-  DefaultFormKey, FormEmits, FormProps, touchTrigger,
+  FormProps,
+  FormEmits,
+  touchTrigger,
+  DefaultFormKey,
 } from './index';
 
 const form = ref<VueElement | null>(null);
@@ -28,6 +30,7 @@ const props = withDefaults(
     touchBy: 'blur' as touchTrigger.BLUR,
     submitOnEnter: false,
     formKey: 'default' as DefaultFormKey,
+    externalErrors: () => ({}),
   },
 );
 

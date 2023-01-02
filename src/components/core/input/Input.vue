@@ -115,6 +115,7 @@ defineExpose({
 
 // states
 .default {
+  -webkit-appearance: none;
   &.focus {
     .field {
       border: 1px solid rgb(var(--color-accent-1));

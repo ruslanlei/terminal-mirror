@@ -1,4 +1,5 @@
 import { post } from '@/api';
+import { ErrorResponse } from '@/api/common';
 
 export interface SignUpDTO {
   username: string,
@@ -9,10 +10,6 @@ export interface SignUpDTO {
 
 export type SignUpModel = Omit<SignUpDTO, 'password1' | 'password2'> & {
   password: string,
-}
-
-export interface SignUpResponse {
-  non_field_errors?: string[],
 }
 
 export const signUp = ({
@@ -27,5 +24,5 @@ export const signUp = ({
     password2: password,
   };
 
-  return post<SignUpResponse>('/auth/signup/', dto);
+  return post<ErrorResponse | null>('/auth/signup/', dto);
 };

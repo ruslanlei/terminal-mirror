@@ -3,6 +3,7 @@
     v-model="model"
     :validation-schema="validationSchema"
     touch-by="input"
+    :external-errors="serverErrors"
     @submit="handleSubmit"
   >
     <SignUpContainer>
@@ -77,6 +78,7 @@ const {
   validationSchema,
   handleSubmit,
   isLoading,
+  serverErrors,
 } = useSignUp();
 
 onMounted(() => {

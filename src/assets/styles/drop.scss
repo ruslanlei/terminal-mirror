@@ -32,7 +32,15 @@ option {
   appearance: none;
   font: inherit;
   color: inherit;
+  &:-webkit-autofill,
+  &:-webkit-autofill:focus {
+    transition: background-color 600000s 0s, color 600000s 0s;
+  }
+  &[data-autocompleted] {
+    background-color: transparent !important;
+  }
 }
+
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {

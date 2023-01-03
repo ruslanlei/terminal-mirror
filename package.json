@@ -22,8 +22,7 @@
     "currency.js": "^2.0.4",
     "numeral": "^2.0.6",
     "uuid": "^9.0.0",
-    "vue-flatpickr-component": "^11.0.1",
-    "floating-vue": "^2.0.0-beta.20"
+    "vue-flatpickr-component": "^11.0.1"
   },
   "devDependencies": {
     "vite": "^4.0.3",

@@ -1,5 +1,5 @@
 <template>
-  <Dropdown>
+  <Dropdown v-model:is-visible="isCalendarVisible">
     <template #trigger>
       <button :class="[$style.trigger, $style[state]]">
         {{ displayValue }}
@@ -78,6 +78,8 @@ const displayValue = ref('');
 watch([localValue, computedIntl], () => {
   displayValue.value = formatter.value(localValue.value);
 }, { immediate: true });
+
+const isCalendarVisible = ref(false);
 </script>
 
 <style lang="scss" module>

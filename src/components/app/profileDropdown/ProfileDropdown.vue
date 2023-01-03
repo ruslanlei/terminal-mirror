@@ -1,5 +1,9 @@
 <template>
-  <Dropdown :distance="10">
+  <Dropdown
+    v-model:is-visible="isVisible"
+    :distance="10"
+    :placement="['bottom', 'right']"
+  >
     <template #trigger>
       <button
         type="button"
@@ -19,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import Dropdown from '@/components/core/dropdown/Dropdown.vue';
 import Icon from '@/components/core/icon/Icon.vue';
 import Avatar from '@/components/core/avatar/Avatar.vue';
@@ -28,6 +32,8 @@ import { useProfileStore } from '@/stores/profile';
 
 const profileStore = useProfileStore();
 const avatar = computed(() => profileStore.profile?.avatar);
+
+const isVisible = ref(false);
 </script>
 
 <style lang="scss" module>

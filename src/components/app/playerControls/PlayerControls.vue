@@ -31,8 +31,7 @@
       />
     </div>
     <Button
-      state="secondary1"
-      size="md"
+      :state="['mdSize', 'secondary1Color', 'interactive']"
       :class="$style.prematureResultButton"
     >
       {{ t('emulator.player.prematureResult') }}

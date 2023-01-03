@@ -47,8 +47,8 @@
       </template>
       <template #submit>
         <Button
-          size="lg"
           type="submit"
+          :state="['lgSize', 'interactive']"
           :is-loading="isLoading"
         >
           {{ t('auth.submit') }}

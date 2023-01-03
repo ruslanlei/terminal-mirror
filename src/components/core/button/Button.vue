@@ -3,9 +3,8 @@
     tabindex="0"
     :class="[
       $style.button,
-      $style[state],
-      $style[size],
       isDisabled && $style.disabled,
+      ...computedState,
     ]"
   >
     <div :class="[$style.loaderCap, !isLoading && $style.hidden]">
@@ -19,16 +18,19 @@
 
 <script setup lang="ts">
 import Loader from '@/components/core/loader/Loader.vue';
+import { useComputedState } from '@/hooks/useComputedState';
 import { ButtonProps } from './index';
 
-withDefaults(
+const props = withDefaults(
   defineProps<ButtonProps>(),
   {
-    state: 'primary',
+    state: 'primaryColor',
     isDisabled: false,
     isLoading: false,
   },
 );
+
+const computedState = useComputedState(props);
 </script>
 
 <style lang="scss" module>
@@ -38,15 +40,8 @@ withDefaults(
   width: 100%;
   display: block;
   position: relative;
-  transition: background-color 200ms, transform 200ms;
   &:not(.disabled) {
     cursor: pointer;
-  }
-  &:focus, &:hover {
-    transform: scale(1.01);
-  }
-  &:active {
-    transform: scale(0.99);
   }
 }
 
@@ -69,7 +64,17 @@ withDefaults(
   pointer-events: none;
 }
 
-.primary {
+.interactive {
+  transition: background-color 200ms, transform 200ms;
+  &:focus, &:hover {
+    transform: scale(1.01);
+  }
+  &:active {
+    transform: scale(0.99);
+  }
+}
+
+.primaryColor {
   color: rgba(var(--color-accent-1));
   background: var(--color-main-gradient);
 }
@@ -79,31 +84,31 @@ withDefaults(
   background-color: rgb(var(--color-primary-1));
 }
 
-.secondary1 {
+.secondary1Color {
   color: rgba(var(--color-accent-1));
   background-color: rgb(var(--color-background-1));
 }
 
-.secondary2 {
+.secondary2Color {
   color: rgba(var(--color-accent-1));
   background-color: rgb(var(--color-background-2));
 }
 
-.lg {
+.lgSize {
   padding: 15px;
   border-radius: 5px;
   @include text;
   font-weight: 600;
 }
 
-.md {
+.mdSize {
   padding: 8px;
   border-radius: 5px;
   @include title4;
   font-weight: 600;
 }
 
-.sm {
+.smSize {
   padding: 3.5px;
   border-radius: 5px;
   @include title5;

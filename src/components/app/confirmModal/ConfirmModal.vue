@@ -12,14 +12,12 @@
     </div>
     <div :class="$style.controls">
       <Button
-        state="outline-secondary"
         @click="handleClose"
       >
         {{ cancelLabel || t('cancelLabel') }}
       </Button>
       <Button
         :class="$style.submit"
-        state="danger"
         @click="handleSubmit"
       >
         {{ confirmLabel || t('confirmLabel') }}

@@ -72,8 +72,7 @@
     <template #submit>
       <Button
         type="submit"
-        state="primary"
-        size="md"
+        :state="['primaryColor', 'mdSize', 'interactive']"
         :class="$style.submit"
       >
         {{ t('order.submit') }}

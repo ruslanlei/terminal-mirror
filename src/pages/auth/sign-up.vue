@@ -45,7 +45,7 @@
       </template>
       <template #submit>
         <Button
-          size="lg"
+          :state="['lgSize', 'interactive']"
           type="submit"
           :is-loading="isLoading"
         >

@@ -4,8 +4,12 @@
       <Button
         v-for="option in options"
         :key="option.percents"
-        :state="checkIsValueEqualToPercent(option.percents) ? 'colored' : 'secondary2'"
-        size="sm"
+        :state="[
+          checkIsValueEqualToPercent(option.percents)
+            ? 'colored'
+            : 'secondary2Color',
+          'smSize',
+        ]"
         :class="$style.option"
         @click="setPercentOfBalance(option.percents)"
       >

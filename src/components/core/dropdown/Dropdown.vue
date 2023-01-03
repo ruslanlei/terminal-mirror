@@ -20,7 +20,10 @@
 
 <script setup lang="ts">
 import {
-  computed, onBeforeMount, onMounted, ref,
+  ref,
+  computed,
+  onBeforeMount,
+  onMounted,
 } from 'vue';
 import { teleportTargets } from '@/enums/teleport';
 import { useLocalValue } from '@/hooks/useLocalValue';
@@ -81,6 +84,15 @@ const calculateDropdownPosition = () => {
   let dropdownTop = 0;
   let dropdownLeft = 0;
 
+  // calculate base placement
+  if (basePlacement === 'bottom') {
+    dropdownTop = triggerRect.top + triggerRect.height;
+  }
+  if (basePlacement === 'top') {
+    dropdownTop = triggerRect.top - dropdownRect.height;
+  }
+
+  // calculate secondary placement
   if (basePlacement === 'bottom' || basePlacement === 'top') {
     if (secondaryPlacement === 'left') {
       dropdownLeft = triggerRect.left;
@@ -95,18 +107,24 @@ const calculateDropdownPosition = () => {
     }
   }
 
-  if (basePlacement === 'bottom') {
-    dropdownTop = triggerRect.top + triggerRect.height;
-  }
-
-  if (basePlacement === 'top') {
-    dropdownTop = triggerRect.top - dropdownRect.height;
-  }
-
+  // add distance
   if (props.distance) {
     if (basePlacement === 'bottom') {
       dropdownTop += props.distance;
     }
+    if (basePlacement === 'top') {
+      dropdownTop -= props.distance;
+    }
+  }
+
+  const gap = 10;
+
+  // keep within bounds
+  if (dropdownLeft < gap) {
+    dropdownLeft = gap;
+  }
+  if ((dropdownLeft + dropdownRect.width) > window.innerWidth) {
+    dropdownLeft = window.innerWidth - dropdownRect.width - gap;
   }
 
   dropdownTop = Math.round(dropdownTop);

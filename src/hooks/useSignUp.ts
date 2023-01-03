@@ -55,7 +55,13 @@ export const useSignUp = () => {
     }
 
     isLoading.value = true;
-    const { result, data } = await sessionStore.register(model.value);
+
+    const {
+      passwordConfirmation,
+      ...normalizedModel
+    } = model.value;
+
+    const { result, data } = await sessionStore.register(normalizedModel);
     if (!result && data) {
       serverErrors.value = processServerErrors(data);
     }

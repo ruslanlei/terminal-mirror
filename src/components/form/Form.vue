@@ -30,7 +30,7 @@ const props = withDefaults(
     touchBy: 'blur' as touchTrigger.BLUR,
     submitOnEnter: false,
     formKey: 'default' as DefaultFormKey,
-    externalErrors: () => ({}),
+    externalErrors: () => [],
   },
 );
 

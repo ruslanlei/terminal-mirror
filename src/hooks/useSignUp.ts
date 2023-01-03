@@ -6,6 +6,7 @@ import { useSessionStore } from '@/stores/session';
 import { SignUpModel } from '@/api/endpoints/auth/signUp';
 import { useToastStore } from '@/stores/toasts';
 import { processServerErrors } from '@/api/common';
+import { FormErrorsList } from '@/components/form';
 
 export const useSignUp = () => {
   const { t } = useI18n();
@@ -33,11 +34,11 @@ export const useSignUp = () => {
       .required(() => t('validationError.required')),
   });
 
-  const serverErrors = ref({});
+  const serverErrors = ref<FormErrorsList>([]);
 
   const isLoading = ref(false);
   const handleSubmit = async () => {
-    serverErrors.value = {};
+    serverErrors.value = [];
 
     if (!agreement.value) {
       toastStore.showDanger({
@@ -50,7 +51,7 @@ export const useSignUp = () => {
     isLoading.value = true;
     const { result, data } = await sessionStore.register(model.value);
     if (!result && data) {
-      processServerErrors(serverErrors.value, data);
+      serverErrors.value = processServerErrors(data);
     }
     isLoading.value = false;
 

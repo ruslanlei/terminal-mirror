@@ -1,13 +1,13 @@
 import { useToastStore } from '@/stores/toasts';
+import { FormErrorsList } from '@/components/form';
 
 export type ErrorResponse = {
   non_field_errors?: string[],
 } & Record<string, string[]>;
 
 export const processServerErrors = (
-  errorsMap: Record<string, string>,
   errorResponse: ErrorResponse,
-) => {
+): FormErrorsList => {
   const toastStore = useToastStore();
 
   if (errorResponse?.non_field_errors) {
@@ -20,11 +20,17 @@ export const processServerErrors = (
     delete errorResponse.non_field_errors;
   }
 
-  const serverErrorsMap = Object.entries(errorResponse)
-    .reduce((acc, [key, value]) => ({
-      ...acc,
-      [key]: value?.[0],
-    }), {});
+  const serverErrorsMap: FormErrorsList = Object.entries(errorResponse)
+    .reduce((
+      errorList: FormErrorsList,
+      [path, value],
+    ) => [
+      ...errorList,
+      {
+        path,
+        message: value?.[0],
+      },
+    ], []);
 
-  Object.assign(errorsMap, serverErrorsMap);
+  return serverErrorsMap;
 };

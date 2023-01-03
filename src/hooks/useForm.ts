@@ -11,8 +11,14 @@ import { isSchema } from 'yup';
 import {
   createObjectWithValues,
 } from '@/utils/object';
-import { FormProps, touchTrigger, FormEmits } from '@/components/form';
+import {
+  FormProps,
+  touchTrigger,
+  FormEmits,
+  FormErrorsList,
+} from '@/components/form';
 import cloneDeep from 'lodash/cloneDeep';
+import { useLocalValue } from '@/hooks/useLocalValue';
 
 export const getFormInjectKey = (key: string) => `form[${key}]`;
 
@@ -35,28 +41,27 @@ export const useForm = (
     throw new Error('Form error: invalid yup schema');
   }
 
-  const model = computed({
-    get: () => props.modelValue,
-    set: (modelValue) => emit('update:modelValue', modelValue),
-  });
+  const model = useLocalValue<any>(props, emit, 'modelValue');
   const primaryModelState = cloneDeep(props.modelValue);
   const resetModel = () => {
     model.value = cloneDeep(primaryModelState);
   };
 
   // errors
-  const errorsList = ref<Array<{ path: string, message: string }>>([]);
-  const errorsMap = computed<{}>(() => errorsList.value.reduce((map, error) => ({
+  const errorsList = ref<FormErrorsList>([]);
+  const externalErrors = useLocalValue<FormErrorsList>(props, emit, 'externalErrors');
+
+  const mixedErrorsList = computed(() => [
+    ...errorsList.value,
+    ...(externalErrors.value ? externalErrors.value : []),
+  ]);
+
+  const errorsMap = computed<{}>(() => mixedErrorsList.value.reduce((map, error) => ({
     ...map,
     [error.path]: error.message,
   }), {}));
 
-  const computedErrorsMap = computed<{}>(() => ({
-    ...errorsMap,
-    ...props.externalErrors,
-  }));
-
-  const isFormValid = computed(() => !errorsList.value.length);
+  const isFormValid = computed(() => !mixedErrorsList.value.length);
 
   // touch
   const touchedMap = reactive<Record<string, boolean>>(
@@ -81,8 +86,9 @@ export const useForm = (
   const validate = async () => {
     isValidated.value = true;
     try {
-      await props.validationSchema.validate(model.value, { abortEarly: false });
       errorsList.value = [];
+      externalErrors.value = [];
+      await props.validationSchema.validate(model.value, { abortEarly: false });
     } catch (err: any) {
       errorsList.value = err.inner
         .map(({ path, message }: any) => ({
@@ -124,7 +130,7 @@ export const useForm = (
   provide<FormProvide>(getFormInjectKey(props.formKey), {
     model,
     isValidated,
-    errorsMap: computedErrorsMap,
+    errorsMap,
     touchedMap,
     touchBy: props.touchBy,
     permanentValidate,
@@ -147,7 +153,7 @@ export const useForm = (
     touchAll,
     clearTouchedMap,
     errorsList,
-    errorsMap: computedErrorsMap,
+    errorsMap,
     isFormValid,
     touchedMap,
     handleSubmit,

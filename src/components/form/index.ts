@@ -11,18 +11,28 @@ export enum touchTrigger {
 
 export type DefaultFormKey = 'default';
 
+interface FormError {
+  path: string,
+  message: string,
+}
+
+export type FormErrorsList = FormError[];
+
+export type FormModel = Record<any, any>;
+
 export interface FormProps {
   formKey: string;
-  modelValue: Record<any, any>;
+  modelValue: FormModel;
   validationSchema: any;
   submitOnEnter: boolean;
   permanent?: boolean;
   touchBy?: touchTrigger;
-  externalErrors?: any;
+  externalErrors?: FormErrorsList;
 }
 
 export interface FormEmits {
-  (e: 'update:modelValue', value: Record<any, any>): void,
+  (e: 'update:modelValue', value: FormModel): void,
+  (e: 'update:externalErrors', value: FormErrorsList): void,
   (e: 'validate', value: boolean): void,
   (e: 'submit'): void,
 }

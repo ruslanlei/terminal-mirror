@@ -13,7 +13,9 @@
       :style="computedDropdownStyles"
       :class="[$style.dropdown, !localIsVisible && $style.hidden]"
     >
-      <slot name="dropdown" />
+      <div :class="$style.dropdownInner">
+        <slot name="dropdown" />
+      </div>
     </div>
   </teleport>
 </template>
@@ -160,13 +162,23 @@ onBeforeMount(removeListeners);
   position: absolute;
   top: 0;
   left: 0;
+  .dropdownInner {
+    transform: translateY(0);
+    transition: transform 200ms, opacity 200ms, clip-path 200ms;
+    clip-path: circle(150% at 100% 0);
+  }
   &.hidden {
-    opacity: 0;
     pointer-events: none;
     * {
-      opacity: 0;
       pointer-events: none;
+    }
+    .dropdownInner {
+      opacity: 0;
+      transform: translateY(-16px);
+      clip-path: circle(0% at 100% 0);
     }
   }
 }
+
+.dropdownInner {}
 </style>

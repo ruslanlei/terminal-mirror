@@ -7,7 +7,7 @@
       <div :class="$style.label">
         {{ t('emulator.player.label') }}
       </div>
-      <Datepicker v-model="date" />
+      <Datepicker v-model="currentDate" />
     </header>
     <div :class="$style.controls">
       <PlayButton
@@ -19,9 +19,10 @@
         :class="$style.rewindButton"
       />
       <RangeSlider
-        v-model="speed"
+        v-model="localSpeed"
         :class="$style.speedSlider"
-        :max="4"
+        :min="0"
+        :max="5"
       />
       <AnimatedText
         :text="displaySpeed"
@@ -48,23 +49,23 @@ import RangeSlider from '@/components/core/rangeSlider/RangeSlider.vue';
 import Button from '@/components/core/button/Button.vue';
 import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
 
+import { PlayerSpeed, useEmulatorStore } from '@/stores/emulator';
+import { storeToRefs } from 'pinia';
 import PlayButton from './playButton/PlayButton.vue';
 import RewindButton from './rewindButton/RewindButton.vue';
 
 const { t } = useI18n();
 
-const date = ref(new Date().toISOString());
+const emulatorStore = useEmulatorStore();
+const { currentDate, speed, isPlaying } = storeToRefs(emulatorStore);
 
-const isPlaying = ref(false);
+const playerSpeedList: PlayerSpeed[] = [1, 2, 10, 100, 1000, 24000];
 
-const speed = ref<0 | 1 | 2 | 3 | 4>(0);
-const displaySpeed = computed(() => ({
-  0: 'x1',
-  1: 'x2',
-  2: 'x10',
-  3: 'x100',
-  4: 'x1000',
-}[speed.value]));
+const localSpeed = computed({
+  get: () => playerSpeedList.findIndex((value: PlayerSpeed) => value === speed.value),
+  set: (value: number) => emulatorStore.setSpeed(playerSpeedList[value]),
+});
+const displaySpeed = computed(() => `x${speed.value}`);
 </script>
 
 <style lang="scss" module>

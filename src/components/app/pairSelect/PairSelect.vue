@@ -3,8 +3,7 @@
     <template #search>
       <Input
         v-model="query"
-        size="md"
-        state="secondary2"
+        :state="['mdSize', 'secondary2Color']"
         :placeholder="t('common.search')"
       >
         <template #prepend>

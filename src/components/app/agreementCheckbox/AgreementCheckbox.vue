@@ -15,6 +15,7 @@
             :to="{ name: 'terms-and-conditions' }"
             :label="t('auth.agreement.conditions')"
             state="primary"
+            :tab-index="-1"
           />
         </template>
         <template #privacy>
@@ -22,6 +23,7 @@
             :to="{ name: 'privacy-policy' }"
             :label="t('auth.agreement.privacy')"
             state="primary"
+            :tab-index="-1"
           />
         </template>
       </i18n-t>

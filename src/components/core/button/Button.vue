@@ -38,9 +38,15 @@ withDefaults(
   width: 100%;
   display: block;
   position: relative;
-  transition: background-color 200ms;
+  transition: background-color 200ms, transform 200ms;
   &:not(.disabled) {
     cursor: pointer;
+  }
+  &:focus, &:hover {
+    transform: scale(1.01);
+  }
+  &:active {
+    transform: scale(0.99);
   }
 }
 

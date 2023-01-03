@@ -66,6 +66,8 @@ const localSpeed = computed({
   set: (value: number) => emulatorStore.setSpeed(playerSpeedList[value]),
 });
 const displaySpeed = computed(() => `x${speed.value}`);
+
+emulatorStore.simulate();
 </script>
 
 <style lang="scss" module>

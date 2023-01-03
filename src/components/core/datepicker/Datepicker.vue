@@ -1,5 +1,8 @@
 <template>
-  <Dropdown v-model:is-visible="isCalendarVisible">
+  <Dropdown
+    v-model:is-visible="isCalendarVisible"
+    :placement="placement"
+  >
     <template #trigger>
       <button :class="[$style.trigger, $style[state]]">
         {{ displayValue }}
@@ -38,6 +41,7 @@ const props = withDefaults(
   defineProps<DatepickerProps>(),
   {
     state: 'default',
+    placement: 'top',
   },
 );
 

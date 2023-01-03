@@ -99,6 +99,10 @@ const calculateDropdownPosition = () => {
     dropdownTop = triggerRect.top + triggerRect.height;
   }
 
+  if (basePlacement === 'top') {
+    dropdownTop = triggerRect.top - dropdownRect.height;
+  }
+
   if (props.distance) {
     if (basePlacement === 'bottom') {
       dropdownTop += props.distance;

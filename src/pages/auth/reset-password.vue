@@ -22,7 +22,7 @@
       <template #submit>
         <Button
           type="submit"
-          size="lg"
+          :state="['primaryColor', 'lgSize']"
           :is-loading="isLoading"
         >
           {{ t('auth.forgotPassword.submit') }}

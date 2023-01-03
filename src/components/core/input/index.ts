@@ -4,6 +4,13 @@ export enum inputType {
   NUMBER = 'number'
 }
 
+export type InputState =
+  'defaultColor'
+  | 'secondary2Color'
+  | 'smSize'
+  | 'mdSize'
+  | 'lgSize'
+
 export interface InputProps {
   modelValue: string | number,
   label?: string,
@@ -16,8 +23,11 @@ export interface InputProps {
   inputmode?: string,
   mask?: string,
   error?: string,
-  state?: 'default' | 'secondary2',
-  size?: 'sm' | 'md' | 'lg',
+  // state?: 'default' | 'secondary2',
+  // size?: 'sm' | 'md' | 'lg',
+  //
+
+  state?: InputState | InputState[],
 }
 
 export interface InputEmits {

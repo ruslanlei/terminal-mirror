@@ -2,7 +2,7 @@
   <Form
     v-model="model"
     :validation-schema="validationSchema"
-    touch-by="input"
+    touch-by="blur"
     @submit="handleSubmit"
   >
     <SignInContainer>
@@ -48,7 +48,7 @@
       <template #submit>
         <Button
           type="submit"
-          :state="['lgSize', 'interactive']"
+          :state="['primaryColor', 'lgSize', 'interactive']"
           :is-loading="isLoading"
         >
           {{ t('auth.submit') }}

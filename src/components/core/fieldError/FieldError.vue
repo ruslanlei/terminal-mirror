@@ -73,5 +73,7 @@ onBeforeUnmount(removeListeners);
   position: absolute;
   bottom: 0;
   @include title4;
+  font-weight: 600;
+  color: rgb(var(--color-danger));
 }
 </style>

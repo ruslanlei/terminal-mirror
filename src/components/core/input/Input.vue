@@ -1,13 +1,11 @@
 <template>
   <label
-    :class="{
-      [$style.root]: true,
-      [$style[state]]: true,
-      [$style[size]]: true,
-      [$style.disabled]: isDisabled,
-      [$style.error]: error,
-      [$style.focus]: isFocused,
-    }"
+    :class="[
+      ...computedState,
+      isDisabled && $style.disabled,
+      !!error && $style.error,
+      isFocused && $style.focus,
+    ]"
   >
     <span
       v-if="('label' in $slots) || label"
@@ -55,6 +53,7 @@
 import { computed, nextTick, ref } from 'vue';
 import { useInput } from '@/hooks/useInput';
 import FieldError from '@/components/core/fieldError/FieldError.vue';
+import { useComputedState } from '@/hooks/useComputedState';
 import {
   inputType,
   InputProps,
@@ -74,8 +73,7 @@ const props = withDefaults(
     type: 'text' as inputType.TEXT,
     autocomplete: undefined,
     inputmode: undefined,
-    state: 'default',
-    size: 'lg',
+    state: () => ['defaultColor', 'lgSize'],
   },
 );
 
@@ -97,6 +95,8 @@ const computedTabIndex = computed(
   () => ((props.disableTabNavigation || props.isDisabled) ? -1 : props.tabIndex),
 );
 
+const computedState = useComputedState(props);
+
 const focus = async () => {
   await nextTick();
   input.value?.focus?.();
@@ -113,7 +113,7 @@ defineExpose({
 @import "src/assets/styles/utils";
 
 // states
-.default {
+.defaultColor {
   -webkit-appearance: none;
   &.focus {
     .field {
@@ -141,7 +141,7 @@ defineExpose({
   }
 }
 
-.secondary2 {
+.secondary2Color {
   .prepend, .append {
     color: rgb(var(--color-accent-2));
     transition: color 200ms;
@@ -174,7 +174,7 @@ defineExpose({
 }
 
 // sizes
-.lg {
+.lgSize {
   .label {
     & + .field {
       margin-top: 6px;
@@ -195,7 +195,7 @@ defineExpose({
   }
 }
 
-.md {
+.mdSize {
   .label {
     & + .field {
       margin-top: 6px;
@@ -219,7 +219,7 @@ defineExpose({
   }
 }
 
-.sm {
+.smSize {
   .label {
     & + .field {
       margin-top: 6px;
@@ -282,6 +282,27 @@ defineExpose({
 }
 
 .error {
-  color: rgba(var(--color-danger), 1);
+  &.focus {
+    .field {
+      border-color: rgba(var(--color-danger), 1);
+      color: rgba(var(--color-danger), 1);
+      & > input {
+        &::placeholder {
+          color: rgba(var(--color-danger), 1);
+        }
+      }
+    }
+  }
+  .field {
+    border: 1px solid rgba(var(--color-danger), 1);
+    &:hover {
+      border-color: rgba(var(--color-danger), 1);
+    }
+    & > input {
+      &::placeholder {
+        color: rgba(var(--color-danger), 1);
+      }
+    }
+  }
 }
 </style>

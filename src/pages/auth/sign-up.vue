@@ -2,7 +2,7 @@
   <Form
     v-model="model"
     :validation-schema="validationSchema"
-    touch-by="input"
+    touch-by="blur"
     :external-errors="serverErrors"
     @submit="handleSubmit"
   >
@@ -45,7 +45,7 @@
       </template>
       <template #submit>
         <Button
-          :state="['lgSize', 'interactive']"
+          :state="['primaryColor', 'lgSize', 'interactive']"
           type="submit"
           :is-loading="isLoading"
         >

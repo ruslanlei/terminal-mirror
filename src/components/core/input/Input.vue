@@ -44,18 +44,17 @@
         <slot name="append" />
       </div>
     </div>
-    <div
-      v-if="error"
+    <FieldError
+      :text="error"
       :class="$style.error"
-    >
-      {{ error }}
-    </div>
+    />
   </label>
 </template>
 
 <script setup lang="ts">
 import { computed, nextTick, ref } from 'vue';
 import { useInput } from '@/hooks/useInput';
+import FieldError from '@/components/core/fieldError/FieldError.vue';
 import {
   inputType,
   InputProps,

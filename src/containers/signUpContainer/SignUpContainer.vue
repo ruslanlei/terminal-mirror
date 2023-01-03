@@ -16,6 +16,9 @@
       <div :class="$style.field">
         <slot name="passwordField" />
       </div>
+      <div :class="$style.field">
+        <slot name="passwordConfirmField" />
+      </div>
       <div :class="$style.agreement">
         <slot name="agreement" />
       </div>

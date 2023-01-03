@@ -33,6 +33,13 @@
           type="password"
         />
       </template>
+      <template #passwordConfirmField>
+        <FormInput
+          name="passwordConfirmation"
+          :placeholder="t('placeholder.passwordConfirmation')"
+          type="password"
+        />
+      </template>
       <template #agreement>
         <AgreementCheckbox v-model="agreement" />
       </template>

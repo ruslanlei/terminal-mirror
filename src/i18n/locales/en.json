@@ -5,13 +5,15 @@
   "validationError": {
     "email": "Value is not valid email",
     "required": "This is required field",
-    "minLength": "This field must be at least {chars} characters long."
+    "minLength": "This field must be at least {chars} characters long.",
+    "passwordsMismatch": "Passwords should be equal to each other"
   },
   "placeholder": {
     "email": "Enter your email",
     "password": "Enter password",
     "newPassword": "Pick a password",
-    "username": "What is your name"
+    "username": "What is your name",
+    "passwordConfirmation": "Repeat password"
   },
   "auth": {
     "description": "Crypto terminal blah blah blah la la lala framework and place of staff training require us to analyze.",

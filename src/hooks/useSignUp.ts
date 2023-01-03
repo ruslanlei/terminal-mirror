@@ -1,7 +1,7 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
-import { object, string } from 'yup';
+import { object, string, ref as yupRef } from 'yup';
 import { useSessionStore } from '@/stores/session';
 import { SignUpModel } from '@/api/endpoints/auth/signUp';
 import { useToastStore } from '@/stores/toasts';
@@ -15,10 +15,13 @@ export const useSignUp = () => {
   const sessionStore = useSessionStore();
   const toastStore = useToastStore();
 
-  const model = ref<SignUpModel>({
+  const model = ref<SignUpModel & {
+    passwordConfirmation: string,
+  }>({
     username: '',
     email: '',
     password: '',
+    passwordConfirmation: '',
   });
 
   const agreement = ref(false);
@@ -32,6 +35,9 @@ export const useSignUp = () => {
       .required(() => t('validationError.required')),
     password: string()
       .required(() => t('validationError.required')),
+    passwordConfirmation: string()
+      .required(() => t('validationError.required'))
+      .oneOf([yupRef('password')], () => t('validationError.passwordsMismatch')),
   });
 
   const serverErrors = ref<FormErrorsList>([]);

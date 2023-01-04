@@ -1,8 +1,9 @@
 <template>
   <div :class="$style.balance">
-    <div :class="$style.label">
-      {{ computedLabel }}
-    </div>
+    <AnimatedText
+      :class="$style.label"
+      :text="computedLabel"
+    />
     <div :class="$style.value">
       {{ balance }}
     </div>
@@ -14,6 +15,7 @@ import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useProfileStore } from '@/stores/profile';
 import { useMarketStore } from '@/stores/market';
+import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
 
 const { t } = useI18n();
 

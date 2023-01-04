@@ -16,12 +16,17 @@
 import { ref, toRefs, watch } from 'vue';
 import { AnimatedTextProps } from './index';
 
-const props = defineProps<AnimatedTextProps>();
+const props = withDefaults(
+  defineProps<AnimatedTextProps>(),
+  {
+    animationType: 'verticalForward',
+  },
+);
 const {
   text,
 } = toRefs(props);
 
-const computedAnimationType = ref('');
+const computedAnimationType = ref(props.animationType);
 
 watch(text, (value, oldValue) => {
   if (props.animationType === 'verticalAuto') {

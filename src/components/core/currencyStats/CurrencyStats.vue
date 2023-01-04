@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.currencyStats">
+  <div :class="[$style.currencyStats, isHighlight && $style.highlight]">
     <CurrencyLogo
       state="square"
       :currency="stats.currency"
@@ -15,7 +15,9 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import {
+  computed, nextTick, ref, toRefs, watch,
+} from 'vue';
 import { useI18n } from 'vue-i18n';
 import CurrencyLogo from '@/components/core/currencyLogo/CurrencyLogo.vue';
 import CurrencyStatsColumn from '@/components/app/currencyStatsColumn/CurrencyStatsColumn.vue';
@@ -64,11 +66,47 @@ const computedCurrencyStats = computed<Array<CurrencyStat[]>>(() => [
     },
   ],
 ]);
+
+const isHighlight = ref(false);
+
+watch(() => props.stats.currency, () => {
+  if (isHighlight.value) {
+    isHighlight.value = false;
+    nextTick(() => {
+      isHighlight.value = true;
+    });
+  } else {
+    isHighlight.value = true;
+  }
+
+  setTimeout(() => {
+    isHighlight.value = false;
+  }, 600);
+});
 </script>
 
 <style lang="scss" module>
 .currencyStats {
   display: flex;
+  position: relative;
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    background-color: rgb(var(--color-background-2));
+    z-index: -1;
+    border-radius: 10px;
+    opacity: 0;
+    transform: scale(0.7);
+    transition: opacity 180ms, transform 180ms;
+    pointer-events: none;
+  }
+  &.highlight {
+    &::before {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
 }
 
 .stats {

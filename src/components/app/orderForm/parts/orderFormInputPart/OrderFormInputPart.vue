@@ -4,14 +4,14 @@
       {{ t('order.price') }}
     </template>
     <template #priceInput>
-      <Input
-        type="number"
-        size="sm"
+      <NumberInput
+        :state="['defaultColor', 'smSize']"
+        :min="1"
       >
         <template #append>
           USDT
         </template>
-      </Input>
+      </NumberInput>
     </template>
     <template #amountLabel>
       {{ t('order.amount') }}

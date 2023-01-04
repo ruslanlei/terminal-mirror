@@ -95,6 +95,12 @@ const calculateDropdownPosition = () => {
   if (basePlacement === 'top') {
     dropdownTop = triggerRect.top - dropdownRect.height;
   }
+  if (basePlacement === 'left') {
+    dropdownLeft = triggerRect.left - dropdownRect.width;
+  }
+  if (basePlacement === 'right') {
+    dropdownLeft = triggerRect.left + triggerRect.width;
+  }
 
   // calculate secondary placement
   if (basePlacement === 'bottom' || basePlacement === 'top') {
@@ -106,8 +112,21 @@ const calculateDropdownPosition = () => {
       dropdownLeft = triggerCenter - (dropdownRect.width / 2);
     }
     if (secondaryPlacement === 'right') {
-      const difference = Math.abs(triggerRect.width - dropdownRect.width);
-      dropdownLeft = triggerRect.left - difference;
+      const difference = triggerRect.width - dropdownRect.width;
+      dropdownLeft = triggerRect.left + difference;
+    }
+  }
+  if (basePlacement === 'left' || basePlacement === 'right') {
+    if (secondaryPlacement === 'top') {
+      dropdownTop = triggerRect.top;
+    }
+    if (secondaryPlacement === 'center') {
+      const triggerCenter = triggerRect.top + (triggerRect.height / 2);
+      dropdownTop = triggerCenter - (dropdownRect.height / 2);
+    }
+    if (secondaryPlacement === 'bottom') {
+      const difference = triggerRect.height - dropdownRect.height;
+      dropdownTop = triggerRect.top + difference;
     }
   }
 
@@ -118,6 +137,12 @@ const calculateDropdownPosition = () => {
     }
     if (basePlacement === 'top') {
       dropdownTop -= props.distance;
+    }
+    if (basePlacement === 'left') {
+      dropdownLeft -= props.distance;
+    }
+    if (basePlacement === 'right') {
+      dropdownLeft += props.distance;
     }
   }
 

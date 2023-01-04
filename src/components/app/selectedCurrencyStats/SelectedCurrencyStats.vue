@@ -6,8 +6,8 @@
 import { computed, reactive } from 'vue';
 import CurrencyStats from '@/components/core/currencyStats/CurrencyStats.vue';
 import { ICurrencyStats } from '@/components/core/currencyStats';
-import { Currency } from '@/api/endpoints/marketdata/stats';
 import { useMarketStore } from '@/stores/market';
+import { Currency } from '@/api/types/currency';
 
 const marketStore = useMarketStore();
 

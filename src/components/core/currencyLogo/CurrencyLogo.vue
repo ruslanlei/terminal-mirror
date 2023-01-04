@@ -14,7 +14,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { Currency } from '@/api/endpoints/marketdata/stats';
+import { Currency } from '@/api/types/currency';
 import { CurrencyLogoProps } from './index';
 import AchainLogo from './assets/achain.svg';
 import AschLogo from './assets/asch.svg';

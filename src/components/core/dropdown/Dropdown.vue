@@ -238,7 +238,7 @@ onBeforeMount(removeListeners);
   top: 0;
   left: 0;
   &.smooth {
-    transition: transform 80ms;
+    transition: transform 50ms;
   }
   .dropdownInner {
     transform: translateY(0);
@@ -254,6 +254,7 @@ onBeforeMount(removeListeners);
     }
   }
 }
+.dropdownInner {}
 
 // transitions
 
@@ -269,7 +270,7 @@ onBeforeMount(removeListeners);
   }
 }
 
-.bottom {
+.bottom, .bottomCenter {
   .dropdownInner {
     clip-path: circle(150% at 50% 0);
   }
@@ -293,7 +294,7 @@ onBeforeMount(removeListeners);
   }
 }
 
-.top {
+.top, .topCenter {
   .dropdownInner {
     clip-path: circle(120% at 50% 100%);
   }
@@ -305,18 +306,51 @@ onBeforeMount(removeListeners);
   }
 }
 
-.topRight {
+.topLeft, .rightBottom {
   .dropdownInner {
-    clip-path: circle(150% at 100% 100%);
-
+    clip-path: circle(150% at 0 100%);
   }
   &.hidden {
     .dropdownInner {
       transform: translateY(16px);
-      clip-path: circle(0 at 100% 100%);
+      clip-path: circle(0% at 0 100%);
     }
   }
 }
 
-.dropdownInner {}
+.topRight, .leftBottom {
+  .dropdownInner {
+    clip-path: circle(150% at 100% 100%);
+  }
+  &.hidden {
+    .dropdownInner {
+      transform: translateY(16px);
+      clip-path: circle(0% at 100% 100%);
+    }
+  }
+}
+
+.left, .leftCenter {
+  .dropdownInner {
+    clip-path: circle(120% at 100% 50%);
+  }
+  &.hidden {
+    .dropdownInner {
+      transform: translateX(16px);
+      clip-path: circle(0% at 100% 50%);
+    }
+  }
+}
+
+.right, .rightCenter {
+  .dropdownInner {
+    clip-path: circle(120% at 0 50%);
+  }
+  &.hidden {
+    .dropdownInner {
+      transform: translateX(-16px);
+      clip-path: circle(0% at 0 50%);
+    }
+  }
+}
 </style>

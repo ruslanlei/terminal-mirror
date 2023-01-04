@@ -39,6 +39,8 @@ const props = withDefaults(
     toggleByClick: true,
     keepWithinWindowVertical: false,
     keepWithinWindowHorizontal: true,
+    containerGap: 10,
+    automaticReplace: true,
   },
 );
 
@@ -77,9 +79,24 @@ const calculateDropdownPosition = () => {
   const triggerRect = trigger.value.getBoundingClientRect();
   const dropdownRect = dropdown.value.getBoundingClientRect();
 
-  const basePlacement = Array.isArray(props.placement)
+  let basePlacement = Array.isArray(props.placement)
     ? props.placement[0]
     : props.placement as DropdownPlacement;
+
+  if (props.automaticReplace) {
+    if (basePlacement === 'top' && triggerRect.top < dropdownRect.height + props.containerGap) {
+      basePlacement = 'bottom';
+    }
+    if (basePlacement === 'bottom' && (
+      triggerRect.top
+        + triggerRect.height
+        + props.containerGap
+        + dropdownRect.height
+    ) > window.innerHeight
+    ) {
+      basePlacement = 'top';
+    }
+  }
 
   const secondaryPlacement = Array.isArray(props.placement)
     ? props.placement[1]
@@ -146,23 +163,21 @@ const calculateDropdownPosition = () => {
     }
   }
 
-  const gap = 10;
-
   // keep within bounds
   if (props.keepWithinWindowHorizontal) {
-    if (dropdownLeft < gap) {
-      dropdownLeft = gap;
+    if (dropdownLeft < props.containerGap) {
+      dropdownLeft = props.containerGap;
     }
     if ((dropdownLeft + dropdownRect.width) > window.innerWidth) {
-      dropdownLeft = window.innerWidth - dropdownRect.width - gap;
+      dropdownLeft = window.innerWidth - dropdownRect.width - props.containerGap;
     }
   }
   if (props.keepWithinWindowVertical) {
-    if (dropdownTop < gap) {
-      dropdownTop = gap;
+    if (dropdownTop < props.containerGap) {
+      dropdownTop = props.containerGap;
     }
     if ((dropdownTop + dropdownRect.height) > window.innerHeight) {
-      dropdownTop = window.innerHeight - dropdownRect.height - gap;
+      dropdownTop = window.innerHeight - dropdownRect.height - props.containerGap;
     }
   }
 

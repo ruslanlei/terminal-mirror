@@ -2,6 +2,7 @@
   <Dropdown
     v-model:is-visible="isCalendarVisible"
     :placement="placement"
+    :container-gap="20"
   >
     <template #trigger>
       <button :class="[$style.trigger, $style[state]]">

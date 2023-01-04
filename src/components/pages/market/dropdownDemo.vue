@@ -4,6 +4,7 @@
       v-model:is-visible="isVisible4"
       :distance="10"
       :placement="['top', 'right']"
+      :keep-within-window-vertical="true"
     >
       <template #trigger>
         <div :class="$style.trigger">

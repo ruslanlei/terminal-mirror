@@ -7,6 +7,8 @@ export interface DropdownProps {
   toggleByClick?: boolean,
   keepWithinWindowVertical?: boolean,
   keepWithinWindowHorizontal?: boolean,
+  containerGap?: number,
+  automaticReplace?: boolean,
 }
 
 export interface DropdownEmits {

@@ -11,7 +11,7 @@
       ref="dropdown"
       v-click-outside="onClickOutside"
       :style="computedDropdownStyles"
-      :class="[$style.dropdown, !localIsVisible && $style.hidden]"
+      :class="[$style.dropdown, !localIsVisible && $style.hidden, smooth && $style.smooth]"
     >
       <div :class="$style.dropdownInner">
         <slot name="dropdown" />
@@ -41,6 +41,7 @@ const props = withDefaults(
     keepWithinWindowHorizontal: true,
     containerGap: 10,
     automaticReplace: true,
+    smooth: true,
   },
 );
 
@@ -219,14 +220,15 @@ onBeforeMount(removeListeners);
 </script>
 
 <style lang="scss" module>
-.trigger {
-
-}
+.trigger {}
 
 .dropdown {
   position: absolute;
   top: 0;
   left: 0;
+  &.smooth {
+    transition: transform 80ms;
+  }
   .dropdownInner {
     transform: translateY(0);
     transition: transform 200ms, opacity 200ms, clip-path 200ms;

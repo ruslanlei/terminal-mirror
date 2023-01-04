@@ -37,6 +37,8 @@ const props = withDefaults(
   {
     placement: 'bottom',
     toggleByClick: true,
+    keepWithinWindowVertical: false,
+    keepWithinWindowHorizontal: true,
   },
 );
 
@@ -122,11 +124,21 @@ const calculateDropdownPosition = () => {
   const gap = 10;
 
   // keep within bounds
-  if (dropdownLeft < gap) {
-    dropdownLeft = gap;
+  if (props.keepWithinWindowHorizontal) {
+    if (dropdownLeft < gap) {
+      dropdownLeft = gap;
+    }
+    if ((dropdownLeft + dropdownRect.width) > window.innerWidth) {
+      dropdownLeft = window.innerWidth - dropdownRect.width - gap;
+    }
   }
-  if ((dropdownLeft + dropdownRect.width) > window.innerWidth) {
-    dropdownLeft = window.innerWidth - dropdownRect.width - gap;
+  if (props.keepWithinWindowVertical) {
+    if (dropdownTop < gap) {
+      dropdownTop = gap;
+    }
+    if ((dropdownTop + dropdownRect.height) > window.innerHeight) {
+      dropdownTop = window.innerHeight - dropdownRect.height - gap;
+    }
   }
 
   dropdownTop = Math.round(dropdownTop);

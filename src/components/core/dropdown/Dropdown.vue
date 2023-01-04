@@ -73,6 +73,30 @@ const computedDropdownStyles = ref({
   transform: 'translateY(0) translateX(0)',
 });
 
+const normalizePlacement = (
+  placement: DropdownPlacement,
+  triggerRect: DOMRect,
+  dropdownRect: DOMRect,
+) => {
+  let normalizedPlacement = placement;
+
+  if (placement === 'top' && triggerRect.top < dropdownRect.height + props.containerGap) {
+    normalizedPlacement = 'bottom';
+  }
+
+  if (placement === 'bottom' && (
+    triggerRect.top
+      + triggerRect.height
+      + props.containerGap
+      + dropdownRect.height
+  ) > window.innerHeight
+  ) {
+    normalizedPlacement = 'top';
+  }
+
+  return normalizedPlacement;
+};
+
 const calculateDropdownPosition = () => {
   if (!trigger.value || !dropdown.value) return;
 
@@ -84,18 +108,7 @@ const calculateDropdownPosition = () => {
     : props.placement as DropdownPlacement;
 
   if (props.automaticReplace) {
-    if (basePlacement === 'top' && triggerRect.top < dropdownRect.height + props.containerGap) {
-      basePlacement = 'bottom';
-    }
-    if (basePlacement === 'bottom' && (
-      triggerRect.top
-        + triggerRect.height
-        + props.containerGap
-        + dropdownRect.height
-    ) > window.innerHeight
-    ) {
-      basePlacement = 'top';
-    }
+    basePlacement = normalizePlacement(basePlacement, triggerRect, dropdownRect);
   }
 
   const secondaryPlacement = Array.isArray(props.placement)

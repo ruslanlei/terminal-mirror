@@ -3,6 +3,7 @@
     v-model:is-visible="isCalendarVisible"
     :placement="placement"
     :container-gap="20"
+    :distance="16"
   >
     <template #trigger>
       <button :class="[$style.trigger, $style[state]]">
@@ -15,10 +16,12 @@
       </button>
     </template>
     <template #dropdown>
-      <FlatPickr
-        v-model="localValue"
-        :config="computedConfig"
-      />
+      <div :class="$style.calendarWrapper">
+        <FlatPickr
+          v-model="localValue"
+          :config="computedConfig"
+        />
+      </div>
     </template>
   </Dropdown>
 </template>
@@ -90,14 +93,19 @@ const isCalendarVisible = ref(false);
 <style lang="scss" module>
 @import "src/assets/styles/utils";
 
+.calendarWrapper {
+  background-color: rgb(var(--color-background-2));
+  padding: 10px;
+  border-radius: 10px;
+}
+
 :global {
   .flatpickr-input {
     display: none;
   }
   .flatpickr-calendar {
-    background-color: rgb(var(--color-background-2));
+    background-color: transparent;
     box-shadow: none;
-    max-width: 100%;
   }
   .flatpickr-current-month {
     display: flex;
@@ -108,6 +116,7 @@ const isCalendarVisible = ref(false);
       background-color: rgb(var(--color-background-2)) !important;
       border: none;
       @include title2;
+      font-weight: 600;
     }
     .numInputWrapper {
       .numInput {
@@ -121,6 +130,9 @@ const isCalendarVisible = ref(false);
     @include title3;
     font-weight: 500 !important;
   }
+  .flatpickr-weekdays {
+    margin-top: 16px;
+  }
   .flatpickr-day {
     color: rgb(var(--color-accent-1));
     border: none;
@@ -131,13 +143,14 @@ const isCalendarVisible = ref(false);
     }
     &.prevMonthDay, &.nextMonthDay {
       color: rgba(var(--color-accent-1), 0.1);
+      &:hover {
+        background-color: rgb(var(--color-background-1));
+      }
     }
     &.selected {
       background: var(--color-main-gradient);
-      transition: transform 150ms;
       &:hover, &:focus {
         background: var(--color-main-gradient);
-        transform: scale(1.1);
       }
     }
     &.today {
@@ -148,8 +161,9 @@ const isCalendarVisible = ref(false);
   }
   .flatpickr-months  {
     .flatpickr-prev-month, .flatpickr-next-month  {
-      fill: rgb(var(--color-accent-2));
-      color: rgb(var(--color-accent-2));
+      svg {
+        fill: rgb(var(--color-accent-1)) !important;
+      }
     }
   }
 }

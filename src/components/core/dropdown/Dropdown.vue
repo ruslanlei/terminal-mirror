@@ -11,7 +11,12 @@
       ref="dropdown"
       v-click-outside="onClickOutside"
       :style="computedDropdownStyles"
-      :class="[$style.dropdown, !localIsVisible && $style.hidden, smooth && $style.smooth]"
+      :class="[
+        $style.dropdown,
+        $style[computedTransitionName],
+        !localIsVisible && $style.hidden,
+        smooth && $style.smooth,
+      ]"
     >
       <div :class="$style.dropdownInner">
         <slot name="dropdown" />
@@ -30,6 +35,7 @@ import {
 import { teleportTargets } from '@/enums/teleport';
 import { useLocalValue } from '@/hooks/useLocalValue';
 import { useEnvironmentObserver } from '@/hooks/useEnvironmentObserver';
+import { capitalizeFirstLetter } from '@/utils/string';
 import { DropdownProps, DropdownEmits, DropdownPlacement } from './index';
 
 const props = withDefaults(
@@ -73,6 +79,11 @@ const teleportTarget = computed(() => `#${teleportTargets.LEVITATING}`);
 const computedDropdownStyles = ref({
   transform: 'translateY(0) translateX(0)',
 });
+
+const computedTransitionName = computed(() => (
+  Array.isArray(props.placement)
+    ? `${props.placement[0]}${capitalizeFirstLetter(props.placement[1])}`
+    : props.placement));
 
 const normalizePlacement = (
   placement: DropdownPlacement,
@@ -232,7 +243,6 @@ onBeforeMount(removeListeners);
   .dropdownInner {
     transform: translateY(0);
     transition: transform 200ms, opacity 200ms, clip-path 200ms;
-    clip-path: circle(150% at 100% 0);
   }
   &.hidden {
     pointer-events: none;
@@ -241,8 +251,69 @@ onBeforeMount(removeListeners);
     }
     .dropdownInner {
       opacity: 0;
+    }
+  }
+}
+
+// transitions
+
+.bottomRight, .leftTop {
+  .dropdownInner {
+    clip-path: circle(150% at 100% 0);
+  }
+  &.hidden {
+    .dropdownInner {
       transform: translateY(-16px);
       clip-path: circle(0% at 100% 0);
+    }
+  }
+}
+
+.bottom {
+  .dropdownInner {
+    clip-path: circle(150% at 50% 0);
+  }
+  &.hidden {
+    .dropdownInner {
+      transform: translateY(-16px);
+      clip-path: circle(0% at 50% 0);
+    }
+  }
+}
+
+.bottomLeft, .rightTop {
+  .dropdownInner {
+    clip-path: circle(150% at 0 0);
+  }
+  &.hidden {
+    .dropdownInner {
+      transform: translateY(-16px);
+      clip-path: circle(0% at 0 0);
+    }
+  }
+}
+
+.top {
+  .dropdownInner {
+    clip-path: circle(120% at 50% 100%);
+  }
+  &.hidden {
+    .dropdownInner {
+      transform: translateY(16px);
+      clip-path: circle(0% at 50% 100%);
+    }
+  }
+}
+
+.topRight {
+  .dropdownInner {
+    clip-path: circle(150% at 100% 100%);
+
+  }
+  &.hidden {
+    .dropdownInner {
+      transform: translateY(16px);
+      clip-path: circle(0 at 100% 100%);
     }
   }
 }

@@ -1,11 +1,12 @@
 <template>
-  <div
+  <button
     ref="trigger"
+    type="button"
     :class="$style.trigger"
     @click="onTriggerClick"
   >
     <slot name="trigger" />
-  </div>
+  </button>
   <teleport :to="teleportTarget">
     <div
       ref="dropdown"

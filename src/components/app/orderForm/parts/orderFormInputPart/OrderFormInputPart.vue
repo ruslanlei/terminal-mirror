@@ -61,6 +61,7 @@
         :state="['defaultColor', 'smSize']"
         type="number"
         :min="1"
+        :max="50"
       />
     </template>
     <template #leverageLiquidationPrice>

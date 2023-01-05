@@ -32,7 +32,7 @@
     </template>
     <template #volumeInput>
       <NumberInput
-        v-model="depositWithLeverage"
+        v-model="deposit"
         :state="['defaultColor', 'smSize']"
         :min="1"
       >
@@ -46,9 +46,9 @@
     </template>
     <template #depositInput>
       <DepositInput
-        v-model="depositWithLeverage"
+        v-model="deposit"
         :balance="balance"
-        :leveraged-balance="leveragedBalance"
+        :leverage="leverage"
       />
     </template>
     <template #leverageLabel>
@@ -97,15 +97,6 @@ const balance = ref(3208);
 const deposit = ref(1);
 
 const leverage = ref(1);
-
-const depositWithLeverage = computed({
-  get: () => deposit.value * leverage.value,
-  set: (value: number) => {
-    deposit.value = value / leverage.value;
-  },
-});
-
-const leveragedBalance = computed(() => balance.value * leverage.value);
 </script>
 
 <style lang="scss" module>

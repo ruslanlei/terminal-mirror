@@ -64,30 +64,33 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, watch } from 'vue';
 import Button from '@/components/core/button/Button.vue';
 import Icon from '@/components/core/icon/Icon.vue';
 import RangeSlider from '@/components/core/rangeSlider/RangeSlider.vue';
 import NumberInput from '@/components/core/numberInput/NumberInput.vue';
 import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
-import { useLocalValue } from '@/hooks/useLocalValue';
 import { roundToDecimalPoint } from '@/utils/number';
+import { useLocalValue } from '@/hooks/useLocalValue';
 import { DepositInputEmits, DepositInputProps } from './index';
 
 const props = withDefaults(
   defineProps<DepositInputProps>(),
   {
     decimals: 2,
+    leverage: 1,
   },
 );
 
 const emit = defineEmits<DepositInputEmits>();
 
-const showLeveragedBalance = computed(() => props.balance !== props.leveragedBalance);
+const leveragedBalance = computed(() => props.balance * props.leverage);
+
+const showLeveragedBalance = computed(() => props.balance !== leveragedBalance.value);
 
 const localValue = useLocalValue<number>(props, emit, 'modelValue');
 
-const onePercentOfBalance = computed(() => props.leveragedBalance / 100);
+const onePercentOfBalance = computed(() => leveragedBalance.value / 100);
 
 const percentsToValue = (
   percents: number,
@@ -103,6 +106,12 @@ const localValueInPercents = computed({
   set: (percents: number) => {
     localValue.value = percentsToValue(percents);
   },
+});
+
+watch(localValueInPercents, () => {
+  if (localValueInPercents.value > 100) {
+    localValueInPercents.value = 100;
+  }
 });
 
 const setPercentOfBalance = (

@@ -2,6 +2,7 @@
   <Form
     v-model="model"
     :validation-schema="validationSchema"
+    :class="$style.ordersForm"
   >
     <OrderFromContainer>
       <template
@@ -92,10 +93,6 @@ const {
 
 .ordersForm {
   height: 100%;
-  padding: 22px;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
 }
 
 .tabs {

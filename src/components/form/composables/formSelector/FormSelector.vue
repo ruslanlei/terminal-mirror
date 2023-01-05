@@ -7,8 +7,8 @@
 
 <script setup lang="ts">
 import Selector from '@/components/core/selector/Selector.vue';
-import { FormSelectorProps } from '@/components/form/composables/formSelector/index';
 import { useActiveField } from '@/hooks/useActiveField';
+import { FormSelectorProps } from './index';
 
 const props = withDefaults(
   defineProps<FormSelectorProps>(),

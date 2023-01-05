@@ -3,7 +3,7 @@
     <header :class="$style.header">
       <Avatar :src="avatar" />
       <div :class="$style.name">
-        {{ profile?.username }}
+        {{ username }}
         <Icon
           :class="$style.verificationBadge"
           icon="verificationCircle"
@@ -12,6 +12,11 @@
       <LanguageSelect
         state="default"
         :class="$style.languageSelect"
+      />
+      <Icon
+        :class="$style.logoutButton"
+        icon="exit"
+        @click="logout"
       />
     </header>
     <SubscriptionBadge
@@ -29,7 +34,7 @@
         <i18n-t keypath="profile.email">
           <template #email>
             <span :class="$style.value">
-              {{ profile.email }}
+              {{ email }}
             </span>
           </template>
         </i18n-t>
@@ -48,9 +53,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { storeToRefs } from 'pinia';
 import Card from '@/components/core/card/Card.vue';
 import Avatar from '@/components/core/avatar/Avatar.vue';
 import Icon from '@/components/core/icon/Icon.vue';
@@ -58,22 +61,17 @@ import LanguageSelect from '@/components/app/languageSelect/LanguageSelect.vue';
 import SubscriptionBadge from '@/components/core/subscriptionBadge/SubscriptionBadge.vue';
 import CurrentTheme from '@/components/app/currentTheme/CurrentTheme.vue';
 import Link from '@/components/core/link/Link.vue';
-import { useProfileStore } from '@/stores/profile';
-
-const profileStore = useProfileStore();
-const {
-  profile,
-} = storeToRefs(profileStore);
+import { useProfileSettings } from '@/hooks/useProfileSettings';
 
 const { t } = useI18n();
 
-const avatar = computed(() => profile.value?.avatar);
-
-const testKey = ref(0);
-
-setInterval(() => {
-  testKey.value = testKey.value ? 0 : 1;
-}, 50000);
+const {
+  logout,
+  avatar,
+  email,
+  username,
+  testKey,
+} = useProfileSettings();
 </script>
 
 <style lang="scss" module>
@@ -130,6 +128,16 @@ setInterval(() => {
   margin-top: 20px;
   display: flex;
   justify-content: space-between;
+}
+
+.logoutButton {
+  cursor: pointer;
+  color: rgb(var(--color-accent-2));
+  transition: color 150ms;
+  margin-left: 20px;
+  &:hover {
+    color: rgb(var(--color-accent-1));
+  }
 }
 
 .support {

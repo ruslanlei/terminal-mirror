@@ -44,6 +44,7 @@
             :key="isPasswordVisible"
             :class="$style.passwordVisibilityButton"
             type="button"
+            :tabindex="-1"
             @click="togglePassword"
           >
             <Icon

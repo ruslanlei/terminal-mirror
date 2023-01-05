@@ -49,27 +49,13 @@ import Tabs from '@/components/core/tabs/Tabs.vue';
 import { SelectorProps } from '@/components/core/selector';
 import OrderFromContainer from '@/containers/orderFormContainer/OrderFormContainer.vue';
 
+import { useOrderCreate } from '@/hooks/useOrderCreate';
 import OrderFormInputPart from './parts/orderFormInputPart/OrderFormInputPart.vue';
 import OrderFormTakeProfitPart from './parts/orderFormTakeProfitPart/OrderFormTakeProfitPart.vue';
 
 const { t } = useI18n();
 
-const orderDirection = ref('long');
-
-const orderDirectionOptions = computed<SelectorProps['options']>(() => [
-  {
-    label: t('order.direction.long'),
-    value: 'long',
-    state: 'success',
-    icon: 'trendingUp',
-  },
-  {
-    label: t('order.direction.short'),
-    value: 'short',
-    state: 'danger',
-    icon: 'trendingDown',
-  },
-]);
+const orderDirection = ref('buy');
 
 const settingsActiveTab = ref('input');
 
@@ -91,6 +77,12 @@ const settingsTabs = computed(() => [
     value: 'slx',
   },
 ]);
+
+const {
+  model,
+  validationSchema,
+  orderDirectionOptions,
+} = useOrderCreate();
 </script>
 
 <style lang="scss" module>

@@ -134,7 +134,8 @@
     "takeProfit": {
       "profit": "Profit",
       "amountOrOrders": "Amount of orders"
-    }
+    },
+    "failedToCreate": "Failed to create order"
   },
   "pairs": {
     "type": {

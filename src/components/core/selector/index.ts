@@ -16,7 +16,7 @@ type SelectorState =
 export interface SelectorProps {
   options: SelectorOption[],
   modelValue: string,
-  state?: SelectorState | Array<SelectorState>,
+  state?: SelectorState | SelectorState[],
   label?: string,
   thickening?: number,
   isGhostAppearAnimation?: boolean,

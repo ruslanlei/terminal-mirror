@@ -3,7 +3,7 @@ import { Order } from '@/api/types/order';
 
 export type CreateOrderDTO = Pick<
   Order,
-  'pair' | 'side' | 'order_type' | 'quantity' | 'price' | 'leverage' | 'master' | 'executed_trade_id'
+  'pair' | 'side' | 'order_type' | 'quantity' | 'price' | 'leverage'
 >;
 
 export const createOrder = (

@@ -1,9 +1,9 @@
 <template>
   <Form
     v-model="model"
+    v-model:external-errors="serverErrors"
     :validation-schema="validationSchema"
     touch-by="blur"
-    :external-errors="serverErrors"
     @submit="handleSubmit"
   >
     <SignUpContainer>

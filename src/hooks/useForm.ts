@@ -88,6 +88,7 @@ export const useForm = (
     try {
       errorsList.value = [];
       externalErrors.value = [];
+      console.log('externalErrors.value', externalErrors.value);
       await props.validationSchema.validate(model.value, { abortEarly: false });
     } catch (err: any) {
       errorsList.value = err.inner

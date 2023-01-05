@@ -31,32 +31,32 @@
       {{ t('order.volume') }}
     </template>
     <template #volumeInput>
-      <NumberInput
-        v-model="deposit"
+      <FormNumberInput
+        name="quantity"
         :state="['defaultColor', 'smSize']"
         :min="1"
       >
         <template #append>
           USDT
         </template>
-      </NumberInput>
+      </FormNumberInput>
     </template>
     <template #depositLabel>
       {{ t('order.deposit') }}
     </template>
     <template #depositInput>
-      <DepositInput
-        v-model="deposit"
+      <FormDepositInput
+        name="quantity"
         :balance="balance"
-        :leverage="leverage"
+        :leverage="model.leverage"
       />
     </template>
     <template #leverageLabel>
       {{ t('order.leverageSize') }}
     </template>
     <template #leverageInput>
-      <NumberInput
-        v-model="leverage"
+      <FormNumberInput
+        name="leverage"
         :class="$style.input"
         :state="['defaultColor', 'smSize']"
         type="number"
@@ -83,21 +83,19 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import OrderFormInputPartContainer from '@/containers/orderFormInputPartContainer/OrderFormInputPartContainer.vue';
-import Input from '@/components/core/input/Input.vue';
 import Button from '@/components/core/button/Button.vue';
 import NumberInput from '@/components/core/numberInput/NumberInput.vue';
-import DepositInput from '@/components/core/depositInput/DepositInput.vue';
-import { computed, ref } from 'vue';
+import { FormNumberInput, FormDepositInput } from '@/components/form';
+import { OrderFormInputPartProps } from '@/components/app/orderForm/parts/orderFormInputPart/index';
+
+const props = defineProps<OrderFormInputPartProps>();
 
 const { t } = useI18n();
 
 const balance = ref(3208);
-
-const deposit = ref(1);
-
-const leverage = ref(1);
 </script>
 
 <style lang="scss" module>

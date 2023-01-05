@@ -8,7 +8,10 @@
     <input
       type="number"
       :value="localValue"
+      :tabindex="computedTabIndex"
       @input="onInput"
+      @focus="onFocus"
+      @blur="onBlur"
     >
     <div
       v-if="'append' in $slots"
@@ -30,10 +33,15 @@ const props = withDefaults(
   {
     min: -Infinity,
     max: Infinity,
+    tabIndex: 0,
   },
 );
 
 const emit = defineEmits<NumberInputEmits>();
+
+const computedTabIndex = computed(
+  () => (props.isDisabled ? -1 : props.tabIndex),
+);
 
 const localValue = useLocalValue<number>(props, emit, 'modelValue');
 const onInput = (event: InputEvent) => {
@@ -50,6 +58,16 @@ const onInput = (event: InputEvent) => {
 
   localValue.value = value;
   eventTarget.value = String(value);
+
+  emit('input', event);
+};
+
+const onFocus = (event: InputEvent) => {
+  emit('focus', event);
+};
+
+const onBlur = (event: InputEvent) => {
+  emit('blur', event);
 };
 
 const states = computed(() => arrayFrom(props.state));

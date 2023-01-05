@@ -35,7 +35,7 @@
           :content-class="tabContentClass"
         >
           <template #tab(input)>
-            <OrderFormInputPart />
+            <OrderFormInputPart :model="model" />
           </template>
           <template #tab(tp)>
             <OrderFormTakeProfitPart />

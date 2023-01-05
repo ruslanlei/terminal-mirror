@@ -1,11 +1,14 @@
 <template>
-  <DepositInput />
+  <DepositInput
+    v-bind="props"
+    v-model="value"
+  />
 </template>
 
 <script setup lang="ts">
 import DepositInput from '@/components/core/depositInput/DepositInput.vue';
 import { useActiveField } from '@/hooks/useActiveField';
-import { FormDepositInputProps } from '@/components/form/composables/formDepositInput/index';
+import { FormDepositInputProps } from './index';
 
 const props = withDefaults(
   defineProps<FormDepositInputProps>(),

@@ -35,6 +35,23 @@
         @focus="onFocus"
         @blur="onBlur"
       >
+      <div v-if="type === 'password'">
+        <Transition
+          name="inputPasswordIcon"
+          mode="out-in"
+        >
+          <button
+            :key="isPasswordVisible"
+            :class="$style.passwordVisibilityButton"
+            type="button"
+            @click="togglePassword"
+          >
+            <Icon
+              :icon="isPasswordVisible ? 'eyeOpen' : 'eyeClose'"
+            />
+          </button>
+        </Transition>
+      </div>
       <div
         v-if="'append' in $slots"
         :class="$style.append"
@@ -53,6 +70,7 @@
 import { computed, nextTick, ref } from 'vue';
 import { useInput } from '@/hooks/useInput';
 import FieldError from '@/components/core/fieldError/FieldError.vue';
+import Icon from '@/components/core/icon/Icon.vue';
 import { useComputedState } from '@/hooks/useComputedState';
 import {
   inputType,
@@ -191,6 +209,10 @@ defineExpose({
     }
   }
 
+  .passwordVisibilityButton {
+    margin-right: 20px;
+  }
+
   .error {
   }
 }
@@ -303,6 +325,25 @@ defineExpose({
         color: rgba(var(--color-danger), 1);
       }
     }
+  }
+}
+
+.passwordVisibilityButton {
+  cursor: pointer;
+}
+</style>
+
+<style lang="scss">
+.inputPasswordIcon {
+  &-enter-active,
+  &-leave-active {
+    transition: opacity 80ms, transform 80ms;
+  }
+
+  &-enter-from,
+  &-leave-to {
+    opacity: 0.4;
+    transform: scale(0.8);
   }
 }
 </style>

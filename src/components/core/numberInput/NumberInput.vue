@@ -9,6 +9,8 @@
       type="number"
       :value="localValue"
       :tabindex="computedTabIndex"
+      :step="step"
+      :disabled="isDisabled"
       @input="onInput"
       @focus="onFocus"
       @blur="onBlur"
@@ -34,6 +36,7 @@ const props = withDefaults(
     min: -Infinity,
     max: Infinity,
     tabIndex: 0,
+    step: 1,
   },
 );
 
@@ -50,14 +53,15 @@ const onInput = (event: InputEvent) => {
 
   if (value < props.min) {
     value = props.min;
+    eventTarget.value = String(value);
   }
 
   if (value > props.max) {
     value = props.max;
+    eventTarget.value = String(value);
   }
 
   localValue.value = value;
-  eventTarget.value = String(value);
 
   emit('input', event);
 };

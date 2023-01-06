@@ -4,6 +4,8 @@ export interface NumberInputProps {
   modelValue: number,
   min?: number,
   max?: number,
+
+  step?: number,
   state?: NumberInputState | NumberInputState[],
 
   isDisabled?: boolean,

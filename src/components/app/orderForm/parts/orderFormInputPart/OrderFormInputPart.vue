@@ -17,29 +17,31 @@
       {{ t('order.amount') }}
     </template>
     <template #amountInput>
-      <NumberInput
+      <FormNumberInput
+        name="quantity"
         type="number"
         :state="['defaultColor', 'smSize']"
-        :min="0.000001"
+        :step="0.001"
       >
         <template #append>
           BTC
         </template>
-      </NumberInput>
+      </FormNumberInput>
     </template>
     <template #volumeLabel>
       {{ t('order.volume') }}
     </template>
     <template #volumeInput>
-      <FormNumberInput
+      <FormExchangeInput
         name="quantity"
         :state="['defaultColor', 'smSize']"
         :min="1"
+        :base-currency-price="16890"
       >
-        <template #append>
+        <template #quoteCurrencyName>
           USDT
         </template>
-      </FormNumberInput>
+      </FormExchangeInput>
     </template>
     <template #depositLabel>
       {{ t('order.deposit') }}
@@ -88,7 +90,7 @@ import { useI18n } from 'vue-i18n';
 import OrderFormInputPartContainer from '@/containers/orderFormInputPartContainer/OrderFormInputPartContainer.vue';
 import Button from '@/components/core/button/Button.vue';
 import NumberInput from '@/components/core/numberInput/NumberInput.vue';
-import { FormNumberInput, FormDepositInput } from '@/components/form';
+import { FormNumberInput, FormDepositInput, FormExchangeInput } from '@/components/form';
 import { OrderFormInputPartProps } from '@/components/app/orderForm/parts/orderFormInputPart/index';
 
 const props = defineProps<OrderFormInputPartProps>();

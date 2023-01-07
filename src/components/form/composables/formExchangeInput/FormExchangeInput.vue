@@ -1,9 +1,7 @@
 <template>
   <ExchangeInput
     v-model="value"
-    :error="error"
-    :max="max"
-    :min="min"
+    v-bind="props"
     @input="onInput"
     @focus="onFocus"
     @blur="onBlur"
@@ -23,6 +21,7 @@ const props = withDefaults(
   defineProps<FormExchangeInputProps>(),
   {
     formKey: 'default',
+    saveOn: 'input',
   },
 );
 

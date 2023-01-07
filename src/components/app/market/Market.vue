@@ -4,10 +4,11 @@
       <MarketTools />
     </template>
     <template #main>
-      <ExchangeInput
-        v-model="d"
-        :base-currency-price="16890"
-        @input="onInput"
+      {{ n }}
+      <NumberInput
+        v-model="n"
+        :state="['defaultColor', 'smSize']"
+        save-on="blur"
       />
     </template>
     <template #order>
@@ -24,13 +25,9 @@ import { ref } from 'vue';
 import MarketContainer from '@/containers/marketContainer/MarketContainer.vue';
 import PlayerControls from '@/components/app/playerControls/PlayerControls.vue';
 import MarketTools from '@/components/app/marketTools/MarketTools.vue';
+import NumberInput from '@/components/core/numberInput/NumberInput.vue';
 
 import Sidebar from '@/components/app/sidebar/Sidebar.vue';
-import ExchangeInput from '@/components/core/exchangeInput/ExchangeInput.vue';
 
-const d = ref(1);
-
-const onInput = () => {
-  console.log('onInput');
-};
+const n = ref(1);
 </script>

@@ -42,6 +42,7 @@
         :base-currency-decimals="baseCurrencyDecimals"
         :base-currency-step="baseCurrencyStep"
         :quote-currency-decimals="2"
+        save-on="blur"
       >
         <template #quoteCurrencyName>
           USDT

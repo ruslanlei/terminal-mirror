@@ -52,7 +52,7 @@ const localValue = computed({
 
 const normalizer: NumberInputNormalizer = (
   number: number,
-  direction: 'increment' | 'decrement',
+  direction?: 'increment' | 'decrement',
 ) => {
   if (direction === 'increment') {
     const quoteInBaseCurrencyPrice = calculateQuoteToBaseCurrencyPrice(number);
@@ -76,6 +76,6 @@ const normalizer: NumberInputNormalizer = (
     ));
   }
 
-  return number;
+  return calculateBaseToQuoteCurrencyPrice(calculateQuoteToBaseCurrencyPrice(number));
 };
 </script>

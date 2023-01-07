@@ -38,6 +38,7 @@ const props = withDefaults(
     max: Infinity,
     tabIndex: 0,
     step: 1,
+    saveOn: 'input',
   },
 );
 
@@ -55,40 +56,65 @@ watch(localValue, () => {
   }
 });
 
-const onInput = (event: InputEvent) => {
-  const eventTarget = (event.target as HTMLInputElement);
-  let value = Number(eventTarget.value);
+const normalizeValue = (
+  value: number,
+) => {
+  let isEdited = false;
 
   if (props.normalizer) {
-    let direction = 'increment';
-    if (value < localValue.value) {
-      direction = 'decrement';
-    }
-    value = props.normalizer(value, direction);
-    eventTarget.value = String(value);
+    // let direction = 'increment';
+    // if (value < localValue.value) {
+    //   direction = 'decrement';
+    // }
+    value = props.normalizer(value);
+    isEdited = true;
   }
 
   if (value < props.min) {
     value = props.min;
-    eventTarget.value = String(value);
+    isEdited = true;
   }
 
   if (value > props.max) {
     value = props.max;
+    isEdited = true;
+  }
+
+  return {
+    value,
+    isEdited,
+  };
+};
+
+const saveValue = (event: InputEvent) => {
+  const eventTarget = (event.target as HTMLInputElement);
+  const { value, isEdited } = normalizeValue(Number(eventTarget.value));
+
+  if (isEdited) {
     eventTarget.value = String(value);
   }
 
   localValue.value = value;
+};
+
+const onInput = (event: InputEvent) => {
+  if (props.saveOn === 'input') {
+    saveValue(event);
+  }
 
   emit('input', event);
 };
 
-const onFocus = (event: InputEvent) => {
-  emit('focus', event);
+const onBlur = (event: InputEvent) => {
+  if (props.saveOn === 'blur') {
+    saveValue(event);
+  }
+
+  emit('blur', event);
 };
 
-const onBlur = (event: InputEvent) => {
-  emit('blur', event);
+const onFocus = (event: InputEvent) => {
+  emit('focus', event);
 };
 
 const states = computed(() => arrayFrom(props.state));

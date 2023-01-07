@@ -5,6 +5,7 @@
     </template>
     <template #priceInput>
       <NumberInput
+        v-model="baseCurrencyPrice"
         :state="['defaultColor', 'smSize']"
         :min="1"
       >

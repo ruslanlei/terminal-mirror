@@ -1,4 +1,6 @@
-export type NumberInputState = 'smSize' | 'defaultColor'
+export type NumberInputState = 'smSize' | 'defaultColor';
+
+export type NumberInputNormalizer = (number: number, direction: 'increment' | 'decrement') => number;
 
 export interface NumberInputProps {
   modelValue: number,
@@ -6,6 +8,8 @@ export interface NumberInputProps {
   max?: number,
 
   step?: number,
+  decimals?: number,
+  normalizer?: NumberInputNormalizer,
   state?: NumberInputState | NumberInputState[],
 
   isDisabled?: boolean,

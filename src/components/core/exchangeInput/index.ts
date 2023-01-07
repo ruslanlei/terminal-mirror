@@ -1,6 +1,9 @@
 export interface ExchangeInputProps {
   modelValue: number,
   baseCurrencyPrice: number,
+  baseCurrencyDecimals: number,
+  baseCurrencyStep: number,
+  quoteCurrencyDecimals: number,
   min?: number,
   max?: number
   isDisabled?: boolean,

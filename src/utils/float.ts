@@ -11,3 +11,17 @@ export const divide = (
   divider: number,
   precision = 0,
 ) => currency(value, { precision }).divide(divider).value;
+
+export const add = (
+  terms: (number | string)[],
+  precision = 2,
+) => terms.reduce(
+  (acc: number, value: number | string) => currency(acc, { precision }).add(value).value,
+  0,
+);
+
+export const subtract = (
+  value: number,
+  subtrahend: number,
+  precision = 2,
+) => currency(value, { precision }).subtract(subtrahend).value;

@@ -21,7 +21,8 @@
         name="quantity"
         type="number"
         :state="['defaultColor', 'smSize']"
-        :step="0.001"
+        :decimals="baseCurrencyDecimals"
+        :step="baseCurrencyStep"
       >
         <template #append>
           BTC
@@ -36,7 +37,11 @@
         name="quantity"
         :state="['defaultColor', 'smSize']"
         :min="1"
+        :step="0.1"
         :base-currency-price="baseCurrencyPrice"
+        :base-currency-decimals="baseCurrencyDecimals"
+        :base-currency-step="baseCurrencyStep"
+        :quote-currency-decimals="2"
       >
         <template #quoteCurrencyName>
           USDT
@@ -101,6 +106,8 @@ const { t } = useI18n();
 const balance = ref(3208);
 
 const baseCurrencyPrice = ref(16890);
+const baseCurrencyDecimals = ref(4);
+const baseCurrencyStep = ref(0.0001);
 </script>
 
 <style lang="scss" module>

@@ -25,10 +25,11 @@
 </template>
 
 <script setup lang="ts">
-import { NumberInputEmits, NumberInputProps } from '@/components/core/numberInput/index';
+import { NumberInputEmits, NumberInputNormalizer, NumberInputProps } from '@/components/core/numberInput/index';
 import { useLocalValue } from '@/hooks/useLocalValue';
-import { computed } from 'vue';
+import { computed, watch } from 'vue';
 import { arrayFrom } from '@/utils/array';
+import { roundToDecimalPoint } from '@/utils/number';
 
 const props = withDefaults(
   defineProps<NumberInputProps>(),
@@ -47,9 +48,25 @@ const computedTabIndex = computed(
 );
 
 const localValue = useLocalValue<number>(props, emit, 'modelValue');
+
+watch(localValue, () => {
+  if (props.decimals) {
+    localValue.value = roundToDecimalPoint(localValue.value, props.decimals);
+  }
+});
+
 const onInput = (event: InputEvent) => {
   const eventTarget = (event.target as HTMLInputElement);
   let value = Number(eventTarget.value);
+
+  if (props.normalizer) {
+    let direction = 'increment';
+    if (value < localValue.value) {
+      direction = 'decrement';
+    }
+    value = props.normalizer(value, direction);
+    eventTarget.value = String(value);
+  }
 
   if (value < props.min) {
     value = props.min;

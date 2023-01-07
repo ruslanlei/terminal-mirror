@@ -36,12 +36,11 @@
       <FormExchangeInput
         name="quantity"
         :state="['defaultColor', 'smSize']"
-        :min="1"
-        :step="0.1"
+        :min="0"
         :base-currency-price="baseCurrencyPrice"
         :base-currency-decimals="baseCurrencyDecimals"
         :base-currency-step="baseCurrencyStep"
-        :quote-currency-decimals="2"
+        :quote-currency-decimals="quoteCurrencyDecimals"
         save-on="blur"
       >
         <template #quoteCurrencyName>
@@ -109,6 +108,8 @@ const balance = ref(3208);
 const baseCurrencyPrice = ref(16890);
 const baseCurrencyDecimals = ref(4);
 const baseCurrencyStep = ref(0.0001);
+
+const quoteCurrencyDecimals = ref(2);
 </script>
 
 <style lang="scss" module>

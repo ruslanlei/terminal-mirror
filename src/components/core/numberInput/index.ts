@@ -11,6 +11,7 @@ export interface NumberInputProps {
   decimals?: number,
   normalizer?: NumberInputNormalizer,
   saveOn?: 'input' | 'blur',
+  normalizeOnKeydown?: boolean,
   state?: NumberInputState | NumberInputState[],
 
   isDisabled?: boolean,

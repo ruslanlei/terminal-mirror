@@ -7,6 +7,7 @@
     :max="max"
     :is-disabled="isDisabled"
     :normalizer="normalizer"
+    :normalize-on-keydown="true"
     @input="emit('input', $event)"
     @focus="emit('focus', $event)"
     @blur="emit('blur', $event)"

@@ -14,6 +14,7 @@
       @input="onInput"
       @focus="onFocus"
       @blur="onBlur"
+      @keydown="onKeydown"
     >
     <div
       v-if="'append' in $slots"
@@ -39,6 +40,7 @@ const props = withDefaults(
     tabIndex: 0,
     step: 1,
     saveOn: 'input',
+    normalizeOnKeydown: false,
   },
 );
 
@@ -58,15 +60,12 @@ watch(localValue, () => {
 
 const normalizeValue = (
   value: number,
+  normalizer?: NumberInputNormalizer,
 ) => {
   let isEdited = false;
 
-  if (props.normalizer) {
-    // let direction = 'increment';
-    // if (value < localValue.value) {
-    //   direction = 'decrement';
-    // }
-    value = props.normalizer(value);
+  if (normalizer) {
+    value = normalizer(value);
     isEdited = true;
   }
 
@@ -86,9 +85,12 @@ const normalizeValue = (
   };
 };
 
-const saveValue = (event: InputEvent) => {
+const saveValue = (
+  event: InputEvent | KeyboardEvent,
+  normalizer?: NumberInputNormalizer,
+) => {
   const eventTarget = (event.target as HTMLInputElement);
-  const { value, isEdited } = normalizeValue(Number(eventTarget.value));
+  const { value, isEdited } = normalizeValue(Number(eventTarget.value), normalizer);
 
   if (isEdited) {
     eventTarget.value = String(value);
@@ -99,7 +101,7 @@ const saveValue = (event: InputEvent) => {
 
 const onInput = (event: InputEvent) => {
   if (props.saveOn === 'input') {
-    saveValue(event);
+    saveValue(event, props.normalizer);
   }
 
   emit('input', event);
@@ -107,7 +109,7 @@ const onInput = (event: InputEvent) => {
 
 const onBlur = (event: InputEvent) => {
   if (props.saveOn === 'blur') {
-    saveValue(event);
+    saveValue(event, props.normalizer);
   }
 
   emit('blur', event);
@@ -115,6 +117,30 @@ const onBlur = (event: InputEvent) => {
 
 const onFocus = (event: InputEvent) => {
   emit('focus', event);
+};
+
+const onKeydown = (event: KeyboardEvent) => {
+  if (!props.normalizeOnKeydown) return;
+
+  if (event.key === 'ArrowUp') {
+    event.preventDefault();
+    saveValue(event, (value: number) => {
+      if (props.normalizer) {
+        return props?.normalizer(value, 'increment');
+      }
+      return value;
+    });
+  }
+
+  if (event.key === 'ArrowDown') {
+    event.preventDefault();
+    saveValue(event, (value: number) => {
+      if (props.normalizer) {
+        return props?.normalizer(value, 'decrement');
+      }
+      return value;
+    });
+  }
 };
 
 const states = computed(() => arrayFrom(props.state));

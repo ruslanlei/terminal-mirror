@@ -54,6 +54,8 @@
           type="number"
           :min="0"
           :max="100"
+          save-on="blur"
+          :normalize-on-keydown="true"
         />
         <div :class="$style.percentSymbol">
           %

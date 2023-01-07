@@ -4,12 +4,7 @@
       <MarketTools />
     </template>
     <template #main>
-      {{ n }}
-      <NumberInput
-        v-model="n"
-        :state="['defaultColor', 'smSize']"
-        save-on="blur"
-      />
+      market
     </template>
     <template #order>
       <Sidebar />
@@ -21,13 +16,9 @@
 </template>
 
 <script async setup lang="ts">
-import { ref } from 'vue';
 import MarketContainer from '@/containers/marketContainer/MarketContainer.vue';
 import PlayerControls from '@/components/app/playerControls/PlayerControls.vue';
 import MarketTools from '@/components/app/marketTools/MarketTools.vue';
-import NumberInput from '@/components/core/numberInput/NumberInput.vue';
 
 import Sidebar from '@/components/app/sidebar/Sidebar.vue';
-
-const n = ref(1);
 </script>

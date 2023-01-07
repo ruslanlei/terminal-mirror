@@ -107,8 +107,8 @@ const { t } = useI18n();
 const balance = ref(3208);
 
 const baseCurrencyPrice = ref(16890);
-const baseCurrencyDecimals = ref(4);
-const baseCurrencyStep = ref(0.0001);
+const baseCurrencyDecimals = ref(3);
+const baseCurrencyStep = ref(0.001);
 
 const quoteCurrencyDecimals = ref(2);
 </script>

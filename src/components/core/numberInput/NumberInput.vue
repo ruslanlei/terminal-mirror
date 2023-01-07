@@ -120,14 +120,14 @@ const onFocus = (event: InputEvent) => {
 };
 
 const onKeydown = (event: KeyboardEvent) => {
-  if (!props.normalizeOnKeydown) return;
-
   if (event.key === 'ArrowUp') {
     event.preventDefault();
     saveValue(event, (value: number) => {
       if (props.normalizer) {
         return props?.normalizer(value, 'increment');
       }
+      value += props.step;
+
       return value;
     });
   }
@@ -138,6 +138,8 @@ const onKeydown = (event: KeyboardEvent) => {
       if (props.normalizer) {
         return props?.normalizer(value, 'decrement');
       }
+      value -= props.step;
+
       return value;
     });
   }

@@ -2,6 +2,7 @@
   <form
     ref="form"
     :class="$style.form"
+    novalidate
     @submit.prevent="handleSubmit"
   >
     <slot />

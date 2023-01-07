@@ -1,9 +1,9 @@
 export interface DepositInputProps {
   modelValue: number,
-  decimals?: number,
   balance: number,
+  baseCurrencyPrice: number,
   leverage?: number,
-  // leveragedBalance: number,
+  decimals?: number,
 }
 
 export interface DepositInputEmits {

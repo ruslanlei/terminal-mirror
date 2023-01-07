@@ -36,7 +36,7 @@
         name="quantity"
         :state="['defaultColor', 'smSize']"
         :min="1"
-        :base-currency-price="16890"
+        :base-currency-price="baseCurrencyPrice"
       >
         <template #quoteCurrencyName>
           USDT
@@ -50,6 +50,7 @@
       <FormDepositInput
         name="quantity"
         :balance="balance"
+        :base-currency-price="baseCurrencyPrice"
         :leverage="model.leverage"
       />
     </template>
@@ -98,6 +99,8 @@ const props = defineProps<OrderFormInputPartProps>();
 const { t } = useI18n();
 
 const balance = ref(3208);
+
+const baseCurrencyPrice = ref(16890);
 </script>
 
 <style lang="scss" module>

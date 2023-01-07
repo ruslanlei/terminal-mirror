@@ -85,12 +85,17 @@ const props = withDefaults(
 const emit = defineEmits<DepositInputEmits>();
 
 const leveragedBalance = computed(() => props.balance * props.leverage);
+const showLeveragedBalance = computed(
+  () => props.balance !== leveragedBalance.value,
+);
 
-const showLeveragedBalance = computed(() => props.balance !== leveragedBalance.value);
+const leveragedBalanceInBaseCurrency = computed(
+  () => leveragedBalance.value / props.baseCurrencyPrice,
+);
 
 const localValue = useLocalValue<number>(props, emit, 'modelValue');
 
-const onePercentOfBalance = computed(() => leveragedBalance.value / 100);
+const onePercentOfBalance = computed(() => leveragedBalanceInBaseCurrency.value / 100);
 
 const percentsToValue = (
   percents: number,

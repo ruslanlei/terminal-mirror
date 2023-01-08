@@ -1,10 +1,14 @@
-import { computed, reactive, ref } from 'vue';
+import {
+  computed,
+  Ref,
+} from 'vue';
 import { roundToDecimalPoint } from '@/utils/number';
 import { add, subtract } from '@/utils/float';
 import { NumberInputNormalizer } from '@/components/core/numberInput';
 
 export interface QuoteCurrency {
   balance: number,
+  leverage: number,
   decimals: number,
 }
 
@@ -15,21 +19,21 @@ export interface BaseCurrency {
 }
 
 export const useExchange = (
-  baseCurrency: BaseCurrency,
-  quoteCurrency: QuoteCurrency,
+  baseCurrency: Ref<BaseCurrency>,
+  quoteCurrency: Ref<QuoteCurrency>,
 ) => {
   const calculateBaseToQuoteCurrencyPrice = (
     baseCurrencyQuantity: number,
   ) => roundToDecimalPoint(
-    baseCurrencyQuantity * baseCurrency.price,
-    quoteCurrency.decimals,
+    baseCurrencyQuantity * baseCurrency.value.price,
+    quoteCurrency.value.decimals,
   );
 
   const calculateQuoteToBaseCurrencyPrice = (
     quoteCurrencyQuantity: number,
   ) => roundToDecimalPoint(
-    quoteCurrencyQuantity / baseCurrency.price,
-    baseCurrency.decimals,
+    quoteCurrencyQuantity / baseCurrency.value.price,
+    baseCurrency.value.decimals,
   );
 
   const incrementDeposit = (number: number) => {
@@ -38,9 +42,9 @@ export const useExchange = (
     return calculateBaseToQuoteCurrencyPrice(add(
       [
         quoteInBaseCurrencyPrice,
-        baseCurrency.step,
+        baseCurrency.value.step,
       ],
-      baseCurrency.decimals,
+      baseCurrency.value.decimals,
     ));
   };
 
@@ -49,8 +53,8 @@ export const useExchange = (
 
     return calculateBaseToQuoteCurrencyPrice(subtract(
       quoteInBaseCurrencyPrice,
-      baseCurrency.step,
-      baseCurrency.decimals,
+      baseCurrency.value.step,
+      baseCurrency.value.decimals,
     ));
   };
 
@@ -65,7 +69,9 @@ export const useExchange = (
     }
   };
 
-  const maxDeposit = computed(() => decrementDeposit(quoteCurrency.balance));
+  const maxDeposit = computed(
+    () => decrementDeposit(quoteCurrency.value.balance) * quoteCurrency.value.leverage,
+  );
 
   return {
     baseCurrency,

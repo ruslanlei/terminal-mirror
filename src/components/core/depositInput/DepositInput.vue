@@ -66,7 +66,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, watch } from 'vue';
+import { computed, toRefs, watch } from 'vue';
 import Button from '@/components/core/button/Button.vue';
 import Icon from '@/components/core/icon/Icon.vue';
 import RangeSlider from '@/components/core/rangeSlider/RangeSlider.vue';
@@ -85,22 +85,26 @@ const props = withDefaults(
   },
 );
 
+const {
+  baseCurrency,
+  quoteCurrency,
+} = toRefs(props);
+
 const emit = defineEmits<DepositInputEmits>();
 
 const {
   maxDeposit,
 } = useExchange(
-  props.baseCurrency,
-  props.quoteCurrency,
+  baseCurrency,
+  quoteCurrency,
 );
 
-const leveragedBalance = computed(() => maxDeposit.value * props.leverage);
 const showLeveragedBalance = computed(
-  () => maxDeposit.value !== leveragedBalance.value,
+  () => maxDeposit.value !== quoteCurrency.value.balance,
 );
 
 const leveragedBalanceInBaseCurrency = computed(
-  () => leveragedBalance.value / props.baseCurrency.price,
+  () => maxDeposit.value / props.baseCurrency.price,
 );
 
 const localValue = useLocalValue<number>(props, emit, 'modelValue');

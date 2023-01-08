@@ -19,7 +19,9 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, watch } from 'vue';
+import {
+  computed, nextTick, toRefs, watch,
+} from 'vue';
 import NumberInput from '@/components/core/numberInput/NumberInput.vue';
 import { roundToDecimalPoint } from '@/utils/number';
 import { NumberInputNormalizer } from '@/components/core/numberInput';
@@ -29,6 +31,11 @@ import { ExchangeInputProps, ExchangeInputEmits } from './index';
 
 const props = defineProps<ExchangeInputProps>();
 
+const {
+  baseCurrency,
+  quoteCurrency,
+} = toRefs(props);
+
 const emit = defineEmits<ExchangeInputEmits>();
 
 const {
@@ -37,8 +44,8 @@ const {
   normalizer,
   maxDeposit,
 } = useExchange(
-  props.baseCurrency,
-  props.quoteCurrency,
+  baseCurrency,
+  quoteCurrency,
 );
 
 const localValue = computed({

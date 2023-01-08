@@ -54,7 +54,6 @@
         name="quantity"
         :quote-currency="quoteCurrency"
         :base-currency="baseCurrency"
-        :leverage="model.leverage"
       />
     </template>
     <template #leverageLabel>
@@ -89,7 +88,7 @@
 </template>
 
 <script setup lang="ts">
-import { reactive } from 'vue';
+import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import OrderFormInputPartContainer from '@/containers/orderFormInputPartContainer/OrderFormInputPartContainer.vue';
 import Button from '@/components/core/button/Button.vue';
@@ -101,16 +100,17 @@ const props = defineProps<OrderFormInputPartProps>();
 
 const { t } = useI18n();
 
-const quoteCurrency = reactive({
+const quoteCurrency = computed(() => ({
   balance: 3208,
   decimals: 2,
-});
+  leverage: props.model.leverage,
+}));
 
-const baseCurrency = reactive({
+const baseCurrency = computed(() => ({
   price: 16890,
   decimals: 3,
   step: 0.001,
-});
+}));
 </script>
 
 <style lang="scss" module>

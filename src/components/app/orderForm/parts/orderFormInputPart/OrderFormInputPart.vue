@@ -94,51 +94,25 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import OrderFormInputPartContainer from '@/containers/orderFormInputPartContainer/OrderFormInputPartContainer.vue';
 import Button from '@/components/core/button/Button.vue';
 import NumberInput from '@/components/core/numberInput/NumberInput.vue';
 import { FormNumberInput, FormDepositInput, FormExchangeInput } from '@/components/form';
 import { OrderFormInputPartProps } from '@/components/app/orderForm/parts/orderFormInputPart/index';
-import { subtract } from '@/utils/float';
-import { roundToDecimalPoint } from '@/utils/number';
+import { useExchange } from '@/hooks/useExchange';
 
 const props = defineProps<OrderFormInputPartProps>();
 
 const { t } = useI18n();
 
-const balance = ref(3208);
-
-const baseCurrencyPrice = ref(16890);
-const baseCurrencyDecimals = ref(3);
-const baseCurrencyStep = ref(0.001);
-
-const quoteCurrencyDecimals = ref(2);
-
-const calculateBaseToQuoteCurrencyPrice = (
-  baseCurrencyQuantity: number,
-) => roundToDecimalPoint(
-  baseCurrencyQuantity * baseCurrencyPrice.value,
-  quoteCurrencyDecimals.value,
-);
-
-const calculateQuoteToBaseCurrencyPrice = (
-  quoteCurrencyQuantity: number,
-) => roundToDecimalPoint(
-  quoteCurrencyQuantity / baseCurrencyPrice.value,
-  baseCurrencyDecimals.value,
-);
-
-const maxDeposit = computed(() => {
-  const quoteInBaseCurrencyPrice = calculateQuoteToBaseCurrencyPrice(balance.value);
-
-  return calculateBaseToQuoteCurrencyPrice(subtract(
-    quoteInBaseCurrencyPrice,
-    baseCurrencyStep.value,
-    baseCurrencyDecimals.value,
-  ));
-});
+const {
+  quoteCurrencyDecimals,
+  baseCurrencyPrice,
+  baseCurrencyDecimals,
+  baseCurrencyStep,
+  maxDeposit,
+} = useExchange();
 </script>
 
 <style lang="scss" module>

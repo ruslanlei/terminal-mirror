@@ -73,7 +73,11 @@ export const useExchange = (
   };
 
   const maxDeposit = computed(
-    () => decrementDeposit(quoteCurrency.value.balance) * quoteCurrency.value.leverage,
+    () => decrementDeposit(quoteCurrency.value.balance),
+  );
+
+  const maxDepositLeveraged = computed(
+    () => decrementDeposit(quoteCurrency.value.balance * quoteCurrency.value.leverage),
   );
 
   return {
@@ -85,5 +89,6 @@ export const useExchange = (
     decrementDeposit,
     normalizer,
     maxDeposit,
+    maxDepositLeveraged,
   };
 };

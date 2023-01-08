@@ -2,7 +2,8 @@ import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { defineStore } from 'pinia';
 import { useStorage } from '@vueuse/core';
-import { getPairs, Pair } from '@/api/endpoints/marketdata/stats';
+import { getPairs } from '@/api/endpoints/marketdata/stats';
+import { Pair } from '@/api/types/pair';
 import { useToastStore } from '@/stores/toasts';
 import { createOrder, CreateOrderDTO } from '@/api/endpoints/orders/create';
 

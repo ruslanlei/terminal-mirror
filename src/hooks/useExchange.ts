@@ -5,14 +5,17 @@ import {
 import { roundToDecimalPoint } from '@/utils/number';
 import { add, subtract } from '@/utils/float';
 import { NumberInputNormalizer } from '@/components/core/numberInput';
+import { Pair } from '@/api/types/pair';
 
 export interface QuoteCurrency {
+  name: Pair['quote'],
   balance: number,
   leverage: number,
   decimals: number,
 }
 
 export interface BaseCurrency {
+  name: Pair['base'],
   price: number,
   decimals: number,
   step: number,

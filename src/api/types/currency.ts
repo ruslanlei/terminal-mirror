@@ -16,4 +16,5 @@ export enum Currency {
   BNB = 'BNB',
   DASH = 'DASH',
   LTC = 'LTC',
+  USDT = 'USDT'
 }

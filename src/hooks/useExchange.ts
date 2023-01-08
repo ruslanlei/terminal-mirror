@@ -1,28 +1,35 @@
-import { computed, ref } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import { roundToDecimalPoint } from '@/utils/number';
 import { add, subtract } from '@/utils/float';
 import { NumberInputNormalizer } from '@/components/core/numberInput';
 
-export const useExchange = () => {
-  const quoteCurrencyBalance = ref(3208);
-  const quoteCurrencyDecimals = ref(2);
+export interface QuoteCurrency {
+  balance: number,
+  decimals: number,
+}
 
-  const baseCurrencyPrice = ref(16890);
-  const baseCurrencyDecimals = ref(3);
-  const baseCurrencyStep = ref(0.001);
+export interface BaseCurrency {
+  price: number,
+  decimals: number,
+  step: number,
+}
 
+export const useExchange = (
+  baseCurrency: BaseCurrency,
+  quoteCurrency: QuoteCurrency,
+) => {
   const calculateBaseToQuoteCurrencyPrice = (
     baseCurrencyQuantity: number,
   ) => roundToDecimalPoint(
-    baseCurrencyQuantity * baseCurrencyPrice.value,
-    quoteCurrencyDecimals.value,
+    baseCurrencyQuantity * baseCurrency.price,
+    quoteCurrency.decimals,
   );
 
   const calculateQuoteToBaseCurrencyPrice = (
     quoteCurrencyQuantity: number,
   ) => roundToDecimalPoint(
-    quoteCurrencyQuantity / baseCurrencyPrice.value,
-    baseCurrencyDecimals.value,
+    quoteCurrencyQuantity / baseCurrency.price,
+    baseCurrency.decimals,
   );
 
   const incrementDeposit = (number: number) => {
@@ -31,9 +38,9 @@ export const useExchange = () => {
     return calculateBaseToQuoteCurrencyPrice(add(
       [
         quoteInBaseCurrencyPrice,
-        baseCurrencyStep.value,
+        baseCurrency.step,
       ],
-      baseCurrencyDecimals.value,
+      baseCurrency.decimals,
     ));
   };
 
@@ -42,8 +49,8 @@ export const useExchange = () => {
 
     return calculateBaseToQuoteCurrencyPrice(subtract(
       quoteInBaseCurrencyPrice,
-      baseCurrencyStep.value,
-      baseCurrencyDecimals.value,
+      baseCurrency.step,
+      baseCurrency.decimals,
     ));
   };
 
@@ -58,14 +65,11 @@ export const useExchange = () => {
     }
   };
 
-  const maxDeposit = computed(() => decrementDeposit(quoteCurrencyBalance.value));
+  const maxDeposit = computed(() => decrementDeposit(quoteCurrency.balance));
 
   return {
-    quoteCurrencyBalance,
-    baseCurrencyPrice,
-    baseCurrencyDecimals,
-    baseCurrencyStep,
-    quoteCurrencyDecimals,
+    baseCurrency,
+    quoteCurrency,
     calculateBaseToQuoteCurrencyPrice,
     calculateQuoteToBaseCurrencyPrice,
     incrementDeposit,

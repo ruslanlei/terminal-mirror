@@ -5,7 +5,7 @@
     </template>
     <template #priceInput>
       <NumberInput
-        v-model="baseCurrencyPrice"
+        v-model="baseCurrency.price"
         :state="['defaultColor', 'smSize']"
         :min="1"
       >
@@ -22,8 +22,8 @@
         name="quantity"
         type="number"
         :state="['defaultColor', 'smSize']"
-        :decimals="baseCurrencyDecimals"
-        :step="baseCurrencyStep"
+        :decimals="baseCurrency.decimals"
+        :step="baseCurrency.step"
       >
         <template #append>
           BTC
@@ -37,12 +37,8 @@
       <FormExchangeInput
         name="quantity"
         :state="['defaultColor', 'smSize']"
-        :min="0"
-        :max="maxDeposit"
-        :base-currency-price="baseCurrencyPrice"
-        :base-currency-decimals="baseCurrencyDecimals"
-        :base-currency-step="baseCurrencyStep"
-        :quote-currency-decimals="quoteCurrencyDecimals"
+        :base-currency="baseCurrency"
+        :quote-currency="quoteCurrency"
         save-on="blur"
       >
         <template #quoteCurrencyName>
@@ -57,8 +53,8 @@
       <FormDepositInput
         name="quantity"
         :quote-currency-balance="maxDeposit"
-        :base-currency-price="baseCurrencyPrice"
-        :base-currency-decimals="baseCurrencyDecimals"
+        :base-currency-price="baseCurrency.price"
+        :base-currency-decimals="baseCurrency.decimals"
         :leverage="model.leverage"
       />
     </template>
@@ -94,6 +90,7 @@
 </template>
 
 <script setup lang="ts">
+import { reactive } from 'vue';
 import { useI18n } from 'vue-i18n';
 import OrderFormInputPartContainer from '@/containers/orderFormInputPartContainer/OrderFormInputPartContainer.vue';
 import Button from '@/components/core/button/Button.vue';
@@ -106,13 +103,23 @@ const props = defineProps<OrderFormInputPartProps>();
 
 const { t } = useI18n();
 
+const quoteCurrency = reactive({
+  balance: 3208,
+  decimals: 2,
+});
+
+const baseCurrency = reactive({
+  price: 16890,
+  decimals: 3,
+  step: 0.001,
+});
+
 const {
-  quoteCurrencyDecimals,
-  baseCurrencyPrice,
-  baseCurrencyDecimals,
-  baseCurrencyStep,
   maxDeposit,
-} = useExchange();
+} = useExchange(
+  baseCurrency,
+  quoteCurrency,
+);
 </script>
 
 <style lang="scss" module>

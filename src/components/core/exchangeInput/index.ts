@@ -1,6 +1,11 @@
+import { BaseCurrency, QuoteCurrency } from '@/hooks/useExchange';
+
 export interface ExchangeInputProps {
   modelValue: number,
   isDisabled?: boolean,
+
+  baseCurrency: BaseCurrency,
+  quoteCurrency: QuoteCurrency,
 }
 
 export interface ExchangeInputEmits {

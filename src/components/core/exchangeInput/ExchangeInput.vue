@@ -36,7 +36,10 @@ const {
   calculateQuoteToBaseCurrencyPrice,
   normalizer,
   maxDeposit,
-} = useExchange();
+} = useExchange(
+  props.baseCurrency,
+  props.quoteCurrency,
+);
 
 const localValue = computed({
   get: () => calculateBaseToQuoteCurrencyPrice(props.modelValue),

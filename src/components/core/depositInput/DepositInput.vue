@@ -26,7 +26,7 @@
           <AnimatedText
             animation-type="verticalAuto"
             :class="$style.realBalance"
-            :text="quoteCurrencyBalance"
+            :text="quoteCurrency.balance"
           />
           <transition name="depositInputLeverageBalance">
             <div
@@ -86,13 +86,13 @@ const props = withDefaults(
 
 const emit = defineEmits<DepositInputEmits>();
 
-const leveragedBalance = computed(() => props.quoteCurrencyBalance * props.leverage);
+const leveragedBalance = computed(() => props.quoteCurrency.balance * props.leverage);
 const showLeveragedBalance = computed(
-  () => props.quoteCurrencyBalance !== leveragedBalance.value,
+  () => props.quoteCurrency.balance !== leveragedBalance.value,
 );
 
 const leveragedBalanceInBaseCurrency = computed(
-  () => leveragedBalance.value / props.baseCurrencyPrice,
+  () => leveragedBalance.value / props.baseCurrency.price,
 );
 
 const localValue = useLocalValue<number>(props, emit, 'modelValue');
@@ -101,7 +101,7 @@ const onePercentOfBalance = computed(() => leveragedBalanceInBaseCurrency.value 
 
 const percentsToValue = (
   percents: number,
-) => roundToDecimalPoint(onePercentOfBalance.value * percents, props.baseCurrencyDecimals);
+) => roundToDecimalPoint(onePercentOfBalance.value * percents, props.baseCurrency.decimals);
 
 const valueToPercents = (value: number) => roundToDecimalPoint(
   value / onePercentOfBalance.value,

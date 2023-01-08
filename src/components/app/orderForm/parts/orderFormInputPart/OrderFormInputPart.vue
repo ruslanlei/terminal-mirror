@@ -52,9 +52,8 @@
     <template #depositInput>
       <FormDepositInput
         name="quantity"
-        :quote-currency-balance="maxDeposit"
-        :base-currency-price="baseCurrency.price"
-        :base-currency-decimals="baseCurrency.decimals"
+        :quote-currency="quoteCurrency"
+        :base-currency="baseCurrency"
         :leverage="model.leverage"
       />
     </template>
@@ -97,7 +96,6 @@ import Button from '@/components/core/button/Button.vue';
 import NumberInput from '@/components/core/numberInput/NumberInput.vue';
 import { FormNumberInput, FormDepositInput, FormExchangeInput } from '@/components/form';
 import { OrderFormInputPartProps } from '@/components/app/orderForm/parts/orderFormInputPart/index';
-import { useExchange } from '@/hooks/useExchange';
 
 const props = defineProps<OrderFormInputPartProps>();
 
@@ -113,13 +111,6 @@ const baseCurrency = reactive({
   decimals: 3,
   step: 0.001,
 });
-
-const {
-  maxDeposit,
-} = useExchange(
-  baseCurrency,
-  quoteCurrency,
-);
 </script>
 
 <style lang="scss" module>

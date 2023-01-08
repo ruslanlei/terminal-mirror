@@ -5,7 +5,7 @@
     </template>
     <template #priceInput>
       <NumberInput
-        v-model="baseCurrency.price"
+        v-model="baseCurrencyPrice"
         :state="['defaultColor', 'smSize']"
         :min="1"
       >
@@ -88,7 +88,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import OrderFormInputPartContainer from '@/containers/orderFormInputPartContainer/OrderFormInputPartContainer.vue';
 import Button from '@/components/core/button/Button.vue';
@@ -112,9 +112,11 @@ const quoteCurrency = computed<QuoteCurrency>(() => ({
   leverage: props.model.leverage,
 }));
 
+const baseCurrencyPrice = ref(16890);
+
 const baseCurrency = computed<BaseCurrency>(() => ({
   name: marketStore.activePairData?.base || Currency.USDT,
-  price: 16890,
+  price: baseCurrencyPrice.value,
   decimals: 3,
   step: 0.001,
 }));

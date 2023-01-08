@@ -74,6 +74,7 @@ import NumberInput from '@/components/core/numberInput/NumberInput.vue';
 import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
 import { roundToDecimalPoint } from '@/utils/number';
 import { useLocalValue } from '@/hooks/useLocalValue';
+import { useExchange } from '@/hooks/useExchange';
 import { DepositInputEmits, DepositInputProps } from './index';
 
 const props = withDefaults(
@@ -86,9 +87,16 @@ const props = withDefaults(
 
 const emit = defineEmits<DepositInputEmits>();
 
-const leveragedBalance = computed(() => props.quoteCurrency.balance * props.leverage);
+const {
+  maxDeposit,
+} = useExchange(
+  props.baseCurrency,
+  props.quoteCurrency,
+);
+
+const leveragedBalance = computed(() => maxDeposit.value * props.leverage);
 const showLeveragedBalance = computed(
-  () => props.quoteCurrency.balance !== leveragedBalance.value,
+  () => maxDeposit.value !== leveragedBalance.value,
 );
 
 const leveragedBalanceInBaseCurrency = computed(

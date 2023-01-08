@@ -26,7 +26,12 @@ import { NumberInputNormalizer } from '@/components/core/numberInput';
 import { add, subtract } from '@/utils/float';
 import { ExchangeInputProps, ExchangeInputEmits } from './index';
 
-const props = defineProps<ExchangeInputProps>();
+const props = withDefaults(
+  defineProps<ExchangeInputProps>(),
+  {
+    min: 0,
+  },
+);
 
 const emit = defineEmits<ExchangeInputEmits>();
 

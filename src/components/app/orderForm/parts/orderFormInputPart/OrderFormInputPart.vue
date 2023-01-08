@@ -38,6 +38,7 @@
         name="quantity"
         :state="['defaultColor', 'smSize']"
         :min="0"
+        :max="maxDeposit"
         :base-currency-price="baseCurrencyPrice"
         :base-currency-decimals="baseCurrencyDecimals"
         :base-currency-step="baseCurrencyStep"
@@ -55,8 +56,9 @@
     <template #depositInput>
       <FormDepositInput
         name="quantity"
-        :balance="balance"
+        :quote-currency-balance="maxDeposit"
         :base-currency-price="baseCurrencyPrice"
+        :base-currency-decimals="baseCurrencyDecimals"
         :leverage="model.leverage"
       />
     </template>
@@ -92,13 +94,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import OrderFormInputPartContainer from '@/containers/orderFormInputPartContainer/OrderFormInputPartContainer.vue';
 import Button from '@/components/core/button/Button.vue';
 import NumberInput from '@/components/core/numberInput/NumberInput.vue';
 import { FormNumberInput, FormDepositInput, FormExchangeInput } from '@/components/form';
 import { OrderFormInputPartProps } from '@/components/app/orderForm/parts/orderFormInputPart/index';
+import { subtract } from '@/utils/float';
+import { roundToDecimalPoint } from '@/utils/number';
 
 const props = defineProps<OrderFormInputPartProps>();
 
@@ -111,6 +115,30 @@ const baseCurrencyDecimals = ref(3);
 const baseCurrencyStep = ref(0.001);
 
 const quoteCurrencyDecimals = ref(2);
+
+const calculateBaseToQuoteCurrencyPrice = (
+  baseCurrencyQuantity: number,
+) => roundToDecimalPoint(
+  baseCurrencyQuantity * baseCurrencyPrice.value,
+  quoteCurrencyDecimals.value,
+);
+
+const calculateQuoteToBaseCurrencyPrice = (
+  quoteCurrencyQuantity: number,
+) => roundToDecimalPoint(
+  quoteCurrencyQuantity / baseCurrencyPrice.value,
+  baseCurrencyDecimals.value,
+);
+
+const maxDeposit = computed(() => {
+  const quoteInBaseCurrencyPrice = calculateQuoteToBaseCurrencyPrice(balance.value);
+
+  return calculateBaseToQuoteCurrencyPrice(subtract(
+    quoteInBaseCurrencyPrice,
+    baseCurrencyStep.value,
+    baseCurrencyDecimals.value,
+  ));
+});
 </script>
 
 <style lang="scss" module>

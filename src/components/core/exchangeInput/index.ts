@@ -5,7 +5,7 @@ export interface ExchangeInputProps {
   baseCurrencyStep: number,
   quoteCurrencyDecimals: number,
   min?: number,
-  max?: number
+  max: number,
   isDisabled?: boolean,
 }
 

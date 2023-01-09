@@ -51,7 +51,7 @@ const percentOfOrder = computed(() => props.orderPrice / 100);
 
 const calculatePercentOfRiseByValue = (
   value: number,
-) => Math.round(((value - props.orderPrice) / percentOfOrder.value));
+) => Math.round((value - props.orderPrice) / percentOfOrder.value);
 
 const calculateValueByPercentOfRise = (
   percentValue: number,

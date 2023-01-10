@@ -47,7 +47,7 @@ const preload = () => {
     img.srcset = srcset.value;
   }
 
-  img.style.opacity = '0';
+  img.style.display = 'none';
   img.onload = () => {
     loaded.value = true;
     img.remove();

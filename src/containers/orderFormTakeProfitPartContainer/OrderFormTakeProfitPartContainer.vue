@@ -8,13 +8,8 @@
         <slot name="profitSwitch" />
       </div>
     </div>
-    <div :class="$style.amountOfOrders">
-      <div :class="[$style.label2, $style.amountOfOrdersLabel]">
-        <slot name="amountOfOrdersLabel" />
-      </div>
-      <div>
-        <slot name="amountOfOrdersInput" />
-      </div>
+    <div :class="$style.takeProfitsList">
+      <slot name="takeProfitsList" />
     </div>
   </div>
 </template>
@@ -46,14 +41,7 @@
   justify-content: space-between;
 }
 
-.amountOfOrdersLabel {
-  max-width: 100px;
-}
-
-.amountOfOrders {
-  display: grid;
-  grid-template-columns: 1fr 1.1fr;
+.takeProfitsList {
   margin-top: 20px;
-  align-items: center;
 }
 </style>

@@ -6,7 +6,8 @@
     "email": "Value is not valid email",
     "required": "This is required field",
     "minLength": "This field must be at least {chars} characters long.",
-    "passwordsMismatch": "Passwords should be equal to each other"
+    "passwordsMismatch": "Passwords should be equal to each other",
+    "tokenInvalidOrNotProvided": "Passed token is invalid or not provided"
   },
   "placeholder": {
     "email": "Enter your email",
@@ -54,6 +55,11 @@
         "noToken": "Token is not provided",
         "badToken": "Provided token is invalid"
       }
+    },
+    "changePassword": {
+      "label": "New password",
+      "description": "Think of a new password",
+      "submit": "Save new password"
     }
   },
   "profile": {
@@ -127,8 +133,14 @@
     "submit": "Open",
     "takeProfit": {
       "profit": "Profit",
-      "amountOrOrders": "Amount of orders"
-    }
+      "amountOfOrders": "Amount of orders",
+      "price": "Price",
+      "income": "Income",
+      "percentOfOrder": "%",
+      "quantity": "Quantity",
+      "quantityPercent": "%"
+    },
+    "failedToCreate": "Failed to create order"
   },
   "pairs": {
     "type": {

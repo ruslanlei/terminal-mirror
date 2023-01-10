@@ -1,7 +1,7 @@
-import { Currency } from '@/api/endpoints/marketdata/stats';
+import { currency } from '@/api/types/currency';
 
 export interface ICurrencyStats {
-  currency: Currency,
+  currency: currency,
   price: number,
   amount: number | string,
   change: number,

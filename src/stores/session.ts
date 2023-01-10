@@ -11,6 +11,7 @@ import { useI18n } from 'vue-i18n';
 import { resetPassword, ResetPasswordDTO } from '@/api/endpoints/auth/resetPassword';
 import { useProfileStore } from '@/stores/profile';
 import { verifyEmail, VerifyEmailDTO } from '@/api/endpoints/auth/verifyEmail';
+import { passwordResetConfirm } from '@/api/endpoints/auth/passwordResetConfirm';
 
 export const checkAuth = (
   isAuthorized: boolean,
@@ -134,5 +135,6 @@ export const useSessionStore = defineStore('session', () => {
     register,
     logout,
     verifyEmail: handleVerifyEmail,
+    passwordResetConfirm,
   };
 });

@@ -26,7 +26,7 @@
           <AnimatedText
             animation-type="verticalAuto"
             :class="$style.realBalance"
-            :text="balance"
+            :text="maxDeposit"
           />
           <transition name="depositInputLeverageBalance">
             <div
@@ -36,7 +36,7 @@
               <AnimatedText
                 animation-type="verticalAuto"
                 :class="$style.leveragedBalance"
-                :text="leveragedBalance"
+                :text="maxDepositLeveraged"
               />
             </div>
           </transition>
@@ -54,6 +54,8 @@
           type="number"
           :min="0"
           :max="100"
+          save-on="blur"
+          :normalize-on-keydown="true"
         />
         <div :class="$style.percentSymbol">
           %
@@ -64,34 +66,55 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, toRefs, watch } from 'vue';
 import Button from '@/components/core/button/Button.vue';
 import Icon from '@/components/core/icon/Icon.vue';
 import RangeSlider from '@/components/core/rangeSlider/RangeSlider.vue';
 import NumberInput from '@/components/core/numberInput/NumberInput.vue';
 import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
-import { useLocalValue } from '@/hooks/useLocalValue';
 import { roundToDecimalPoint } from '@/utils/number';
+import { useLocalValue } from '@/hooks/useLocalValue';
+import { useExchange } from '@/hooks/useExchange';
 import { DepositInputEmits, DepositInputProps } from './index';
 
 const props = withDefaults(
   defineProps<DepositInputProps>(),
   {
     decimals: 2,
+    leverage: 1,
   },
 );
 
+const {
+  baseCurrency,
+  quoteCurrency,
+} = toRefs(props);
+
 const emit = defineEmits<DepositInputEmits>();
 
-const showLeveragedBalance = computed(() => props.balance !== props.leveragedBalance);
+const {
+  maxDeposit,
+  maxDepositLeveraged,
+} = useExchange(
+  baseCurrency,
+  quoteCurrency,
+);
+
+const showLeveragedBalance = computed(
+  () => maxDeposit.value !== maxDepositLeveraged.value,
+);
+
+const leveragedBalanceInBaseCurrency = computed(
+  () => maxDepositLeveraged.value / props.baseCurrency.price,
+);
 
 const localValue = useLocalValue<number>(props, emit, 'modelValue');
 
-const onePercentOfBalance = computed(() => props.leveragedBalance / 100);
+const onePercentOfBalance = computed(() => leveragedBalanceInBaseCurrency.value / 100);
 
 const percentsToValue = (
   percents: number,
-) => roundToDecimalPoint(onePercentOfBalance.value * percents, props.decimals);
+) => roundToDecimalPoint(onePercentOfBalance.value * percents, props.baseCurrency.decimals);
 
 const valueToPercents = (value: number) => roundToDecimalPoint(
   value / onePercentOfBalance.value,
@@ -103,6 +126,12 @@ const localValueInPercents = computed({
   set: (percents: number) => {
     localValue.value = percentsToValue(percents);
   },
+});
+
+watch(localValueInPercents, () => {
+  if (localValueInPercents.value > 100) {
+    localValueInPercents.value = 100;
+  }
 });
 
 const setPercentOfBalance = (

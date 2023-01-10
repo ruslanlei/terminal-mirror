@@ -2,8 +2,10 @@ import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { defineStore } from 'pinia';
 import { useStorage } from '@vueuse/core';
-import { getPairs, Pair } from '@/api/endpoints/marketdata/stats';
+import { getPairs } from '@/api/endpoints/marketdata/stats';
+import { Pair } from '@/api/types/pair';
 import { useToastStore } from '@/stores/toasts';
+import { createOrder, CreateOrderDTO } from '@/api/endpoints/orders/create';
 
 export type MarketType = 'emulator' | 'real';
 
@@ -39,6 +41,18 @@ export const useMarketStore = defineStore('market', () => {
     pairs.value = data;
   };
 
+  const handleCreateOrder = async (dto: CreateOrderDTO) => {
+    const response = await createOrder(dto);
+
+    if (!response.result) {
+      toastStore.showDanger({
+        text: t('order.failedToCreate'),
+      });
+    }
+
+    return response;
+  };
+
   return {
     pairs,
     marketType,
@@ -46,5 +60,6 @@ export const useMarketStore = defineStore('market', () => {
     setPair,
     activePairData,
     getPairs: handleGetPairs,
+    createOrder: handleCreateOrder,
   };
 });

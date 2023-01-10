@@ -128,6 +128,7 @@ const onKeydown = (event: KeyboardEvent) => {
       if (props.normalizer) {
         return props?.normalizer(value, 'increment');
       }
+
       value = add([value, props.step], props.decimals);
 
       return value;
@@ -140,11 +141,14 @@ const onKeydown = (event: KeyboardEvent) => {
       if (props.normalizer) {
         return props?.normalizer(value, 'decrement');
       }
+
       value = subtract(value, props.step, props.decimals);
 
       return value;
     });
   }
+
+  emit('input', event);
 };
 
 const states = computed(() => arrayFrom(props.state));

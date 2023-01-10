@@ -4,6 +4,7 @@
       v-model="takeProfitsAmount"
       :min="1"
       :max="maxTakeProfits"
+      @input="autoCalculateTakeProfits"
     />
     <TakeProfitInput
       v-for="(takeProfit, takeProfitIndex) in takeProfits"
@@ -66,14 +67,14 @@ const fixTakeProfits = () => {
 
   if (takeProfitsAmount.value > 1) {
     takeProfitsAmount.value -= 1;
+    takeProfits.value.splice(-1, 1);
   }
-
-  console.log(difference, lastTakeProfit);
 };
 
 watch(takeProfits, fixTakeProfits, { deep: true });
 
 const autoCalculateTakeProfits = () => {
+  console.log('autoCalculateTakeProfits');
   takeProfits.value = Array(takeProfitsAmount.value).fill(0).map(() => ({
     price: 17000,
     quantity: divide(orderQuantity.value, takeProfitsAmount.value, 6),
@@ -81,7 +82,6 @@ const autoCalculateTakeProfits = () => {
 };
 
 autoCalculateTakeProfits();
-watch(takeProfitsAmount, autoCalculateTakeProfits);
 </script>
 
 <style lang="scss" module>

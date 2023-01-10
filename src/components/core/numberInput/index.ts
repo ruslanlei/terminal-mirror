@@ -23,7 +23,7 @@ export interface NumberInputProps {
 
 export interface NumberInputEmits {
   (e: 'update:modelValue', value: number): void,
-  (e: 'input', value: InputEvent): void,
+  (e: 'input', value: InputEvent | KeyboardEvent): void,
   (e: 'focus', value: InputEvent): void,
   (e: 'blur', value: InputEvent): void,
 }

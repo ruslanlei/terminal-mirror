@@ -85,7 +85,6 @@ const onUpdateTakeProfit = (
 };
 
 const autoCalculateTakeProfits = () => {
-  console.log('autoCalculateTakeProfits');
   takeProfits.value = Array(takeProfitsAmount.value).fill(0).map(() => ({
     price: 17000,
     quantity: divide(orderQuantity.value, takeProfitsAmount.value, 6),

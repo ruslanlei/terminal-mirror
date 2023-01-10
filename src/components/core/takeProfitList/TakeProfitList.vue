@@ -48,14 +48,7 @@ const maxTakeProfits = computed(() => Math.min(
 
 const takeProfits = ref<TakeProfitInputValue[]>([]);
 
-const onUpdateTakeProfit = (
-  takeProfit: TakeProfitInputValue,
-  takeProfitIndex: number,
-) => {
-  takeProfits.value[takeProfitIndex] = takeProfit;
-
-  const isLast = takeProfitIndex === (takeProfits.value.length - 1);
-
+const fixSumOfTakeProfits = (isLast: boolean) => {
   const sumOfTakeProfits = takeProfits.value.reduce((
     summary: number,
     takeProfit: TakeProfitInputValue,
@@ -82,6 +75,17 @@ const onUpdateTakeProfit = (
       takeProfits.value.splice(deleteFrom, 1);
     }
   });
+};
+
+const onUpdateTakeProfit = (
+  takeProfit: TakeProfitInputValue,
+  takeProfitIndex: number,
+) => {
+  takeProfits.value[takeProfitIndex] = takeProfit;
+
+  const isLast = takeProfitIndex === (takeProfits.value.length - 1);
+
+  fixSumOfTakeProfits(isLast);
 };
 
 const autoCalculateTakeProfits = () => {

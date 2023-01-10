@@ -19,17 +19,16 @@
 
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
+import { divide } from '@/utils/float';
 import TakeProfitInput from '@/components/core/takeProfitInput/TakeProfitInput.vue';
 import NumberInput from '@/components/core/numberInput/NumberInput.vue';
 import { BaseCurrency } from '@/hooks/useExchange';
 import { Currency } from '@/api/types/currency';
 import { TakeProfitInputValue } from '@/components/core/takeProfitInput';
-import { roundToDecimalPoint } from '@/utils/number';
-import { divide } from '@/utils/float';
 
 const orderPrice = ref(16200);
 
-const orderQuantity = ref(0.018);
+const orderQuantity = ref(0.1);
 
 const baseCurrency = computed<BaseCurrency>(() => ({
   name: Currency.USDT,
@@ -38,8 +37,13 @@ const baseCurrency = computed<BaseCurrency>(() => ({
   step: 0.001,
 }));
 
+const MAXIMUM_ALLOWED_TAKE_PROFITS = 50;
+
 const takeProfitsAmount = ref(1);
-const maxTakeProfits = computed(() => orderQuantity.value / baseCurrency.value.step);
+const maxTakeProfits = computed(() => Math.min(
+  orderQuantity.value / baseCurrency.value.step,
+  MAXIMUM_ALLOWED_TAKE_PROFITS,
+));
 
 const takeProfits = ref<TakeProfitInputValue[]>([
   {
@@ -51,7 +55,7 @@ const takeProfits = ref<TakeProfitInputValue[]>([
 watch(takeProfitsAmount, () => {
   takeProfits.value = Array(takeProfitsAmount.value).fill(0).map(() => ({
     price: 17000,
-    quantity: divide(orderQuantity.value, takeProfitsAmount.value, 3),
+    quantity: divide(orderQuantity.value, takeProfitsAmount.value, 6),
   }));
 });
 </script>

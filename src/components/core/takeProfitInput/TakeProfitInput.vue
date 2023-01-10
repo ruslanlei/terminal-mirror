@@ -6,7 +6,7 @@
         type="number"
       />
       <NumberInput
-        v-model="percentOfRiseValue"
+        v-model="percentOfProfitValue"
         type="number"
       />
     </div>
@@ -17,7 +17,6 @@
         :min="baseCurrency.step"
         :max="orderQuantity"
         :step="baseCurrency.step"
-        :decimals="baseCurrency.decimals"
       />
       <NumberInput
         v-model="percentOfQuantity"
@@ -49,18 +48,18 @@ const localValue = useLocalValue<TakeProfitInputValue>(props, emit, 'modelValue'
 
 const percentOfOrder = computed(() => props.orderPrice / 100);
 
-const calculatePercentOfRiseByValue = (
+const calculatePercentOfProfitByValue = (
   value: number,
 ) => Math.round((value - props.orderPrice) / percentOfOrder.value);
 
-const calculateValueByPercentOfRise = (
+const calculateValueByPercentOfProfit = (
   percentValue: number,
 ) => (percentValue * percentOfOrder.value) + props.orderPrice;
 
-const percentOfRiseValue = computed({
-  get: () => calculatePercentOfRiseByValue(localValue.value.price),
+const percentOfProfitValue = computed({
+  get: () => calculatePercentOfProfitByValue(localValue.value.price),
   set: (percentValue: number) => {
-    localValue.value.price = calculateValueByPercentOfRise(percentValue);
+    localValue.value.price = calculateValueByPercentOfProfit(percentValue);
   },
 });
 

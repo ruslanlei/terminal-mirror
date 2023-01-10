@@ -133,7 +133,12 @@
     "submit": "Open",
     "takeProfit": {
       "profit": "Profit",
-      "amountOfOrders": "Amount of orders"
+      "amountOfOrders": "Amount of orders",
+      "price": "Price",
+      "income": "Income",
+      "percentOfOrder": "%",
+      "quantity": "Quantity",
+      "quantityPercent": "%"
     },
     "failedToCreate": "Failed to create order"
   },

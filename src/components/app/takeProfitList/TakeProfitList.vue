@@ -15,17 +15,40 @@
       />
     </div>
 
-    <div :class="$style.takeProfitInputs">
-      <TakeProfitInput
-        v-for="(takeProfit, takeProfitIndex) in localValue"
-        :key="takeProfitIndex"
-        v-model:price="takeProfit.price"
-        v-model:quantity="takeProfit.quantity"
-        :order-price="orderPrice"
-        :order-quantity="orderQuantity"
-        :currency="currency"
-        @quantity-input="onUpdateTakeProfitQuantity(takeProfitIndex)"
-      />
+    <div :class="$style.takeProfitTable">
+      <div :class="$style.inputsHeader">
+        <div :class="$style.inputsHeaderColumnLeft">
+          <div :class="$style.column">
+            {{ t('order.takeProfit.price') }}
+          </div>
+          <div :class="[$style.column, $style.incomeLabel]">
+            {{ t('order.takeProfit.income') }}
+          </div>
+          <div :class="[$style.column, $style.percentOfOrderLabel]">
+            {{ t('order.takeProfit.percentOfOrder') }}
+          </div>
+        </div>
+        <div :class="$style.inputsHeaderColumnRight">
+          <div :class="$style.column">
+            {{ t('order.takeProfit.quantity') }}
+          </div>
+          <div :class="[$style.column, $style.quantityPercent]">
+            {{ t('order.takeProfit.quantityPercent') }}
+          </div>
+        </div>
+      </div>
+      <div :class="$style.takeProfitInputs">
+        <TakeProfitInput
+          v-for="(takeProfit, takeProfitIndex) in localValue"
+          :key="takeProfitIndex"
+          v-model:price="takeProfit.price"
+          v-model:quantity="takeProfit.quantity"
+          :order-price="orderPrice"
+          :order-quantity="orderQuantity"
+          :currency="currency"
+          @quantity-input="onUpdateTakeProfitQuantity(takeProfitIndex)"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -125,7 +148,45 @@ autoCalculateTakeProfits();
   }
 }
 
-.takeProfitInputs {
+.takeProfitTable {
   margin-top: 20px;
+}
+
+.takeProfitInputs {
+  margin-top: 5px;
+}
+
+.inputsHeader {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.column {
+  @include title5;
+  font-weight: 500;
+  color: rgb(var(--color-accent-1));
+}
+
+.incomeLabel {
+  text-align: center;
+}
+
+.percentOfOrderLabel {
+  text-align: right;
+}
+
+.inputsHeaderColumnLeft {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.inputsHeaderColumnRight {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.quantityPercent {
+  text-align: right;
 }
 </style>

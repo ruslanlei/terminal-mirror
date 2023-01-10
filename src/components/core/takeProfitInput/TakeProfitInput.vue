@@ -17,6 +17,8 @@
         :min="baseCurrency.step"
         :max="orderQuantity"
         :step="baseCurrency.step"
+        :decimals="baseCurrency.decimals"
+        :round-to-decimal-point="false"
       />
       <NumberInput
         v-model="percentOfQuantity"

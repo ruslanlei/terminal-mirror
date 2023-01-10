@@ -31,6 +31,7 @@ import { useLocalValue } from '@/hooks/useLocalValue';
 import { computed, watch } from 'vue';
 import { arrayFrom } from '@/utils/array';
 import { roundToDecimalPoint } from '@/utils/number';
+import { add, subtract } from '@/utils/float';
 
 const props = withDefaults(
   defineProps<NumberInputProps>(),
@@ -41,6 +42,7 @@ const props = withDefaults(
     step: 1,
     saveOn: 'input',
     normalizeOnKeydown: false,
+    roundToDecimalPoint: true,
   },
 );
 
@@ -53,7 +55,7 @@ const computedTabIndex = computed(
 const localValue = useLocalValue<number>(props, emit, 'modelValue');
 
 watch(localValue, () => {
-  if (props.decimals) {
+  if (props.decimals && props.roundToDecimalPoint) {
     localValue.value = roundToDecimalPoint(localValue.value, props.decimals);
   }
 });
@@ -126,7 +128,7 @@ const onKeydown = (event: KeyboardEvent) => {
       if (props.normalizer) {
         return props?.normalizer(value, 'increment');
       }
-      value += props.step;
+      value = add([value, props.step], props.decimals);
 
       return value;
     });
@@ -138,7 +140,7 @@ const onKeydown = (event: KeyboardEvent) => {
       if (props.normalizer) {
         return props?.normalizer(value, 'decrement');
       }
-      value -= props.step;
+      value = subtract(value, props.step, props.decimals);
 
       return value;
     });

@@ -6,8 +6,8 @@
     @focus="onFocus"
     @blur="onBlur"
   >
-    <template #quoteCurrencyName>
-      <slot name="quoteCurrencyName" />
+    <template #quotecurrency>
+      <slot name="quotecurrency" />
     </template>
   </ExchangeInput>
 </template>

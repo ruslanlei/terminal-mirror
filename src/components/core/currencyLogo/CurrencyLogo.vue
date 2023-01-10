@@ -14,7 +14,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { Currency } from '@/api/types/currency';
+import { currency } from '@/api/types/currency';
 import { CurrencyLogoProps } from './index';
 import AchainLogo from './assets/achain.svg';
 import AschLogo from './assets/asch.svg';
@@ -35,7 +35,7 @@ const props = withDefaults(
   },
 );
 
-const logoMap: Record<Currency, any> = {
+const logoMap: Record<currency, any> = {
   BTC: BtcLogo,
   ETH: EthLogo,
   BNB: BnbLogo,
@@ -49,7 +49,7 @@ const logoMap: Record<Currency, any> = {
   tether: TetherLogo,
 };
 
-const colorMap: Record<Currency, string> = {
+const colorMap: Record<currency, string> = {
   BTC: '#F49D35',
   ETH: '#627EEA',
   BNB: '#F3BA2F',

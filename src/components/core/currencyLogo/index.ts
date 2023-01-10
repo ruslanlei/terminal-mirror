@@ -1,6 +1,6 @@
-import { Currency } from '@/api/endpoints/marketdata/stats';
+import { currency } from '@/api/types/currency';
 
 export interface CurrencyLogoProps {
-  currency: Currency,
+  currency: currency,
   state: 'circle' | 'square',
 }

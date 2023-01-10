@@ -1,4 +1,4 @@
-import { BaseCurrency } from '@/hooks/useExchange';
+import { Currency } from '@/types/currency';
 
 export interface TakeProfitInputValue {
   price: number,
@@ -6,7 +6,7 @@ export interface TakeProfitInputValue {
 }
 
 export interface TakeProfitInputProps {
-  currency: BaseCurrency,
+  currency: Currency,
   orderPrice: number,
   orderQuantity: number,
 

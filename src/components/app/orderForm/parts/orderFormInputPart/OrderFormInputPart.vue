@@ -41,7 +41,7 @@
         :quote-currency="quoteCurrency"
         save-on="blur"
       >
-        <template #quoteCurrencyName>
+        <template #quotecurrency>
           {{ quoteCurrency.name }}
         </template>
       </FormExchangeInput>
@@ -97,7 +97,7 @@ import { FormDepositInput, FormExchangeInput, FormNumberInput } from '@/componen
 import { OrderFormInputPartProps } from '@/components/app/orderForm/parts/orderFormInputPart/index';
 import { useMarketStore } from '@/stores/market';
 import { BaseCurrency, QuoteCurrency } from '@/hooks/useExchange';
-import { Currency } from '@/api/types/currency';
+import { currency } from '@/api/types/currency';
 
 const props = defineProps<OrderFormInputPartProps>();
 
@@ -106,7 +106,7 @@ const marketStore = useMarketStore();
 const { t } = useI18n();
 
 const quoteCurrency = computed<QuoteCurrency>(() => ({
-  name: marketStore.activePairData?.quote || Currency.BTC,
+  name: marketStore.activePairData?.quote || currency.BTC,
   balance: 3208,
   decimals: 2,
   leverage: props.model.leverage,
@@ -115,7 +115,7 @@ const quoteCurrency = computed<QuoteCurrency>(() => ({
 const baseCurrencyPrice = ref(16890);
 
 const baseCurrency = computed<BaseCurrency>(() => ({
-  name: marketStore.activePairData?.base || Currency.USDT,
+  name: marketStore.activePairData?.base || currency.USDT,
   price: baseCurrencyPrice.value,
   decimals: 3,
   step: 0.001,

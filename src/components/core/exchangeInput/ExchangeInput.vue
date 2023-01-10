@@ -13,7 +13,7 @@
     @blur="emit('blur', $event)"
   >
     <template #append>
-      <slot name="quoteCurrencyName" />
+      <slot name="quotecurrency" />
     </template>
   </NumberInput>
 </template>

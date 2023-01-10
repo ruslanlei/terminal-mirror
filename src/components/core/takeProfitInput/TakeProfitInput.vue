@@ -4,10 +4,14 @@
       <NumberInput
         v-model="localPrice"
         type="number"
+        :class="$style.input"
+        :state="['xsSize']"
       />
       <NumberInput
         v-model="percentOfProfitValue"
         type="number"
+        :class="$style.input"
+        :state="['alignRight', 'xsSize']"
       />
     </div>
     <div :class="$style.amount">
@@ -20,6 +24,8 @@
         :decimals="currency.decimals"
         :round-to-decimal-point="false"
         save-on="blur"
+        :class="$style.input"
+        :state="['xsSize']"
         @input="onQuantityInput"
       />
       <NumberInput
@@ -28,6 +34,8 @@
         :min="percentOfQuantityInputStep"
         :max="100"
         :step="percentOfQuantityInputStep"
+        :class="$style.input"
+        :state="['alignRight', 'xsSize']"
         @input="onQuantityInput"
       />
     </div>
@@ -95,13 +103,15 @@ const percentOfQuantityInputStep = computed(
 .takeProfitInput {
   color: rgb(var(--color-accent-1));
   display: flex;
+  gap: 10px;
 }
 
-.price {
-  border: 1px solid rgb(var(--color-accent-2));
+.price, .amount {
+  border-bottom: 1px solid rgb(var(--color-accent-2));
+  display: flex;
 }
 
-.amount {
-  border: 1px solid rgb(var(--color-accent-2));
+.input {
+  width: 50%;
 }
 </style>

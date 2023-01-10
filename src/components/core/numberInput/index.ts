@@ -1,6 +1,4 @@
-import { roundToDecimalPoint } from '@/utils/number';
-
-export type NumberInputState = 'smSize' | 'defaultColor';
+export type NumberInputState = 'xsSize' | 'smSize' | 'defaultColor' | 'alignRight';
 
 export type NumberInputNormalizer = (number: number, direction?: 'increment' | 'decrement') => number;
 

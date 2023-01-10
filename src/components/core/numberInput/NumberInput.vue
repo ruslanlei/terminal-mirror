@@ -161,6 +161,11 @@ const states = computed(() => arrayFrom(props.state));
   width: 100%;
   display: flex;
   align-items: center;
+  input {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
 }
 
 .smSize {
@@ -168,8 +173,15 @@ const states = computed(() => arrayFrom(props.state));
   border-radius: 5px;
   & > input {
     padding: 7px 10px;
-    height: 100%;
-    width: 100%;
+  }
+}
+
+.xsSize {
+  @include title5;
+  border-radius: 5px;
+  font-weight: 600;
+  & > input {
+    padding: 2px 0;
   }
 }
 
@@ -179,6 +191,12 @@ const states = computed(() => arrayFrom(props.state));
   transition: border-color 150ms;
   &:hover {
     border: 1px solid rgb(var(--color-accent-1));
+  }
+}
+
+.alignRight {
+  & > input {
+    text-align: right;
   }
 }
 

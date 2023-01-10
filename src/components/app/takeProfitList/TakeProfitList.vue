@@ -1,9 +1,11 @@
 <template>
   <div :class="$style.takeProfitList">
+    {{ t('order.takeProfit.amountOrOrders') }}
     <NumberInput
       v-model="takeProfitsAmount"
       :min="1"
       :max="maxTakeProfits"
+      :state="['smSize', 'defaultColor']"
       @input="autoCalculateTakeProfits"
     />
     <TakeProfitInput
@@ -21,6 +23,7 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { add, divide, subtract } from '@/utils/float';
 import TakeProfitInput from '@/components/core/takeProfitInput/TakeProfitInput.vue';
 import NumberInput from '@/components/core/numberInput/NumberInput.vue';
@@ -34,6 +37,8 @@ const props = defineProps<TakeProfitListProps>();
 
 const emit = defineEmits<TakeProfitListEmit>();
 
+const { t } = useI18n();
+
 const localValue = useLocalValue<TakeProfit[]>(props, emit, 'modelValue');
 
 const baseCurrency = computed<BaseCurrency>(() => ({
@@ -43,7 +48,7 @@ const baseCurrency = computed<BaseCurrency>(() => ({
   step: 0.001,
 }));
 
-const MAXIMUM_ALLOWED_TAKE_PROFITS = 50;
+const MAXIMUM_ALLOWED_TAKE_PROFITS = 20;
 
 const takeProfitsAmount = ref(5);
 const maxTakeProfits = computed(() => Math.min(

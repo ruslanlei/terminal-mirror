@@ -6,16 +6,11 @@
     <template #profitSwitch>
       <Switch v-model="isEnabled" />
     </template>
-    <template #amountOfOrdersLabel>
-      {{ t('order.takeProfit.amountOrOrders') }}
-    </template>
-    <template #amountOfOrdersInput>
-      <NumberInput
-        v-model="amountOfOrders"
-        size="sm"
-        :min="1"
-        :max="12"
-        :state="['smSize', 'defaultColor']"
+    <template #takeProfitsList>
+      <TakeProfitList
+        v-model="takeProfits"
+        :order-price="16200"
+        :order-quantity="0.1"
       />
     </template>
   </OrderFormTakeProfilePartContainer>
@@ -26,11 +21,11 @@ import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import OrderFormTakeProfilePartContainer from '@/containers/orderFormTakeProfitPartContainer/OrderFormTakeProfitPartContainer.vue';
 import Switch from '@/components/core/switch/Switch.vue';
-import NumberInput from '@/components/core/numberInput/NumberInput.vue';
+import TakeProfitList from '@/components/app/takeProfitList/TakeProfitList.vue';
 
 const { t } = useI18n();
 
 const isEnabled = ref(false);
 
-const amountOfOrders = ref(5);
+const takeProfits = ref([]);
 </script>

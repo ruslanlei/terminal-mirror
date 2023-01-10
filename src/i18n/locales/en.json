@@ -133,7 +133,7 @@
     "submit": "Open",
     "takeProfit": {
       "profit": "Profit",
-      "amountOrOrders": "Amount of orders"
+      "amountOfOrders": "Amount of orders"
     },
     "failedToCreate": "Failed to create order"
   },

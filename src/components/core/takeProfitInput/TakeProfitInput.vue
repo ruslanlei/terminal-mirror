@@ -18,25 +18,28 @@
       <NumberInput
         v-model="localQuantity"
         type="number"
+        save-on="blur"
         :min="currency.step"
         :max="orderQuantity"
         :step="currency.step"
         :decimals="currency.decimals"
         :round-to-decimal-point="false"
-        save-on="blur"
         :class="$style.input"
         :state="['xsSize']"
         @input="onQuantityInput"
+        @blur="onQuantityInput"
       />
       <NumberInput
         v-model="percentOfQuantity"
         type="number"
+        save-on="blur"
         :min="percentOfQuantityInputStep"
         :max="100"
         :step="percentOfQuantityInputStep"
         :class="$style.input"
         :state="['alignRight', 'xsSize']"
         @input="onQuantityInput"
+        @blur="onQuantityInput"
       />
     </div>
   </div>

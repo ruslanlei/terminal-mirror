@@ -59,7 +59,7 @@ const {
 } = storeToRefs(i18nStore);
 
 const localesMap: Record<AppLocale, any> = {
-  ru: Russian,
+  wru: Russian,
   en: english,
 };
 

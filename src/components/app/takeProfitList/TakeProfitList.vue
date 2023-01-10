@@ -1,23 +1,32 @@
 <template>
   <div :class="$style.takeProfitList">
-    {{ t('order.takeProfit.amountOrOrders') }}
-    <NumberInput
-      v-model="takeProfitsAmount"
-      :min="1"
-      :max="maxTakeProfits"
-      :state="['smSize', 'defaultColor']"
-      @input="autoCalculateTakeProfits"
-    />
-    <TakeProfitInput
-      v-for="(takeProfit, takeProfitIndex) in localValue"
-      :key="takeProfitIndex"
-      v-model:price="takeProfit.price"
-      v-model:quantity="takeProfit.quantity"
-      :order-price="orderPrice"
-      :order-quantity="orderQuantity"
-      :currency="currency"
-      @quantity-input="onUpdateTakeProfitQuantity(takeProfitIndex)"
-    />
+    <div :class="$style.amountOfOrders">
+      <div :class="$style.label">
+        <slot name="amountOrOrdersLabel">
+          {{ t('order.takeProfit.amountOfOrders') }}
+        </slot>
+      </div>
+      <NumberInput
+        v-model="takeProfitsAmount"
+        :min="1"
+        :max="maxTakeProfits"
+        :state="['smSize', 'defaultColor']"
+        @input="autoCalculateTakeProfits"
+      />
+    </div>
+
+    <div :class="$style.takeProfitInputs">
+      <TakeProfitInput
+        v-for="(takeProfit, takeProfitIndex) in localValue"
+        :key="takeProfitIndex"
+        v-model:price="takeProfit.price"
+        v-model:quantity="takeProfit.quantity"
+        :order-price="orderPrice"
+        :order-quantity="orderQuantity"
+        :currency="currency"
+        @quantity-input="onUpdateTakeProfitQuantity(takeProfitIndex)"
+      />
+    </div>
   </div>
 </template>
 
@@ -101,5 +110,22 @@ autoCalculateTakeProfits();
 </script>
 
 <style lang="scss" module>
+@import "src/assets/styles/utils";
+
 .takeProfitList {}
+
+.amountOfOrders {
+  display: grid;
+  grid-template-columns: 0.9fr 1fr;
+  .label {
+    @include title3;
+    color: rgb(var(--color-accent-1));
+    font-weight: 500;
+    max-width: 110px;
+  }
+}
+
+.takeProfitInputs {
+  margin-top: 20px;
+}
 </style>

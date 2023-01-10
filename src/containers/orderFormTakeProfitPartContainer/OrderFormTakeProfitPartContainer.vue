@@ -41,5 +41,7 @@
   justify-content: space-between;
 }
 
-.takeProfitsList {}
+.takeProfitsList {
+  margin-top: 20px;
+}
 </style>

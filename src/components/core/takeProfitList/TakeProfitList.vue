@@ -14,7 +14,7 @@
       :order-price="orderPrice"
       :order-quantity="orderQuantity"
       :base-currency="baseCurrency"
-      @quantity-input="onUpdateTakeProfit(takeProfitIndex)"
+      @quantity-input="onUpdateTakeProfitQuantity(takeProfitIndex)"
     />
   </div>
 </template>
@@ -49,7 +49,7 @@ const maxTakeProfits = computed(() => Math.min(
 
 const takeProfits = ref<TakeProfitInputValue[]>([]);
 
-const fixSumOfTakeProfits = (isLast: boolean) => {
+const fixSumOfTakeProfits = (borrowFromFirst: boolean) => {
   const sumOfTakeProfits = takeProfits.value.reduce((
     summary: number,
     takeProfit: TakeProfitInputValue,
@@ -59,7 +59,7 @@ const fixSumOfTakeProfits = (isLast: boolean) => {
 
   const difference = subtract(sumOfTakeProfits, orderQuantity.value, 6);
 
-  const donorTakeProfit = isLast
+  const donorTakeProfit = borrowFromFirst
     ? takeProfits.value[0]
     : takeProfits.value[takeProfits.value.length - 1];
 
@@ -72,13 +72,13 @@ const fixSumOfTakeProfits = (isLast: boolean) => {
     if (takeProfitsAmount.value > 1) {
       takeProfitsAmount.value -= 1;
 
-      const deleteFrom = isLast ? 0 : -1;
+      const deleteFrom = borrowFromFirst ? 0 : -1;
       takeProfits.value.splice(deleteFrom, 1);
     }
   });
 };
 
-const onUpdateTakeProfit = (
+const onUpdateTakeProfitQuantity = (
   takeProfitIndex: number,
 ) => {
   const isLast = takeProfitIndex === (takeProfits.value.length - 1);

@@ -19,6 +19,7 @@
         :step="baseCurrency.step"
         :decimals="baseCurrency.decimals"
         :round-to-decimal-point="false"
+        save-on="blur"
       />
       <NumberInput
         v-model="percentOfQuantity"
@@ -37,7 +38,7 @@ import {
   TakeProfitInputProps,
   TakeProfitInputValue,
 } from '@/components/core/takeProfitInput/index';
-import { computed } from 'vue';
+import { computed, watch } from 'vue';
 import NumberInput from '@/components/core/numberInput/NumberInput.vue';
 import { useLocalValue } from '@/hooks/useLocalValue';
 import { roundToDecimalPoint } from '@/utils/number';
@@ -47,6 +48,9 @@ const props = defineProps<TakeProfitInputProps>();
 const emit = defineEmits<TakeProfitInputEmits>();
 
 const localValue = useLocalValue<TakeProfitInputValue>(props, emit, 'modelValue');
+watch(localValue.value, () => {
+  emit('update:modelValue', localValue.value);
+}, { deep: true });
 
 const percentOfOrder = computed(() => props.orderPrice / 100);
 

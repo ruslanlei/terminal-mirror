@@ -13,13 +13,13 @@
       :order-quantity="orderQuantity"
       :base-currency="baseCurrency"
       :model-value="takeProfit"
-      @update:model-value="takeProfits[takeProfitIndex] = $event"
+      @update:model-value="onUpdateTakeProfit($event, takeProfitIndex)"
     />
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
+import { computed, ref } from 'vue';
 import { add, divide, subtract } from '@/utils/float';
 import TakeProfitInput from '@/components/core/takeProfitInput/TakeProfitInput.vue';
 import NumberInput from '@/components/core/numberInput/NumberInput.vue';
@@ -48,7 +48,14 @@ const maxTakeProfits = computed(() => Math.min(
 
 const takeProfits = ref<TakeProfitInputValue[]>([]);
 
-const fixTakeProfits = () => {
+const onUpdateTakeProfit = (
+  takeProfit: TakeProfitInputValue,
+  takeProfitIndex: number,
+) => {
+  takeProfits.value[takeProfitIndex] = takeProfit;
+
+  const isLast = takeProfitIndex === (takeProfits.value.length - 1);
+
   const sumOfTakeProfits = takeProfits.value.reduce((
     summary: number,
     takeProfit: TakeProfitInputValue,
@@ -58,20 +65,24 @@ const fixTakeProfits = () => {
 
   const difference = subtract(sumOfTakeProfits, orderQuantity.value, 6);
 
-  const lastTakeProfit = takeProfits.value[takeProfits.value.length - 1];
+  const donorTakeProfit = isLast
+    ? takeProfits.value[0]
+    : takeProfits.value[takeProfits.value.length - 1];
 
-  if (lastTakeProfit.quantity > difference) {
-    lastTakeProfit.quantity = subtract(lastTakeProfit.quantity, difference, 6);
-    return;
-  }
+  requestAnimationFrame(() => {
+    if (donorTakeProfit.quantity > difference) {
+      donorTakeProfit.quantity = subtract(donorTakeProfit.quantity, difference, 6);
+      return;
+    }
 
-  if (takeProfitsAmount.value > 1) {
-    takeProfitsAmount.value -= 1;
-    takeProfits.value.splice(-1, 1);
-  }
+    if (takeProfitsAmount.value > 1) {
+      takeProfitsAmount.value -= 1;
+
+      const deleteFrom = isLast ? 0 : -1;
+      takeProfits.value.splice(deleteFrom, 1);
+    }
+  });
 };
-
-watch(takeProfits, fixTakeProfits, { deep: true });
 
 const autoCalculateTakeProfits = () => {
   console.log('autoCalculateTakeProfits');

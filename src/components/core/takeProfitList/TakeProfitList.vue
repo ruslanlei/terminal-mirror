@@ -9,11 +9,12 @@
     <TakeProfitInput
       v-for="(takeProfit, takeProfitIndex) in takeProfits"
       :key="takeProfitIndex"
+      v-model:price="takeProfit.price"
+      v-model:quantity="takeProfit.quantity"
       :order-price="orderPrice"
       :order-quantity="orderQuantity"
       :base-currency="baseCurrency"
-      :model-value="takeProfit"
-      @update:model-value="onUpdateTakeProfit($event, takeProfitIndex)"
+      @quantity-input="onUpdateTakeProfit(takeProfitIndex)"
     />
   </div>
 </template>
@@ -78,11 +79,8 @@ const fixSumOfTakeProfits = (isLast: boolean) => {
 };
 
 const onUpdateTakeProfit = (
-  takeProfit: TakeProfitInputValue,
   takeProfitIndex: number,
 ) => {
-  takeProfits.value[takeProfitIndex] = takeProfit;
-
   const isLast = takeProfitIndex === (takeProfits.value.length - 1);
 
   fixSumOfTakeProfits(isLast);

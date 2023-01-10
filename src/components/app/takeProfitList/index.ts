@@ -5,6 +5,8 @@ export interface TakeProfit {
 
 export interface TakeProfitListProps {
   modelValue: TakeProfit[],
+  orderPrice: number,
+  orderQuantity: number,
 }
 
 export interface TakeProfitListEmit {

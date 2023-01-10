@@ -14,10 +14,10 @@
       <NumberInput
         v-model="localQuantity"
         type="number"
-        :min="baseCurrency.step"
+        :min="currency.step"
         :max="orderQuantity"
-        :step="baseCurrency.step"
-        :decimals="baseCurrency.decimals"
+        :step="currency.step"
+        :decimals="currency.decimals"
         :round-to-decimal-point="false"
         save-on="blur"
         @input="onQuantityInput"
@@ -81,13 +81,13 @@ const percentOfQuantity = computed({
   set: (percentValue: number) => {
     localQuantity.value = roundToDecimalPoint(
       roundToDecimalPoint(percentValue, 2) * percentOfOrderQuantity.value,
-      props.baseCurrency.decimals,
+      props.currency.decimals,
     );
   },
 });
 
 const percentOfQuantityInputStep = computed(
-  () => roundToDecimalPoint(100 / (props.orderQuantity / props.baseCurrency.step), 2),
+  () => roundToDecimalPoint(100 / (props.orderQuantity / props.currency.step), 2),
 );
 </script>
 

@@ -13,7 +13,7 @@
       v-model:quantity="takeProfit.quantity"
       :order-price="orderPrice"
       :order-quantity="orderQuantity"
-      :base-currency="baseCurrency"
+      :currency="baseCurrency"
       @quantity-input="onUpdateTakeProfitQuantity(takeProfitIndex)"
     />
   </div>
@@ -28,17 +28,13 @@ import { BaseCurrency } from '@/hooks/useExchange';
 import { Currency } from '@/api/types/currency';
 import { TakeProfitInputValue } from '@/components/core/takeProfitInput';
 import { useLocalValue } from '@/hooks/useLocalValue';
-import { TakeProfit, TakeProfitListEmit, TakeProfitListProps } from '@/components/core/takeProfitList/index';
+import { TakeProfit, TakeProfitListEmit, TakeProfitListProps } from '@/components/app/takeProfitList/index';
 
 const props = defineProps<TakeProfitListProps>();
 
 const emit = defineEmits<TakeProfitListEmit>();
 
 const localValue = useLocalValue<TakeProfit[]>(props, emit, 'modelValue');
-
-const orderPrice = ref(16200);
-
-const orderQuantity = ref(0.1);
 
 const baseCurrency = computed<BaseCurrency>(() => ({
   name: Currency.USDT,
@@ -51,7 +47,7 @@ const MAXIMUM_ALLOWED_TAKE_PROFITS = 50;
 
 const takeProfitsAmount = ref(5);
 const maxTakeProfits = computed(() => Math.min(
-  orderQuantity.value / baseCurrency.value.step,
+  props.orderQuantity / baseCurrency.value.step,
   MAXIMUM_ALLOWED_TAKE_PROFITS,
 ));
 
@@ -61,9 +57,9 @@ const fixSumOfTakeProfits = (borrowFromFirst: boolean) => {
     takeProfit: TakeProfitInputValue,
   ) => add([summary, takeProfit.quantity], 6), 0);
 
-  if (sumOfTakeProfits === orderQuantity.value) return;
+  if (sumOfTakeProfits === props.orderQuantity) return;
 
-  const difference = subtract(sumOfTakeProfits, orderQuantity.value, 6);
+  const difference = subtract(sumOfTakeProfits, props.orderQuantity, 6);
 
   const donorTakeProfit = borrowFromFirst
     ? localValue.value[0]
@@ -95,7 +91,7 @@ const onUpdateTakeProfitQuantity = (
 const autoCalculateTakeProfits = () => {
   localValue.value = Array(takeProfitsAmount.value).fill(0).map(() => ({
     price: 17000,
-    quantity: divide(orderQuantity.value, takeProfitsAmount.value, 6),
+    quantity: divide(props.orderQuantity, takeProfitsAmount.value, 6),
   }));
 };
 

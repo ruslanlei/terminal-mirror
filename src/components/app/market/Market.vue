@@ -4,7 +4,11 @@
       <MarketTools />
     </template>
     <template #main>
-      <TakeProfitList v-model="takeProfits" />
+      <TakeProfitList
+        v-model="takeProfits"
+        :order-price="16200"
+        :order-quantity="0.1"
+      />
     </template>
     <template #order>
       <Sidebar />
@@ -22,7 +26,7 @@ import PlayerControls from '@/components/app/playerControls/PlayerControls.vue';
 
 import MarketTools from '@/components/app/marketTools/MarketTools.vue';
 import Sidebar from '@/components/app/sidebar/Sidebar.vue';
-import TakeProfitList from '@/components/core/takeProfitList/TakeProfitList.vue';
+import TakeProfitList from '@/components/app/takeProfitList/TakeProfitList.vue';
 
 const takeProfits = ref([]);
 </script>

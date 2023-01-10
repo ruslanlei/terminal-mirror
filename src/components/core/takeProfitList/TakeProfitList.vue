@@ -7,7 +7,7 @@
       @input="autoCalculateTakeProfits"
     />
     <TakeProfitInput
-      v-for="(takeProfit, takeProfitIndex) in takeProfits"
+      v-for="(takeProfit, takeProfitIndex) in localValue"
       :key="takeProfitIndex"
       v-model:price="takeProfit.price"
       v-model:quantity="takeProfit.quantity"
@@ -27,6 +27,14 @@ import NumberInput from '@/components/core/numberInput/NumberInput.vue';
 import { BaseCurrency } from '@/hooks/useExchange';
 import { Currency } from '@/api/types/currency';
 import { TakeProfitInputValue } from '@/components/core/takeProfitInput';
+import { useLocalValue } from '@/hooks/useLocalValue';
+import { TakeProfit, TakeProfitListEmit, TakeProfitListProps } from '@/components/core/takeProfitList/index';
+
+const props = defineProps<TakeProfitListProps>();
+
+const emit = defineEmits<TakeProfitListEmit>();
+
+const localValue = useLocalValue<TakeProfit[]>(props, emit, 'modelValue');
 
 const orderPrice = ref(16200);
 
@@ -47,10 +55,8 @@ const maxTakeProfits = computed(() => Math.min(
   MAXIMUM_ALLOWED_TAKE_PROFITS,
 ));
 
-const takeProfits = ref<TakeProfitInputValue[]>([]);
-
 const fixSumOfTakeProfits = (borrowFromFirst: boolean) => {
-  const sumOfTakeProfits = takeProfits.value.reduce((
+  const sumOfTakeProfits = localValue.value.reduce((
     summary: number,
     takeProfit: TakeProfitInputValue,
   ) => add([summary, takeProfit.quantity], 6), 0);
@@ -60,8 +66,8 @@ const fixSumOfTakeProfits = (borrowFromFirst: boolean) => {
   const difference = subtract(sumOfTakeProfits, orderQuantity.value, 6);
 
   const donorTakeProfit = borrowFromFirst
-    ? takeProfits.value[0]
-    : takeProfits.value[takeProfits.value.length - 1];
+    ? localValue.value[0]
+    : localValue.value[localValue.value.length - 1];
 
   requestAnimationFrame(() => {
     if (donorTakeProfit.quantity > difference) {
@@ -73,7 +79,7 @@ const fixSumOfTakeProfits = (borrowFromFirst: boolean) => {
       takeProfitsAmount.value -= 1;
 
       const deleteFrom = borrowFromFirst ? 0 : -1;
-      takeProfits.value.splice(deleteFrom, 1);
+      localValue.value.splice(deleteFrom, 1);
     }
   });
 };
@@ -81,13 +87,13 @@ const fixSumOfTakeProfits = (borrowFromFirst: boolean) => {
 const onUpdateTakeProfitQuantity = (
   takeProfitIndex: number,
 ) => {
-  const isLast = takeProfitIndex === (takeProfits.value.length - 1);
+  const isLast = takeProfitIndex === (localValue.value.length - 1);
 
   fixSumOfTakeProfits(isLast);
 };
 
 const autoCalculateTakeProfits = () => {
-  takeProfits.value = Array(takeProfitsAmount.value).fill(0).map(() => ({
+  localValue.value = Array(takeProfitsAmount.value).fill(0).map(() => ({
     price: 17000,
     quantity: divide(orderQuantity.value, takeProfitsAmount.value, 6),
   }));

@@ -19,7 +19,7 @@
 
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
-import { divide } from '@/utils/float';
+import { add, divide, subtract } from '@/utils/float';
 import TakeProfitInput from '@/components/core/takeProfitInput/TakeProfitInput.vue';
 import NumberInput from '@/components/core/numberInput/NumberInput.vue';
 import { BaseCurrency } from '@/hooks/useExchange';
@@ -39,25 +39,49 @@ const baseCurrency = computed<BaseCurrency>(() => ({
 
 const MAXIMUM_ALLOWED_TAKE_PROFITS = 50;
 
-const takeProfitsAmount = ref(1);
+const takeProfitsAmount = ref(5);
 const maxTakeProfits = computed(() => Math.min(
   orderQuantity.value / baseCurrency.value.step,
   MAXIMUM_ALLOWED_TAKE_PROFITS,
 ));
 
-const takeProfits = ref<TakeProfitInputValue[]>([
-  {
-    price: 17000,
-    quantity: 0.001,
-  },
-]);
+const takeProfits = ref<TakeProfitInputValue[]>([]);
 
-watch(takeProfitsAmount, () => {
+const fixTakeProfits = () => {
+  const sumOfTakeProfits = takeProfits.value.reduce((
+    summary: number,
+    takeProfit: TakeProfitInputValue,
+  ) => add([summary, takeProfit.quantity], 6), 0);
+
+  if (sumOfTakeProfits === orderQuantity.value) return;
+
+  const difference = subtract(sumOfTakeProfits, orderQuantity.value, 6);
+
+  const lastTakeProfit = takeProfits.value[takeProfits.value.length - 1];
+
+  if (lastTakeProfit.quantity > difference) {
+    lastTakeProfit.quantity = subtract(lastTakeProfit.quantity, difference, 6);
+    return;
+  }
+
+  if (takeProfitsAmount.value > 1) {
+    takeProfitsAmount.value -= 1;
+  }
+
+  console.log(difference, lastTakeProfit);
+};
+
+watch(takeProfits, fixTakeProfits, { deep: true });
+
+const autoCalculateTakeProfits = () => {
   takeProfits.value = Array(takeProfitsAmount.value).fill(0).map(() => ({
     price: 17000,
     quantity: divide(orderQuantity.value, takeProfitsAmount.value, 6),
   }));
-});
+};
+
+autoCalculateTakeProfits();
+watch(takeProfitsAmount, autoCalculateTakeProfits);
 </script>
 
 <style lang="scss" module>

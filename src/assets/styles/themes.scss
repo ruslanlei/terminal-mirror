@@ -8,6 +8,7 @@
 
   --color-accent-1: #{extractRgb($mono-white)};
   --color-accent-2: #{extractRgb($grey1)};
+  --color-accent-3: #{extractRgb($grey2)};
 
   --color-background-1: #{extractRgb($darkBlack)};
   --color-background-2: #{extractRgb($lightBlack)};
@@ -18,5 +19,6 @@
   --color-primary-1: #{extractRgb($blue)};
 
   --color-danger: #{extractRgb($red1)};
+  --color-danger-2: #{extractRgb($orange)};
   --color-success: #{extractRgb($green1)};
 }

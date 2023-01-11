@@ -14,6 +14,19 @@
         :order-quantity="0.1"
       />
     </template>
+    <template #ratioTip="{ tipIconClass }">
+      <Icon
+        :size="20"
+        icon="info"
+        :class="tipIconClass"
+      />
+    </template>
+    <template #ratioLabel>
+      {{ t('order.takeProfit.ratio') }}
+    </template>
+    <template #ratio>
+      1 to 3
+    </template>
   </OrderFormTakeProfilePartContainer>
 </template>
 
@@ -22,6 +35,7 @@ import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import OrderFormTakeProfilePartContainer from '@/containers/orderFormTakeProfitPartContainer/OrderFormTakeProfitPartContainer.vue';
 import Switch from '@/components/core/switch/Switch.vue';
+import Icon from '@/components/core/icon/Icon.vue';
 import TakeProfitList from '@/components/app/takeProfitList/TakeProfitList.vue';
 import { BaseCurrency } from '@/hooks/useExchange';
 import { currency } from '@/api/types/currency';

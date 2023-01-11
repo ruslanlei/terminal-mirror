@@ -79,6 +79,11 @@ const computedState = useComputedState(props);
   background: var(--color-main-gradient);
 }
 
+.successColor {
+  color: rgba(var(--color-accent-1));
+  background: rgb(var(--color-success));
+}
+
 .colored {
   color: rgba(var(--color-accent-1));
   background-color: rgb(var(--color-primary-1));

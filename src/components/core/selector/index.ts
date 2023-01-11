@@ -1,6 +1,6 @@
-export type SelectorOption = {
+export type SelectorOption<V = string> = {
   label: string,
-  value: string,
+  value: V,
   state?: 'success' | 'danger',
 } & Record<any, any>;
 

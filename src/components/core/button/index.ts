@@ -3,6 +3,7 @@ export type ButtonState =
   | 'colored'
   | 'secondary1Color'
   | 'secondary2Color'
+  | 'successColor'
   | 'smSize'
   | 'mdSize'
   | 'lgSize'

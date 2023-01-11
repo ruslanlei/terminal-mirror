@@ -1,6 +1,7 @@
 {
   "common": {
-    "search": "Search"
+    "search": "Search",
+    "save": "Save"
   },
   "validationError": {
     "email": "Value is not valid email",
@@ -139,7 +140,10 @@
       "percentOfOrder": "%",
       "quantity": "Quantity",
       "quantityPercent": "%",
-      "ratio": "Ratio"
+      "ratio": "Ratio",
+      "risk": "Risk",
+      "profitValue": "TP +{profit}",
+      "riskValue": "SL -{risk}"
     },
     "failedToCreate": "Failed to create order"
   },

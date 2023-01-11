@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.orderFormTakeProfitPartContainer">
-    <div :class="$style.profit">
+    <div :class="$style.switch">
       <div :class="$style.label">
         <slot name="profit" />
       </div>
@@ -27,6 +27,30 @@
         <slot name="ratio" />
       </div>
     </div>
+    <div :class="$style.metrics">
+      <div :class="$style.metric">
+        <div :class="$style.label">
+          <slot name="profitLabel" />
+        </div>
+        <div :class="$style.profit">
+          <slot name="profitValue" />
+        </div>
+      </div>
+      <div :class="$style.metric">
+        <div :class="$style.label">
+          <slot name="riskLabel" />
+        </div>
+        <div :class="$style.risk">
+          <slot name="riskValue" />
+        </div>
+      </div>
+    </div>
+    <div :class="$style.submitButtonWrapper">
+      <slot
+        name="submit"
+        :button-class="$style.submitButton"
+      />
+    </div>
   </div>
 </template>
 
@@ -52,7 +76,7 @@
   color: rgb(var(--color-accent-1));
 }
 
-.profit {
+.switch {
   display: flex;
   justify-content: space-between;
 }
@@ -91,5 +115,48 @@
   border-radius: 12px;
   @include title5;
   font-weight: 600;
+}
+
+.metrics {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.metric {
+  .label {
+    @include title4;
+  }
+}
+
+.profit, .risk {
+  border-radius: 5px;
+  padding: 7px 0;
+  display: flex;
+  justify-content: center;
+  margin-top: 5px;
+  @include title5;
+  font-weight: 600;
+}
+
+.profit {
+  background-color: rgb(var(--color-background-4));
+  color: rgb(var(--color-primary-2));
+}
+
+.risk {
+  background-color: rgb(var(--color-danger-4));
+  color: rgb(var(--color-danger-3));
+}
+
+.submitButtonWrapper {
+  margin-top: 20px;
+}
+
+.submitButton {
+  padding: 10px;
+  @include title4;
+  line-height: 20px;
 }
 </style>

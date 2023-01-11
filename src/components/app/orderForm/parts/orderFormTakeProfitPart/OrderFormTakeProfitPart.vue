@@ -27,6 +27,27 @@
     <template #ratio>
       1 to 3
     </template>
+    <template #profitLabel>
+      {{ t('order.takeProfit.profit') }}
+    </template>
+    <template #profitValue>
+      {{ t('order.takeProfit.profitValue', { profit: '100$' }) }}
+    </template>
+    <template #riskLabel>
+      {{ t('order.takeProfit.risk') }}
+    </template>
+    <template #riskValue>
+      {{ t('order.takeProfit.riskValue', { risk: '100$' }) }}
+    </template>
+    <template #submit="{ buttonClass }">
+      <Button
+        :class="buttonClass"
+        :state="['successColor', 'mdSize']"
+        @click="onSubmit"
+      >
+        {{ t('common.save') }}
+      </Button>
+    </template>
   </OrderFormTakeProfilePartContainer>
 </template>
 
@@ -36,9 +57,13 @@ import { useI18n } from 'vue-i18n';
 import OrderFormTakeProfilePartContainer from '@/containers/orderFormTakeProfitPartContainer/OrderFormTakeProfitPartContainer.vue';
 import Switch from '@/components/core/switch/Switch.vue';
 import Icon from '@/components/core/icon/Icon.vue';
+import Button from '@/components/core/button/Button.vue';
 import TakeProfitList from '@/components/app/takeProfitList/TakeProfitList.vue';
 import { BaseCurrency } from '@/hooks/useExchange';
 import { currency } from '@/api/types/currency';
+import { OrderFormTakeProfitPartEmits } from './index';
+
+const emit = defineEmits<OrderFormTakeProfitPartEmits>();
 
 const { t } = useI18n();
 
@@ -52,4 +77,8 @@ const baseCurrency = computed<BaseCurrency>(() => ({
   decimals: 3,
   step: 0.001,
 }));
+
+const onSubmit = () => {
+  emit('submit');
+};
 </script>

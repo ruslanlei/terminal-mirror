@@ -38,7 +38,7 @@
             <OrderFormInputPart :model="model" />
           </template>
           <template #tab(tp)>
-            <OrderFormTakeProfitPart />
+            <OrderFormTakeProfitPart @submit="openTab('input')" />
           </template>
         </Tabs>
       </template>
@@ -55,14 +55,16 @@ import OrderFromContainer from '@/containers/orderFormContainer/OrderFormContain
 import { Form, FormSelector } from '@/components/form';
 
 import { useOrderCreate } from '@/hooks/useOrderCreate';
+import { OrderFormTab } from '@/components/app/orderForm/index';
+import { Tab } from '@/components/core/tabs';
 import OrderFormInputPart from './parts/orderFormInputPart/OrderFormInputPart.vue';
 import OrderFormTakeProfitPart from './parts/orderFormTakeProfitPart/OrderFormTakeProfitPart.vue';
 
 const { t } = useI18n();
 
-const settingsActiveTab = ref('input');
+const settingsActiveTab = ref<OrderFormTab>('input');
 
-const settingsTabs = computed(() => [
+const settingsTabs = computed<Tab<OrderFormTab>[]>(() => [
   {
     label: t('order.additionalSettings.input'),
     value: 'input',
@@ -80,6 +82,10 @@ const settingsTabs = computed(() => [
     value: 'slx',
   },
 ]);
+
+const openTab = (tab: OrderFormTab) => {
+  settingsActiveTab.value = tab;
+};
 
 const {
   model,

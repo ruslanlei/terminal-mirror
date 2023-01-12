@@ -1,10 +1,7 @@
 import {
   ref,
   computed,
-  provide,
   reactive,
-  Ref,
-  ComputedRef,
 } from 'vue';
 import { CreateOrderDTO } from '@/api/endpoints/orders/create';
 import { useMarketStore } from '@/stores/market';
@@ -45,7 +42,6 @@ export const useOrderCreate = () => {
     price: 16890,
     leverage: 1,
   });
-  provide<OrderModel>('model', model);
 
   const validationSchema = object().shape({
     pair: number().required(() => t('validationError.required')),
@@ -58,7 +54,6 @@ export const useOrderCreate = () => {
   });
 
   const takeProfits = ref<TakeProfit[]>([]);
-  provide<Ref<TakeProfit[]>>('takeProfits', takeProfits);
 
   const quoteCurrency = computed<QuoteCurrency>(() => ({
     name: marketStore.activePairData?.quote || currency.USDT,
@@ -67,7 +62,6 @@ export const useOrderCreate = () => {
     step: 0.01,
     leverage: model.leverage,
   }));
-  provide<ComputedRef<QuoteCurrency>>('quoteCurrency', quoteCurrency);
 
   const baseCurrency = computed<BaseCurrency>(() => ({
     name: marketStore.activePairData?.base || currency.BTC,
@@ -75,7 +69,6 @@ export const useOrderCreate = () => {
     decimals: 3,
     step: 0.001,
   }));
-  provide<ComputedRef<BaseCurrency>>('baseCurrency', baseCurrency);
 
   return {
     model,

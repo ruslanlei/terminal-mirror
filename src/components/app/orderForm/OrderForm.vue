@@ -49,16 +49,24 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import {
+  ref,
+  computed,
+  provide,
+  Ref,
+  ComputedRef,
+} from 'vue';
 import { useI18n } from 'vue-i18n';
 import Icon from '@/components/core/icon/Icon.vue';
 import Tabs from '@/components/core/tabs/Tabs.vue';
 import OrderFromContainer from '@/containers/orderFormContainer/OrderFormContainer.vue';
 import { Form, FormSelector } from '@/components/form';
 
-import { useOrderCreate } from '@/hooks/useOrderCreate';
+import { OrderModel, useOrderCreate } from '@/hooks/useOrderCreate';
 import { OrderFormTab } from '@/components/app/orderForm/index';
 import { Tab } from '@/components/core/tabs';
+import { TakeProfit } from '@/components/app/takeProfitList';
+import { BaseCurrency, QuoteCurrency } from '@/hooks/useExchange';
 import OrderFormInputPart from './parts/orderFormInputPart/OrderFormInputPart.vue';
 import OrderFormTakeProfitPart from './parts/orderFormTakeProfitPart/OrderFormTakeProfitPart.vue';
 
@@ -93,7 +101,15 @@ const {
   model,
   validationSchema,
   orderDirectionOptions,
+  takeProfits,
+  quoteCurrency,
+  baseCurrency,
 } = useOrderCreate();
+
+provide<OrderModel>('model', model);
+provide<Ref<TakeProfit[]>>('takeProfits', takeProfits);
+provide<ComputedRef<QuoteCurrency>>('quoteCurrency', quoteCurrency);
+provide<ComputedRef<BaseCurrency>>('baseCurrency', baseCurrency);
 </script>
 
 <style lang="scss" module>

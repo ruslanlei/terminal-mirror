@@ -53,6 +53,8 @@ export const useOrderCreate = () => {
     leverage: number().min(1).max(20),
   });
 
+  const isTakeProfitsEnabled = ref<boolean>(false);
+
   const takeProfits = ref<TakeProfit[]>([]);
 
   const quoteCurrency = computed<QuoteCurrency>(() => ({
@@ -73,6 +75,7 @@ export const useOrderCreate = () => {
   return {
     model,
     validationSchema,
+    isTakeProfitsEnabled,
     takeProfits,
     orderDirectionOptions,
     quoteCurrency,

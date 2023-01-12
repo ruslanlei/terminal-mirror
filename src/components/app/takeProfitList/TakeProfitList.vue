@@ -122,11 +122,20 @@ const onUpdateTakeProfitQuantity = (
   fixSumOfTakeProfits(isLast);
 };
 
+const percentOfOrderPrice = computed(() => props.orderPrice / 100);
+
+const EACH_TAKE_PROFIT_PERCENT_INCREASE = 0.5;
+
 const autoCalculateTakeProfits = () => {
-  localValue.value = Array(takeProfitsAmount.value).fill(0).map(() => ({
-    price: 17000,
-    quantity: divide(props.orderQuantity, takeProfitsAmount.value, 6),
-  }));
+  localValue.value = Array(takeProfitsAmount.value).fill(0).map((value, index) => {
+    const percentIncrease = EACH_TAKE_PROFIT_PERCENT_INCREASE * (index + 1);
+    const increase = percentIncrease * percentOfOrderPrice.value;
+
+    return {
+      price: props.orderPrice + increase,
+      quantity: divide(props.orderQuantity, takeProfitsAmount.value, 6),
+    };
+  });
 };
 
 autoCalculateTakeProfits();

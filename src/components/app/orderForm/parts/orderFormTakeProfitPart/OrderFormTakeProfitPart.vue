@@ -4,14 +4,14 @@
       {{ t('order.takeProfit.profit') }}
     </template>
     <template #profitSwitch>
-      <Switch v-model="isEnabled" />
+      <Switch v-model="isTakeProfitsEnabled" />
     </template>
     <template #takeProfitsList>
       <TakeProfitList
         v-model="takeProfits"
         :currency="baseCurrency"
-        :order-price="model.price"
-        :order-quantity="model.quantity"
+        :order-price="model?.price"
+        :order-quantity="model?.quantity"
       />
     </template>
     <template #ratioTip="{ tipIconClass }">
@@ -52,7 +52,10 @@
 </template>
 
 <script setup lang="ts">
-import { inject, ref } from 'vue';
+import {
+  inject,
+  Ref,
+} from 'vue';
 import { useI18n } from 'vue-i18n';
 import OrderFormTakeProfilePartContainer from '@/containers/orderFormTakeProfitPartContainer/OrderFormTakeProfitPartContainer.vue';
 import Switch from '@/components/core/switch/Switch.vue';
@@ -70,11 +73,10 @@ const emit = defineEmits<OrderFormTakeProfitPartEmits>();
 
 const { t } = useI18n();
 
-const isEnabled = ref(false);
-
 const model = inject<OrderModel>('model');
 const baseCurrency = inject<BaseCurrency>('baseCurrency');
 const takeProfits = inject<TakeProfit[]>('takeProfits');
+const isTakeProfitsEnabled = inject<Ref<boolean>>('isTakeProfitsEnabled');
 
 const onSubmit = () => {
   emit('submit');

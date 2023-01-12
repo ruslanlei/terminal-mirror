@@ -102,12 +102,14 @@ const {
   validationSchema,
   orderDirectionOptions,
   takeProfits,
+  isTakeProfitsEnabled,
   quoteCurrency,
   baseCurrency,
 } = useOrderCreate();
 
 provide<OrderModel>('model', model);
 provide<Ref<TakeProfit[]>>('takeProfits', takeProfits);
+provide<Ref<boolean>>('isTakeProfitsEnabled', isTakeProfitsEnabled);
 provide<ComputedRef<QuoteCurrency>>('quoteCurrency', quoteCurrency);
 provide<ComputedRef<BaseCurrency>>('baseCurrency', baseCurrency);
 </script>

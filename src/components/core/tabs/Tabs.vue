@@ -48,12 +48,10 @@ const computedTransitionName = computed(() => ({
 }[switchDirection.value]));
 
 const onSelectNext = () => {
-  console.log('onSelectNext');
   switchDirection.value = 'next';
 };
 
 const onSelectPrev = () => {
-  console.log('onSelectPrev');
   switchDirection.value = 'prev';
 };
 </script>

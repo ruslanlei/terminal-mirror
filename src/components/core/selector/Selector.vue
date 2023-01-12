@@ -50,16 +50,16 @@
 <script setup lang="ts">
 import {
   ref,
+  computed,
   watch,
-  onBeforeUpdate,
   onMounted,
   onBeforeUnmount,
-  computed,
+  onBeforeUpdate,
 } from 'vue';
 import { useLocalValue } from '@/hooks/useLocalValue';
 import { useEnvironmentObserver } from '@/hooks/useEnvironmentObserver';
 import { arrayFrom } from '@/utils/array';
-import { SelectorProps, SelectorEmits, SelectorOption } from './index';
+import { SelectorEmits, SelectorOption, SelectorProps } from './index';
 
 const props = withDefaults(
   defineProps<SelectorProps>(),
@@ -89,6 +89,23 @@ const localValue = useLocalValue<string>(
   'modelValue',
 );
 
+const detectDirection = (nextOption: string, previousOption: string) => {
+  const activeOptionIndex = props.options.findIndex(
+    (option: SelectorOption) => option.value === previousOption,
+  );
+  const nextOptionIndex = props.options.findIndex(
+    (option: SelectorOption) => option.value === nextOption,
+  );
+  const isForward = activeOptionIndex < nextOptionIndex;
+
+  if (isForward) {
+    emit('selectNext');
+  } else {
+    emit('selectPrev');
+  }
+};
+watch(localValue, detectDirection);
+
 const activeOption = ref<SelectorOption>();
 onMounted(() => {
   const option = props.options.find(
@@ -100,20 +117,7 @@ onMounted(() => {
 });
 
 const onOptionClick = (selectingOption: SelectorOption) => {
-  const activeOptionIndex = props.options.findIndex(
-    (option: SelectorOption) => option.value === localValue.value,
-  );
-  const nextOptionIndex = props.options.findIndex(
-    (option: SelectorOption) => option.value === selectingOption.value,
-  );
-  const isForward = activeOptionIndex < nextOptionIndex;
-
-  if (isForward) {
-    emit('selectNext');
-  } else {
-    emit('selectPrev');
-  }
-
+  detectDirection(selectingOption.value, localValue.value);
   localValue.value = selectingOption.value;
   activeOption.value = selectingOption;
 };

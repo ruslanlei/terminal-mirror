@@ -31,9 +31,9 @@ import { TabsEmits, TabsProps } from './index';
 const props = withDefaults(
   defineProps<TabsProps>(),
   {
-    selectorProps: {
+    selectorProps: () => ({
       state: ['tabsShape', 'secondaryColor2'],
-    },
+    }),
   },
 );
 
@@ -48,10 +48,12 @@ const computedTransitionName = computed(() => ({
 }[switchDirection.value]));
 
 const onSelectNext = () => {
+  console.log('onSelectNext');
   switchDirection.value = 'next';
 };
 
 const onSelectPrev = () => {
+  console.log('onSelectPrev');
   switchDirection.value = 'prev';
 };
 </script>

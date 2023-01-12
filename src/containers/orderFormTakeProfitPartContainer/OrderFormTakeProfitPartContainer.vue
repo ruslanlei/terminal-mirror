@@ -1,55 +1,57 @@
 <template>
   <div :class="$style.orderFormTakeProfitPartContainer">
-    <div :class="$style.switch">
-      <div :class="$style.label">
-        <slot name="profit" />
-      </div>
-      <div>
-        <slot name="profitSwitch" />
-      </div>
-    </div>
-    <div :class="$style.takeProfitsList">
-      <slot name="takeProfitsList" />
-    </div>
-    <div :class="$style.ratio">
-      <div :class="$style.ratioLabel">
-        <div :class="$style.ratioTip">
-          <slot
-            name="ratioTip"
-            :tip-icon-class="$style.icon"
-          />
-        </div>
-        <div :class="$style.ratioLabelText">
-          <slot name="ratioLabel" />
-        </div>
-      </div>
-      <div :class="$style.ratioValue">
-        <slot name="ratio" />
-      </div>
-    </div>
-    <div :class="$style.metrics">
-      <div :class="$style.metric">
+    <div :class="$style.inner">
+      <div :class="$style.switch">
         <div :class="$style.label">
-          <slot name="profitLabel" />
+          <slot name="profit" />
         </div>
-        <div :class="$style.profit">
-          <slot name="profitValue" />
-        </div>
-      </div>
-      <div :class="$style.metric">
-        <div :class="$style.label">
-          <slot name="riskLabel" />
-        </div>
-        <div :class="$style.risk">
-          <slot name="riskValue" />
+        <div>
+          <slot name="profitSwitch" />
         </div>
       </div>
-    </div>
-    <div :class="$style.submitButtonWrapper">
-      <slot
-        name="submit"
-        :button-class="$style.submitButton"
-      />
+      <div :class="$style.takeProfitsList">
+        <slot name="takeProfitsList" />
+      </div>
+      <div :class="$style.ratio">
+        <div :class="$style.ratioLabel">
+          <div :class="$style.ratioTip">
+            <slot
+              name="ratioTip"
+              :tip-icon-class="$style.icon"
+            />
+          </div>
+          <div :class="$style.ratioLabelText">
+            <slot name="ratioLabel" />
+          </div>
+        </div>
+        <div :class="$style.ratioValue">
+          <slot name="ratio" />
+        </div>
+      </div>
+      <div :class="$style.metrics">
+        <div :class="$style.metric">
+          <div :class="$style.label">
+            <slot name="profitLabel" />
+          </div>
+          <div :class="$style.profit">
+            <slot name="profitValue" />
+          </div>
+        </div>
+        <div :class="$style.metric">
+          <div :class="$style.label">
+            <slot name="riskLabel" />
+          </div>
+          <div :class="$style.risk">
+            <slot name="riskValue" />
+          </div>
+        </div>
+      </div>
+      <div :class="$style.submitButtonWrapper">
+        <slot
+          name="submit"
+          :button-class="$style.submitButton"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -61,7 +63,15 @@
 @import "src/assets/styles/utils";
 
 .orderFormTakeProfitPartContainer {
-  padding: 0 22px;
+  padding: 0 12px 22px 12px;
+  height: 100%;
+}
+
+.inner {
+  height: 100%;
+  padding: 0 10px;
+  @include scrollbarPrimary(4px);
+  overflow-y: auto;
 }
 
 .label {

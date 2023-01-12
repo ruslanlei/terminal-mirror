@@ -1,5 +1,5 @@
 <template>
-  <PairsSelectContainer :class="$style.pairSelect">
+  <PairsSelectContainer>
     <template #search>
       <Input
         v-model="query"
@@ -44,7 +44,3 @@ const {
 
 getPairs();
 </script>
-
-<style lang="scss" module>
-.pairSelect {}
-</style>

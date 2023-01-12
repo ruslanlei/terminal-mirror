@@ -35,10 +35,18 @@
           :content-class="tabContentClass"
         >
           <template #tab(input)>
-            <OrderFormInputPart :model="model" />
+            <OrderFormInputPart
+              :base-currency="baseCurrency"
+              :quote-currency="quoteCurrency"
+            />
           </template>
           <template #tab(tp)>
-            <OrderFormTakeProfitPart @submit="openTab('input')" />
+            <OrderFormTakeProfitPart
+              v-model="takeProfits"
+              :model="model"
+              :base-currency="baseCurrency"
+              @submit="openTab('input')"
+            />
           </template>
         </Tabs>
       </template>
@@ -89,13 +97,16 @@ const openTab = (tab: OrderFormTab) => {
 
 const {
   model,
+  takeProfits,
   validationSchema,
   orderDirectionOptions,
+  quoteCurrency,
+  baseCurrency,
 } = useOrderCreate();
 </script>
 
 <style lang="scss" module>
-@import "@/assets/styles/utils";
+@import "src/assets/styles/utils";
 
 .ordersForm {
   height: 100%;

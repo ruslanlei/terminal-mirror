@@ -11,7 +11,8 @@ type SelectorState =
   | 'mdSize'
   | 'default'
   | 'tabsShape'
-  | 'secondaryColor2';
+  | 'secondaryColor2'
+  | 'secondaryColor5';
 
 export interface SelectorProps {
   options: SelectorOption[],

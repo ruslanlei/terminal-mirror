@@ -2,7 +2,14 @@
   <Selector
     v-model="value"
     v-bind="props"
-  />
+  >
+    <template #option="payload">
+      <slot
+        name="option"
+        v-bind="payload"
+      />
+    </template>
+  </Selector>
 </template>
 
 <script setup lang="ts">

@@ -4,15 +4,15 @@
       {{ t('order.price') }}
     </template>
     <template #priceInput>
-      <NumberInput
-        v-model="baseCurrencyPrice"
+      <FormNumberInput
+        name="price"
         :state="['defaultColor', 'smSize']"
         :min="1"
       >
         <template #append>
           {{ quoteCurrency.name }}
         </template>
-      </NumberInput>
+      </FormNumberInput>
     </template>
     <template #amountLabel>
       {{ t('order.amount') }}
@@ -88,38 +88,15 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import OrderFormInputPartContainer from '@/containers/orderFormInputPartContainer/OrderFormInputPartContainer.vue';
 import Button from '@/components/core/button/Button.vue';
-import NumberInput from '@/components/core/numberInput/NumberInput.vue';
 import { FormDepositInput, FormExchangeInput, FormNumberInput } from '@/components/form';
 import { OrderFormInputPartProps } from '@/components/app/orderForm/parts/orderFormInputPart/index';
-import { useMarketStore } from '@/stores/market';
-import { BaseCurrency, QuoteCurrency } from '@/hooks/useExchange';
-import { currency } from '@/api/types/currency';
 
 const props = defineProps<OrderFormInputPartProps>();
 
-const marketStore = useMarketStore();
-
 const { t } = useI18n();
-
-const quoteCurrency = computed<QuoteCurrency>(() => ({
-  name: marketStore.activePairData?.quote || currency.BTC,
-  balance: 3208,
-  decimals: 2,
-  leverage: props.model.leverage,
-}));
-
-const baseCurrencyPrice = ref(16890);
-
-const baseCurrency = computed<BaseCurrency>(() => ({
-  name: marketStore.activePairData?.base || currency.USDT,
-  price: baseCurrencyPrice.value,
-  decimals: 3,
-  step: 0.001,
-}));
 </script>
 
 <style lang="scss" module>

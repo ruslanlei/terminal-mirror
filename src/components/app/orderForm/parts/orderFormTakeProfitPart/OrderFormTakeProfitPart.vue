@@ -10,8 +10,8 @@
       <TakeProfitList
         v-model="takeProfits"
         :currency="baseCurrency"
-        :order-price="16200"
-        :order-quantity="0.1"
+        :order-price="model.price"
+        :order-quantity="model.quantity"
       />
     </template>
     <template #ratioTip="{ tipIconClass }">
@@ -52,16 +52,19 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import OrderFormTakeProfilePartContainer from '@/containers/orderFormTakeProfitPartContainer/OrderFormTakeProfitPartContainer.vue';
 import Switch from '@/components/core/switch/Switch.vue';
 import Icon from '@/components/core/icon/Icon.vue';
 import Button from '@/components/core/button/Button.vue';
 import TakeProfitList from '@/components/app/takeProfitList/TakeProfitList.vue';
-import { BaseCurrency } from '@/hooks/useExchange';
-import { currency } from '@/api/types/currency';
-import { OrderFormTakeProfitPartEmits } from './index';
+import {
+  OrderFormTakeProfitPartProps,
+  OrderFormTakeProfitPartEmits,
+} from './index';
+
+const props = defineProps<OrderFormTakeProfitPartProps>();
 
 const emit = defineEmits<OrderFormTakeProfitPartEmits>();
 
@@ -70,13 +73,6 @@ const { t } = useI18n();
 const isEnabled = ref(false);
 
 const takeProfits = ref([]);
-
-const baseCurrency = computed<BaseCurrency>(() => ({
-  name: currency.USDT,
-  price: 16890,
-  decimals: 3,
-  step: 0.001,
-}));
 
 const onSubmit = () => {
   emit('submit');

@@ -1,5 +1,6 @@
-import { CreateOrderDTO } from '@/api/endpoints/orders/create';
+import { BaseCurrency, QuoteCurrency } from '@/hooks/useExchange';
 
 export interface OrderFormInputPartProps {
-  model: CreateOrderDTO,
+  baseCurrency: BaseCurrency,
+  quoteCurrency: QuoteCurrency,
 }

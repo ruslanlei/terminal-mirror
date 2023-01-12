@@ -92,11 +92,15 @@ import { useI18n } from 'vue-i18n';
 import OrderFormInputPartContainer from '@/containers/orderFormInputPartContainer/OrderFormInputPartContainer.vue';
 import Button from '@/components/core/button/Button.vue';
 import { FormDepositInput, FormExchangeInput, FormNumberInput } from '@/components/form';
-import { OrderFormInputPartProps } from '@/components/app/orderForm/parts/orderFormInputPart/index';
-
-const props = defineProps<OrderFormInputPartProps>();
+import { inject } from 'vue';
+import { OrderModel } from '@/hooks/useOrderCreate';
+import { BaseCurrency } from '@/hooks/useExchange';
 
 const { t } = useI18n();
+
+const model = inject<OrderModel>('model');
+const quoteCurrency = inject<BaseCurrency>('quoteCurrency');
+const baseCurrency = inject<BaseCurrency>('baseCurrency');
 </script>
 
 <style lang="scss" module>

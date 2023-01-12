@@ -52,19 +52,19 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { inject, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import OrderFormTakeProfilePartContainer from '@/containers/orderFormTakeProfitPartContainer/OrderFormTakeProfitPartContainer.vue';
 import Switch from '@/components/core/switch/Switch.vue';
 import Icon from '@/components/core/icon/Icon.vue';
 import Button from '@/components/core/button/Button.vue';
 import TakeProfitList from '@/components/app/takeProfitList/TakeProfitList.vue';
+import { OrderModel } from '@/hooks/useOrderCreate';
+import { BaseCurrency } from '@/hooks/useExchange';
+import { TakeProfit } from '@/components/app/takeProfitList';
 import {
-  OrderFormTakeProfitPartProps,
   OrderFormTakeProfitPartEmits,
 } from './index';
-
-const props = defineProps<OrderFormTakeProfitPartProps>();
 
 const emit = defineEmits<OrderFormTakeProfitPartEmits>();
 
@@ -72,7 +72,9 @@ const { t } = useI18n();
 
 const isEnabled = ref(false);
 
-const takeProfits = ref([]);
+const model = inject<OrderModel>('model');
+const baseCurrency = inject<BaseCurrency>('baseCurrency');
+const takeProfits = inject<TakeProfit[]>('takeProfits');
 
 const onSubmit = () => {
   emit('submit');

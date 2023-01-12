@@ -35,16 +35,10 @@
           :content-class="tabContentClass"
         >
           <template #tab(input)>
-            <OrderFormInputPart
-              :base-currency="baseCurrency"
-              :quote-currency="quoteCurrency"
-            />
+            <OrderFormInputPart />
           </template>
           <template #tab(tp)>
             <OrderFormTakeProfitPart
-              v-model="takeProfits"
-              :model="model"
-              :base-currency="baseCurrency"
               @submit="openTab('input')"
             />
           </template>
@@ -97,11 +91,8 @@ const openTab = (tab: OrderFormTab) => {
 
 const {
   model,
-  takeProfits,
   validationSchema,
   orderDirectionOptions,
-  quoteCurrency,
-  baseCurrency,
 } = useOrderCreate();
 </script>
 

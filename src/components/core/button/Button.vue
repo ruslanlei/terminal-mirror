@@ -24,7 +24,7 @@ import { ButtonProps } from './index';
 const props = withDefaults(
   defineProps<ButtonProps>(),
   {
-    state: 'primaryColor',
+    state: 'gradientColor',
     isDisabled: false,
     isLoading: false,
   },
@@ -75,6 +75,11 @@ const computedState = useComputedState(props);
 }
 
 .primaryColor {
+  color: rgba(var(--color-accent-1));
+  background: rgb(var(--color-primary-1));
+}
+
+.gradientColor {
   color: rgba(var(--color-accent-1));
   background: var(--color-main-gradient);
 }

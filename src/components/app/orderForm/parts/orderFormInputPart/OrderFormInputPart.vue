@@ -80,7 +80,7 @@
     <template #submit>
       <Button
         type="submit"
-        :state="['primaryColor', 'mdSize', 'interactive']"
+        :state="['gradientColor', 'mdSize', 'interactive']"
         :class="$style.submit"
       >
         {{ t('order.submit') }}

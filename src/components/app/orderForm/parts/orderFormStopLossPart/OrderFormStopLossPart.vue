@@ -33,6 +33,14 @@
     <template #ratio>
       <OrderFormRatio />
     </template>
+    <template #submit="{ buttonClass }">
+      <Button
+        :class="buttonClass"
+        :state="['primaryColor', 'mdSize']"
+      >
+        {{ t('common.save') }}
+      </Button>
+    </template>
   </OrderFormStopLossPartContainer>
 </template>
 
@@ -44,6 +52,7 @@ import OrderFormStopLossPartContainer
 import Switch from '@/components/core/switch/Switch.vue';
 import NumberInput from '@/components/core/numberInput/NumberInput.vue';
 import OrderFormRatio from '@/components/app/orderFormRatio/OrderFormRatio.vue';
+import Button from '@/components/core/button/Button.vue';
 
 const { t } = useI18n();
 

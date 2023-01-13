@@ -43,6 +43,12 @@
     <div :class="$style.ratio">
       <slot name="ratio" />
     </div>
+    <div :class="$style.submitWrapper">
+      <slot
+        name="submit"
+        :button-class="$style.submitButton"
+      />
+    </div>
   </div>
 </template>
 
@@ -93,5 +99,15 @@
 
 .percentOfOrder, .percentOfDeposit {
   margin-top: 10px;
+}
+
+.submitWrapper {
+  margin-top: 20px;
+}
+
+.submitButton {
+  padding: 10px;
+  @include title4;
+  line-height: 20px;
 }
 </style>

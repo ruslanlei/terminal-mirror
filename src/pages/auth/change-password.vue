@@ -29,7 +29,7 @@
       <template #submit>
         <Button
           :is-loading="isLoading"
-          :state="['lgSize', 'primaryColor', 'interactive']"
+          :state="['lgSize', 'gradientColor', 'interactive']"
         >
           {{ t('auth.changePassword.submit') }}
         </Button>

@@ -48,7 +48,7 @@
       <template #submit>
         <Button
           type="submit"
-          :state="['primaryColor', 'lgSize', 'interactive']"
+          :state="['gradientColor', 'lgSize', 'interactive']"
           :is-loading="isLoading"
         >
           {{ t('auth.submit') }}

@@ -15,7 +15,9 @@
           :key="localValue"
           :class="$style.tabContent"
         >
-          <slot :name="`tab(${localValue})`" />
+          <KeepAlive>
+            <slot :name="`tab(${localValue})`" />
+          </KeepAlive>
         </div>
       </transition>
     </div>

@@ -54,7 +54,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import {
+  ref,
+  computed,
+  // watch,
+  toRefs,
+} from 'vue';
 import { useI18n } from 'vue-i18n';
 import { add, divide, subtract } from '@/utils/float';
 import TakeProfitInput from '@/components/core/takeProfitInput/TakeProfitInput.vue';
@@ -73,11 +78,11 @@ const localValue = useLocalValue<TakeProfit[]>(props, emit, 'modelValue');
 
 const MAXIMUM_ALLOWED_TAKE_PROFITS = 20;
 
-const takeProfitsAmount = ref(5);
 const maxTakeProfits = computed(() => Math.min(
   props.orderQuantity / props.currency.step,
   MAXIMUM_ALLOWED_TAKE_PROFITS,
 ));
+const takeProfitsAmount = ref(Math.min(maxTakeProfits.value, 5));
 
 const maxAllowedDecimals = computed(() => props.currency.decimals * 2);
 
@@ -126,6 +131,13 @@ const percentOfOrderPrice = computed(() => props.orderPrice / 100);
 
 const EACH_TAKE_PROFIT_PERCENT_INCREASE = 0.5;
 
+const {
+  orderPrice,
+  orderQuantity,
+  currency,
+} = toRefs(props);
+
+/// ////// TODO Move to form
 const autoCalculateTakeProfits = () => {
   localValue.value = Array(takeProfitsAmount.value).fill(0).map((value, index) => {
     const percentIncrease = EACH_TAKE_PROFIT_PERCENT_INCREASE * (index + 1);
@@ -137,8 +149,23 @@ const autoCalculateTakeProfits = () => {
     };
   });
 };
+// if ()
+// autoCalculateTakeProfits();
+// watch([orderPrice, currency], autoCalculateTakeProfits);
 
-autoCalculateTakeProfits();
+const autoCalculateTakeProfitPrices = () => {
+  localValue.value = localValue.value.map((value, index) => {
+    const percentIncrease = EACH_TAKE_PROFIT_PERCENT_INCREASE * (index + 1);
+    const increase = percentIncrease * percentOfOrderPrice.value;
+
+    return {
+      ...value,
+      price: props.orderPrice + increase,
+    };
+  });
+};
+autoCalculateTakeProfitPrices();
+// watch(orderPrice, autoCalculateTakeProfitPrices);
 </script>
 
 <style lang="scss" module>

@@ -1,4 +1,5 @@
 <template>
+  {{ takeProfits }}
   <Form
     v-model="model"
     :validation-schema="validationSchema"

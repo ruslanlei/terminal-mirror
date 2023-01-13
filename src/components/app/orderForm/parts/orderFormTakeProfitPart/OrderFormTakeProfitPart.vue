@@ -11,7 +11,7 @@
         v-model="takeProfits"
         :currency="baseCurrency"
         :order-price="model?.price"
-        :order-quantity="model?.quantity"
+        :order-quantity="model?.quantity || baseCurrency?.step"
       />
     </template>
     <template #ratioTip="{ tipIconClass }">

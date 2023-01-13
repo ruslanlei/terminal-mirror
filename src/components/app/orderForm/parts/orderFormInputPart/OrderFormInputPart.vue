@@ -10,7 +10,7 @@
         :min="1"
       >
         <template #append>
-          {{ quoteCurrency.name }}
+          {{ quoteCurrency?.name }}
         </template>
       </FormNumberInput>
     </template>
@@ -21,12 +21,13 @@
       <FormNumberInput
         name="quantity"
         type="number"
+        :min="0"
         :state="['defaultColor', 'smSize']"
-        :decimals="baseCurrency.decimals"
-        :step="baseCurrency.step"
+        :decimals="baseCurrency?.decimals"
+        :step="baseCurrency?.step"
       >
         <template #append>
-          {{ baseCurrency.name }}
+          {{ baseCurrency?.name }}
         </template>
       </FormNumberInput>
     </template>
@@ -42,7 +43,7 @@
         save-on="blur"
       >
         <template #quotecurrency>
-          {{ quoteCurrency.name }}
+          {{ quoteCurrency?.name }}
         </template>
       </FormExchangeInput>
     </template>
@@ -88,11 +89,11 @@
 </template>
 
 <script setup lang="ts">
+import { inject } from 'vue';
 import { useI18n } from 'vue-i18n';
 import OrderFormInputPartContainer from '@/containers/orderFormInputPartContainer/OrderFormInputPartContainer.vue';
 import Button from '@/components/core/button/Button.vue';
 import { FormDepositInput, FormExchangeInput, FormNumberInput } from '@/components/form';
-import { inject } from 'vue';
 import { OrderModel } from '@/hooks/useOrderCreate';
 import { BaseCurrency } from '@/hooks/useExchange';
 

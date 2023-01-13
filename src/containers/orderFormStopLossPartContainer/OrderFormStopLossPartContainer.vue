@@ -8,6 +8,38 @@
         <slot name="stopLossSwitch" />
       </div>
     </div>
+    <div :class="[$style.row, $style.exactPrice]">
+      <div :class="$style.label">
+        <slot name="exactPriceLabel" />
+      </div>
+      <div :class="$style.field">
+        <slot name="exactPriceInput" />
+      </div>
+    </div>
+    <div :class="[$style.row, $style.amountOfRisk]">
+      <div :class="[$style.labelLarge, $style.thick]">
+        <slot name="amountOfRiskLabel" />
+      </div>
+      <div :class="$style.field">
+        <slot name="amountOfRiskInput" />
+      </div>
+    </div>
+    <div :class="[$style.row, $style.percentOfOrder]">
+      <div :class="[$style.label, $style.thick]">
+        <slot name="percentOfOrderLabel" />
+      </div>
+      <div :class="$style.field">
+        <slot name="percentOfOrderInput" />
+      </div>
+    </div>
+    <div :class="[$style.row, $style.percentOfDeposit]">
+      <div :class="[$style.label, $style.thick]">
+        <slot name="percentOfDepositLabel" />
+      </div>
+      <div :class="$style.field">
+        <slot name="percentOfDepositInput" />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -31,4 +63,32 @@
 }
 
 .stopLossSwitch {}
+
+.row {
+  display: grid;
+  grid-template-columns: 0.9fr 1fr;
+  align-items: center;
+  .label, .labelLarge {
+    color: rgb(var(--color-accent-1));
+    font-weight: 500;
+    &.thick {
+      font-weight: 600;
+    }
+  }
+  .label {
+    @include title3;
+  }
+  .labelLarge {
+    @include title2;
+  }
+  .field {}
+}
+
+.exactPrice, .amountOfRisk {
+  margin-top: 20px;
+}
+
+.percentOfOrder, .percentOfDeposit {
+  margin-top: 10px;
+}
 </style>

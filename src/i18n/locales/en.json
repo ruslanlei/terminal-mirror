@@ -146,7 +146,11 @@
       "riskValue": "SL -{risk}"
     },
     "stopLoss": {
-      "switchLabel": "Loss"
+      "switchLabel": "Loss",
+      "exactPrice": "Exact price",
+      "amountOfRisk": "Amount of risk",
+      "percentOfOrder": "% of order",
+      "percentOfDeposit": "% of deposit"
     },
     "failedToCreate": "Failed to create order"
   },

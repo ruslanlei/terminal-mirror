@@ -6,6 +6,30 @@
     <template #stopLossSwitch>
       <Switch v-model="isStopLossEnabled" />
     </template>
+    <template #exactPriceLabel>
+      {{ t('order.stopLoss.exactPrice') }}
+    </template>
+    <template #exactPriceInput>
+      <NumberInput :state="['smSize', 'defaultColor']" />
+    </template>
+    <template #amountOfRiskLabel>
+      {{ t('order.stopLoss.amountOfRisk') }}
+    </template>
+    <template #amountOfRiskInput>
+      <NumberInput :state="['smSize', 'defaultColor']" />
+    </template>
+    <template #percentOfOrderLabel>
+      {{ t('order.stopLoss.percentOfOrder') }}
+    </template>
+    <template #percentOfOrderInput>
+      <NumberInput :state="['smSize', 'defaultColor']" />
+    </template>
+    <template #percentOfDepositLabel>
+      {{ t('order.stopLoss.percentOfDeposit') }}
+    </template>
+    <template #percentOfDepositInput>
+      <NumberInput :state="['smSize', 'defaultColor']" />
+    </template>
   </OrderFormStopLossPartContainer>
 </template>
 
@@ -15,6 +39,7 @@ import { useI18n } from 'vue-i18n';
 import OrderFormStopLossPartContainer
   from '@/containers/orderFormStopLossPartContainer/OrderFormStopLossPartContainer.vue';
 import Switch from '@/components/core/switch/Switch.vue';
+import NumberInput from '@/components/core/numberInput/NumberInput.vue';
 
 const { t } = useI18n();
 

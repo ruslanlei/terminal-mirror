@@ -40,6 +40,9 @@
         <slot name="percentOfDepositInput" />
       </div>
     </div>
+    <div :class="$style.ratio">
+      <slot name="ratio" />
+    </div>
   </div>
 </template>
 

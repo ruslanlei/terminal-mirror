@@ -30,6 +30,9 @@
     <template #percentOfDepositInput>
       <NumberInput :state="['smSize', 'defaultColor']" />
     </template>
+    <template #ratio>
+      <OrderFormRatio />
+    </template>
   </OrderFormStopLossPartContainer>
 </template>
 
@@ -40,6 +43,7 @@ import OrderFormStopLossPartContainer
   from '@/containers/orderFormStopLossPartContainer/OrderFormStopLossPartContainer.vue';
 import Switch from '@/components/core/switch/Switch.vue';
 import NumberInput from '@/components/core/numberInput/NumberInput.vue';
+import OrderFormRatio from '@/components/app/orderFormRatio/OrderFormRatio.vue';
 
 const { t } = useI18n();
 

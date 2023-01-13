@@ -27,30 +27,8 @@
         :order-quantity="model?.quantity || baseCurrency?.step"
       />
     </template>
-    <template #ratioTip="{ tipIconClass }">
-      <Icon
-        :size="20"
-        icon="info"
-        :class="tipIconClass"
-      />
-    </template>
-    <template #ratioLabel>
-      {{ t('order.takeProfit.ratio') }}
-    </template>
     <template #ratio>
-      1 to 3
-    </template>
-    <template #profitLabel>
-      {{ t('order.takeProfit.profit') }}
-    </template>
-    <template #profitValue>
-      {{ t('order.takeProfit.profitValue', { profit: '100$' }) }}
-    </template>
-    <template #riskLabel>
-      {{ t('order.takeProfit.risk') }}
-    </template>
-    <template #riskValue>
-      {{ t('order.takeProfit.riskValue', { risk: '100$' }) }}
+      <OrderFormRatio />
     </template>
     <template #submit="{ buttonClass }">
       <Button
@@ -80,6 +58,7 @@ import { OrderModel } from '@/hooks/useOrderCreate';
 import { BaseCurrency } from '@/hooks/useExchange';
 import { TakeProfit } from '@/components/app/takeProfitList';
 import NumberInput from '@/components/core/numberInput/NumberInput.vue';
+import OrderFormRatio from '@/components/app/orderFormRatio/OrderFormRatio.vue';
 import { OrderFormTakeProfitPartEmits } from './index';
 
 const emit = defineEmits<OrderFormTakeProfitPartEmits>();

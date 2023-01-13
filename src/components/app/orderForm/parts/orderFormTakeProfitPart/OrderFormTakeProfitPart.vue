@@ -6,9 +6,22 @@
     <template #profitSwitch>
       <Switch v-model="isTakeProfitsEnabled" />
     </template>
+    <template #takeProfitsAmountLabel>
+      {{ t('order.takeProfit.amountOfOrders') }}
+    </template>
+    <template #takeProfitsAmountInput>
+      <NumberInput
+        v-model="takeProfitsAmount"
+        :min="1"
+        :max="maxTakeProfits"
+        :state="['smSize', 'defaultColor']"
+        @input="onTakeProfitsAmountInput"
+      />
+    </template>
     <template #takeProfitsList>
       <TakeProfitList
         v-model="takeProfits"
+        v-model:take-profits-amount="takeProfitsAmount"
         :currency="baseCurrency"
         :order-price="model?.price"
         :order-quantity="model?.quantity || baseCurrency?.step"
@@ -55,6 +68,7 @@
 import {
   inject,
   Ref,
+  ComputedRef,
 } from 'vue';
 import { useI18n } from 'vue-i18n';
 import OrderFormTakeProfilePartContainer from '@/containers/orderFormTakeProfitPartContainer/OrderFormTakeProfitPartContainer.vue';
@@ -65,9 +79,8 @@ import TakeProfitList from '@/components/app/takeProfitList/TakeProfitList.vue';
 import { OrderModel } from '@/hooks/useOrderCreate';
 import { BaseCurrency } from '@/hooks/useExchange';
 import { TakeProfit } from '@/components/app/takeProfitList';
-import {
-  OrderFormTakeProfitPartEmits,
-} from './index';
+import NumberInput from '@/components/core/numberInput/NumberInput.vue';
+import { OrderFormTakeProfitPartEmits } from './index';
 
 const emit = defineEmits<OrderFormTakeProfitPartEmits>();
 
@@ -77,6 +90,13 @@ const model = inject<OrderModel>('model');
 const baseCurrency = inject<BaseCurrency>('baseCurrency');
 const takeProfits = inject<TakeProfit[]>('takeProfits');
 const isTakeProfitsEnabled = inject<Ref<boolean>>('isTakeProfitsEnabled');
+
+const maxTakeProfits = inject<ComputedRef<number>>('maxTakeProfits');
+const takeProfitsAmount = inject<Ref<number>>('takeProfitsAmount');
+
+const onTakeProfitsAmountInput = () => {
+  emit('takeProfitsAmountInput');
+};
 
 const onSubmit = () => {
   emit('submit');

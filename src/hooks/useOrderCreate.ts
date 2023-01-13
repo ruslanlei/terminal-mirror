@@ -1,7 +1,7 @@
 import {
   ref,
   computed,
-  reactive, watch,
+  reactive, watch, provide, ComputedRef, Ref,
 } from 'vue';
 import { CreateOrderDTO } from '@/api/endpoints/orders/create';
 import { useMarketStore } from '@/stores/market';
@@ -78,6 +78,7 @@ export const useOrderCreate = () => {
     model.quantity / baseCurrency.value.step,
     MAXIMUM_ALLOWED_TAKE_PROFITS,
   ));
+
   const takeProfitsAmount = ref(5);
 
   const takeProfits = ref<TakeProfit[]>([]);
@@ -97,14 +98,10 @@ export const useOrderCreate = () => {
       };
     });
   };
-  autoCalculateTakeProfits();
   watch(
-    [
-      () => model.quantity,
-      baseCurrency,
-    ],
+    [() => model.quantity, baseCurrency],
     autoCalculateTakeProfits,
-    { deep: true },
+    { deep: true, immediate: true },
   );
 
   const autoCalculateTakeProfitPrices = () => {
@@ -133,5 +130,8 @@ export const useOrderCreate = () => {
     orderDirectionOptions,
     quoteCurrency,
     baseCurrency,
+    maxTakeProfits,
+    takeProfitsAmount,
+    autoCalculateTakeProfits,
   };
 };

@@ -1,54 +1,37 @@
 <template>
   <div :class="$style.takeProfitList">
-    <div :class="$style.amountOfOrders">
-      <div :class="$style.label">
-        <slot name="amountOrOrdersLabel">
-          {{ t('order.takeProfit.amountOfOrders') }}
-        </slot>
+    <div :class="$style.inputsHeader">
+      <div :class="$style.inputsHeaderColumnLeft">
+        <div :class="$style.column">
+          {{ t('order.takeProfit.price') }}
+        </div>
+        <div :class="[$style.column, $style.incomeLabel]">
+          {{ t('order.takeProfit.income') }}
+        </div>
+        <div :class="[$style.column, $style.percentOfOrderLabel]">
+          {{ t('order.takeProfit.percentOfOrder') }}
+        </div>
       </div>
-      <NumberInput
-        v-model="takeProfitsAmount"
-        :min="1"
-        :max="maxTakeProfits"
-        :state="['smSize', 'defaultColor']"
-        @input="autoCalculateTakeProfits"
-      />
+      <div :class="$style.inputsHeaderColumnRight">
+        <div :class="$style.column">
+          {{ t('order.takeProfit.quantity') }}
+        </div>
+        <div :class="[$style.column, $style.quantityPercent]">
+          {{ t('order.takeProfit.quantityPercent') }}
+        </div>
+      </div>
     </div>
-
-    <div :class="$style.takeProfitTable">
-      <div :class="$style.inputsHeader">
-        <div :class="$style.inputsHeaderColumnLeft">
-          <div :class="$style.column">
-            {{ t('order.takeProfit.price') }}
-          </div>
-          <div :class="[$style.column, $style.incomeLabel]">
-            {{ t('order.takeProfit.income') }}
-          </div>
-          <div :class="[$style.column, $style.percentOfOrderLabel]">
-            {{ t('order.takeProfit.percentOfOrder') }}
-          </div>
-        </div>
-        <div :class="$style.inputsHeaderColumnRight">
-          <div :class="$style.column">
-            {{ t('order.takeProfit.quantity') }}
-          </div>
-          <div :class="[$style.column, $style.quantityPercent]">
-            {{ t('order.takeProfit.quantityPercent') }}
-          </div>
-        </div>
-      </div>
-      <div :class="$style.takeProfitInputs">
-        <TakeProfitInput
-          v-for="(takeProfit, takeProfitIndex) in localValue"
-          :key="takeProfitIndex"
-          v-model:price="takeProfit.price"
-          v-model:quantity="takeProfit.quantity"
-          :order-price="orderPrice"
-          :order-quantity="orderQuantity"
-          :currency="currency"
-          @quantity-input="onUpdateTakeProfitQuantity(takeProfitIndex)"
-        />
-      </div>
+    <div :class="$style.takeProfitInputs">
+      <TakeProfitInput
+        v-for="(takeProfit, takeProfitIndex) in localValue"
+        :key="takeProfitIndex"
+        v-model:price="takeProfit.price"
+        v-model:quantity="takeProfit.quantity"
+        :order-price="orderPrice"
+        :order-quantity="orderQuantity"
+        :currency="currency"
+        @quantity-input="onUpdateTakeProfitQuantity(takeProfitIndex)"
+      />
     </div>
   </div>
 </template>
@@ -63,7 +46,6 @@ import {
 import { useI18n } from 'vue-i18n';
 import { add, divide, subtract } from '@/utils/float';
 import TakeProfitInput from '@/components/core/takeProfitInput/TakeProfitInput.vue';
-import NumberInput from '@/components/core/numberInput/NumberInput.vue';
 import { TakeProfitInputValue } from '@/components/core/takeProfitInput';
 import { useLocalValue } from '@/hooks/useLocalValue';
 import { TakeProfit, TakeProfitListEmit, TakeProfitListProps } from '@/components/app/takeProfitList/index';
@@ -76,13 +58,7 @@ const { t } = useI18n();
 
 const localValue = useLocalValue<TakeProfit[]>(props, emit, 'modelValue');
 
-const MAXIMUM_ALLOWED_TAKE_PROFITS = 20;
-
-const maxTakeProfits = computed(() => Math.min(
-  props.orderQuantity / props.currency.step,
-  MAXIMUM_ALLOWED_TAKE_PROFITS,
-));
-const takeProfitsAmount = ref(Math.min(maxTakeProfits.value, 5));
+const takeProfitsAmount = useLocalValue<number>(props, emit, 'takeProfitsAmount');
 
 const maxAllowedDecimals = computed(() => props.currency.decimals * 2);
 
@@ -126,66 +102,15 @@ const onUpdateTakeProfitQuantity = (
 
   fixSumOfTakeProfits(isLast);
 };
-
-const percentOfOrderPrice = computed(() => props.orderPrice / 100);
-
-const EACH_TAKE_PROFIT_PERCENT_INCREASE = 0.5;
-
-const {
-  orderPrice,
-  orderQuantity,
-  currency,
-} = toRefs(props);
-
-/// ////// TODO Move to form
-const autoCalculateTakeProfits = () => {
-  localValue.value = Array(takeProfitsAmount.value).fill(0).map((value, index) => {
-    const percentIncrease = EACH_TAKE_PROFIT_PERCENT_INCREASE * (index + 1);
-    const increase = percentIncrease * percentOfOrderPrice.value;
-
-    return {
-      price: props.orderPrice + increase,
-      quantity: divide(props.orderQuantity, takeProfitsAmount.value, 6),
-    };
-  });
-};
-// if ()
-// autoCalculateTakeProfits();
-// watch([orderPrice, currency], autoCalculateTakeProfits);
-
-const autoCalculateTakeProfitPrices = () => {
-  localValue.value = localValue.value.map((value, index) => {
-    const percentIncrease = EACH_TAKE_PROFIT_PERCENT_INCREASE * (index + 1);
-    const increase = percentIncrease * percentOfOrderPrice.value;
-
-    return {
-      ...value,
-      price: props.orderPrice + increase,
-    };
-  });
-};
-autoCalculateTakeProfitPrices();
-// watch(orderPrice, autoCalculateTakeProfitPrices);
 </script>
 
 <style lang="scss" module>
 @import "src/assets/styles/utils";
 
-.takeProfitList {}
-
-.amountOfOrders {
-  display: grid;
-  grid-template-columns: 0.9fr 1fr;
-  .label {
-    @include title3;
-    color: rgb(var(--color-accent-1));
-    font-weight: 500;
-    max-width: 110px;
-  }
+.takeProfitList {
 }
 
 .takeProfitTable {
-  margin-top: 20px;
 }
 
 .takeProfitInputs {

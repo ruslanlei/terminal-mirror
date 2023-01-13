@@ -1,5 +1,5 @@
 <template>
-  {{ takeProfits }}
+  <!--  {{ takeProfits }}-->
   <Form
     v-model="model"
     :validation-schema="validationSchema"
@@ -40,6 +40,7 @@
           </template>
           <template #tab(tp)>
             <OrderFormTakeProfitPart
+              @take-profits-amount-input="autoCalculateTakeProfits"
               @submit="openTab('input')"
             />
           </template>
@@ -68,6 +69,7 @@ import { OrderFormTab } from '@/components/app/orderForm/index';
 import { Tab } from '@/components/core/tabs';
 import { TakeProfit } from '@/components/app/takeProfitList';
 import { BaseCurrency, QuoteCurrency } from '@/hooks/useExchange';
+import { number } from 'yup';
 import OrderFormInputPart from './parts/orderFormInputPart/OrderFormInputPart.vue';
 import OrderFormTakeProfitPart from './parts/orderFormTakeProfitPart/OrderFormTakeProfitPart.vue';
 
@@ -106,6 +108,9 @@ const {
   isTakeProfitsEnabled,
   quoteCurrency,
   baseCurrency,
+  autoCalculateTakeProfits,
+  maxTakeProfits,
+  takeProfitsAmount,
 } = useOrderCreate();
 
 provide<OrderModel>('model', model);
@@ -113,6 +118,8 @@ provide<Ref<TakeProfit[]>>('takeProfits', takeProfits);
 provide<Ref<boolean>>('isTakeProfitsEnabled', isTakeProfitsEnabled);
 provide<ComputedRef<QuoteCurrency>>('quoteCurrency', quoteCurrency);
 provide<ComputedRef<BaseCurrency>>('baseCurrency', baseCurrency);
+provide<ComputedRef<number>>('maxTakeProfits', maxTakeProfits);
+provide<Ref<number>>('takeProfitsAmount', takeProfitsAmount);
 </script>
 
 <style lang="scss" module>

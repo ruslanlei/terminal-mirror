@@ -37,14 +37,9 @@
 </template>
 
 <script setup lang="ts">
-import {
-  ref,
-  computed,
-  // watch,
-  toRefs,
-} from 'vue';
+import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { add, divide, subtract } from '@/utils/float';
+import { add, subtract } from '@/utils/float';
 import TakeProfitInput from '@/components/core/takeProfitInput/TakeProfitInput.vue';
 import { TakeProfitInputValue } from '@/components/core/takeProfitInput';
 import { useLocalValue } from '@/hooks/useLocalValue';

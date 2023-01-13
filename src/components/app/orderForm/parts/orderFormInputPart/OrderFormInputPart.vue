@@ -8,6 +8,7 @@
         name="price"
         :state="['defaultColor', 'smSize']"
         :min="1"
+        save-on="blur"
       >
         <template #append>
           {{ quoteCurrency?.name }}

@@ -74,10 +74,7 @@ export const useOrderCreate = () => {
 
   const MAXIMUM_ALLOWED_TAKE_PROFITS = 20;
 
-  const maxTakeProfits = computed(() => Math.min(
-    model.quantity / baseCurrency.value.step,
-    MAXIMUM_ALLOWED_TAKE_PROFITS,
-  ));
+  const maxTakeProfits = computed(() => MAXIMUM_ALLOWED_TAKE_PROFITS);
 
   const takeProfitsAmount = ref(5);
 
@@ -86,23 +83,6 @@ export const useOrderCreate = () => {
   const EACH_TAKE_PROFIT_PERCENT_INCREASE = 0.5;
 
   const percentOfOrderPrice = computed(() => model.price / 100);
-
-  const autoCalculateTakeProfits = () => {
-    takeProfits.value = Array(takeProfitsAmount.value).fill(0).map((value, index) => {
-      const percentIncrease = EACH_TAKE_PROFIT_PERCENT_INCREASE * (index + 1);
-      const increase = percentIncrease * percentOfOrderPrice.value;
-
-      return {
-        price: model.price + increase,
-        quantity: divide(model.quantity, takeProfitsAmount.value, 6),
-      };
-    });
-  };
-  watch(
-    [() => model.quantity, baseCurrency],
-    autoCalculateTakeProfits,
-    { deep: true, immediate: true },
-  );
 
   const autoCalculateTakeProfitPrices = () => {
     takeProfits.value = takeProfits.value.map((value, index) => {
@@ -120,6 +100,30 @@ export const useOrderCreate = () => {
     autoCalculateTakeProfitPrices,
     { deep: true },
   );
+
+  const autoCalculateTakeProfitAmounts = () => {
+    const quantity = divide(model.quantity, takeProfitsAmount.value, 6);
+
+    takeProfits.value = takeProfits.value.map((value, index) => ({
+      ...value,
+      quantity,
+    }));
+  };
+  watch(
+    [() => model.quantity, baseCurrency],
+    autoCalculateTakeProfitAmounts,
+    { deep: true },
+  );
+
+  const autoCalculateTakeProfits = () => {
+    takeProfits.value = Array(takeProfitsAmount.value).fill(0).map(() => ({
+      price: 0,
+      quantity: 0,
+    }));
+    autoCalculateTakeProfitPrices();
+    autoCalculateTakeProfitAmounts();
+  };
+  autoCalculateTakeProfits();
   // take profits -->
 
   return {

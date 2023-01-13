@@ -55,7 +55,7 @@ const localValue = useLocalValue<TakeProfit[]>(props, emit, 'modelValue');
 
 const takeProfitsAmount = useLocalValue<number>(props, emit, 'takeProfitsAmount');
 
-const maxAllowedDecimals = computed(() => props.currency.decimals * 2);
+const maxAllowedDecimals = computed(() => props.currency.decimals * 6);
 
 const fixSumOfTakeProfits = (borrowFromFirst: boolean) => {
   const sumOfTakeProfits = localValue.value.reduce((

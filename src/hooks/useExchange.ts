@@ -64,7 +64,7 @@ export const useExchange = (
     switch (direction) {
       case 'increment': return incrementDeposit(number);
       case 'decrement': return decrementDeposit(number);
-      default: return calculateBaseToQuoteCurrencyPrice(number);
+      default: return calculateBaseToQuoteCurrencyPrice(calculateQuoteToBaseCurrencyPrice(number));
     }
   };
 

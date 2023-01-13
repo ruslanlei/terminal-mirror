@@ -101,6 +101,26 @@ const saveValue = (
   localValue.value = value;
 };
 
+const increment = (value: number) => {
+  if (props.normalizer) {
+    return props?.normalizer(value, 'increment');
+  }
+
+  value = add([value, props.step], props.decimals);
+
+  return value;
+};
+
+const decrement = (value: number) => {
+  if (props.normalizer) {
+    return props?.normalizer(value, 'decrement');
+  }
+
+  value = subtract(value, props.step, props.decimals);
+
+  return value;
+};
+
 const onInput = (event: InputEvent) => {
   if (props.saveOn === 'input') {
     saveValue(event, props.normalizer);
@@ -124,28 +144,12 @@ const onFocus = (event: InputEvent) => {
 const onKeydown = (event: KeyboardEvent) => {
   if (event.key === 'ArrowUp') {
     event.preventDefault();
-    saveValue(event, (value: number) => {
-      if (props.normalizer) {
-        return props?.normalizer(value, 'increment');
-      }
-
-      value = add([value, props.step], props.decimals);
-
-      return value;
-    });
+    saveValue(event, increment);
   }
 
   if (event.key === 'ArrowDown') {
     event.preventDefault();
-    saveValue(event, (value: number) => {
-      if (props.normalizer) {
-        return props?.normalizer(value, 'decrement');
-      }
-
-      value = subtract(value, props.step, props.decimals);
-
-      return value;
-    });
+    saveValue(event, decrement);
   }
 
   emit('input', event);

@@ -128,6 +128,16 @@ export const useOrderCreate = () => {
 
   // <-- stop loss
   const isStopLossEnabled = ref(false);
+
+  const stopLossPrice = ref(0);
+
+  const STOP_LOSS_DEFAULT_PERCENT = 10;
+
+  const autoCalculateStopLoss = () => {
+    const percentOfOrder = model.price / 100;
+    stopLossPrice.value = model.price - (percentOfOrder * STOP_LOSS_DEFAULT_PERCENT);
+  };
+  autoCalculateStopLoss();
   // stop loss -- >
 
   return {
@@ -142,5 +152,6 @@ export const useOrderCreate = () => {
     takeProfitsAmount,
     autoCalculateTakeProfits,
     isStopLossEnabled,
+    stopLossPrice,
   };
 };

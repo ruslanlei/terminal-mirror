@@ -116,6 +116,7 @@ const {
   maxTakeProfits,
   takeProfitsAmount,
   isStopLossEnabled,
+  stopLossPrice,
 } = useOrderCreate();
 
 provide<OrderModel>('model', model);
@@ -126,6 +127,7 @@ provide<ComputedRef<BaseCurrency>>('baseCurrency', baseCurrency);
 provide<ComputedRef<number>>('maxTakeProfits', maxTakeProfits);
 provide<Ref<number>>('takeProfitsAmount', takeProfitsAmount);
 provide<Ref<boolean>>('isStopLossEnabled', isStopLossEnabled);
+provide<Ref<number>>('stopLossPrice', stopLossPrice);
 </script>
 
 <style lang="scss" module>

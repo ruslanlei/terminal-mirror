@@ -10,7 +10,11 @@
       {{ t('order.stopLoss.exactPrice') }}
     </template>
     <template #exactPriceInput>
-      <NumberInput :state="['smSize', 'defaultColor']">
+      <NumberInput
+        v-model="stopLossPrice"
+        :min="0"
+        :state="['smSize', 'defaultColor']"
+      >
         <template #append>
           {{ quoteCurrency?.name }}
         </template>
@@ -30,7 +34,10 @@
       {{ t('order.stopLoss.percentOfOrder') }}
     </template>
     <template #percentOfOrderInput>
-      <NumberInput :state="['smSize', 'defaultColor']">
+      <NumberInput
+        v-model="percentageOfOrder"
+        :state="['smSize', 'defaultColor']"
+      >
         <template #append>
           {{ '%' }}
         </template>
@@ -61,7 +68,9 @@
 </template>
 
 <script setup lang="ts">
-import { ComputedRef, inject, Ref } from 'vue';
+import {
+  computed, ComputedRef, inject, provide, Ref,
+} from 'vue';
 import { useI18n } from 'vue-i18n';
 import OrderFormStopLossPartContainer
   from '@/containers/orderFormStopLossPartContainer/OrderFormStopLossPartContainer.vue';
@@ -70,10 +79,27 @@ import NumberInput from '@/components/core/numberInput/NumberInput.vue';
 import OrderFormRatio from '@/components/app/orderFormRatio/OrderFormRatio.vue';
 import Button from '@/components/core/button/Button.vue';
 import { QuoteCurrency } from '@/hooks/useExchange';
+import { OrderModel } from '@/hooks/useOrderCreate';
+import { roundToDecimalPoint } from '@/utils/number';
 
 const { t } = useI18n();
 
 const isStopLossEnabled = inject<Ref<boolean>>('isStopLossEnabled');
 
 const quoteCurrency = inject<ComputedRef<QuoteCurrency>>('quoteCurrency');
+const stopLossPrice = inject<Ref<number>>('stopLossPrice');
+
+const model = inject<OrderModel>('model');
+
+const percentOfOrder = computed(() => (model?.price || 0) / 100);
+
+const percentageOfOrder = computed({
+  get: () => roundToDecimalPoint(stopLossPrice?.value / percentOfOrder.value, 2),
+  set: (value: number) => {
+    stopLossPrice.value = roundToDecimalPoint(
+      value * percentOfOrder.value,
+      quoteCurrency?.value.decimals,
+    );
+  },
+});
 </script>

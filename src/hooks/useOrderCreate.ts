@@ -126,6 +126,10 @@ export const useOrderCreate = () => {
   autoCalculateTakeProfits();
   // take profits -->
 
+  // <-- stop loss
+  const isStopLossEnabled = ref(false);
+  // stop loss -- >
+
   return {
     model,
     validationSchema,
@@ -137,5 +141,6 @@ export const useOrderCreate = () => {
     maxTakeProfits,
     takeProfitsAmount,
     autoCalculateTakeProfits,
+    isStopLossEnabled,
   };
 };

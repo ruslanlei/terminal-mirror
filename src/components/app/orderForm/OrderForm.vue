@@ -44,6 +44,9 @@
               @submit="openTab('input')"
             />
           </template>
+          <template #tab(sl)>
+            <OrderFormStopLossPart />
+          </template>
         </Tabs>
       </template>
     </OrderFromContainer>
@@ -69,9 +72,10 @@ import { OrderFormTab } from '@/components/app/orderForm/index';
 import { Tab } from '@/components/core/tabs';
 import { TakeProfit } from '@/components/app/takeProfitList';
 import { BaseCurrency, QuoteCurrency } from '@/hooks/useExchange';
-import { number } from 'yup';
+
 import OrderFormInputPart from './parts/orderFormInputPart/OrderFormInputPart.vue';
 import OrderFormTakeProfitPart from './parts/orderFormTakeProfitPart/OrderFormTakeProfitPart.vue';
+import OrderFormStopLossPart from './parts/orderFormStopLossPart/OrderFormStopLossPart.vue';
 
 const { t } = useI18n();
 
@@ -111,6 +115,7 @@ const {
   autoCalculateTakeProfits,
   maxTakeProfits,
   takeProfitsAmount,
+  isStopLossEnabled,
 } = useOrderCreate();
 
 provide<OrderModel>('model', model);
@@ -120,6 +125,7 @@ provide<ComputedRef<QuoteCurrency>>('quoteCurrency', quoteCurrency);
 provide<ComputedRef<BaseCurrency>>('baseCurrency', baseCurrency);
 provide<ComputedRef<number>>('maxTakeProfits', maxTakeProfits);
 provide<Ref<number>>('takeProfitsAmount', takeProfitsAmount);
+provide<Ref<boolean>>('isStopLossEnabled', isStopLossEnabled);
 </script>
 
 <style lang="scss" module>

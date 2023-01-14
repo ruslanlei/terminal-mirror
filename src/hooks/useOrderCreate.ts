@@ -72,9 +72,7 @@ export const useOrderCreate = () => {
   // <-- take profits
   const isTakeProfitsEnabled = ref<boolean>(false);
 
-  const MAXIMUM_ALLOWED_TAKE_PROFITS = 20;
-
-  const maxTakeProfits = computed(() => MAXIMUM_ALLOWED_TAKE_PROFITS);
+  const maxTakeProfits = 20;
 
   const takeProfitsAmount = ref(5);
 

@@ -11,10 +11,10 @@ export interface OrderFormProvide {
   isTakeProfitsEnabled: Ref<boolean>,
   quoteCurrency: ComputedRef<QuoteCurrency>,
   baseCurrency: ComputedRef<BaseCurrency>,
-  maxTakeProfits: ComputedRef<number>,
+  maxTakeProfits: number,
   takeProfitsAmount: Ref<number>,
   isStopLossEnabled: Ref<boolean>,
   stopLossPrice: Ref<number>,
 }
 
-export const OrderFormInjectionKey: InjectionKey<OrderModel> = Symbol('OrderForm');
+export const OrderFormInjectionKey: InjectionKey<OrderFormProvide> = Symbol('OrderForm');

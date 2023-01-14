@@ -94,10 +94,16 @@ const model = inject<OrderModel>('model');
 const percentOfOrder = computed(() => (model?.price || 0) / 100);
 
 const percentageOfOrder = computed({
-  get: () => roundToDecimalPoint(stopLossPrice?.value / percentOfOrder.value, 2),
+  get: () => {
+    const percentageOfDifference = Math.abs(stopLossPrice?.value - model?.price);
+    return roundToDecimalPoint(percentageOfDifference / percentOfOrder.value, 2);
+  },
   set: (value: number) => {
+    const difference = value * percentOfOrder.value;
+    const stopLossPriceRaw = Math.abs(model?.price - difference);
+
     stopLossPrice.value = roundToDecimalPoint(
-      value * percentOfOrder.value,
+      stopLossPriceRaw,
       quoteCurrency?.value.decimals,
     );
   },

@@ -69,7 +69,9 @@
 
 <script setup lang="ts">
 import {
-  computed, ComputedRef, inject, provide, Ref,
+  computed,
+  inject,
+  Ref,
 } from 'vue';
 import { useI18n } from 'vue-i18n';
 import OrderFormStopLossPartContainer
@@ -78,29 +80,29 @@ import Switch from '@/components/core/switch/Switch.vue';
 import NumberInput from '@/components/core/numberInput/NumberInput.vue';
 import OrderFormRatio from '@/components/app/orderFormRatio/OrderFormRatio.vue';
 import Button from '@/components/core/button/Button.vue';
-import { QuoteCurrency } from '@/hooks/useExchange';
-import { OrderModel } from '@/hooks/useOrderCreate';
 import { roundToDecimalPoint } from '@/utils/number';
+import { useOrderFormInject } from '@/hooks/useOrderFormInject';
 
 const { t } = useI18n();
 
 const isStopLossEnabled = inject<Ref<boolean>>('isStopLossEnabled');
 
-const quoteCurrency = inject<ComputedRef<QuoteCurrency>>('quoteCurrency');
-const stopLossPrice = inject<Ref<number>>('stopLossPrice');
-
-const model = inject<OrderModel>('model');
+const {
+  model,
+  quoteCurrency,
+  stopLossPrice,
+} = useOrderFormInject();
 
 const percentOfOrder = computed(() => (model?.price || 0) / 100);
 
 const percentageOfOrder = computed({
   get: () => {
-    const percentageOfDifference = Math.abs(stopLossPrice?.value - model?.price);
+    const percentageOfDifference = Math.abs(stopLossPrice.value - model.price);
     return roundToDecimalPoint(percentageOfDifference / percentOfOrder.value, 2);
   },
   set: (value: number) => {
     const difference = value * percentOfOrder.value;
-    const stopLossPriceRaw = Math.abs(model?.price - difference);
+    const stopLossPriceRaw = Math.abs(model.price - difference);
 
     stopLossPrice.value = roundToDecimalPoint(
       stopLossPriceRaw,

@@ -1,5 +1,4 @@
 <template>
-  <!--  {{ takeProfits }}-->
   <Form
     v-model="model"
     :validation-schema="validationSchema"
@@ -58,8 +57,6 @@ import {
   ref,
   computed,
   provide,
-  Ref,
-  ComputedRef,
 } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Icon from '@/components/core/icon/Icon.vue';
@@ -67,15 +64,13 @@ import Tabs from '@/components/core/tabs/Tabs.vue';
 import OrderFromContainer from '@/containers/orderFormContainer/OrderFormContainer.vue';
 import { Form, FormSelector } from '@/components/form';
 
-import { OrderModel, useOrderCreate } from '@/hooks/useOrderCreate';
-import { OrderFormTab } from '@/components/app/orderForm/index';
+import { useOrderCreate } from '@/hooks/useOrderCreate';
+import { OrderFormInjectionKey, OrderFormTab } from '@/components/app/orderForm/index';
 import { Tab } from '@/components/core/tabs';
-import { TakeProfit } from '@/components/app/takeProfitList';
-import { BaseCurrency, QuoteCurrency } from '@/hooks/useExchange';
 
-import OrderFormInputPart from './parts/orderFormInputPart/OrderFormInputPart.vue';
-import OrderFormTakeProfitPart from './parts/orderFormTakeProfitPart/OrderFormTakeProfitPart.vue';
-import OrderFormStopLossPart from './parts/orderFormStopLossPart/OrderFormStopLossPart.vue';
+import OrderFormInputPart from './composables/orderFormInputPart/OrderFormInputPart.vue';
+import OrderFormTakeProfitPart from './composables/orderFormTakeProfitPart/OrderFormTakeProfitPart.vue';
+import OrderFormStopLossPart from './composables/orderFormStopLossPart/OrderFormStopLossPart.vue';
 
 const { t } = useI18n();
 
@@ -119,15 +114,17 @@ const {
   stopLossPrice,
 } = useOrderCreate();
 
-provide<OrderModel>('model', model);
-provide<Ref<TakeProfit[]>>('takeProfits', takeProfits);
-provide<Ref<boolean>>('isTakeProfitsEnabled', isTakeProfitsEnabled);
-provide<ComputedRef<QuoteCurrency>>('quoteCurrency', quoteCurrency);
-provide<ComputedRef<BaseCurrency>>('baseCurrency', baseCurrency);
-provide<ComputedRef<number>>('maxTakeProfits', maxTakeProfits);
-provide<Ref<number>>('takeProfitsAmount', takeProfitsAmount);
-provide<Ref<boolean>>('isStopLossEnabled', isStopLossEnabled);
-provide<Ref<number>>('stopLossPrice', stopLossPrice);
+provide(OrderFormInjectionKey, {
+  model,
+  takeProfits,
+  isTakeProfitsEnabled,
+  quoteCurrency,
+  baseCurrency,
+  maxTakeProfits,
+  takeProfitsAmount,
+  isStopLossEnabled,
+  stopLossPrice,
+});
 </script>
 
 <style lang="scss" module>

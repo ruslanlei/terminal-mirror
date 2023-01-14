@@ -11,7 +11,7 @@
         save-on="blur"
       >
         <template #append>
-          {{ quoteCurrency?.name }}
+          {{ quoteCurrency.name }}
         </template>
       </FormNumberInput>
     </template>
@@ -24,11 +24,11 @@
         type="number"
         :min="0"
         :state="['defaultColor', 'smSize']"
-        :decimals="baseCurrency?.decimals"
-        :step="baseCurrency?.step"
+        :decimals="baseCurrency.decimals"
+        :step="baseCurrency.step"
       >
         <template #append>
-          {{ baseCurrency?.name }}
+          {{ baseCurrency.name }}
         </template>
       </FormNumberInput>
     </template>
@@ -44,7 +44,7 @@
         save-on="blur"
       >
         <template #quotecurrency>
-          {{ quoteCurrency?.name }}
+          {{ quoteCurrency.name }}
         </template>
       </FormExchangeInput>
     </template>
@@ -90,19 +90,19 @@
 </template>
 
 <script setup lang="ts">
-import { inject } from 'vue';
 import { useI18n } from 'vue-i18n';
 import OrderFormInputPartContainer from '@/containers/orderFormInputPartContainer/OrderFormInputPartContainer.vue';
 import Button from '@/components/core/button/Button.vue';
 import { FormDepositInput, FormExchangeInput, FormNumberInput } from '@/components/form';
-import { OrderModel } from '@/hooks/useOrderCreate';
-import { BaseCurrency } from '@/hooks/useExchange';
+import { useOrderFormInject } from '@/hooks/useOrderFormInject';
 
 const { t } = useI18n();
 
-const model = inject<OrderModel>('model');
-const quoteCurrency = inject<BaseCurrency>('quoteCurrency');
-const baseCurrency = inject<BaseCurrency>('baseCurrency');
+const {
+  model,
+  quoteCurrency,
+  baseCurrency,
+} = useOrderFormInject();
 </script>
 
 <style lang="scss" module>

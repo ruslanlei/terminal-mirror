@@ -23,8 +23,8 @@
         v-model="takeProfits"
         v-model:take-profits-amount="takeProfitsAmount"
         :currency="baseCurrency"
-        :order-price="model?.price"
-        :order-quantity="model?.quantity || baseCurrency?.step"
+        :order-price="model.price"
+        :order-quantity="model.quantity"
       />
     </template>
     <template #ratio>
@@ -43,35 +43,29 @@
 </template>
 
 <script setup lang="ts">
-import {
-  inject,
-  Ref,
-  ComputedRef,
-} from 'vue';
 import { useI18n } from 'vue-i18n';
 import OrderFormTakeProfilePartContainer from '@/containers/orderFormTakeProfitPartContainer/OrderFormTakeProfitPartContainer.vue';
 import Switch from '@/components/core/switch/Switch.vue';
-import Icon from '@/components/core/icon/Icon.vue';
 import Button from '@/components/core/button/Button.vue';
 import TakeProfitList from '@/components/app/takeProfitList/TakeProfitList.vue';
-import { OrderModel } from '@/hooks/useOrderCreate';
-import { BaseCurrency } from '@/hooks/useExchange';
-import { TakeProfit } from '@/components/app/takeProfitList';
 import NumberInput from '@/components/core/numberInput/NumberInput.vue';
 import OrderFormRatio from '@/components/app/orderFormRatio/OrderFormRatio.vue';
+import { useOrderFormInject } from '@/hooks/useOrderFormInject';
 import { OrderFormTakeProfitPartEmits } from './index';
 
 const emit = defineEmits<OrderFormTakeProfitPartEmits>();
 
 const { t } = useI18n();
 
-const model = inject<OrderModel>('model');
-const baseCurrency = inject<BaseCurrency>('baseCurrency');
-const takeProfits = inject<TakeProfit[]>('takeProfits');
-const isTakeProfitsEnabled = inject<Ref<boolean>>('isTakeProfitsEnabled');
-
-const maxTakeProfits = inject<ComputedRef<number>>('maxTakeProfits');
-const takeProfitsAmount = inject<Ref<number>>('takeProfitsAmount');
+const {
+  model,
+  quoteCurrency,
+  baseCurrency,
+  takeProfits,
+  isTakeProfitsEnabled,
+  maxTakeProfits,
+  takeProfitsAmount,
+} = useOrderFormInject();
 
 const onTakeProfitsAmountInput = () => {
   emit('takeProfitsAmountInput');

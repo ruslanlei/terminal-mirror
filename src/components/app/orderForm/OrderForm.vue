@@ -104,6 +104,7 @@ const {
   validationSchema,
   orderDirectionOptions,
   takeProfits,
+  takeProfitsIncomeSum,
   isTakeProfitsEnabled,
   quoteCurrency,
   baseCurrency,
@@ -117,6 +118,7 @@ const {
 provide(OrderFormInjectionKey, {
   model,
   takeProfits,
+  takeProfitsIncomeSum,
   isTakeProfitsEnabled,
   quoteCurrency,
   baseCurrency,

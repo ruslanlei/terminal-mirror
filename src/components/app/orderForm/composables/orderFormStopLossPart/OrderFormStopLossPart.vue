@@ -57,7 +57,10 @@
       </NumberInput>
     </template>
     <template #ratio>
-      <OrderFormRatio />
+      <OrderFormRatio
+        :profit="takeProfitsIncomeSum"
+        :quote-currency="quoteCurrency"
+      />
     </template>
     <template #submit="{ buttonClass }">
       <Button
@@ -94,6 +97,7 @@ const {
   model,
   quoteCurrency,
   stopLossPrice,
+  takeProfitsIncomeSum,
 } = useOrderFormInject();
 
 const percentOfOrder = computed(() => (model?.price || 0) / 100);

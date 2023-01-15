@@ -21,7 +21,7 @@
           {{ t('order.takeProfit.profit') }}
         </div>
         <div :class="$style.profit">
-          {{ t('order.takeProfit.profitValue', { profit: '100$' }) }}
+          {{ t('order.takeProfit.profitValue', { profit: profitDisplayValue }) }}
         </div>
       </div>
       <div :class="$style.metric">
@@ -39,8 +39,17 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import Icon from '@/components/core/icon/Icon.vue';
+import { OrderFormRatioProps } from '@/components/app/orderFormRatio/index';
+import { computed } from 'vue';
 
 const { t } = useI18n();
+
+const props = defineProps<OrderFormRatioProps>();
+
+const profitDisplayValue = computed(() => t('common.currencyAmount', {
+  amount: props.profit,
+  currency: props.quoteCurrency.name,
+}));
 </script>
 
 <style lang="scss" module>

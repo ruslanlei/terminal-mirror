@@ -1,7 +1,8 @@
 {
   "common": {
     "search": "Search",
-    "save": "Save"
+    "save": "Save",
+    "currencyAmount": "{amount} {currency}"
   },
   "validationError": {
     "email": "Value is not valid email",

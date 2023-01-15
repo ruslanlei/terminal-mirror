@@ -8,6 +8,7 @@ export type OrderFormTab = 'input' | 'tp' | 'sl' | 'slx';
 export interface OrderFormProvide {
   model: OrderModel,
   takeProfits: Ref<TakeProfit[]>,
+  takeProfitsIncomeSum: ComputedRef<number>,
   isTakeProfitsEnabled: Ref<boolean>,
   quoteCurrency: ComputedRef<QuoteCurrency>,
   baseCurrency: ComputedRef<BaseCurrency>,

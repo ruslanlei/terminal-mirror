@@ -12,6 +12,7 @@ import { BaseCurrency, QuoteCurrency } from '@/hooks/useExchange';
 import { currency } from '@/api/types/currency';
 import { TakeProfit } from '@/components/app/takeProfitList';
 import { divide } from '@/utils/float';
+import { roundToDecimalPoint } from '@/utils/number';
 
 export type OrderModel = CreateOrderDTO;
 
@@ -70,13 +71,21 @@ export const useOrderCreate = () => {
   }));
 
   // <-- take profits
-  const isTakeProfitsEnabled = ref<boolean>(false);
+  const isTakeProfitsEnabled = ref<boolean>(true);
 
   const maxTakeProfits = 20;
 
   const takeProfitsAmount = ref(5);
 
   const takeProfits = ref<TakeProfit[]>([]);
+
+  const takeProfitsIncomeSum = computed(() => {
+    const rawSum = takeProfits.value.reduce(
+      (sum: number, takeProfit: TakeProfit) => sum + (takeProfit.price * takeProfit.quantity),
+      0,
+    );
+    return roundToDecimalPoint(rawSum, quoteCurrency.value.decimals);
+  });
 
   const EACH_TAKE_PROFIT_PERCENT_INCREASE = 0.5;
 
@@ -125,7 +134,7 @@ export const useOrderCreate = () => {
   // take profits -->
 
   // <-- stop loss
-  const isStopLossEnabled = ref(false);
+  const isStopLossEnabled = ref(true);
 
   const stopLossPrice = ref(0);
 
@@ -143,6 +152,7 @@ export const useOrderCreate = () => {
     validationSchema,
     isTakeProfitsEnabled,
     takeProfits,
+    takeProfitsIncomeSum,
     orderDirectionOptions,
     quoteCurrency,
     baseCurrency,

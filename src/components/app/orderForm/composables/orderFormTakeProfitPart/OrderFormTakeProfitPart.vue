@@ -28,7 +28,10 @@
       />
     </template>
     <template #ratio>
-      <OrderFormRatio />
+      <OrderFormRatio
+        :profit="takeProfitsIncomeSum"
+        :quote-currency="quoteCurrency"
+      />
     </template>
     <template #submit="{ buttonClass }">
       <Button
@@ -65,6 +68,7 @@ const {
   isTakeProfitsEnabled,
   maxTakeProfits,
   takeProfitsAmount,
+  takeProfitsIncomeSum,
 } = useOrderFormInject();
 
 const onTakeProfitsAmountInput = () => {

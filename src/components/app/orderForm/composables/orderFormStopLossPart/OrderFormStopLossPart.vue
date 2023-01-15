@@ -24,7 +24,10 @@
       {{ t('order.stopLoss.amountOfRisk') }}
     </template>
     <template #amountOfRiskInput>
-      <NumberInput :state="['smSize', 'defaultColor']">
+      <NumberInput
+        v-model="sumOfRisk"
+        :state="['smSize', 'defaultColor']"
+      >
         <template #append>
           {{ quoteCurrency?.name }}
         </template>
@@ -95,6 +98,8 @@ const {
 
 const percentOfOrder = computed(() => (model?.price || 0) / 100);
 
+// <price> × (1-(<percent of loss>/<quantity in quote>) = 45
+
 const percentageOfOrder = computed({
   get: () => {
     const percentageOfDifference = Math.abs(stopLossPrice.value - model.price);
@@ -110,4 +115,18 @@ const percentageOfOrder = computed({
     );
   },
 });
+
+const sumOfRisk = computed({
+  get: () => {
+    const difference = Math.abs(
+      (stopLossPrice.value * model.quantity) - (model.price * model.quantity),
+    );
+    return roundToDecimalPoint(difference, 2);
+  },
+  set: (value: number) => {
+    // ???
+  },
+});
+
+// % of deposit - % of balance of account
 </script>

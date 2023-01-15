@@ -29,7 +29,7 @@
           {{ t('order.takeProfit.risk') }}
         </div>
         <div :class="$style.risk">
-          {{ t('order.takeProfit.riskValue', { risk: '100$' }) }}
+          {{ t('order.takeProfit.riskValue', { risk: riskDisplayValue }) }}
         </div>
       </div>
     </div>
@@ -48,6 +48,11 @@ const props = defineProps<OrderFormRatioProps>();
 
 const profitDisplayValue = computed(() => t('common.currencyAmount', {
   amount: props.profit,
+  currency: props.quoteCurrency.name,
+}));
+
+const riskDisplayValue = computed(() => t('common.currencyAmount', {
+  amount: props.risk,
   currency: props.quoteCurrency.name,
 }));
 </script>

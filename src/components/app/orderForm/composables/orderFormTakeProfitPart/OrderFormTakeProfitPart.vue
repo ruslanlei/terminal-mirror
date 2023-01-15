@@ -30,6 +30,7 @@
     <template #ratio>
       <OrderFormRatio
         :profit="takeProfitsIncomeSum"
+        :risk="stopLossRisk"
         :quote-currency="quoteCurrency"
       />
     </template>
@@ -69,6 +70,7 @@ const {
   maxTakeProfits,
   takeProfitsAmount,
   takeProfitsIncomeSum,
+  stopLossRisk,
 } = useOrderFormInject();
 
 const onTakeProfitsAmountInput = () => {

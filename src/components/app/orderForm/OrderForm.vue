@@ -113,6 +113,7 @@ const {
   takeProfitsAmount,
   isStopLossEnabled,
   stopLossPrice,
+  stopLossRisk,
 } = useOrderCreate();
 
 provide(OrderFormInjectionKey, {
@@ -126,6 +127,7 @@ provide(OrderFormInjectionKey, {
   takeProfitsAmount,
   isStopLossEnabled,
   stopLossPrice,
+  stopLossRisk,
 });
 </script>
 

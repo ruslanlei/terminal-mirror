@@ -58,6 +58,7 @@
     </template>
     <template #ratio>
       <OrderFormRatio
+        :risk="stopLossRisk"
         :profit="takeProfitsIncomeSum"
         :quote-currency="quoteCurrency"
       />
@@ -98,6 +99,7 @@ const {
   quoteCurrency,
   stopLossPrice,
   takeProfitsIncomeSum,
+  stopLossRisk,
 } = useOrderFormInject();
 
 const percentOfOrder = computed(() => (model?.price || 0) / 100);

@@ -145,6 +145,13 @@ export const useOrderCreate = () => {
     stopLossPrice.value = model.price - (percentOfOrder * STOP_LOSS_DEFAULT_PERCENT);
   };
   autoCalculateStopLoss();
+
+  const stopLossRisk = computed(
+    () => {
+      const riskRaw = (model.price * model.quantity) - (stopLossPrice.value * model.quantity);
+      return roundToDecimalPoint(riskRaw, quoteCurrency.value.decimals);
+    },
+  );
   // stop loss -- >
 
   return {
@@ -161,5 +168,6 @@ export const useOrderCreate = () => {
     autoCalculateTakeProfits,
     isStopLossEnabled,
     stopLossPrice,
+    stopLossRisk,
   };
 };

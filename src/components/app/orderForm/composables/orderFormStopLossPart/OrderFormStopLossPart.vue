@@ -115,11 +115,12 @@ const percentOfOrder = computed({
     return roundToDecimalPoint(rawPercentageOfDifference, 2);
   },
   set: (value: number) => {
-    const difference = value * (model.price / 100);
-    const stopLossPriceRaw = model.price - difference;
+    // order price - (percentOfOrder * order price / 100)
+
+    const formulaResultRaw = (model.price - (value * (model.price / 100)));
 
     stopLossPrice.value = roundToDecimalPoint(
-      stopLossPriceRaw,
+      formulaResultRaw,
       quoteCurrency?.value.decimals,
     );
   },

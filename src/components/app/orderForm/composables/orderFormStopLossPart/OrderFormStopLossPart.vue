@@ -38,7 +38,7 @@
     </template>
     <template #percentOfOrderInput>
       <NumberInput
-        v-model="percentageOfOrder"
+        v-model="percentOfOrder"
         :state="['smSize', 'defaultColor']"
       >
         <template #append>
@@ -104,16 +104,14 @@ const {
   isStopLossEnabled,
 } = useOrderFormInject();
 
-const percentOfOrder = computed(() => model.price / 100);
-
-const percentageOfOrder = computed({
+const percentOfOrder = computed({
   get: () => {
     // 100 - ((stop loss price / order price) * 100)
     const rawPercentageOfDifference = 100 /* % */ - (stopLossPrice.value / model.price) * 100;
     return roundToDecimalPoint(rawPercentageOfDifference, 2);
   },
   set: (value: number) => {
-    const difference = value * percentOfOrder.value;
+    const difference = value * (model.price / 100);
     const stopLossPriceRaw = model.price - difference;
 
     stopLossPrice.value = roundToDecimalPoint(
@@ -125,6 +123,7 @@ const percentageOfOrder = computed({
 
 const sumOfRisk = computed({
   get: () => {
+    // (order price * order quantity) - (stop loss price * order quantity)
     const difference = (model.price * model.quantity) - (stopLossPrice.value * model.quantity);
     return roundToDecimalPoint(difference, 2);
   },

@@ -44,7 +44,7 @@
             />
           </template>
           <template #tab(sl)>
-            <OrderFormStopLossPart />
+            <OrderFormStopLossPart @submit="openTab('input')" />
           </template>
         </Tabs>
       </template>

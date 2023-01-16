@@ -74,6 +74,7 @@
       <Button
         :class="buttonClass"
         :state="['primaryColor', 'mdSize']"
+        @click="onSubmit"
       >
         {{ t('common.save') }}
       </Button>
@@ -84,8 +85,6 @@
 <script setup lang="ts">
 import {
   computed,
-  inject,
-  Ref,
 } from 'vue';
 import { useI18n } from 'vue-i18n';
 import OrderFormStopLossPartContainer
@@ -96,8 +95,15 @@ import OrderFormRatio from '@/components/app/orderFormRatio/OrderFormRatio.vue';
 import Button from '@/components/core/button/Button.vue';
 import { roundToDecimalPoint } from '@/utils/number';
 import { useOrderFormInject } from '@/hooks/useOrderFormInject';
+import { OrderFormStopLossPartEmits } from './index';
 
 const { t } = useI18n();
+
+const emit = defineEmits<OrderFormStopLossPartEmits>();
+
+const onSubmit = () => {
+  emit('submit');
+};
 
 const {
   model,

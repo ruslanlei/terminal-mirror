@@ -14,6 +14,7 @@
         v-model="stopLossPrice"
         :min="0"
         :state="['smSize', 'defaultColor']"
+        :step="0.01"
       >
         <template #append>
           {{ quoteCurrency?.name }}
@@ -27,6 +28,7 @@
       <NumberInput
         v-model="sumOfRisk"
         :state="['smSize', 'defaultColor']"
+        :step="0.01"
       >
         <template #append>
           {{ quoteCurrency?.name }}
@@ -40,6 +42,7 @@
       <NumberInput
         v-model="percentOfOrder"
         :state="['smSize', 'defaultColor']"
+        :step="0.01"
       >
         <template #append>
           {{ '%' }}
@@ -53,6 +56,7 @@
       <NumberInput
         v-model="percentOfDeposit"
         :state="['smSize', 'defaultColor']"
+        :step="0.01"
       >
         <template #append>
           {{ '%' }}
@@ -147,7 +151,13 @@ const percentOfDeposit = computed({
     return roundToDecimalPoint(formulaResultRaw, 2);
   },
   set: (value: number) => {
-    // TODO
+    const TEST_DEPOSIT = 3180;
+
+    // (orderVolume - (balance * percentOfDeposit / 100)) / order quantity
+    const orderVolume = model.price * model.quantity;
+    const formulaResult = (orderVolume - (TEST_DEPOSIT * (value / 100))) / model.quantity;
+
+    stopLossPrice.value = roundToDecimalPoint(formulaResult, quoteCurrency.value.decimals);
   },
 });
 </script>

@@ -95,14 +95,13 @@ import { useOrderFormInject } from '@/hooks/useOrderFormInject';
 
 const { t } = useI18n();
 
-const isStopLossEnabled = inject<Ref<boolean>>('isStopLossEnabled');
-
 const {
   model,
   quoteCurrency,
   stopLossPrice,
   takeProfitsIncomeSum,
   stopLossRisk,
+  isStopLossEnabled,
 } = useOrderFormInject();
 
 const percentOfOrder = computed(() => model.price / 100);
@@ -115,7 +114,7 @@ const percentageOfOrder = computed({
   },
   set: (value: number) => {
     const difference = value * percentOfOrder.value;
-    const stopLossPriceRaw = Math.abs(model.price - difference);
+    const stopLossPriceRaw = model.price - difference;
 
     stopLossPrice.value = roundToDecimalPoint(
       stopLossPriceRaw,
@@ -130,7 +129,9 @@ const sumOfRisk = computed({
     return roundToDecimalPoint(difference, 2);
   },
   set: (value: number) => {
-    // TODO
+    // ((order price * order quantity) - sumOfRisk) / order quantity
+    const formulaResultRaw = ((model.price * model.quantity) - value) / model.quantity;
+    stopLossPrice.value = roundToDecimalPoint(formulaResultRaw, quoteCurrency.value.decimals);
   },
 });
 
@@ -146,6 +147,8 @@ const percentOfDeposit = computed({
     const formulaResultRaw = ((orderVolume - stopLossVolume) / TEST_DEPOSIT) * 100;
     return roundToDecimalPoint(formulaResultRaw, 2);
   },
-  set: (value: number) => {},
+  set: (value: number) => {
+    // TODO
+  },
 });
 </script>

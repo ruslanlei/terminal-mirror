@@ -50,7 +50,10 @@
       {{ t('order.stopLoss.percentOfDeposit') }}
     </template>
     <template #percentOfDepositInput>
-      <NumberInput :state="['smSize', 'defaultColor']">
+      <NumberInput
+        v-model="percentOfDeposit"
+        :state="['smSize', 'defaultColor']"
+      >
         <template #append>
           {{ '%' }}
         </template>
@@ -129,5 +132,20 @@ const sumOfRisk = computed({
   set: (value: number) => {
     // TODO
   },
+});
+
+const percentOfDeposit = computed({
+  get: () => {
+    // ((stop loss price * order quantity) - (order price * order quantity)) / balance) * 100
+
+    const orderVolume = model.price * model.quantity;
+    const stopLossVolume = stopLossPrice.value * model.quantity;
+
+    const TEST_DEPOSIT = 3180;
+
+    const formulaResultRaw = ((orderVolume - stopLossVolume) / TEST_DEPOSIT) * 100;
+    return roundToDecimalPoint(formulaResultRaw, 2);
+  },
+  set: (value: number) => {},
 });
 </script>

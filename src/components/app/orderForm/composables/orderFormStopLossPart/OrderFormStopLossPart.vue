@@ -110,11 +110,14 @@ const {
 
 const percentOfOrder = computed({
   get: () => {
+    // Formula:
     // 100 - ((stop loss price / order price) * 100)
-    const rawPercentageOfDifference = 100 /* % */ - (stopLossPrice.value / model.price) * 100;
+
+    const rawPercentageOfDifference = 100 - (stopLossPrice.value / model.price) * 100;
     return roundToDecimalPoint(rawPercentageOfDifference, 2);
   },
   set: (value: number) => {
+    // Formula:
     // order price - (percentOfOrder * order price / 100)
 
     const formulaResultRaw = (model.price - (value * (model.price / 100)));
@@ -128,12 +131,16 @@ const percentOfOrder = computed({
 
 const sumOfRisk = computed({
   get: () => {
+    // Formula:
     // (order price * order quantity) - (stop loss price * order quantity)
+
     const difference = (model.price * model.quantity) - (stopLossPrice.value * model.quantity);
     return roundToDecimalPoint(difference, 2);
   },
   set: (value: number) => {
+    // Formula:
     // ((order price * order quantity) - sumOfRisk) / order quantity
+
     const formulaResultRaw = ((model.price * model.quantity) - value) / model.quantity;
     stopLossPrice.value = roundToDecimalPoint(formulaResultRaw, quoteCurrency.value.decimals);
   },
@@ -141,6 +148,7 @@ const sumOfRisk = computed({
 
 const percentOfDeposit = computed({
   get: () => {
+    // Formula:
     // ((order price * order quantity) - (stop loss price * order quantity)) / balance) * 100
 
     const orderVolume = model.price * model.quantity;
@@ -152,9 +160,11 @@ const percentOfDeposit = computed({
     return roundToDecimalPoint(formulaResultRaw, 2);
   },
   set: (value: number) => {
+    // Formula:
+    // (orderVolume - (balance * percentOfDeposit / 100)) / order quantity
+
     const TEST_DEPOSIT = 3180;
 
-    // (orderVolume - (balance * percentOfDeposit / 100)) / order quantity
     const orderVolume = model.price * model.quantity;
     const formulaResult = (orderVolume - (TEST_DEPOSIT * (value / 100))) / model.quantity;
 

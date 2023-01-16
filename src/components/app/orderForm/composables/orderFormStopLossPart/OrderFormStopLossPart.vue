@@ -109,7 +109,7 @@ const percentOfOrder = computed(() => model.price / 100);
 
 const percentageOfOrder = computed({
   get: () => {
-    // 100 - (stop loss price / order price) * 100
+    // 100 - ((stop loss price / order price) * 100)
     const rawPercentageOfDifference = 100 /* % */ - (stopLossPrice.value / model.price) * 100;
     return roundToDecimalPoint(rawPercentageOfDifference, 2);
   },
@@ -136,7 +136,7 @@ const sumOfRisk = computed({
 
 const percentOfDeposit = computed({
   get: () => {
-    // ((stop loss price * order quantity) - (order price * order quantity)) / balance) * 100
+    // ((order price * order quantity) - (stop loss price * order quantity)) / balance) * 100
 
     const orderVolume = model.price * model.quantity;
     const stopLossVolume = stopLossPrice.value * model.quantity;

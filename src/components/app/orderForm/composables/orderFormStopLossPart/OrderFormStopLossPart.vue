@@ -102,14 +102,13 @@ const {
   stopLossRisk,
 } = useOrderFormInject();
 
-const percentOfOrder = computed(() => (model?.price || 0) / 100);
-
-// <price> × (1-(<percent of loss>/<quantity in quote>) = 45
+const percentOfOrder = computed(() => model.price / 100);
 
 const percentageOfOrder = computed({
   get: () => {
-    const percentageOfDifference = Math.abs(stopLossPrice.value - model.price);
-    return roundToDecimalPoint(percentageOfDifference / percentOfOrder.value, 2);
+    // 100 - (stop loss price / order price) * 100
+    const rawPercentageOfDifference = 100 /* % */ - (stopLossPrice.value / model.price) * 100;
+    return roundToDecimalPoint(rawPercentageOfDifference, 2);
   },
   set: (value: number) => {
     const difference = value * percentOfOrder.value;
@@ -124,15 +123,11 @@ const percentageOfOrder = computed({
 
 const sumOfRisk = computed({
   get: () => {
-    const difference = Math.abs(
-      (stopLossPrice.value * model.quantity) - (model.price * model.quantity),
-    );
+    const difference = (model.price * model.quantity) - (stopLossPrice.value * model.quantity);
     return roundToDecimalPoint(difference, 2);
   },
   set: (value: number) => {
-    // ???
+    // TODO
   },
 });
-
-// % of deposit - % of balance of account
 </script>

@@ -107,9 +107,7 @@
   "order": {
     "tab": {
       "orders": "Orders",
-      "pairs": "Pairs",
-      "glasses": "Glasses",
-      "widget": "Widget"
+      "pairs": "Pairs"
     },
     "direction": {
       "long": "Long",

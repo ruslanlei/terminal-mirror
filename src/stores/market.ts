@@ -16,6 +16,11 @@ export interface TakeProfit {
   quantity: number,
 }
 
+export interface StopLoss {
+  price: number,
+  quantity: number,
+}
+
 export const useMarketStore = defineStore('market', () => {
   const { t } = useI18n();
 
@@ -82,6 +87,23 @@ export const useMarketStore = defineStore('market', () => {
     return response;
   };
 
+  const createStopLoss = async (stopLoss: StopLoss, side: Order['side']) => {
+    const response = await createOrder({
+      pair: activePair.value,
+      side,
+      order_type: 'sl',
+      ...stopLoss,
+    });
+
+    if (!response.result) {
+      toastStore.showDanger({
+        text: t('order.failedToCreateStopLoss'),
+      });
+    }
+
+    return response;
+  };
+
   return {
     pairs,
     marketType,
@@ -91,5 +113,6 @@ export const useMarketStore = defineStore('market', () => {
     getPairs: handleGetPairs,
     createOrder: handleCreateOrder,
     createListOfTakeProfits,
+    createStopLoss,
   };
 });

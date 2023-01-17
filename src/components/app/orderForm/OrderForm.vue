@@ -3,6 +3,7 @@
     v-model="model"
     :validation-schema="validationSchema"
     :class="$style.ordersForm"
+    @submit="handleSubmit"
   >
     <OrderFromContainer>
       <template
@@ -114,6 +115,8 @@ const {
   isStopLossEnabled,
   stopLossPrice,
   stopLossRisk,
+  isLoading,
+  handleSubmit,
 } = useOrderCreate();
 
 provide(OrderFormInjectionKey, {

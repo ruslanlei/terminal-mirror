@@ -13,6 +13,7 @@ import { BaseCurrency, QuoteCurrency } from '@/hooks/useExchange';
 import { currency } from '@/api/types/currency';
 import { divide } from '@/utils/float';
 import { roundToDecimalPoint } from '@/utils/number';
+import cloneDeep from 'lodash/cloneDeep';
 
 export type OrderModel = CreateOrderDTO;
 
@@ -44,6 +45,10 @@ export const useOrderCreate = () => {
     price: 16890,
     leverage: 1,
   });
+  const baseModel = cloneDeep(model);
+  const resetModel = () => {
+    Object.assign(model, baseModel);
+  };
 
   const validationSchema = object().shape({
     pair: number().required(() => t('validationError.required')),
@@ -162,6 +167,14 @@ export const useOrderCreate = () => {
     },
   );
 
+  const createStopLoss = () => {
+    const side = model.side === 'buy' ? 'sell' : 'buy';
+
+    return marketStore.createStopLoss({
+      price: stopLossPrice.value,
+      quantity: model.quantity,
+    }, side);
+  };
   // stop loss -- >
 
   // <-- submit
@@ -181,7 +194,15 @@ export const useOrderCreate = () => {
       if (!result) return;
     }
 
-    if (isStopLossEnabled.value) {}
+    if (isStopLossEnabled.value) {
+      const { result } = await createStopLoss();
+
+      if (!result) return;
+    }
+
+    isLoading.value = false;
+
+    resetModel();
   };
   // submit -->
 
@@ -200,5 +221,7 @@ export const useOrderCreate = () => {
     isStopLossEnabled,
     stopLossPrice,
     stopLossRisk,
+    isLoading,
+    handleSubmit,
   };
 };

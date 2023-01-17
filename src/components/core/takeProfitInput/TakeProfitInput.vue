@@ -50,7 +50,6 @@
 import {
   TakeProfitInputEmits,
   TakeProfitInputProps,
-  TakeProfitInputValue,
 } from '@/components/core/takeProfitInput/index';
 import { computed, watch } from 'vue';
 import NumberInput from '@/components/core/numberInput/NumberInput.vue';

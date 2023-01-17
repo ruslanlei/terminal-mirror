@@ -1,9 +1,5 @@
 import { Currency } from '@/types/currency';
-
-export interface TakeProfit {
-  price: number,
-  quantity: number,
-}
+import { TakeProfit } from '@/stores/market';
 
 export interface TakeProfitListProps {
   modelValue: TakeProfit[],

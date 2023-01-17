@@ -6,8 +6,15 @@ import { getPairs } from '@/api/endpoints/marketdata/stats';
 import { Pair } from '@/api/types/pair';
 import { useToastStore } from '@/stores/toasts';
 import { createOrder, CreateOrderDTO } from '@/api/endpoints/orders/create';
+import { Order } from '@/api/types/order';
+import { requestMany } from '@/api/common';
 
 export type MarketType = 'emulator' | 'real';
+
+export interface TakeProfit {
+  price: number,
+  quantity: number,
+}
 
 export const useMarketStore = defineStore('market', () => {
   const { t } = useI18n();
@@ -53,6 +60,28 @@ export const useMarketStore = defineStore('market', () => {
     return response;
   };
 
+  const createListOfTakeProfits = async (
+    takeProfits: TakeProfit[],
+    side: Order['side'],
+  ) => {
+    const response = await requestMany(
+      takeProfits.map((takeProfit: TakeProfit) => createOrder({
+        pair: activePair.value,
+        side,
+        order_type: 'tp',
+        ...takeProfit,
+      })),
+    );
+
+    if (!response.result) {
+      toastStore.showDanger({
+        text: t('order.failedToCreate'),
+      });
+    }
+
+    return response;
+  };
+
   return {
     pairs,
     marketType,
@@ -61,5 +90,6 @@ export const useMarketStore = defineStore('market', () => {
     activePairData,
     getPairs: handleGetPairs,
     createOrder: handleCreateOrder,
+    createListOfTakeProfits,
   };
 });

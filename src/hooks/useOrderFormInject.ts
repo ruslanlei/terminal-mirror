@@ -1,7 +1,7 @@
 import {
   ref,
   computed,
-  inject,
+  inject, ComputedRef,
 } from 'vue';
 import { currency } from '@/api/types/currency';
 import { OrderFormInjectionKey, OrderFormProvide } from '@/components/app/orderForm';
@@ -19,6 +19,7 @@ export const useOrderFormInject = (): OrderFormProvide => inject<OrderFormProvid
     },
     takeProfits: ref([]),
     isTakeProfitsEnabled: ref(false),
+    takeProfitsIncomeSum: computed(() => 0),
     quoteCurrency: computed(() => ({
       name: currency.USDT,
       balance: 0,
@@ -32,9 +33,10 @@ export const useOrderFormInject = (): OrderFormProvide => inject<OrderFormProvid
       decimals: 3,
       step: 0.001,
     })),
-    maxTakeProfits: computed(() => 5),
+    maxTakeProfits: 5,
     takeProfitsAmount: ref(5),
     isStopLossEnabled: ref(false),
     stopLossPrice: ref(19000),
+    stopLossRisk: computed(() => 0),
   },
 );

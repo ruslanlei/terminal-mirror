@@ -1,16 +1,16 @@
 import {
   ref,
   computed,
-  reactive, watch, provide, ComputedRef, Ref,
+  reactive,
+  watch,
 } from 'vue';
 import { CreateOrderDTO } from '@/api/endpoints/orders/create';
-import { useMarketStore } from '@/stores/market';
+import { TakeProfit, useMarketStore } from '@/stores/market';
 import { SelectorProps } from '@/components/core/selector';
 import { useI18n } from 'vue-i18n';
 import { number, object, string } from 'yup';
 import { BaseCurrency, QuoteCurrency } from '@/hooks/useExchange';
 import { currency } from '@/api/types/currency';
-import { TakeProfit } from '@/components/app/takeProfitList';
 import { divide } from '@/utils/float';
 import { roundToDecimalPoint } from '@/utils/number';
 
@@ -131,6 +131,18 @@ export const useOrderCreate = () => {
     autoCalculateTakeProfitAmounts();
   };
   autoCalculateTakeProfits();
+
+  const createTakeProfits = async (mainOrderModel: OrderModel) => {
+    const results = await Promise.all(
+      takeProfits.value.map((takeProfit: TakeProfit) => marketStore.createOrder({
+        pair: marketStore.activePair,
+        side: mainOrderModel.side === 'buy' ? 'sell' : 'buy',
+        order_type: 'tp',
+        ...takeProfit,
+      })),
+    );
+    const isAllTakeProfitsSucessfulyCreated = !results.map(({ result }) => result).includes(false);
+  };
   // take profits -->
 
   // <-- stop loss
@@ -152,7 +164,25 @@ export const useOrderCreate = () => {
       return roundToDecimalPoint(riskRaw, quoteCurrency.value.decimals);
     },
   );
+
   // stop loss -- >
+
+  // <-- submit
+  const isLoading = ref(false);
+
+  const handleSubmit = async () => {
+    if (isLoading.value) return;
+    isLoading.value = true;
+
+    const mainOrderCreateResponse = await marketStore.createOrder(model);
+
+    if (!mainOrderCreateResponse.result) return;
+
+    if (isTakeProfitsEnabled.value) {
+
+    }
+  };
+  // submit -->
 
   return {
     model,

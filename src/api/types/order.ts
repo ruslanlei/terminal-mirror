@@ -8,7 +8,7 @@ export interface Order {
   order_type: 'limit' | 'tp' | 'sl',
   quantity: number,
   price: number,
-  leverage: number,
+  leverage?: number,
   status: string,
   transaction: number,
   master: number,

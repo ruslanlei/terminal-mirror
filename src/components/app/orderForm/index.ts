@@ -1,7 +1,7 @@
 import { OrderModel } from '@/hooks/useOrderCreate';
 import { ComputedRef, InjectionKey, Ref } from 'vue';
-import { TakeProfit } from '@/components/app/takeProfitList';
 import { BaseCurrency, QuoteCurrency } from '@/hooks/useExchange';
+import { TakeProfit } from '@/stores/market';
 
 export type OrderFormTab = 'input' | 'tp' | 'sl' | 'slx';
 

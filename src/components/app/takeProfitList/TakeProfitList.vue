@@ -43,7 +43,8 @@ import { add, subtract } from '@/utils/float';
 import TakeProfitInput from '@/components/core/takeProfitInput/TakeProfitInput.vue';
 import { TakeProfitInputValue } from '@/components/core/takeProfitInput';
 import { useLocalValue } from '@/hooks/useLocalValue';
-import { TakeProfit, TakeProfitListEmit, TakeProfitListProps } from '@/components/app/takeProfitList/index';
+import { TakeProfitListEmit, TakeProfitListProps } from '@/components/app/takeProfitList/index';
+import { TakeProfit } from '@/stores/market';
 
 const props = defineProps<TakeProfitListProps>();
 

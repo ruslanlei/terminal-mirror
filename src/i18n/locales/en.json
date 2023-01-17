@@ -151,7 +151,8 @@
       "percentOfOrder": "% of order",
       "percentOfDeposit": "% of deposit"
     },
-    "failedToCreate": "Failed to create order"
+    "failedToCreate": "Failed to create order",
+    "failedToCreateTakeProfits": "Failed to create one or more TPs"
   },
   "pairs": {
     "type": {

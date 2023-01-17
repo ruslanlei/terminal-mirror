@@ -140,18 +140,15 @@ const normalizeValue = (
 };
 
 const saveValue = (
-  // event: InputEvent | KeyboardEvent,
   value: number,
   normalizer?: NumberInputNormalizer,
 ) => {
-  // const eventTarget = (event.target as HTMLInputElement);
   const {
     value: normalizedValue,
     isEdited,
   } = normalizeValue(value, normalizer);
 
   if (isEdited && field.value) {
-    // eventTarget.value = String(value);
     field.value.value = String(normalizedValue);
   }
 
@@ -247,7 +244,7 @@ const states = useComputedState(props);
     @include title4;
     border-radius: 5px;
     & > input {
-      padding: 7px 10px;
+      padding: 7px min(10px, 14%);
     }
   }
   .error {

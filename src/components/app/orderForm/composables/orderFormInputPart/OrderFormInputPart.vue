@@ -68,14 +68,14 @@
         :state="['defaultColor', 'smSize']"
         type="number"
         :min="1"
-        :max="50"
+        :max="20"
       />
     </template>
     <template #leverageLiquidationPrice>
-      11
+      {{ pledge }}
     </template>
     <template #leveragePositionMargin>
-      1
+      {{ liquidationPrice }}
     </template>
     <template #submit>
       <slot name="submit" />
@@ -95,6 +95,8 @@ const {
   model,
   quoteCurrency,
   baseCurrency,
+  pledge,
+  liquidationPrice,
 } = useOrderFormInject();
 </script>
 

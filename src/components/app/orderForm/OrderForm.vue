@@ -127,6 +127,8 @@ const {
   isStopLossEnabled,
   stopLossPrice,
   stopLossRisk,
+  pledge,
+  liquidationPrice,
   isLoading,
   handleSubmit,
 } = useOrderCreate();
@@ -143,6 +145,8 @@ provide(OrderFormInjectionKey, {
   isStopLossEnabled,
   stopLossPrice,
   stopLossRisk,
+  pledge,
+  liquidationPrice,
 });
 </script>
 

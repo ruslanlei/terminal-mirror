@@ -17,6 +17,8 @@ export interface OrderFormProvide {
   isStopLossEnabled: Ref<boolean>,
   stopLossPrice: Ref<number>,
   stopLossRisk: ComputedRef<number>,
+  pledge: ComputedRef<number>,
+  liquidationPrice: ComputedRef<number>,
 }
 
 export const OrderFormInjectionKey: InjectionKey<OrderFormProvide> = Symbol('OrderForm');

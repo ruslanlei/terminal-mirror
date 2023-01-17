@@ -38,5 +38,7 @@ export const useOrderFormInject = (): OrderFormProvide => inject<OrderFormProvid
     isStopLossEnabled: ref(false),
     stopLossPrice: ref(19000),
     stopLossRisk: computed(() => 0),
+    pledge: computed(() => 0),
+    liquidationPrice: computed(() => 0),
   },
 );

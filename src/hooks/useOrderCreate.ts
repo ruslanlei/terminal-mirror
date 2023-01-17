@@ -171,6 +171,16 @@ export const useOrderCreate = () => {
     },
   );
 
+  const pledge = computed(() => roundToDecimalPoint(
+    (model.price * model.quantity) / model.leverage,
+    quoteCurrency.value.decimals,
+  ));
+
+  const liquidationPrice = computed(() => (model.quantity ? roundToDecimalPoint(
+    pledge.value / model.quantity,
+    quoteCurrency.value.decimals,
+  ) : 0));
+
   const createStopLoss = () => {
     const side = model.side === 'buy' ? 'sell' : 'buy';
 
@@ -238,6 +248,8 @@ export const useOrderCreate = () => {
     isStopLossEnabled,
     stopLossPrice,
     stopLossRisk,
+    pledge,
+    liquidationPrice,
     isLoading,
     handleSubmit,
   };

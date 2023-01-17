@@ -16,7 +16,9 @@ import { roundToDecimalPoint } from '@/utils/number';
 import cloneDeep from 'lodash/cloneDeep';
 import { useToastStore } from '@/stores/toasts';
 
-export type OrderModel = CreateOrderDTO;
+export interface OrderModel extends CreateOrderDTO {
+  leverage: number,
+}
 
 export const useOrderCreate = () => {
   const marketStore = useMarketStore();

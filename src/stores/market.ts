@@ -75,7 +75,7 @@ export const useMarketStore = defineStore('market', () => {
 
     if (!response.result) {
       toastStore.showDanger({
-        text: t('order.failedToCreate'),
+        text: t('order.failedToCreateTakeProfits'),
       });
     }
 

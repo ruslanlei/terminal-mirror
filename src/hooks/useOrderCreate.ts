@@ -132,16 +132,13 @@ export const useOrderCreate = () => {
   };
   autoCalculateTakeProfits();
 
-  const createTakeProfits = async (mainOrderModel: OrderModel) => {
-    const results = await Promise.all(
-      takeProfits.value.map((takeProfit: TakeProfit) => marketStore.createOrder({
-        pair: marketStore.activePair,
-        side: mainOrderModel.side === 'buy' ? 'sell' : 'buy',
-        order_type: 'tp',
-        ...takeProfit,
-      })),
+  const createTakeProfits = () => {
+    const side = model.side === 'buy' ? 'sell' : 'buy';
+
+    return marketStore.createListOfTakeProfits(
+      takeProfits.value,
+      side,
     );
-    const isAllTakeProfitsSucessfulyCreated = !results.map(({ result }) => result).includes(false);
   };
   // take profits -->
 
@@ -179,8 +176,12 @@ export const useOrderCreate = () => {
     if (!mainOrderCreateResponse.result) return;
 
     if (isTakeProfitsEnabled.value) {
+      const { result } = await createTakeProfits();
 
+      if (!result) return;
     }
+
+    if (isStopLossEnabled.value) {}
   };
   // submit -->
 

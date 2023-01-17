@@ -4,6 +4,7 @@
       <Button
         v-for="option in options"
         :key="option.percents"
+        type="button"
         :state="[
           checkIsValueEqualToPercent(option.percents)
             ? 'colored'

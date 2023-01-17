@@ -78,13 +78,7 @@
       1
     </template>
     <template #submit>
-      <Button
-        type="submit"
-        :state="['gradientColor', 'mdSize', 'interactive']"
-        :class="$style.submit"
-      >
-        {{ t('order.submit') }}
-      </Button>
+      <slot name="submit" />
     </template>
   </OrderFormInputPartContainer>
 </template>
@@ -92,7 +86,6 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import OrderFormInputPartContainer from '@/containers/orderFormInputPartContainer/OrderFormInputPartContainer.vue';
-import Button from '@/components/core/button/Button.vue';
 import { FormDepositInput, FormExchangeInput, FormNumberInput } from '@/components/form';
 import { useOrderFormInject } from '@/hooks/useOrderFormInject';
 

@@ -7,7 +7,7 @@ import { Pair } from '@/api/types/pair';
 import { useToastStore } from '@/stores/toasts';
 import { createOrder, CreateOrderDTO } from '@/api/endpoints/orders/create';
 import { Order } from '@/api/types/order';
-import { requestMany } from '@/api/common';
+import { processServerErrors, requestMany } from '@/api/common';
 
 export type MarketType = 'emulator' | 'real';
 
@@ -57,9 +57,7 @@ export const useMarketStore = defineStore('market', () => {
     const response = await createOrder(dto);
 
     if (!response.result) {
-      toastStore.showDanger({
-        text: t('order.failedToCreate'),
-      });
+      processServerErrors(response.data, t('order.failedToCreate'));
     }
 
     return response;
@@ -96,9 +94,7 @@ export const useMarketStore = defineStore('market', () => {
     });
 
     if (!response.result) {
-      toastStore.showDanger({
-        text: t('order.failedToCreateStopLoss'),
-      });
+      processServerErrors(response.data, t('order.failedToCreateStopLoss'));
     }
 
     return response;

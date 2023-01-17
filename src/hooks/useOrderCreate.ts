@@ -184,20 +184,29 @@ export const useOrderCreate = () => {
     if (isLoading.value) return;
     isLoading.value = true;
 
-    const mainOrderCreateResponse = await marketStore.createOrder(model);
+    const { result } = await marketStore.createOrder(model);
 
-    if (!mainOrderCreateResponse.result) return;
+    if (!result) {
+      isLoading.value = false;
+      return;
+    }
 
     if (isTakeProfitsEnabled.value) {
       const { result } = await createTakeProfits();
 
-      if (!result) return;
+      if (!result) {
+        isLoading.value = false;
+        return;
+      }
     }
 
     if (isStopLossEnabled.value) {
       const { result } = await createStopLoss();
 
-      if (!result) return;
+      if (!result) {
+        isLoading.value = false;
+        return;
+      }
     }
 
     isLoading.value = false;

@@ -36,7 +36,18 @@
           :content-class="tabContentClass"
         >
           <template #tab(input)>
-            <OrderFormInputPart />
+            <OrderFormInputPart>
+              <template #submit>
+                <Button
+                  type="submit"
+                  :state="['gradientColor', 'mdSize', 'interactive']"
+                  :class="$style.submit"
+                  :is-loading="isLoading"
+                >
+                  {{ t('order.submit') }}
+                </Button>
+              </template>
+            </OrderFormInputPart>
           </template>
           <template #tab(tp)>
             <OrderFormTakeProfitPart
@@ -63,6 +74,7 @@ import { useI18n } from 'vue-i18n';
 import Icon from '@/components/core/icon/Icon.vue';
 import Tabs from '@/components/core/tabs/Tabs.vue';
 import OrderFromContainer from '@/containers/orderFormContainer/OrderFormContainer.vue';
+import Button from '@/components/core/button/Button.vue';
 import { Form, FormSelector } from '@/components/form';
 
 import { useOrderCreate } from '@/hooks/useOrderCreate';

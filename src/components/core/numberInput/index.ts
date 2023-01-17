@@ -19,6 +19,7 @@ export interface NumberInputProps {
   roundToDecimalPoint?: boolean,
   error?: string,
   label?: string,
+  hideArrows?: boolean,
 }
 
 export interface NumberInputEmits {

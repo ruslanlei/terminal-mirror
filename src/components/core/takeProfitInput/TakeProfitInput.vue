@@ -6,6 +6,7 @@
         type="number"
         :class="$style.input"
         :state="['xsSize']"
+        :hide-arrows="true"
       />
       <NumberInput
         v-model="percentOfProfitValue"
@@ -13,6 +14,7 @@
         :step="0.1"
         :class="$style.input"
         :state="['alignRight', 'xsSize']"
+        :hide-arrows="true"
       />
     </div>
     <div :class="$style.amount">
@@ -27,6 +29,7 @@
         :round-to-decimal-point="false"
         :class="$style.input"
         :state="['xsSize']"
+        :hide-arrows="true"
         @input="onQuantityInput"
         @blur="onQuantityInput"
       />
@@ -39,6 +42,7 @@
         :step="percentOfQuantityInputStep"
         :class="$style.input"
         :state="['alignRight', 'xsSize']"
+        :hide-arrows="true"
         @input="onQuantityInput"
         @blur="onQuantityInput"
       />
@@ -51,7 +55,7 @@ import {
   TakeProfitInputEmits,
   TakeProfitInputProps,
 } from '@/components/core/takeProfitInput/index';
-import { computed, watch } from 'vue';
+import { computed } from 'vue';
 import NumberInput from '@/components/core/numberInput/NumberInput.vue';
 import { useLocalValue } from '@/hooks/useLocalValue';
 import { roundToDecimalPoint } from '@/utils/number';

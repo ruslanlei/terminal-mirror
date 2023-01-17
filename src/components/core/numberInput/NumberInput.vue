@@ -26,7 +26,10 @@
         @blur="onBlur"
         @keydown="onKeydown"
       >
-      <div :class="$style.arrows">
+      <div
+        v-if="!hideArrows"
+        :class="$style.arrows"
+      >
         <button
           type="button"
           :class="[
@@ -89,6 +92,7 @@ const props = withDefaults(
     normalizeOnKeydown: false,
     roundToDecimalPoint: true,
     state: () => ['smSize', 'defaultColor'],
+    hideArrows: false,
   },
 );
 

@@ -73,9 +73,9 @@ import {
   PairsTableProps,
   PairsTableRecord,
 } from '@/components/app/pairsTable/index';
-import { Pair } from '@/api/endpoints/marketdata/stats';
 import { SortDirection } from '@/components/core/table';
 import { humanizeNumber } from '@/utils/number';
+import { Pair } from '@/api/types/pair';
 
 const props = defineProps<PairsTableProps>();
 

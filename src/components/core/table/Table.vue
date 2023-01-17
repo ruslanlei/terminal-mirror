@@ -227,7 +227,11 @@ const {
 }
 
 .tinySize {
+  .head {
+    padding-bottom: 4px;
+  }
   &.list {
+    margin-top: -4px;
     &.scrollable {
       @include scrollbarPrimary(4px, 2px);
       padding-right: 10px;
@@ -242,6 +246,13 @@ const {
     .record {
       padding: 5px 0;
     }
+  }
+}
+
+.secondaryColor3 {
+  background-color: rgb(var(--color-background-3));
+  .head {
+    background-color: rgb(var(--color-background-3));
   }
 }
 </style>

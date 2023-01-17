@@ -18,7 +18,7 @@
       <PairsTable
         :class="tableClass"
         :pairs="pairs"
-        :state="['scrollable', 'tinySize']"
+        :state="['scrollable', 'tinySize', 'secondaryColor3']"
         @select-pair="setPair"
       />
     </template>

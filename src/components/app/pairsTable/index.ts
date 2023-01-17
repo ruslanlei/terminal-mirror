@@ -1,5 +1,5 @@
-import { Pair } from '@/api/endpoints/marketdata/stats';
 import { TableColumn, TableProps, TableRecord } from '@/components/core/table';
+import { Pair } from '@/api/types/pair';
 
 export type PairsTableColumnSlug = 'pairs' | 'priceAndVolume';
 

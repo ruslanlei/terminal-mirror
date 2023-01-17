@@ -6,7 +6,10 @@
     @focus="onFocus"
     @blur="onBlur"
   >
-    <template #append>
+    <template
+      v-if="'append' in $slots"
+      #append
+    >
       <slot name="append" />
     </template>
   </NumberInput>

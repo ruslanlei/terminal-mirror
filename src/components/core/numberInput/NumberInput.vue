@@ -1,7 +1,7 @@
 <template>
   <label
     :class="[
-      ...states.map((s) => $style[s]),
+      ...states,
       !!error && $style.withError,
     ]"
   >
@@ -15,6 +15,7 @@
     </span>
     <div :class="[$style.field]">
       <input
+        ref="field"
         type="number"
         :value="localValue"
         :tabindex="computedTabIndex"
@@ -25,6 +26,34 @@
         @blur="onBlur"
         @keydown="onKeydown"
       >
+      <div :class="$style.arrows">
+        <button
+          type="button"
+          :class="[
+            $style.arrowButton,
+            localValue === max && $style.disabled,
+          ]"
+          @click="onClickIncrement"
+        >
+          <Icon
+            :size="6"
+            icon="tinyArrowUp"
+          />
+        </button>
+        <button
+          type="button"
+          :class="[
+            $style.arrowButton,
+            localValue === min && $style.disabled,
+          ]"
+          @click="onClickDecrement"
+        >
+          <Icon
+            :size="6"
+            icon="tinyArrowDown"
+          />
+        </button>
+      </div>
       <div
         v-if="'append' in $slots"
         :class="$style.append"
@@ -40,12 +69,13 @@
 </template>
 
 <script setup lang="ts">
-import { computed, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useLocalValue } from '@/hooks/useLocalValue';
 import { roundToDecimalPoint } from '@/utils/number';
 import { add, subtract } from '@/utils/float';
-import { arrayFrom } from '@/utils/array';
 import FieldError from '@/components/core/fieldError/FieldError.vue';
+import Icon from '@/components/core/icon/Icon.vue';
+import { useComputedState } from '@/hooks/useComputedState';
 import { NumberInputEmits, NumberInputNormalizer, NumberInputProps } from './index';
 
 const props = withDefaults(
@@ -58,10 +88,13 @@ const props = withDefaults(
     saveOn: 'input',
     normalizeOnKeydown: false,
     roundToDecimalPoint: true,
+    state: () => ['smSize', 'defaultColor'],
   },
 );
 
 const emit = defineEmits<NumberInputEmits>();
+
+const field = ref<HTMLInputElement>();
 
 const computedTabIndex = computed(
   () => (props.isDisabled ? -1 : props.tabIndex),
@@ -103,20 +136,25 @@ const normalizeValue = (
 };
 
 const saveValue = (
-  event: InputEvent | KeyboardEvent,
+  // event: InputEvent | KeyboardEvent,
+  value: number,
   normalizer?: NumberInputNormalizer,
 ) => {
-  const eventTarget = (event.target as HTMLInputElement);
-  const { value, isEdited } = normalizeValue(Number(eventTarget.value), normalizer);
+  // const eventTarget = (event.target as HTMLInputElement);
+  const {
+    value: normalizedValue,
+    isEdited,
+  } = normalizeValue(value, normalizer);
 
-  if (isEdited) {
-    eventTarget.value = String(value);
+  if (isEdited && field.value) {
+    // eventTarget.value = String(value);
+    field.value.value = String(normalizedValue);
   }
 
-  localValue.value = value;
+  localValue.value = normalizedValue;
 };
 
-const increment = (value: number) => {
+const incrementValue = (value: number) => {
   if (props.normalizer) {
     return props?.normalizer(value, 'increment');
   }
@@ -126,7 +164,7 @@ const increment = (value: number) => {
   return value;
 };
 
-const decrement = (value: number) => {
+const decrementValue = (value: number) => {
   if (props.normalizer) {
     return props?.normalizer(value, 'decrement');
   }
@@ -138,7 +176,8 @@ const decrement = (value: number) => {
 
 const onInput = (event: InputEvent) => {
   if (props.saveOn === 'input') {
-    saveValue(event, props.normalizer);
+    const eventTarget = (event.target as HTMLInputElement);
+    saveValue(Number(eventTarget.value), props.normalizer);
   }
 
   emit('input', event);
@@ -146,7 +185,8 @@ const onInput = (event: InputEvent) => {
 
 const onBlur = (event: InputEvent) => {
   if (props.saveOn === 'blur') {
-    saveValue(event, props.normalizer);
+    const eventTarget = (event.target as HTMLInputElement);
+    saveValue(Number(eventTarget.value), props.normalizer);
   }
 
   emit('blur', event);
@@ -159,18 +199,27 @@ const onFocus = (event: InputEvent) => {
 const onKeydown = (event: KeyboardEvent) => {
   if (event.key === 'ArrowUp') {
     event.preventDefault();
-    saveValue(event, increment);
+    const eventTarget = (event.target as HTMLInputElement);
+    saveValue(Number(eventTarget.value), incrementValue);
   }
 
   if (event.key === 'ArrowDown') {
     event.preventDefault();
-    saveValue(event, decrement);
+    const eventTarget = (event.target as HTMLInputElement);
+    saveValue(Number(eventTarget.value), decrementValue);
   }
 
   emit('input', event);
 };
 
-const states = computed(() => arrayFrom(props.state));
+const onClickIncrement = () => {
+  saveValue(localValue.value, incrementValue);
+};
+const onClickDecrement = () => {
+  saveValue(localValue.value, decrementValue);
+};
+
+const states = useComputedState(props);
 </script>
 
 <style lang="scss" module>
@@ -246,5 +295,26 @@ const states = computed(() => arrayFrom(props.state));
 
 .error {
   color: rgb(var(--color-danger-2));
+}
+
+.arrows {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-right: 10px;
+}
+
+.arrowButton {
+  height: 6px;
+  width: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: rgb(var(--color-accent-2));
+  transition: 200ms color;
+  &.disabled {
+    color: rgb(var(--color-accent-3));
+  }
 }
 </style>

@@ -14,11 +14,13 @@ import { currency } from '@/api/types/currency';
 import { divide } from '@/utils/float';
 import { roundToDecimalPoint } from '@/utils/number';
 import cloneDeep from 'lodash/cloneDeep';
+import { useToastStore } from '@/stores/toasts';
 
 export type OrderModel = CreateOrderDTO;
 
 export const useOrderCreate = () => {
   const marketStore = useMarketStore();
+  const toastStore = useToastStore();
 
   const { t } = useI18n();
 
@@ -212,6 +214,10 @@ export const useOrderCreate = () => {
     isLoading.value = false;
 
     resetModel();
+
+    toastStore.showSuccess({
+      text: t('order.successfullyCreated'),
+    });
   };
   // submit -->
 

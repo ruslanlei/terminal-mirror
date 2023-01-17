@@ -176,18 +176,16 @@ const decrementValue = (value: number) => {
 };
 
 const onInput = (event: InputEvent) => {
-  if (props.saveOn === 'input') {
-    const eventTarget = (event.target as HTMLInputElement);
-    saveValue(Number(eventTarget.value), props.normalizer);
+  if (props.saveOn === 'input' && field.value) {
+    saveValue(Number(field.value.value), props.normalizer);
   }
 
   emit('input', event);
 };
 
 const onBlur = (event: InputEvent) => {
-  if (props.saveOn === 'blur') {
-    const eventTarget = (event.target as HTMLInputElement);
-    saveValue(Number(eventTarget.value), props.normalizer);
+  if (props.saveOn === 'blur' && field.value) {
+    saveValue(Number(field.value.value), props.normalizer);
   }
 
   emit('blur', event);

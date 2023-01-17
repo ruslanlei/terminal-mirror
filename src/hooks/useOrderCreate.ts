@@ -54,16 +54,6 @@ export const useOrderCreate = () => {
     Object.assign(model, baseModel);
   };
 
-  const validationSchema = object().shape({
-    pair: number().required(() => t('validationError.required')),
-    side: string()
-      .required(() => t('validationError.required'))
-      .oneOf(['buy', 'sell']),
-    quantity: number().min(0.001),
-    price: number().min(0.001),
-    leverage: number().min(1).max(20),
-  });
-
   const quoteCurrency = computed<QuoteCurrency>(() => ({
     name: marketStore.activePairData?.quote || currency.USDT,
     balance: 3208,
@@ -78,6 +68,22 @@ export const useOrderCreate = () => {
     decimals: 3,
     step: 0.001,
   }));
+
+  const validationSchema = object().shape({
+    pair: number().required(() => t('validationError.required')),
+    side: string()
+      .required(() => t('validationError.required'))
+      .oneOf(['buy', 'sell']),
+    quantity: number().min(
+      baseCurrency.value.step,
+      () => t('validationError.min', { min: baseCurrency.value.step }),
+    ),
+    price: number().min(
+      1,
+      () => t('validationError.min', { min: 1 }),
+    ),
+    leverage: number().min(1).max(20),
+  });
 
   // <-- take profits
   const isTakeProfitsEnabled = ref<boolean>(true);

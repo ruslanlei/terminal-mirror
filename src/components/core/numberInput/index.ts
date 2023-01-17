@@ -17,6 +17,8 @@ export interface NumberInputProps {
   isDisabled?: boolean,
   tabIndex?: number,
   roundToDecimalPoint?: boolean,
+  error?: string,
+  label?: string,
 }
 
 export interface NumberInputEmits {

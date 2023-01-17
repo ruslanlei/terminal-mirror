@@ -1,6 +1,7 @@
 <template>
   <NumberInput
     v-model="value"
+    :error="error"
     @input="onInput"
     @focus="onFocus"
     @blur="onBlur"

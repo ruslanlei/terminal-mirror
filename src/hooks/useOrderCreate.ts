@@ -55,8 +55,8 @@ export const useOrderCreate = () => {
     side: string()
       .required(() => t('validationError.required'))
       .oneOf(['buy', 'sell']),
-    quantity: number().min(0),
-    price: number().min(0),
+    quantity: number().min(0.001),
+    price: number().min(0.001),
     leverage: number().min(1).max(20),
   });
 

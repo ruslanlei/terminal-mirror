@@ -63,6 +63,8 @@ onBeforeUnmount(removeListeners);
   position: relative;
   overflow: hidden;
   transition: height 160ms, opacity 160ms;
+  font-size: inherit;
+  color: inherit;
   &.hidden {
     opacity: 0;
   }
@@ -72,8 +74,8 @@ onBeforeUnmount(removeListeners);
   width: 100%;
   position: absolute;
   bottom: 0;
-  @include title4;
+  font-size: inherit;
   font-weight: 600;
-  color: rgb(var(--color-danger));
+  color: inherit;
 }
 </style>

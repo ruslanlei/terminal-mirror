@@ -1,37 +1,52 @@
 <template>
-  <div
+  <label
     :class="[
-      $style.numberInput,
       ...states.map((s) => $style[s]),
+      !!error && $style.withError,
     ]"
   >
-    <input
-      type="number"
-      :value="localValue"
-      :tabindex="computedTabIndex"
-      :step="step"
-      :disabled="isDisabled"
-      @input="onInput"
-      @focus="onFocus"
-      @blur="onBlur"
-      @keydown="onKeydown"
+    <span
+      v-if="('label' in $slots) || label"
+      :class="$style.label"
     >
-    <div
-      v-if="'append' in $slots"
-      :class="$style.append"
-    >
-      <slot name="append" />
+      <slot name="label">
+        {{ label }}
+      </slot>
+    </span>
+    <div :class="[$style.field]">
+      <input
+        type="number"
+        :value="localValue"
+        :tabindex="computedTabIndex"
+        :step="step"
+        :disabled="isDisabled"
+        @input="onInput"
+        @focus="onFocus"
+        @blur="onBlur"
+        @keydown="onKeydown"
+      >
+      <div
+        v-if="'append' in $slots"
+        :class="$style.append"
+      >
+        <slot name="append" />
+      </div>
     </div>
-  </div>
+    <FieldError
+      :text="error"
+      :class="$style.error"
+    />
+  </label>
 </template>
 
 <script setup lang="ts">
-import { NumberInputEmits, NumberInputNormalizer, NumberInputProps } from '@/components/core/numberInput/index';
-import { useLocalValue } from '@/hooks/useLocalValue';
 import { computed, watch } from 'vue';
-import { arrayFrom } from '@/utils/array';
+import { useLocalValue } from '@/hooks/useLocalValue';
 import { roundToDecimalPoint } from '@/utils/number';
 import { add, subtract } from '@/utils/float';
+import { arrayFrom } from '@/utils/array';
+import FieldError from '@/components/core/fieldError/FieldError.vue';
+import { NumberInputEmits, NumberInputNormalizer, NumberInputProps } from './index';
 
 const props = withDefaults(
   defineProps<NumberInputProps>(),
@@ -161,7 +176,9 @@ const states = computed(() => arrayFrom(props.state));
 <style lang="scss" module>
 @import "src/assets/styles/utils";
 
-.numberInput {
+.numberInput {}
+
+.field {
   width: 100%;
   display: flex;
   align-items: center;
@@ -173,38 +190,61 @@ const states = computed(() => arrayFrom(props.state));
 }
 
 .smSize {
-  @include title4;
-  border-radius: 5px;
-  & > input {
-    padding: 7px 10px;
+  .field {
+    @include title4;
+    border-radius: 5px;
+    & > input {
+      padding: 7px 10px;
+    }
+  }
+  .error {
+    margin-top: 2px;
+    @include title7;
   }
 }
 
 .xsSize {
-  @include title5;
-  border-radius: 5px;
-  font-weight: 600;
-  & > input {
-    padding: 2px 0;
+  .field {
+    @include title5;
+    border-radius: 5px;
+    font-weight: 600;
+    & > input {
+      padding: 2px 0;
+    }
   }
 }
 
 .defaultColor {
-  color: rgb(var(--color-accent-1));
-  border: 1px solid rgb(var(--color-accent-2));
-  transition: border-color 150ms;
-  &:hover {
-    border: 1px solid rgb(var(--color-accent-1));
+  .field {
+    color: rgb(var(--color-accent-1));
+    border: 1px solid rgb(var(--color-accent-2));
+    transition: border-color 150ms;
+    &:hover {
+      border: 1px solid rgb(var(--color-accent-1));
+    }
   }
 }
 
 .alignRight {
-  & > input {
-    text-align: right;
+  .field {
+    & > input {
+      text-align: right;
+    }
   }
 }
 
 .append {
   margin-right: 10px;
+}
+
+// default styles
+.withError {
+  .field {
+    border: 1px solid rgb(var(--color-danger-2));
+  }
+}
+
+.error {
+  color: rgb(var(--color-danger-2));
 }
 </style>

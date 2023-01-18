@@ -148,8 +148,6 @@ const saveValue = (
     isChanged,
   } = normalizeValue(value, normalizer);
 
-  console.log(isChanged, value);
-
   if (isChanged && field.value) {
     field.value.value = String(normalizedValue);
   }
@@ -185,7 +183,7 @@ const onInput = (event: InputEvent) => {
   emit('input', event);
 };
 
-const onBlur = (event: InputEvent) => {
+const onBlur = () => {
   if (props.saveOn === 'blur' && field.value) {
     saveValue(Number(field.value.value), props.normalizer);
   }

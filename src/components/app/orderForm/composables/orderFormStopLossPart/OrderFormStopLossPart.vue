@@ -21,10 +21,10 @@
         </template>
       </NumberInput>
     </template>
-    <template #amountOfRiskLabel>
-      {{ t('order.stopLoss.amountOfRisk') }}
+    <template #sumOfRiskLabel>
+      {{ t('order.stopLoss.sumOfRisk') }}
     </template>
-    <template #amountOfRiskInput>
+    <template #sumOfRiskInput>
       <NumberInput
         v-model="sumOfRisk"
         :state="['smSize', 'defaultColor']"

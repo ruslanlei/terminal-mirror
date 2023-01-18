@@ -16,12 +16,12 @@
         <slot name="exactPriceInput" />
       </div>
     </div>
-    <div :class="[$style.row, $style.amountOfRisk]">
+    <div :class="[$style.row, $style.sumOfRisk]">
       <div :class="[$style.labelLarge, $style.thick]">
-        <slot name="amountOfRiskLabel" />
+        <slot name="sumOfRiskLabel" />
       </div>
       <div :class="$style.field">
-        <slot name="amountOfRiskInput" />
+        <slot name="sumOfRiskInput" />
       </div>
     </div>
     <div :class="[$style.row, $style.percentOfOrder]">
@@ -93,7 +93,7 @@
   .field {}
 }
 
-.exactPrice, .amountOfRisk {
+.exactPrice, .sumOfRisk {
   margin-top: 20px;
 }
 

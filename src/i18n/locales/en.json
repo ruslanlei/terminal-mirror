@@ -148,7 +148,7 @@
     "stopLoss": {
       "switchLabel": "Loss",
       "exactPrice": "Exact price",
-      "amountOfRisk": "Amount of risk",
+      "sumOfRisk": "Amount of risk",
       "percentOfOrder": "% of order",
       "percentOfDeposit": "% of deposit"
     },

@@ -66,8 +66,8 @@
     <template #ratio>
       <OrderFormRatio
         :ratio="ratio"
-        :risk="stopLossRisk"
-        :profit="takeProfitsIncomeSum"
+        :profit="profitDisplayValue"
+        :risk="riskDisplayValue"
         :quote-currency="quoteCurrency"
       />
     </template>
@@ -110,8 +110,8 @@ const {
   model,
   quoteCurrency,
   stopLossPrice,
-  takeProfitsIncomeSum,
-  stopLossRisk,
+  profitDisplayValue,
+  riskDisplayValue,
   isStopLossEnabled,
   ratio,
 } = useOrderFormInject();

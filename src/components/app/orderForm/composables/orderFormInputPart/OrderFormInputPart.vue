@@ -82,6 +82,15 @@
     <template #submit>
       <slot name="submit" />
     </template>
+    <template #ratio>
+      {{ ratio }}
+    </template>
+    <template #profit>
+      {{ profitDisplayValue }}
+    </template>
+    <template #loss>
+      {{ riskDisplayValue }}
+    </template>
   </OrderFormInputPartContainer>
 </template>
 
@@ -100,6 +109,9 @@ const {
   baseCurrency,
   pledge,
   liquidationPrice,
+  ratio,
+  profitDisplayValue,
+  riskDisplayValue,
 } = useOrderFormInject();
 
 const {

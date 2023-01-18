@@ -21,7 +21,8 @@
           {{ t('order.takeProfit.profit') }}
         </div>
         <div :class="$style.profit">
-          {{ t('order.takeProfit.profitValue', { profit: profitDisplayValue }) }}
+          {{ profit }}
+          <!--          {{ t('order.takeProfit.profitValue', { profit: profitDisplayValue }) }}-->
         </div>
       </div>
       <div :class="$style.metric">
@@ -29,7 +30,8 @@
           {{ t('order.takeProfit.risk') }}
         </div>
         <div :class="$style.risk">
-          {{ t('order.takeProfit.riskValue', { risk: riskDisplayValue }) }}
+          {{ risk }}
+          <!--          {{ t('order.takeProfit.riskValue', { risk: riskDisplayValue }) }}-->
         </div>
       </div>
     </div>
@@ -46,15 +48,15 @@ const { t } = useI18n();
 
 const props = defineProps<OrderFormRatioProps>();
 
-const profitDisplayValue = computed(() => t('common.currencyAmount', {
-  amount: props.profit,
-  currency: props.quoteCurrency.name,
-}));
-
-const riskDisplayValue = computed(() => t('common.currencyAmount', {
-  amount: props.risk,
-  currency: props.quoteCurrency.name,
-}));
+// const profitDisplayValue = computed(() => t('common.currencyAmount', {
+//   amount: props.profit,
+//   currency: props.quoteCurrency.name,
+// }));
+//
+// const riskDisplayValue = computed(() => t('common.currencyAmount', {
+//   amount: props.risk,
+//   currency: props.quoteCurrency.name,
+// }));
 </script>
 
 <style lang="scss" module>

@@ -20,6 +20,8 @@ export interface OrderFormProvide {
   pledge: ComputedRef<number>,
   liquidationPrice: ComputedRef<number>,
   ratio: ComputedRef<string>,
+  profitDisplayValue: ComputedRef<string>,
+  riskDisplayValue: ComputedRef<string>,
 }
 
 export const OrderFormInjectionKey: InjectionKey<OrderFormProvide> = Symbol('OrderForm');

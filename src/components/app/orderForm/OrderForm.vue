@@ -147,6 +147,22 @@ const ratio = computed(() => {
     : t('order.ratio', { loss: 0, profit: 0 });
 });
 
+const profitDisplayValue = computed(() => t('order.takeProfit.profitValue', {
+  profit:
+    t('common.currencyAmount', {
+      amount: takeProfitsIncomeSum.value,
+      currency: quoteCurrency.value.name,
+    }),
+}));
+
+const riskDisplayValue = computed(() => t('order.takeProfit.riskValue', {
+  risk:
+    t('common.currencyAmount', {
+      amount: stopLossRisk.value,
+      currency: quoteCurrency.value.name,
+    }),
+}));
+
 provide(OrderFormInjectionKey, {
   model,
   takeProfits,
@@ -162,6 +178,8 @@ provide(OrderFormInjectionKey, {
   pledge,
   liquidationPrice,
   ratio,
+  profitDisplayValue,
+  riskDisplayValue,
 });
 </script>
 

@@ -41,6 +41,8 @@ export const useOrderFormInject = (): OrderFormProvide => inject<OrderFormProvid
     stopLossRisk: computed(() => 0),
     pledge: computed(() => 0),
     liquidationPrice: computed(() => 0),
-    maxBaseCurrencyDepositLeveraged: computed(() => 0),
+    ratio: computed(() => ''),
+    profitDisplayValue: computed(() => ''),
+    riskDisplayValue: computed(() => ''),
   },
 );

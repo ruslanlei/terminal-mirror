@@ -53,7 +53,7 @@ export const useOrderCreate = () => {
 
   const quoteCurrency = computed<QuoteCurrency>(() => ({
     name: marketStore.activePairData?.quote || currency.USDT,
-    balance: 3208,
+    balance: 178299,
     decimals: 2,
     step: 0.01,
     leverage: model.leverage,

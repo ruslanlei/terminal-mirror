@@ -2,7 +2,7 @@ import { QuoteCurrency } from '@/hooks/useExchange';
 
 export interface OrderFormRatioProps {
   ratio: string,
-  profit: number,
-  risk: number,
+  profit: string,
+  risk: string,
   quoteCurrency: QuoteCurrency,
 }

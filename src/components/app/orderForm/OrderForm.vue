@@ -81,7 +81,7 @@ import { useOrderCreate } from '@/hooks/useOrderCreate';
 import { OrderFormInjectionKey, OrderFormTab } from '@/components/app/orderForm/index';
 import { Tab } from '@/components/core/tabs';
 
-import { useExchange } from '@/hooks/useExchange';
+import { roundToDecimalPoint } from '@/utils/number';
 import OrderFormInputPart from './composables/orderFormInputPart/OrderFormInputPart.vue';
 import OrderFormTakeProfitPart from './composables/orderFormTakeProfitPart/OrderFormTakeProfitPart.vue';
 import OrderFormStopLossPart from './composables/orderFormStopLossPart/OrderFormStopLossPart.vue';
@@ -134,6 +134,19 @@ const {
   handleSubmit,
 } = useOrderCreate();
 
+const ratio = computed(() => {
+  const isNumbersValid = takeProfitsIncomeSum.value
+      && stopLossRisk.value
+      && takeProfitsIncomeSum.value > stopLossRisk.value;
+
+  return isNumbersValid
+    ? t('order.ratio', {
+      loss: 1,
+      profit: roundToDecimalPoint(takeProfitsIncomeSum.value / stopLossRisk.value, 1),
+    })
+    : t('order.ratio', { loss: 0, profit: 0 });
+});
+
 provide(OrderFormInjectionKey, {
   model,
   takeProfits,
@@ -148,6 +161,7 @@ provide(OrderFormInjectionKey, {
   stopLossRisk,
   pledge,
   liquidationPrice,
+  ratio,
 });
 </script>
 

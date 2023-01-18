@@ -12,7 +12,7 @@
         </div>
       </div>
       <div :class="$style.ratioValue">
-        1 to 3
+        {{ ratio }}
       </div>
     </div>
     <div :class="$style.metrics">

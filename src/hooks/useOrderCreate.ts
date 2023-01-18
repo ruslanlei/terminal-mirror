@@ -13,8 +13,8 @@ import { BaseCurrency, QuoteCurrency } from '@/hooks/useExchange';
 import { currency } from '@/api/types/currency';
 import { divide } from '@/utils/float';
 import { roundToDecimalPoint } from '@/utils/number';
-import cloneDeep from 'lodash/cloneDeep';
 import { useToastStore } from '@/stores/toasts';
+import { useModelReset } from '@/hooks/useModelReset';
 
 export interface OrderModel extends CreateOrderDTO {
   leverage: number,
@@ -49,10 +49,7 @@ export const useOrderCreate = () => {
     price: 16890,
     leverage: 1,
   });
-  const baseModel = cloneDeep(model);
-  const resetModel = () => {
-    Object.assign(model, baseModel);
-  };
+  const { resetModel } = useModelReset(model);
 
   const quoteCurrency = computed<QuoteCurrency>(() => ({
     name: marketStore.activePairData?.quote || currency.USDT,

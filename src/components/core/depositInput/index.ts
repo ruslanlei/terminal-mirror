@@ -9,10 +9,6 @@ export interface DepositInputProps {
   quoteCurrency: QuoteCurrency,
   baseCurrency: BaseCurrency,
   saveOn?: NumberInputProps['saveOn'],
-
-  // quoteCurrencyBalance: number,
-  // baseCurrencyPrice: number,
-  // baseCurrencyDecimals: number,
 }
 
 export interface DepositInputEmits {

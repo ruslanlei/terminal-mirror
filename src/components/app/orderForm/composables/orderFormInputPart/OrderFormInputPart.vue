@@ -89,6 +89,7 @@ import { useI18n } from 'vue-i18n';
 import OrderFormInputPartContainer from '@/containers/orderFormInputPartContainer/OrderFormInputPartContainer.vue';
 import { FormDepositInput, FormExchangeInput, FormNumberInput } from '@/components/form';
 import { useOrderFormInject } from '@/hooks/useOrderFormInject';
+import { useExchange } from '@/hooks/useExchange';
 
 const { t } = useI18n();
 
@@ -98,8 +99,14 @@ const {
   baseCurrency,
   pledge,
   liquidationPrice,
-  maxBaseCurrencyDepositLeveraged,
 } = useOrderFormInject();
+
+const {
+  maxBaseCurrencyDepositLeveraged,
+} = useExchange(
+  baseCurrency,
+  quoteCurrency,
+);
 </script>
 
 <style lang="scss" module>

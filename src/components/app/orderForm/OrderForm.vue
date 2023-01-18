@@ -134,13 +134,6 @@ const {
   handleSubmit,
 } = useOrderCreate();
 
-const {
-  maxBaseCurrencyDepositLeveraged,
-} = useExchange(
-  baseCurrency,
-  quoteCurrency,
-);
-
 provide(OrderFormInjectionKey, {
   model,
   takeProfits,
@@ -155,7 +148,6 @@ provide(OrderFormInjectionKey, {
   stopLossRisk,
   pledge,
   liquidationPrice,
-  maxBaseCurrencyDepositLeveraged,
 });
 </script>
 

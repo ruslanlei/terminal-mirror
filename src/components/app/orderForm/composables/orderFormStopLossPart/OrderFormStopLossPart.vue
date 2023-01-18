@@ -73,6 +73,7 @@
     </template>
     <template #submit="{ buttonClass }">
       <Button
+        type="button"
         :class="buttonClass"
         :state="['primaryColor', 'mdSize']"
         @click="onSubmit"

@@ -37,6 +37,7 @@
     </template>
     <template #submit="{ buttonClass }">
       <Button
+        type="button"
         :class="buttonClass"
         :state="['successColor', 'mdSize']"
         @click="onSubmit"

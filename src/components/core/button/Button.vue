@@ -65,9 +65,9 @@ const computedState = useComputedState(props);
 }
 
 .interactive {
-  transition: background-color 200ms, transform 200ms;
+  transition: background-color 200ms;
   &:focus, &:hover {
-    transform: scale(1.01);
+    //transform: scale(1.01);
   }
   &:active {
     transform: scale(0.99);

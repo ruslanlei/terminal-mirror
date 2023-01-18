@@ -19,6 +19,7 @@ export interface OrderFormProvide {
   stopLossRisk: ComputedRef<number>,
   pledge: ComputedRef<number>,
   liquidationPrice: ComputedRef<number>,
+  maxBaseCurrencyDepositLeveraged: ComputedRef<number>,
 }
 
 export const OrderFormInjectionKey: InjectionKey<OrderFormProvide> = Symbol('OrderForm');

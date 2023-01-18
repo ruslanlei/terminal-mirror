@@ -27,7 +27,7 @@
           <AnimatedText
             animation-type="verticalAuto"
             :class="$style.realBalance"
-            :text="maxDeposit"
+            :text="maxQuoteCurrencyDeposit"
           />
           <transition name="depositInputLeverageBalance">
             <div
@@ -37,7 +37,7 @@
               <AnimatedText
                 animation-type="verticalAuto"
                 :class="$style.leveragedBalance"
-                :text="maxDepositLeveraged"
+                :text="maxQuoteCurrencyDepositLeveraged"
               />
             </div>
           </transition>
@@ -94,19 +94,19 @@ const {
 const emit = defineEmits<DepositInputEmits>();
 
 const {
-  maxDeposit,
-  maxDepositLeveraged,
+  maxQuoteCurrencyDeposit,
+  maxQuoteCurrencyDepositLeveraged,
 } = useExchange(
   baseCurrency,
   quoteCurrency,
 );
 
 const showLeveragedBalance = computed(
-  () => maxDeposit.value !== maxDepositLeveraged.value,
+  () => maxQuoteCurrencyDeposit.value !== maxQuoteCurrencyDepositLeveraged.value,
 );
 
 const leveragedBalanceInBaseCurrency = computed(
-  () => maxDepositLeveraged.value / props.baseCurrency.price,
+  () => maxQuoteCurrencyDepositLeveraged.value / props.baseCurrency.price,
 );
 
 const localValue = useLocalValue<number>(props, emit, 'modelValue');

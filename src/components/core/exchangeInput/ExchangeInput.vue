@@ -4,7 +4,7 @@
     type="number"
     :state="['defaultColor', 'smSize']"
     :min="0"
-    :max="maxDeposit"
+    :max="maxQuoteCurrencyDeposit"
     :is-disabled="isDisabled"
     :normalizer="normalizer"
     :normalize-on-keydown="true"
@@ -13,19 +13,18 @@
     @blur="emit('blur', $event)"
   >
     <template #append>
-      <slot name="quotecurrency" />
+      <slot name="quoteCurrency" />
     </template>
   </NumberInput>
 </template>
 
 <script setup lang="ts">
 import {
-  computed, nextTick, toRefs, watch,
+  computed,
+  toRefs,
 } from 'vue';
 import NumberInput from '@/components/core/numberInput/NumberInput.vue';
-import { roundToDecimalPoint } from '@/utils/number';
 import { NumberInputNormalizer } from '@/components/core/numberInput';
-import { add, subtract } from '@/utils/float';
 import { useExchange } from '@/hooks/useExchange';
 import { ExchangeInputProps, ExchangeInputEmits } from './index';
 
@@ -41,12 +40,24 @@ const emit = defineEmits<ExchangeInputEmits>();
 const {
   calculateBaseToQuoteCurrencyPrice,
   calculateQuoteToBaseCurrencyPrice,
-  normalizer,
-  maxDeposit,
+  incrementDeposit,
+  decrementDeposit,
+  maxQuoteCurrencyDeposit,
 } = useExchange(
   baseCurrency,
   quoteCurrency,
 );
+
+const normalizer: NumberInputNormalizer = (
+  number: number,
+  direction?: 'increment' | 'decrement',
+) => {
+  switch (direction) {
+    case 'increment': return incrementDeposit(number);
+    case 'decrement': return decrementDeposit(number);
+    default: return calculateBaseToQuoteCurrencyPrice(calculateQuoteToBaseCurrencyPrice(number));
+  }
+};
 
 const localValue = computed({
   get: () => calculateBaseToQuoteCurrencyPrice(props.modelValue),

@@ -32,6 +32,7 @@ export const useOrderFormInject = (): OrderFormProvide => inject<OrderFormProvid
       price: 20000,
       decimals: 3,
       step: 0.001,
+      balance: 0,
     })),
     maxTakeProfits: 5,
     takeProfitsAmount: ref(5),
@@ -40,5 +41,6 @@ export const useOrderFormInject = (): OrderFormProvide => inject<OrderFormProvid
     stopLossRisk: computed(() => 0),
     pledge: computed(() => 0),
     liquidationPrice: computed(() => 0),
+    maxBaseCurrencyDepositLeveraged: computed(() => 0),
   },
 );

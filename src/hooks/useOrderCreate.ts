@@ -64,9 +64,9 @@ export const useOrderCreate = () => {
 
   const baseCurrency = computed<BaseCurrency>(() => ({
     name: marketStore.activePairData?.base || currency.BTC,
-    price: model.price,
     decimals: 3,
     step: 0.001,
+    price: model.price,
   }));
 
   const validationSchema = object().shape({

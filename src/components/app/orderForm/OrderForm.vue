@@ -81,6 +81,7 @@ import { useOrderCreate } from '@/hooks/useOrderCreate';
 import { OrderFormInjectionKey, OrderFormTab } from '@/components/app/orderForm/index';
 import { Tab } from '@/components/core/tabs';
 
+import { useExchange } from '@/hooks/useExchange';
 import OrderFormInputPart from './composables/orderFormInputPart/OrderFormInputPart.vue';
 import OrderFormTakeProfitPart from './composables/orderFormTakeProfitPart/OrderFormTakeProfitPart.vue';
 import OrderFormStopLossPart from './composables/orderFormStopLossPart/OrderFormStopLossPart.vue';
@@ -133,6 +134,13 @@ const {
   handleSubmit,
 } = useOrderCreate();
 
+const {
+  maxBaseCurrencyDepositLeveraged,
+} = useExchange(
+  baseCurrency,
+  quoteCurrency,
+);
+
 provide(OrderFormInjectionKey, {
   model,
   takeProfits,
@@ -147,6 +155,7 @@ provide(OrderFormInjectionKey, {
   stopLossRisk,
   pledge,
   liquidationPrice,
+  maxBaseCurrencyDepositLeveraged,
 });
 </script>
 

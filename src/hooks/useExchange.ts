@@ -4,17 +4,15 @@ import {
 } from 'vue';
 import { roundToDecimalPoint } from '@/utils/number';
 import { add, subtract } from '@/utils/float';
-import { NumberInputNormalizer } from '@/components/core/numberInput';
 import { Currency } from '@/types/currency';
 
 export interface QuoteCurrency extends Currency {
-  balance: number,
   leverage: number,
+  balance: number,
 }
 
 export interface BaseCurrency extends Currency {
   price: number,
-  step: number,
 }
 
 export const useExchange = (
@@ -57,23 +55,16 @@ export const useExchange = (
     ));
   };
 
-  const normalizer: NumberInputNormalizer = (
-    number: number,
-    direction?: 'increment' | 'decrement',
-  ) => {
-    switch (direction) {
-      case 'increment': return incrementDeposit(number);
-      case 'decrement': return decrementDeposit(number);
-      default: return calculateBaseToQuoteCurrencyPrice(calculateQuoteToBaseCurrencyPrice(number));
-    }
-  };
-
-  const maxDeposit = computed(
+  const maxQuoteCurrencyDeposit = computed(
     () => decrementDeposit(quoteCurrency.value.balance),
   );
 
-  const maxDepositLeveraged = computed(
+  const maxQuoteCurrencyDepositLeveraged = computed(
     () => decrementDeposit(quoteCurrency.value.balance * quoteCurrency.value.leverage),
+  );
+
+  const maxBaseCurrencyDepositLeveraged = computed(
+    () => maxQuoteCurrencyDepositLeveraged.value / baseCurrency.value.price,
   );
 
   return {
@@ -83,8 +74,8 @@ export const useExchange = (
     calculateQuoteToBaseCurrencyPrice,
     incrementDeposit,
     decrementDeposit,
-    normalizer,
-    maxDeposit,
-    maxDepositLeveraged,
+    maxQuoteCurrencyDeposit,
+    maxQuoteCurrencyDepositLeveraged,
+    maxBaseCurrencyDepositLeveraged,
   };
 };

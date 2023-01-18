@@ -23,6 +23,7 @@
         name="quantity"
         type="number"
         :min="0"
+        :max="maxBaseCurrencyDepositLeveraged"
         :state="['defaultColor', 'smSize']"
         :decimals="baseCurrency.decimals"
         :step="baseCurrency.step"
@@ -43,7 +44,7 @@
         :quote-currency="quoteCurrency"
         save-on="blur"
       >
-        <template #quotecurrency>
+        <template #quoteCurrency>
           {{ quoteCurrency.name }}
         </template>
       </FormExchangeInput>
@@ -97,6 +98,7 @@ const {
   baseCurrency,
   pledge,
   liquidationPrice,
+  maxBaseCurrencyDepositLeveraged,
 } = useOrderFormInject();
 </script>
 

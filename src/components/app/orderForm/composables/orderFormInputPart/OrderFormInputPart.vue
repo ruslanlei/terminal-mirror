@@ -27,6 +27,7 @@
         :state="['defaultColor', 'smSize']"
         :decimals="baseCurrency.decimals"
         :step="baseCurrency.step"
+        save-on="blur"
       >
         <template #append>
           {{ baseCurrency.name }}

@@ -8,6 +8,7 @@
     :is-disabled="isDisabled"
     :normalizer="normalizer"
     :normalize-on-keydown="true"
+    :save-on="saveOn"
     @input="emit('input', $event)"
     @focus="emit('focus', $event)"
     @blur="emit('blur', $event)"

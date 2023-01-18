@@ -1,4 +1,5 @@
 import { BaseCurrency, QuoteCurrency } from '@/hooks/useExchange';
+import { NumberInputProps } from '@/components/core/numberInput';
 
 export interface ExchangeInputProps {
   modelValue: number,
@@ -6,6 +7,7 @@ export interface ExchangeInputProps {
 
   baseCurrency: BaseCurrency,
   quoteCurrency: QuoteCurrency,
+  saveOn: NumberInputProps['saveOn'],
 }
 
 export interface ExchangeInputEmits {

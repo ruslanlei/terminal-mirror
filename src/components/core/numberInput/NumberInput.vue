@@ -116,26 +116,26 @@ const normalizeValue = (
   value: number,
   normalizer?: NumberInputNormalizer,
 ) => {
-  let isEdited = false;
+  let isChanged = false;
 
   if (normalizer) {
     value = normalizer(value);
-    isEdited = true;
+    isChanged = true;
   }
 
   if (value < props.min) {
     value = props.min;
-    isEdited = true;
+    isChanged = true;
   }
 
   if (value > props.max) {
     value = props.max;
-    isEdited = true;
+    isChanged = true;
   }
 
   return {
     value,
-    isEdited,
+    isChanged,
   };
 };
 
@@ -145,10 +145,12 @@ const saveValue = (
 ) => {
   const {
     value: normalizedValue,
-    isEdited,
+    isChanged,
   } = normalizeValue(value, normalizer);
 
-  if (isEdited && field.value) {
+  console.log(isChanged, value);
+
+  if (isChanged && field.value) {
     field.value.value = String(normalizedValue);
   }
 
@@ -188,7 +190,8 @@ const onBlur = (event: InputEvent) => {
     saveValue(Number(field.value.value), props.normalizer);
   }
 
-  emit('blur', event);
+  // FIXME: find reason why after this event input stop working
+  // emit('blur', event);
 };
 
 const onFocus = (event: InputEvent) => {

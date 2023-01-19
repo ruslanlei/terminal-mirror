@@ -5,11 +5,19 @@
   >
     <div
       ref="container"
-      :class="$style.fieldErrorContainer"
+      :class="[containerClass, $style.fieldErrorContainer]"
     >
-      <slot>
-        {{ text }}
-      </slot>
+      <Icon
+        v-if="showIcon"
+        :class="$style.icon"
+        icon="info"
+        :size="18"
+      />
+      <span :class="$style.text">
+        <slot>
+          {{ text }}
+        </slot>
+      </span>
     </div>
   </div>
 </template>
@@ -23,8 +31,14 @@ import {
 } from 'vue';
 import { FieldErrorProps } from '@/components/core/fieldError/index';
 import { useEnvironmentObserver } from '@/hooks/useEnvironmentObserver';
+import Icon from '@/components/core/icon/Icon.vue';
 
-const props = defineProps<FieldErrorProps>();
+const props = withDefaults(
+  defineProps<FieldErrorProps>(),
+  {
+    showIcon: true,
+  },
+);
 
 const container = ref<HTMLElement>();
 
@@ -71,11 +85,26 @@ onBeforeUnmount(removeListeners);
 }
 
 .fieldErrorContainer {
+  display: flex;
+  align-items: center;
   width: 100%;
   position: absolute;
   bottom: 0;
   font-size: inherit;
   font-weight: 600;
+  color: inherit;
+}
+
+.icon {
+  width: 12px;
+  min-width: 12px;
+  & + .text {
+    margin-left: 8px;
+  }
+}
+
+.text {
+  font-size: inherit;
   color: inherit;
 }
 </style>

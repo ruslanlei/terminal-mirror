@@ -20,6 +20,7 @@ export interface NumberInputProps {
   error?: string,
   label?: string,
   hideArrows?: boolean,
+  showErrorIcon?: boolean,
 }
 
 export interface NumberInputEmits {

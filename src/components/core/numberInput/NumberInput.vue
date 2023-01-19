@@ -66,7 +66,8 @@
     </div>
     <FieldError
       :text="error"
-      :class="$style.error"
+      :class="$style.errorMessage"
+      :container-class="$style.errorMessageInner"
     />
   </label>
 </template>
@@ -93,6 +94,7 @@ const props = withDefaults(
     roundToDecimalPoint: true,
     state: () => ['smSize', 'defaultColor'],
     hideArrows: false,
+    showErrorIcon: true,
   },
 );
 
@@ -248,7 +250,12 @@ const states = useComputedState(props);
   }
   .error {
     margin-top: 2px;
+  }
+  .errorMessage {
     @include title7;
+  }
+  .errorMessageInner {
+    padding-top: 4px;
   }
 }
 
@@ -317,4 +324,10 @@ const states = useComputedState(props);
     color: rgb(var(--color-accent-3));
   }
 }
+
+.errorMessage {
+  color: rgb(var(--color-danger-2));
+}
+
+.errorMessageInner {}
 </style>

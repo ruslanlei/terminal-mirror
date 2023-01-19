@@ -61,15 +61,17 @@
     <div :class="$style.submit">
       <slot name="submit" />
     </div>
-    <div :class="$style.ratio">
-      <div :class="$style.ratioValue">
-        <slot name="ratio" />
-      </div>
+    <div :class="$style.profitAndLoss">
       <div :class="$style.profit">
         <slot name="profit" />
       </div>
       <div :class="$style.loss">
         <slot name="loss" />
+      </div>
+    </div>
+    <div :class="$style.ratio">
+      <div :class="$style.ratioValue">
+        <slot name="ratio" />
       </div>
     </div>
   </div>
@@ -156,11 +158,16 @@ import Icon from '@/components/core/icon/Icon.vue';
   margin-top: auto;
 }
 
-.ratio {
+.profitAndLoss {
   margin-top: 10px;
-  padding: 0 20px;
+  //padding: 0 20px;
   display: flex;
   justify-content: space-between;
+}
+
+.ratio {
+  display: flex;
+  justify-content: center;
 }
 
 .ratioValue, .profit, .loss {
@@ -170,6 +177,10 @@ import Icon from '@/components/core/icon/Icon.vue';
 
 .ratioValue {
   color: rgb(var(--color-accent-1));
+  background-color: rgb(var(--color-accent-3));
+  padding: 2px 10px;
+  border-radius: 12px;
+  margin-top: 10px;
 }
 
 .profit {

@@ -1,4 +1,7 @@
-@mixin scrollbarDefault() {
+@mixin scrollbarDefault($absolute: false) {
+  @if ($absolute) {
+    overflow-y: overlay;
+  }
   &::-webkit-scrollbar-track {
     background: rgb(var(--color-background-2));
   }
@@ -11,7 +14,27 @@
   }
 }
 
-@mixin scrollbarPrimary($width: 12px, $borderRadius: 6px) {
+@mixin scrollbarSecondary($absolute: false) {
+  @if ($absolute) {
+    overflow-y: overlay;
+  }
+  &::-webkit-scrollbar-track {
+    background: rgb(var(--color-background-2));
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: rgb(var(--color-accent-3));
+    outline: none;
+  }
+  &::-webkit-scrollbar {
+    width: 12px;
+  }
+}
+
+
+@mixin scrollbarPrimary($width: 12px, $borderRadius: 6px, $absolute: false) {
+  @if ($absolute) {
+    overflow-y: overlay;
+  }
   &::-webkit-scrollbar-track {
     background-color: rgb(var(--color-background-2));
     border-radius: $borderRadius;

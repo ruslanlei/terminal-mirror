@@ -23,11 +23,8 @@ export interface InputProps {
   inputmode?: string,
   mask?: string,
   error?: string,
-  // state?: 'default' | 'secondary2',
-  // size?: 'sm' | 'md' | 'lg',
-  //
-
   state?: InputState | InputState[],
+  showErrorIcon?: boolean,
 }
 
 export interface InputEmits {

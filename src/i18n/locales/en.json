@@ -6,7 +6,7 @@
   },
   "validationError": {
     "email": "Value is not valid email",
-    "required": "This is required field",
+    "required": "This is required",
     "minLength": "This field must be at least {chars} characters long.",
     "passwordsMismatch": "Passwords should be equal to each other",
     "tokenInvalidOrNotProvided": "Passed token is invalid or not provided",

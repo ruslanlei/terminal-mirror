@@ -62,7 +62,8 @@
     </div>
     <FieldError
       :text="error"
-      :class="$style.error"
+      :class="$style.errorMessage"
+      :container-class="$style.errorMessageInner"
     />
   </label>
 </template>
@@ -205,16 +206,18 @@ defineExpose({
     & > input {
       padding: 18px 20px;
     }
-    & + .error {
-      margin-top: 6px;
-    }
+  }
+
+  .errorMessageInner {
+    padding-top: 6px;
   }
 
   .passwordVisibilityButton {
     margin-right: 20px;
   }
 
-  .error {
+  .errorMessage {
+    @include text;
   }
 }
 
@@ -233,12 +236,13 @@ defineExpose({
     & > input, .append {
       @include title3;
     }
-    & + .error {
-      margin-top: 6px;
-    }
   }
 
-  .error {
+  .errorMessageInner {
+    padding-top: 6px;
+  }
+
+  .errorMessage {
   }
 }
 
@@ -257,12 +261,10 @@ defineExpose({
     & > input, .append {
       @include title4;
     }
-    & + .error {
-      margin-top: 6px;
-    }
   }
 
-  .error {
+  .errorMessageInner {
+    padding-top: 6px;
   }
 }
 
@@ -307,31 +309,38 @@ defineExpose({
 .error {
   &.focus {
     .field {
-      border-color: rgba(var(--color-danger), 1);
-      color: rgba(var(--color-danger), 1);
+      border-color: rgba(var(--color-danger-2), 1);
+      color: rgba(var(--color-danger-2), 1);
       & > input {
         &::placeholder {
-          color: rgba(var(--color-danger), 1);
+          color: rgba(var(--color-danger-2), 1);
         }
       }
     }
   }
   .field {
-    border: 1px solid rgba(var(--color-danger), 1);
+    border: 1px solid rgba(var(--color-danger-2), 1);
     &:hover {
-      border-color: rgba(var(--color-danger), 1);
+      border-color: rgba(var(--color-danger-2), 1);
     }
     & > input {
       &::placeholder {
-        color: rgba(var(--color-danger), 1);
+        color: rgba(var(--color-danger-2), 1);
       }
     }
+  }
+  .errorMessage {
+    color: rgb(var(--color-danger-2));
   }
 }
 
 .passwordVisibilityButton {
   cursor: pointer;
 }
+
+.errorMessage {}
+
+.errorMessageInner {}
 </style>
 
 <style lang="scss">

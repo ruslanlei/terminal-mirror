@@ -6,10 +6,12 @@ export enum inputType {
 
 export type InputState =
   'defaultColor'
-  | 'secondary2Color'
-  | 'smSize'
-  | 'mdSize'
-  | 'lgSize'
+  | 'secondary2Color';
+
+export type InputSize =
+  'sm'
+  | 'md'
+  | 'lg'
 
 export interface InputProps {
   modelValue: string | number,
@@ -24,6 +26,7 @@ export interface InputProps {
   mask?: string,
   error?: string,
   state?: InputState | InputState[],
+  size?: InputSize,
   showErrorIcon?: boolean,
 }
 

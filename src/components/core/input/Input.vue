@@ -1,6 +1,7 @@
 <template>
   <label
     :class="[
+      $style[size],
       ...computedState,
       isDisabled && $style.disabled,
       !!error && $style.error,
@@ -93,7 +94,8 @@ const props = withDefaults(
     type: 'text' as inputType.TEXT,
     autocomplete: undefined,
     inputmode: undefined,
-    state: () => ['defaultColor', 'lgSize'],
+    state: 'defaultColor',
+    size: 'lg',
   },
 );
 
@@ -194,7 +196,7 @@ defineExpose({
 }
 
 // sizes
-.lgSize {
+.lg {
   .label {
     & + .field {
       margin-top: 6px;
@@ -221,7 +223,7 @@ defineExpose({
   }
 }
 
-.mdSize {
+.md {
   .label {
     & + .field {
       margin-top: 6px;
@@ -246,7 +248,7 @@ defineExpose({
   }
 }
 
-.smSize {
+.sm {
   .label {
     & + .field {
       margin-top: 6px;

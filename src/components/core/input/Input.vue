@@ -64,7 +64,9 @@
     <FieldError
       :text="error"
       :class="$style.errorMessage"
-      :container-class="$style.errorMessageInner"
+      :offset="6"
+      :size="size"
+      :show-icon="showErrorIcon"
     />
   </label>
 </template>
@@ -96,6 +98,7 @@ const props = withDefaults(
     inputmode: undefined,
     state: 'defaultColor',
     size: 'lg',
+    showErrorIcon: true,
   },
 );
 
@@ -210,10 +213,6 @@ defineExpose({
     }
   }
 
-  .errorMessageInner {
-    padding-top: 6px;
-  }
-
   .passwordVisibilityButton {
     margin-right: 20px;
   }
@@ -240,10 +239,6 @@ defineExpose({
     }
   }
 
-  .errorMessageInner {
-    padding-top: 6px;
-  }
-
   .errorMessage {
   }
 }
@@ -263,10 +258,6 @@ defineExpose({
     & > input, .append {
       @include title4;
     }
-  }
-
-  .errorMessageInner {
-    padding-top: 6px;
   }
 }
 
@@ -341,8 +332,6 @@ defineExpose({
 }
 
 .errorMessage {}
-
-.errorMessageInner {}
 </style>
 
 <style lang="scss">

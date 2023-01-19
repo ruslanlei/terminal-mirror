@@ -66,9 +66,11 @@
       </div>
     </div>
     <FieldError
+      :size="size"
       :text="error"
+      :offset="4"
       :class="$style.errorMessage"
-      :container-class="$style.errorMessageInner"
+      :show-icon="showErrorIcon"
     />
   </label>
 </template>
@@ -253,12 +255,6 @@ const states = useComputedState(props);
   .error {
     margin-top: 2px;
   }
-  .errorMessage {
-    @include title7;
-  }
-  .errorMessageInner {
-    padding-top: 4px;
-  }
 }
 
 .xs {
@@ -330,6 +326,4 @@ const states = useComputedState(props);
 .errorMessage {
   color: rgb(var(--color-danger-2));
 }
-
-.errorMessageInner {}
 </style>

@@ -28,6 +28,7 @@
         :decimals="baseCurrency.decimals"
         :step="baseCurrency.step"
         save-on="blur"
+        :show-error-icon="false"
       >
         <template #append>
           {{ baseCurrency.name }}

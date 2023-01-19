@@ -4,6 +4,7 @@
     :style="{
       ...(size ? {
         width: `${size}px`,
+        minWidth: `${size}px`,
         height: `${size}px`,
       } : {})
     }"

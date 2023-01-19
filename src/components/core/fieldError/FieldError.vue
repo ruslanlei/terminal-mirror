@@ -1,17 +1,22 @@
 <template>
   <div
     :style="computedStyles"
-    :class="[$style.fieldError, !isVisible && $style.hidden]"
+    :class="[
+      $style[size],
+      $style.fieldError,
+      !isVisible && $style.hidden,
+    ]"
   >
     <div
       ref="container"
-      :class="[containerClass, $style.fieldErrorContainer]"
+      :class="$style.fieldErrorContainer"
+      :style="computedInnerStyles"
     >
       <Icon
         v-if="showIcon"
         :class="$style.icon"
         icon="info"
-        :size="18"
+        :size="computedIconSize"
       />
       <span :class="$style.text">
         <slot>
@@ -37,6 +42,8 @@ const props = withDefaults(
   defineProps<FieldErrorProps>(),
   {
     showIcon: true,
+    size: 'lg',
+    offset: 0,
   },
 );
 
@@ -57,6 +64,15 @@ const calculateHeight = () => {
     computedStyles.value.height = '0px';
   }
 };
+
+const computedInnerStyles = computed(() => ({
+  paddingTop: `${props.offset}px`,
+}));
+
+const computedIconSize = computed(() => ({
+  sm: 12,
+  lg: 18,
+}[props.size]));
 
 const {
   setListeners,
@@ -86,12 +102,10 @@ onBeforeUnmount(removeListeners);
 
 .fieldErrorContainer {
   display: flex;
-  align-items: center;
+  //align-items: center;
   width: 100%;
   position: absolute;
   bottom: 0;
-  font-size: inherit;
-  font-weight: 600;
   color: inherit;
 }
 
@@ -104,7 +118,17 @@ onBeforeUnmount(removeListeners);
 }
 
 .text {
-  font-size: inherit;
   color: inherit;
+}
+
+// states
+.sm {
+  @include title7;
+  font-weight: 600;
+}
+
+.lg {
+  @include text;
+  font-weight: 500;
 }
 </style>

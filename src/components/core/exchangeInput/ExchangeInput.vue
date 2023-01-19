@@ -2,7 +2,8 @@
   <NumberInput
     v-model="localValue"
     type="number"
-    :state="['defaultColor', 'smSize']"
+    state="defaultColor"
+    size="sm"
     :min="0"
     :max="maxQuoteCurrencyDeposit"
     :is-disabled="isDisabled"

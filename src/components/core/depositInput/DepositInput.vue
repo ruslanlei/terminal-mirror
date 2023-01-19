@@ -51,7 +51,8 @@
         <NumberInput
           v-model="localValueInPercents"
           :class="$style.input"
-          :state="['defaultColor', 'smSize']"
+          state="defaultColor"
+          size="sm"
           type="number"
           :min="0"
           :max="100"

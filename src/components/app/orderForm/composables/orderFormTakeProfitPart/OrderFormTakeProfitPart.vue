@@ -14,7 +14,8 @@
         v-model="takeProfitsAmount"
         :min="1"
         :max="maxTakeProfits"
-        :state="['smSize', 'defaultColor']"
+        size="sm"
+        state="defaultColor"
         @input="onTakeProfitsAmountInput"
       />
     </template>

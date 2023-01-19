@@ -5,7 +5,8 @@
         v-model="localPrice"
         type="number"
         :class="$style.input"
-        :state="['xsSize']"
+        :state="null"
+        size="xs"
         :hide-arrows="true"
       />
       <NumberInput
@@ -13,7 +14,8 @@
         type="number"
         :step="0.1"
         :class="$style.input"
-        :state="['alignRight', 'xsSize']"
+        state="alignRight"
+        size="xs"
         :hide-arrows="true"
       />
     </div>
@@ -28,7 +30,8 @@
         :decimals="currency.decimals"
         :round-to-decimal-point="false"
         :class="$style.input"
-        :state="['xsSize']"
+        :state="null"
+        size="xs"
         :hide-arrows="true"
         @input="onQuantityInput"
         @blur="onQuantityInput"
@@ -41,7 +44,8 @@
         :max="100"
         :step="percentOfQuantityInputStep"
         :class="$style.input"
-        :state="['alignRight', 'xsSize']"
+        state="alignRight"
+        size="xs"
         :hide-arrows="true"
         @input="onQuantityInput"
         @blur="onQuantityInput"

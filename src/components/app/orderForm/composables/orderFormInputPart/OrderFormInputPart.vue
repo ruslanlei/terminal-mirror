@@ -6,7 +6,7 @@
     <template #priceInput>
       <FormNumberInput
         name="price"
-        :state="['defaultColor', 'smSize']"
+        state="defaultColor"
         :min="1"
         save-on="blur"
       >
@@ -24,7 +24,7 @@
         type="number"
         :min="0"
         :max="maxBaseCurrencyDepositLeveraged"
-        :state="['defaultColor', 'smSize']"
+        state="defaultColor"
         :decimals="baseCurrency.decimals"
         :step="baseCurrency.step"
         save-on="blur"
@@ -67,7 +67,7 @@
       <FormNumberInput
         name="leverage"
         :class="$style.input"
-        :state="['defaultColor', 'smSize']"
+        state="defaultColor"
         type="number"
         :min="1"
         :max="20"

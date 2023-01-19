@@ -1,6 +1,7 @@
 <template>
   <label
     :class="[
+      $style[size],
       ...states,
       !!error && $style.withError,
     ]"
@@ -92,7 +93,8 @@ const props = withDefaults(
     saveOn: 'input',
     normalizeOnKeydown: false,
     roundToDecimalPoint: true,
-    state: () => ['smSize', 'defaultColor'],
+    state: 'defaultColor',
+    size: 'sm',
     hideArrows: false,
     showErrorIcon: true,
   },
@@ -240,7 +242,7 @@ const states = useComputedState(props);
   }
 }
 
-.smSize {
+.sm {
   .field {
     @include title4;
     border-radius: 5px;
@@ -259,7 +261,7 @@ const states = useComputedState(props);
   }
 }
 
-.xsSize {
+.xs {
   .field {
     @include title5;
     border-radius: 5px;

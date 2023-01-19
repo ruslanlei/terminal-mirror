@@ -13,7 +13,8 @@
       <NumberInput
         v-model="stopLossPrice"
         :min="0"
-        :state="['smSize', 'defaultColor']"
+        state="defaultColor"
+        size="sm"
         :step="0.01"
       >
         <template #append>
@@ -27,7 +28,8 @@
     <template #sumOfRiskInput>
       <NumberInput
         v-model="sumOfRisk"
-        :state="['smSize', 'defaultColor']"
+        size="sm"
+        state="defaultColor"
         :step="0.01"
       >
         <template #append>
@@ -41,7 +43,8 @@
     <template #percentOfOrderInput>
       <NumberInput
         v-model="percentOfOrder"
-        :state="['smSize', 'defaultColor']"
+        size="sm"
+        state="defaultColor"
         :step="0.01"
       >
         <template #append>
@@ -55,7 +58,8 @@
     <template #percentOfDepositInput>
       <NumberInput
         v-model="percentOfDeposit"
-        :state="['smSize', 'defaultColor']"
+        size="sm"
+        state="defaultColor"
         :step="0.01"
       >
         <template #append>

@@ -44,7 +44,11 @@
       "login": "Sign in",
       "emailSent": "Verification link successfully sent. Check email to activate account",
       "failed": "Failed to sign up",
-      "mustAcceptAgreement": "You must accept agreement before sign up"
+      "mustAcceptAgreement": "You must accept agreement before sign up",
+      "successScreen": {
+        "label": "You are successful registered!",
+        "description": "Now you can enter the platform."
+      }
     },
     "forgotPassword": {
       "label": "Password recovery",

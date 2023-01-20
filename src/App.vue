@@ -21,6 +21,8 @@ useApp();
 .layout {}
 
 .modalLayer {
+  position: fixed;
+  inset: 0;
   z-index: 3000;
 }
 

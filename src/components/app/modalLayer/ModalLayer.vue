@@ -2,17 +2,19 @@
   <div
     :class="{
       [$style.modalLayer]: true,
-      [$style.active]: isActiveModals
+      [$style.active]: isAnyActiveModals
     }"
   >
     <div
-      :class="$style.module"
-    >
+      :class="[$style.backdrop, !isAnyActiveModals && $style.hidden]"
+      @click="closeModal(displayModal.id)"
+    />
+    <div :class="$style.modal">
       <component
         :is="displayModal.component"
-        v-if="isActiveModals"
+        v-if="isAnyActiveModals"
         v-bind="displayModal.payload"
-        :class="$style.module"
+        :class="$style.modal"
         @close="closeModal(displayModal.id)"
       />
     </div>
@@ -23,18 +25,20 @@
 import { computed } from 'vue';
 import { useModalStore, Modal, modalType } from '@/stores/modals';
 import ConfirmModal from '@/components/app/confirmModal/ConfirmModal.vue';
+import SuccessSignUpModal from '@/components/app/successSignUpModal/SuccessSignUpModal.vue';
 
 const modalsStore = useModalStore();
 
 const modalsMap = {
   [modalType.CONFIRM]: ConfirmModal,
+  [modalType.SUCCESS_SIGN_UP]: SuccessSignUpModal,
 };
 
 const modals = computed(() => modalsStore.list.map((modal) => ({
   ...modal,
   component: modalsMap[modal.type],
 })));
-const isActiveModals = computed(() => !!modals.value.length);
+const isAnyActiveModals = computed(() => !!modals.value.length);
 
 const displayModal = computed(() => modals.value?.[modals.value.length - 1] || null);
 
@@ -47,8 +51,14 @@ const closeModal = (modalId: Modal['id']) => {
 @import "src/assets/styles/utils";
 
 .modalLayer {
+  overflow-y: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100%;
   pointer-events: none;
-  * {
+  @include scrollbarDefault();
+  & > * {
     pointer-events: all;
   }
   &.active {
@@ -59,16 +69,22 @@ const closeModal = (modalId: Modal['id']) => {
   }
 }
 
-.layer {
-  overflow-y: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100%;
-  @include scrollbarDefault();
+.modal {
+  width: 100%;
+  max-width: 600px;
+  position: relative;
+  z-index: 2;
 }
 
-.module {
-  width: 100%;
+.backdrop {
+  cursor: pointer;
+  position: absolute;
+  inset: 0;
+  background-color: rgba(var(--color-background-1), 0.4);
+  transition: opacity 200ms;
+  &.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
 }
 </style>

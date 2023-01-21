@@ -183,5 +183,22 @@
       "common": "Common",
       "orders": "Orders"
     }
+  },
+  "ordersList": {
+    "column": {
+      "pair": "Pair",
+      "type": "Type",
+      "volume": "Volume {currencyName}",
+      "coins": "Coins",
+      "prices": {
+        "order": "Order price{current}",
+        "current": "/current"
+      },
+      "sl": "SL",
+      "pnl": "PNL {value}",
+      "tp": "TP",
+      "date": "Date",
+      "comment": "Comment"
+    }
   }
 }

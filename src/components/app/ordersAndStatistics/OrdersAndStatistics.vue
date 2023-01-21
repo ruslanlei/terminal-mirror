@@ -27,7 +27,7 @@
       </div>
     </div>
     <div :class="$style.content">
-      <OrdersList
+      <CurrentOrdersList
         v-if="activeTab === 'orders'"
         :list-type="ordersListType"
       />
@@ -36,18 +36,21 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, defineAsyncComponent, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Selector from '@/components/core/selector/Selector.vue';
-import OrdersList from '@/components/app/ordersList/OrdersList.vue';
 import {
   MainSelectorOptions,
   MainSelectorOptionValue,
   OrdersSelectorOptions,
   StatisticsSelectorOptions,
   StatisticsSelectorOptionValue,
-} from '@/components/app/ordersAndStatistics/index';
-import { OrdersListType } from '@/components/app/ordersList';
+  OrdersSelectorOptionValue,
+} from './index';
+
+const CurrentOrdersList = defineAsyncComponent(
+  () => import('@/components/app/currentOrdersList/CurrentOrdersList.vue'),
+);
 
 const { t } = useI18n();
 
@@ -64,7 +67,7 @@ const mainSelectorOptions = computed<MainSelectorOptions>(() => [
   },
 ]);
 
-const ordersListType = ref<OrdersListType>('current');
+const ordersListType = ref<OrdersSelectorOptionValue>('current');
 const orderListOptions = computed<OrdersSelectorOptions>(() => [
   {
     label: t('ordersAndStatistics.ordersTab.current'),

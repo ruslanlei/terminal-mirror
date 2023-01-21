@@ -26,6 +26,7 @@
           <slot
             :name="`column(${column.slug})`"
             :column="column"
+            :data="column.data"
             :label="column.label"
             :slug="column.slug"
             :is-all-records-selected="isAllRecordsSelected"

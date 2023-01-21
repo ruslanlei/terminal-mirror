@@ -1,0 +1,115 @@
+<template>
+  <div :class="$style.ordersList">
+    <div :class="$style.header">
+      <Selector
+        v-model="activeTab"
+        :options="mainSelectorOptions"
+        :state="['simpleColor', 'lgSize']"
+      />
+      <div :class="$style.additionalTab">
+        <transition
+          name="orderAndStatisticsTabs"
+          mode="out-in"
+        >
+          <Selector
+            v-if="activeTab === 'orders'"
+            v-model="ordersActiveTab"
+            :options="ordersTabs"
+            :state="['secondaryColor2', 'mdSize']"
+          />
+          <Selector
+            v-else-if="activeTab === 'statistics'"
+            v-model="statisticsActiveTab"
+            :options="statisticsTabs"
+            :state="['secondaryColor2', 'mdSize']"
+          />
+        </transition>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { computed, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+import Selector from '@/components/core/selector/Selector.vue';
+import {
+  MainSelectorOptions,
+  MainSelectorOptionValue,
+  OrdersSelectorOptions,
+  OrdersSelectorOptionValue,
+  StatisticsSelectorOptions,
+  StatisticsSelectorOptionValue,
+} from '@/components/app/ordersAndStatistics/index';
+
+const { t } = useI18n();
+
+const activeTab = ref<MainSelectorOptionValue>('orders');
+
+const mainSelectorOptions = computed<MainSelectorOptions>(() => [
+  {
+    label: t('ordersAndStatistics.ordersLabel'),
+    value: 'orders',
+  },
+  {
+    label: t('ordersAndStatistics.statisticsLabel'),
+    value: 'statistics',
+  },
+]);
+
+const ordersActiveTab = ref<OrdersSelectorOptionValue>('current');
+
+const ordersTabs = computed<OrdersSelectorOptions>(() => [
+  {
+    label: t('ordersAndStatistics.ordersTab.current'),
+    value: 'current',
+  },
+  {
+    label: t('ordersAndStatistics.ordersTab.closed'),
+    value: 'closed',
+  },
+]);
+
+const statisticsActiveTab = ref<StatisticsSelectorOptionValue>('common');
+
+const statisticsTabs = computed<StatisticsSelectorOptions>(() => [
+  {
+    label: t('ordersAndStatistics.statisticsTab.common'),
+    value: 'common',
+  },
+  {
+    label: t('ordersAndStatistics.statisticsTab.orders'),
+    value: 'orders',
+  },
+]);
+</script>
+
+<style lang="scss" module>
+.ordersList {}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.additionalTab {}
+</style>
+
+<style lang="scss">
+.orderAndStatisticsTabs {
+  &-enter-active,
+  &-leave-active {
+    transition: opacity 160ms, transform 200ms;
+  }
+
+  &-enter-from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  &-leave-to {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+</style>

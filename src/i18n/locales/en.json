@@ -171,5 +171,17 @@
       "pairs": "Pairs",
       "priceAndVolume": "Price/Volume"
     }
+  },
+  "ordersAndStatistics": {
+    "ordersLabel": "Orders",
+    "ordersTab": {
+      "current": "Current",
+      "closed": "Closed"
+    },
+    "statisticsLabel": "Statistics",
+    "statisticsTab": {
+      "common": "Common",
+      "orders": "Orders"
+    }
   }
 }

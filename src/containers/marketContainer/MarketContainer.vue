@@ -7,14 +7,20 @@
       <slot name="tools" />
     </div>
     <main :class="$style.main">
-      <slot name="main" />
+      <div :class="$style.chart">
+        <slot name="chart" />
+      </div>
+      <div :class="$style.chartDivider" />
+      <div :class="$style.orders">
+        <slot name="orders" />
+      </div>
     </main>
     <aside
       :style="stickyElementStyles"
       :class="$style.sideBar"
     >
       <div :class="$style.orderSettings">
-        <slot name="order" />
+        <slot name="sidebar" />
       </div>
       <div
         v-if="'playerControls' in $slots"
@@ -50,6 +56,21 @@ const stickyElementStyles = computed(() => ({
 }
 
 .main {
+}
+
+.chart {
+  height: 500px;
+}
+
+.chartDivider {
+  height: 2px;
+  border-radius: 1px;
+  width: 100%;
+  background-color: rgb(var(--color-background-3));
+}
+
+.orders {
+  margin-top: 20px;
 }
 
 .sideBar {

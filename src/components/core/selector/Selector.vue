@@ -268,6 +268,22 @@ onBeforeUnmount(removeListeners);
   }
 }
 
+.lgSize {
+  &.options {
+    border-radius: 5px;
+  }
+  .item {
+    @include title1;
+    font-weight: 700;
+    padding: 10px 20px;
+    height: 100%;
+    flex-grow: 1;
+  }
+  .ghost {
+    border-radius: 5px;
+  }
+}
+
 .secondaryColor5 {
   &.options {
     background-color: rgb(var(--color-background-2));
@@ -296,7 +312,21 @@ onBeforeUnmount(removeListeners);
     }
   }
   .ghost {
-    background-color: rgb(var(--color-background-3));;
+    background-color: rgb(var(--color-background-3));
+  }
+}
+
+.simpleColor {
+  &.options {
+  }
+  .item {
+    color: rgb(var(--color-accent-2));
+    &.active {
+      color: rgb(var(--color-accent-1));
+    }
+  }
+  .ghost {
+    display: none;
   }
 }
 

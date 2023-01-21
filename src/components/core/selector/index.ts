@@ -12,7 +12,9 @@ type SelectorState =
   | 'default'
   | 'tabsShape'
   | 'secondaryColor2'
-  | 'secondaryColor5';
+  | 'secondaryColor5'
+  | 'simpleColor'
+  | 'lgSize';
 
 export interface SelectorProps {
   options: SelectorOption[],

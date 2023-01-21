@@ -13,8 +13,8 @@
         >
           <Selector
             v-if="activeTab === 'orders'"
-            v-model="ordersActiveTab"
-            :options="ordersTabs"
+            v-model="ordersListType"
+            :options="orderListOptions"
             :state="['secondaryColor2', 'mdSize']"
           />
           <Selector
@@ -26,6 +26,12 @@
         </transition>
       </div>
     </div>
+    <div :class="$style.content">
+      <OrdersList
+        v-if="activeTab === 'orders'"
+        :list-type="ordersListType"
+      />
+    </div>
   </div>
 </template>
 
@@ -33,14 +39,15 @@
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Selector from '@/components/core/selector/Selector.vue';
+import OrdersList from '@/components/app/ordersList/OrdersList.vue';
 import {
   MainSelectorOptions,
   MainSelectorOptionValue,
   OrdersSelectorOptions,
-  OrdersSelectorOptionValue,
   StatisticsSelectorOptions,
   StatisticsSelectorOptionValue,
 } from '@/components/app/ordersAndStatistics/index';
+import { OrdersListType } from '@/components/app/ordersList';
 
 const { t } = useI18n();
 
@@ -57,9 +64,8 @@ const mainSelectorOptions = computed<MainSelectorOptions>(() => [
   },
 ]);
 
-const ordersActiveTab = ref<OrdersSelectorOptionValue>('current');
-
-const ordersTabs = computed<OrdersSelectorOptions>(() => [
+const ordersListType = ref<OrdersListType>('current');
+const orderListOptions = computed<OrdersSelectorOptions>(() => [
   {
     label: t('ordersAndStatistics.ordersTab.current'),
     value: 'current',
@@ -71,7 +77,6 @@ const ordersTabs = computed<OrdersSelectorOptions>(() => [
 ]);
 
 const statisticsActiveTab = ref<StatisticsSelectorOptionValue>('common');
-
 const statisticsTabs = computed<StatisticsSelectorOptions>(() => [
   {
     label: t('ordersAndStatistics.statisticsTab.common'),

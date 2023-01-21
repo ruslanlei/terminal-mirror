@@ -18,6 +18,6 @@ import MarketHeader from '@/components/app/marketHeader/MarketHeader.vue';
   position: sticky;
   top: 0;
   background-color: rgb(var(--color-background-1));
-  z-index: 2;
+  z-index: 3;
 }
 </style>

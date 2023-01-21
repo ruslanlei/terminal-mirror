@@ -1,4 +1,5 @@
 import { SelectorOption } from '@/components/core/selector';
+import { OrdersListType } from '@/components/app/ordersList';
 
 export type MainSelectorOptionValue = 'orders' | 'statistics';
 
@@ -6,9 +7,8 @@ export type MainSelectorOptions = SelectorOption<
   MainSelectorOptionValue
 >[];
 
-export type OrdersSelectorOptionValue = 'current' | 'closed';
 export type OrdersSelectorOptions = SelectorOption<
-  OrdersSelectorOptionValue
+  OrdersListType
 >[];
 
 export type StatisticsSelectorOptionValue = 'common' | 'orders';

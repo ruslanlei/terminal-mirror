@@ -275,7 +275,7 @@ onBeforeUnmount(removeListeners);
   .item {
     @include title1;
     font-weight: 700;
-    padding: 10px 20px;
+    padding: 10px;
     height: 100%;
     flex-grow: 1;
   }

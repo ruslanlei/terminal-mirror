@@ -212,7 +212,9 @@ const {
   border-radius: 10px;
   &.list {
     .head {
-      padding: 16px;
+      padding: 15px 20px;
+      border-radius: 5px;
+      @include title3;
     }
     .records {
       padding: 14px 0;
@@ -254,6 +256,12 @@ const {
   background-color: rgb(var(--color-background-3));
   .head {
     background-color: rgb(var(--color-background-3));
+  }
+}
+
+.ordersListColor {
+  .head {
+    background-color: rgb(var(--color-background-2));
   }
 }
 </style>

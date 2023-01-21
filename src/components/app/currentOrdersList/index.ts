@@ -17,7 +17,7 @@ export type CurrentOrdersTableColumnSlug =
 
 export type CurrentOrdersTableColumn = TableColumn<CurrentOrdersTableColumnSlug>;
 
-export type PairsTableRecord = TableRecord<CurrentOrdersTableColumnSlug, {
+export type CurrentOrdersTableRecord = TableRecord<CurrentOrdersTableColumnSlug, {
   pair: currency,
   type: Order['side'],
   volume: number,

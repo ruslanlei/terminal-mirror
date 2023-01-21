@@ -36,7 +36,11 @@ export enum SortDirection {
   DESC = 'desc',
 }
 
-export type TableState = 'scrollable' | 'defaultSize' | 'tinySize' | 'secondaryColor3';
+export type TableState = 'scrollable'
+  | 'defaultSize'
+  | 'tinySize'
+  | 'ordersListColor'
+  | 'secondaryColor3';
 
 export interface TableProps {
   type: tableType,

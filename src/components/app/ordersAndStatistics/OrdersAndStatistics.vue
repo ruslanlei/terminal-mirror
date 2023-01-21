@@ -28,7 +28,8 @@
     </div>
     <div :class="$style.content">
       <CurrentOrdersList
-        v-if="activeTab === 'orders'"
+        v-if="activeTab === 'orders' && ordersListType === 'current'"
+        :class="$style.ordersList"
         :list-type="ordersListType"
       />
     </div>
@@ -102,6 +103,10 @@ const statisticsTabs = computed<StatisticsSelectorOptions>(() => [
 }
 
 .additionalTab {}
+
+.ordersList {
+  margin-top: 20px;
+}
 </style>
 
 <style lang="scss">

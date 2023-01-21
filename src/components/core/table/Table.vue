@@ -215,6 +215,7 @@ const {
       padding: 15px 20px;
       border-radius: 5px;
       @include title3;
+      font-weight: 400;
     }
     .records {
       padding: 14px 0;

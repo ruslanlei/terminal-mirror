@@ -8,21 +8,29 @@
     <template #column(volume)>
       <i18n-t keypath="ordersList.column.volume">
         <template #currencyName>
-          {{ 'USDT' }}
+          <InlineSpace />
+          <span :class="$style.quoteCurrency">
+            {{ 'USDT' }}
+          </span>
         </template>
       </i18n-t>
     </template>
     <template #column(prices)>
       <i18n-t keypath="ordersList.column.prices.order">
         <template #current>
-          {{ t('ordersList.column.prices.current') }}
+          <span :class="$style.priceLabelCurrent">
+            {{ t('ordersList.column.prices.current') }}
+          </span>
         </template>
       </i18n-t>
     </template>
     <template #column(pnl)>
       <i18n-t keypath="ordersList.column.pnl">
         <template #value>
-          {{ '+32.331%' }}
+          <InlineSpace />
+          <span :class="$style.pnlColumnValue">
+            {{ '+32.331%' }}
+          </span>
         </template>
       </i18n-t>
     </template>
@@ -33,6 +41,7 @@
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Table from '@/components/core/table/Table.vue';
+import InlineSpace from '@/components/core/inlineSpace/InlineSpace.vue';
 import { CurrentOrdersTableColumn, CurrentOrdersTableRecord } from './index';
 
 const { t } = useI18n();
@@ -104,4 +113,17 @@ const records = computed<CurrentOrdersTableRecord[]>(() => []);
 
 <style lang="scss" module>
 .ordersList {}
+
+.quoteCurrency {
+  color: rgb(var(--color-accent-2));
+}
+
+.priceLabelCurrent {
+  color: rgb(var(--color-accent-2));
+}
+
+.pnlColumnValue {
+  color: rgb(var(--color-success));
+  font-weight: 600;
+}
 </style>

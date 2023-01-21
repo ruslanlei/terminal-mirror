@@ -1,4 +1,5 @@
 import { post } from '@/api';
+import { ErrorResponse } from '@/api/common';
 import { Order } from '@/api/types/order';
 
 export type CreateOrderDTO = Pick<
@@ -8,4 +9,4 @@ export type CreateOrderDTO = Pick<
 
 export const createOrder = (
   dto: CreateOrderDTO,
-) => post('/trading/orders', dto);
+) => post<Order | ErrorResponse>('/trading/orders', dto);

@@ -1,11 +1,15 @@
 <template>
   <NumberInput
     v-model="value"
+    :error="error"
     @input="onInput"
     @focus="onFocus"
     @blur="onBlur"
   >
-    <template #append>
+    <template
+      v-if="'append' in $slots"
+      #append
+    >
       <slot name="append" />
     </template>
   </NumberInput>

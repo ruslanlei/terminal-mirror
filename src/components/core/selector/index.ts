@@ -1,6 +1,6 @@
-export type SelectorOption = {
+export type SelectorOption<V = string> = {
   label: string,
-  value: string,
+  value: V,
   state?: 'success' | 'danger',
 } & Record<any, any>;
 
@@ -11,7 +11,10 @@ type SelectorState =
   | 'mdSize'
   | 'default'
   | 'tabsShape'
-  | 'secondaryColor2';
+  | 'secondaryColor2'
+  | 'secondaryColor5'
+  | 'simpleColor'
+  | 'lgSize';
 
 export interface SelectorProps {
   options: SelectorOption[],

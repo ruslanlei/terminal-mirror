@@ -3,6 +3,7 @@
     v-model="model"
     :validation-schema="validationSchema"
     :class="$style.ordersForm"
+    @submit="handleSubmit"
   >
     <OrderFromContainer>
       <template
@@ -35,10 +36,27 @@
           :content-class="tabContentClass"
         >
           <template #tab(input)>
-            <OrderFormInputPart :model="model" />
+            <OrderFormInputPart>
+              <template #submit>
+                <Button
+                  type="submit"
+                  :state="['gradientColor', 'mdSize', 'interactive']"
+                  :class="$style.submit"
+                  :is-loading="isLoading"
+                >
+                  {{ t('order.submit') }}
+                </Button>
+              </template>
+            </OrderFormInputPart>
           </template>
           <template #tab(tp)>
-            <OrderFormTakeProfitPart />
+            <OrderFormTakeProfitPart
+              @take-profits-amount-input="autoCalculateTakeProfits"
+              @submit="openTab('input')"
+            />
+          </template>
+          <template #tab(sl)>
+            <OrderFormStopLossPart @submit="openTab('input')" />
           </template>
         </Tabs>
       </template>
@@ -47,22 +65,32 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import {
+  ref,
+  computed,
+  provide,
+} from 'vue';
 import { useI18n } from 'vue-i18n';
 import Icon from '@/components/core/icon/Icon.vue';
 import Tabs from '@/components/core/tabs/Tabs.vue';
 import OrderFromContainer from '@/containers/orderFormContainer/OrderFormContainer.vue';
+import Button from '@/components/core/button/Button.vue';
 import { Form, FormSelector } from '@/components/form';
 
 import { useOrderCreate } from '@/hooks/useOrderCreate';
-import OrderFormInputPart from './parts/orderFormInputPart/OrderFormInputPart.vue';
-import OrderFormTakeProfitPart from './parts/orderFormTakeProfitPart/OrderFormTakeProfitPart.vue';
+import { OrderFormInjectionKey, OrderFormTab } from '@/components/app/orderForm/index';
+import { Tab } from '@/components/core/tabs';
+
+import { roundToDecimalPoint } from '@/utils/number';
+import OrderFormInputPart from './composables/orderFormInputPart/OrderFormInputPart.vue';
+import OrderFormTakeProfitPart from './composables/orderFormTakeProfitPart/OrderFormTakeProfitPart.vue';
+import OrderFormStopLossPart from './composables/orderFormStopLossPart/OrderFormStopLossPart.vue';
 
 const { t } = useI18n();
 
-const settingsActiveTab = ref('input');
+const settingsActiveTab = ref<OrderFormTab>('input');
 
-const settingsTabs = computed(() => [
+const settingsTabs = computed<Tab<OrderFormTab>[]>(() => [
   {
     label: t('order.additionalSettings.input'),
     value: 'input',
@@ -81,15 +109,82 @@ const settingsTabs = computed(() => [
   },
 ]);
 
+const openTab = (tab: OrderFormTab) => {
+  settingsActiveTab.value = tab;
+};
+
 const {
   model,
   validationSchema,
   orderDirectionOptions,
+  takeProfits,
+  takeProfitsIncomeSum,
+  isTakeProfitsEnabled,
+  quoteCurrency,
+  baseCurrency,
+  autoCalculateTakeProfits,
+  maxTakeProfits,
+  takeProfitsAmount,
+  isStopLossEnabled,
+  stopLossPrice,
+  stopLossRisk,
+  pledge,
+  liquidationPrice,
+  isLoading,
+  handleSubmit,
 } = useOrderCreate();
+
+const ratio = computed(() => {
+  const isNumbersValid = takeProfitsIncomeSum.value
+      && stopLossRisk.value
+      && takeProfitsIncomeSum.value > stopLossRisk.value;
+
+  return isNumbersValid
+    ? t('order.ratio', {
+      loss: 1,
+      profit: roundToDecimalPoint(takeProfitsIncomeSum.value / stopLossRisk.value, 1),
+    })
+    : t('order.ratio', { loss: 0, profit: 0 });
+});
+
+const profitDisplayValue = computed(() => t('order.takeProfit.profitValue', {
+  profit:
+    t('common.currencyAmount', {
+      amount: takeProfitsIncomeSum.value,
+      currency: quoteCurrency.value.name,
+    }),
+}));
+
+const riskDisplayValue = computed(() => t('order.takeProfit.riskValue', {
+  risk:
+    t('common.currencyAmount', {
+      amount: stopLossRisk.value,
+      currency: quoteCurrency.value.name,
+    }),
+}));
+
+provide(OrderFormInjectionKey, {
+  model,
+  takeProfits,
+  takeProfitsIncomeSum,
+  isTakeProfitsEnabled,
+  quoteCurrency,
+  baseCurrency,
+  maxTakeProfits,
+  takeProfitsAmount,
+  isStopLossEnabled,
+  stopLossPrice,
+  stopLossRisk,
+  pledge,
+  liquidationPrice,
+  ratio,
+  profitDisplayValue,
+  riskDisplayValue,
+});
 </script>
 
 <style lang="scss" module>
-@import "@/assets/styles/utils";
+@import "src/assets/styles/utils";
 
 .ordersForm {
   height: 100%;

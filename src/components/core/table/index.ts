@@ -2,12 +2,14 @@ export type TableColumn<S = string> = {
   label: string,
   slug: S,
   isSelect?: boolean,
-  // string when value in or rems
+
+  // string when value in px, rems etc.
   // and number when value equals to count of 'fr' (css fractions grid column).
-  // For example { size: '10px' } or { size: 1 }
+  // example: { size: '10px' } or { size: 1 }
   size?: string | number,
   sortable?: boolean,
   align?: 'left' | 'center' | 'right',
+  data?: any,
 }
 
 export type TableRecord<
@@ -34,7 +36,11 @@ export enum SortDirection {
   DESC = 'desc',
 }
 
-export type TableState = 'scrollable' | 'defaultSize' | 'tinySize';
+export type TableState = 'scrollable'
+  | 'defaultSize'
+  | 'tinySize'
+  | 'ordersListColor'
+  | 'secondaryColor3';
 
 export interface TableProps {
   type: tableType,

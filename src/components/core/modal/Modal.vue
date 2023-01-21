@@ -1,7 +1,6 @@
 <template>
   <Card
-    v-click-outside="close"
-    :class="$style.root"
+    :class="$style.modal"
   >
     <div
       :class="{
@@ -11,19 +10,6 @@
     >
       <Loader />
     </div>
-    <template #head>
-      <div :class="$style.head">
-        <slot name="head">
-          {{ label }}
-        </slot>
-        <button
-          :class="$style.closeButton"
-          @click="close"
-        >
-          close
-        </button>
-      </div>
-    </template>
     <div :class="[$style.content, contentClass]">
       <slot />
     </div>
@@ -33,7 +19,7 @@
 <script setup lang="ts">
 import Card from '@/components/core/card/Card.vue';
 import Loader from '@/components/core/loader/Loader.vue';
-import { ModalProps } from '@/components/core/modal/index';
+import { ModalProps } from './index';
 
 withDefaults(
   defineProps<ModalProps>(),
@@ -41,31 +27,17 @@ withDefaults(
     isLoading: false,
   },
 );
-const emit = defineEmits<{(e: 'close'): void }>();
-
-const close = () => emit('close');
 </script>
 
 <style lang="scss" module>
 @import "src/assets/styles/utils";
 
-.root {
+.modal {
   position: relative;
-  max-width: 600px;
-}
-
-.head {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
 }
 
 .content {
   margin-top: 20px;
-}
-
-.closeButton {
-  margin-left: auto;
 }
 
 .loader {

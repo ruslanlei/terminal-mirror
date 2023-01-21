@@ -6,8 +6,20 @@ import { getPairs } from '@/api/endpoints/marketdata/stats';
 import { Pair } from '@/api/types/pair';
 import { useToastStore } from '@/stores/toasts';
 import { createOrder, CreateOrderDTO } from '@/api/endpoints/orders/create';
+import { Order } from '@/api/types/order';
+import { processServerErrors, requestMany } from '@/api/common';
 
 export type MarketType = 'emulator' | 'real';
+
+export interface TakeProfit {
+  price: number,
+  quantity: number,
+}
+
+export interface StopLoss {
+  price: number,
+  quantity: number,
+}
 
 export const useMarketStore = defineStore('market', () => {
   const { t } = useI18n();
@@ -45,9 +57,44 @@ export const useMarketStore = defineStore('market', () => {
     const response = await createOrder(dto);
 
     if (!response.result) {
+      processServerErrors(response.data, t('order.failedToCreate'));
+    }
+
+    return response;
+  };
+
+  const createListOfTakeProfits = async (
+    takeProfits: TakeProfit[],
+    side: Order['side'],
+  ) => {
+    const response = await requestMany(
+      takeProfits.map((takeProfit: TakeProfit) => createOrder({
+        pair: activePair.value,
+        side,
+        order_type: 'tp',
+        ...takeProfit,
+      })),
+    );
+
+    if (!response.result) {
       toastStore.showDanger({
-        text: t('order.failedToCreate'),
+        text: t('order.failedToCreateTakeProfits'),
       });
+    }
+
+    return response;
+  };
+
+  const createStopLoss = async (stopLoss: StopLoss, side: Order['side']) => {
+    const response = await createOrder({
+      pair: activePair.value,
+      side,
+      order_type: 'sl',
+      ...stopLoss,
+    });
+
+    if (!response.result) {
+      processServerErrors(response.data, t('order.failedToCreateStopLoss'));
     }
 
     return response;
@@ -61,5 +108,7 @@ export const useMarketStore = defineStore('market', () => {
     activePairData,
     getPairs: handleGetPairs,
     createOrder: handleCreateOrder,
+    createListOfTakeProfits,
+    createStopLoss,
   };
 });

@@ -4,6 +4,7 @@ import { uuid } from '@/utils/uuid';
 
 export enum modalType {
   CONFIRM = 'confirm',
+  SUCCESS_SIGN_UP = 'successSignUp',
 }
 
 export type Modal = {

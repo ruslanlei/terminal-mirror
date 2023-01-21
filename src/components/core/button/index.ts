@@ -1,8 +1,10 @@
 export type ButtonState =
   'primaryColor'
+  | 'gradientColor'
   | 'colored'
   | 'secondary1Color'
   | 'secondary2Color'
+  | 'successColor'
   | 'smSize'
   | 'mdSize'
   | 'lgSize'

@@ -5,13 +5,18 @@
         v-model="localPrice"
         type="number"
         :class="$style.input"
-        :state="['xsSize']"
+        :state="null"
+        size="xs"
+        :hide-arrows="true"
       />
       <NumberInput
         v-model="percentOfProfitValue"
         type="number"
+        :step="0.1"
         :class="$style.input"
-        :state="['alignRight', 'xsSize']"
+        state="alignRight"
+        size="xs"
+        :hide-arrows="true"
       />
     </div>
     <div :class="$style.amount">
@@ -25,7 +30,9 @@
         :decimals="currency.decimals"
         :round-to-decimal-point="false"
         :class="$style.input"
-        :state="['xsSize']"
+        :state="null"
+        size="xs"
+        :hide-arrows="true"
         @input="onQuantityInput"
         @blur="onQuantityInput"
       />
@@ -37,7 +44,9 @@
         :max="100"
         :step="percentOfQuantityInputStep"
         :class="$style.input"
-        :state="['alignRight', 'xsSize']"
+        state="alignRight"
+        size="xs"
+        :hide-arrows="true"
         @input="onQuantityInput"
         @blur="onQuantityInput"
       />
@@ -49,12 +58,12 @@
 import {
   TakeProfitInputEmits,
   TakeProfitInputProps,
-  TakeProfitInputValue,
 } from '@/components/core/takeProfitInput/index';
-import { computed, watch } from 'vue';
+import { computed } from 'vue';
 import NumberInput from '@/components/core/numberInput/NumberInput.vue';
 import { useLocalValue } from '@/hooks/useLocalValue';
 import { roundToDecimalPoint } from '@/utils/number';
+import { divide } from '@/utils/float';
 
 const props = defineProps<TakeProfitInputProps>();
 
@@ -72,7 +81,7 @@ const percentOfOrder = computed(() => props.orderPrice / 100);
 
 const calculatePercentOfProfitByValue = (
   value: number,
-) => Math.round((value - props.orderPrice) / percentOfOrder.value);
+) => divide((value - props.orderPrice), percentOfOrder.value, 2);
 
 const calculateValueByPercentOfProfit = (
   percentValue: number,

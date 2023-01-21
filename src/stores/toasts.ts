@@ -9,6 +9,7 @@ export const useToastStore = defineStore('toast', () => {
   const showToast = (toast: Omit<IToast, 'id'>) => {
     list.value.push({
       id: uuid(),
+      duration: 3000,
       ...toast,
     });
   };

@@ -1,14 +1,17 @@
-import { useToastStore } from '@/stores/toasts';
 import { FormErrorsList } from '@/components/form';
+import { useToastStore } from '@/stores/toasts';
 
 export type ErrorResponse = {
   non_field_errors?: string[],
 } & Record<string, string[]>;
 
 export const processServerErrors = (
-  errorResponse: ErrorResponse,
+  errorResponse: ErrorResponse | any,
+  fallbackError?: string,
 ): FormErrorsList => {
   const toastStore = useToastStore();
+
+  if (!errorResponse || typeof errorResponse !== 'object') return [];
 
   if (errorResponse?.non_field_errors) {
     errorResponse.non_field_errors.forEach((error: string) => {
@@ -18,9 +21,14 @@ export const processServerErrors = (
       });
     });
     delete errorResponse.non_field_errors;
+  } else if (fallbackError) {
+    toastStore.showDanger({
+      text: fallbackError,
+      duration: 6000,
+    });
   }
 
-  const serverErrorsMap: FormErrorsList = Object.entries(errorResponse)
+  const serverErrorsMap: FormErrorsList = Object.entries(errorResponse as Record<any, any>)
     .reduce((
       errorList: FormErrorsList,
       [path, value],

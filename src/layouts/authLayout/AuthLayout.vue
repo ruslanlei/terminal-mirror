@@ -1,20 +1,22 @@
 <template>
   <div :class="$style.authLayout">
     <div :class="$style.sidebar">
-      <header :class="$style.header">
-        <Link
-          :class="$style.logo"
-          :to="{ name: 'auth-sign-in' }"
-        >
-          <Logo :state="['mdSize', 'defaultState']" />
-        </Link>
-        <LanguageSelect />
-      </header>
-      <div :class="$style.description">
-        {{ t('auth.description') }}
-      </div>
-      <div :class="$style.content">
-        <slot />
+      <div :class="$style.sidebarInner">
+        <header :class="$style.header">
+          <Link
+            :class="$style.logo"
+            :to="{ name: 'auth-sign-in' }"
+          >
+            <Logo :state="['mdSize', 'defaultState']" />
+          </Link>
+          <LanguageSelect />
+        </header>
+        <div :class="$style.description">
+          {{ t('auth.description') }}
+        </div>
+        <div :class="$style.content">
+          <slot />
+        </div>
       </div>
       <footer :class="$style.footer">
         <div :class="$style.privacy">
@@ -44,7 +46,7 @@ const { t } = useI18n();
 </script>
 
 <style lang="scss" module>
-@import "@/assets/styles/utils";
+@import "src/assets/styles/utils";
 
 .authLayout {
   display: grid;
@@ -58,7 +60,12 @@ const { t } = useI18n();
   padding: 84px 80px 40px 80px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  overflow-y: auto;
+  @include scrollbarSecondary(true);
 }
+
+.sidebarInner {}
 
 .header {
   display: flex;
@@ -80,7 +87,7 @@ const { t } = useI18n();
 }
 
 .footer {
-  margin-top: auto;
+  margin-top: 40px;
   display: flex;
   justify-content: space-between;
   align-items: center;

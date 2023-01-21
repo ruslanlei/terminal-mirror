@@ -1,15 +1,28 @@
 <template>
   <div
     :style="computedStyles"
-    :class="[$style.fieldError, !isVisible && $style.hidden]"
+    :class="[
+      $style[size],
+      $style.fieldError,
+      !isVisible && $style.hidden,
+    ]"
   >
     <div
       ref="container"
       :class="$style.fieldErrorContainer"
+      :style="computedInnerStyles"
     >
-      <slot>
-        {{ text }}
-      </slot>
+      <Icon
+        v-if="showIcon"
+        :class="$style.icon"
+        icon="info"
+        :size="computedIconSize"
+      />
+      <span :class="$style.text">
+        <slot>
+          {{ text }}
+        </slot>
+      </span>
     </div>
   </div>
 </template>
@@ -23,8 +36,16 @@ import {
 } from 'vue';
 import { FieldErrorProps } from '@/components/core/fieldError/index';
 import { useEnvironmentObserver } from '@/hooks/useEnvironmentObserver';
+import Icon from '@/components/core/icon/Icon.vue';
 
-const props = defineProps<FieldErrorProps>();
+const props = withDefaults(
+  defineProps<FieldErrorProps>(),
+  {
+    showIcon: true,
+    size: 'lg',
+    offset: 0,
+  },
+);
 
 const container = ref<HTMLElement>();
 
@@ -43,6 +64,15 @@ const calculateHeight = () => {
     computedStyles.value.height = '0px';
   }
 };
+
+const computedInnerStyles = computed(() => ({
+  paddingTop: `${props.offset}px`,
+}));
+
+const computedIconSize = computed(() => ({
+  sm: 12,
+  lg: 18,
+}[props.size]));
 
 const {
   setListeners,
@@ -63,17 +93,42 @@ onBeforeUnmount(removeListeners);
   position: relative;
   overflow: hidden;
   transition: height 160ms, opacity 160ms;
+  font-size: inherit;
+  color: inherit;
   &.hidden {
     opacity: 0;
   }
 }
 
 .fieldErrorContainer {
+  display: flex;
+  //align-items: center;
   width: 100%;
   position: absolute;
   bottom: 0;
-  @include title4;
+  color: inherit;
+}
+
+.icon {
+  width: 12px;
+  min-width: 12px;
+  & + .text {
+    margin-left: 8px;
+  }
+}
+
+.text {
+  color: inherit;
+}
+
+// states
+.sm {
+  @include title7;
   font-weight: 600;
-  color: rgb(var(--color-danger));
+}
+
+.lg {
+  @include text;
+  font-weight: 500;
 }
 </style>

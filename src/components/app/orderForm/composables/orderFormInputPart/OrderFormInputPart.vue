@@ -4,15 +4,16 @@
       {{ t('order.price') }}
     </template>
     <template #priceInput>
-      <NumberInput
-        v-model="baseCurrencyPrice"
-        :state="['defaultColor', 'smSize']"
+      <FormNumberInput
+        name="price"
+        state="defaultColor"
         :min="1"
+        save-on="blur"
       >
         <template #append>
           {{ quoteCurrency.name }}
         </template>
-      </NumberInput>
+      </FormNumberInput>
     </template>
     <template #amountLabel>
       {{ t('order.amount') }}
@@ -21,9 +22,13 @@
       <FormNumberInput
         name="quantity"
         type="number"
-        :state="['defaultColor', 'smSize']"
+        :min="0"
+        :max="maxBaseCurrencyDepositLeveraged"
+        state="defaultColor"
         :decimals="baseCurrency.decimals"
         :step="baseCurrency.step"
+        save-on="blur"
+        :show-error-icon="false"
       >
         <template #append>
           {{ baseCurrency.name }}
@@ -41,7 +46,7 @@
         :quote-currency="quoteCurrency"
         save-on="blur"
       >
-        <template #quotecurrency>
+        <template #quoteCurrency>
           {{ quoteCurrency.name }}
         </template>
       </FormExchangeInput>
@@ -63,63 +68,59 @@
       <FormNumberInput
         name="leverage"
         :class="$style.input"
-        :state="['defaultColor', 'smSize']"
+        state="defaultColor"
         type="number"
         :min="1"
-        :max="50"
+        :max="20"
       />
     </template>
     <template #leverageLiquidationPrice>
-      11
+      {{ pledge }}
     </template>
     <template #leveragePositionMargin>
-      1
+      {{ liquidationPrice }}
     </template>
     <template #submit>
-      <Button
-        type="submit"
-        :state="['primaryColor', 'mdSize', 'interactive']"
-        :class="$style.submit"
-      >
-        {{ t('order.submit') }}
-      </Button>
+      <slot name="submit" />
+    </template>
+    <template #ratio>
+      {{ ratio }}
+    </template>
+    <template #profit>
+      {{ profitDisplayValue }}
+    </template>
+    <template #loss>
+      {{ riskDisplayValue }}
     </template>
   </OrderFormInputPartContainer>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import OrderFormInputPartContainer from '@/containers/orderFormInputPartContainer/OrderFormInputPartContainer.vue';
-import Button from '@/components/core/button/Button.vue';
-import NumberInput from '@/components/core/numberInput/NumberInput.vue';
 import { FormDepositInput, FormExchangeInput, FormNumberInput } from '@/components/form';
-import { OrderFormInputPartProps } from '@/components/app/orderForm/parts/orderFormInputPart/index';
-import { useMarketStore } from '@/stores/market';
-import { BaseCurrency, QuoteCurrency } from '@/hooks/useExchange';
-import { currency } from '@/api/types/currency';
-
-const props = defineProps<OrderFormInputPartProps>();
-
-const marketStore = useMarketStore();
+import { useOrderFormInject } from '@/hooks/useOrderFormInject';
+import { useExchange } from '@/hooks/useExchange';
 
 const { t } = useI18n();
 
-const quoteCurrency = computed<QuoteCurrency>(() => ({
-  name: marketStore.activePairData?.quote || currency.BTC,
-  balance: 3208,
-  decimals: 2,
-  leverage: props.model.leverage,
-}));
+const {
+  model,
+  quoteCurrency,
+  baseCurrency,
+  pledge,
+  liquidationPrice,
+  ratio,
+  profitDisplayValue,
+  riskDisplayValue,
+} = useOrderFormInject();
 
-const baseCurrencyPrice = ref(16890);
-
-const baseCurrency = computed<BaseCurrency>(() => ({
-  name: marketStore.activePairData?.base || currency.USDT,
-  price: baseCurrencyPrice.value,
-  decimals: 3,
-  step: 0.001,
-}));
+const {
+  maxBaseCurrencyDepositLeveraged,
+} = useExchange(
+  baseCurrency,
+  quoteCurrency,
+);
 </script>
 
 <style lang="scss" module>

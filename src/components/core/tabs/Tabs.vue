@@ -15,7 +15,9 @@
           :key="localValue"
           :class="$style.tabContent"
         >
-          <slot :name="`tab(${localValue})`" />
+          <KeepAlive>
+            <slot :name="`tab(${localValue})`" />
+          </KeepAlive>
         </div>
       </transition>
     </div>
@@ -31,9 +33,9 @@ import { TabsEmits, TabsProps } from './index';
 const props = withDefaults(
   defineProps<TabsProps>(),
   {
-    selectorProps: {
+    selectorProps: () => ({
       state: ['tabsShape', 'secondaryColor2'],
-    },
+    }),
   },
 );
 

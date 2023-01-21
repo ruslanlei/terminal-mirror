@@ -24,7 +24,7 @@ import { ButtonProps } from './index';
 const props = withDefaults(
   defineProps<ButtonProps>(),
   {
-    state: 'primaryColor',
+    state: 'gradientColor',
     isDisabled: false,
     isLoading: false,
   },
@@ -65,9 +65,9 @@ const computedState = useComputedState(props);
 }
 
 .interactive {
-  transition: background-color 200ms, transform 200ms;
+  transition: background-color 200ms;
   &:focus, &:hover {
-    transform: scale(1.01);
+    //transform: scale(1.01);
   }
   &:active {
     transform: scale(0.99);
@@ -76,7 +76,17 @@ const computedState = useComputedState(props);
 
 .primaryColor {
   color: rgba(var(--color-accent-1));
+  background: rgb(var(--color-primary-1));
+}
+
+.gradientColor {
+  color: rgba(var(--color-accent-1));
   background: var(--color-main-gradient);
+}
+
+.successColor {
+  color: rgba(var(--color-accent-1));
+  background: rgb(var(--color-success));
 }
 
 .colored {

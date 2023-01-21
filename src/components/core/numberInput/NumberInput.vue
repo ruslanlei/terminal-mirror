@@ -1,37 +1,89 @@
 <template>
-  <div
+  <label
     :class="[
-      $style.numberInput,
-      ...states.map((s) => $style[s]),
+      $style[size],
+      ...states,
+      !!error && $style.withError,
     ]"
   >
-    <input
-      type="number"
-      :value="localValue"
-      :tabindex="computedTabIndex"
-      :step="step"
-      :disabled="isDisabled"
-      @input="onInput"
-      @focus="onFocus"
-      @blur="onBlur"
-      @keydown="onKeydown"
+    <span
+      v-if="('label' in $slots) || label"
+      :class="$style.label"
     >
-    <div
-      v-if="'append' in $slots"
-      :class="$style.append"
-    >
-      <slot name="append" />
+      <slot name="label">
+        {{ label }}
+      </slot>
+    </span>
+    <div :class="[$style.field]">
+      <input
+        ref="field"
+        type="number"
+        :value="localValue"
+        :tabindex="computedTabIndex"
+        :step="step"
+        :disabled="isDisabled"
+        @input="onInput"
+        @focus="onFocus"
+        @blur="onBlur"
+        @keydown="onKeydown"
+      >
+      <div
+        v-if="!hideArrows"
+        :class="$style.arrows"
+      >
+        <button
+          type="button"
+          :class="[
+            $style.arrowButton,
+            localValue === max && $style.disabled,
+          ]"
+          @click="onClickIncrement"
+        >
+          <Icon
+            :size="6"
+            icon="tinyArrowUp"
+          />
+        </button>
+        <button
+          type="button"
+          :class="[
+            $style.arrowButton,
+            localValue === min && $style.disabled,
+          ]"
+          @click="onClickDecrement"
+        >
+          <Icon
+            :size="6"
+            icon="tinyArrowDown"
+          />
+        </button>
+      </div>
+      <div
+        v-if="'append' in $slots"
+        :class="$style.append"
+      >
+        <slot name="append" />
+      </div>
     </div>
-  </div>
+    <FieldError
+      :size="size"
+      :text="error"
+      :offset="4"
+      :class="$style.errorMessage"
+      :show-icon="showErrorIcon"
+    />
+  </label>
 </template>
 
 <script setup lang="ts">
-import { NumberInputEmits, NumberInputNormalizer, NumberInputProps } from '@/components/core/numberInput/index';
+import { computed, ref, watch } from 'vue';
 import { useLocalValue } from '@/hooks/useLocalValue';
-import { computed, watch } from 'vue';
-import { arrayFrom } from '@/utils/array';
 import { roundToDecimalPoint } from '@/utils/number';
 import { add, subtract } from '@/utils/float';
+import FieldError from '@/components/core/fieldError/FieldError.vue';
+import Icon from '@/components/core/icon/Icon.vue';
+import { useComputedState } from '@/hooks/useComputedState';
+import { NumberInputEmits, NumberInputNormalizer, NumberInputProps } from './index';
 
 const props = withDefaults(
   defineProps<NumberInputProps>(),
@@ -43,10 +95,16 @@ const props = withDefaults(
     saveOn: 'input',
     normalizeOnKeydown: false,
     roundToDecimalPoint: true,
+    state: 'defaultColor',
+    size: 'sm',
+    hideArrows: false,
+    showErrorIcon: true,
   },
 );
 
 const emit = defineEmits<NumberInputEmits>();
+
+const field = ref<HTMLInputElement>();
 
 const computedTabIndex = computed(
   () => (props.isDisabled ? -1 : props.tabIndex),
@@ -64,57 +122,80 @@ const normalizeValue = (
   value: number,
   normalizer?: NumberInputNormalizer,
 ) => {
-  let isEdited = false;
+  let isChanged = false;
 
   if (normalizer) {
     value = normalizer(value);
-    isEdited = true;
+    isChanged = true;
   }
 
   if (value < props.min) {
     value = props.min;
-    isEdited = true;
+    isChanged = true;
   }
 
   if (value > props.max) {
     value = props.max;
-    isEdited = true;
+    isChanged = true;
   }
 
   return {
     value,
-    isEdited,
+    isChanged,
   };
 };
 
 const saveValue = (
-  event: InputEvent | KeyboardEvent,
+  value: number,
   normalizer?: NumberInputNormalizer,
 ) => {
-  const eventTarget = (event.target as HTMLInputElement);
-  const { value, isEdited } = normalizeValue(Number(eventTarget.value), normalizer);
+  const {
+    value: normalizedValue,
+    isChanged,
+  } = normalizeValue(value, normalizer);
 
-  if (isEdited) {
-    eventTarget.value = String(value);
+  if (isChanged && field.value) {
+    field.value.value = String(normalizedValue);
   }
 
-  localValue.value = value;
+  localValue.value = normalizedValue;
+};
+
+const incrementValue = (value: number) => {
+  if (props.normalizer) {
+    return props?.normalizer(value, 'increment');
+  }
+
+  value = add([value, props.step], props.decimals);
+
+  return value;
+};
+
+const decrementValue = (value: number) => {
+  if (props.normalizer) {
+    return props?.normalizer(value, 'decrement');
+  }
+
+  value = subtract(value, props.step, props.decimals);
+
+  return value;
 };
 
 const onInput = (event: InputEvent) => {
-  if (props.saveOn === 'input') {
-    saveValue(event, props.normalizer);
+  if (props.saveOn === 'input' && field.value) {
+    saveValue(Number(field.value.value), props.normalizer);
   }
 
   emit('input', event);
 };
 
-const onBlur = (event: InputEvent) => {
-  if (props.saveOn === 'blur') {
-    saveValue(event, props.normalizer);
+const onBlur = () => {
+  if (props.saveOn === 'blur' && field.value) {
+    saveValue(Number(field.value.value), props.normalizer);
   }
 
-  emit('blur', event);
+  // FIXME: find reason why after this event input stop working
+  // emit('blur', event);
 };
 
 const onFocus = (event: InputEvent) => {
@@ -124,40 +205,35 @@ const onFocus = (event: InputEvent) => {
 const onKeydown = (event: KeyboardEvent) => {
   if (event.key === 'ArrowUp') {
     event.preventDefault();
-    saveValue(event, (value: number) => {
-      if (props.normalizer) {
-        return props?.normalizer(value, 'increment');
-      }
-
-      value = add([value, props.step], props.decimals);
-
-      return value;
-    });
+    const eventTarget = (event.target as HTMLInputElement);
+    saveValue(Number(eventTarget.value), incrementValue);
   }
 
   if (event.key === 'ArrowDown') {
     event.preventDefault();
-    saveValue(event, (value: number) => {
-      if (props.normalizer) {
-        return props?.normalizer(value, 'decrement');
-      }
-
-      value = subtract(value, props.step, props.decimals);
-
-      return value;
-    });
+    const eventTarget = (event.target as HTMLInputElement);
+    saveValue(Number(eventTarget.value), decrementValue);
   }
 
   emit('input', event);
 };
 
-const states = computed(() => arrayFrom(props.state));
+const onClickIncrement = () => {
+  saveValue(localValue.value, incrementValue);
+};
+const onClickDecrement = () => {
+  saveValue(localValue.value, decrementValue);
+};
+
+const states = useComputedState(props);
 </script>
 
 <style lang="scss" module>
 @import "src/assets/styles/utils";
 
-.numberInput {
+.numberInput {}
+
+.field {
   width: 100%;
   display: flex;
   align-items: center;
@@ -168,39 +244,86 @@ const states = computed(() => arrayFrom(props.state));
   }
 }
 
-.smSize {
-  @include title4;
-  border-radius: 5px;
-  & > input {
-    padding: 7px 10px;
+.sm {
+  .field {
+    @include title4;
+    border-radius: 5px;
+    & > input {
+      padding: 7px min(10px, 14%);
+    }
+  }
+  .error {
+    margin-top: 2px;
   }
 }
 
-.xsSize {
-  @include title5;
-  border-radius: 5px;
-  font-weight: 600;
-  & > input {
-    padding: 2px 0;
+.xs {
+  .field {
+    @include title5;
+    border-radius: 5px;
+    font-weight: 600;
+    & > input {
+      padding: 2px 0;
+    }
   }
 }
 
 .defaultColor {
-  color: rgb(var(--color-accent-1));
-  border: 1px solid rgb(var(--color-accent-2));
-  transition: border-color 150ms;
-  &:hover {
-    border: 1px solid rgb(var(--color-accent-1));
+  .field {
+    color: rgb(var(--color-accent-1));
+    border: 1px solid rgb(var(--color-accent-2));
+    transition: border-color 150ms;
+    &:hover {
+      border: 1px solid rgb(var(--color-accent-1));
+    }
   }
 }
 
 .alignRight {
-  & > input {
-    text-align: right;
+  .field {
+    & > input {
+      text-align: right;
+    }
   }
 }
 
 .append {
   margin-right: 10px;
+}
+
+// default styles
+.withError {
+  .field {
+    border: 1px solid rgb(var(--color-danger-2));
+  }
+}
+
+.error {
+  color: rgb(var(--color-danger-2));
+}
+
+.arrows {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-right: 10px;
+}
+
+.arrowButton {
+  height: 6px;
+  width: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: rgb(var(--color-accent-2));
+  transition: 200ms color;
+  &.disabled {
+    color: rgb(var(--color-accent-3));
+  }
+}
+
+.errorMessage {
+  color: rgb(var(--color-danger-2));
 }
 </style>

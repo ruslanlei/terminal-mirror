@@ -1,4 +1,6 @@
-export type NumberInputState = 'xsSize' | 'smSize' | 'defaultColor' | 'alignRight';
+export type NumberInputState = /* 'xsSize' | 'smSize' | */ 'defaultColor' | 'alignRight';
+
+export type NumberInputSize = 'xs' | 'sm';
 
 export type NumberInputNormalizer = (number: number, direction?: 'increment' | 'decrement') => number;
 
@@ -13,10 +15,15 @@ export interface NumberInputProps {
   saveOn?: 'input' | 'blur',
   normalizeOnKeydown?: boolean,
   state?: NumberInputState | NumberInputState[],
+  size?: NumberInputSize,
 
   isDisabled?: boolean,
   tabIndex?: number,
   roundToDecimalPoint?: boolean,
+  error?: string,
+  label?: string,
+  hideArrows?: boolean,
+  showErrorIcon?: boolean,
 }
 
 export interface NumberInputEmits {

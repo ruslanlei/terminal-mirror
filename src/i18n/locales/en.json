@@ -1,13 +1,16 @@
 {
   "common": {
-    "search": "Search"
+    "search": "Search",
+    "save": "Save",
+    "currencyAmount": "{amount} {currency}"
   },
   "validationError": {
     "email": "Value is not valid email",
-    "required": "This is required field",
+    "required": "This is required",
     "minLength": "This field must be at least {chars} characters long.",
     "passwordsMismatch": "Passwords should be equal to each other",
-    "tokenInvalidOrNotProvided": "Passed token is invalid or not provided"
+    "tokenInvalidOrNotProvided": "Passed token is invalid or not provided",
+    "min": "Value must be greater than or equal to {min}"
   },
   "placeholder": {
     "email": "Enter your email",
@@ -41,7 +44,11 @@
       "login": "Sign in",
       "emailSent": "Verification link successfully sent. Check email to activate account",
       "failed": "Failed to sign up",
-      "mustAcceptAgreement": "You must accept agreement before sign up"
+      "mustAcceptAgreement": "You must accept agreement before sign up",
+      "successScreen": {
+        "label": "You are successful registered!",
+        "description": "Now you can enter the platform."
+      }
     },
     "forgotPassword": {
       "label": "Password recovery",
@@ -105,9 +112,7 @@
   "order": {
     "tab": {
       "orders": "Orders",
-      "pairs": "Pairs",
-      "glasses": "Glasses",
-      "widget": "Widget"
+      "pairs": "Pairs"
     },
     "direction": {
       "long": "Long",
@@ -138,9 +143,24 @@
       "income": "Income",
       "percentOfOrder": "%",
       "quantity": "Quantity",
-      "quantityPercent": "%"
+      "quantityPercent": "%",
+      "ratio": "Ratio",
+      "risk": "Risk",
+      "profitValue": "TP +{profit}",
+      "riskValue": "SL -{risk}"
     },
-    "failedToCreate": "Failed to create order"
+    "stopLoss": {
+      "switchLabel": "Loss",
+      "exactPrice": "Exact price",
+      "sumOfRisk": "Amount of risk",
+      "percentOfOrder": "% of order",
+      "percentOfDeposit": "% of deposit"
+    },
+    "ratio": "{loss} to {profit}",
+    "failedToCreate": "Failed to create order",
+    "failedToCreateTakeProfits": "Failed to create one or more TPs",
+    "failedToCreateStopLoss": "Failed to create SL",
+    "successfullyCreated": "Order(s) has been successfully created"
   },
   "pairs": {
     "type": {
@@ -150,6 +170,35 @@
     "table": {
       "pairs": "Pairs",
       "priceAndVolume": "Price/Volume"
+    }
+  },
+  "ordersAndStatistics": {
+    "ordersLabel": "Orders",
+    "ordersTab": {
+      "current": "Current",
+      "closed": "Closed"
+    },
+    "statisticsLabel": "Statistics",
+    "statisticsTab": {
+      "common": "Common",
+      "orders": "Orders"
+    }
+  },
+  "ordersList": {
+    "column": {
+      "pair": "Pair",
+      "type": "Type",
+      "volume": "Volume {currencyName}",
+      "coins": "Coins",
+      "prices": {
+        "order": "Order price{current}",
+        "current": "/current"
+      },
+      "sl": "SL",
+      "pnl": "PNL {value}",
+      "tp": "TP",
+      "date": "Date",
+      "comment": "Comment"
     }
   }
 }

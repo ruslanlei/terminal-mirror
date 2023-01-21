@@ -1,6 +1,7 @@
 <template>
   <label
     :class="[
+      $style[size],
       ...computedState,
       isDisabled && $style.disabled,
       !!error && $style.error,
@@ -62,7 +63,10 @@
     </div>
     <FieldError
       :text="error"
-      :class="$style.error"
+      :class="$style.errorMessage"
+      :offset="6"
+      :size="size"
+      :show-icon="showErrorIcon"
     />
   </label>
 </template>
@@ -92,7 +96,9 @@ const props = withDefaults(
     type: 'text' as inputType.TEXT,
     autocomplete: undefined,
     inputmode: undefined,
-    state: () => ['defaultColor', 'lgSize'],
+    state: 'defaultColor',
+    size: 'lg',
+    showErrorIcon: true,
   },
 );
 
@@ -193,7 +199,7 @@ defineExpose({
 }
 
 // sizes
-.lgSize {
+.lg {
   .label {
     & + .field {
       margin-top: 6px;
@@ -205,20 +211,18 @@ defineExpose({
     & > input {
       padding: 18px 20px;
     }
-    & + .error {
-      margin-top: 6px;
-    }
   }
 
   .passwordVisibilityButton {
     margin-right: 20px;
   }
 
-  .error {
+  .errorMessage {
+    @include text;
   }
 }
 
-.mdSize {
+.md {
   .label {
     & + .field {
       margin-top: 6px;
@@ -233,16 +237,13 @@ defineExpose({
     & > input, .append {
       @include title3;
     }
-    & + .error {
-      margin-top: 6px;
-    }
   }
 
-  .error {
+  .errorMessage {
   }
 }
 
-.smSize {
+.sm {
   .label {
     & + .field {
       margin-top: 6px;
@@ -257,12 +258,6 @@ defineExpose({
     & > input, .append {
       @include title4;
     }
-    & + .error {
-      margin-top: 6px;
-    }
-  }
-
-  .error {
   }
 }
 
@@ -307,31 +302,36 @@ defineExpose({
 .error {
   &.focus {
     .field {
-      border-color: rgba(var(--color-danger), 1);
-      color: rgba(var(--color-danger), 1);
+      border-color: rgba(var(--color-danger-2), 1);
+      color: rgba(var(--color-danger-2), 1);
       & > input {
         &::placeholder {
-          color: rgba(var(--color-danger), 1);
+          color: rgba(var(--color-danger-2), 1);
         }
       }
     }
   }
   .field {
-    border: 1px solid rgba(var(--color-danger), 1);
+    border: 1px solid rgba(var(--color-danger-2), 1);
     &:hover {
-      border-color: rgba(var(--color-danger), 1);
+      border-color: rgba(var(--color-danger-2), 1);
     }
     & > input {
       &::placeholder {
-        color: rgba(var(--color-danger), 1);
+        color: rgba(var(--color-danger-2), 1);
       }
     }
+  }
+  .errorMessage {
+    color: rgb(var(--color-danger-2));
   }
 }
 
 .passwordVisibilityButton {
   cursor: pointer;
 }
+
+.errorMessage {}
 </style>
 
 <style lang="scss">

@@ -47,5 +47,10 @@
 
 .tabsContent {
   margin: 22px -22px 0;
+  position: relative;
+  & > * {
+    position: absolute;
+    inset: 0;
+  }
 }
 </style>

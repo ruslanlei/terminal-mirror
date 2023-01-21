@@ -2,11 +2,13 @@ import { computed, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useSessionStore } from '@/stores/session';
 import { useI18n } from 'vue-i18n';
+import { modalType, useModalStore } from '@/stores/modals';
 
 type VerifyEmailError = 'noToken' | 'badToken';
 
 export const useEmailVerification = () => {
   const sessionStore = useSessionStore();
+  const modalStore = useModalStore();
 
   const { t } = useI18n();
 
@@ -37,6 +39,9 @@ export const useEmailVerification = () => {
     isLoading.value = false;
 
     if (result) {
+      modalStore.showModal({
+        type: modalType.SUCCESS_SIGN_UP,
+      });
       await router.push({
         name: 'auth-sign-in',
       });

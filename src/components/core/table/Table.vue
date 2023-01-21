@@ -26,6 +26,7 @@
           <slot
             :name="`column(${column.slug})`"
             :column="column"
+            :data="column.data"
             :label="column.label"
             :slug="column.slug"
             :is-all-records-selected="isAllRecordsSelected"
@@ -211,7 +212,10 @@ const {
   border-radius: 10px;
   &.list {
     .head {
-      padding: 16px;
+      padding: 15px 20px;
+      border-radius: 5px;
+      @include title3;
+      font-weight: 400;
     }
     .records {
       padding: 14px 0;
@@ -227,7 +231,11 @@ const {
 }
 
 .tinySize {
+  .head {
+    padding-bottom: 4px;
+  }
   &.list {
+    margin-top: -4px;
     &.scrollable {
       @include scrollbarPrimary(4px, 2px);
       padding-right: 10px;
@@ -242,6 +250,19 @@ const {
     .record {
       padding: 5px 0;
     }
+  }
+}
+
+.secondaryColor3 {
+  background-color: rgb(var(--color-background-3));
+  .head {
+    background-color: rgb(var(--color-background-3));
+  }
+}
+
+.ordersListColor {
+  .head {
+    background-color: rgb(var(--color-background-2));
   }
 }
 </style>

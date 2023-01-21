@@ -1,9 +1,10 @@
 <template>
-  <PairsSelectContainer :class="$style.pairSelect">
+  <PairsSelectContainer>
     <template #search>
       <Input
         v-model="query"
-        :state="['mdSize', 'secondary2Color']"
+        size="md"
+        state="secondary2Color"
         :placeholder="t('common.search')"
       >
         <template #prepend>
@@ -18,7 +19,7 @@
       <PairsTable
         :class="tableClass"
         :pairs="pairs"
-        :state="['scrollable', 'tinySize']"
+        :state="['scrollable', 'tinySize', 'secondaryColor3']"
         @select-pair="setPair"
       />
     </template>
@@ -44,7 +45,3 @@ const {
 
 getPairs();
 </script>
-
-<style lang="scss" module>
-.pairSelect {}
-</style>

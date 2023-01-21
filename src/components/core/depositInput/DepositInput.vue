@@ -4,6 +4,7 @@
       <Button
         v-for="option in options"
         :key="option.percents"
+        type="button"
         :state="[
           checkIsValueEqualToPercent(option.percents)
             ? 'colored'
@@ -26,7 +27,7 @@
           <AnimatedText
             animation-type="verticalAuto"
             :class="$style.realBalance"
-            :text="maxDeposit"
+            :text="maxQuoteCurrencyDeposit"
           />
           <transition name="depositInputLeverageBalance">
             <div
@@ -36,7 +37,7 @@
               <AnimatedText
                 animation-type="verticalAuto"
                 :class="$style.leveragedBalance"
-                :text="maxDepositLeveraged"
+                :text="maxQuoteCurrencyDepositLeveraged"
               />
             </div>
           </transition>
@@ -50,7 +51,8 @@
         <NumberInput
           v-model="localValueInPercents"
           :class="$style.input"
-          :state="['defaultColor', 'smSize']"
+          state="defaultColor"
+          size="sm"
           type="number"
           :min="0"
           :max="100"
@@ -93,19 +95,19 @@ const {
 const emit = defineEmits<DepositInputEmits>();
 
 const {
-  maxDeposit,
-  maxDepositLeveraged,
+  maxQuoteCurrencyDeposit,
+  maxQuoteCurrencyDepositLeveraged,
 } = useExchange(
   baseCurrency,
   quoteCurrency,
 );
 
 const showLeveragedBalance = computed(
-  () => maxDeposit.value !== maxDepositLeveraged.value,
+  () => maxQuoteCurrencyDeposit.value !== maxQuoteCurrencyDepositLeveraged.value,
 );
 
 const leveragedBalanceInBaseCurrency = computed(
-  () => maxDepositLeveraged.value / props.baseCurrency.price,
+  () => maxQuoteCurrencyDepositLeveraged.value / props.baseCurrency.price,
 );
 
 const localValue = useLocalValue<number>(props, emit, 'modelValue');

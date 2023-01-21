@@ -68,14 +68,14 @@ import Table from '@/components/core/table/Table.vue';
 import TrendingIcon from '@/components/core/trendingIcon/TrendingIcon.vue';
 import CurrencyLogo from '@/components/core/currencyLogo/CurrencyLogo.vue';
 import Icon from '@/components/core/icon/Icon.vue';
+import { SortDirection } from '@/components/core/table';
+import { humanizeNumber } from '@/utils/number';
+import { Pair } from '@/api/types/pair';
 import {
   PairsTableColumn, PairsTableEmits,
   PairsTableProps,
   PairsTableRecord,
-} from '@/components/app/pairsTable/index';
-import { Pair } from '@/api/endpoints/marketdata/stats';
-import { SortDirection } from '@/components/core/table';
-import { humanizeNumber } from '@/utils/number';
+} from './index';
 
 const props = defineProps<PairsTableProps>();
 

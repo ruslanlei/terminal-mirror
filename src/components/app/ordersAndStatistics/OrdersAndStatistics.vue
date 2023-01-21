@@ -27,11 +27,16 @@
       </div>
     </div>
     <div :class="$style.content">
-      <CurrentOrdersList
-        v-if="activeTab === 'orders' && ordersListType === 'current'"
-        :class="$style.ordersList"
-        :list-type="ordersListType"
-      />
+      <transition
+        name="orderAndStatisticsTabs"
+        mode="out-in"
+      >
+        <ActiveOrdersList
+          v-if="activeTab === 'orders' && ordersListType === 'current'"
+          :class="$style.ordersList"
+          :list-type="ordersListType"
+        />
+      </transition>
     </div>
   </div>
 </template>
@@ -49,8 +54,8 @@ import {
   OrdersSelectorOptionValue,
 } from './index';
 
-const CurrentOrdersList = defineAsyncComponent(
-  () => import('@/components/app/currentOrdersList/CurrentOrdersList.vue'),
+const ActiveOrdersList = defineAsyncComponent(
+  () => import('@/components/app/activeOrdersList/ActiveOrdersList.vue'),
 );
 
 const { t } = useI18n();

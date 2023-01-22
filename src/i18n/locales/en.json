@@ -160,7 +160,8 @@
     "failedToCreate": "Failed to create order",
     "failedToCreateTakeProfits": "Failed to create one or more TPs",
     "failedToCreateStopLoss": "Failed to create SL",
-    "successfullyCreated": "Order(s) has been successfully created"
+    "successfullyCreated": "Order(s) has been successfully created",
+    "failedToGetList": "Failed to get list of orders"
   },
   "pairs": {
     "type": {

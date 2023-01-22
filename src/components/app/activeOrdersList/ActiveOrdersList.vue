@@ -140,7 +140,7 @@ await getList();
     color: rgb(var(--color-danger));
   }
   &.buy {
-    color: var(--color-success);
+    color: rgb(var(--color-success));
   }
 }
 

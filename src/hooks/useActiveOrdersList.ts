@@ -3,6 +3,7 @@ import { useI18n } from 'vue-i18n';
 import { CurrentOrdersTableColumn, CurrentOrdersTableRecord } from '@/components/app/activeOrdersList';
 import { useMarketStore } from '@/stores/market';
 import { Order } from '@/api/types/order';
+import { multiply } from '@/utils/float';
 
 export const useActiveOrdersList = () => {
   const { t } = useI18n();
@@ -82,25 +83,33 @@ export const useActiveOrdersList = () => {
 
     const limitOrders = data.filter((order: Order) => order.order_type === 'limit');
 
-    records.value = limitOrders.map((order: Order) => ({
-      id: order.id,
-      data: {
-        pair: marketStore.pairsMap?.[order.pair]?.base,
-        type: order.side,
-        volume: 0, /* FIXME */
-        coins: order.quantity,
-        prices: {
-          orderPrice: order.price,
-          current: 0, /* FIXME */
+    records.value = limitOrders.map((order: Order) => {
+      const pairData = marketStore.pairsMap?.[order.pair];
+
+      if (!pairData) {
+        throw new Error('[Active orders list]: pair data not found');
+      }
+
+      return {
+        id: order.id,
+        data: {
+          pair: pairData.base,
+          type: order.side,
+          volume: multiply(order.quantity, order.price, 6), /* FIXME */
+          coins: order.quantity,
+          prices: {
+            orderPrice: order.price,
+            current: 0, /* FIXME */
+          },
+          sl: 0, /* FIXME */
+          pnl: 0, /* FIXME */
+          tp: 0, /* FIXME */
+          date: '',
+          comment: order,
+          options: order,
         },
-        sl: 0, /* FIXME */
-        pnl: 0, /* FIXME */
-        tp: 0, /* FIXME */
-        date: '',
-        comment: order,
-        options: order,
-      },
-    }));
+      };
+    });
     console.log(records.value);
   };
 

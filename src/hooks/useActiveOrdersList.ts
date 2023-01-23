@@ -1,6 +1,6 @@
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { CurrentOrdersTableColumn, CurrentOrdersTableRecord } from '@/components/app/activeOrdersList';
+import { ActiveOrdersTableColumn, ActiveOrdersTableRecord } from '@/components/app/activeOrdersList';
 import { useMarketStore } from '@/stores/market';
 import { Order, SubOrder } from '@/api/types/order';
 import { multiply } from '@/utils/float';
@@ -10,7 +10,7 @@ export const useActiveOrdersList = () => {
   const { t } = useI18n();
   const marketStore = useMarketStore();
 
-  const columns = computed<CurrentOrdersTableColumn[]>(() => [
+  const columns = computed<ActiveOrdersTableColumn[]>(() => [
     {
       label: t('ordersList.column.pair'),
       slug: 'pair',
@@ -72,19 +72,14 @@ export const useActiveOrdersList = () => {
     },
   ]);
 
-  const records = ref<CurrentOrdersTableRecord[]>([]);
+  const records = ref<ActiveOrdersTableRecord[]>([]);
 
   const isLoading = ref(false);
-  const getList = async () => {
-    isLoading.value = true;
-    const { result, data: orders } = await marketStore.getOrderList();
-    isLoading.value = false;
 
-    if (!result) return;
-
+  const groupOrdersToTableRecords = (orders: Order[]) => {
     const limitOrders = orders.filter((order: Order) => order.order_type === 'limit');
 
-    records.value = limitOrders.map((order: Order) => {
+    return limitOrders.map((order: Order) => {
       const pairData = marketStore.pairsMap?.[order.pair];
 
       if (!pairData) {
@@ -131,6 +126,16 @@ export const useActiveOrdersList = () => {
         ],
       };
     });
+  };
+
+  const getList = async () => {
+    isLoading.value = true;
+    const { result, data: orders } = await marketStore.getOrderList();
+    isLoading.value = false;
+
+    if (!result) return;
+
+    records.value = groupOrdersToTableRecords(orders);
   };
 
   return {

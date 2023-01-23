@@ -81,8 +81,8 @@
     <template #cell(options)>
       options
     </template>
-    <template #children>
-      children
+    <template #recordChildren>
+      <SubOrdersTable />
     </template>
   </Table>
 </template>
@@ -93,6 +93,7 @@ import Table from '@/components/core/table/Table.vue';
 import InlineSpace from '@/components/core/inlineSpace/InlineSpace.vue';
 import CurrencyLogo from '@/components/core/currencyLogo/CurrencyLogo.vue';
 import { useActiveOrdersList } from '@/hooks/useActiveOrdersList';
+import SubOrdersTable from "@/components/app/activeOrdersList/subOrdersTable/SubOrdersTable.vue";
 
 const { t } = useI18n();
 

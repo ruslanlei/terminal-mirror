@@ -5,7 +5,6 @@
       isChildrenVisible && $style.childrenVisible,
       ...computedStates,
     ]"
-    @click="toggleChildren"
   >
     <div
       :class="[
@@ -13,6 +12,7 @@
         record.isSelected && $style.selected,
       ]"
       :style="computedRowStyles"
+      @click="toggleChildren"
     >
       <slot />
     </div>
@@ -102,6 +102,7 @@ onBeforeUnmount(removeListeners);
 .children {
   position: absolute;
   bottom: 0;
+  width: 100%;
 }
 
 // states

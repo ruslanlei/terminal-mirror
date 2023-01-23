@@ -54,4 +54,5 @@ export interface TableProps {
   sortDirection?: SortDirection,
   state?: TableState | TableState[],
   isRowsClickable?: boolean,
+  isHeadVisible?: boolean,
 }

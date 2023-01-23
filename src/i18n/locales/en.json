@@ -109,6 +109,28 @@
       "description": "renew your subscription for work"
     }
   },
+  "pairs": {
+    "type": {
+      "standard": "Standard",
+      "market": "Market"
+    },
+    "table": {
+      "pairs": "Pairs",
+      "priceAndVolume": "Price/Volume"
+    }
+  },
+  "ordersAndStatistics": {
+    "ordersLabel": "Orders",
+    "ordersTab": {
+      "current": "Current",
+      "closed": "Closed"
+    },
+    "statisticsLabel": "Statistics",
+    "statisticsTab": {
+      "common": "Common",
+      "orders": "Orders"
+    }
+  },
   "order": {
     "tab": {
       "orders": "Orders",
@@ -163,28 +185,6 @@
     "successfullyCreated": "Order(s) has been successfully created",
     "failedToGetList": "Failed to get list of orders"
   },
-  "pairs": {
-    "type": {
-      "standard": "Standard",
-      "market": "Market"
-    },
-    "table": {
-      "pairs": "Pairs",
-      "priceAndVolume": "Price/Volume"
-    }
-  },
-  "ordersAndStatistics": {
-    "ordersLabel": "Orders",
-    "ordersTab": {
-      "current": "Current",
-      "closed": "Closed"
-    },
-    "statisticsLabel": "Statistics",
-    "statisticsTab": {
-      "common": "Common",
-      "orders": "Orders"
-    }
-  },
   "ordersList": {
     "column": {
       "pair": "Pair",
@@ -200,6 +200,19 @@
       "tp": "TP",
       "date": "Date",
       "comment": "Comment"
-    }
+    },
+    "subOrder": {
+      "type": {
+        "takeProfit": "TP{index}",
+        "stopLoss": "SL"
+      },
+      "masterType": {
+        "limit": "L"
+      },
+      "quantity": "{coins} coins {percentage}",
+      "quantityPercent": "/ {percent} of position",
+      "volume": "{volume} {currency}"
+    },
+    "edit": "Edit"
   }
 }

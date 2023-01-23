@@ -8,6 +8,7 @@
     ]"
   >
     <div
+      v-if="isHeadVisible"
       :style="computedRowStyles"
       :class="$style.head"
     >
@@ -67,10 +68,10 @@
           </div>
         </template>
         <template
-          v-if="record.children && 'children' in $slots"
+          v-if="record.children && 'recordChildren' in $slots"
           #children
         >
-          <slot name="children" />
+          <slot name="recordChildren" />
         </template>
       </TableRow>
     </div>
@@ -94,6 +95,7 @@ const props = withDefaults(
   defineProps<TableProps>(),
   {
     type: 'list' as tableType.LIST,
+    isHeadVisible: true,
   },
 );
 const emit = defineEmits<{(e: 'update:selectedRecords', value: SelectedRecords): void,
@@ -113,16 +115,6 @@ const computedListColumns = computed(() => props.columns.reduce(
 const computedRowStyles = computed(() => ({
   gridTemplateColumns: computedListColumns.value,
 }));
-
-const computedGridColumns = computed(() => Array(props.gridColumns ?? 1)
-  .fill('1fr')
-  .reduce((acc, value) => `${acc} ${value}`, ''));
-
-// const computedRootStyles = computed(() => ({
-//   ...(props.type === tableType.GRID ? {
-//     gridTemplateColumns: computedGridColumns.value,
-//   } : {}),
-// }));
 
 const computedState = useComputedState(props);
 

@@ -15,10 +15,11 @@ export type TableColumn<S = string> = {
 export type TableRecord<
   Columns extends string = string,
   Data = Record<Columns, any>,
+  Children = any,
 > = {
   id: string | number,
   data: Data,
-  children?: any,
+  children?: Children,
 }
 
 export type InnerTableRecord = TableRecord & {

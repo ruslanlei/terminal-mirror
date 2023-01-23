@@ -69,9 +69,12 @@
         </template>
         <template
           v-if="record.children && 'recordChildren' in $slots"
-          #children
+          #children="data"
         >
-          <slot name="recordChildren" />
+          <slot
+            name="recordChildren"
+            v-bind="data"
+          />
         </template>
       </TableRow>
     </div>

@@ -1,7 +1,7 @@
 import { TableColumn, TableRecord } from '@/components/core/table';
 import { currency } from '@/api/types/currency';
-
-export interface SubOrdersTableProps {}
+import { Order, SubOrder } from '@/api/types/order';
+import { Pair } from '@/api/types/pair';
 
 export type SubOrdersColumnSlug =
   'type'
@@ -30,3 +30,12 @@ export type SubOrdersRecord = TableRecord<SubOrdersColumnSlug, {
   date: string,
   options: any,
 }>;
+
+export interface SubOrderTableItem extends SubOrder {
+  masterData: Order,
+  pairData: Pair,
+}
+
+export interface SubOrdersTableProps {
+  orders: SubOrderTableItem[],
+}

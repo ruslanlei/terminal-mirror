@@ -20,3 +20,7 @@ export interface Order {
   canceled_at: string,
   canceled_price: number,
 }
+
+export interface SubOrder extends Order {
+  order_type: 'tp' | 'sl',
+}

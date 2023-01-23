@@ -25,7 +25,10 @@
         ref="children"
         :class="$style.children"
       >
-        <slot name="children" />
+        <slot
+          name="children"
+          :data="record.children"
+        />
       </div>
     </div>
   </div>

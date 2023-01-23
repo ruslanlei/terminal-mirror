@@ -58,11 +58,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import Table from '@/components/core/table/Table.vue';
 import { useI18n } from 'vue-i18n';
-import { currency } from '@/api/types/currency';
-import { SubOrdersColumn, SubOrdersRecord, SubOrdersTableProps } from './index';
+import {
+  SubOrdersColumn, SubOrdersRecord, SubOrdersTableProps, SubOrderTableItem,
+} from './index';
 
 const props = defineProps<SubOrdersTableProps>();
 
@@ -107,33 +108,33 @@ const columns = ref<SubOrdersColumn[]>([
   },
 ]);
 
-const records = ref<SubOrdersRecord[]>([
-  {
-    id: 1,
+const records = computed<SubOrdersRecord[]>(
+  () => props.orders.map((order: SubOrderTableItem) => ({
+    id: order.id,
     data: {
       type: {
-        value: 'tp',
+        value: order.order_type,
         label: ({
           tp: t('ordersList.subOrder.type.takeProfit', { index: 1 }),
           sl: t('ordersList.subOrder.type.stopLoss'),
-        }.tp),
+        }[order.order_type]),
       },
       masterType: ({
         limit: t('ordersList.subOrder.masterType.limit'),
       }.limit),
       quantity: {
-        value: 0.002,
-        percent: 50,
+        value: order.quantity,
+        percent: order.masterData.quantity,
       },
       volume: {
         value: 32.2,
-        currency: currency.USDT,
+        currency: order.pairData.quote,
       },
       date: '2023-03-01',
       options: {},
     },
-  },
-]);
+  })),
+);
 </script>
 
 <style lang="scss" module>

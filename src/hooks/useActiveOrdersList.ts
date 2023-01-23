@@ -2,8 +2,9 @@ import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { CurrentOrdersTableColumn, CurrentOrdersTableRecord } from '@/components/app/activeOrdersList';
 import { useMarketStore } from '@/stores/market';
-import { Order } from '@/api/types/order';
+import { Order, SubOrder } from '@/api/types/order';
 import { multiply } from '@/utils/float';
+import { SubOrderTableItem } from '@/components/app/activeOrdersList/subOrdersTable';
 
 export const useActiveOrdersList = () => {
   const { t } = useI18n();
@@ -90,9 +91,13 @@ export const useActiveOrdersList = () => {
         throw new Error('[Active orders list]: pair data not found');
       }
 
-      const relatedStopLoss = orders.find(
+      const relatedTakeProfits = orders.filter(
+        (targetOrder: Order) => targetOrder.order_type === 'tp' && targetOrder.master === order.id,
+      ) as SubOrder[];
+
+      const relatedStopLoss = orders.filter(
         (targetOrder: Order) => targetOrder.order_type === 'sl' && targetOrder.master === order.id,
-      );
+      ) as SubOrder[];
 
       return {
         id: order.id,
@@ -113,11 +118,19 @@ export const useActiveOrdersList = () => {
           options: order,
         },
         children: [
-          relatedStopLoss,
+          ...relatedTakeProfits.map((order: Order) => ({
+            ...order,
+            pairData,
+            masterData: order,
+          })) as SubOrderTableItem[],
+          ...relatedStopLoss.map((order: Order) => ({
+            ...order,
+            pairData,
+            masterData: order,
+          })) as SubOrderTableItem[],
         ],
       };
     });
-    console.log(records.value);
   };
 
   return {

@@ -28,7 +28,7 @@
     </div>
     <div :class="$style.content">
       <transition
-        name="orderAndStatisticsTabs"
+        name="orderAndStatisticsTabContent"
         mode="out-in"
       >
         <ActiveOrdersList
@@ -118,16 +118,29 @@ const statisticsTabs = computed<StatisticsSelectorOptions>(() => [
 .orderAndStatisticsTabs {
   &-enter-active,
   &-leave-active {
-    transition: opacity 160ms, transform 200ms;
+    transition: opacity 160ms, transform 160ms;
   }
 
   &-enter-from {
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateY(10px);
   }
   &-leave-to {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(-10px);
+  }
+}
+.orderAndStatisticsTabContent {
+  &-enter-active,
+  &-leave-active {
+    transition: opacity 160ms, transform 160ms;
+  }
+
+  &-enter-from {
+    opacity: 0;
+  }
+  &-leave-to {
+    opacity: 0;
   }
 }
 </style>

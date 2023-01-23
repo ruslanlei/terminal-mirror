@@ -46,6 +46,7 @@
         :record="record"
         :columns="columns"
         :state="state"
+        :data-id="tableId"
         @click="onRowClick(record.id)"
         @cell-click="onCellClick(record.id, $event)"
       >
@@ -82,10 +83,13 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useTable } from '@/hooks/useTable';
 import TableRow from '@/components/core/table/tableRow/TableRow.vue';
 import { useComputedState } from '@/hooks/useComputedState';
+import { playAnimation } from '@/utils/animation';
+import anime from 'animejs';
+import { uuid } from '@/utils/uuid';
 import {
   tableType,
   TableRecord,
@@ -128,6 +132,19 @@ const {
   computedRecords,
   onRowClick,
 } = useTable(props, emit);
+
+const tableId = ref(uuid());
+
+onMounted(() => {
+  playAnimation({
+    targets: `[data-id="${tableId.value}"]`,
+    translateY: [200, 0],
+    opacity: [0, 1],
+    duration: 800,
+    easing: 'easeOutQuint',
+    delay: anime.stagger(40, { from: 'first' }),
+  });
+});
 </script>
 
 <style lang="scss" module>
@@ -136,6 +153,7 @@ const {
 // default state
 .table {
   color: white;
+  overflow: hidden;
   &.list {
     .head {
       display: grid;
@@ -178,6 +196,10 @@ const {
 }
 
 .recordColumn {}
+
+.row {
+  display: block;
+}
 
 // states
 .scrollable {

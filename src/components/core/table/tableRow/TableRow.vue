@@ -33,9 +33,10 @@ import {
   ref,
   computed,
   watch,
-  reactive,
+  reactive, onMounted, onBeforeUnmount,
 } from 'vue';
 import { useComputedState } from '@/hooks/useComputedState';
+import { useEnvironmentObserver } from '@/hooks/useEnvironmentObserver';
 import { TableRowProps } from './index';
 
 const props = defineProps<TableRowProps>();
@@ -62,13 +63,21 @@ const calculateChildrenStyle = () => {
   if (isChildrenVisible.value && children.value) {
     const { height } = children.value.getBoundingClientRect();
     computedChildrenContainerStyle.height = `${height}px`;
-    computedChildrenContainerStyle.transition = `height ${Math.min(height * 3, 300)}ms`;
+    computedChildrenContainerStyle.transition = `height ${Math.min(Math.max(height * 3, 160), 300)}ms`;
   } else {
     computedChildrenContainerStyle.height = '0px';
   }
 };
 
 watch(isChildrenVisible, calculateChildrenStyle);
+
+const {
+  setListeners,
+  removeListeners,
+} = useEnvironmentObserver(calculateChildrenStyle);
+
+onMounted(setListeners);
+onBeforeUnmount(removeListeners);
 </script>
 
 <style lang="scss" module>

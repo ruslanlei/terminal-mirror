@@ -81,6 +81,9 @@
     <template #cell(options)>
       options
     </template>
+    <template #children>
+      children
+    </template>
   </Table>
 </template>
 

@@ -1,13 +1,16 @@
 <template>
   <div
-    :class="$style.recordWrapper"
+    :class="[
+      $style.recordWrapper,
+      isChildrenVisible && $style.childrenVisible,
+      ...computedStates,
+    ]"
     @click="toggleChildren"
   >
     <div
       :class="[
         $style.record,
         record.isSelected && $style.selected,
-        ...computedStates,
       ]"
       :style="computedRowStyles"
     >
@@ -87,6 +90,7 @@ onBeforeUnmount(removeListeners);
 
 .record {
   display: grid;
+  cursor: pointer;
 }
 .recordColumn {}
 
@@ -102,10 +106,32 @@ onBeforeUnmount(removeListeners);
 
 // states
 .defaultSize {
-  padding: 16px;
+  border-radius: 5px;
+  .record {
+    padding: 16px;
+  }
+  .childrenContainer {
+    border-radius: 0 0 5px 5px;
+  }
 }
 
 .tinySize {
-  padding: 5px 0;
+  .record {
+    padding: 5px 0;
+  }
+}
+
+.ordersListColor {
+  transition: background-color 150ms;
+  &:hover {
+    background-color: rgb(var(--color-background-3));
+  }
+  &.childrenVisible {
+    background-color: rgb(var(--color-background-3));
+  }
+  .childrenContainer {
+    transition: background-color 150ms;
+    background-color: rgb(var(--color-background-2));
+  }
 }
 </style>

@@ -4,52 +4,51 @@
       $style.table,
       $style[type],
       isRowsClickable && $style.rowsClickable,
-      ...computedStates.map((s) => $style[s]),
+      ...computedState,
     ]"
-    :style="computedRootStyles"
   >
-    <template v-if="type === tableType.LIST">
+    <div
+      :style="computedRowStyles"
+      :class="$style.head"
+    >
       <div
-        :style="computedRowStyles"
-        :class="$style.head"
+        v-for="column in columns"
+        :key="column.slug"
+        :class="[
+          $style.column,
+          $style[column.align],
+          (column.sortable || column.isSelect) && $style.clickable,
+        ]"
+        @click="onColumnClick(column)"
       >
-        <div
-          v-for="column in columns"
-          :key="column.slug"
-          :class="[
-            $style.column,
-            $style[column.align],
-            (column.sortable || column.isSelect) && $style.clickable,
-          ]"
-          @click="onColumnClick(column)"
+        <slot
+          :name="`column(${column.slug})`"
+          :column="column"
+          :data="column.data"
+          :label="column.label"
+          :slug="column.slug"
+          :is-all-records-selected="isAllRecordsSelected"
+          :is-sorted-by="sortBy === column.slug"
+          :sort-direction="sortDirection"
+          :is-sorted-asc="sortBy === column.slug && sortDirection === 'asc'"
+          :is-sorted-desc="sortBy === column.slug && sortDirection === 'desc'"
         >
-          <slot
-            :name="`column(${column.slug})`"
-            :column="column"
-            :data="column.data"
-            :label="column.label"
-            :slug="column.slug"
-            :is-all-records-selected="isAllRecordsSelected"
-            :is-sorted-by="sortBy === column.slug"
-            :sort-direction="sortDirection"
-            :is-sorted-asc="sortBy === column.slug && sortDirection === 'asc'"
-            :is-sorted-desc="sortBy === column.slug && sortDirection === 'desc'"
-          >
-            {{ column.label }}
-          </slot>
-        </div>
+          {{ column.label }}
+        </slot>
       </div>
-      <div :class="$style.records">
-        <div
-          v-for="record in computedRecords"
-          :key="record.id"
-          :class="[
-            $style.record,
-            record.isSelected && $style.selected
-          ]"
-          :style="computedRowStyles"
-          @click="onRowClick(record.id)"
-        >
+    </div>
+    <div :class="$style.records">
+      <TableRow
+        v-for="record in computedRecords"
+        :key="record.id"
+        :grid-columns="computedListColumns"
+        :record="record"
+        :columns="columns"
+        :state="state"
+        @click="onRowClick(record.id)"
+        @cell-click="onCellClick(record.id, $event)"
+      >
+        <template #default>
           <div
             v-for="column in columns"
             :key="column.slug"
@@ -66,29 +65,23 @@
               :is-selected="record.isSelected"
             />
           </div>
-        </div>
-      </div>
-    </template>
-    <template v-else-if="type === tableType.GRID">
-      <div
-        v-for="record in computedRecords"
-        :key="record.id"
-        :class="$style.gridItem"
-      >
-        <slot
-          name="grid-item"
-          :record="record"
-          :is-selected="record.isSelected"
-        />
-      </div>
-    </template>
+        </template>
+        <template
+          v-if="record.children && 'children' in $slots"
+          #children
+        >
+          <slot name="children" />
+        </template>
+      </TableRow>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useTable } from '@/hooks/useTable';
-import { arrayFrom } from '@/utils/array';
+import TableRow from '@/components/core/table/tableRow/TableRow.vue';
+import { useComputedState } from '@/hooks/useComputedState';
 import {
   tableType,
   TableRecord,
@@ -125,13 +118,13 @@ const computedGridColumns = computed(() => Array(props.gridColumns ?? 1)
   .fill('1fr')
   .reduce((acc, value) => `${acc} ${value}`, ''));
 
-const computedRootStyles = computed(() => ({
-  ...(props.type === tableType.GRID ? {
-    gridTemplateColumns: computedGridColumns.value,
-  } : {}),
-}));
+// const computedRootStyles = computed(() => ({
+//   ...(props.type === tableType.GRID ? {
+//     gridTemplateColumns: computedGridColumns.value,
+//   } : {}),
+// }));
 
-const computedStates = computed(() => arrayFrom(props.state));
+const computedState = useComputedState(props);
 
 const {
   isAllRecordsSelected,
@@ -220,9 +213,6 @@ const {
     .records {
       padding: 14px 0;
     }
-    .record {
-      padding: 16px;
-    }
   }
   &.grid {
     grid-gap: 16px;
@@ -246,9 +236,6 @@ const {
     }
     .records {
       margin-top: 15px;
-    }
-    .record {
-      padding: 5px 0;
     }
   }
 }

@@ -76,12 +76,12 @@ export const useActiveOrdersList = () => {
   const isLoading = ref(false);
   const getList = async () => {
     isLoading.value = true;
-    const { result, data } = await marketStore.getOrderList();
+    const { result, data: orders } = await marketStore.getOrderList();
     isLoading.value = false;
 
     if (!result) return;
 
-    const limitOrders = data.filter((order: Order) => order.order_type === 'limit');
+    const limitOrders = orders.filter((order: Order) => order.order_type === 'limit');
 
     records.value = limitOrders.map((order: Order) => {
       const pairData = marketStore.pairsMap?.[order.pair];
@@ -89,6 +89,10 @@ export const useActiveOrdersList = () => {
       if (!pairData) {
         throw new Error('[Active orders list]: pair data not found');
       }
+
+      const relatedStopLoss = orders.find(
+        (targetOrder: Order) => targetOrder.order_type === 'sl' && targetOrder.master === order.id,
+      );
 
       return {
         id: order.id,
@@ -108,6 +112,9 @@ export const useActiveOrdersList = () => {
           comment: order,
           options: order,
         },
+        children: [
+          relatedStopLoss,
+        ],
       };
     });
     console.log(records.value);

@@ -18,6 +18,7 @@ export type TableRecord<
 > = {
   id: string | number,
   data: Data,
+  children?: any,
 }
 
 export type InnerTableRecord = TableRecord & {

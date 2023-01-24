@@ -31,20 +31,22 @@
         name="orderAndStatisticsTabContent"
         mode="out-in"
       >
-        <ActiveOrdersList
-          v-if="activeTab === 'orders' && ordersListType === 'current'"
-          :class="$style.ordersList"
-          :list-type="ordersListType"
-        />
+        <KeepAlive>
+          <ActiveOrdersList
+            v-if="activeTab === 'orders' && ordersListType === 'current'"
+            :class="$style.ordersList"
+          />
+        </KeepAlive>
       </transition>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, defineAsyncComponent, ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Selector from '@/components/core/selector/Selector.vue';
+import ActiveOrdersList from '@/components/app/activeOrdersList/ActiveOrdersList.vue';
 import {
   MainSelectorOptions,
   MainSelectorOptionValue,
@@ -53,10 +55,6 @@ import {
   StatisticsSelectorOptionValue,
   OrdersSelectorOptionValue,
 } from './index';
-
-const ActiveOrdersList = defineAsyncComponent(
-  () => import('@/components/app/activeOrdersList/ActiveOrdersList.vue'),
-);
 
 const { t } = useI18n();
 

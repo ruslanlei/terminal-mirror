@@ -5,6 +5,7 @@ import { useMarketStore } from '@/stores/market';
 import { Order, SubOrder } from '@/api/types/order';
 import { multiply } from '@/utils/float';
 import { SubOrderTableItem } from '@/components/app/activeOrdersList/subOrdersTable';
+import { awaitTimeout } from '@/utils/promise';
 
 export const useActiveOrdersList = () => {
   const { t } = useI18n();

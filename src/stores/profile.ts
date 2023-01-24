@@ -3,7 +3,8 @@ import { defineStore } from 'pinia';
 import { useI18n } from 'vue-i18n';
 import { useStorage } from '@vueuse/core';
 import { useToastStore } from '@/stores/toasts';
-import { getProfile, Profile } from '@/api/endpoints/auth/getProfile';
+import { getProfile } from '@/api/endpoints/auth/getProfile';
+import { Profile } from '@/api/types/profile';
 
 export const useProfileStore = defineStore('profile', () => {
   const { t } = useI18n();

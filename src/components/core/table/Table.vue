@@ -83,7 +83,9 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue';
+import {
+  computed, onBeforeUnmount, onMounted, ref,
+} from 'vue';
 import { useTable } from '@/hooks/useTable';
 import TableRow from '@/components/core/table/tableRow/TableRow.vue';
 import { useComputedState } from '@/hooks/useComputedState';
@@ -144,6 +146,10 @@ onMounted(() => {
     easing: 'easeOutQuint',
     delay: anime.stagger(40, { from: 'first' }),
   });
+});
+
+onBeforeUnmount(() => {
+  anime.remove(`[data-id="${tableId.value}"]`);
 });
 </script>
 

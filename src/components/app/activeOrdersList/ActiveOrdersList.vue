@@ -1,99 +1,107 @@
 <template>
-  <Table
-    :columns="columns"
-    :records="records"
-    :state="['ordersListColor', 'defaultSize']"
-    :class="$style.ordersList"
+  <transition
+    name="skeletonTransition"
+    mode="out-in"
   >
-    <template #column(volume)>
-      <i18n-t keypath="ordersList.column.volume">
-        <template #currencyName>
-          <InlineSpace />
-          <span :class="$style.quoteCurrency">
-            {{ 'USDT' }}
+    <ListSkeleton v-if="isLoading" />
+    <Table
+      v-else
+      :columns="columns"
+      :records="records"
+      :state="['ordersListColor', 'defaultSize']"
+      :class="$style.ordersList"
+    >
+      <template #column(volume)>
+        <i18n-t keypath="ordersList.column.volume">
+          <template #currencyName>
+            <InlineSpace />
+            <span :class="$style.quoteCurrency">
+              {{ 'USDT' }}
+            </span>
+          </template>
+        </i18n-t>
+      </template>
+      <template #column(prices)>
+        <i18n-t keypath="ordersList.column.prices.order">
+          <template #current>
+            <span :class="$style.priceLabelCurrent">
+              {{ t('ordersList.column.prices.current') }}
+            </span>
+          </template>
+        </i18n-t>
+      </template>
+      <template #column(pnl)>
+        <i18n-t keypath="ordersList.column.pnl">
+          <template #value>
+            <InlineSpace />
+            <span :class="$style.pnlColumnValue">
+              {{ '+32.331%' }}
+            </span>
+          </template>
+        </i18n-t>
+      </template>
+      <template #cell(pair)="{ data: currency }">
+        <div :class="$style.pairCell">
+          <CurrencyLogo :currency="currency" />
+          <span :class="$style.pairName">
+            {{ currency }}
           </span>
-        </template>
-      </i18n-t>
-    </template>
-    <template #column(prices)>
-      <i18n-t keypath="ordersList.column.prices.order">
-        <template #current>
-          <span :class="$style.priceLabelCurrent">
-            {{ t('ordersList.column.prices.current') }}
+        </div>
+      </template>
+      <template #cell(type)="{ data: orderDirection }">
+        <span :class="[$style.orderDirection, $style[orderDirection]]">
+          {{ t(`order.direction.${ ({ sell: 'short', buy: 'long' }[orderDirection]) }`) }}
+        </span>
+      </template>
+      <template #cell(volume)="{ data }">
+        {{ data }}
+      </template>
+      <template #cell(coins)="{ data }">
+        {{ data }}
+      </template>
+      <template #cell(prices)="{ data }">
+        <div :class="$style.pricesCell">
+          <span>
+            {{ data.orderPrice }}
           </span>
-        </template>
-      </i18n-t>
-    </template>
-    <template #column(pnl)>
-      <i18n-t keypath="ordersList.column.pnl">
-        <template #value>
-          <InlineSpace />
-          <span :class="$style.pnlColumnValue">
-            {{ '+32.331%' }}
+          <span :class="$style.pricesCellCurrent">
+            {{ data.current }}
           </span>
-        </template>
-      </i18n-t>
-    </template>
-    <template #cell(pair)="{ data: currency }">
-      <div :class="$style.pairCell">
-        <CurrencyLogo :currency="currency" />
-        <span :class="$style.pairName">
-          {{ currency }}
-        </span>
-      </div>
-    </template>
-    <template #cell(type)="{ data: orderDirection }">
-      <span :class="[$style.orderDirection, $style[orderDirection]]">
-        {{ t(`order.direction.${ ({ sell: 'short', buy: 'long' }[orderDirection]) }`) }}
-      </span>
-    </template>
-    <template #cell(volume)="{ data }">
-      {{ data }}
-    </template>
-    <template #cell(coins)="{ data }">
-      {{ data }}
-    </template>
-    <template #cell(prices)="{ data }">
-      <div :class="$style.pricesCell">
-        <span>
-          {{ data.orderPrice }}
-        </span>
-        <span :class="$style.pricesCellCurrent">
-          {{ data.current }}
-        </span>
-      </div>
-    </template>
-    <template #cell(sl)="{ data }">
-      {{ data }}
-    </template>
-    <template #cell(pnl)="{ data }">
-      {{ data }}
-    </template>
-    <template #cell(tp)="{ data }">
-      {{ data }}
-    </template>
-    <template #cell(date)="{ data }">
-      {{ data }}
-    </template>
-    <template #cell(comment)>
-      comment
-    </template>
-    <template #cell(options)>
-      options
-    </template>
-    <template #recordChildren="{ data: subOrders }">
-      <SubOrdersTable :orders="subOrders" />
-    </template>
-  </Table>
+        </div>
+      </template>
+      <template #cell(sl)="{ data }">
+        {{ data }}
+      </template>
+      <template #cell(pnl)="{ data }">
+        {{ data }}
+      </template>
+      <template #cell(tp)="{ data }">
+        {{ data }}
+      </template>
+      <template #cell(date)="{ data }">
+        {{ data }}
+      </template>
+      <template #cell(comment)>
+        comment
+      </template>
+      <template #cell(options)>
+        options
+      </template>
+      <template #recordChildren="{ data: subOrders }">
+        <SubOrdersTable :orders="subOrders" />
+      </template>
+    </Table>
+  </transition>
 </template>
 
-<script async setup lang="ts">
+<script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import Table from '@/components/core/table/Table.vue';
 import InlineSpace from '@/components/core/inlineSpace/InlineSpace.vue';
 import CurrencyLogo from '@/components/core/currencyLogo/CurrencyLogo.vue';
 import { useActiveOrdersList } from '@/hooks/useActiveOrdersList';
 import SubOrdersTable from '@/components/app/activeOrdersList/subOrdersTable/SubOrdersTable.vue';
+import ListSkeleton from '@/components/app/listSkeleton/ListSkeleton.vue';
 
 const { t } = useI18n();
 
@@ -104,7 +112,7 @@ const {
   getList,
 } = useActiveOrdersList();
 
-await getList();
+getList();
 </script>
 
 <style lang="scss" module>
@@ -156,4 +164,8 @@ await getList();
   margin-left: 5px;
   color: rgb(var(--color-accent-2));
 }
+</style>
+
+<style lang="scss">
+@import "@/assets/styles/transitions.scss";
 </style>

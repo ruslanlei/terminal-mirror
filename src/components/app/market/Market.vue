@@ -18,7 +18,7 @@
   </MarketContainer>
 </template>
 
-<script async setup lang="ts">
+<script setup lang="ts">
 import MarketContainer from '@/containers/marketContainer/MarketContainer.vue';
 import PlayerControls from '@/components/app/playerControls/PlayerControls.vue';
 

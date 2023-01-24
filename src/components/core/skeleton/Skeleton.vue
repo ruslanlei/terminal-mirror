@@ -1,9 +1,15 @@
 <template>
-  <div :class="[$style.skeleton, skeletonClass.DEFAULT]" />
+  <div
+    :class="$style.skeleton"
+    :data-skeleton-id="containerId"
+  />
 </template>
 
 <script setup lang="ts">
-import { skeletonClass } from './index';
+import { inject } from 'vue';
+import { SkeletonContainerIdInjectionKey } from '@/components/core/skeletonContainer';
+
+const containerId = inject(SkeletonContainerIdInjectionKey);
 </script>
 
 <style lang="scss" module>

@@ -1,7 +1,7 @@
 <template>
   <Transition
     mode="out-in"
-    name="pageTransition"
+    name="skeletonTransition"
   >
     <Suspense>
       <template #default>

@@ -91,6 +91,9 @@ export const useActiveOrdersList = () => {
       const relatedTakeProfits = orders.filter(
         (targetOrder: Order) => targetOrder.order_type === 'tp' && targetOrder.master === order.id,
       ) as SubOrder[];
+      const sortedRelatedTakeProfits = relatedTakeProfits.sort(
+        (orderA: SubOrder, orderB: SubOrder) => orderB.price - orderA.price,
+      );
 
       const relatedStopLoss = orders.filter(
         (targetOrder: Order) => targetOrder.order_type === 'sl' && targetOrder.master === order.id,
@@ -115,10 +118,11 @@ export const useActiveOrdersList = () => {
           options: order,
         },
         children: [
-          ...relatedTakeProfits.map((order: Order) => ({
+          ...sortedRelatedTakeProfits.map((order: Order, index: number) => ({
             ...order,
             pairData,
             masterData: order,
+            orderIndex: sortedRelatedTakeProfits.length - index,
           })) as SubOrderTableItem[],
 
           ...(relatedStopLoss ? [{

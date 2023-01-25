@@ -117,7 +117,7 @@ const records = computed<SubOrdersRecord[]>(
       type: {
         value: order.order_type,
         label: ({
-          tp: t('ordersList.subOrder.type.takeProfit', { index: 1 }),
+          tp: t('ordersList.subOrder.type.takeProfit', { index: order.orderIndex }),
           sl: t('ordersList.subOrder.type.stopLoss'),
         }[order.order_type]),
       },
@@ -129,7 +129,7 @@ const records = computed<SubOrdersRecord[]>(
         percent: order.masterData.quantity,
       },
       volume: {
-        value: 32.2,
+        value: order.price,
         currency: order.pairData.quote,
       },
       date: humanizeDate(order.created),

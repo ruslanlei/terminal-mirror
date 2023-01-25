@@ -119,6 +119,12 @@ onBeforeUnmount(removeListeners);
   }
 }
 
+.smSize {
+  .record {
+    padding: 10px 0;
+  }
+}
+
 .tinySize {
   .record {
     padding: 5px 0;
@@ -136,6 +142,14 @@ onBeforeUnmount(removeListeners);
   .childrenContainer {
     transition: background-color 150ms;
     background-color: rgb(var(--color-background-2));
+  }
+}
+
+.subOrdersColor {
+  &:not(:first-child) {
+    .record {
+      border-top: 1px solid rgb(var(--color-background-3));
+    }
   }
 }
 </style>

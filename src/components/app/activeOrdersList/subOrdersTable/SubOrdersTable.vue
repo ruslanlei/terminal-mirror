@@ -3,6 +3,7 @@
     :columns="columns"
     :records="records"
     :is-head-visible="false"
+    :state="['smSize', 'subOrdersColor']"
   >
     <template #cell(type)="{ data: { value: type, label } }">
       <div :class="[$style.orderType, $style[type]]">

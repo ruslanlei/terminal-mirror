@@ -84,7 +84,10 @@
 
 <script setup lang="ts">
 import {
-  computed, onBeforeUnmount, onMounted, ref,
+  ref,
+  computed,
+  onBeforeUnmount,
+  onMounted,
 } from 'vue';
 import { useTable } from '@/hooks/useTable';
 import TableRow from '@/components/core/table/tableRow/TableRow.vue';
@@ -226,20 +229,27 @@ onBeforeUnmount(() => {
 
 .defaultSize {
   border-radius: 10px;
-  &.list {
-    .head {
-      padding: 15px 20px;
-      border-radius: 5px;
-      @include title3;
-      font-weight: 400;
-    }
-    .records {
-      padding: 14px 0;
-    }
+  .head {
+    padding: 15px 20px;
+    border-radius: 5px;
+    @include title3;
+    font-weight: 400;
   }
-  &.grid {
-    grid-gap: 16px;
-    padding: 16px;
+  .records {
+    padding: 14px 0;
+  }
+}
+
+.smSize {
+  border-radius: 10px;
+  .head {
+    padding: 10px;
+    border-radius: 5px;
+    @include title3;
+    font-weight: 400;
+  }
+  .records {
+    padding: 0;
   }
 }
 
@@ -247,19 +257,16 @@ onBeforeUnmount(() => {
   .head {
     padding-bottom: 4px;
   }
-  &.list {
-    margin-top: -4px;
-    &.scrollable {
-      @include scrollbarPrimary(4px, 2px);
-      padding-right: 10px;
-    }
-    .column {
-      @include title4;
-      font-weight: 600;
-    }
-    .records {
-      margin-top: 15px;
-    }
+  &.scrollable {
+    @include scrollbarPrimary(4px, 2px);
+    padding-right: 10px;
+  }
+  .column {
+    @include title4;
+    font-weight: 600;
+  }
+  .records {
+    margin-top: 15px;
   }
 }
 

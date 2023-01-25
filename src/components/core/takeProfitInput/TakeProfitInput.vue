@@ -63,7 +63,7 @@ import { computed } from 'vue';
 import NumberInput from '@/components/core/numberInput/NumberInput.vue';
 import { useLocalValue } from '@/hooks/useLocalValue';
 import { roundToDecimalPoint } from '@/utils/number';
-import { divide } from '@/utils/float';
+import { divide } from '@/math/float';
 
 const props = defineProps<TakeProfitInputProps>();
 

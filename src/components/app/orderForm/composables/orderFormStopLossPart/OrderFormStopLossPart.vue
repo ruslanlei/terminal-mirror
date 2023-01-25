@@ -101,6 +101,7 @@ import OrderFormRatio from '@/components/app/orderFormRatio/OrderFormRatio.vue';
 import Button from '@/components/core/button/Button.vue';
 import { roundToDecimalPoint } from '@/utils/number';
 import { useOrderFormInject } from '@/hooks/useOrderFormInject';
+import { calculatePercentOfOrder } from '@/math/formulas';
 import { OrderFormStopLossPartEmits } from './index';
 
 const { t } = useI18n();
@@ -126,8 +127,11 @@ const percentOfOrder = computed({
     // Formula:
     // 100 - ((stop loss price / order price) * 100)
 
-    const rawPercentageOfDifference = 100 - (stopLossPrice.value / model.price) * 100;
-    return roundToDecimalPoint(rawPercentageOfDifference, 2);
+    const rawResult = calculatePercentOfOrder(model.price, stopLossPrice.value);
+
+    // const rawPercentageOfDifference = 100 - (stopLossPrice.value / model.price) * 100;
+    // return roundToDecimalPoint(rawPercentageOfDifference, 2);
+    return roundToDecimalPoint(rawResult, 2);
   },
   set: (value: number) => {
     // Formula:

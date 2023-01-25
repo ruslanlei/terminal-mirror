@@ -22,6 +22,7 @@
       :style="computedChildrenContainerStyle"
     >
       <div
+        v-if="isChildrenVisible"
         ref="children"
         :class="$style.children"
       >

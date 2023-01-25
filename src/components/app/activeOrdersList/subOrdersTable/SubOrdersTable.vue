@@ -62,6 +62,7 @@
 import { computed, ref } from 'vue';
 import Table from '@/components/core/table/Table.vue';
 import { useI18n } from 'vue-i18n';
+import { humanizeDate } from '@/utils/date';
 import {
   SubOrdersColumn, SubOrdersRecord, SubOrdersTableProps, SubOrderTableItem,
 } from './index';
@@ -131,7 +132,7 @@ const records = computed<SubOrdersRecord[]>(
         value: 32.2,
         currency: order.pairData.quote,
       },
-      date: '2023-03-01',
+      date: humanizeDate(order.created),
       options: {},
     },
   })),

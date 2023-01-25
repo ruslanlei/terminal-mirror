@@ -6,6 +6,7 @@ export interface Order {
   pair: Pair['id'],
   side: 'buy' | 'sell',
   order_type: 'limit' | 'tp' | 'sl',
+  created: string,
   quantity: number,
   price: number,
   leverage?: number,

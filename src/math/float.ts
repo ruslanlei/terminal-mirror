@@ -1,4 +1,5 @@
 import currency from 'currency.js';
+import curry from 'lodash/curry';
 
 export const multiply = (
   value: number,
@@ -25,3 +26,8 @@ export const subtract = (
   subtrahend: number,
   precision = 2,
 ) => currency(value, { precision }).subtract(subtrahend).value;
+
+export const roundToDecimalPoint = curry((decimals: number, number: number) => {
+  const divider = 10 ** decimals;
+  return Math.round(number * divider) / divider;
+});

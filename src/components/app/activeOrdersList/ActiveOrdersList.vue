@@ -82,10 +82,28 @@
         {{ data }}
       </template>
       <template #cell(comment)>
-        comment
+        <button
+          type="button"
+          :class="$style.commentButton"
+        >
+          <Icon icon="textAlignLeft" />
+        </button>
       </template>
       <template #cell(options)>
-        options
+        <div :class="$style.orderOptions">
+          <button
+            type="button"
+            :class="$style.swapButton"
+          >
+            <Icon icon="swap" />
+          </button>
+          <button
+            type="button"
+            :class="$style.deleteButton"
+          >
+            <Icon icon="cross" />
+          </button>
+        </div>
       </template>
       <template #recordChildren="{ data: subOrders }">
         <SubOrdersTable :orders="subOrders" />
@@ -102,6 +120,7 @@ import CurrencyLogo from '@/components/core/currencyLogo/CurrencyLogo.vue';
 import { useActiveOrdersList } from '@/hooks/useActiveOrdersList';
 import SubOrdersTable from '@/components/app/activeOrdersList/subOrdersTable/SubOrdersTable.vue';
 import ListSkeleton from '@/components/app/listSkeleton/ListSkeleton.vue';
+import Icon from '@/components/core/icon/Icon.vue';
 
 const { t } = useI18n();
 
@@ -163,6 +182,23 @@ getList();
 .pricesCellCurrent {
   margin-left: 5px;
   color: rgb(var(--color-accent-2));
+}
+
+.commentButton {
+  color: rgb(var(--color-accent-2));
+}
+
+.orderOptions {
+  display: flex;
+  gap: 10px;
+}
+
+.swapButton {
+  color: rgb(var(--color-accent-2));
+}
+
+.deleteButton {
+  color: rgb(var(--color-danger));
 }
 </style>
 

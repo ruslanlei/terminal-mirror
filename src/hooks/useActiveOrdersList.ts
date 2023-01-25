@@ -5,6 +5,7 @@ import { useMarketStore } from '@/stores/market';
 import { Order, SubOrder } from '@/api/types/order';
 import { SubOrderTableItem } from '@/components/app/activeOrdersList/subOrdersTable';
 import { multiply } from '@/math/float';
+import { humanizeDate } from '@/utils/date';
 
 export const useActiveOrdersList = () => {
   const { t } = useI18n();
@@ -69,6 +70,7 @@ export const useActiveOrdersList = () => {
       label: '',
       slug: 'options',
       size: 0.7,
+      align: 'center',
     },
   ]);
 
@@ -92,7 +94,7 @@ export const useActiveOrdersList = () => {
 
       const relatedStopLoss = orders.filter(
         (targetOrder: Order) => targetOrder.order_type === 'sl' && targetOrder.master === order.id,
-      ) as SubOrder[];
+      )[0] as SubOrder;
 
       return {
         id: order.id,
@@ -108,7 +110,7 @@ export const useActiveOrdersList = () => {
           sl: 0, /* FIXME */
           pnl: 0, /* FIXME */
           tp: 0, /* FIXME */
-          date: '',
+          date: humanizeDate(order.created),
           comment: order,
           options: order,
         },
@@ -118,11 +120,12 @@ export const useActiveOrdersList = () => {
             pairData,
             masterData: order,
           })) as SubOrderTableItem[],
-          ...relatedStopLoss.map((order: Order) => ({
-            ...order,
+
+          ...(relatedStopLoss ? [{
+            ...relatedStopLoss,
             pairData,
             masterData: order,
-          })) as SubOrderTableItem[],
+          }] : []),
         ],
       };
     });

@@ -34,7 +34,7 @@ export type SubOrdersRecord = TableRecord<SubOrdersColumnSlug, {
 export interface SubOrderTableItem extends SubOrder {
   masterData: Order,
   pairData: Pair,
-  orderIndex: number,
+  orderIndex?: number,
 }
 
 export interface SubOrdersTableProps {

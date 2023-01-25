@@ -3,4 +3,3 @@
     terms and conditions
   </div>
 </template>
-

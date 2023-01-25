@@ -6,4 +6,3 @@ export interface TableRowProps {
   gridColumns: string,
   state: TableState | TableState[],
 }
-

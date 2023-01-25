@@ -1,183 +1,137 @@
 <template>
-  <Table
-    :columns="columns"
-    :records="records"
-    :state="['ordersListColor', 'defaultSize']"
-    :class="$style.ordersList"
+  <transition
+    name="skeletonTransition"
+    mode="out-in"
   >
-    <template #column(volume)>
-      <i18n-t keypath="ordersList.column.volume">
-        <template #currencyName>
-          <InlineSpace />
-          <span :class="$style.quoteCurrency">
-            {{ 'USDT' }}
+    <ListSkeleton v-if="isLoading" />
+    <Table
+      v-else
+      :columns="columns"
+      :records="records"
+      :state="['ordersListColor', 'defaultSize']"
+      :class="$style.ordersList"
+    >
+      <template #column(volume)>
+        <i18n-t keypath="ordersList.column.volume">
+          <template #currencyName>
+            <InlineSpace />
+            <span :class="$style.quoteCurrency">
+              {{ 'USDT' }}
+            </span>
+          </template>
+        </i18n-t>
+      </template>
+      <template #column(prices)>
+        <i18n-t keypath="ordersList.column.prices.order">
+          <template #current>
+            <span :class="$style.priceLabelCurrent">
+              {{ t('ordersList.column.prices.current') }}
+            </span>
+          </template>
+        </i18n-t>
+      </template>
+      <template #column(pnl)>
+        <i18n-t keypath="ordersList.column.pnl">
+          <template #value>
+            <InlineSpace />
+            <span :class="$style.pnlColumnValue">
+              {{ '+32.331%' }}
+            </span>
+          </template>
+        </i18n-t>
+      </template>
+      <template #cell(pair)="{ data: currency }">
+        <div :class="$style.pairCell">
+          <CurrencyLogo :currency="currency" />
+          <span :class="$style.pairName">
+            {{ currency }}
           </span>
-        </template>
-      </i18n-t>
-    </template>
-    <template #column(prices)>
-      <i18n-t keypath="ordersList.column.prices.order">
-        <template #current>
-          <span :class="$style.priceLabelCurrent">
-            {{ t('ordersList.column.prices.current') }}
+        </div>
+      </template>
+      <template #cell(type)="{ data: orderDirection }">
+        <span :class="[$style.orderDirection, $style[orderDirection]]">
+          {{ t(`order.direction.${ ({ sell: 'short', buy: 'long' }[orderDirection]) }`) }}
+        </span>
+      </template>
+      <template #cell(volume)="{ data }">
+        {{ data }}
+      </template>
+      <template #cell(coins)="{ data }">
+        {{ data }}
+      </template>
+      <template #cell(prices)="{ data }">
+        <div :class="$style.pricesCell">
+          <span>
+            {{ data.orderPrice }}
           </span>
-        </template>
-      </i18n-t>
-    </template>
-    <template #column(pnl)>
-      <i18n-t keypath="ordersList.column.pnl">
-        <template #value>
-          <InlineSpace />
-          <span :class="$style.pnlColumnValue">
-            {{ '+32.331%' }}
+          <span :class="$style.pricesCellCurrent">
+            {{ data.current }}
           </span>
-        </template>
-      </i18n-t>
-    </template>
-    <template #cell(pair)="{ data: currency }">
-      <div :class="$style.pairCell">
-        <CurrencyLogo :currency="currency" />
-        <span :class="$style.pairName">
-          {{ currency }}
-        </span>
-      </div>
-    </template>
-    <template #cell(type)="{ data: orderDirection }">
-      <span :class="[$style.orderDirection, $style[orderDirection]]">
-        {{ t(`order.direction.${ ({ sell: 'short', buy: 'long' }[orderDirection]) }`) }}
-      </span>
-    </template>
-    <template #cell(volume)="{ data }">
-      {{ data }}
-    </template>
-    <template #cell(coins)="{ data }">
-      {{ data }}
-    </template>
-    <template #cell(prices)="{ data }">
-      <div :class="$style.pricesCell">
-        <span>
-          {{ data.orderPrice }}
-        </span>
-        <span :class="$style.pricesCellCurrent">
-          {{ data.current }}
-        </span>
-      </div>
-    </template>
-    <template #cell(sl)="{ data }">
-      {{ data }}
-    </template>
-    <template #cell(pnl)="{ data }">
-      {{ data }}
-    </template>
-    <template #cell(tp)="{ data }">
-      {{ data }}
-    </template>
-    <template #cell(date)="{ data }">
-      {{ data }}
-    </template>
-    <template #cell(comment)>
-      comment
-    </template>
-    <template #cell(options)>
-      options
-    </template>
-  </Table>
+        </div>
+      </template>
+      <template #cell(sl)="{ data }">
+        {{ data }}
+      </template>
+      <template #cell(pnl)="{ data }">
+        {{ data }}
+      </template>
+      <template #cell(tp)="{ data }">
+        {{ data }}
+      </template>
+      <template #cell(date)="{ data }">
+        {{ data }}
+      </template>
+      <template #cell(comment)>
+        <button
+          type="button"
+          :class="$style.commentButton"
+        >
+          <Icon icon="textAlignLeft" />
+        </button>
+      </template>
+      <template #cell(options)>
+        <div :class="$style.orderOptions">
+          <button
+            type="button"
+            :class="$style.swapButton"
+          >
+            <Icon icon="swap" />
+          </button>
+          <button
+            type="button"
+            :class="$style.deleteButton"
+          >
+            <Icon icon="cross" />
+          </button>
+        </div>
+      </template>
+      <template #recordChildren="{ data: subOrders }">
+        <SubOrdersTable :orders="subOrders" />
+      </template>
+    </Table>
+  </transition>
 </template>
 
-<script async setup lang="ts">
-import { computed } from 'vue';
+<script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import Table from '@/components/core/table/Table.vue';
 import InlineSpace from '@/components/core/inlineSpace/InlineSpace.vue';
 import CurrencyLogo from '@/components/core/currencyLogo/CurrencyLogo.vue';
-import { currency } from '@/api/types/currency';
-import { CurrentOrdersTableColumn, CurrentOrdersTableRecord } from './index';
+import { useActiveOrdersList } from '@/hooks/useActiveOrdersList';
+import SubOrdersTable from '@/components/app/activeOrdersList/subOrdersTable/SubOrdersTable.vue';
+import ListSkeleton from '@/components/app/listSkeleton/ListSkeleton.vue';
+import Icon from '@/components/core/icon/Icon.vue';
 
 const { t } = useI18n();
 
-const columns = computed<CurrentOrdersTableColumn[]>(() => [
-  {
-    label: t('ordersList.column.pair'),
-    slug: 'pair',
-    size: 1,
-  },
-  {
-    label: t('ordersList.column.type'),
-    slug: 'type',
-    size: 0.7,
-  },
-  {
-    label: '',
-    slug: 'volume',
-    size: 1.1,
-  },
-  {
-    label: t('ordersList.column.coins'),
-    slug: 'coins',
-    size: 1,
-  },
-  {
-    label: '',
-    slug: 'prices',
-    size: 1.7,
-  },
-  {
-    label: t('ordersList.column.sl'),
-    slug: 'sl',
-    size: 0.5,
-    align: 'center',
-  },
-  {
-    label: '',
-    slug: 'pnl',
-    size: 1.5,
-    align: 'center',
-  },
-  {
-    label: t('ordersList.column.tp'),
-    slug: 'tp',
-    size: 0.5,
-    align: 'center',
-  },
-  {
-    label: t('ordersList.column.date'),
-    slug: 'date',
-    size: 1,
-  },
-  {
-    label: t('ordersList.column.comment'),
-    slug: 'comment',
-    size: 0.5,
-    align: 'center',
-  },
-  {
-    label: '',
-    slug: 'options',
-    size: 0.7,
-  },
-]);
+const {
+  columns,
+  records,
+  isLoading,
+  getList,
+} = useActiveOrdersList();
 
-const records = computed<CurrentOrdersTableRecord[]>(() => [
-  {
-    id: 1,
-    data: {
-      pair: currency.BTC,
-      type: 'sell',
-      volume: 0,
-      coins: 0,
-      prices: {
-        orderPrice: 8000,
-        current: 7000,
-      },
-      sl: 0,
-      pnl: 0,
-      tp: 0,
-      date: 0,
-      comment: {},
-      options: {},
-    },
-  },
-]);
+getList();
 </script>
 
 <style lang="scss" module>
@@ -217,7 +171,7 @@ const records = computed<CurrentOrdersTableRecord[]>(() => [
     color: rgb(var(--color-danger));
   }
   &.buy {
-    color: var(--color-success);
+    color: rgb(var(--color-success));
   }
 }
 
@@ -229,4 +183,25 @@ const records = computed<CurrentOrdersTableRecord[]>(() => [
   margin-left: 5px;
   color: rgb(var(--color-accent-2));
 }
+
+.commentButton {
+  color: rgb(var(--color-accent-2));
+}
+
+.orderOptions {
+  display: flex;
+  gap: 10px;
+}
+
+.swapButton {
+  color: rgb(var(--color-accent-2));
+}
+
+.deleteButton {
+  color: rgb(var(--color-danger));
+}
+</style>
+
+<style lang="scss">
+@import "@/assets/styles/transitions.scss";
 </style>

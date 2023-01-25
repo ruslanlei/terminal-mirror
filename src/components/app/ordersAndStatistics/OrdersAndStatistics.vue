@@ -28,23 +28,25 @@
     </div>
     <div :class="$style.content">
       <transition
-        name="orderAndStatisticsTabs"
+        name="orderAndStatisticsTabContent"
         mode="out-in"
       >
-        <ActiveOrdersList
-          v-if="activeTab === 'orders' && ordersListType === 'current'"
-          :class="$style.ordersList"
-          :list-type="ordersListType"
-        />
+        <KeepAlive>
+          <ActiveOrdersList
+            v-if="activeTab === 'orders' && ordersListType === 'current'"
+            :class="$style.ordersList"
+          />
+        </KeepAlive>
       </transition>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, defineAsyncComponent, ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Selector from '@/components/core/selector/Selector.vue';
+import ActiveOrdersList from '@/components/app/activeOrdersList/ActiveOrdersList.vue';
 import {
   MainSelectorOptions,
   MainSelectorOptionValue,
@@ -53,10 +55,6 @@ import {
   StatisticsSelectorOptionValue,
   OrdersSelectorOptionValue,
 } from './index';
-
-const ActiveOrdersList = defineAsyncComponent(
-  () => import('@/components/app/activeOrdersList/ActiveOrdersList.vue'),
-);
 
 const { t } = useI18n();
 
@@ -118,16 +116,29 @@ const statisticsTabs = computed<StatisticsSelectorOptions>(() => [
 .orderAndStatisticsTabs {
   &-enter-active,
   &-leave-active {
-    transition: opacity 160ms, transform 200ms;
+    transition: opacity 160ms, transform 160ms;
   }
 
   &-enter-from {
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateY(10px);
   }
   &-leave-to {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(-10px);
+  }
+}
+.orderAndStatisticsTabContent {
+  &-enter-active,
+  &-leave-active {
+    transition: opacity 160ms, transform 160ms;
+  }
+
+  &-enter-from {
+    opacity: 0;
+  }
+  &-leave-to {
+    opacity: 0;
   }
 }
 </style>

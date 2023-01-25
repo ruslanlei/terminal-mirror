@@ -15,9 +15,11 @@ export type TableColumn<S = string> = {
 export type TableRecord<
   Columns extends string = string,
   Data = Record<Columns, any>,
+  Children = any,
 > = {
   id: string | number,
   data: Data,
+  children?: Children,
 }
 
 export type InnerTableRecord = TableRecord & {
@@ -38,9 +40,11 @@ export enum SortDirection {
 
 export type TableState = 'scrollable'
   | 'defaultSize'
+  | 'smSize'
   | 'tinySize'
   | 'ordersListColor'
-  | 'secondaryColor3';
+  | 'secondaryColor3'
+  | 'subOrdersColor';
 
 export interface TableProps {
   type: tableType,
@@ -53,4 +57,5 @@ export interface TableProps {
   sortDirection?: SortDirection,
   state?: TableState | TableState[],
   isRowsClickable?: boolean,
+  isHeadVisible?: boolean,
 }

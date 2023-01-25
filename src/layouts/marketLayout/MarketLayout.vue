@@ -19,5 +19,6 @@ import MarketHeader from '@/components/app/marketHeader/MarketHeader.vue';
   top: 0;
   background-color: rgb(var(--color-background-1));
   z-index: 3;
+  height: 102px;
 }
 </style>

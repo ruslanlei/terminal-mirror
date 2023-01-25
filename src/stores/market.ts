@@ -8,6 +8,7 @@ import { useToastStore } from '@/stores/toasts';
 import { createOrder, CreateOrderDTO } from '@/api/endpoints/orders/create';
 import { Order } from '@/api/types/order';
 import { processServerErrors, requestMany } from '@/api/common';
+import { getOrdersList } from '@/api/endpoints/orders/getList';
 
 export type MarketType = 'emulator' | 'real';
 
@@ -29,6 +30,11 @@ export const useMarketStore = defineStore('market', () => {
   const marketType = useStorage<MarketType>('marketType', 'emulator');
 
   const pairs = useStorage<Pair[]>('pairs', []);
+
+  const pairsMap = computed<Record<Pair['id'], Pair>>(() => pairs.value.reduce((acc, pair: Pair) => ({
+    ...acc,
+    [pair.id]: pair,
+  }), {}));
 
   const activePair = useStorage<Pair['id']>('activePair', 1);
 
@@ -100,8 +106,19 @@ export const useMarketStore = defineStore('market', () => {
     return response;
   };
 
+  const getOrderList = async () => {
+    const response = await getOrdersList();
+
+    if (!response.result) {
+      processServerErrors(response.data, t('order.failedToGetList'));
+    }
+
+    return response;
+  };
+
   return {
     pairs,
+    pairsMap,
     marketType,
     activePair,
     setPair,
@@ -110,5 +127,6 @@ export const useMarketStore = defineStore('market', () => {
     createOrder: handleCreateOrder,
     createListOfTakeProfits,
     createStopLoss,
+    getOrderList,
   };
 });

@@ -4,52 +4,53 @@
       $style.table,
       $style[type],
       isRowsClickable && $style.rowsClickable,
-      ...computedStates.map((s) => $style[s]),
+      ...computedState,
     ]"
-    :style="computedRootStyles"
   >
-    <template v-if="type === tableType.LIST">
+    <div
+      v-if="isHeadVisible"
+      :style="computedRowStyles"
+      :class="$style.head"
+    >
       <div
-        :style="computedRowStyles"
-        :class="$style.head"
+        v-for="column in columns"
+        :key="column.slug"
+        :class="[
+          $style.column,
+          $style[column.align],
+          (column.sortable || column.isSelect) && $style.clickable,
+        ]"
+        @click="onColumnClick(column)"
       >
-        <div
-          v-for="column in columns"
-          :key="column.slug"
-          :class="[
-            $style.column,
-            $style[column.align],
-            (column.sortable || column.isSelect) && $style.clickable,
-          ]"
-          @click="onColumnClick(column)"
+        <slot
+          :name="`column(${column.slug})`"
+          :column="column"
+          :data="column.data"
+          :label="column.label"
+          :slug="column.slug"
+          :is-all-records-selected="isAllRecordsSelected"
+          :is-sorted-by="sortBy === column.slug"
+          :sort-direction="sortDirection"
+          :is-sorted-asc="sortBy === column.slug && sortDirection === 'asc'"
+          :is-sorted-desc="sortBy === column.slug && sortDirection === 'desc'"
         >
-          <slot
-            :name="`column(${column.slug})`"
-            :column="column"
-            :data="column.data"
-            :label="column.label"
-            :slug="column.slug"
-            :is-all-records-selected="isAllRecordsSelected"
-            :is-sorted-by="sortBy === column.slug"
-            :sort-direction="sortDirection"
-            :is-sorted-asc="sortBy === column.slug && sortDirection === 'asc'"
-            :is-sorted-desc="sortBy === column.slug && sortDirection === 'desc'"
-          >
-            {{ column.label }}
-          </slot>
-        </div>
+          {{ column.label }}
+        </slot>
       </div>
-      <div :class="$style.records">
-        <div
-          v-for="record in computedRecords"
-          :key="record.id"
-          :class="[
-            $style.record,
-            record.isSelected && $style.selected
-          ]"
-          :style="computedRowStyles"
-          @click="onRowClick(record.id)"
-        >
+    </div>
+    <div :class="$style.records">
+      <TableRow
+        v-for="record in computedRecords"
+        :key="record.id"
+        :grid-columns="computedListColumns"
+        :record="record"
+        :columns="columns"
+        :state="state"
+        :data-id="tableId"
+        @click="onRowClick(record.id)"
+        @cell-click="onCellClick(record.id, $event)"
+      >
+        <template #default>
           <div
             v-for="column in columns"
             :key="column.slug"
@@ -66,29 +67,34 @@
               :is-selected="record.isSelected"
             />
           </div>
-        </div>
-      </div>
-    </template>
-    <template v-else-if="type === tableType.GRID">
-      <div
-        v-for="record in computedRecords"
-        :key="record.id"
-        :class="$style.gridItem"
-      >
-        <slot
-          name="grid-item"
-          :record="record"
-          :is-selected="record.isSelected"
-        />
-      </div>
-    </template>
+        </template>
+        <template
+          v-if="record.children && 'recordChildren' in $slots"
+          #children="data"
+        >
+          <slot
+            name="recordChildren"
+            v-bind="data"
+          />
+        </template>
+      </TableRow>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import {
+  ref,
+  computed,
+  onBeforeUnmount,
+  onMounted,
+} from 'vue';
 import { useTable } from '@/hooks/useTable';
-import { arrayFrom } from '@/utils/array';
+import TableRow from '@/components/core/table/tableRow/TableRow.vue';
+import { useComputedState } from '@/hooks/useComputedState';
+import { playAnimation } from '@/utils/animation';
+import anime from 'animejs';
+import { uuid } from '@/utils/uuid';
 import {
   tableType,
   TableRecord,
@@ -101,6 +107,7 @@ const props = withDefaults(
   defineProps<TableProps>(),
   {
     type: 'list' as tableType.LIST,
+    isHeadVisible: true,
   },
 );
 const emit = defineEmits<{(e: 'update:selectedRecords', value: SelectedRecords): void,
@@ -121,17 +128,7 @@ const computedRowStyles = computed(() => ({
   gridTemplateColumns: computedListColumns.value,
 }));
 
-const computedGridColumns = computed(() => Array(props.gridColumns ?? 1)
-  .fill('1fr')
-  .reduce((acc, value) => `${acc} ${value}`, ''));
-
-const computedRootStyles = computed(() => ({
-  ...(props.type === tableType.GRID ? {
-    gridTemplateColumns: computedGridColumns.value,
-  } : {}),
-}));
-
-const computedStates = computed(() => arrayFrom(props.state));
+const computedState = useComputedState(props);
 
 const {
   isAllRecordsSelected,
@@ -140,6 +137,23 @@ const {
   computedRecords,
   onRowClick,
 } = useTable(props, emit);
+
+const tableId = ref(uuid());
+
+onMounted(() => {
+  playAnimation({
+    targets: `[data-id="${tableId.value}"]`,
+    translateY: [200, 0],
+    opacity: [0, 1],
+    duration: 800,
+    easing: 'easeOutQuint',
+    delay: anime.stagger(40, { from: 'first' }),
+  });
+});
+
+onBeforeUnmount(() => {
+  anime.remove(`[data-id="${tableId.value}"]`);
+});
 </script>
 
 <style lang="scss" module>
@@ -148,6 +162,7 @@ const {
 // default state
 .table {
   color: white;
+  overflow: hidden;
   &.list {
     .head {
       display: grid;
@@ -191,6 +206,10 @@ const {
 
 .recordColumn {}
 
+.row {
+  display: block;
+}
+
 // states
 .scrollable {
   display: flex;
@@ -210,23 +229,27 @@ const {
 
 .defaultSize {
   border-radius: 10px;
-  &.list {
-    .head {
-      padding: 15px 20px;
-      border-radius: 5px;
-      @include title3;
-      font-weight: 400;
-    }
-    .records {
-      padding: 14px 0;
-    }
-    .record {
-      padding: 16px;
-    }
+  .head {
+    padding: 15px 20px;
+    border-radius: 5px;
+    @include title3;
+    font-weight: 400;
   }
-  &.grid {
-    grid-gap: 16px;
-    padding: 16px;
+  .records {
+    padding: 14px 0;
+  }
+}
+
+.smSize {
+  border-radius: 10px;
+  .head {
+    padding: 10px;
+    border-radius: 5px;
+    @include title3;
+    font-weight: 400;
+  }
+  .records {
+    padding: 0;
   }
 }
 
@@ -234,22 +257,16 @@ const {
   .head {
     padding-bottom: 4px;
   }
-  &.list {
-    margin-top: -4px;
-    &.scrollable {
-      @include scrollbarPrimary(4px, 2px);
-      padding-right: 10px;
-    }
-    .column {
-      @include title4;
-      font-weight: 600;
-    }
-    .records {
-      margin-top: 15px;
-    }
-    .record {
-      padding: 5px 0;
-    }
+  &.scrollable {
+    @include scrollbarPrimary(4px, 2px);
+    padding-right: 10px;
+  }
+  .column {
+    @include title4;
+    font-weight: 600;
+  }
+  .records {
+    margin-top: 15px;
   }
 }
 

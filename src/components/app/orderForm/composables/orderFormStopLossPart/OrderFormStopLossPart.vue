@@ -27,7 +27,7 @@
     </template>
     <template #sumOfRiskInput>
       <NumberInput
-        v-model="sumOfRisk"
+        v-model="amountOfRisk"
         size="sm"
         state="defaultColor"
         :step="0.01"
@@ -42,7 +42,7 @@
     </template>
     <template #percentOfOrderInput>
       <NumberInput
-        v-model="percentOfOrder"
+        v-model="percentOfOrderPrice"
         size="sm"
         state="defaultColor"
         :step="0.01"
@@ -99,8 +99,14 @@ import Switch from '@/components/core/switch/Switch.vue';
 import NumberInput from '@/components/core/numberInput/NumberInput.vue';
 import OrderFormRatio from '@/components/app/orderFormRatio/OrderFormRatio.vue';
 import Button from '@/components/core/button/Button.vue';
-import { roundToDecimalPoint } from '@/utils/number';
 import { useOrderFormInject } from '@/hooks/useOrderFormInject';
+import {
+  calculatePercentOfOrderPrice,
+  calculatePriceByPercentOfOrderPrice,
+  calculateAmountOfRisk, calculateOrderPriceByRiskAmount,
+} from '@/math/formulas/order';
+import { roundToDecimalPoint } from '@/math/float';
+import { compose } from '@/utils/fp';
 import { OrderFormStopLossPartEmits } from './index';
 
 const { t } = useI18n();
@@ -121,41 +127,31 @@ const {
   ratio,
 } = useOrderFormInject();
 
-const percentOfOrder = computed({
-  get: () => {
-    // Formula:
-    // 100 - ((stop loss price / order price) * 100)
+const percentOfOrderPrice = computed({
+  get: () => compose(
+    roundToDecimalPoint(2),
+    calculatePercentOfOrderPrice(model.price),
+  )(stopLossPrice.value),
 
-    const rawPercentageOfDifference = 100 - (stopLossPrice.value / model.price) * 100;
-    return roundToDecimalPoint(rawPercentageOfDifference, 2);
-  },
-  set: (value: number) => {
-    // Formula:
-    // order price - (percentOfOrder * order price / 100)
-
-    const formulaResultRaw = (model.price - (value * (model.price / 100)));
-
-    stopLossPrice.value = roundToDecimalPoint(
-      formulaResultRaw,
-      quoteCurrency?.value.decimals,
-    );
+  set: (percent: number) => {
+    stopLossPrice.value = compose(
+      roundToDecimalPoint(quoteCurrency.value.decimals),
+      calculatePriceByPercentOfOrderPrice(model.price),
+    )(percent);
   },
 });
 
-const sumOfRisk = computed({
-  get: () => {
-    // Formula:
-    // (order price * order quantity) - (stop loss price * order quantity)
+const amountOfRisk = computed({
+  get: () => compose(
+    roundToDecimalPoint(2),
+    calculateAmountOfRisk(model.price, model.quantity),
+  )(stopLossPrice.value),
 
-    const difference = (model.price * model.quantity) - (stopLossPrice.value * model.quantity);
-    return roundToDecimalPoint(difference, 2);
-  },
-  set: (value: number) => {
-    // Formula:
-    // ((order price * order quantity) - sumOfRisk) / order quantity
-
-    const formulaResultRaw = ((model.price * model.quantity) - value) / model.quantity;
-    stopLossPrice.value = roundToDecimalPoint(formulaResultRaw, quoteCurrency.value.decimals);
+  set: (amountOfRisk: number) => {
+    stopLossPrice.value = compose(
+      roundToDecimalPoint(quoteCurrency.value.decimals),
+      calculateOrderPriceByRiskAmount(model.price, model.quantity),
+    )(amountOfRisk);
   },
 });
 

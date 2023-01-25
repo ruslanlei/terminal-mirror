@@ -6,6 +6,7 @@ export interface Order {
   pair: Pair['id'],
   side: 'buy' | 'sell',
   order_type: 'limit' | 'tp' | 'sl',
+  created: string,
   quantity: number,
   price: number,
   leverage?: number,
@@ -19,4 +20,8 @@ export interface Order {
   cancelled_trade_id: number,
   canceled_at: string,
   canceled_price: number,
+}
+
+export interface SubOrder extends Order {
+  order_type: 'tp' | 'sl',
 }

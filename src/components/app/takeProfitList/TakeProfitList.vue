@@ -39,12 +39,12 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { add, subtract } from '@/utils/float';
 import TakeProfitInput from '@/components/core/takeProfitInput/TakeProfitInput.vue';
 import { TakeProfitInputValue } from '@/components/core/takeProfitInput';
 import { useLocalValue } from '@/hooks/useLocalValue';
 import { TakeProfitListEmit, TakeProfitListProps } from '@/components/app/takeProfitList/index';
 import { TakeProfit } from '@/stores/market';
+import { add, subtract } from '@/math/float';
 
 const props = defineProps<TakeProfitListProps>();
 

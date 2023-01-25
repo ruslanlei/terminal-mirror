@@ -11,10 +11,10 @@ import { useI18n } from 'vue-i18n';
 import { number, object, string } from 'yup';
 import { BaseCurrency, QuoteCurrency } from '@/hooks/useExchange';
 import { currency } from '@/api/types/currency';
-import { divide } from '@/utils/float';
 import { roundToDecimalPoint } from '@/utils/number';
 import { useToastStore } from '@/stores/toasts';
 import { useModelReset } from '@/hooks/useModelReset';
+import { divide } from '@/math/float';
 
 export interface OrderModel extends CreateOrderDTO {
   leverage: number,

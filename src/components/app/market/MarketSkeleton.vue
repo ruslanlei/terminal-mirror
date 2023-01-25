@@ -1,5 +1,5 @@
 <template>
-  <div
+  <SkeletonContainer
     :style="computedStyles"
     :class="$style.marketSkeleton"
   >
@@ -9,13 +9,14 @@
       <Skeleton />
       <Skeleton />
     </div>
-  </div>
+  </SkeletonContainer>
 </template>
 
 <script setup lang="ts">
-import Skeleton from '@/components/core/skeleton/Skeleton.vue';
 import { computed } from 'vue';
+import Skeleton from '@/components/core/skeleton/Skeleton.vue';
 import { size } from '@/enums/sizing';
+import SkeletonContainer from '@/components/core/skeletonContainer/SkeletonContainer.vue';
 
 const computedStyles = computed(() => ({
   height: `calc(100 * var(--vh) - ${size.HEADER}px)`,

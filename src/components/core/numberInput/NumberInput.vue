@@ -79,10 +79,10 @@
 import { computed, ref, watch } from 'vue';
 import { useLocalValue } from '@/hooks/useLocalValue';
 import { roundToDecimalPoint } from '@/utils/number';
-import { add, subtract } from '@/utils/float';
 import FieldError from '@/components/core/fieldError/FieldError.vue';
 import Icon from '@/components/core/icon/Icon.vue';
 import { useComputedState } from '@/hooks/useComputedState';
+import { add, subtract } from '@/math/float';
 import { NumberInputEmits, NumberInputNormalizer, NumberInputProps } from './index';
 
 const props = withDefaults(

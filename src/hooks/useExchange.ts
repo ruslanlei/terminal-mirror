@@ -3,16 +3,16 @@ import {
   Ref,
 } from 'vue';
 import { roundToDecimalPoint } from '@/utils/number';
-import { add, subtract } from '@/utils/float';
 import { Currency } from '@/types/currency';
+import { add, subtract } from '@/math/float';
 
 export interface QuoteCurrency extends Currency {
-  leverage: number,
-  balance: number,
+    leverage: number,
+    balance: number,
 }
 
 export interface BaseCurrency extends Currency {
-  price: number,
+    price: number,
 }
 
 export const useExchange = (

@@ -76,13 +76,8 @@ import NumberInput from '@/components/core/numberInput/NumberInput.vue';
 import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
 import { useLocalValue } from '@/hooks/useLocalValue';
 import { useExchange } from '@/hooks/useExchange';
-import {
-  divide,
-  divideRight,
-  multiply,
-  roundToDecimalPoint,
-} from '@/math/float';
-import { compose } from '@/utils/fp';
+import { percentsToValue, valueToPercents } from '@/math/formulas/common';
+import { calculateOnePercentOfBaseBalanceByQuote } from '@/math/formulas/currency';
 import { DepositInputEmits, DepositInputProps } from './index';
 
 const props = withDefaults(
@@ -112,39 +107,32 @@ const showLeveragedBalance = computed(
   () => maxQuoteCurrencyDeposit.value !== maxQuoteCurrencyDepositLeveraged.value,
 );
 
-const leveragedBalanceInBaseCurrency = computed(
-  () => divide(maxQuoteCurrencyDepositLeveraged.value, props.baseCurrency.price),
-);
-
 const localValue = useLocalValue<number>(props, emit, 'modelValue');
 
-const onePercentOfBalance = computed(() => divide(leveragedBalanceInBaseCurrency.value, 100));
-
-const percentsToValue = (
-  percents: number,
-) => {
-  const onePercentOfBalance = compose(
-    divideRight(100),
-    divideRight(props.baseCurrency.price),
-  )(maxQuoteCurrencyDepositLeveraged.value);
-
-  return compose(
-    roundToDecimalPoint(props.baseCurrency.decimals),
-    multiply(onePercentOfBalance),
-  )(percents);
-};
-
-const valueToPercents = (
-  value: number,
-) => compose(
-  roundToDecimalPoint(props.quoteCurrency.decimals),
-  divideRight(onePercentOfBalance.value),
-)(value);
-
 const localValueInPercents = computed({
-  get: () => valueToPercents(localValue.value),
+  get: () => {
+    const onePercentOfBalance = calculateOnePercentOfBaseBalanceByQuote(
+      baseCurrency.value.price,
+      maxQuoteCurrencyDepositLeveraged.value,
+    );
+
+    return valueToPercents(
+      baseCurrency.value.decimals,
+      onePercentOfBalance,
+      localValue.value,
+    );
+  },
   set: (percents: number) => {
-    localValue.value = percentsToValue(percents);
+    const onePercentOfBalance = calculateOnePercentOfBaseBalanceByQuote(
+      baseCurrency.value.price,
+      maxQuoteCurrencyDepositLeveraged.value,
+    );
+
+    localValue.value = percentsToValue(
+      baseCurrency.value.decimals,
+      onePercentOfBalance,
+      percents,
+    );
   },
 });
 
@@ -162,7 +150,18 @@ const setPercentOfBalance = (
 
 const checkIsValueEqualToPercent = (
   percents: number,
-) => localValue.value === percentsToValue(percents);
+) => {
+  const onePercentOfBalance = calculateOnePercentOfBaseBalanceByQuote(
+    baseCurrency.value.price,
+    maxQuoteCurrencyDepositLeveraged.value,
+  );
+
+  return localValue.value === percentsToValue(
+    baseCurrency.value.decimals,
+    onePercentOfBalance,
+    percents,
+  );
+};
 
 const options = computed(() => [
   {

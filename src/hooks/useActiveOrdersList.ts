@@ -100,19 +100,21 @@ export const useActiveOrdersList = () => {
         (targetOrder: Order) => targetOrder.order_type === 'sl' && targetOrder.master === order.id,
       )[0] as SubOrder;
 
+      const orderVolume = compose(
+        roundToDecimalPoint(6), /* TODO: change to base currency decimals */
+        multiply,
+      )(order.quantity, order.price);
+
       return {
         id: order.id,
         data: {
           pair: pairData.base,
           type: order.side,
-          volume: compose(
-            roundToDecimalPoint(6),
-            multiply,
-          )(order.quantity, order.price), /* FIXME */
+          volume: orderVolume,
           coins: order.quantity,
           prices: {
             orderPrice: order.price,
-            current: 0, /* FIXME */
+            current: 0, /* TODO: add current price */
           },
           sl: 0, /* FIXME */
           pnl: 0, /* FIXME */

@@ -11,6 +11,11 @@ export const divide = curry<number, number, number>((
   divider: number,
 ) => currency(value, { precision: 30 }).divide(divider).value);
 
+export const divideRight = curry((
+  divider: number,
+  value: number,
+) => divide(value, divider));
+
 export const add = curry<number, number, number>((
   term1: number,
   term2: number,

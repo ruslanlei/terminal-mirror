@@ -76,7 +76,13 @@ import NumberInput from '@/components/core/numberInput/NumberInput.vue';
 import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
 import { useLocalValue } from '@/hooks/useLocalValue';
 import { useExchange } from '@/hooks/useExchange';
-import { divide, roundToDecimalPoint } from '@/math/float';
+import {
+  divide,
+  divideRight,
+  multiply,
+  roundToDecimalPoint,
+} from '@/math/float';
+import { compose } from '@/utils/fp';
 import { DepositInputEmits, DepositInputProps } from './index';
 
 const props = withDefaults(
@@ -107,21 +113,33 @@ const showLeveragedBalance = computed(
 );
 
 const leveragedBalanceInBaseCurrency = computed(
-  () => maxQuoteCurrencyDepositLeveraged.value / props.baseCurrency.price,
+  () => divide(maxQuoteCurrencyDepositLeveraged.value, props.baseCurrency.price),
 );
 
 const localValue = useLocalValue<number>(props, emit, 'modelValue');
 
-const onePercentOfBalance = computed(() => leveragedBalanceInBaseCurrency.value / 100);
+const onePercentOfBalance = computed(() => divide(leveragedBalanceInBaseCurrency.value, 100));
 
 const percentsToValue = (
   percents: number,
-) => roundToDecimalPoint(props.baseCurrency.decimals, onePercentOfBalance.value * percents);
+) => {
+  const onePercentOfBalance = compose(
+    divideRight(100),
+    divideRight(props.baseCurrency.price),
+  )(maxQuoteCurrencyDepositLeveraged.value);
 
-const valueToPercents = (value: number) => roundToDecimalPoint(
-  props.quoteCurrency.decimals,
-  divide(value, onePercentOfBalance.value),
-);
+  return compose(
+    roundToDecimalPoint(props.baseCurrency.decimals),
+    multiply(onePercentOfBalance),
+  )(percents);
+};
+
+const valueToPercents = (
+  value: number,
+) => compose(
+  roundToDecimalPoint(props.quoteCurrency.decimals),
+  divideRight(onePercentOfBalance.value),
+)(value);
 
 const localValueInPercents = computed({
   get: () => valueToPercents(localValue.value),

@@ -57,14 +57,30 @@ const normalizer: NumberInputNormalizer = (
   switch (direction) {
     case 'increment': return incrementDeposit(number);
     case 'decrement': return decrementDeposit(number);
-    default: return calculateBaseToQuoteCurrencyPrice(calculateQuoteToBaseCurrencyPrice(number));
+    default: return calculateBaseToQuoteCurrencyPrice(
+      baseCurrency.value.decimals,
+      baseCurrency.value.price,
+      calculateQuoteToBaseCurrencyPrice(
+        quoteCurrency.value.decimals,
+        baseCurrency.value.price,
+        number,
+      ),
+    );
   }
 };
 
 const localValue = computed({
-  get: () => calculateBaseToQuoteCurrencyPrice(props.modelValue),
+  get: () => calculateBaseToQuoteCurrencyPrice(
+    baseCurrency.value.decimals,
+    baseCurrency.value.price,
+    props.modelValue,
+  ),
   set: (value: number) => {
-    emit('update:modelValue', calculateQuoteToBaseCurrencyPrice(value));
+    emit('update:modelValue', calculateQuoteToBaseCurrencyPrice(
+      quoteCurrency.value.decimals,
+      baseCurrency.value.price,
+      value,
+    ));
   },
 });
 </script>

@@ -26,6 +26,11 @@ export const subtract = curry<number, number, number>((
   subtrahend: number,
 ) => currency(value, { precision: 30 }).subtract(subtrahend).value);
 
+export const subtractRight = curry<number, number, number>((
+  subtrahend: number,
+  value: number,
+) => currency(value, { precision: 30 }).subtract(subtrahend).value);
+
 export const roundToDecimalPoint = curry<number, number, number>(
   (decimals: number, number: number) => {
     const divider = 10 ** decimals;

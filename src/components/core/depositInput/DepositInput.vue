@@ -95,6 +95,8 @@ const {
 
 const emit = defineEmits<DepositInputEmits>();
 
+const localValue = useLocalValue<number>(props, emit, 'modelValue');
+
 const {
   maxQuoteCurrencyDeposit,
   maxQuoteCurrencyDepositLeveraged,
@@ -107,34 +109,29 @@ const showLeveragedBalance = computed(
   () => maxQuoteCurrencyDeposit.value !== maxQuoteCurrencyDepositLeveraged.value,
 );
 
-const localValue = useLocalValue<number>(props, emit, 'modelValue');
+const onePercentOfBalance = computed(() => calculateOnePercentOfBaseBalanceByQuote(
+  baseCurrency.value.price,
+  maxQuoteCurrencyDepositLeveraged.value,
+));
 
 const localValueInPercents = computed({
-  get: () => {
-    const onePercentOfBalance = calculateOnePercentOfBaseBalanceByQuote(
-      baseCurrency.value.price,
-      maxQuoteCurrencyDepositLeveraged.value,
-    );
-
-    return valueToPercents(
-      baseCurrency.value.decimals,
-      onePercentOfBalance,
-      localValue.value,
-    );
-  },
+  get: () => valueToPercents(
+    baseCurrency.value.decimals,
+    onePercentOfBalance.value,
+    localValue.value,
+  ),
   set: (percents: number) => {
-    const onePercentOfBalance = calculateOnePercentOfBaseBalanceByQuote(
-      baseCurrency.value.price,
-      maxQuoteCurrencyDepositLeveraged.value,
-    );
-
     localValue.value = percentsToValue(
       baseCurrency.value.decimals,
-      onePercentOfBalance,
+      onePercentOfBalance.value,
       percents,
     );
   },
 });
+
+const setPercentOfBalance = (percents: number) => {
+  localValueInPercents.value = percents;
+};
 
 watch(localValueInPercents, () => {
   if (localValueInPercents.value > 100) {
@@ -142,26 +139,13 @@ watch(localValueInPercents, () => {
   }
 });
 
-const setPercentOfBalance = (
-  percents: number,
-) => {
-  localValueInPercents.value = percents;
-};
-
 const checkIsValueEqualToPercent = (
   percents: number,
-) => {
-  const onePercentOfBalance = calculateOnePercentOfBaseBalanceByQuote(
-    baseCurrency.value.price,
-    maxQuoteCurrencyDepositLeveraged.value,
-  );
-
-  return localValue.value === percentsToValue(
-    baseCurrency.value.decimals,
-    onePercentOfBalance,
-    percents,
-  );
-};
+) => localValue.value === percentsToValue(
+  baseCurrency.value.decimals,
+  onePercentOfBalance.value,
+  percents,
+);
 
 const options = computed(() => [
   {

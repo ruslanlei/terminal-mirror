@@ -34,47 +34,37 @@ export const useExchange = (
   )(baseCurrencyQuantity));
 
   const calculateAndRoundBaseCurrencyQuantity = curry((
-    quoteCurrencyDecimals: number,
+    baseCurrencyDecimals: number,
     baseCurrencyPrice: number,
     quoteCurrencyQuantity: number,
   ) => compose(
-    roundToDecimalPoint(quoteCurrencyDecimals),
+    roundToDecimalPoint(baseCurrencyDecimals),
     calculateBaseCurrencyQuantity(baseCurrencyPrice),
   )(quoteCurrencyQuantity));
 
-  const incrementDeposit = (number: number) => {
-    const baseCurrencyQuantity = calculateAndRoundBaseCurrencyQuantity(
-      baseCurrency.value.decimals,
-      baseCurrency.value.price,
-      number,
-    );
-
-    return calculateAndRoundQuoteCurrencyQuantity(
+  const incrementDeposit = (number: number) => compose(
+    calculateAndRoundQuoteCurrencyQuantity(
       quoteCurrency.value.decimals,
       baseCurrency.value.price,
-      add(
-        baseCurrency.value.step,
-        baseCurrencyQuantity,
-      ),
-    );
-  };
-
-  const decrementDeposit = (number: number) => {
-    const quoteInBaseCurrencyPrice = calculateAndRoundBaseCurrencyQuantity(
+    ),
+    add(baseCurrency.value.step),
+    calculateAndRoundBaseCurrencyQuantity(
       baseCurrency.value.decimals,
       baseCurrency.value.price,
-      number,
-    );
+    ),
+  )(number);
 
-    return calculateAndRoundQuoteCurrencyQuantity(
+  const decrementDeposit = (number: number) => compose(
+    calculateAndRoundQuoteCurrencyQuantity(
       quoteCurrency.value.decimals,
       baseCurrency.value.price,
-      subtractRight(
-        baseCurrency.value.step,
-        quoteInBaseCurrencyPrice,
-      ),
-    );
-  };
+    ),
+    subtractRight(baseCurrency.value.step),
+    calculateAndRoundBaseCurrencyQuantity(
+      baseCurrency.value.decimals,
+      baseCurrency.value.price,
+    ),
+  )(number);
 
   const maxQuoteCurrencyDeposit = computed(
     () => decrementDeposit(quoteCurrency.value.balance),
@@ -91,8 +81,8 @@ export const useExchange = (
   return {
     baseCurrency,
     quoteCurrency,
-    calculateBaseToQuoteCurrencyPrice: calculateAndRoundQuoteCurrencyQuantity,
-    calculateQuoteToBaseCurrencyPrice: calculateAndRoundBaseCurrencyQuantity,
+    calculateAndRoundQuoteCurrencyQuantity,
+    calculateAndRoundBaseCurrencyQuantity,
     incrementDeposit,
     decrementDeposit,
     maxQuoteCurrencyDeposit,

@@ -77,7 +77,9 @@ import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
 import { useLocalValue } from '@/hooks/useLocalValue';
 import { useExchange } from '@/hooks/useExchange';
 import { percentsToValue, valueToPercents } from '@/math/formulas/common';
-import { calculateOnePercentOfBaseBalanceByQuote } from '@/math/formulas/currency';
+import { convertQuoteBalanceToBase } from '@/math/formulas/currency';
+import { compose, isEqual } from '@/utils/fp';
+import { roundToDecimalPoint } from '@/math/float';
 import { DepositInputEmits, DepositInputProps } from './index';
 
 const props = withDefaults(
@@ -109,23 +111,21 @@ const showLeveragedBalance = computed(
   () => maxQuoteCurrencyDeposit.value !== maxQuoteCurrencyDepositLeveraged.value,
 );
 
-const onePercentOfBalance = computed(() => calculateOnePercentOfBaseBalanceByQuote(
+const baseCurrencyBalance = computed(() => convertQuoteBalanceToBase(
   baseCurrency.value.price,
   maxQuoteCurrencyDepositLeveraged.value,
 ));
 
 const localValueInPercents = computed({
-  get: () => valueToPercents(
-    baseCurrency.value.decimals,
-    onePercentOfBalance.value,
-    localValue.value,
-  ),
+  get: () => compose(
+    roundToDecimalPoint(2),
+    valueToPercents(baseCurrencyBalance.value),
+  )(localValue.value),
   set: (percents: number) => {
-    localValue.value = percentsToValue(
-      baseCurrency.value.decimals,
-      onePercentOfBalance.value,
-      percents,
-    );
+    localValue.value = compose(
+      roundToDecimalPoint(baseCurrency.value.decimals),
+      percentsToValue(baseCurrencyBalance.value),
+    )(percents);
   },
 });
 
@@ -139,13 +139,11 @@ watch(localValueInPercents, () => {
   }
 });
 
-const checkIsValueEqualToPercent = (
-  percents: number,
-) => localValue.value === percentsToValue(
-  baseCurrency.value.decimals,
-  onePercentOfBalance.value,
-  percents,
-);
+const checkIsValueEqualToPercent = (percents: number) => compose(
+  isEqual(localValue.value),
+  roundToDecimalPoint(baseCurrency.value.decimals),
+  percentsToValue(baseCurrencyBalance.value),
+)(percents);
 
 const options = computed(() => [
   {

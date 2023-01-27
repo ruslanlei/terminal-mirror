@@ -62,8 +62,11 @@ import {
 import { computed } from 'vue';
 import NumberInput from '@/components/core/numberInput/NumberInput.vue';
 import { useLocalValue } from '@/hooks/useLocalValue';
-// import { roundToDecimalPoint } from '@/utils/number';
-import { divide, roundToDecimalPoint } from '@/math/float';
+import {
+  divide,
+  divideRight,
+  roundToDecimalPoint,
+} from '@/math/float';
 
 const props = defineProps<TakeProfitInputProps>();
 
@@ -77,7 +80,7 @@ const onQuantityInput = () => {
   emit('quantityInput');
 };
 
-const percentOfOrder = computed(() => props.orderPrice / 100);
+const percentOfOrder = computed(() => divideRight(100, props.orderPrice));
 
 const calculatePercentOfProfitByValue = (
   value: number,

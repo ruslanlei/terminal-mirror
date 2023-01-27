@@ -1,5 +1,4 @@
-import { divideRight, multiply, roundToDecimalPoint } from '@/math/float';
-import { compose } from '@/utils/fp';
+import { divideRight, multiply } from '@/math/float';
 import curry from 'lodash/curry';
 
 export const calculateOnePercent = (
@@ -7,19 +6,17 @@ export const calculateOnePercent = (
 ) => divideRight(100, balance);
 
 export const percentsToValue = curry((
-  decimals: number,
-  onePercentAmount: number,
+  total: number,
   percents: number,
-) => compose(
-  roundToDecimalPoint(decimals),
-  multiply(onePercentAmount),
-)(percents));
+) => multiply(
+  calculateOnePercent(total),
+  percents,
+));
 
 export const valueToPercents = curry((
-  decimals: number,
-  onePercentOfBalance: number,
+  total: number,
   value: number,
-) => compose(
-  roundToDecimalPoint(decimals),
-  divideRight(onePercentOfBalance),
-)(value));
+) => divideRight(
+  calculateOnePercent(total),
+  value,
+));

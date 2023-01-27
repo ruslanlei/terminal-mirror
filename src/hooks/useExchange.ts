@@ -2,14 +2,20 @@ import {
   computed,
   Ref,
 } from 'vue';
-import { Currency } from '@/types/currency';
+import curry from 'lodash/curry';
+import { compose } from '@/utils/fp';
 import {
   add,
-  divideRight, roundToDecimalPoint, subtract, subtractRight,
+  divideRight,
+  multiply,
+  roundToDecimalPoint,
+  subtractRight,
 } from '@/math/float';
-import { compose } from '@/utils/fp';
-import { calculateBaseCurrencyQuantity, calculateQuoteCurrencyVolume } from '@/math/formulas/currency';
-import curry from 'lodash/curry';
+import {
+  calculateBaseCurrencyQuantity,
+  calculateQuoteCurrencyVolume,
+} from '@/math/formulas/currency';
+import { Currency } from '@/types/currency';
 
 export interface QuoteCurrency extends Currency {
     leverage: number,
@@ -30,8 +36,8 @@ export const useExchange = (
     baseCurrencyQuantity: number,
   ) => compose(
     roundToDecimalPoint(quoteCurrencyDecimals),
-    calculateQuoteCurrencyVolume(baseCurrencyPrice),
-  )(baseCurrencyQuantity));
+    calculateQuoteCurrencyVolume,
+  )(baseCurrencyPrice, baseCurrencyQuantity));
 
   const calculateAndRoundBaseCurrencyQuantity = curry((
     baseCurrencyDecimals: number,
@@ -39,8 +45,8 @@ export const useExchange = (
     quoteCurrencyQuantity: number,
   ) => compose(
     roundToDecimalPoint(baseCurrencyDecimals),
-    calculateBaseCurrencyQuantity(baseCurrencyPrice),
-  )(quoteCurrencyQuantity));
+    calculateBaseCurrencyQuantity,
+  )(baseCurrencyPrice, quoteCurrencyQuantity));
 
   const incrementDeposit = (number: number) => compose(
     calculateAndRoundQuoteCurrencyQuantity(
@@ -70,12 +76,13 @@ export const useExchange = (
     () => decrementDeposit(quoteCurrency.value.balance),
   );
 
-  const maxQuoteCurrencyDepositLeveraged = computed(
-    () => decrementDeposit(quoteCurrency.value.balance * quoteCurrency.value.leverage),
-  );
+  const maxQuoteCurrencyDepositLeveraged = computed(() => compose(
+    decrementDeposit,
+    multiply,
+  )(quoteCurrency.value.balance, quoteCurrency.value.leverage));
 
   const maxBaseCurrencyDepositLeveraged = computed(
-    () => maxQuoteCurrencyDepositLeveraged.value / baseCurrency.value.price,
+    () => divideRight(baseCurrency.value.price, maxQuoteCurrencyDepositLeveraged.value),
   );
 
   return {

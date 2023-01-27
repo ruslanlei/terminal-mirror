@@ -2,9 +2,8 @@ import {
   computed,
   Ref,
 } from 'vue';
-import { roundToDecimalPoint } from '@/utils/number';
 import { Currency } from '@/types/currency';
-import { add, subtract } from '@/math/float';
+import { roundToDecimalPoint, subtract } from '@/math/float';
 
 export interface QuoteCurrency extends Currency {
     leverage: number,
@@ -22,27 +21,24 @@ export const useExchange = (
   const calculateBaseToQuoteCurrencyPrice = (
     baseCurrencyQuantity: number,
   ) => roundToDecimalPoint(
-    baseCurrencyQuantity * baseCurrency.value.price,
     quoteCurrency.value.decimals,
+    baseCurrencyQuantity * baseCurrency.value.price,
   );
 
   const calculateQuoteToBaseCurrencyPrice = (
     quoteCurrencyQuantity: number,
   ) => roundToDecimalPoint(
-    quoteCurrencyQuantity / baseCurrency.value.price,
     baseCurrency.value.decimals,
+    quoteCurrencyQuantity / baseCurrency.value.price,
   );
 
   const incrementDeposit = (number: number) => {
     const quoteInBaseCurrencyPrice = calculateQuoteToBaseCurrencyPrice(number);
 
-    return calculateBaseToQuoteCurrencyPrice(add(
-      [
-        quoteInBaseCurrencyPrice,
-        baseCurrency.value.step,
-      ],
-      baseCurrency.value.decimals,
-    ));
+    return calculateBaseToQuoteCurrencyPrice(
+      quoteInBaseCurrencyPrice,
+      // baseCurrency.value.step,
+    );
   };
 
   const decrementDeposit = (number: number) => {
@@ -51,7 +47,6 @@ export const useExchange = (
     return calculateBaseToQuoteCurrencyPrice(subtract(
       quoteInBaseCurrencyPrice,
       baseCurrency.value.step,
-      baseCurrency.value.decimals,
     ));
   };
 

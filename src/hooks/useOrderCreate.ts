@@ -11,10 +11,9 @@ import { useI18n } from 'vue-i18n';
 import { number, object, string } from 'yup';
 import { BaseCurrency, QuoteCurrency } from '@/hooks/useExchange';
 import { currency } from '@/api/types/currency';
-import { roundToDecimalPoint } from '@/utils/number';
 import { useToastStore } from '@/stores/toasts';
 import { useModelReset } from '@/hooks/useModelReset';
-import { divide } from '@/math/float';
+import { divide, roundToDecimalPoint } from '@/math/float';
 
 export interface OrderModel extends CreateOrderDTO {
   leverage: number,
@@ -96,7 +95,7 @@ export const useOrderCreate = () => {
       (sum: number, takeProfit: TakeProfit) => sum + (takeProfit.price * takeProfit.quantity),
       0,
     );
-    return roundToDecimalPoint(rawSum, quoteCurrency.value.decimals);
+    return roundToDecimalPoint(quoteCurrency.value.decimals, rawSum);
   });
 
   const EACH_TAKE_PROFIT_PERCENT_INCREASE = 0.5;
@@ -121,7 +120,7 @@ export const useOrderCreate = () => {
   );
 
   const autoCalculateTakeProfitAmounts = () => {
-    const quantity = divide(model.quantity, takeProfitsAmount.value, 6);
+    const quantity = divide(model.quantity, takeProfitsAmount.value);
 
     takeProfits.value = takeProfits.value.map((value, index) => ({
       ...value,
@@ -170,18 +169,18 @@ export const useOrderCreate = () => {
   const stopLossRisk = computed(
     () => {
       const riskRaw = (model.price * model.quantity) - (stopLossPrice.value * model.quantity);
-      return roundToDecimalPoint(riskRaw, quoteCurrency.value.decimals);
+      return roundToDecimalPoint(quoteCurrency.value.decimals, riskRaw);
     },
   );
 
   const pledge = computed(() => roundToDecimalPoint(
-    (model.price * model.quantity) / model.leverage,
     quoteCurrency.value.decimals,
+    (model.price * model.quantity) / model.leverage,
   ));
 
   const liquidationPrice = computed(() => (model.quantity ? roundToDecimalPoint(
-    pledge.value / model.quantity,
     quoteCurrency.value.decimals,
+    pledge.value / model.quantity,
   ) : 0));
 
   const createStopLoss = () => {

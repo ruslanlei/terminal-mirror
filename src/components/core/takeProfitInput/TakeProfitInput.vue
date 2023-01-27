@@ -62,8 +62,8 @@ import {
 import { computed } from 'vue';
 import NumberInput from '@/components/core/numberInput/NumberInput.vue';
 import { useLocalValue } from '@/hooks/useLocalValue';
-import { roundToDecimalPoint } from '@/utils/number';
-import { divide } from '@/math/float';
+// import { roundToDecimalPoint } from '@/utils/number';
+import { divide, roundToDecimalPoint } from '@/math/float';
 
 const props = defineProps<TakeProfitInputProps>();
 
@@ -81,7 +81,7 @@ const percentOfOrder = computed(() => props.orderPrice / 100);
 
 const calculatePercentOfProfitByValue = (
   value: number,
-) => divide((value - props.orderPrice), percentOfOrder.value, 2);
+) => divide((value - props.orderPrice), percentOfOrder.value);
 
 const calculateValueByPercentOfProfit = (
   percentValue: number,
@@ -97,17 +97,17 @@ const percentOfProfitValue = computed({
 const percentOfOrderQuantity = computed(() => props.orderQuantity / 100);
 
 const percentOfQuantity = computed({
-  get: () => roundToDecimalPoint(localQuantity.value / percentOfOrderQuantity.value, 2),
+  get: () => roundToDecimalPoint(2, localQuantity.value / percentOfOrderQuantity.value),
   set: (percentValue: number) => {
     localQuantity.value = roundToDecimalPoint(
-      roundToDecimalPoint(percentValue, 2) * percentOfOrderQuantity.value,
       props.currency.decimals,
+      roundToDecimalPoint(percentValue, 2) * percentOfOrderQuantity.value,
     );
   },
 });
 
 const percentOfQuantityInputStep = computed(
-  () => roundToDecimalPoint(100 / (props.orderQuantity / props.currency.step), 2),
+  () => roundToDecimalPoint(2, 100 / (props.orderQuantity / props.currency.step)),
 );
 </script>
 

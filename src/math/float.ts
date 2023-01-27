@@ -1,33 +1,29 @@
 import currency from 'currency.js';
 import curry from 'lodash/curry';
 
-export const multiply = (
+export const multiply = curry<number, number, number>((
   value: number,
   multiplier: number,
-  precision = 0,
-) => currency(value, { precision }).multiply(multiplier).value;
+) => currency(value, { precision: 30 }).multiply(multiplier).value);
 
-export const divide = (
+export const divide = curry<number, number, number>((
   value: number,
   divider: number,
-  precision = 0,
-) => currency(value, { precision }).divide(divider).value;
+) => currency(value, { precision: 30 }).divide(divider).value);
 
-export const add = (
-  terms: (number | string)[],
-  precision = 2,
-) => terms.reduce(
-  (acc: number, value: number | string) => currency(acc, { precision }).add(value).value,
-  0,
-);
+export const add = curry<number, number, number>((
+  term1: number,
+  term2: number,
+) => currency(term1, { precision: 30 }).add(term2).value);
 
-export const subtract = (
+export const subtract = curry<number, number, number>((
   value: number,
   subtrahend: number,
-  precision = 2,
-) => currency(value, { precision }).subtract(subtrahend).value;
+) => currency(value, { precision: 30 }).subtract(subtrahend).value);
 
-export const roundToDecimalPoint = curry((decimals: number, number: number) => {
-  const divider = 10 ** decimals;
-  return Math.round(number * divider) / divider;
-});
+export const roundToDecimalPoint = curry<number, number, number>(
+  (decimals: number, number: number) => {
+    const divider = 10 ** decimals;
+    return Math.round(number * divider) / divider;
+  },
+);

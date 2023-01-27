@@ -74,9 +74,9 @@ import Icon from '@/components/core/icon/Icon.vue';
 import RangeSlider from '@/components/core/rangeSlider/RangeSlider.vue';
 import NumberInput from '@/components/core/numberInput/NumberInput.vue';
 import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
-import { roundToDecimalPoint } from '@/utils/number';
 import { useLocalValue } from '@/hooks/useLocalValue';
 import { useExchange } from '@/hooks/useExchange';
+import { divide, roundToDecimalPoint } from '@/math/float';
 import { DepositInputEmits, DepositInputProps } from './index';
 
 const props = withDefaults(
@@ -116,11 +116,11 @@ const onePercentOfBalance = computed(() => leveragedBalanceInBaseCurrency.value 
 
 const percentsToValue = (
   percents: number,
-) => roundToDecimalPoint(onePercentOfBalance.value * percents, props.baseCurrency.decimals);
+) => roundToDecimalPoint(props.baseCurrency.decimals, onePercentOfBalance.value * percents);
 
 const valueToPercents = (value: number) => roundToDecimalPoint(
-  value / onePercentOfBalance.value,
-  props.decimals,
+  props.quoteCurrency.decimals,
+  divide(value, onePercentOfBalance.value),
 );
 
 const localValueInPercents = computed({

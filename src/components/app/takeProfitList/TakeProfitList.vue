@@ -62,11 +62,11 @@ const fixSumOfTakeProfits = (borrowFromFirst: boolean) => {
   const sumOfTakeProfits = localValue.value.reduce((
     summary: number,
     takeProfit: TakeProfitInputValue,
-  ) => add([summary, takeProfit.quantity], maxAllowedDecimals.value), 0);
+  ) => add(summary, takeProfit.quantity), 0);
 
   if (sumOfTakeProfits === props.orderQuantity) return;
 
-  const difference = subtract(sumOfTakeProfits, props.orderQuantity, maxAllowedDecimals.value);
+  const difference = subtract(sumOfTakeProfits, props.orderQuantity);
 
   const donorTakeProfit = borrowFromFirst
     ? localValue.value[0]
@@ -77,7 +77,6 @@ const fixSumOfTakeProfits = (borrowFromFirst: boolean) => {
       donorTakeProfit.quantity = subtract(
         donorTakeProfit.quantity,
         difference,
-        maxAllowedDecimals.value,
       );
       return;
     }

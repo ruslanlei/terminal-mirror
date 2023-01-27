@@ -4,8 +4,9 @@ import { ActiveOrdersTableColumn, ActiveOrdersTableRecord } from '@/components/a
 import { useMarketStore } from '@/stores/market';
 import { Order, SubOrder } from '@/api/types/order';
 import { SubOrderTableItem } from '@/components/app/activeOrdersList/subOrdersTable';
-import { multiply } from '@/math/float';
+import { multiply, roundToDecimalPoint } from '@/math/float';
 import { humanizeDate } from '@/utils/date';
+import { compose } from '@/utils/fp';
 
 export const useActiveOrdersList = () => {
   const { t } = useI18n();
@@ -104,7 +105,10 @@ export const useActiveOrdersList = () => {
         data: {
           pair: pairData.base,
           type: order.side,
-          volume: multiply(order.quantity, order.price, 6), /* FIXME */
+          volume: compose(
+            roundToDecimalPoint(6),
+            multiply,
+          )(order.quantity, order.price), /* FIXME */
           coins: order.quantity,
           prices: {
             orderPrice: order.price,

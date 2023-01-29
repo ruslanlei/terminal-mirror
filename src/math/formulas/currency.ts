@@ -1,7 +1,6 @@
-import curry from 'lodash/curry';
-import { divideRight, multiply, roundToDecimalPoint } from '@/math/float';
-import { compose } from '@/utils/fp';
-import { calculateOnePercent } from '@/math/formulas/common';
+import { divideRight, multiply } from '@/math/float';
+import { compose, curry } from '@/utils/fp';
+import { calculateOnePercent } from '@/math/helpers/percents';
 
 export const convertQuoteBalanceToBase = curry((
   baseCurrencyPrice: number,

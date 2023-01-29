@@ -1,5 +1,5 @@
 import currency from 'currency.js';
-import curry from 'lodash/curry';
+import { curry } from '@/utils/fp';
 
 export const multiply = curry<number, number, number>((
   value: number,

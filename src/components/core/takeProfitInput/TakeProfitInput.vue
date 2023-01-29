@@ -69,7 +69,7 @@ import {
   roundToDecimalPoint,
 } from '@/math/float';
 import { compose } from '@/utils/fp';
-import { calculateIncreasePercent, addPercents } from '@/math/formulas/common';
+import { addPercents, calculateIncreasePercent } from '@/math/helpers/percents';
 
 const props = defineProps<TakeProfitInputProps>();
 

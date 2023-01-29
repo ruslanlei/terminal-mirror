@@ -2,8 +2,7 @@ import {
   computed,
   Ref,
 } from 'vue';
-import curry from 'lodash/curry';
-import { compose } from '@/utils/fp';
+import { compose, curry } from '@/utils/fp';
 import {
   add,
   divideRight,

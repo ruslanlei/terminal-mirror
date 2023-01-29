@@ -1,4 +1,4 @@
-import curry from 'lodash/curry';
+import { curry } from '@/utils/fp';
 
 export const calculatePercentOfOrderPrice = curry((
   orderPrice: number,

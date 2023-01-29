@@ -68,18 +68,13 @@
 </template>
 
 <script setup lang="ts">
-import { computed, toRefs, watch } from 'vue';
+import { computed } from 'vue';
 import Button from '@/components/core/button/Button.vue';
 import Icon from '@/components/core/icon/Icon.vue';
 import RangeSlider from '@/components/core/rangeSlider/RangeSlider.vue';
 import NumberInput from '@/components/core/numberInput/NumberInput.vue';
 import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
-import { useLocalValue } from '@/hooks/useLocalValue';
-import { useExchange } from '@/hooks/useExchange';
-import { percentsToValue, valueToPercents } from '@/math/formulas/common';
-import { convertQuoteBalanceToBase } from '@/math/formulas/currency';
-import { compose, isEqual } from '@/utils/fp';
-import { roundToDecimalPoint } from '@/math/float';
+import { useDepositInput } from '@/hooks/useDepositInput';
 import { DepositInputEmits, DepositInputProps } from './index';
 
 const props = withDefaults(
@@ -90,60 +85,17 @@ const props = withDefaults(
   },
 );
 
-const {
-  baseCurrency,
-  quoteCurrency,
-} = toRefs(props);
-
 const emit = defineEmits<DepositInputEmits>();
 
-const localValue = useLocalValue<number>(props, emit, 'modelValue');
-
 const {
+  localValue,
+  showLeveragedBalance,
+  localValueInPercents,
+  setPercentOfBalance,
+  checkIsValueEqualToPercent,
   maxQuoteCurrencyDeposit,
   maxQuoteCurrencyDepositLeveraged,
-} = useExchange(
-  baseCurrency,
-  quoteCurrency,
-);
-
-const showLeveragedBalance = computed(
-  () => maxQuoteCurrencyDeposit.value !== maxQuoteCurrencyDepositLeveraged.value,
-);
-
-const baseCurrencyBalance = computed(() => convertQuoteBalanceToBase(
-  baseCurrency.value.price,
-  maxQuoteCurrencyDepositLeveraged.value,
-));
-
-const localValueInPercents = computed({
-  get: () => compose(
-    roundToDecimalPoint(2),
-    valueToPercents(baseCurrencyBalance.value),
-  )(localValue.value),
-  set: (percents: number) => {
-    localValue.value = compose(
-      roundToDecimalPoint(baseCurrency.value.decimals),
-      percentsToValue(baseCurrencyBalance.value),
-    )(percents);
-  },
-});
-
-const setPercentOfBalance = (percents: number) => {
-  localValueInPercents.value = percents;
-};
-
-watch(localValueInPercents, () => {
-  if (localValueInPercents.value > 100) {
-    localValueInPercents.value = 100;
-  }
-});
-
-const checkIsValueEqualToPercent = (percents: number) => compose(
-  isEqual(localValue.value),
-  roundToDecimalPoint(baseCurrency.value.decimals),
-  percentsToValue(baseCurrencyBalance.value),
-)(percents);
+} = useDepositInput(props, emit);
 
 const options = computed(() => [
   {

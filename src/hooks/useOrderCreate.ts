@@ -14,6 +14,12 @@ import { currency } from '@/api/types/currency';
 import { useToastStore } from '@/stores/toasts';
 import { useModelReset } from '@/hooks/useModelReset';
 import { divide, roundToDecimalPoint } from '@/math/float';
+import { compose, curry } from '@/utils/fp';
+import {
+  calculateTakeProfitPricesByIncreasePercent,
+  reduceTakeProfitsToAmountOfProfitAndRound,
+} from '@/math/formulas/takeProfit';
+import { calculateOnePercent } from '@/math/helpers/percents';
 
 export interface OrderModel extends CreateOrderDTO {
   leverage: number,
@@ -90,28 +96,19 @@ export const useOrderCreate = () => {
 
   const takeProfits = ref<TakeProfit[]>([]);
 
-  const takeProfitsIncomeSum = computed(() => {
-    const rawSum = takeProfits.value.reduce(
-      (sum: number, takeProfit: TakeProfit) => sum + (takeProfit.price * takeProfit.quantity),
-      0,
-    );
-    return roundToDecimalPoint(quoteCurrency.value.decimals, rawSum);
-  });
+  const takeProfitsIncomeSum = computed(() => reduceTakeProfitsToAmountOfProfitAndRound(
+    quoteCurrency.value.decimals,
+    takeProfits.value,
+  ));
 
   const EACH_TAKE_PROFIT_PERCENT_INCREASE = 0.5;
 
-  const percentOfOrderPrice = computed(() => model.price / 100);
-
   const autoCalculateTakeProfitPrices = () => {
-    takeProfits.value = takeProfits.value.map((value, index) => {
-      const percentIncrease = EACH_TAKE_PROFIT_PERCENT_INCREASE * (index + 1);
-      const increase = percentIncrease * percentOfOrderPrice.value;
-
-      return {
-        ...value,
-        price: model.price + increase,
-      };
-    });
+    takeProfits.value = calculateTakeProfitPricesByIncreasePercent(
+      EACH_TAKE_PROFIT_PERCENT_INCREASE,
+      model.price,
+      takeProfits.value,
+    );
   };
   watch(
     () => model.price,
@@ -122,7 +119,7 @@ export const useOrderCreate = () => {
   const autoCalculateTakeProfitAmounts = () => {
     const quantity = divide(model.quantity, takeProfitsAmount.value);
 
-    takeProfits.value = takeProfits.value.map((value, index) => ({
+    takeProfits.value = takeProfits.value.map((value) => ({
       ...value,
       quantity,
     }));

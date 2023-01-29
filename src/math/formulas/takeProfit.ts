@@ -1,11 +1,16 @@
 import {
   compose,
-  curry,
+  curry, getLength,
   map,
   reduce,
 } from '@/utils/fp';
 import { TakeProfit } from '@/stores/market';
-import { add, multiply, roundToDecimalPoint } from '@/math/float';
+import {
+  add,
+  divide,
+  multiply,
+  roundToDecimalPoint,
+} from '@/math/float';
 import { calculateOnePercent } from '@/math/helpers/percents';
 
 export const reduceTakeProfitsToAmountOfProfit = (
@@ -27,7 +32,7 @@ export const reduceTakeProfitsToAmountOfProfitAndRound = curry((
   reduceTakeProfitsToAmountOfProfit,
 )(takeProfits));
 
-export const calculateTakeProfitPricesByIncreasePercent = curry((
+export const mapTakeProfitPricesByIncreasePercent = curry((
   percentOfIncrease: number,
   orderPrice: number,
   takeProfits: TakeProfit[],
@@ -43,3 +48,14 @@ export const calculateTakeProfitPricesByIncreasePercent = curry((
     )(index),
   }),
 ));
+
+export const divideEquallyOrderQuantityBetweenTakeProfits = curry((
+  orderQuantity: number,
+  takeProfits: TakeProfit[],
+) => takeProfits.map((value) => ({
+  ...value,
+  quantity: compose(
+    divide(orderQuantity),
+    getLength,
+  )(takeProfits),
+})));

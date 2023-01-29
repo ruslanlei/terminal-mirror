@@ -16,6 +16,8 @@ export const log = curry((
   return value;
 });
 
+export const getLength = (array: any[]) => array.length;
+
 export {
   curry,
   flowRight as compose,

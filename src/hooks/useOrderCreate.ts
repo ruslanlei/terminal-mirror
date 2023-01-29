@@ -13,13 +13,12 @@ import { BaseCurrency, QuoteCurrency } from '@/hooks/useExchange';
 import { currency } from '@/api/types/currency';
 import { useToastStore } from '@/stores/toasts';
 import { useModelReset } from '@/hooks/useModelReset';
-import { divide, roundToDecimalPoint } from '@/math/float';
-import { compose, curry } from '@/utils/fp';
+import { roundToDecimalPoint } from '@/math/float';
 import {
-  calculateTakeProfitPricesByIncreasePercent,
+  divideEquallyOrderQuantityBetweenTakeProfits,
+  mapTakeProfitPricesByIncreasePercent,
   reduceTakeProfitsToAmountOfProfitAndRound,
 } from '@/math/formulas/takeProfit';
-import { calculateOnePercent } from '@/math/helpers/percents';
 
 export interface OrderModel extends CreateOrderDTO {
   leverage: number,
@@ -104,7 +103,7 @@ export const useOrderCreate = () => {
   const EACH_TAKE_PROFIT_PERCENT_INCREASE = 0.5;
 
   const autoCalculateTakeProfitPrices = () => {
-    takeProfits.value = calculateTakeProfitPricesByIncreasePercent(
+    takeProfits.value = mapTakeProfitPricesByIncreasePercent(
       EACH_TAKE_PROFIT_PERCENT_INCREASE,
       model.price,
       takeProfits.value,
@@ -117,12 +116,10 @@ export const useOrderCreate = () => {
   );
 
   const autoCalculateTakeProfitAmounts = () => {
-    const quantity = divide(model.quantity, takeProfitsAmount.value);
-
-    takeProfits.value = takeProfits.value.map((value) => ({
-      ...value,
-      quantity,
-    }));
+    takeProfits.value = divideEquallyOrderQuantityBetweenTakeProfits(
+      model.quantity,
+      takeProfits.value,
+    );
   };
   watch(
     [() => model.quantity, baseCurrency],

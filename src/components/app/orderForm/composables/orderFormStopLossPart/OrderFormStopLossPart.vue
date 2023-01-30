@@ -101,7 +101,7 @@ import OrderFormRatio from '@/components/app/orderFormRatio/OrderFormRatio.vue';
 import Button from '@/components/core/button/Button.vue';
 import { useOrderFormInject } from '@/hooks/useOrderFormInject';
 import {
-  calculateOrderPriceByRiskAmount,
+  calculateOriginalPriceByVolumeDifference,
   calculateVolumeDifference,
 } from '@/math/formulas/order';
 import { roundToDecimalPoint } from '@/math/float';
@@ -154,8 +154,12 @@ const amountOfRisk = computed({
   set: (amountOfRisk: number) => {
     stopLossPrice.value = compose(
       roundToDecimalPoint(quoteCurrency.value.decimals),
-      calculateOrderPriceByRiskAmount(model.price, model.quantity),
-    )(amountOfRisk);
+      calculateOriginalPriceByVolumeDifference,
+    )(
+      model.price,
+      model.quantity,
+      amountOfRisk,
+    );
   },
 });
 

@@ -2,7 +2,9 @@ import { compose, curry, toAbsolute } from '@/utils/fp';
 import {
   divideRight,
   multiply,
-  roundToDecimalPoint, subtract,
+  roundToDecimalPoint,
+  subtract,
+  subtractRight,
 } from '@/math/float';
 
 export const calculateRisk = curry((
@@ -27,11 +29,15 @@ export const calculateVolumeDifference = curry((
   comparingPrice,
 ));
 
-export const calculateOrderPriceByRiskAmount = curry((
-  orderPrice: number,
-  orderQuantity: number,
-  riskAmount: number,
-) => ((orderPrice * orderQuantity) - riskAmount) / orderQuantity);
+export const calculateOriginalPriceByVolumeDifference = curry((
+  originalPrice: number,
+  quantity: number,
+  volumeDifference: number,
+) => compose(
+  divideRight(quantity),
+  subtractRight(volumeDifference),
+  multiply,
+)(originalPrice, quantity));
 
 export const calculatePledge = curry((
   orderPrice: number,

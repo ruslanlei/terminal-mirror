@@ -16,6 +16,11 @@ export const log = curry((
   return value;
 });
 
+export const arrayOf = curry((
+  initializer: () => any,
+  length: number,
+) => Array(length).fill(0).map(initializer));
+
 export const getLength = (array: any[]) => array.length;
 
 export {

@@ -19,6 +19,7 @@ import {
   mapTakeProfitPricesByIncreasePercent,
   reduceTakeProfitsToAmountOfProfitAndRound,
 } from '@/math/formulas/takeProfit';
+import { arrayOf, compose, curry } from '@/utils/fp';
 
 export interface OrderModel extends CreateOrderDTO {
   leverage: number,
@@ -91,7 +92,7 @@ export const useOrderCreate = () => {
 
   const maxTakeProfits = 20;
 
-  const takeProfitsAmount = ref(5);
+  const takeProfitsAmount = ref(1);
 
   const takeProfits = ref<TakeProfit[]>([]);
 
@@ -127,13 +128,27 @@ export const useOrderCreate = () => {
     { deep: true },
   );
 
-  const autoCalculateTakeProfits = () => {
-    takeProfits.value = Array(takeProfitsAmount.value).fill(0).map(() => ({
+  const autoInitTakeProfits = (
+    percentOfIncrease: number,
+    orderPrice: number,
+    orderQuantity: number,
+    amount: number,
+  ) => compose(
+    spreadOrderQuantityBetweenTakeProfits(orderQuantity),
+    mapTakeProfitPricesByIncreasePercent(percentOfIncrease, orderPrice),
+    arrayOf(() => ({
       price: 0,
       quantity: 0,
-    }));
-    autoCalculateTakeProfitPrices();
-    autoCalculateTakeProfitAmounts();
+    })),
+  )(amount);
+
+  const autoCalculateTakeProfits = () => {
+    takeProfits.value = autoInitTakeProfits(
+      EACH_TAKE_PROFIT_PERCENT_INCREASE,
+      model.price,
+      model.quantity,
+      takeProfitsAmount.value,
+    );
   };
   autoCalculateTakeProfits();
 

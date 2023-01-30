@@ -7,6 +7,7 @@ import { SubOrderTableItem } from '@/components/app/activeOrdersList/subOrdersTa
 import { multiply, roundToDecimalPoint } from '@/math/float';
 import { humanizeDate } from '@/utils/date';
 import { compose } from '@/utils/fp';
+import { calculatePercentOfDifference } from '@/math/helpers/percents';
 
 export const useActiveOrdersList = () => {
   const { t } = useI18n();
@@ -105,6 +106,13 @@ export const useActiveOrdersList = () => {
         multiply,
       )(order.quantity, order.price);
 
+      const stopLossPercent = relatedStopLoss?.price
+        ? compose(
+          roundToDecimalPoint(2),
+          calculatePercentOfDifference,
+        )(order.price, relatedStopLoss.price)
+        : null;
+
       return {
         id: order.id,
         data: {
@@ -116,7 +124,7 @@ export const useActiveOrdersList = () => {
             orderPrice: order.price,
             current: 0, /* TODO: add current price */
           },
-          sl: 0, /* FIXME */
+          sl: stopLossPercent,
           pnl: 0, /* FIXME */
           tp: 0, /* FIXME */
           date: humanizeDate(order.created),
@@ -124,8 +132,8 @@ export const useActiveOrdersList = () => {
           options: order,
         },
         children: [
-          ...sortedRelatedTakeProfits.map((order: Order, index: number) => ({
-            ...order,
+          ...sortedRelatedTakeProfits.map((subOrder: Order, index: number) => ({
+            ...subOrder,
             pairData,
             masterData: order,
             orderIndex: sortedRelatedTakeProfits.length - index,

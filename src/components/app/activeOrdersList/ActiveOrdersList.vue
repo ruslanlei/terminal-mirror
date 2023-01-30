@@ -69,8 +69,19 @@
           </span>
         </div>
       </template>
-      <template #cell(sl)="{ data }">
-        {{ data }}
+      <template #cell(sl)="{ data: stopLossPercent }">
+        <div
+          v-if="stopLossPercent !== null"
+          :class="$style.stopLossPercent"
+        >
+          {{ t('common.percents', { value: -Math.abs(stopLossPercent) }) }}
+        </div>
+        <div
+          v-else
+          :class="$style.emptyValue"
+        >
+          {{ '-' }}
+        </div>
       </template>
       <template #cell(pnl)="{ data }">
         {{ data }}
@@ -157,6 +168,12 @@ getList();
   align-items: center;
 }
 
+.emptyValue {
+  color: rgb(var(--color-accent-1));
+  @include title2;
+  font-weight: 600;
+}
+
 .pairName {
   color: rgb(var(--color-accent-2));
   @include title2;
@@ -182,6 +199,12 @@ getList();
 .pricesCellCurrent {
   margin-left: 5px;
   color: rgb(var(--color-accent-2));
+}
+
+.stopLossPercent {
+  color: rgb(var(--color-danger-2));
+  @include title2;
+  font-weight: 600;
 }
 
 .commentButton {

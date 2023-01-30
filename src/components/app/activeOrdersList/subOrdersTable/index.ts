@@ -21,7 +21,7 @@ export type SubOrdersRecord = TableRecord<SubOrdersColumnSlug, {
   masterType: string,
   quantity: {
     value: number,
-    percent: number,
+    percent: string,
   },
   volume: {
     value: number,

@@ -2,7 +2,8 @@
   "common": {
     "search": "Search",
     "save": "Save",
-    "currencyAmount": "{amount} {currency}"
+    "currencyAmount": "{amount} {currency}",
+    "percents": "{value}%"
   },
   "validationError": {
     "email": "Value is not valid email",

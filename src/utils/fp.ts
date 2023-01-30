@@ -9,7 +9,7 @@ export const isEqual = curry(lodashIsEqual);
 export const reduce = curry(lodashReduce);
 
 export const log = curry((
-  message: string,
+  message: string | number,
   value: any,
 ) => {
   console.log(message, value);

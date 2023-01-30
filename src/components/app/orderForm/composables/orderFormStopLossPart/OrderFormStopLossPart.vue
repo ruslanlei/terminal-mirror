@@ -164,8 +164,6 @@ const amountOfRisk = computed({
   },
 });
 
-const TEST_BALANCE = 3180;
-
 const percentOfDeposit = computed({
   get: () => compose(
     roundToDecimalPoint(2),
@@ -174,7 +172,7 @@ const percentOfDeposit = computed({
     model.quantity,
     model.price,
     stopLossPrice.value,
-    TEST_BALANCE,
+    quoteCurrency.value.balance,
   ),
 
   set: (percentOfDeposit: number) => {
@@ -183,7 +181,7 @@ const percentOfDeposit = computed({
       calculatePriceByPercentOfDeposit(
         model.quantity,
         model.price,
-        TEST_BALANCE,
+        quoteCurrency.value.balance,
       ),
     )(percentOfDeposit);
   },

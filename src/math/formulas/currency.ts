@@ -1,4 +1,6 @@
-import { divideRight, multiply } from '@/math/float';
+import {
+  add, divideRight, multiply, subtractRight,
+} from '@/math/float';
 import { compose, curry } from '@/utils/fp';
 import { calculateOnePercent } from '@/math/helpers/percents';
 
@@ -10,23 +12,22 @@ export const convertQuoteBalanceToBase = curry((
   quoteCurrencyBalance,
 ));
 
-export const calculateOnePercentOfBaseBalanceByQuote = curry((
+export const incrementQuoteDepositByBaseStep = curry((
+  baseCurrencyStep: number,
   baseCurrencyPrice: number,
-  quoteCurrencyBalance: number,
+  quoteCurrencyVolume: number,
 ) => compose(
-  calculateOnePercent,
-  convertQuoteBalanceToBase,
-)(baseCurrencyPrice, quoteCurrencyBalance));
+  multiply(baseCurrencyPrice),
+  add(baseCurrencyStep),
+  divideRight(baseCurrencyPrice), // quote quantity in base
+)(quoteCurrencyVolume));
 
-export const calculateQuoteCurrencyVolume = curry((
+export const decrementQuoteDepositByBaseStep = curry((
+  baseCurrencyStep: number,
   baseCurrencyPrice: number,
-  baseCurrencyQuantity: number,
-) => multiply(
-  baseCurrencyPrice,
-  baseCurrencyQuantity,
-));
-
-export const calculateBaseCurrencyQuantity = curry((
-  baseCurrencyPrice: number,
-  quoteCurrencyQuantity: number,
-) => divideRight(baseCurrencyPrice, quoteCurrencyQuantity));
+  quoteCurrencyVolume: number,
+) => compose(
+  multiply(baseCurrencyPrice),
+  subtractRight(baseCurrencyStep),
+  divideRight(baseCurrencyPrice), // quote quantity in base
+)(quoteCurrencyVolume));

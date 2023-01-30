@@ -29,6 +29,7 @@ import NumberInput from '@/components/core/numberInput/NumberInput.vue';
 import { NumberInputNormalizer } from '@/components/core/numberInput';
 import { useExchange } from '@/hooks/useExchange';
 import { compose } from '@/utils/fp';
+import { divideRight, multiply, roundToDecimalPoint } from '@/math/float';
 import { ExchangeInputProps, ExchangeInputEmits } from './index';
 
 const props = defineProps<ExchangeInputProps>();
@@ -41,8 +42,6 @@ const {
 const emit = defineEmits<ExchangeInputEmits>();
 
 const {
-  calculateAndRoundQuoteCurrencyQuantity,
-  calculateAndRoundBaseCurrencyQuantity,
   incrementDeposit,
   decrementDeposit,
   maxQuoteCurrencyDeposit,
@@ -58,31 +57,20 @@ const normalizer: NumberInputNormalizer = (
   switch (direction) {
     case 'increment': return incrementDeposit(number);
     case 'decrement': return decrementDeposit(number);
-    default: return compose(
-      calculateAndRoundQuoteCurrencyQuantity(
-        baseCurrency.value.decimals,
-        baseCurrency.value.price,
-      ),
-      calculateAndRoundBaseCurrencyQuantity(
-        baseCurrency.value.decimals,
-        baseCurrency.value.price,
-      ),
-    )(number);
+    default: return number;
   }
 };
 
 const localValue = computed({
-  get: () => calculateAndRoundQuoteCurrencyQuantity(
-    quoteCurrency.value.decimals,
-    baseCurrency.value.price,
-    props.modelValue,
-  ),
+  get: () => compose(
+    roundToDecimalPoint(quoteCurrency.value.decimals),
+    multiply(baseCurrency.value.price),
+  )(props.modelValue),
   set: (value: number) => {
-    emit('update:modelValue', calculateAndRoundBaseCurrencyQuantity(
-      baseCurrency.value.decimals,
-      baseCurrency.value.price,
-      value,
-    ));
+    emit('update:modelValue', compose(
+      roundToDecimalPoint(baseCurrency.value.decimals),
+      divideRight(baseCurrency.value.price),
+    )(value));
   },
 });
 </script>

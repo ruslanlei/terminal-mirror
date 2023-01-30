@@ -17,8 +17,8 @@ export const calculateRisk = curry((
 ));
 
 export const calculateVolumeDifference = curry((
-  originalPrice: number,
   quantity: number,
+  originalPrice: number,
   comparingPrice: number,
 ) => compose(
   toAbsolute,

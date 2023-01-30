@@ -187,8 +187,8 @@ export const useOrderCreate = () => {
       roundToDecimalPoint(quoteCurrency.value.decimals),
       calculateVolumeDifference,
     )(
-      model.price,
       model.quantity,
+      model.price,
       stopLossPrice.value,
     ),
   );

@@ -1,15 +1,15 @@
-import currency from 'currency.js';
 import { curry } from '@/utils/fp';
+import numeral from 'numeral';
 
 export const multiply = curry((
   value: number,
   multiplier: number,
-) => currency(value, { precision: 30 }).multiply(multiplier).value);
+) => numeral(value).multiply(multiplier)._value);
 
 export const divide = curry((
   value: number,
   divider: number,
-) => currency(value, { precision: 30 }).divide(divider).value);
+) => numeral(value).divide(divider)._value);
 
 export const divideRight = curry((
   divider: number,
@@ -19,17 +19,17 @@ export const divideRight = curry((
 export const add = curry((
   term1: number,
   term2: number,
-) => currency(term1, { precision: 30 }).add(term2).value);
+) => numeral(term1).add(term2)._value);
 
 export const subtract = curry((
   value: number,
   subtrahend: number,
-) => currency(value, { precision: 30 }).subtract(subtrahend).value);
+) => numeral(value).subtract(subtrahend)._value);
 
 export const subtractRight = curry((
   subtrahend: number,
   value: number,
-) => currency(value, { precision: 30 }).subtract(subtrahend).value);
+) => numeral(value).subtract(subtrahend)._value);
 
 export const roundToDecimalPoint = curry(
   (decimals: number, number: number) => {

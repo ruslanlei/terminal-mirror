@@ -83,6 +83,7 @@ import FieldError from '@/components/core/fieldError/FieldError.vue';
 import Icon from '@/components/core/icon/Icon.vue';
 import { useComputedState } from '@/hooks/useComputedState';
 import { add, roundToDecimalPoint, subtract } from '@/math/float';
+import numeral from 'numeral';
 import { NumberInputEmits, NumberInputNormalizer, NumberInputProps } from './index';
 
 const props = withDefaults(

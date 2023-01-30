@@ -15,7 +15,7 @@ import { useToastStore } from '@/stores/toasts';
 import { useModelReset } from '@/hooks/useModelReset';
 import { roundToDecimalPoint } from '@/math/float';
 import {
-  divideEquallyOrderQuantityBetweenTakeProfits,
+  spreadOrderQuantityBetweenTakeProfits,
   mapTakeProfitPricesByIncreasePercent,
   reduceTakeProfitsToAmountOfProfitAndRound,
 } from '@/math/formulas/takeProfit';
@@ -116,7 +116,7 @@ export const useOrderCreate = () => {
   );
 
   const autoCalculateTakeProfitAmounts = () => {
-    takeProfits.value = divideEquallyOrderQuantityBetweenTakeProfits(
+    takeProfits.value = spreadOrderQuantityBetweenTakeProfits(
       model.quantity,
       takeProfits.value,
     );

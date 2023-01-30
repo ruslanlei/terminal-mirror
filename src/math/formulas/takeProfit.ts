@@ -49,7 +49,7 @@ export const mapTakeProfitPricesByIncreasePercent = curry((
   }),
 ));
 
-export const divideEquallyOrderQuantityBetweenTakeProfits = curry((
+export const spreadOrderQuantityBetweenTakeProfits = curry((
   orderQuantity: number,
   takeProfits: TakeProfit[],
 ) => takeProfits.map((value) => ({

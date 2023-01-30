@@ -47,7 +47,7 @@ const hideToast = async (toastId: IToast['id']) => {
   playAnimation({
     targets: toast,
     scale: [1, 0.5],
-    translateY: [0, 50],
+    translateY: [0, -50],
     easing: 'easeInOutQuart',
     duration: HIDE_ANIMATION_DURATION,
   });

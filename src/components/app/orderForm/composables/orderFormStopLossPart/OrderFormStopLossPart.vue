@@ -101,12 +101,12 @@ import OrderFormRatio from '@/components/app/orderFormRatio/OrderFormRatio.vue';
 import Button from '@/components/core/button/Button.vue';
 import { useOrderFormInject } from '@/hooks/useOrderFormInject';
 import {
-  calculatePercentOfOrderPrice,
-  calculatePriceByPercentOfOrderPrice,
-  calculateAmountOfRisk, calculateOrderPriceByRiskAmount,
+  calculateOrderPriceByRiskAmount,
+  calculateVolumeDifference,
 } from '@/math/formulas/order';
 import { roundToDecimalPoint } from '@/math/float';
 import { compose } from '@/utils/fp';
+import { calculatePercentOfDifference, decreaseByPercent } from '@/math/helpers/percents';
 import { OrderFormStopLossPartEmits } from './index';
 
 const { t } = useI18n();
@@ -130,22 +130,26 @@ const {
 const percentOfOrderPrice = computed({
   get: () => compose(
     roundToDecimalPoint(2),
-    calculatePercentOfOrderPrice(model.price),
-  )(stopLossPrice.value),
+    calculatePercentOfDifference,
+  )(model.price, stopLossPrice.value),
 
   set: (percent: number) => {
     stopLossPrice.value = compose(
       roundToDecimalPoint(quoteCurrency.value.decimals),
-      calculatePriceByPercentOfOrderPrice(model.price),
-    )(percent);
+      decreaseByPercent,
+    )(model.price, percent);
   },
 });
 
 const amountOfRisk = computed({
   get: () => compose(
-    roundToDecimalPoint(2),
-    calculateAmountOfRisk(model.price, model.quantity),
-  )(stopLossPrice.value),
+    roundToDecimalPoint(quoteCurrency.value.decimals),
+    calculateVolumeDifference,
+  )(
+    model.price,
+    model.quantity,
+    stopLossPrice.value,
+  ),
 
   set: (amountOfRisk: number) => {
     stopLossPrice.value = compose(

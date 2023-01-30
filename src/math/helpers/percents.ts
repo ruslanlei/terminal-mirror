@@ -1,5 +1,7 @@
 import {
-  compose, curry, isEqual, log,
+  compose,
+  curry,
+  isEqual, toAbsolute,
 } from '@/utils/fp';
 import {
   add,
@@ -46,6 +48,16 @@ export const valueToRoundedPercents = curry((
   roundToDecimalPoint(decimals),
   valueToPercents(total),
 )(value));
+
+export const calculatePercentOfDifference = curry((
+  total: number,
+  comparingNumber: number,
+) => compose(
+  toAbsolute,
+  subtract(100),
+  multiply(100),
+  divideRight(total),
+)(comparingNumber));
 
 export const calculateIncreasePercent = curry((
   total: number,

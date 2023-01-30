@@ -16,6 +16,8 @@ export const log = curry((
   return value;
 });
 
+export const { abs: toAbsolute } = Math;
+
 export const arrayOf = curry((
   initializer: () => any,
   length: number,

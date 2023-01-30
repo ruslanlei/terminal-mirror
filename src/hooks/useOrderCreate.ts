@@ -22,9 +22,9 @@ import { arrayOf, compose } from '@/utils/fp';
 import { decreaseByPercent } from '@/math/helpers/percents';
 import {
   calculateAndRoundLiquidationPrice,
-  calculateAndRoundPledge,
+  calculateAndRoundPledge, calculateVolumeDifference,
 } from '@/math/formulas/order';
-import { calculateAndRoundStopLossRisk } from '@/math/formulas/stopLoss';
+import { roundToDecimalPoint } from '@/math/float';
 
 export interface OrderModel extends CreateOrderDTO {
   leverage: number,
@@ -183,11 +183,13 @@ export const useOrderCreate = () => {
   autoCalculateStopLoss();
 
   const stopLossRisk = computed(
-    () => calculateAndRoundStopLossRisk(
+    () => compose(
+      roundToDecimalPoint(quoteCurrency.value.decimals),
+      calculateVolumeDifference,
+    )(
       model.price,
       model.quantity,
       stopLossPrice.value,
-      quoteCurrency.value.decimals,
     ),
   );
 

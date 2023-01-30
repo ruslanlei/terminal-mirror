@@ -1,25 +1,31 @@
-import { compose, curry } from '@/utils/fp';
+import { compose, curry, toAbsolute } from '@/utils/fp';
 import {
   divideRight,
   multiply,
-  roundToDecimalPoint,
+  roundToDecimalPoint, subtract,
 } from '@/math/float';
 
-export const calculatePercentOfOrderPrice = curry((
-  orderPrice: number,
-  price: number,
-) => 100 - (price / orderPrice) * 100);
+export const calculateRisk = curry((
+  originalPrice: number,
+  quantity: number,
+  comparingPrice: number,
+) => subtract(
+  multiply(originalPrice, quantity),
+  multiply(comparingPrice, quantity),
+));
 
-export const calculatePriceByPercentOfOrderPrice = curry((
-  price: number,
-  percent: number,
-) => price - (percent * (price / 100)));
-
-export const calculateAmountOfRisk = curry((
-  orderPrice: number,
-  orderQuantity: number,
-  price: number,
-) => (orderPrice * orderQuantity) - (price * orderQuantity));
+export const calculateVolumeDifference = curry((
+  originalPrice: number,
+  quantity: number,
+  comparingPrice: number,
+) => compose(
+  toAbsolute,
+  calculateRisk,
+)(
+  originalPrice,
+  quantity,
+  comparingPrice,
+));
 
 export const calculateOrderPriceByRiskAmount = curry((
   orderPrice: number,

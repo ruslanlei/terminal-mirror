@@ -198,8 +198,6 @@ export const useOrderCreate = () => {
     quoteCurrency.value.decimals,
   ));
 
-  /// FIXME ->
-
   const liquidationPrice = computed(() => (model.quantity ? calculateAndRoundLiquidationPrice(
     model.price,
     model.quantity,

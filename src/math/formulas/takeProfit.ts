@@ -24,6 +24,14 @@ export const reduceTakeProfitsToAmountOfProfit = (
   0,
 );
 
+export const reduceTakeProfitsToQuantitiesSum = (
+  takeProfits: TakeProfit[],
+): number => reduce(
+  takeProfits,
+  (quantitiesSum: number, { quantity }: TakeProfit) => add(quantitiesSum, quantity),
+  0,
+);
+
 export const reduceTakeProfitsToAmountOfProfitAndRound = curry((
   decimals: number,
   takeProfits: TakeProfit[],

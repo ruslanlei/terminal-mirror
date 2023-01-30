@@ -1,4 +1,9 @@
-import { curry } from '@/utils/fp';
+import { compose, curry } from '@/utils/fp';
+import {
+  divideRight,
+  multiply,
+  roundToDecimalPoint,
+} from '@/math/float';
 
 export const calculatePercentOfOrderPrice = curry((
   orderPrice: number,
@@ -21,3 +26,44 @@ export const calculateOrderPriceByRiskAmount = curry((
   orderQuantity: number,
   riskAmount: number,
 ) => ((orderPrice * orderQuantity) - riskAmount) / orderQuantity);
+
+export const calculatePledge = curry((
+  orderPrice: number,
+  orderQuantity: number,
+  leverage: number,
+) => compose(
+  divideRight(leverage),
+  multiply(orderPrice),
+)(orderQuantity));
+export const calculateAndRoundPledge = curry((
+  orderPrice: number,
+  orderQuantity: number,
+  leverage: number,
+  decimals: number,
+) => compose(
+  roundToDecimalPoint(decimals),
+  calculatePledge,
+)(
+  orderPrice,
+  orderQuantity,
+  leverage,
+));
+
+export const calculateLiquidationPrice = curry((
+  orderPrice: number,
+  orderQuantity: number,
+  leverage: number,
+) => compose(
+  divideRight(orderQuantity),
+  calculatePledge,
+)(orderPrice, orderQuantity, leverage));
+
+export const calculateAndRoundLiquidationPrice = curry((
+  orderPrice: number,
+  orderQuantity: number,
+  leverage: number,
+  decimals: number,
+) => compose(
+  roundToDecimalPoint(decimals),
+  calculateLiquidationPrice,
+)(orderPrice, orderQuantity, leverage));

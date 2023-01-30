@@ -5,13 +5,13 @@ import {
   add,
   divideRight,
   multiply,
-  roundToDecimalPoint,
+  roundToDecimalPoint, subtract,
   subtractRight,
 } from '@/math/float';
 
 export const calculateOnePercent = (
-  balance: number,
-) => divideRight(100, balance);
+  total: number,
+) => divideRight(100, total);
 
 export const percentsToValue = curry((
   total: number,
@@ -54,6 +54,14 @@ export const calculateIncreasePercent = curry((
   divideRight(calculateOnePercent(total)),
   subtractRight(total),
 )(value));
+
+export const decreaseByPercent = curry((
+  total: number,
+  percent: number,
+) => compose(
+  subtract(total),
+  multiply(calculateOnePercent(total)),
+)(percent));
 
 export const addPercents = curry((
   total: number,

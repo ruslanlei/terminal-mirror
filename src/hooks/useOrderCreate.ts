@@ -13,13 +13,18 @@ import { BaseCurrency, QuoteCurrency } from '@/hooks/useExchange';
 import { currency } from '@/api/types/currency';
 import { useToastStore } from '@/stores/toasts';
 import { useModelReset } from '@/hooks/useModelReset';
-import { roundToDecimalPoint } from '@/math/float';
 import {
   spreadOrderQuantityBetweenTakeProfits,
   mapTakeProfitPricesByIncreasePercent,
   reduceTakeProfitsToAmountOfProfitAndRound,
 } from '@/math/formulas/takeProfit';
-import { arrayOf, compose, curry } from '@/utils/fp';
+import { arrayOf, compose } from '@/utils/fp';
+import { decreaseByPercent } from '@/math/helpers/percents';
+import {
+  calculateAndRoundLiquidationPrice,
+  calculateAndRoundPledge,
+} from '@/math/formulas/order';
+import { calculateAndRoundStopLossRisk } from '@/math/formulas/stopLoss';
 
 export interface OrderModel extends CreateOrderDTO {
   leverage: number,
@@ -128,7 +133,7 @@ export const useOrderCreate = () => {
     { deep: true },
   );
 
-  const autoInitTakeProfits = (
+  const initTakeProfits = (
     percentOfIncrease: number,
     orderPrice: number,
     orderQuantity: number,
@@ -143,7 +148,7 @@ export const useOrderCreate = () => {
   )(amount);
 
   const autoCalculateTakeProfits = () => {
-    takeProfits.value = autoInitTakeProfits(
+    takeProfits.value = initTakeProfits(
       EACH_TAKE_PROFIT_PERCENT_INCREASE,
       model.price,
       model.quantity,
@@ -170,26 +175,36 @@ export const useOrderCreate = () => {
   const STOP_LOSS_DEFAULT_PERCENT = 10;
 
   const autoCalculateStopLoss = () => {
-    const percentOfOrder = model.price / 100;
-    stopLossPrice.value = model.price - (percentOfOrder * STOP_LOSS_DEFAULT_PERCENT);
+    stopLossPrice.value = decreaseByPercent(
+      model.price,
+      STOP_LOSS_DEFAULT_PERCENT,
+    );
   };
   autoCalculateStopLoss();
 
   const stopLossRisk = computed(
-    () => {
-      const riskRaw = (model.price * model.quantity) - (stopLossPrice.value * model.quantity);
-      return roundToDecimalPoint(quoteCurrency.value.decimals, riskRaw);
-    },
+    () => calculateAndRoundStopLossRisk(
+      model.price,
+      model.quantity,
+      stopLossPrice.value,
+      quoteCurrency.value.decimals,
+    ),
   );
 
-  const pledge = computed(() => roundToDecimalPoint(
+  const pledge = computed(() => calculateAndRoundPledge(
+    model.price,
+    model.quantity,
+    model.leverage,
     quoteCurrency.value.decimals,
-    (model.price * model.quantity) / model.leverage,
   ));
 
-  const liquidationPrice = computed(() => (model.quantity ? roundToDecimalPoint(
+  /// FIXME ->
+
+  const liquidationPrice = computed(() => (model.quantity ? calculateAndRoundLiquidationPrice(
+    model.price,
+    model.quantity,
+    model.leverage,
     quoteCurrency.value.decimals,
-    pledge.value / model.quantity,
   ) : 0));
 
   const createStopLoss = () => {

@@ -7,7 +7,9 @@
       :key="text"
       :class="$style.animatedText"
     >
-      {{ text }}
+      <slot :value="text">
+        {{ text }}
+      </slot>
     </div>
   </transition>
 </template>

@@ -11,10 +11,20 @@ import { useI18n } from 'vue-i18n';
 import { number, object, string } from 'yup';
 import { BaseCurrency, QuoteCurrency } from '@/hooks/useExchange';
 import { currency } from '@/api/types/currency';
-import { roundToDecimalPoint } from '@/utils/number';
 import { useToastStore } from '@/stores/toasts';
 import { useModelReset } from '@/hooks/useModelReset';
-import { divide } from '@/math/float';
+import {
+  spreadOrderQuantityBetweenTakeProfits,
+  mapTakeProfitPricesByIncreasePercent,
+  reduceTakeProfitsToAmountOfProfitAndRound,
+} from '@/math/formulas/takeProfit';
+import { arrayOf, compose } from '@/utils/fp';
+import { decreaseByPercent } from '@/math/helpers/percents';
+import {
+  calculateAndRoundLiquidationPrice,
+  calculateAndRoundPledge, calculateVolumeDifference,
+} from '@/math/formulas/order';
+import { roundToDecimalPoint } from '@/math/float';
 
 export interface OrderModel extends CreateOrderDTO {
   leverage: number,
@@ -87,32 +97,23 @@ export const useOrderCreate = () => {
 
   const maxTakeProfits = 20;
 
-  const takeProfitsAmount = ref(5);
+  const takeProfitsAmount = ref(1);
 
   const takeProfits = ref<TakeProfit[]>([]);
 
-  const takeProfitsIncomeSum = computed(() => {
-    const rawSum = takeProfits.value.reduce(
-      (sum: number, takeProfit: TakeProfit) => sum + (takeProfit.price * takeProfit.quantity),
-      0,
-    );
-    return roundToDecimalPoint(rawSum, quoteCurrency.value.decimals);
-  });
+  const takeProfitsIncomeSum = computed(() => reduceTakeProfitsToAmountOfProfitAndRound(
+    quoteCurrency.value.decimals,
+    takeProfits.value,
+  ));
 
   const EACH_TAKE_PROFIT_PERCENT_INCREASE = 0.5;
 
-  const percentOfOrderPrice = computed(() => model.price / 100);
-
   const autoCalculateTakeProfitPrices = () => {
-    takeProfits.value = takeProfits.value.map((value, index) => {
-      const percentIncrease = EACH_TAKE_PROFIT_PERCENT_INCREASE * (index + 1);
-      const increase = percentIncrease * percentOfOrderPrice.value;
-
-      return {
-        ...value,
-        price: model.price + increase,
-      };
-    });
+    takeProfits.value = mapTakeProfitPricesByIncreasePercent(
+      EACH_TAKE_PROFIT_PERCENT_INCREASE,
+      model.price,
+      takeProfits.value,
+    );
   };
   watch(
     () => model.price,
@@ -121,12 +122,10 @@ export const useOrderCreate = () => {
   );
 
   const autoCalculateTakeProfitAmounts = () => {
-    const quantity = divide(model.quantity, takeProfitsAmount.value, 6);
-
-    takeProfits.value = takeProfits.value.map((value, index) => ({
-      ...value,
-      quantity,
-    }));
+    takeProfits.value = spreadOrderQuantityBetweenTakeProfits(
+      model.quantity,
+      takeProfits.value,
+    );
   };
   watch(
     [() => model.quantity, baseCurrency],
@@ -134,13 +133,27 @@ export const useOrderCreate = () => {
     { deep: true },
   );
 
-  const autoCalculateTakeProfits = () => {
-    takeProfits.value = Array(takeProfitsAmount.value).fill(0).map(() => ({
+  const initTakeProfits = (
+    percentOfIncrease: number,
+    orderPrice: number,
+    orderQuantity: number,
+    amount: number,
+  ) => compose(
+    spreadOrderQuantityBetweenTakeProfits(orderQuantity),
+    mapTakeProfitPricesByIncreasePercent(percentOfIncrease, orderPrice),
+    arrayOf(() => ({
       price: 0,
       quantity: 0,
-    }));
-    autoCalculateTakeProfitPrices();
-    autoCalculateTakeProfitAmounts();
+    })),
+  )(amount);
+
+  const autoCalculateTakeProfits = () => {
+    takeProfits.value = initTakeProfits(
+      EACH_TAKE_PROFIT_PERCENT_INCREASE,
+      model.price,
+      model.quantity,
+      takeProfitsAmount.value,
+    );
   };
   autoCalculateTakeProfits();
 
@@ -162,25 +175,35 @@ export const useOrderCreate = () => {
   const STOP_LOSS_DEFAULT_PERCENT = 10;
 
   const autoCalculateStopLoss = () => {
-    const percentOfOrder = model.price / 100;
-    stopLossPrice.value = model.price - (percentOfOrder * STOP_LOSS_DEFAULT_PERCENT);
+    stopLossPrice.value = decreaseByPercent(
+      model.price,
+      STOP_LOSS_DEFAULT_PERCENT,
+    );
   };
   autoCalculateStopLoss();
 
   const stopLossRisk = computed(
-    () => {
-      const riskRaw = (model.price * model.quantity) - (stopLossPrice.value * model.quantity);
-      return roundToDecimalPoint(riskRaw, quoteCurrency.value.decimals);
-    },
+    () => compose(
+      roundToDecimalPoint(quoteCurrency.value.decimals),
+      calculateVolumeDifference,
+    )(
+      model.quantity,
+      model.price,
+      stopLossPrice.value,
+    ),
   );
 
-  const pledge = computed(() => roundToDecimalPoint(
-    (model.price * model.quantity) / model.leverage,
+  const pledge = computed(() => calculateAndRoundPledge(
+    model.price,
+    model.quantity,
+    model.leverage,
     quoteCurrency.value.decimals,
   ));
 
-  const liquidationPrice = computed(() => (model.quantity ? roundToDecimalPoint(
-    pledge.value / model.quantity,
+  const liquidationPrice = computed(() => (model.quantity ? calculateAndRoundLiquidationPrice(
+    model.price,
+    model.quantity,
+    model.leverage,
     quoteCurrency.value.decimals,
   ) : 0));
 

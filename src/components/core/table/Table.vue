@@ -12,9 +12,10 @@
       :style="computedRowStyles"
       :class="$style.head"
     >
-      <div
+      <button
         v-for="column in columns"
         :key="column.slug"
+        type="button"
         :class="[
           $style.column,
           $style[column.align],
@@ -36,7 +37,7 @@
         >
           {{ column.label }}
         </slot>
-      </div>
+      </button>
     </div>
     <div :class="$style.records">
       <TableRow
@@ -51,9 +52,10 @@
         @cell-click="onCellClick(record.id, $event)"
       >
         <template #default>
-          <div
+          <button
             v-for="column in columns"
             :key="column.slug"
+            type="button"
             :class="[
               $style.recordColumn,
               $style[column.align],
@@ -66,7 +68,7 @@
               :data="record.data[column.slug]"
               :is-selected="record.isSelected"
             />
-          </div>
+          </button>
         </template>
         <template
           v-if="record.children && 'recordChildren' in $slots"
@@ -234,6 +236,10 @@ onBeforeUnmount(() => {
     border-radius: 5px;
     @include title3;
     font-weight: 400;
+  }
+  .column {
+    @include title2;
+    font-weight: 600;
   }
   .records {
     padding: 14px 0;

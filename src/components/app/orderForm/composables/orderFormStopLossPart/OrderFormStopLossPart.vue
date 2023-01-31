@@ -101,12 +101,13 @@ import OrderFormRatio from '@/components/app/orderFormRatio/OrderFormRatio.vue';
 import Button from '@/components/core/button/Button.vue';
 import { useOrderFormInject } from '@/hooks/useOrderFormInject';
 import {
-  calculatePercentOfOrderPrice,
-  calculatePriceByPercentOfOrderPrice,
-  calculateAmountOfRisk, calculateOrderPriceByRiskAmount,
+  calculateOriginalPriceByVolumeDifference,
+  calculateVolumeDifference,
 } from '@/math/formulas/order';
 import { roundToDecimalPoint } from '@/math/float';
 import { compose } from '@/utils/fp';
+import { calculatePercentOfDifference, decreaseByPercent } from '@/math/helpers/percents';
+import { calculatePriceByPercentOfDeposit, calculateVolumeDifferenceInPercentsOfDeposit } from '@/math/formulas/stopLoss';
 import { OrderFormStopLossPartEmits } from './index';
 
 const { t } = useI18n();
@@ -130,54 +131,59 @@ const {
 const percentOfOrderPrice = computed({
   get: () => compose(
     roundToDecimalPoint(2),
-    calculatePercentOfOrderPrice(model.price),
-  )(stopLossPrice.value),
+    calculatePercentOfDifference,
+  )(model.price, stopLossPrice.value),
 
   set: (percent: number) => {
     stopLossPrice.value = compose(
       roundToDecimalPoint(quoteCurrency.value.decimals),
-      calculatePriceByPercentOfOrderPrice(model.price),
-    )(percent);
+      decreaseByPercent,
+    )(model.price, percent);
   },
 });
 
 const amountOfRisk = computed({
   get: () => compose(
-    roundToDecimalPoint(2),
-    calculateAmountOfRisk(model.price, model.quantity),
-  )(stopLossPrice.value),
+    roundToDecimalPoint(quoteCurrency.value.decimals),
+    calculateVolumeDifference,
+  )(
+    model.quantity,
+    model.price,
+    stopLossPrice.value,
+  ),
 
   set: (amountOfRisk: number) => {
     stopLossPrice.value = compose(
       roundToDecimalPoint(quoteCurrency.value.decimals),
-      calculateOrderPriceByRiskAmount(model.price, model.quantity),
-    )(amountOfRisk);
+      calculateOriginalPriceByVolumeDifference,
+    )(
+      model.price,
+      model.quantity,
+      amountOfRisk,
+    );
   },
 });
 
 const percentOfDeposit = computed({
-  get: () => {
-    // Formula:
-    // ((order price * order quantity) - (stop loss price * order quantity)) / balance) * 100
+  get: () => compose(
+    roundToDecimalPoint(2),
+    calculateVolumeDifferenceInPercentsOfDeposit,
+  )(
+    model.quantity,
+    model.price,
+    stopLossPrice.value,
+    quoteCurrency.value.balance,
+  ),
 
-    const orderVolume = model.price * model.quantity;
-    const stopLossVolume = stopLossPrice.value * model.quantity;
-
-    const TEST_DEPOSIT = 3180;
-
-    const formulaResultRaw = ((orderVolume - stopLossVolume) / TEST_DEPOSIT) * 100;
-    return roundToDecimalPoint(formulaResultRaw, 2);
-  },
-  set: (value: number) => {
-    // Formula:
-    // (orderVolume - (balance * percentOfDeposit / 100)) / order quantity
-
-    const TEST_DEPOSIT = 3180;
-
-    const orderVolume = model.price * model.quantity;
-    const formulaResult = (orderVolume - (TEST_DEPOSIT * (value / 100))) / model.quantity;
-
-    stopLossPrice.value = roundToDecimalPoint(formulaResult, quoteCurrency.value.decimals);
+  set: (percentOfDeposit: number) => {
+    stopLossPrice.value = compose(
+      roundToDecimalPoint(quoteCurrency.value.decimals),
+      calculatePriceByPercentOfDeposit(
+        model.quantity,
+        model.price,
+        quoteCurrency.value.balance,
+      ),
+    )(percentOfDeposit);
   },
 });
 </script>

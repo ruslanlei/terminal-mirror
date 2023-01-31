@@ -1,6 +1,6 @@
 import { currency } from '@/api/types/currency';
 
-export interface Pair {
+export interface PairServerData {
   id: number,
   alias: string,
   base: currency,

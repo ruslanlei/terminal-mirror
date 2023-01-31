@@ -1,8 +1,8 @@
 import { post } from '@/api';
-import { Pair } from '@/api/endpoints/marketdata/stats';
+import { PairServerData } from '@/api/types/pairServerData';
 
 export interface SimulateDTO {
-  pair: Pair['id'],
+  pair: PairServerData['id'],
   date_from: string,
   candle_size: number,
   compression: number,

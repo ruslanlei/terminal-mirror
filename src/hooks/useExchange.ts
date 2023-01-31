@@ -2,9 +2,17 @@ import {
   computed,
   Ref,
 } from 'vue';
-import { roundToDecimalPoint } from '@/utils/number';
+import { compose } from '@/utils/fp';
+import {
+  divideRight,
+  multiply,
+  roundToDecimalPoint,
+} from '@/math/float';
 import { Currency } from '@/types/currency';
-import { add, subtract } from '@/math/float';
+import {
+  incrementQuoteDepositByBaseStep,
+  decrementQuoteDepositByBaseStep,
+} from '@/math/formulas/currency';
 
 export interface QuoteCurrency extends Currency {
     leverage: number,
@@ -19,59 +27,44 @@ export const useExchange = (
   baseCurrency: Ref<BaseCurrency>,
   quoteCurrency: Ref<QuoteCurrency>,
 ) => {
-  const calculateBaseToQuoteCurrencyPrice = (
-    baseCurrencyQuantity: number,
-  ) => roundToDecimalPoint(
-    baseCurrencyQuantity * baseCurrency.value.price,
-    quoteCurrency.value.decimals,
-  );
-
-  const calculateQuoteToBaseCurrencyPrice = (
-    quoteCurrencyQuantity: number,
-  ) => roundToDecimalPoint(
-    quoteCurrencyQuantity / baseCurrency.value.price,
-    baseCurrency.value.decimals,
-  );
-
-  const incrementDeposit = (number: number) => {
-    const quoteInBaseCurrencyPrice = calculateQuoteToBaseCurrencyPrice(number);
-
-    return calculateBaseToQuoteCurrencyPrice(add(
-      [
-        quoteInBaseCurrencyPrice,
-        baseCurrency.value.step,
-      ],
-      baseCurrency.value.decimals,
-    ));
-  };
-
-  const decrementDeposit = (number: number) => {
-    const quoteInBaseCurrencyPrice = calculateQuoteToBaseCurrencyPrice(number);
-
-    return calculateBaseToQuoteCurrencyPrice(subtract(
-      quoteInBaseCurrencyPrice,
+  const incrementDeposit = (deposit: number) => compose(
+    roundToDecimalPoint(quoteCurrency.value.decimals),
+    incrementQuoteDepositByBaseStep(
       baseCurrency.value.step,
-      baseCurrency.value.decimals,
-    ));
-  };
+      baseCurrency.value.price,
+    ),
+  )(deposit);
+
+  const decrementDeposit = (quoteDeposit: number) => compose(
+    roundToDecimalPoint(quoteCurrency.value.decimals),
+    decrementQuoteDepositByBaseStep(
+      baseCurrency.value.step,
+      baseCurrency.value.price,
+    ),
+  )(quoteDeposit);
 
   const maxQuoteCurrencyDeposit = computed(
     () => decrementDeposit(quoteCurrency.value.balance),
   );
 
-  const maxQuoteCurrencyDepositLeveraged = computed(
-    () => decrementDeposit(quoteCurrency.value.balance * quoteCurrency.value.leverage),
-  );
+  const maxQuoteCurrencyDepositLeveraged = computed(() => compose(
+    decrementDeposit,
+    multiply,
+  )(
+    quoteCurrency.value.balance,
+    quoteCurrency.value.leverage,
+  ));
 
   const maxBaseCurrencyDepositLeveraged = computed(
-    () => maxQuoteCurrencyDepositLeveraged.value / baseCurrency.value.price,
+    () => divideRight(
+      baseCurrency.value.price,
+      maxQuoteCurrencyDepositLeveraged.value,
+    ),
   );
 
   return {
     baseCurrency,
     quoteCurrency,
-    calculateBaseToQuoteCurrencyPrice,
-    calculateQuoteToBaseCurrencyPrice,
     incrementDeposit,
     decrementDeposit,
     maxQuoteCurrencyDeposit,

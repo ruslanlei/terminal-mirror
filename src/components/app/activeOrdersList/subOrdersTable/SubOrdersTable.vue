@@ -24,7 +24,7 @@
         </template>
         <template #percentage>
           <span :class="$style.quantityPercent">
-            {{ t('ordersList.subOrder.quantityPercent', { percent }) }}
+            {{ percent }}
           </span>
         </template>
       </i18n-t>
@@ -63,6 +63,9 @@ import { computed, ref } from 'vue';
 import Table from '@/components/core/table/Table.vue';
 import { useI18n } from 'vue-i18n';
 import { humanizeDate } from '@/utils/date';
+import { compose } from '@/utils/fp';
+import { roundToDecimalPoint } from '@/math/float';
+import { calculatePercentOfDifference, valueToPercents } from '@/math/helpers/percents';
 import {
   SubOrdersColumn, SubOrdersRecord, SubOrdersTableProps, SubOrderTableItem,
 } from './index';
@@ -111,31 +114,56 @@ const columns = ref<SubOrdersColumn[]>([
 ]);
 
 const records = computed<SubOrdersRecord[]>(
-  () => props.orders.map((order: SubOrderTableItem) => ({
-    id: order.id,
-    data: {
-      type: {
-        value: order.order_type,
-        label: ({
-          tp: t('ordersList.subOrder.type.takeProfit', { index: order.orderIndex }),
-          sl: t('ordersList.subOrder.type.stopLoss'),
-        }[order.order_type]),
+  () => props.orders.map((order: SubOrderTableItem) => {
+    const label = ({
+      tp: t('ordersList.subOrder.type.takeProfit', { index: order.orderIndex }),
+      sl: t('ordersList.subOrder.type.stopLoss'),
+    }[order.order_type]);
+
+    const masterType = ({
+      limit: t('ordersList.subOrder.masterType.limit'),
+    }.limit);
+
+    const percentOfMasterQuantity = compose(
+      roundToDecimalPoint(2),
+      valueToPercents,
+    )(order.masterData.quantity, order.quantity);
+
+    const percentOfMasterQuantityLabel = t(
+      'ordersList.subOrder.quantityPercent',
+      {
+        percent: t(
+          'common.percents',
+          {
+            value: percentOfMasterQuantity,
+          },
+        ),
       },
-      masterType: ({
-        limit: t('ordersList.subOrder.masterType.limit'),
-      }.limit),
-      quantity: {
-        value: order.quantity,
-        percent: order.masterData.quantity,
+    );
+
+    const date = humanizeDate(order.created);
+
+    return {
+      id: order.id,
+      data: {
+        type: {
+          value: order.order_type,
+          label,
+        },
+        masterType,
+        quantity: {
+          value: order.quantity,
+          percent: percentOfMasterQuantityLabel,
+        },
+        volume: {
+          value: order.price,
+          currency: order.pairData.quote,
+        },
+        date,
+        options: {},
       },
-      volume: {
-        value: order.price,
-        currency: order.pairData.quote,
-      },
-      date: humanizeDate(order.created),
-      options: {},
-    },
-  })),
+    };
+  }),
 );
 </script>
 

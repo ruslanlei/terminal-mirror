@@ -1,5 +1,5 @@
 import { TableColumn, TableProps, TableRecord } from '@/components/core/table';
-import { Pair } from '@/api/types/pair';
+import { PairServerData } from '@/api/types/pairServerData';
 
 export type PairsTableColumnSlug = 'pairs' | 'priceAndVolume';
 
@@ -7,19 +7,19 @@ export type PairsTableColumn = TableColumn<PairsTableColumnSlug>;
 
 export type PairsTableRecord = TableRecord<PairsTableColumnSlug, {
   pairs: {
-    base: Pair['base'],
-    quote: Pair['quote'],
+    base: PairServerData['base'],
+    quote: PairServerData['quote'],
   },
   priceAndVolume: {
-    totalTrades: Pair['total_trades'] | string,
+    totalTrades: PairServerData['total_trades'] | string,
   }
 }>;
 
 export interface PairsTableProps {
-  pairs: Pair[],
+  pairs: PairServerData[],
   state?: TableProps['state'],
 }
 
 export interface PairsTableEmits {
-  (e: 'selectPair', value: Pair['id']): void,
+  (e: 'selectPair', value: PairServerData['id']): void,
 }

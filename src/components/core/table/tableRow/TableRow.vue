@@ -1,5 +1,6 @@
 <template>
   <div
+    ref="row"
     :class="[
       $style.recordWrapper,
       isChildrenVisible && $style.childrenVisible,
@@ -22,11 +23,11 @@
       :style="computedChildrenContainerStyle"
     >
       <div
-        v-if="isChildrenVisible"
         ref="children"
         :class="$style.children"
       >
         <slot
+          v-if="isChildrenVisible"
           name="children"
           :data="record.children"
         />
@@ -40,13 +41,15 @@ import {
   ref,
   computed,
   watch,
-  reactive, onMounted, onBeforeUnmount,
+  reactive, onMounted, onBeforeUnmount, nextTick,
 } from 'vue';
 import { useComputedState } from '@/hooks/useComputedState';
 import { useEnvironmentObserver } from '@/hooks/useEnvironmentObserver';
 import { TableRowProps } from './index';
 
 const props = defineProps<TableRowProps>();
+
+const row = ref();
 
 const children = ref<HTMLElement>();
 
@@ -76,12 +79,15 @@ const calculateChildrenStyle = () => {
   }
 };
 
-watch(isChildrenVisible, calculateChildrenStyle);
+watch(isChildrenVisible, async () => {
+  await nextTick();
+  calculateChildrenStyle();
+});
 
 const {
   setListeners,
   removeListeners,
-} = useEnvironmentObserver(calculateChildrenStyle);
+} = useEnvironmentObserver(row, calculateChildrenStyle);
 
 onMounted(setListeners);
 onBeforeUnmount(removeListeners);

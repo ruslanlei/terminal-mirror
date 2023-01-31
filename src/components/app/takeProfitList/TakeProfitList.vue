@@ -40,11 +40,12 @@
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import TakeProfitInput from '@/components/core/takeProfitInput/TakeProfitInput.vue';
-import { TakeProfitInputValue } from '@/components/core/takeProfitInput';
 import { useLocalValue } from '@/hooks/useLocalValue';
 import { TakeProfitListEmit, TakeProfitListProps } from '@/components/app/takeProfitList/index';
 import { TakeProfit } from '@/stores/market';
-import { add, subtract } from '@/math/float';
+import { subtract } from '@/math/float';
+import { reduceTakeProfitsToQuantitiesSum } from '@/math/formulas/takeProfit';
+import { awaitFrame } from '@/utils/window';
 
 const props = defineProps<TakeProfitListProps>();
 
@@ -58,37 +59,30 @@ const takeProfitsAmount = useLocalValue<number>(props, emit, 'takeProfitsAmount'
 
 const maxAllowedDecimals = computed(() => props.currency.decimals * 6);
 
-const fixSumOfTakeProfits = (borrowFromFirst: boolean) => {
-  const sumOfTakeProfits = localValue.value.reduce((
-    summary: number,
-    takeProfit: TakeProfitInputValue,
-  ) => add([summary, takeProfit.quantity], maxAllowedDecimals.value), 0);
+const fixSumOfTakeProfits = async (borrowFromFirst: boolean) => {
+  const sumOfTakeProfits = reduceTakeProfitsToQuantitiesSum(localValue.value);
 
   if (sumOfTakeProfits === props.orderQuantity) return;
 
-  const difference = subtract(sumOfTakeProfits, props.orderQuantity, maxAllowedDecimals.value);
+  await awaitFrame();
+
+  const difference = subtract(sumOfTakeProfits, props.orderQuantity);
 
   const donorTakeProfit = borrowFromFirst
     ? localValue.value[0]
     : localValue.value[localValue.value.length - 1];
 
-  requestAnimationFrame(() => {
-    if (donorTakeProfit.quantity > difference) {
-      donorTakeProfit.quantity = subtract(
-        donorTakeProfit.quantity,
-        difference,
-        maxAllowedDecimals.value,
-      );
-      return;
-    }
+  if (donorTakeProfit.quantity > difference) {
+    donorTakeProfit.quantity = subtract(donorTakeProfit.quantity, difference);
+    return;
+  }
 
-    if (takeProfitsAmount.value > 1) {
-      takeProfitsAmount.value -= 1;
+  if (takeProfitsAmount.value > 1) {
+    takeProfitsAmount.value = subtract(takeProfitsAmount.value, 1);
 
-      const deleteFrom = borrowFromFirst ? 0 : -1;
-      localValue.value.splice(deleteFrom, 1);
-    }
-  });
+    const deleteFrom = borrowFromFirst ? 0 : -1;
+    localValue.value.splice(deleteFrom, 1);
+  }
 };
 
 const onUpdateTakeProfitQuantity = (

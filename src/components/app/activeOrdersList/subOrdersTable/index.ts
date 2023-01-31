@@ -1,7 +1,7 @@
 import { TableColumn, TableRecord } from '@/components/core/table';
 import { currency } from '@/api/types/currency';
 import { Order, SubOrder } from '@/api/types/order';
-import { Pair } from '@/api/types/pair';
+import { PairServerData } from '@/api/types/pairServerData';
 
 export type SubOrdersColumnSlug =
   'type'
@@ -21,7 +21,7 @@ export type SubOrdersRecord = TableRecord<SubOrdersColumnSlug, {
   masterType: string,
   quantity: {
     value: number,
-    percent: number,
+    percent: string,
   },
   volume: {
     value: number,
@@ -33,7 +33,7 @@ export type SubOrdersRecord = TableRecord<SubOrdersColumnSlug, {
 
 export interface SubOrderTableItem extends SubOrder {
   masterData: Order,
-  pairData: Pair,
+  pairData: PairServerData,
   orderIndex?: number,
 }
 

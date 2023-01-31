@@ -81,7 +81,9 @@ import { useOrderCreate } from '@/hooks/useOrderCreate';
 import { OrderFormInjectionKey, OrderFormTab } from '@/components/app/orderForm/index';
 import { Tab } from '@/components/core/tabs';
 
-import { roundToDecimalPoint } from '@/utils/number';
+// import { roundToDecimalPoint } from '@/utils/number';
+import { divideRight, roundToDecimalPoint } from '@/math/float';
+import { compose } from '@/utils/fp';
 import OrderFormInputPart from './composables/orderFormInputPart/OrderFormInputPart.vue';
 import OrderFormTakeProfitPart from './composables/orderFormTakeProfitPart/OrderFormTakeProfitPart.vue';
 import OrderFormStopLossPart from './composables/orderFormStopLossPart/OrderFormStopLossPart.vue';
@@ -142,7 +144,10 @@ const ratio = computed(() => {
   return isNumbersValid
     ? t('order.ratio', {
       loss: 1,
-      profit: roundToDecimalPoint(takeProfitsIncomeSum.value / stopLossRisk.value, 1),
+      profit: compose(
+        roundToDecimalPoint(1),
+        divideRight,
+      )(stopLossRisk.value, takeProfitsIncomeSum.value),
     })
     : t('order.ratio', { loss: 0, profit: 0 });
 });

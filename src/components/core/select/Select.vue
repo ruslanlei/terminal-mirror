@@ -69,59 +69,59 @@
     >
       {{ error }}
     </div>
-    <teleport :to="teleportTarget">
-      <div
-        ref="dropdown"
-        :class="[
-          $style.dropdown,
-          $style[size],
-          isDropdownVisible && $style.active,
-          $style[state],
-          $style[computedPosition],
-        ]"
-        :style="computedDropdownStyles"
-      >
-        <input
-          v-if="isSearchable"
-          ref="search"
-          v-model="query"
-          :class="$style.search"
-          type="text"
-          :placeholder="searchPlaceholder"
-          @keydown.prevent.up.exact="closeDropdownAndFocusTrigger"
-          @keydown.prevent.down.exact="onSearchDown"
-          @keydown.tab.shift.exact="closeDropdownAndFocusTrigger"
-          @keydown.esc.exact.prevent="closeDropdownAndFocusTrigger"
-        >
-        <button
-          v-for="(option, optionIndex) in computedOptions"
-          :ref="el => { optionRefs[optionIndex] = el }"
-          :key="option.value"
-          :class="[
-            $style.selectItem,
-            option.isSelected && $style.selected,
-          ]"
-          tabindex="0"
-          :data-role="selectRole.ITEM"
-          @click="selectOptionAndCloseDropdown(option.value)"
-          @keydown.space.exact.prevent="selectOptionAndCloseDropdown(option.value)"
-          @keydown.enter.prevent="selectOptionAndCloseDropdown(option.value)"
-          @keydown.tab.exact="onOptionTab(optionIndex)"
-          @keydown.tab.shift.exact="onOptionShiftTab(optionIndex)"
-          @keydown.prevent.down.exact="onNextOption(optionIndex)"
-          @keydown.prevent.up.exact="onPreviousOption(optionIndex)"
-          @keydown.esc.exact.prevent="closeDropdownAndFocusTrigger"
-        >
-          <slot
-            name="option"
-            :option="option"
-          >
-            {{ option.label }}
-          </slot>
-        </button>
-      </div>
-    </teleport>
   </div>
+  <teleport :to="teleportTarget">
+    <div
+      ref="dropdown"
+      :class="[
+        $style.dropdown,
+        $style[size],
+        isDropdownVisible && $style.active,
+        $style[state],
+        $style[computedPosition],
+      ]"
+      :style="computedDropdownStyles"
+    >
+      <input
+        v-if="isSearchable"
+        ref="search"
+        v-model="query"
+        :class="$style.search"
+        type="text"
+        :placeholder="searchPlaceholder"
+        @keydown.prevent.up.exact="closeDropdownAndFocusTrigger"
+        @keydown.prevent.down.exact="onSearchDown"
+        @keydown.tab.shift.exact="closeDropdownAndFocusTrigger"
+        @keydown.esc.exact.prevent="closeDropdownAndFocusTrigger"
+      >
+      <button
+        v-for="(option, optionIndex) in computedOptions"
+        :ref="el => { optionRefs[optionIndex] = el }"
+        :key="option.value"
+        :class="[
+          $style.selectItem,
+          option.isSelected && $style.selected,
+        ]"
+        tabindex="0"
+        :data-role="selectRole.ITEM"
+        @click="selectOptionAndCloseDropdown(option.value)"
+        @keydown.space.exact.prevent="selectOptionAndCloseDropdown(option.value)"
+        @keydown.enter.prevent="selectOptionAndCloseDropdown(option.value)"
+        @keydown.tab.exact="onOptionTab(optionIndex)"
+        @keydown.tab.shift.exact="onOptionShiftTab(optionIndex)"
+        @keydown.prevent.down.exact="onNextOption(optionIndex)"
+        @keydown.prevent.up.exact="onPreviousOption(optionIndex)"
+        @keydown.esc.exact.prevent="closeDropdownAndFocusTrigger"
+      >
+        <slot
+          name="option"
+          :option="option"
+        >
+          {{ option.label }}
+        </slot>
+      </button>
+    </div>
+  </teleport>
 </template>
 
 <script setup lang="ts">
@@ -392,7 +392,7 @@ const onEnvironmentMutation = () => {
 const {
   setListeners,
   removeListeners,
-} = useEnvironmentObserver(onEnvironmentMutation);
+} = useEnvironmentObserver(root, onEnvironmentMutation, true);
 
 onMounted(setListeners);
 onBeforeUnmount(removeListeners);

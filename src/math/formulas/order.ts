@@ -1,23 +1,81 @@
-import curry from 'lodash/curry';
+import { compose, curry, toAbsolute } from '@/utils/fp';
+import {
+  divideRight,
+  multiply,
+  roundToDecimalPoint,
+  subtract,
+  subtractRight,
+} from '@/math/float';
 
-export const calculatePercentOfOrderPrice = curry((
-  orderPrice: number,
-  price: number,
-) => 100 - (price / orderPrice) * 100);
+export const calculateRisk = curry((
+  originalPrice: number,
+  quantity: number,
+  comparingPrice: number,
+) => subtract(
+  multiply(originalPrice, quantity),
+  multiply(comparingPrice, quantity),
+));
 
-export const calculatePriceByPercentOfOrderPrice = curry((
-  price: number,
-  percent: number,
-) => price - (percent * (price / 100)));
+export const calculateVolumeDifference = curry((
+  quantity: number,
+  originalPrice: number,
+  comparingPrice: number,
+) => compose(
+  toAbsolute,
+  calculateRisk,
+)(
+  originalPrice,
+  quantity,
+  comparingPrice,
+));
 
-export const calculateAmountOfRisk = curry((
+export const calculateOriginalPriceByVolumeDifference = curry((
+  originalPrice: number,
+  quantity: number,
+  volumeDifference: number,
+) => compose(
+  divideRight(quantity),
+  subtractRight(volumeDifference),
+  multiply,
+)(originalPrice, quantity));
+
+export const calculatePledge = curry((
   orderPrice: number,
   orderQuantity: number,
-  price: number,
-) => (orderPrice * orderQuantity) - (price * orderQuantity));
-
-export const calculateOrderPriceByRiskAmount = curry((
+  leverage: number,
+) => compose(
+  divideRight(leverage),
+  multiply(orderPrice),
+)(orderQuantity));
+export const calculateAndRoundPledge = curry((
   orderPrice: number,
   orderQuantity: number,
-  riskAmount: number,
-) => ((orderPrice * orderQuantity) - riskAmount) / orderQuantity);
+  leverage: number,
+  decimals: number,
+) => compose(
+  roundToDecimalPoint(decimals),
+  calculatePledge,
+)(
+  orderPrice,
+  orderQuantity,
+  leverage,
+));
+
+export const calculateLiquidationPrice = curry((
+  orderPrice: number,
+  orderQuantity: number,
+  leverage: number,
+) => compose(
+  divideRight(orderQuantity),
+  calculatePledge,
+)(orderPrice, orderQuantity, leverage));
+
+export const calculateAndRoundLiquidationPrice = curry((
+  orderPrice: number,
+  orderQuantity: number,
+  leverage: number,
+  decimals: number,
+) => compose(
+  roundToDecimalPoint(decimals),
+  calculateLiquidationPrice,
+)(orderPrice, orderQuantity, leverage));

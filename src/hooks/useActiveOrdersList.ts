@@ -4,8 +4,12 @@ import { ActiveOrdersTableColumn, ActiveOrdersTableRecord } from '@/components/a
 import { useMarketStore } from '@/stores/market';
 import { Order, SubOrder } from '@/api/types/order';
 import { SubOrderTableItem } from '@/components/app/activeOrdersList/subOrdersTable';
-import { multiply } from '@/math/float';
+import { add, multiply, roundToDecimalPoint } from '@/math/float';
 import { humanizeDate } from '@/utils/date';
+import { compose } from '@/utils/fp';
+import { calculatePercentOfDifference } from '@/math/helpers/percents';
+import { calculateCommonTakeProfitPercent } from '@/math/formulas/takeProfit';
+import { calculatePnl } from '@/math/formulas/pnl';
 
 export const useActiveOrdersList = () => {
   const { t } = useI18n();
@@ -40,19 +44,19 @@ export const useActiveOrdersList = () => {
     {
       label: t('ordersList.column.sl'),
       slug: 'sl',
-      size: 0.5,
+      size: 0.7,
       align: 'center',
     },
     {
       label: '',
       slug: 'pnl',
-      size: 1.5,
+      size: 1,
       align: 'center',
     },
     {
       label: t('ordersList.column.tp'),
       slug: 'tp',
-      size: 0.5,
+      size: 0.7,
       align: 'center',
     },
     {
@@ -63,7 +67,7 @@ export const useActiveOrdersList = () => {
     {
       label: t('ordersList.column.comment'),
       slug: 'comment',
-      size: 0.5,
+      size: 0.7,
       align: 'center',
     },
     {
@@ -73,10 +77,6 @@ export const useActiveOrdersList = () => {
       align: 'center',
     },
   ]);
-
-  const records = ref<ActiveOrdersTableRecord[]>([]);
-
-  const isLoading = ref(false);
 
   const groupOrdersToTableRecords = (orders: Order[]) => {
     const limitOrders = orders.filter((order: Order) => order.order_type === 'limit');
@@ -99,27 +99,62 @@ export const useActiveOrdersList = () => {
         (targetOrder: Order) => targetOrder.order_type === 'sl' && targetOrder.master === order.id,
       )[0] as SubOrder;
 
+      const orderVolume = compose(
+        roundToDecimalPoint(6), /* TODO: change to base currency decimals */
+        multiply,
+      )(order.quantity, order.price);
+
+      const stopLossPercent = relatedStopLoss?.price
+        ? compose(
+          roundToDecimalPoint(2),
+          calculatePercentOfDifference,
+        )(order.price, relatedStopLoss.price)
+        : null;
+
+      const pnl = compose(
+        roundToDecimalPoint(2),
+        calculatePnl,
+      )(
+        order.price,
+        order.quantity,
+        marketStore.activePairPrice,
+      );
+
+      const tp = relatedTakeProfits.length
+        ? compose(
+          roundToDecimalPoint(2),
+          calculateCommonTakeProfitPercent,
+        )(
+          order.price,
+          order.quantity,
+          relatedTakeProfits,
+        )
+        : null;
+
       return {
         id: order.id,
         data: {
           pair: pairData.base,
           type: order.side,
-          volume: multiply(order.quantity, order.price, 6), /* FIXME */
+          volume: orderVolume,
           coins: order.quantity,
           prices: {
             orderPrice: order.price,
-            current: 0, /* FIXME */
+            current: marketStore.activePairPrice,
           },
-          sl: 0, /* FIXME */
-          pnl: 0, /* FIXME */
-          tp: 0, /* FIXME */
+          sl: stopLossPercent,
+          pnl: {
+            value: pnl,
+            currency: pairData.quote,
+          },
+          tp,
           date: humanizeDate(order.created),
           comment: order,
           options: order,
         },
         children: [
-          ...sortedRelatedTakeProfits.map((order: Order, index: number) => ({
-            ...order,
+          ...sortedRelatedTakeProfits.map((subOrder: Order, index: number) => ({
+            ...subOrder,
             pairData,
             masterData: order,
             orderIndex: sortedRelatedTakeProfits.length - index,
@@ -135,19 +170,36 @@ export const useActiveOrdersList = () => {
     });
   };
 
+  const orders = ref<Order[]>([]);
+
+  const records = computed<ActiveOrdersTableRecord[]>(
+    () => groupOrdersToTableRecords(orders.value),
+  );
+
+  const commonPnl = computed(() => records.value.reduce((
+    commonPnl: number,
+    record: ActiveOrdersTableRecord,
+  ) => compose(
+    roundToDecimalPoint(2),
+    add,
+  )(commonPnl, record.data.pnl.value), 0));
+
+  const isLoading = ref(false);
+
   const getList = async () => {
     isLoading.value = true;
-    const { result, data: orders } = await marketStore.getOrderList();
+    const { result, data } = await marketStore.getOrderList();
     isLoading.value = false;
 
     if (!result) return;
 
-    records.value = groupOrdersToTableRecords(orders);
+    orders.value = data;
   };
 
   return {
     columns,
     records,
+    commonPnl,
     isLoading,
     getList,
   };

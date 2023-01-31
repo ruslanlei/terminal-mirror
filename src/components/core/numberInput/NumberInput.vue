@@ -78,11 +78,12 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
 import { useLocalValue } from '@/hooks/useLocalValue';
-import { roundToDecimalPoint } from '@/utils/number';
+// import { roundToDecimalPoint } from '@/utils/number';
 import FieldError from '@/components/core/fieldError/FieldError.vue';
 import Icon from '@/components/core/icon/Icon.vue';
 import { useComputedState } from '@/hooks/useComputedState';
-import { add, subtract } from '@/math/float';
+import { add, roundToDecimalPoint, subtract } from '@/math/float';
+import numeral from 'numeral';
 import { NumberInputEmits, NumberInputNormalizer, NumberInputProps } from './index';
 
 const props = withDefaults(
@@ -114,7 +115,7 @@ const localValue = useLocalValue<number>(props, emit, 'modelValue');
 
 watch(localValue, () => {
   if (props.decimals && props.roundToDecimalPoint) {
-    localValue.value = roundToDecimalPoint(localValue.value, props.decimals);
+    localValue.value = roundToDecimalPoint(props.decimals, localValue.value);
   }
 });
 
@@ -166,7 +167,7 @@ const incrementValue = (value: number) => {
     return props?.normalizer(value, 'increment');
   }
 
-  value = add([value, props.step], props.decimals);
+  value = add(value, props.step);
 
   return value;
 };
@@ -176,7 +177,7 @@ const decrementValue = (value: number) => {
     return props?.normalizer(value, 'decrement');
   }
 
-  value = subtract(value, props.step, props.decimals);
+  value = subtract(value, props.step);
 
   return value;
 };

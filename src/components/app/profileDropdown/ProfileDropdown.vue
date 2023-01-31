@@ -1,7 +1,7 @@
 <template>
   <Dropdown
     v-model:is-visible="isVisible"
-    :distance="10"
+    :distance="20"
     :placement="['bottom', 'right']"
   >
     <template #trigger>

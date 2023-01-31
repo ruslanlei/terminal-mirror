@@ -11,6 +11,21 @@
       :state="['ordersListColor', 'defaultSize']"
       :class="$style.ordersList"
     >
+      <template #cell(pair)="{ data: currency }">
+        <div :class="$style.pairCell">
+          <CurrencyLogo :currency="currency" />
+          <span :class="$style.pairName">
+            {{ currency }}
+          </span>
+        </div>
+      </template>
+
+      <template #cell(type)="{ data: orderDirection }">
+        <span :class="[$style.orderDirection, $style[orderDirection]]">
+          {{ t(`order.direction.${ ({ sell: 'short', buy: 'long' }[orderDirection]) }`) }}
+        </span>
+      </template>
+
       <template #column(volume)>
         <i18n-t keypath="ordersList.column.volume">
           <template #currencyName>
@@ -21,6 +36,14 @@
           </template>
         </i18n-t>
       </template>
+      <template #cell(volume)="{ data }">
+        {{ data }}
+      </template>
+
+      <template #cell(coins)="{ data }">
+        {{ data }}
+      </template>
+
       <template #column(prices)>
         <i18n-t keypath="ordersList.column.prices.order">
           <template #current>
@@ -29,35 +52,6 @@
             </span>
           </template>
         </i18n-t>
-      </template>
-      <template #column(pnl)>
-        <i18n-t keypath="ordersList.column.pnl">
-          <template #value>
-            <InlineSpace />
-            <span :class="$style.pnlColumnValue">
-              {{ '+32.331%' }}
-            </span>
-          </template>
-        </i18n-t>
-      </template>
-      <template #cell(pair)="{ data: currency }">
-        <div :class="$style.pairCell">
-          <CurrencyLogo :currency="currency" />
-          <span :class="$style.pairName">
-            {{ currency }}
-          </span>
-        </div>
-      </template>
-      <template #cell(type)="{ data: orderDirection }">
-        <span :class="[$style.orderDirection, $style[orderDirection]]">
-          {{ t(`order.direction.${ ({ sell: 'short', buy: 'long' }[orderDirection]) }`) }}
-        </span>
-      </template>
-      <template #cell(volume)="{ data }">
-        {{ data }}
-      </template>
-      <template #cell(coins)="{ data }">
-        {{ data }}
       </template>
       <template #cell(prices)="{ data }">
         <div :class="$style.pricesCell">
@@ -69,15 +63,61 @@
           </span>
         </div>
       </template>
-      <template #cell(sl)="{ data }">
-        {{ data }}
+
+      <template #cell(sl)="{ data: stopLossPercent }">
+        <div
+          v-if="stopLossPercent !== null"
+          :class="$style.stopLossPercent"
+        >
+          {{ t('common.percents', { value: -Math.abs(stopLossPercent) }) }}
+        </div>
+        <div
+          v-else
+          :class="$style.emptyValue"
+        >
+          {{ '-' }}
+        </div>
       </template>
-      <template #cell(pnl)="{ data }">
-        {{ data }}
+
+      <template #column(pnl)>
+        <i18n-t keypath="ordersList.column.pnl">
+          <template #value>
+            <InlineSpace />
+            <span :class="$style.pnlColumnValue">
+              {{ t('common.currencyAmount', { amount: commonPnl, currency: '$' }) }}
+            </span>
+          </template>
+        </i18n-t>
       </template>
-      <template #cell(tp)="{ data }">
-        {{ data }}
+      <template #cell(pnl)="{ data: { value, currency } }">
+        <Badge
+          :state="isPositive(value) ? 'success' : 'danger'"
+          size="sm"
+        >
+          <AnimatedText
+            :text="value"
+            animation-type="verticalAuto"
+          >
+            {{ t('common.currencyAmount', { amount: value, currency }) }}
+          </AnimatedText>
+        </Badge>
       </template>
+
+      <template #cell(tp)="{ data: commonTakeProfitPercent }">
+        <div
+          v-if="commonTakeProfitPercent"
+          :class="$style.commonTakeProfit"
+        >
+          {{ t('common.percents', { value: commonTakeProfitPercent }) }}
+        </div>
+        <div
+          v-else
+          :class="$style.emptyValue"
+        >
+          {{ '-' }}
+        </div>
+      </template>
+
       <template #cell(date)="{ data }">
         {{ data }}
       </template>
@@ -121,6 +161,9 @@ import { useActiveOrdersList } from '@/hooks/useActiveOrdersList';
 import SubOrdersTable from '@/components/app/activeOrdersList/subOrdersTable/SubOrdersTable.vue';
 import ListSkeleton from '@/components/app/listSkeleton/ListSkeleton.vue';
 import Icon from '@/components/core/icon/Icon.vue';
+import { isPositive } from '@/math/helpers/number';
+import Badge from '@/components/core/badge/Badge.vue';
+import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
 
 const { t } = useI18n();
 
@@ -129,6 +172,7 @@ const {
   records,
   isLoading,
   getList,
+  commonPnl,
 } = useActiveOrdersList();
 
 getList();
@@ -157,6 +201,12 @@ getList();
   align-items: center;
 }
 
+.emptyValue {
+  color: rgb(var(--color-accent-1));
+  @include title2;
+  font-weight: 600;
+}
+
 .pairName {
   color: rgb(var(--color-accent-2));
   @include title2;
@@ -182,6 +232,18 @@ getList();
 .pricesCellCurrent {
   margin-left: 5px;
   color: rgb(var(--color-accent-2));
+}
+
+.stopLossPercent {
+  color: rgb(var(--color-danger-2));
+  @include title2;
+  font-weight: 600;
+}
+
+.commonTakeProfit {
+  color: rgb(var(--color-primary-1));
+  @include title2;
+  font-weight: 600;
 }
 
 .commentButton {

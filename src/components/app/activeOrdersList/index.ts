@@ -29,7 +29,7 @@ export type ActiveOrdersTableRecord = TableRecord<ActiveOrdersTableColumnSlug, {
   },
   sl: number | null,
   pnl: number,
-  tp: number,
+  tp: number | null,
   date: string,
   comment: Order,
   options: Order,

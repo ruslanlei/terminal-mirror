@@ -8,6 +8,7 @@ import { multiply, roundToDecimalPoint } from '@/math/float';
 import { humanizeDate } from '@/utils/date';
 import { compose } from '@/utils/fp';
 import { calculatePercentOfDifference } from '@/math/helpers/percents';
+import { calculateCommonTakeProfitPercent } from '@/math/formulas/takeProfit';
 
 export const useActiveOrdersList = () => {
   const { t } = useI18n();
@@ -42,19 +43,19 @@ export const useActiveOrdersList = () => {
     {
       label: t('ordersList.column.sl'),
       slug: 'sl',
-      size: 0.5,
+      size: 0.7,
       align: 'center',
     },
     {
       label: '',
       slug: 'pnl',
-      size: 1.5,
+      size: 1,
       align: 'center',
     },
     {
       label: t('ordersList.column.tp'),
       slug: 'tp',
-      size: 0.5,
+      size: 0.7,
       align: 'center',
     },
     {
@@ -65,7 +66,7 @@ export const useActiveOrdersList = () => {
     {
       label: t('ordersList.column.comment'),
       slug: 'comment',
-      size: 0.5,
+      size: 0.7,
       align: 'center',
     },
     {
@@ -113,6 +114,17 @@ export const useActiveOrdersList = () => {
         )(order.price, relatedStopLoss.price)
         : null;
 
+      const tp = relatedTakeProfits.length
+        ? compose(
+          roundToDecimalPoint(2),
+          calculateCommonTakeProfitPercent,
+        )(
+          order.price,
+          order.quantity,
+          relatedTakeProfits,
+        )
+        : null;
+
       return {
         id: order.id,
         data: {
@@ -126,7 +138,7 @@ export const useActiveOrdersList = () => {
           },
           sl: stopLossPercent,
           pnl: 0, /* FIXME */
-          tp: 0, /* FIXME */
+          tp,
           date: humanizeDate(order.created),
           comment: order,
           options: order,

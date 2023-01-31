@@ -7,9 +7,10 @@ import {
 import { TakeProfit } from '@/stores/market';
 import {
   add,
-  divide,
+  divide, divideRight,
   multiply,
   roundToDecimalPoint,
+  subtractRight,
 } from '@/math/float';
 import { calculateOnePercent } from '@/math/helpers/percents';
 
@@ -67,3 +68,18 @@ export const spreadOrderQuantityBetweenTakeProfits = curry((
     getLength,
   )(takeProfits),
 })));
+
+export const calculateCommonTakeProfitPercent = curry((
+  orderPrice: number,
+  orderQuantity: number,
+  takeProfits: TakeProfit[],
+) => {
+  const orderVolume = multiply(orderPrice, orderQuantity);
+
+  return compose(
+    multiply(100),
+    divideRight(orderVolume),
+    subtractRight(orderVolume),
+    reduceTakeProfitsToAmountOfProfit,
+  )(takeProfits);
+});

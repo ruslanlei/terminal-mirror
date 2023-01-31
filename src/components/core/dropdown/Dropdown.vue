@@ -236,7 +236,10 @@ watch(localIsVisible, () => {
     targets: dropdownInner.value,
     translateY,
     translateX,
-    opacity: [0, 1],
+    opacity: [
+      { value: 0, easing: 'linear', duration: 0 },
+      { value: 1, easing: 'linear', duration: 120 },
+    ],
     duration: 780,
   });
 });

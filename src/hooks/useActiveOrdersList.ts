@@ -78,10 +78,6 @@ export const useActiveOrdersList = () => {
     },
   ]);
 
-  const records = ref<ActiveOrdersTableRecord[]>([]);
-
-  const isLoading = ref(false);
-
   const groupOrdersToTableRecords = (orders: Order[]) => {
     const limitOrders = orders.filter((order: Order) => order.order_type === 'limit');
 
@@ -121,7 +117,7 @@ export const useActiveOrdersList = () => {
       )(
         order.price,
         order.quantity,
-        17000,
+        marketStore.activePairPrice,
       );
 
       const tp = relatedTakeProfits.length
@@ -144,7 +140,7 @@ export const useActiveOrdersList = () => {
           coins: order.quantity,
           prices: {
             orderPrice: order.price,
-            current: 0, /* TODO: add current price */
+            current: marketStore.activePairPrice,
           },
           sl: stopLossPercent,
           pnl: {
@@ -174,14 +170,22 @@ export const useActiveOrdersList = () => {
     });
   };
 
+  const orders = ref<Order[]>([]);
+
+  const records = computed<ActiveOrdersTableRecord[]>(
+    () => groupOrdersToTableRecords(orders.value),
+  );
+
+  const isLoading = ref(false);
+
   const getList = async () => {
     isLoading.value = true;
-    const { result, data: orders } = await marketStore.getOrderList();
+    const { result, data } = await marketStore.getOrderList();
     isLoading.value = false;
 
     if (!result) return;
 
-    records.value = groupOrdersToTableRecords(orders);
+    orders.value = data;
   };
 
   return {

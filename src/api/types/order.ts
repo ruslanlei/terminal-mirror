@@ -1,9 +1,9 @@
-import { Pair } from '@/api/types/pair';
+import { PairServerData } from '@/api/types/pairServerData';
 
 export interface Order {
   id: number,
   user: 0,
-  pair: Pair['id'],
+  pair: PairServerData['id'],
   side: 'buy' | 'sell',
   order_type: 'limit' | 'tp' | 'sl',
   created: string,

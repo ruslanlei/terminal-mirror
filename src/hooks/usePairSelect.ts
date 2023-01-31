@@ -2,7 +2,7 @@ import { ref, watch } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useMarketStore } from '@/stores/market';
 import debounce from 'lodash/debounce';
-import { Pair } from '@/api/types/pair';
+import { PairServerData } from '@/api/types/pairServerData';
 
 export const usePairSelect = () => {
   const marketStore = useMarketStore();
@@ -12,7 +12,7 @@ export const usePairSelect = () => {
 
   const query = ref<string>('');
 
-  const computedPairs = ref<Pair[]>(pairs.value);
+  const computedPairs = ref<PairServerData[]>(pairs.value);
 
   watch(query, debounce(async () => {
     computedPairs.value = pairs.value.filter(
@@ -20,7 +20,7 @@ export const usePairSelect = () => {
     );
   }, 300));
 
-  const setPair = (id: Pair['id']) => {
+  const setPair = (id: PairServerData['id']) => {
     marketStore.setPair(id);
   };
 

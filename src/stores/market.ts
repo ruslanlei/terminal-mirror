@@ -1,14 +1,14 @@
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { defineStore } from 'pinia';
 import { useStorage } from '@vueuse/core';
 import { getPairs } from '@/api/endpoints/marketdata/stats';
-import { Pair } from '@/api/types/pair';
 import { useToastStore } from '@/stores/toasts';
 import { createOrder, CreateOrderDTO } from '@/api/endpoints/orders/create';
 import { Order } from '@/api/types/order';
 import { processServerErrors, requestMany } from '@/api/common';
 import { getOrdersList } from '@/api/endpoints/orders/getList';
+import { PairServerData } from '@/api/types/pairServerData';
 
 export type MarketType = 'emulator' | 'real';
 
@@ -29,22 +29,26 @@ export const useMarketStore = defineStore('market', () => {
 
   const marketType = useStorage<MarketType>('marketType', 'emulator');
 
-  const pairs = useStorage<Pair[]>('pairs', []);
+  const pairs = useStorage<PairServerData[]>('pairs', []);
 
-  const pairsMap = computed<Record<Pair['id'], Pair>>(() => pairs.value.reduce((acc, pair: Pair) => ({
-    ...acc,
-    [pair.id]: pair,
-  }), {}));
+  const pairsMap = computed<Record<PairServerData['id'], PairServerData>>(
+    () => pairs.value.reduce((acc, pair: PairServerData) => ({
+      ...acc,
+      [pair.id]: pair,
+    }), {}),
+  );
 
-  const activePair = useStorage<Pair['id']>('activePair', 1);
+  const activePair = useStorage<PairServerData['id']>('activePair', 1);
 
-  const setPair = (pairId: Pair['id']) => {
+  const setPair = (pairId: PairServerData['id']) => {
     activePair.value = pairId;
   };
 
-  const activePairData = computed(() => pairs.value.find(
-    (pair) => pair.id === activePair.value,
-  ));
+  const activePairData = computed<PairServerData | undefined>(
+    () => pairsMap.value[activePair.value],
+  );
+
+  const activePairPrice = ref(0);
 
   const handleGetPairs = async () => {
     const { result, data } = await getPairs();
@@ -123,6 +127,7 @@ export const useMarketStore = defineStore('market', () => {
     activePair,
     setPair,
     activePairData,
+    activePairPrice,
     getPairs: handleGetPairs,
     createOrder: handleCreateOrder,
     createListOfTakeProfits,

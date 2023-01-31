@@ -14,12 +14,14 @@
       :style="computedDropdownStyles"
       :class="[
         $style.dropdown,
-        $style[computedTransitionName],
         !localIsVisible && $style.hidden,
         smooth && $style.smooth,
       ]"
     >
-      <div :class="$style.dropdownInner">
+      <div
+        ref="dropdownInner"
+        :class="$style.dropdownInner"
+      >
         <slot name="dropdown" />
       </div>
     </div>
@@ -32,11 +34,12 @@ import {
   computed,
   onBeforeMount,
   onMounted,
+  watch,
 } from 'vue';
 import { teleportTargets } from '@/enums/teleport';
 import { useLocalValue } from '@/hooks/useLocalValue';
-import { capitalizeFirstLetter } from '@/utils/string';
 import { useEnvironmentObserver } from '@/hooks/useEnvironmentObserver';
+import { playAnimation } from '@/utils/animation';
 import { DropdownProps, DropdownEmits, DropdownPlacement } from './index';
 
 const props = withDefaults(
@@ -57,6 +60,8 @@ const emit = defineEmits<DropdownEmits>();
 const trigger = ref<HTMLElement>();
 
 const dropdown = ref<HTMLElement>();
+
+const dropdownInner = ref<HTMLElement>();
 
 const localIsVisible = useLocalValue<boolean>(props, emit, 'isVisible');
 
@@ -80,11 +85,6 @@ const teleportTarget = computed(() => `#${teleportTargets.LEVITATING}`);
 const computedDropdownStyles = ref({
   transform: 'translateY(0) translateX(0)',
 });
-
-const computedTransitionName = computed(() => (
-  Array.isArray(props.placement)
-    ? `${props.placement[0]}${capitalizeFirstLetter(props.placement[1])}`
-    : props.placement));
 
 const normalizePlacement = (
   placement: DropdownPlacement,
@@ -213,6 +213,34 @@ const calculateDropdownPosition = () => {
   computedDropdownStyles.value.transform = `translateY(${dropdownTop}px) translateX(${dropdownLeft}px)`;
 };
 
+watch(localIsVisible, () => {
+  if (!localIsVisible.value) return;
+
+  let translateY: number | number[] = 0;
+  let translateX: number | number[] = 0;
+
+  if (props.placement[0] === 'bottom') {
+    translateY = [-60, 0];
+  }
+  if (props.placement[0] === 'top') {
+    translateY = [60, 0];
+  }
+  if (props.placement[0] === 'left') {
+    translateX = [60, 0];
+  }
+  if (props.placement[0] === 'right') {
+    translateX = [-60, 0];
+  }
+
+  playAnimation({
+    targets: dropdownInner.value,
+    translateY,
+    translateX,
+    opacity: [0, 1],
+    duration: 780,
+  });
+});
+
 const onTriggerClick = () => {
   if (!props.toggleByClick) return;
 
@@ -224,7 +252,7 @@ const {
   removeListeners,
 } = useEnvironmentObserver(trigger, calculateDropdownPosition, true);
 
-onMounted(() => {
+onMounted(async () => {
   calculateDropdownPosition();
   setListeners();
 });
@@ -241,117 +269,16 @@ onBeforeMount(removeListeners);
   &.smooth {
     transition: transform 50ms;
   }
-  .dropdownInner {
-    transform: translateY(0);
-    transition: transform 200ms, opacity 200ms, clip-path 200ms;
-  }
   &.hidden {
     pointer-events: none;
     * {
       pointer-events: none;
     }
     .dropdownInner {
-      opacity: 0;
+      transition: opacity 200ms;
+      opacity: 0 !important;
     }
   }
 }
 .dropdownInner {}
-
-// transitions
-
-.bottomRight, .leftTop {
-  .dropdownInner {
-    clip-path: circle(150% at 100% 0);
-  }
-  &.hidden {
-    .dropdownInner {
-      transform: translateY(-16px);
-      clip-path: circle(0% at 100% 0);
-    }
-  }
-}
-
-.bottom, .bottomCenter {
-  .dropdownInner {
-    clip-path: circle(150% at 50% 0);
-  }
-  &.hidden {
-    .dropdownInner {
-      transform: translateY(-16px);
-      clip-path: circle(0% at 50% 0);
-    }
-  }
-}
-
-.bottomLeft, .rightTop {
-  .dropdownInner {
-    clip-path: circle(150% at 0 0);
-  }
-  &.hidden {
-    .dropdownInner {
-      transform: translateY(-16px);
-      clip-path: circle(0% at 0 0);
-    }
-  }
-}
-
-.top, .topCenter {
-  .dropdownInner {
-    clip-path: circle(120% at 50% 100%);
-  }
-  &.hidden {
-    .dropdownInner {
-      transform: translateY(16px);
-      clip-path: circle(0% at 50% 100%);
-    }
-  }
-}
-
-.topLeft, .rightBottom {
-  .dropdownInner {
-    clip-path: circle(150% at 0 100%);
-  }
-  &.hidden {
-    .dropdownInner {
-      transform: translateY(16px);
-      clip-path: circle(0% at 0 100%);
-    }
-  }
-}
-
-.topRight, .leftBottom {
-  .dropdownInner {
-    clip-path: circle(150% at 100% 100%);
-  }
-  &.hidden {
-    .dropdownInner {
-      transform: translateY(16px);
-      clip-path: circle(0% at 100% 100%);
-    }
-  }
-}
-
-.left, .leftCenter {
-  .dropdownInner {
-    clip-path: circle(120% at 100% 50%);
-  }
-  &.hidden {
-    .dropdownInner {
-      transform: translateX(16px);
-      clip-path: circle(0% at 100% 50%);
-    }
-  }
-}
-
-.right, .rightCenter {
-  .dropdownInner {
-    clip-path: circle(120% at 0 50%);
-  }
-  &.hidden {
-    .dropdownInner {
-      transform: translateX(-16px);
-      clip-path: circle(0% at 0 50%);
-    }
-  }
-}
 </style>

@@ -35,8 +35,8 @@ import {
 } from 'vue';
 import { teleportTargets } from '@/enums/teleport';
 import { useLocalValue } from '@/hooks/useLocalValue';
-import { useEnvironmentObserver } from '@/hooks/useEnvironmentObserver';
 import { capitalizeFirstLetter } from '@/utils/string';
+import { useEnvironmentObserver } from '@/hooks/useEnvironmentObserver';
 import { DropdownProps, DropdownEmits, DropdownPlacement } from './index';
 
 const props = withDefaults(
@@ -222,7 +222,7 @@ const onTriggerClick = () => {
 const {
   setListeners,
   removeListeners,
-} = useEnvironmentObserver(calculateDropdownPosition);
+} = useEnvironmentObserver(trigger, calculateDropdownPosition, true);
 
 onMounted(() => {
   calculateDropdownPosition();

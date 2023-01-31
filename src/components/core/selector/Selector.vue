@@ -150,7 +150,7 @@ const findActiveTab = () => {
 const {
   setListeners,
   removeListeners,
-} = useEnvironmentObserver(findActiveTab);
+} = useEnvironmentObserver(container, findActiveTab);
 
 watch(localValue, findActiveTab);
 onMounted(() => {

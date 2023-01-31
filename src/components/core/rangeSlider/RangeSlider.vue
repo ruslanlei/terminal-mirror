@@ -115,7 +115,7 @@ const computedProgressStyles = computed(() => ({
 const {
   setListeners,
   removeListeners,
-} = useEnvironmentObserver(() => {
+} = useEnvironmentObserver(slider, () => {
   calculateSliderSizing();
   if (!isDragging.value) {
     calculatePositionByValue();

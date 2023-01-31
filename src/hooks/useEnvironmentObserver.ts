@@ -1,22 +1,28 @@
-import { createBodyObserver } from '@/utils/dom';
+import { MaybeComputedElementRef, useResizeObserver } from '@vueuse/core';
 
-export const useEnvironmentObserver = (callback: (...args: any[]) => any) => {
+export const useEnvironmentObserver = (
+  target: MaybeComputedElementRef,
+  callback: () => any,
+  watchScroll: boolean = false,
+) => {
   const {
-    init: initBodyObserver,
-    disconnect: disconnectBodyObserver,
-  } = createBodyObserver(callback);
+    stop: disconnect,
+  } = useResizeObserver(target, callback);
 
   const setListeners = () => {
     window.addEventListener('resize', callback);
-    window.addEventListener('scroll', callback);
     window.addEventListener('orientationchange', callback);
-    initBodyObserver();
+    if (watchScroll) {
+      window.addEventListener('scroll', callback);
+    }
   };
   const removeListeners = () => {
     window.removeEventListener('resize', callback);
-    window.removeEventListener('scroll', callback);
     window.removeEventListener('orientationchange', callback);
-    disconnectBodyObserver();
+    if (watchScroll) {
+      window.removeEventListener('scroll', callback);
+    }
+    disconnect();
   };
 
   return {

@@ -1,7 +1,8 @@
 import {
   compose,
   curry,
-  isEqual, log, toAbsolute,
+  isEqual,
+  toAbsolute,
 } from '@/utils/fp';
 import {
   add,

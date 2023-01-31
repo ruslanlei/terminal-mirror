@@ -1,5 +1,6 @@
 <template>
   <div
+    ref="wrapper"
     :style="computedStyles"
     :class="[
       $style[size],
@@ -48,6 +49,7 @@ const props = withDefaults(
 );
 
 const container = ref<HTMLElement>();
+const wrapper = ref<HTMLElement>();
 
 const isVisible = computed(() => !!props.text);
 
@@ -77,7 +79,7 @@ const computedIconSize = computed(() => ({
 const {
   setListeners,
   removeListeners,
-} = useEnvironmentObserver(calculateHeight);
+} = useEnvironmentObserver(wrapper, calculateHeight);
 
 onMounted(() => {
   calculateHeight();

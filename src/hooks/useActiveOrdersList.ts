@@ -4,7 +4,7 @@ import { ActiveOrdersTableColumn, ActiveOrdersTableRecord } from '@/components/a
 import { useMarketStore } from '@/stores/market';
 import { Order, SubOrder } from '@/api/types/order';
 import { SubOrderTableItem } from '@/components/app/activeOrdersList/subOrdersTable';
-import { multiply, roundToDecimalPoint } from '@/math/float';
+import { add, multiply, roundToDecimalPoint } from '@/math/float';
 import { humanizeDate } from '@/utils/date';
 import { compose } from '@/utils/fp';
 import { calculatePercentOfDifference } from '@/math/helpers/percents';
@@ -176,6 +176,14 @@ export const useActiveOrdersList = () => {
     () => groupOrdersToTableRecords(orders.value),
   );
 
+  const commonPnl = computed(() => records.value.reduce((
+    commonPnl: number,
+    record: ActiveOrdersTableRecord,
+  ) => compose(
+    roundToDecimalPoint(2),
+    add,
+  )(commonPnl, record.data.pnl.value), 0));
+
   const isLoading = ref(false);
 
   const getList = async () => {
@@ -191,6 +199,7 @@ export const useActiveOrdersList = () => {
   return {
     columns,
     records,
+    commonPnl,
     isLoading,
     getList,
   };

@@ -84,7 +84,7 @@
           <template #value>
             <InlineSpace />
             <span :class="$style.pnlColumnValue">
-              {{ '+32.331%' }}
+              {{ t('common.currencyAmount', { amount: commonPnl, currency: '$' }) }}
             </span>
           </template>
         </i18n-t>
@@ -172,6 +172,7 @@ const {
   records,
   isLoading,
   getList,
+  commonPnl,
 } = useActiveOrdersList();
 
 getList();

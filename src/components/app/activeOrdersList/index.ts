@@ -28,7 +28,10 @@ export type ActiveOrdersTableRecord = TableRecord<ActiveOrdersTableColumnSlug, {
     current: number,
   },
   sl: number | null,
-  pnl: number,
+  pnl: {
+    value: number,
+    currency: string,
+  },
   tp: number | null,
   date: string,
   comment: Order,

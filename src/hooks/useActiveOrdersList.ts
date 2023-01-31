@@ -9,6 +9,7 @@ import { humanizeDate } from '@/utils/date';
 import { compose } from '@/utils/fp';
 import { calculatePercentOfDifference } from '@/math/helpers/percents';
 import { calculateCommonTakeProfitPercent } from '@/math/formulas/takeProfit';
+import { calculatePnl } from '@/math/formulas/pnl';
 
 export const useActiveOrdersList = () => {
   const { t } = useI18n();
@@ -114,6 +115,15 @@ export const useActiveOrdersList = () => {
         )(order.price, relatedStopLoss.price)
         : null;
 
+      const pnl = compose(
+        roundToDecimalPoint(2),
+        calculatePnl,
+      )(
+        order.price,
+        order.quantity,
+        17000,
+      );
+
       const tp = relatedTakeProfits.length
         ? compose(
           roundToDecimalPoint(2),
@@ -137,7 +147,10 @@ export const useActiveOrdersList = () => {
             current: 0, /* TODO: add current price */
           },
           sl: stopLossPercent,
-          pnl: 0, /* FIXME */
+          pnl: {
+            value: pnl,
+            currency: pairData.quote,
+          },
           tp,
           date: humanizeDate(order.created),
           comment: order,

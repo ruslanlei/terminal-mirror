@@ -89,8 +89,18 @@
           </template>
         </i18n-t>
       </template>
-      <template #cell(pnl)="{ data }">
-        {{ data }}
+      <template #cell(pnl)="{ data: { value, currency } }">
+        <Badge
+          :state="isPositive(value) ? 'success' : 'danger'"
+          size="sm"
+        >
+          <AnimatedText
+            :text="value"
+            animation-type="verticalAuto"
+          >
+            {{ t('common.currencyAmount', { amount: value, currency }) }}
+          </AnimatedText>
+        </Badge>
       </template>
 
       <template #cell(tp)="{ data: commonTakeProfitPercent }">
@@ -151,6 +161,9 @@ import { useActiveOrdersList } from '@/hooks/useActiveOrdersList';
 import SubOrdersTable from '@/components/app/activeOrdersList/subOrdersTable/SubOrdersTable.vue';
 import ListSkeleton from '@/components/app/listSkeleton/ListSkeleton.vue';
 import Icon from '@/components/core/icon/Icon.vue';
+import { isPositive } from '@/math/helpers/number';
+import Badge from '@/components/core/badge/Badge.vue';
+import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
 
 const { t } = useI18n();
 

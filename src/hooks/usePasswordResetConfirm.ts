@@ -33,7 +33,7 @@ export const usePasswordResetConfirm = () => {
   });
 
   const setToken = async () => {
-    if (!route.query?.token || typeof route.query?.token !== 'string') {
+    if (!route.params?.token || typeof route.params?.token !== 'string') {
       toastStore.showDanger({
         text: t('validationError.tokenInvalidOrNotProvided'),
         duration: 6000,
@@ -44,8 +44,10 @@ export const usePasswordResetConfirm = () => {
       return;
     }
 
-    model.value.token = route.query.token;
-    model.value.uid = route.query.token;
+    const [uid, token] = route.params.token.split('---');
+
+    model.value.uid = uid;
+    model.value.token = token;
   };
 
   const isLoading = ref(false);
@@ -61,14 +63,15 @@ export const usePasswordResetConfirm = () => {
 
     isLoading.value = false;
 
-    console.log(data);
-
     if (result) {
       await router.push({
         name: 'auth-sign-in',
       });
     } else if (data) {
-      serverErrors.value = processServerErrors(data);
+      toastStore.showDanger({
+        text: t('validationError.tokenInvalidOrNotProvided'),
+        duration: 6000,
+      });
     }
   };
 

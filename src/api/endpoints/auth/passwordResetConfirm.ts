@@ -10,4 +10,4 @@ export interface ConfirmResetPasswordDTO {
 
 export const passwordResetConfirm = (
   dto: ConfirmResetPasswordDTO,
-) => post<null | ErrorResponse>('/auth/password/reset/confirm', dto);
+) => post<null | ErrorResponse>('/auth/password/reset/confirm/', dto);

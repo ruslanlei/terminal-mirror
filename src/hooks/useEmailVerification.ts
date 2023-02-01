@@ -27,7 +27,7 @@ export const useEmailVerification = () => {
   const isLoading = ref(false);
 
   const verify = async () => {
-    if (!route.query?.token || typeof route.query?.token !== 'string') {
+    if (!route.params?.token || typeof route.params?.token !== 'string') {
       error.value = 'noToken';
       return;
     }
@@ -35,7 +35,7 @@ export const useEmailVerification = () => {
     isLoading.value = true;
     const {
       result,
-    } = await sessionStore.verifyEmail(route.query.token);
+    } = await sessionStore.verifyEmail(route.params.token);
     isLoading.value = false;
 
     if (result) {

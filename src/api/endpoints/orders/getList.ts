@@ -1,4 +1,6 @@
 import { get } from '@/api';
-import { Order } from '@/api/types/order';
+import { Order, OrderStatus } from '@/api/types/order';
 
-export const getOrdersList = () => get<Order[]>('/trading/orders');
+export const getOrdersList = (
+  status: OrderStatus,
+) => get<Order[]>('/trading/orders', { status });

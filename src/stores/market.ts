@@ -5,7 +5,7 @@ import { useStorage } from '@vueuse/core';
 import { getPairs } from '@/api/endpoints/marketdata/stats';
 import { useToastStore } from '@/stores/toasts';
 import { createOrder, CreateOrderDTO } from '@/api/endpoints/orders/create';
-import { Order } from '@/api/types/order';
+import { Order, OrderStatus } from '@/api/types/order';
 import { processServerErrors, requestMany } from '@/api/common';
 import { getOrdersList } from '@/api/endpoints/orders/getList';
 import { PairServerData } from '@/api/types/pairServerData';
@@ -110,8 +110,10 @@ export const useMarketStore = defineStore('market', () => {
     return response;
   };
 
-  const getOrderList = async () => {
-    const response = await getOrdersList();
+  const getOrderList = async (
+    status: OrderStatus,
+  ) => {
+    const response = await getOrdersList(status);
 
     if (!response.result) {
       processServerErrors(response.data, t('order.failedToGetList'));

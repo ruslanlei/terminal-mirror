@@ -61,6 +61,11 @@
       <div
         v-if="'append' in $slots"
         :class="$style.append"
+        :style="{
+          ...(appendMinWidth ? {
+            minWidth: `${appendMinWidth}px`,
+          } : {})
+        }"
       >
         <slot name="append" />
       </div>
@@ -78,12 +83,10 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
 import { useLocalValue } from '@/hooks/useLocalValue';
-// import { roundToDecimalPoint } from '@/utils/number';
 import FieldError from '@/components/core/fieldError/FieldError.vue';
 import Icon from '@/components/core/icon/Icon.vue';
 import { useComputedState } from '@/hooks/useComputedState';
-import { add, roundToDecimalPoint, subtract } from '@/math/float';
-import numeral from 'numeral';
+import { add, subtract, roundToDecimalPoint } from '@/math/float';
 import { NumberInputEmits, NumberInputNormalizer, NumberInputProps } from './index';
 
 const props = withDefaults(
@@ -100,6 +103,7 @@ const props = withDefaults(
     size: 'sm',
     hideArrows: false,
     showErrorIcon: true,
+    appendMinWidth: 0,
   },
 );
 
@@ -290,6 +294,8 @@ const states = useComputedState(props);
 
 .append {
   margin-right: 10px;
+  display: flex;
+  justify-content: flex-end;
 }
 
 // default styles

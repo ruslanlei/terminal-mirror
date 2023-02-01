@@ -9,6 +9,7 @@
         state="defaultColor"
         :min="1"
         save-on="blur"
+        :append-min-width="35"
       >
         <template #append>
           {{ quoteCurrency.name }}
@@ -29,6 +30,7 @@
         :step="baseCurrency.step"
         save-on="blur"
         :show-error-icon="false"
+        :append-min-width="35"
       >
         <template #append>
           {{ baseCurrency.name }}
@@ -45,6 +47,7 @@
         :base-currency="baseCurrency"
         :quote-currency="quoteCurrency"
         save-on="blur"
+        :append-min-width="35"
       >
         <template #quoteCurrency>
           {{ quoteCurrency.name }}

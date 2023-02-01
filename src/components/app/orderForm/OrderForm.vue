@@ -90,26 +90,6 @@ import OrderFormStopLossPart from './composables/orderFormStopLossPart/OrderForm
 const { t } = useI18n();
 
 const settingsActiveTab = ref<OrderFormTab>('input');
-
-const settingsTabs = computed<Tab<OrderFormTab>[]>(() => [
-  {
-    label: t('order.additionalSettings.input'),
-    value: 'input',
-  },
-  {
-    label: t('order.additionalSettings.tp'),
-    value: 'tp',
-  },
-  {
-    label: t('order.additionalSettings.sl'),
-    value: 'sl',
-  },
-  {
-    label: t('order.additionalSettings.slx'),
-    value: 'slx',
-  },
-]);
-
 const openTab = (tab: OrderFormTab) => {
   settingsActiveTab.value = tab;
 };
@@ -134,6 +114,33 @@ const {
   isLoading,
   handleSubmit,
 } = useOrderCreate();
+
+const settingsTabs = computed<Tab<OrderFormTab>[]>(() => [
+  {
+    label: t('order.additionalSettings.input'),
+    value: 'input',
+  },
+  {
+    label: t('order.additionalSettings.tp'),
+    value: 'tp',
+    activeState: 'accent1TextColor',
+    ...(isTakeProfitsEnabled.value ? {
+      state: 'primaryTextColor',
+    } : {}),
+  },
+  {
+    label: t('order.additionalSettings.sl'),
+    value: 'sl',
+    activeState: 'accent1TextColor',
+    ...(isStopLossEnabled.value ? {
+      state: 'danger2TextColor',
+    } : {}),
+  },
+  {
+    label: t('order.additionalSettings.slx'),
+    value: 'slx',
+  },
+]);
 
 const ratio = computed(() => {
   const isNumbersValid = takeProfitsIncomeSum.value

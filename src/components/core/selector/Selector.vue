@@ -13,13 +13,22 @@
         ...states.map((s) => $style[s])
       ]"
     >
-      <div
+      <button
         v-for="option in options"
         :ref="optionElement => { optionRefs[option.value] = optionElement }"
         :key="option.value"
+        type="button"
         :class="[
           $style.item,
           localValue === option.value && $style.active,
+          ...[localValue === option.value && option?.activeState
+            ? [$style[option.activeState]]
+            : []
+          ],
+          ...[option?.state
+            ? [$style[option.state]]
+            : []
+          ]
         ]"
         :data-value="option.value"
         @click="onOptionClick(option)"
@@ -31,14 +40,16 @@
         >
           {{ option.label }}
         </slot>
-      </div>
+      </button>
       <div
         :style="computedGhostStyles"
         :class="[
           $style.ghost,
           isGhostAppearAnimation && $style.animated,
-          ...[activeOption?.state
-            ? [$style[`${activeOption.state}Ghost`]]
+          ...[activeOption?.ghostState
+            ? [
+              $style[activeOption.ghostState]
+            ]
             : []
           ]
         ]"
@@ -74,7 +85,7 @@ const emit = defineEmits<SelectorEmits>();
 const states = computed(() => arrayFrom(props.state));
 
 if (!props.modelValue) {
-  throw new Error('MultiSwitch Error: modelValue is not passed (check v-model)');
+  throw new Error('[MultiSwitch Error]: modelValue is not passed (check v-model)');
 }
 
 const container = ref<HTMLElement>();
@@ -322,7 +333,7 @@ onBeforeUnmount(removeListeners);
   .item {
     color: rgb(var(--color-accent-2));
     &.active {
-      color: rgb(var(--color-accent-1));
+      //color: rgb(var(--color-accent-1));
     }
   }
   .ghost {
@@ -348,11 +359,23 @@ onBeforeUnmount(removeListeners);
   }
 }
 
-.successGhost {
+.successBackground {
   background-color: rgb(var(--color-success)) !important;
 }
 
-.dangerGhost {
+.dangerBackground {
   background-color: rgb(var(--color-danger)) !important;
+}
+
+.primaryTextColor {
+  color: rgb(var(--color-primary-1)) !important;
+}
+
+.danger2TextColor {
+  color: rgb(var(--color-danger-2)) !important;
+}
+
+.accent1TextColor {
+  color: rgb(var(--color-accent-1)) !important;
 }
 </style>

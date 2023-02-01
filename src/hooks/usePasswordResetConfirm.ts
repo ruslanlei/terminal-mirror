@@ -6,7 +6,7 @@ import { useToastStore } from '@/stores/toasts';
 import { useI18n } from 'vue-i18n';
 import { object, ref as yupRef, string } from 'yup';
 import { processServerErrors } from '@/api/common';
-import { FormErrorsList } from '@/components/form';
+import { FormErrorsList } from '@/form';
 
 export const usePasswordResetConfirm = () => {
   const sessionStore = useSessionStore();

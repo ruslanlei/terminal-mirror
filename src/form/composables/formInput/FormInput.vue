@@ -1,9 +1,10 @@
 <template>
-  <Select
+  <Input
+    ref="input"
+    v-bind="props"
     v-model="value"
     :error="error"
-    v-bind="props"
-    @change="onChange"
+    @input="onInput"
     @focus="onFocus"
     @blur="onBlur"
   >
@@ -16,58 +17,46 @@
         v-bind="data"
       />
     </template>
-    <template
-      v-if="'trigger' in $slots"
-      #trigger="data"
-    >
-      <slot
-        name="trigger"
-        v-bind="data"
-      />
-    </template>
-    <template
-      v-if="'option' in $slots"
-      #option="data"
-    >
-      <slot
-        name="option"
-        v-bind="data"
-      />
-    </template>
-  </Select>
+  </Input>
 </template>
 
 <script setup lang="ts">
-import Select from '@/components/core/select/Select.vue';
-import { FormSelectProps } from '@/components/form/composables/formSelect/index';
+import Input from '@/components/core/input/Input.vue';
 import { useActiveField } from '@/hooks/useActiveField';
-import { DefaultFormKey } from '@/components/form';
+import { DefaultFormKey } from '@/form';
+import { ref } from 'vue';
+import { FormInputProps } from './index';
 
 const props = withDefaults(
-  defineProps<FormSelectProps>(),
+  defineProps<FormInputProps>(),
   {
+    isDisabled: false,
     formKey: 'default' as DefaultFormKey,
   },
 );
-const emit = defineEmits<{(e: 'change'): any,
-  (e: 'focus'): any,
-  (e: 'blur'): any,
-}>();
+const emit = defineEmits([
+  'input',
+  'focus',
+  'blur',
+]);
+
+const input = ref();
+const focus = () => {
+  input.value.focus();
+};
 
 const {
   value,
   error,
-  // isValidated,
-  // isTouched,
   onInput: activeFieldOnInput,
   onFocus: activeFieldOnFocus,
   onBlur: activeFieldOnBlur,
 } = useActiveField(props.formKey, props.name);
 
-const onChange = () => {
+const onInput = () => {
   if (props.isDisabled) return;
   activeFieldOnInput();
-  emit('change');
+  emit('input');
 };
 
 const onFocus = () => {
@@ -81,4 +70,8 @@ const onBlur = () => {
   activeFieldOnBlur();
   emit('blur');
 };
+
+defineExpose({
+  focus,
+});
 </script>

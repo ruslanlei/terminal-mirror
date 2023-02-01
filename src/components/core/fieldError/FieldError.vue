@@ -33,7 +33,7 @@ import {
   ref,
   computed,
   onBeforeUnmount,
-  onMounted,
+  onMounted, watch,
 } from 'vue';
 import { FieldErrorProps } from '@/components/core/fieldError/index';
 import { useEnvironmentObserver } from '@/hooks/useEnvironmentObserver';
@@ -80,6 +80,7 @@ const {
   setListeners,
   removeListeners,
 } = useEnvironmentObserver(wrapper, calculateHeight);
+watch(isVisible, calculateHeight);
 
 onMounted(() => {
   calculateHeight();

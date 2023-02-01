@@ -6,7 +6,8 @@ import { useSessionStore } from '@/stores/session';
 import { SignUpModel } from '@/api/endpoints/auth/signUp';
 import { useToastStore } from '@/stores/toasts';
 import { processServerErrors } from '@/api/common';
-import { FormErrorsList } from '@/components/form';
+import { FormErrorsList } from '@/form';
+import { OnlyLatinCharactersRegex } from '@/form/regex/onlyLatinCharacters';
 
 export const useSignUp = () => {
   const { t } = useI18n();
@@ -29,7 +30,8 @@ export const useSignUp = () => {
   const validationSchema = object().shape({
     username: string()
       .required(() => t('validationError.required'))
-      .min(3, () => t('validationError.minLength', { chars: 3 })),
+      .min(3, () => t('validationError.minLength', { chars: 3 }))
+      .matches(OnlyLatinCharactersRegex, () => t('validationError.onlyLatinCharacters')),
     email: string()
       .email(() => t('validationError.email'))
       .required(() => t('validationError.required')),

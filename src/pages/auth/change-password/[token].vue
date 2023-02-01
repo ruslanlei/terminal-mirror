@@ -47,7 +47,7 @@ meta:
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import AuthChangePasswordContainer from '@/containers/authChangePasswordContainer/AuthChangePasswordContainer.vue';
-import { Form, FormInput } from '@/components/form';
+import { Form, FormInput } from '@/form';
 import Button from '@/components/core/button/Button.vue';
 import { usePasswordResetConfirm } from '@/hooks/usePasswordResetConfirm';
 

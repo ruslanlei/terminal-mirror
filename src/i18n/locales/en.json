@@ -11,7 +11,8 @@
     "minLength": "This field must be at least {chars} characters long.",
     "passwordsMismatch": "Passwords should be equal to each other",
     "tokenInvalidOrNotProvided": "Passed token is invalid or not provided",
-    "min": "Value must be greater than or equal to {min}"
+    "min": "Value must be greater than or equal to {min}",
+    "onlyLatinCharacters": "Field must contain only latin characters"
   },
   "placeholder": {
     "email": "Enter your email",

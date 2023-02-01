@@ -75,7 +75,7 @@ import Icon from '@/components/core/icon/Icon.vue';
 import Tabs from '@/components/core/tabs/Tabs.vue';
 import OrderFromContainer from '@/containers/orderFormContainer/OrderFormContainer.vue';
 import Button from '@/components/core/button/Button.vue';
-import { Form, FormSelector } from '@/components/form';
+import { Form, FormSelector } from '@/form';
 
 import { useOrderCreate } from '@/hooks/useOrderCreate';
 import { OrderFormInjectionKey, OrderFormTab } from '@/components/app/orderForm/index';

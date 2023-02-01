@@ -68,7 +68,7 @@ meta:
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { Form, FormInput } from '@/components/form';
+import { Form, FormInput } from '@/form';
 import SignUpContainer from '@/containers/signUpContainer/SignUpContainer.vue';
 import AgreementCheckbox from '@/components/app/agreementCheckbox/AgreementCheckbox.vue';
 import Button from '@/components/core/button/Button.vue';

@@ -70,7 +70,7 @@ meta:
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { Form, FormInput } from '@/components/form';
+import { Form, FormInput } from '@/form';
 import Checkbox from '@/components/core/checkbox/Checkbox.vue';
 import SignInContainer from '@/containers/signInContainer/SignInContainer.vue';
 import Link from '@/components/core/link/Link.vue';

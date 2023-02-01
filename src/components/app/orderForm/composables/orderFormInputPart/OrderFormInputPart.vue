@@ -98,7 +98,7 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import OrderFormInputPartContainer from '@/containers/orderFormInputPartContainer/OrderFormInputPartContainer.vue';
-import { FormDepositInput, FormExchangeInput, FormNumberInput } from '@/components/form';
+import { FormDepositInput, FormExchangeInput, FormNumberInput } from '@/form';
 import { useOrderFormInject } from '@/hooks/useOrderFormInject';
 import { useExchange } from '@/hooks/useExchange';
 

@@ -1,4 +1,4 @@
-import { FormErrorsList } from '@/components/form';
+import { FormErrorsList } from '@/form';
 import { useToastStore } from '@/stores/toasts';
 
 export type ErrorResponse = {

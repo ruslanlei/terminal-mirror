@@ -1,7 +1,7 @@
 <template>
   <Card :class="$style.profileSettings">
     <header :class="$style.header">
-      <Avatar :src="avatar" />
+      <Avatar :src="DefaultAvatar" />
       <div :class="$style.name">
         {{ username }}
         <Icon
@@ -62,12 +62,12 @@ import SubscriptionBadge from '@/components/core/subscriptionBadge/SubscriptionB
 import CurrentTheme from '@/components/app/currentTheme/CurrentTheme.vue';
 import Link from '@/components/core/link/Link.vue';
 import { useProfileSettings } from '@/hooks/useProfileSettings';
+import DefaultAvatar from '@/assets/images/defaultAvatar.svg?url';
 
 const { t } = useI18n();
 
 const {
   logout,
-  avatar,
   email,
   username,
   testKey,

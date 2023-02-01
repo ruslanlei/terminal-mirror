@@ -21,10 +21,7 @@ export const useProfileStore = defineStore('profile', () => {
     isFetchingProfile.value = false;
 
     if (result) {
-      profile.value = {
-        ...data,
-        avatar: 'https://picsum.photos/200/300',
-      };
+      profile.value = data;
     } else {
       toastStore.showDanger({
         text: t('profile.failedToFetch'),

@@ -11,7 +11,6 @@ export const useProfileSettings = () => {
     profile,
   } = storeToRefs(profileStore);
 
-  const avatar = computed(() => profile.value?.avatar);
   const email = computed(() => profile.value?.email);
   const username = computed(() => profile.value?.username);
 
@@ -23,7 +22,6 @@ export const useProfileSettings = () => {
 
   return {
     logout: sessionStore.logout,
-    avatar,
     email,
     username,
     testKey,

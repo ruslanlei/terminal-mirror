@@ -1,6 +1,5 @@
 export interface Profile {
   pk: number,
-  avatar: string,
   username: string,
   email: string,
   first_name: string,

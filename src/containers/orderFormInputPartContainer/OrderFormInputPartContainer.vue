@@ -70,6 +70,9 @@
       </div>
     </div>
     <div :class="$style.ratio">
+      <div :class="$style.ratioLabel">
+        <slot name="ratioLabel" />
+      </div>
       <div :class="$style.ratioValue">
         <slot name="ratio" />
       </div>
@@ -160,14 +163,21 @@ import Icon from '@/components/core/icon/Icon.vue';
 
 .profitAndLoss {
   margin-top: 10px;
-  //padding: 0 20px;
   display: flex;
   justify-content: space-between;
 }
 
 .ratio {
   display: flex;
-  justify-content: center;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 5px;
+}
+
+.ratioLabel {
+  @include title4;
+  color: rgb(var(--color-accent-2));
+  font-weight: 500;
 }
 
 .ratioValue, .profit, .loss {
@@ -180,7 +190,6 @@ import Icon from '@/components/core/icon/Icon.vue';
   background-color: rgb(var(--color-accent-3));
   padding: 2px 10px;
   border-radius: 12px;
-  margin-top: 10px;
 }
 
 .profit {

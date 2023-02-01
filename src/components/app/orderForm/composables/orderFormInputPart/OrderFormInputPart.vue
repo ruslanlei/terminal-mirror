@@ -83,6 +83,9 @@
     <template #submit>
       <slot name="submit" />
     </template>
+    <template #ratioLabel>
+      {{ t('order.ratioLabel') }}
+    </template>
     <template #ratio>
       {{ ratio }}
     </template>

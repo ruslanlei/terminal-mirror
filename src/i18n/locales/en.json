@@ -181,6 +181,7 @@
       "percentOfDeposit": "% of deposit"
     },
     "ratio": "{loss} to {profit}",
+    "ratioLabel": "Ratio",
     "failedToCreate": "Failed to create order",
     "failedToCreateTakeProfits": "Failed to create one or more TPs",
     "failedToCreateStopLoss": "Failed to create SL",

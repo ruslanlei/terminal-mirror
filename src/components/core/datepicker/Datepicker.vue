@@ -111,6 +111,23 @@ const isCalendarVisible = ref(false);
     display: flex;
     align-items: center;
     justify-content: center;
+
+    .numInputWrapper {
+      border-radius: 2px;
+    }
+    .arrowUp, .arrowDown {
+      border-radius: 2px;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+      &:after {
+        border-bottom-color: #fff !important;
+        border-top-color: #fff !important;
+      }
+    }
+
     .flatpickr-monthDropdown-months {
       color: rgb(var(--color-accent-1));
       background-color: rgb(var(--color-background-2)) !important;

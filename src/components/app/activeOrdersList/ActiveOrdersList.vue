@@ -83,9 +83,24 @@
         <i18n-t keypath="ordersList.column.pnl">
           <template #value>
             <InlineSpace />
-            <span :class="$style.pnlColumnValue">
-              {{ t('common.currencyAmount', { amount: commonPnl, currency: '$' }) }}
-            </span>
+            <i18n-t
+              :class="$style.pnlColumnValue"
+              tag="div"
+              keypath="common.currencyAmount"
+            >
+              <template #amount>
+                <AnimatedText
+                  :text="commonPnl"
+                  animation-type="verticalAuto"
+                >
+                  {{ commonPnl }}
+                </AnimatedText>
+              </template>
+              <template #currency>
+                <InlineSpace />
+                {{ '$' }}
+              </template>
+            </i18n-t>
           </template>
         </i18n-t>
       </template>
@@ -194,6 +209,7 @@ getList();
 .pnlColumnValue {
   color: rgb(var(--color-success));
   font-weight: 600;
+  display: flex;
 }
 
 .pairCell {

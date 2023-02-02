@@ -67,37 +67,14 @@
       <template #column(results)>
         {{ t('ordersList.column.results') }}
       </template>
-      <template #cell(results)="{ data }">
-        {{ data }}
-      </template>
-
-      <template #cell(sl)="{ data: stopLossPercent }">
-        <div
-          v-if="stopLossPercent !== null"
-          :class="$style.stopLossPercent"
-        >
-          {{ t('common.percents', { value: -Math.abs(stopLossPercent) }) }}
-        </div>
-        <div
-          v-else
-          :class="$style.emptyValue"
-        >
-          {{ '-' }}
-        </div>
-      </template>
-
-      <template #cell(tp)="{ data: commonTakeProfitPercent }">
-        <div
-          v-if="commonTakeProfitPercent"
-          :class="$style.commonTakeProfit"
-        >
-          {{ t('common.percents', { value: commonTakeProfitPercent }) }}
-        </div>
-        <div
-          v-else
-          :class="$style.emptyValue"
-        >
-          {{ '-' }}
+      <template #cell(results)="{ data: { pnlPercent, pnl } }">
+        <div :class="$style.results">
+          <div>
+            {{ pnlPercent }}
+          </div>
+          <div>
+            {{ pnl }}
+          </div>
         </div>
       </template>
 
@@ -205,6 +182,9 @@ onActivated(() => {
   }
 }
 
+.results {
+}
+
 .pricesCell {
   display: flex;
 }
@@ -212,18 +192,6 @@ onActivated(() => {
 .pricesCellCurrent {
   margin-left: 5px;
   color: rgb(var(--color-accent-2));
-}
-
-.stopLossPercent {
-  color: rgb(var(--color-danger-2));
-  @include title2;
-  font-weight: 600;
-}
-
-.commonTakeProfit {
-  color: rgb(var(--color-primary-1));
-  @include title2;
-  font-weight: 600;
 }
 
 .commentButton {

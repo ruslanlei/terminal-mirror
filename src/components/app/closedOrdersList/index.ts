@@ -25,8 +25,8 @@ export type ClosedOrdersTableRecord = TableRecord<ClosedOrdersTableColumnSlug, {
     current: number,
   },
   results: {
-    income: number,
     pnl: number,
+    pnlPercent: number,
   },
   date: {
     open: string,

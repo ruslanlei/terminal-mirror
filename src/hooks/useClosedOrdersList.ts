@@ -94,8 +94,8 @@ export const useClosedOrdersList = () => {
             current: marketStore.activePairPrice,
           },
           results: {
-            income: 0,
             pnl: 0,
+            pnlPercent: 0,
           },
           date: {
             open: humanizeDate(order.created),

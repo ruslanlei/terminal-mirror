@@ -3,12 +3,9 @@ import { useI18n } from 'vue-i18n';
 import { useMarketStore } from '@/stores/market';
 import { Order, SubOrder } from '@/api/types/order';
 import { ActiveSubOrderTableItem } from '@/components/app/activeOrdersList/activeSubOrdersTable';
-import { add, multiply, roundToDecimalPoint } from '@/math/float';
+import { multiply, roundToDecimalPoint } from '@/math/float';
 import { humanizeDate } from '@/utils/date';
 import { compose } from '@/utils/fp';
-import { calculatePercentOfDifference } from '@/math/helpers/percents';
-import { calculateCommonTakeProfitPercent } from '@/math/formulas/takeProfit';
-import { calculatePnl } from '@/math/formulas/pnl';
 import { ClosedOrdersTableColumn, ClosedOrdersTableRecord } from '@/components/app/closedOrdersList';
 
 export const useClosedOrdersList = () => {
@@ -42,33 +39,14 @@ export const useClosedOrdersList = () => {
       size: 1.7,
     },
     {
-      label: t('ordersList.column.sl'),
-      slug: 'sl',
-      size: 0.7,
-      align: 'center',
-    },
-    {
       label: '',
-      slug: 'pnl',
-      size: 1,
-      align: 'center',
-    },
-    {
-      label: t('ordersList.column.tp'),
-      slug: 'tp',
-      size: 0.7,
-      align: 'center',
+      slug: 'results',
+      size: 1.7,
     },
     {
       label: t('ordersList.column.date'),
       slug: 'date',
-      size: 1,
-    },
-    {
-      label: t('ordersList.column.comment'),
-      slug: 'comment',
-      size: 0.7,
-      align: 'center',
+      size: 1.7,
     },
     {
       label: '',
@@ -104,33 +82,6 @@ export const useClosedOrdersList = () => {
         multiply,
       )(order.quantity, order.price);
 
-      const stopLossPercent = relatedStopLoss?.price
-        ? compose(
-          roundToDecimalPoint(2),
-          calculatePercentOfDifference,
-        )(order.price, relatedStopLoss.price)
-        : null;
-
-      const pnl = compose(
-        roundToDecimalPoint(2),
-        calculatePnl,
-      )(
-        order.price,
-        order.quantity,
-        marketStore.activePairPrice,
-      );
-
-      const tp = relatedTakeProfits.length
-        ? compose(
-          roundToDecimalPoint(2),
-          calculateCommonTakeProfitPercent,
-        )(
-          order.price,
-          order.quantity,
-          relatedTakeProfits,
-        )
-        : null;
-
       return {
         id: order.id,
         data: {
@@ -142,14 +93,14 @@ export const useClosedOrdersList = () => {
             orderPrice: order.price,
             current: marketStore.activePairPrice,
           },
-          sl: stopLossPercent,
-          pnl: {
-            value: pnl,
-            currency: pairData.quote,
+          results: {
+            income: 0,
+            pnl: 0,
           },
-          tp,
-          date: humanizeDate(order.created),
-          comment: order,
+          date: {
+            open: humanizeDate(order.created),
+            close: humanizeDate(order.created),
+          },
           options: order,
         },
         children: [
@@ -176,19 +127,15 @@ export const useClosedOrdersList = () => {
     () => groupOrdersToTableRecords(orders.value),
   );
 
-  const commonPnl = computed(() => records.value.reduce((
-    commonPnl: number,
-    record: ClosedOrdersTableRecord,
-  ) => compose(
-    roundToDecimalPoint(2),
-    add,
-  )(commonPnl, record.data.pnl.value), 0));
-
   const isLoading = ref(false);
 
-  const getList = async () => {
-    isLoading.value = true;
+  const getList = async (showLoading: boolean) => {
+    if (showLoading) {
+      isLoading.value = true;
+    }
+
     const { result, data } = await marketStore.getOrderList('new');
+
     isLoading.value = false;
 
     if (!result) return;
@@ -199,7 +146,6 @@ export const useClosedOrdersList = () => {
   return {
     columns,
     records,
-    commonPnl,
     isLoading,
     getList,
   };

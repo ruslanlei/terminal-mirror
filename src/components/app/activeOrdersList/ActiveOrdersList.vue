@@ -179,6 +179,7 @@ import Icon from '@/components/core/icon/Icon.vue';
 import { isPositive } from '@/math/helpers/number';
 import Badge from '@/components/core/badge/Badge.vue';
 import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
+import { onActivated } from 'vue';
 
 const { t } = useI18n();
 
@@ -190,7 +191,10 @@ const {
   commonPnl,
 } = useActiveOrdersList();
 
-getList();
+onActivated(() => {
+  const showLoading = !records.value?.length;
+  getList(showLoading);
+});
 </script>
 
 <style lang="scss" module>

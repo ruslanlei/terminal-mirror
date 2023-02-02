@@ -9,11 +9,8 @@ export type ClosedOrdersTableColumnSlug =
   | 'volume'
   | 'coins'
   | 'prices'
-  | 'sl'
-  | 'pnl'
-  | 'tp'
+  | 'results'
   | 'date'
-  | 'comment'
   | 'options';
 
 export type ClosedOrdersTableColumn = TableColumn<ClosedOrdersTableColumnSlug>;
@@ -27,13 +24,13 @@ export type ClosedOrdersTableRecord = TableRecord<ClosedOrdersTableColumnSlug, {
     orderPrice: number,
     current: number,
   },
-  sl: number | null,
-  pnl: {
-    value: number,
-    currency: string,
+  results: {
+    income: number,
+    pnl: number,
   },
-  tp: number | null,
-  date: string,
-  comment: Order,
+  date: {
+    open: string,
+    close: string,
+  },
   options: Order,
 }, ClosedSubOrderTableItem[]>;

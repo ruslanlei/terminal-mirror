@@ -186,9 +186,13 @@ export const useActiveOrdersList = () => {
 
   const isLoading = ref(false);
 
-  const getList = async () => {
-    isLoading.value = true;
+  const getList = async (showLoading: boolean) => {
+    if (showLoading) {
+      isLoading.value = true;
+    }
+
     const { result, data } = await marketStore.getOrderList('new');
+
     isLoading.value = false;
 
     if (!result) return;

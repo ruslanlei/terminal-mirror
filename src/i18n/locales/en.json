@@ -196,8 +196,10 @@
       "coins": "Coins",
       "prices": {
         "order": "Order price{current}",
-        "current": "/current"
+        "current": "/current",
+        "close": "/close"
       },
+      "results": "Results",
       "sl": "SL",
       "pnl": "PNL {value}",
       "tp": "TP",

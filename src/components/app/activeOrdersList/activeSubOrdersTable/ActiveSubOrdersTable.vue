@@ -65,16 +65,19 @@ import { useI18n } from 'vue-i18n';
 import { humanizeDate } from '@/utils/date';
 import { compose } from '@/utils/fp';
 import { roundToDecimalPoint } from '@/math/float';
-import { calculatePercentOfDifference, valueToPercents } from '@/math/helpers/percents';
+import { valueToPercents } from '@/math/helpers/percents';
 import {
-  SubOrdersColumn, SubOrdersRecord, SubOrdersTableProps, SubOrderTableItem,
+  ActiveSubOrdersColumn,
+  ActiveSubOrdersRecord,
+  ActiveSubOrdersTableProps,
+  ActiveSubOrderTableItem,
 } from './index';
 
-const props = defineProps<SubOrdersTableProps>();
+const props = defineProps<ActiveSubOrdersTableProps>();
 
 const { t } = useI18n();
 
-const columns = ref<SubOrdersColumn[]>([
+const columns = ref<ActiveSubOrdersColumn[]>([
   {
     label: '',
     slug: 'type',
@@ -113,8 +116,8 @@ const columns = ref<SubOrdersColumn[]>([
   },
 ]);
 
-const records = computed<SubOrdersRecord[]>(
-  () => props.orders.map((order: SubOrderTableItem) => {
+const records = computed<ActiveSubOrdersRecord[]>(
+  () => props.orders.map((order: ActiveSubOrderTableItem) => {
     const label = ({
       tp: t('ordersList.subOrder.type.takeProfit', { index: order.orderIndex }),
       sl: t('ordersList.subOrder.type.stopLoss'),

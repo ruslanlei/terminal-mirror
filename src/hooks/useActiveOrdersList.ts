@@ -3,7 +3,7 @@ import { useI18n } from 'vue-i18n';
 import { ActiveOrdersTableColumn, ActiveOrdersTableRecord } from '@/components/app/activeOrdersList';
 import { useMarketStore } from '@/stores/market';
 import { Order, SubOrder } from '@/api/types/order';
-import { SubOrderTableItem } from '@/components/app/activeOrdersList/subOrdersTable';
+import { ActiveSubOrderTableItem } from '@/components/app/activeOrdersList/activeSubOrdersTable';
 import { add, multiply, roundToDecimalPoint } from '@/math/float';
 import { humanizeDate } from '@/utils/date';
 import { compose } from '@/utils/fp';
@@ -158,7 +158,7 @@ export const useActiveOrdersList = () => {
             pairData,
             masterData: order,
             orderIndex: sortedRelatedTakeProfits.length - index,
-          })) as SubOrderTableItem[],
+          })) as ActiveSubOrderTableItem[],
 
           ...(relatedStopLoss ? [{
             ...relatedStopLoss,

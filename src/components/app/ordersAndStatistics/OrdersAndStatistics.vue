@@ -38,6 +38,17 @@
           />
         </KeepAlive>
       </transition>
+      <transition
+        name="orderAndStatisticsTabContent"
+        mode="out-in"
+      >
+        <KeepAlive>
+          <ActiveOrdersList
+            v-if="activeTab === 'orders' && ordersListType === 'closed'"
+            :class="$style.ordersList"
+          />
+        </KeepAlive>
+      </transition>
     </div>
   </div>
 </template>

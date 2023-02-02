@@ -3,7 +3,7 @@ import { currency } from '@/api/types/currency';
 import { Order, SubOrder } from '@/api/types/order';
 import { PairServerData } from '@/api/types/pairServerData';
 
-export type SubOrdersColumnSlug =
+export type ActiveActiveSubOrdersColumnSlug =
   'type'
   | 'masterType'
   | 'quantity'
@@ -11,9 +11,9 @@ export type SubOrdersColumnSlug =
   | 'date'
   | 'options'
 
-export type SubOrdersColumn = TableColumn<SubOrdersColumnSlug>;
+export type ActiveSubOrdersColumn = TableColumn<ActiveActiveSubOrdersColumnSlug>;
 
-export type SubOrdersRecord = TableRecord<SubOrdersColumnSlug, {
+export type ActiveSubOrdersRecord = TableRecord<ActiveActiveSubOrdersColumnSlug, {
   type: {
     value: 'tp' | 'sl',
     label: string,
@@ -31,12 +31,12 @@ export type SubOrdersRecord = TableRecord<SubOrdersColumnSlug, {
   options: any,
 }>;
 
-export interface SubOrderTableItem extends SubOrder {
+export interface ActiveSubOrderTableItem extends SubOrder {
   masterData: Order,
   pairData: PairServerData,
   orderIndex?: number,
 }
 
-export interface SubOrdersTableProps {
-  orders: SubOrderTableItem[],
+export interface ActiveSubOrdersTableProps {
+  orders: ActiveSubOrderTableItem[],
 }

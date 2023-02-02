@@ -146,7 +146,7 @@
         </div>
       </template>
       <template #recordChildren="{ data: subOrders }">
-        <SubOrdersTable :orders="subOrders" />
+        <ActiveSubOrdersTable :orders="subOrders" />
       </template>
     </Table>
   </transition>
@@ -158,7 +158,7 @@ import Table from '@/components/core/table/Table.vue';
 import InlineSpace from '@/components/core/inlineSpace/InlineSpace.vue';
 import CurrencyLogo from '@/components/core/currencyLogo/CurrencyLogo.vue';
 import { useActiveOrdersList } from '@/hooks/useActiveOrdersList';
-import SubOrdersTable from '@/components/app/activeOrdersList/subOrdersTable/SubOrdersTable.vue';
+import ActiveSubOrdersTable from '@/components/app/activeOrdersList/activeSubOrdersTable/ActiveSubOrdersTable.vue';
 import ListSkeleton from '@/components/app/listSkeleton/ListSkeleton.vue';
 import Icon from '@/components/core/icon/Icon.vue';
 import { isPositive } from '@/math/helpers/number';

@@ -4,6 +4,7 @@ import eslintPlugin from 'vite-plugin-eslint';
 import pagesPlugin from 'vite-plugin-pages';
 import svgLoader from 'vite-svg-loader';
 import vueTypeImportsPlugin from 'vite-plugin-vue-type-imports';
+import compressionPlugin from 'vite-plugin-compression';
 import path from 'path';
 
 // https://vitejs.dev/config/
@@ -20,6 +21,7 @@ export default defineConfig({
       importMode: 'async',
     }),
     vueTypeImportsPlugin(),
+    compressionPlugin(),
   ],
   resolve: {
     alias: {

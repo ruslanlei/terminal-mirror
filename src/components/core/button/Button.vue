@@ -40,6 +40,7 @@ const computedState = useComputedState(props);
   width: 100%;
   display: block;
   position: relative;
+  transition: 160ms background-color;
   &:not(.disabled) {
     cursor: pointer;
   }
@@ -102,6 +103,9 @@ const computedState = useComputedState(props);
 .secondary2Color {
   color: rgba(var(--color-accent-1));
   background-color: rgb(var(--color-background-2));
+  &:hover {
+    background-color: rgb(var(--color-background-4));
+  }
 }
 
 .lgSize {

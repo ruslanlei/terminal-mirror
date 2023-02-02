@@ -9,6 +9,7 @@
         state="defaultColor"
         :min="1"
         save-on="blur"
+        :append-min-width="35"
       >
         <template #append>
           {{ quoteCurrency.name }}
@@ -29,6 +30,7 @@
         :step="baseCurrency.step"
         save-on="blur"
         :show-error-icon="false"
+        :append-min-width="35"
       >
         <template #append>
           {{ baseCurrency.name }}
@@ -45,6 +47,7 @@
         :base-currency="baseCurrency"
         :quote-currency="quoteCurrency"
         save-on="blur"
+        :append-min-width="35"
       >
         <template #quoteCurrency>
           {{ quoteCurrency.name }}
@@ -83,6 +86,9 @@
     <template #submit>
       <slot name="submit" />
     </template>
+    <template #ratioLabel>
+      {{ t('order.ratioLabel') }}
+    </template>
     <template #ratio>
       {{ ratio }}
     </template>
@@ -98,7 +104,7 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import OrderFormInputPartContainer from '@/containers/orderFormInputPartContainer/OrderFormInputPartContainer.vue';
-import { FormDepositInput, FormExchangeInput, FormNumberInput } from '@/components/form';
+import { FormDepositInput, FormExchangeInput, FormNumberInput } from '@/form';
 import { useOrderFormInject } from '@/hooks/useOrderFormInject';
 import { useExchange } from '@/hooks/useExchange';
 

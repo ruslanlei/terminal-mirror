@@ -14,7 +14,7 @@
 
 <script setup lang="ts">
 import ExchangeInput from '@/components/core/exchangeInput/ExchangeInput.vue';
-import { FormExchangeInputEmits, FormExchangeInputProps } from '@/components/form/composables/formExchangeInput/index';
+import { FormExchangeInputEmits, FormExchangeInputProps } from '@/form/composables/formExchangeInput/index';
 import { useActiveField } from '@/hooks/useActiveField';
 
 const props = withDefaults(

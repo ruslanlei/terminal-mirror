@@ -1,8 +1,7 @@
 <template>
-  <Picture
-    :class="$style.avatar"
-    :src="src"
-  />
+  <div :class="$style.avatar">
+    <Picture :src="src" />
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -19,11 +18,14 @@ defineProps<AvatarProps>();
   height: 40px;
   min-height: 40px;
   border-radius: 50%;
-  transition: transform 200ms;
+  transition: transform 160ms;
   user-select: none;
   object-fit: cover;
   &:hover {
     transform: scale(1.05);
+  }
+  &:active {
+    transform: scale(0.95);
   }
 }
 </style>

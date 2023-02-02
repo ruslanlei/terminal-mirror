@@ -1,7 +1,7 @@
 import { TableColumn, TableRecord } from '@/components/core/table';
 import { currency } from '@/api/types/currency';
 import { Order } from '@/api/types/order';
-import { SubOrderTableItem } from '@/components/app/activeOrdersList/subOrdersTable';
+import { ActiveSubOrderTableItem } from '@/components/app/activeOrdersList/activeSubOrdersTable';
 
 export type ActiveOrdersTableColumnSlug =
   'pair'
@@ -36,4 +36,4 @@ export type ActiveOrdersTableRecord = TableRecord<ActiveOrdersTableColumnSlug, {
   date: string,
   comment: Order,
   options: Order,
-}, SubOrderTableItem[]>;
+}, ActiveSubOrderTableItem[]>;

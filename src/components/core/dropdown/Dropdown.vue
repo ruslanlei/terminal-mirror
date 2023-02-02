@@ -15,7 +15,6 @@
       :class="[
         $style.dropdown,
         !localIsVisible && $style.hidden,
-        smooth && $style.smooth,
       ]"
     >
       <div
@@ -34,7 +33,7 @@ import {
   computed,
   onBeforeMount,
   onMounted,
-  watch,
+  watch, nextTick,
 } from 'vue';
 import { teleportTargets } from '@/enums/teleport';
 import { useLocalValue } from '@/hooks/useLocalValue';
@@ -51,7 +50,6 @@ const props = withDefaults(
     keepWithinWindowHorizontal: true,
     containerGap: 10,
     automaticReplace: true,
-    smooth: true,
   },
 );
 
@@ -213,22 +211,28 @@ const calculateDropdownPosition = () => {
   computedDropdownStyles.value.transform = `translateY(${dropdownTop}px) translateX(${dropdownLeft}px)`;
 };
 
+watch(localIsVisible, calculateDropdownPosition);
+
 watch(localIsVisible, () => {
   if (!localIsVisible.value) return;
 
   let translateY: number | number[] = 0;
   let translateX: number | number[] = 0;
 
-  if (props.placement[0] === 'bottom') {
+  const placement = Array.isArray(props.placement)
+    ? props.placement[0]
+    : props.placement;
+
+  if (placement === 'bottom') {
     translateY = [-60, 0];
   }
-  if (props.placement[0] === 'top') {
+  if (placement === 'top') {
     translateY = [60, 0];
   }
-  if (props.placement[0] === 'left') {
+  if (placement === 'left') {
     translateX = [60, 0];
   }
-  if (props.placement[0] === 'right') {
+  if (placement === 'right') {
     translateX = [-60, 0];
   }
 
@@ -269,9 +273,6 @@ onBeforeMount(removeListeners);
   position: absolute;
   top: 0;
   left: 0;
-  &.smooth {
-    transition: transform 50ms;
-  }
   &.hidden {
     pointer-events: none;
     * {

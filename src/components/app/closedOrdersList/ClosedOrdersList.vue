@@ -48,7 +48,7 @@
         <i18n-t keypath="ordersList.column.prices.order">
           <template #current>
             <span :class="$style.priceLabelCurrent">
-              {{ t('ordersList.column.prices.current') }}
+              {{ t('ordersList.column.prices.close') }}
             </span>
           </template>
         </i18n-t>
@@ -64,6 +64,13 @@
         </div>
       </template>
 
+      <template #column(results)>
+        {{ t('ordersList.column.results') }}
+      </template>
+      <template #cell(results)="{ data }">
+        {{ data }}
+      </template>
+
       <template #cell(sl)="{ data: stopLossPercent }">
         <div
           v-if="stopLossPercent !== null"
@@ -77,45 +84,6 @@
         >
           {{ '-' }}
         </div>
-      </template>
-
-      <template #column(pnl)>
-        <i18n-t keypath="ordersList.column.pnl">
-          <template #value>
-            <InlineSpace />
-            <i18n-t
-              :class="$style.pnlColumnValue"
-              tag="div"
-              keypath="common.currencyAmount"
-            >
-              <template #amount>
-                <AnimatedText
-                  :text="commonPnl"
-                  animation-type="verticalAuto"
-                >
-                  {{ commonPnl }}
-                </AnimatedText>
-              </template>
-              <template #currency>
-                <InlineSpace />
-                {{ '$' }}
-              </template>
-            </i18n-t>
-          </template>
-        </i18n-t>
-      </template>
-      <template #cell(pnl)="{ data: { value, currency } }">
-        <Badge
-          :state="isPositive(value) ? 'success' : 'danger'"
-          size="sm"
-        >
-          <AnimatedText
-            :text="value"
-            animation-type="verticalAuto"
-          >
-            {{ t('common.currencyAmount', { amount: value, currency }) }}
-          </AnimatedText>
-        </Badge>
       </template>
 
       <template #cell(tp)="{ data: commonTakeProfitPercent }">
@@ -136,14 +104,6 @@
       <template #cell(date)="{ data }">
         {{ data }}
       </template>
-      <template #cell(comment)>
-        <button
-          type="button"
-          :class="$style.commentButton"
-        >
-          <Icon icon="textAlignLeft" />
-        </button>
-      </template>
       <template #cell(options)>
         <div :class="$style.orderOptions">
           <button
@@ -160,8 +120,9 @@
           </button>
         </div>
       </template>
+
       <template #recordChildren="{ data: subOrders }">
-        <ActiveSubOrdersTable :orders="subOrders" />
+        <ClosedSubOrdersTable :orders="subOrders" />
       </template>
     </Table>
   </transition>
@@ -172,13 +133,13 @@ import { useI18n } from 'vue-i18n';
 import Table from '@/components/core/table/Table.vue';
 import InlineSpace from '@/components/core/inlineSpace/InlineSpace.vue';
 import CurrencyLogo from '@/components/core/currencyLogo/CurrencyLogo.vue';
-import { useActiveOrdersList } from '@/hooks/useActiveOrdersList';
-import ActiveSubOrdersTable from '@/components/app/activeOrdersList/activeSubOrdersTable/ActiveSubOrdersTable.vue';
 import ListSkeleton from '@/components/app/listSkeleton/ListSkeleton.vue';
 import Icon from '@/components/core/icon/Icon.vue';
 import { isPositive } from '@/math/helpers/number';
 import Badge from '@/components/core/badge/Badge.vue';
 import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
+import ClosedSubOrdersTable from '@/components/app/closedOrdersList/closedSubOrdersTable/ClosedSubOrdersTable.vue';
+import { useClosedOrdersList } from '@/hooks/useClosedOrdersList';
 import { onActivated } from 'vue';
 
 const { t } = useI18n();
@@ -188,8 +149,7 @@ const {
   records,
   isLoading,
   getList,
-  commonPnl,
-} = useActiveOrdersList();
+} = useClosedOrdersList();
 
 onActivated(() => {
   const showLoading = !records.value?.length;

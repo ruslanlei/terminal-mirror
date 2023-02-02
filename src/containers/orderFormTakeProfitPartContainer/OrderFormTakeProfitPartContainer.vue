@@ -47,8 +47,8 @@
 .inner {
   height: 100%;
   padding: 0 10px;
-  @include scrollbarPrimary(4px);
   overflow-y: auto;
+  @include scrollbarPrimary(4px, 6px, true);
 }
 
 .label {

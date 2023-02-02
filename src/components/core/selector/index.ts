@@ -1,7 +1,16 @@
+export type SelectorButtonState =
+    'primaryTextColor'
+    | 'danger2TextColor'
+    | 'accent1TextColor'
+    | 'successBackground'
+    | 'dangerBackground';
+
 export type SelectorOption<V = string> = {
   label: string,
   value: V,
-  state?: 'success' | 'danger',
+  ghostState?: SelectorButtonState,
+  state?: SelectorButtonState,
+  activeState?: SelectorButtonState,
 } & Record<any, any>;
 
 type SelectorState =

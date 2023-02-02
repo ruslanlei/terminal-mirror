@@ -75,13 +75,12 @@ import Icon from '@/components/core/icon/Icon.vue';
 import Tabs from '@/components/core/tabs/Tabs.vue';
 import OrderFromContainer from '@/containers/orderFormContainer/OrderFormContainer.vue';
 import Button from '@/components/core/button/Button.vue';
-import { Form, FormSelector } from '@/components/form';
+import { Form, FormSelector } from '@/form';
 
 import { useOrderCreate } from '@/hooks/useOrderCreate';
 import { OrderFormInjectionKey, OrderFormTab } from '@/components/app/orderForm/index';
 import { Tab } from '@/components/core/tabs';
 
-// import { roundToDecimalPoint } from '@/utils/number';
 import { divideRight, roundToDecimalPoint } from '@/math/float';
 import { compose } from '@/utils/fp';
 import OrderFormInputPart from './composables/orderFormInputPart/OrderFormInputPart.vue';
@@ -91,26 +90,6 @@ import OrderFormStopLossPart from './composables/orderFormStopLossPart/OrderForm
 const { t } = useI18n();
 
 const settingsActiveTab = ref<OrderFormTab>('input');
-
-const settingsTabs = computed<Tab<OrderFormTab>[]>(() => [
-  {
-    label: t('order.additionalSettings.input'),
-    value: 'input',
-  },
-  {
-    label: t('order.additionalSettings.tp'),
-    value: 'tp',
-  },
-  {
-    label: t('order.additionalSettings.sl'),
-    value: 'sl',
-  },
-  {
-    label: t('order.additionalSettings.slx'),
-    value: 'slx',
-  },
-]);
-
 const openTab = (tab: OrderFormTab) => {
   settingsActiveTab.value = tab;
 };
@@ -135,6 +114,33 @@ const {
   isLoading,
   handleSubmit,
 } = useOrderCreate();
+
+const settingsTabs = computed<Tab<OrderFormTab>[]>(() => [
+  {
+    label: t('order.additionalSettings.input'),
+    value: 'input',
+  },
+  {
+    label: t('order.additionalSettings.tp'),
+    value: 'tp',
+    activeState: 'accent1TextColor',
+    ...(isTakeProfitsEnabled.value ? {
+      state: 'primaryTextColor',
+    } : {}),
+  },
+  {
+    label: t('order.additionalSettings.sl'),
+    value: 'sl',
+    activeState: 'accent1TextColor',
+    ...(isStopLossEnabled.value ? {
+      state: 'danger2TextColor',
+    } : {}),
+  },
+  {
+    label: t('order.additionalSettings.slx'),
+    value: 'slx',
+  },
+]);
 
 const ratio = computed(() => {
   const isNumbersValid = takeProfitsIncomeSum.value

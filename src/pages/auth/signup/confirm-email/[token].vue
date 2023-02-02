@@ -11,10 +11,9 @@
 </template>
 
 <route lang="yaml">
-name: name-override
-meta:
-  guestRequired: true
-  layout: auth
+  meta:
+    guestRequired: true
+    layout: auth
 </route>
 
 <script setup lang="ts">

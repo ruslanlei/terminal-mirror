@@ -40,8 +40,9 @@ const toggle = () => {
   width: 36px;
   height: 20px;
   border-radius: 14px;
-  padding: 2px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
   &.active {
     .circle {
       transform: translateX(16px);
@@ -56,6 +57,8 @@ $transitionDuration: 140ms;
   height: 16px;
   border-radius: 50%;
   transition: transform $transitionDuration;
+  position: absolute;
+  left: 2px;
 }
 
 .primaryColor {

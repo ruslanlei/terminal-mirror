@@ -9,7 +9,7 @@
         type="button"
         :class="$style.trigger"
       >
-        <Avatar :src="avatar" />
+        <Avatar :src="DefaultAvatar" />
         <Icon
           :class="$style.triggerIcon"
           icon="arrowDown"
@@ -29,6 +29,7 @@ import Icon from '@/components/core/icon/Icon.vue';
 import Avatar from '@/components/core/avatar/Avatar.vue';
 import ProfileSettings from '@/components/app/profileSettings/ProfileSettings.vue';
 import { useProfileStore } from '@/stores/profile';
+import DefaultAvatar from '@/assets/images/defaultAvatar.svg?url';
 
 const profileStore = useProfileStore();
 const avatar = computed(() => profileStore.profile?.avatar);

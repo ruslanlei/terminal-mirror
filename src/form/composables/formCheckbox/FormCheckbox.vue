@@ -19,7 +19,7 @@
 <script setup lang="ts">
 import Checkbox from '@/components/core/checkbox/Checkbox.vue';
 import { useActiveField } from '@/hooks/useActiveField';
-import { DefaultFormKey } from '@/components/form';
+import { DefaultFormKey } from '@/form';
 import { FormCheckboxProps } from './index';
 
 const props = withDefaults(

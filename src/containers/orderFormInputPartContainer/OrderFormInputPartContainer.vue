@@ -1,77 +1,86 @@
 <template>
   <div :class="$style.orderFormOrdersPartContainer">
-    <div :class="$style.inputRow">
-      <div :class="$style.inputLabel">
-        <slot name="priceLabel" />
-      </div>
-      <div>
-        <slot name="priceInput" />
-      </div>
-    </div>
-    <div :class="$style.inputRow">
-      <div :class="$style.inputLabel">
-        <slot name="amountLabel" />
-      </div>
-      <div>
-        <slot name="amountInput" />
-      </div>
-    </div>
-    <div :class="$style.inputRow">
-      <div :class="$style.inputLabel">
-        <slot name="volumeLabel" />
-      </div>
-      <div>
-        <slot name="volumeInput" />
-      </div>
-    </div>
-    <div :class="[$style.label, $style.depositLabel]">
-      <slot name="depositLabel" />
-    </div>
-    <div :class="$style.depositInput">
-      <slot name="depositInput" />
-    </div>
-    <div :class="[$style.label, $style.leverageLabel]">
-      <slot name="leverageLabel" />
-    </div>
-    <div :class="$style.leverageRow">
-      <div>
-        <slot name="leverageInput" />
-      </div>
-      <div :class="$style.leverageLiquidationPrice">
-        <Icon
-          :size="20"
-          :class="$style.icon"
-          icon="lock"
-        />
-        <div :class="$style.label">
-          <slot name="leverageLiquidationPrice" />
+    <div :class="$style.inner">
+      <div :class="$style.topBlock">
+        <div :class="$style.inputRow">
+          <div :class="$style.inputLabel">
+            <slot name="priceLabel" />
+          </div>
+          <div>
+            <slot name="priceInput" />
+          </div>
+        </div>
+        <div :class="$style.inputRow">
+          <div :class="$style.inputLabel">
+            <slot name="amountLabel" />
+          </div>
+          <div>
+            <slot name="amountInput" />
+          </div>
+        </div>
+        <div :class="$style.inputRow">
+          <div :class="$style.inputLabel">
+            <slot name="volumeLabel" />
+          </div>
+          <div>
+            <slot name="volumeInput" />
+          </div>
+        </div>
+        <div :class="[$style.label, $style.depositLabel]">
+          <slot name="depositLabel" />
+        </div>
+        <div :class="$style.depositInput">
+          <slot name="depositInput" />
+        </div>
+        <div :class="[$style.label, $style.leverageLabel]">
+          <slot name="leverageLabel" />
+        </div>
+        <div :class="$style.leverageRow">
+          <div>
+            <slot name="leverageInput" />
+          </div>
+          <div :class="$style.leverageLiquidationPrice">
+            <Icon
+              :size="20"
+              :class="$style.icon"
+              icon="lock"
+            />
+            <div :class="$style.label">
+              <slot name="leverageLiquidationPrice" />
+            </div>
+          </div>
+          <div :class="$style.leveragePositionMargin">
+            <Icon
+              :size="20"
+              :class="$style.icon"
+              icon="fire"
+            />
+            <div :class="$style.label">
+              <slot name="leveragePositionMargin" />
+            </div>
+          </div>
         </div>
       </div>
-      <div :class="$style.leveragePositionMargin">
-        <Icon
-          :size="20"
-          :class="$style.icon"
-          icon="fire"
-        />
-        <div :class="$style.label">
-          <slot name="leveragePositionMargin" />
+      <div :class="$style.bottomBlock">
+        <div :class="$style.submit">
+          <slot name="submit" />
         </div>
-      </div>
-    </div>
-    <div :class="$style.submit">
-      <slot name="submit" />
-    </div>
-    <div :class="$style.profitAndLoss">
-      <div :class="$style.profit">
-        <slot name="profit" />
-      </div>
-      <div :class="$style.loss">
-        <slot name="loss" />
-      </div>
-    </div>
-    <div :class="$style.ratio">
-      <div :class="$style.ratioValue">
-        <slot name="ratio" />
+        <div :class="$style.profitAndLoss">
+          <div :class="$style.profit">
+            <slot name="profit" />
+          </div>
+          <div :class="$style.loss">
+            <slot name="loss" />
+          </div>
+        </div>
+        <div :class="$style.ratio">
+          <div :class="$style.ratioLabel">
+            <slot name="ratioLabel" />
+          </div>
+          <div :class="$style.ratioValue">
+            <slot name="ratio" />
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -85,6 +94,29 @@ import Icon from '@/components/core/icon/Icon.vue';
 @import "src/assets/styles/utils";
 
 .orderFormOrdersPartContainer {
+  padding: 0 12px 22px 12px !important;
+}
+
+.inner {
+  height: 100%;
+  padding: 0 10px;
+  overflow-y: auto;
+  @include scrollbarPrimary(4px, 6px, true);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+}
+
+.topBlock {
+  padding-bottom: 36px;
+}
+
+.bottomBlock {
+  position: sticky;
+  bottom: 0;
+  background-color: rgb(var(--color-background-3));
+  border-radius: 4px;
 }
 
 .inputRow {
@@ -160,14 +192,21 @@ import Icon from '@/components/core/icon/Icon.vue';
 
 .profitAndLoss {
   margin-top: 10px;
-  //padding: 0 20px;
   display: flex;
   justify-content: space-between;
 }
 
 .ratio {
   display: flex;
-  justify-content: center;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 5px;
+}
+
+.ratioLabel {
+  @include title4;
+  color: rgb(var(--color-accent-2));
+  font-weight: 500;
 }
 
 .ratioValue, .profit, .loss {
@@ -180,7 +219,6 @@ import Icon from '@/components/core/icon/Icon.vue';
   background-color: rgb(var(--color-accent-3));
   padding: 2px 10px;
   border-radius: 12px;
-  margin-top: 10px;
 }
 
 .profit {

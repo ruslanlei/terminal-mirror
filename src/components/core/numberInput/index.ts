@@ -24,6 +24,7 @@ export interface NumberInputProps {
   label?: string,
   hideArrows?: boolean,
   showErrorIcon?: boolean,
+  appendMinWidth?: number,
 }
 
 export interface NumberInputEmits {

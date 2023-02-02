@@ -2,7 +2,7 @@ import {
   computed,
   inject,
 } from 'vue';
-import { touchTrigger } from '@/components/form';
+import { touchTrigger } from '@/form';
 import { useChain } from '@/hooks/useChain';
 import { FormProvide, getFormInjectKey } from '@/hooks/useForm';
 

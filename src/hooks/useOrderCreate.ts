@@ -40,13 +40,13 @@ export const useOrderCreate = () => {
     {
       label: t('order.direction.long'),
       value: 'buy',
-      state: 'success',
+      ghostState: 'successBackground',
       icon: 'trendingUp',
     },
     {
       label: t('order.direction.short'),
       value: 'sell',
-      state: 'danger',
+      ghostState: 'dangerBackground',
       icon: 'trendingDown',
     },
   ]);

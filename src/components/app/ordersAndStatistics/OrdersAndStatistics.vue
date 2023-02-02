@@ -38,6 +38,17 @@
           />
         </KeepAlive>
       </transition>
+      <transition
+        name="orderAndStatisticsTabContent"
+        mode="out-in"
+      >
+        <KeepAlive>
+          <ClosedOrdersList
+            v-if="activeTab === 'orders' && ordersListType === 'closed'"
+            :class="$style.ordersList"
+          />
+        </KeepAlive>
+      </transition>
     </div>
   </div>
 </template>
@@ -47,6 +58,7 @@ import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Selector from '@/components/core/selector/Selector.vue';
 import ActiveOrdersList from '@/components/app/activeOrdersList/ActiveOrdersList.vue';
+import ClosedOrdersList from '@/components/app/closedOrdersList/ClosedOrdersList.vue';
 import {
   MainSelectorOptions,
   MainSelectorOptionValue,

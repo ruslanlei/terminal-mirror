@@ -1,5 +1,7 @@
 import { PairServerData } from '@/api/types/pairServerData';
 
+export type OrderStatus = 'new' | 'filled' | 'expired' | 'canceled' | 'executed' | 'closed';
+
 export interface Order {
   id: number,
   user: 0,
@@ -10,7 +12,7 @@ export interface Order {
   quantity: number,
   price: number,
   leverage?: number,
-  status: string,
+  status: OrderStatus,
   transaction: number,
   master: number,
   executed_trade_id: number,

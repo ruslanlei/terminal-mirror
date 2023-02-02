@@ -16,7 +16,7 @@ import {
   touchTrigger,
   FormEmits,
   FormErrorsList,
-} from '@/components/form';
+} from '@/form';
 import cloneDeep from 'lodash/cloneDeep';
 import { useLocalValue } from '@/hooks/useLocalValue';
 

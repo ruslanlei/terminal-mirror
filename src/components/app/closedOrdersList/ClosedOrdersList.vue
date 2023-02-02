@@ -172,13 +172,13 @@ import { useI18n } from 'vue-i18n';
 import Table from '@/components/core/table/Table.vue';
 import InlineSpace from '@/components/core/inlineSpace/InlineSpace.vue';
 import CurrencyLogo from '@/components/core/currencyLogo/CurrencyLogo.vue';
-import { useActiveOrdersList } from '@/hooks/useActiveOrdersList';
 import ListSkeleton from '@/components/app/listSkeleton/ListSkeleton.vue';
 import Icon from '@/components/core/icon/Icon.vue';
 import { isPositive } from '@/math/helpers/number';
 import Badge from '@/components/core/badge/Badge.vue';
 import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
 import ClosedSubOrdersTable from '@/components/app/closedOrdersList/closedSubOrdersTable/ClosedSubOrdersTable.vue';
+import { useClosedOrdersList } from '@/hooks/useClosedOrdersList';
 
 const { t } = useI18n();
 
@@ -188,7 +188,7 @@ const {
   isLoading,
   getList,
   commonPnl,
-} = useActiveOrdersList();
+} = useClosedOrdersList();
 
 getList();
 </script>

@@ -48,7 +48,12 @@
         <i18n-t keypath="ordersList.column.prices.order">
           <template #current>
             <span :class="$style.priceLabelCurrent">
-              {{ t('ordersList.column.prices.close') }}
+              <template v-if="listType === 'active'">
+                {{ t('ordersList.column.prices.current') }}
+              </template>
+              <template v-if="listType === 'closed'">
+                {{ t('ordersList.column.prices.close') }}
+              </template>
             </span>
           </template>
         </i18n-t>
@@ -56,10 +61,15 @@
       <template #cell(prices)="{ data }">
         <div :class="$style.pricesCell">
           <span>
-            {{ data.orderPrice }}
+            {{ data.order }}
           </span>
           <span :class="$style.pricesCellCurrent">
-            {{ data.current }}
+            <template v-if="listType === 'active'">
+              {{ data.current }}
+            </template>
+            <template v-if="listType === 'closed'">
+              {{ data.close }}
+            </template>
           </span>
         </div>
       </template>
@@ -78,8 +88,98 @@
         </div>
       </template>
 
+      <template #cell(sl)="{ data: stopLossPercent }">
+        <div
+          v-if="stopLossPercent !== null"
+          :class="$style.stopLossPercent"
+        >
+          {{ t('common.percents', { value: -Math.abs(stopLossPercent) }) }}
+        </div>
+        <div
+          v-else
+          :class="$style.emptyValue"
+        >
+          {{ '-' }}
+        </div>
+      </template>
+
+      <template #column(pnl)>
+        <i18n-t keypath="ordersList.column.pnl">
+          <template #value>
+            <InlineSpace />
+            <i18n-t
+              :class="$style.pnlColumnValue"
+              tag="div"
+              keypath="common.currencyAmount"
+            >
+              <template #amount>
+                <AnimatedText
+                  :text="commonPnl"
+                  animation-type="verticalAuto"
+                >
+                  {{ commonPnl }}
+                </AnimatedText>
+              </template>
+              <template #currency>
+                <InlineSpace />
+                {{ '$' }}
+              </template>
+            </i18n-t>
+          </template>
+        </i18n-t>
+      </template>
+      <template #cell(pnl)="{ data: { value, currency } }">
+        <Badge
+          :state="isPositive(value) ? 'success' : 'danger'"
+          size="sm"
+        >
+          <AnimatedText
+            :text="value"
+            animation-type="verticalAuto"
+          >
+            {{ t('common.currencyAmount', { amount: value, currency }) }}
+          </AnimatedText>
+        </Badge>
+      </template>
+
+      <template #cell(tp)="{ data: commonTakeProfitPercent }">
+        <div
+          v-if="commonTakeProfitPercent"
+          :class="$style.commonTakeProfit"
+        >
+          {{ t('common.percents', { value: commonTakeProfitPercent }) }}
+        </div>
+        <div
+          v-else
+          :class="$style.emptyValue"
+        >
+          {{ '-' }}
+        </div>
+      </template>
+
+      <template #column(date)>
+        <i18n-t
+          v-if="listType === 'closed'"
+          tag="span"
+          keypath="ordersList.column.dateOpenClose.open"
+        >
+          <template #close>
+            <span :class="$style.dateClose">
+              {{ t('ordersList.column.dateOpenClose.close') }}
+            </span>
+          </template>
+        </i18n-t>
+      </template>
       <template #cell(date)="{ data }">
         {{ data }}
+      </template>
+      <template #cell(comment)>
+        <button
+          type="button"
+          :class="$style.commentButton"
+        >
+          <Icon icon="textAlignLeft" />
+        </button>
       </template>
       <template #cell(options)>
         <div :class="$style.orderOptions">
@@ -97,9 +197,8 @@
           </button>
         </div>
       </template>
-
-      <template #recordChildren="{ data: subOrders }">
-        <ClosedSubOrdersTable :orders="subOrders" />
+      <template #recordChildren="{ children }">
+        <SubOrdersTable :orders="children" />
       </template>
     </Table>
   </transition>
@@ -115,21 +214,31 @@ import Icon from '@/components/core/icon/Icon.vue';
 import { isPositive } from '@/math/helpers/number';
 import Badge from '@/components/core/badge/Badge.vue';
 import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
-import ClosedSubOrdersTable from '@/components/app/closedOrdersList/closedSubOrdersTable/ClosedSubOrdersTable.vue';
-import { useClosedOrdersList } from '@/hooks/useClosedOrdersList';
 import { onActivated } from 'vue';
+import SubOrdersTable from '@/components/app/ordersList/subOrdersTable/SubOrdersTable.vue';
+import { useOrdersList } from '@/hooks/useOrdersList';
+import { OrdersListProps } from './index';
 
 const { t } = useI18n();
 
+const props = withDefaults(
+  defineProps<OrdersListProps>(),
+  {
+    listType: 'active',
+  },
+);
+
 const {
   columns,
+  orders,
   records,
   isLoading,
   getList,
-} = useClosedOrdersList();
+  commonPnl,
+} = useOrdersList(props);
 
 onActivated(() => {
-  const showLoading = !records.value?.length;
+  const showLoading = !orders.value?.length;
   getList(showLoading);
 });
 </script>
@@ -182,9 +291,6 @@ onActivated(() => {
   }
 }
 
-.results {
-}
-
 .pricesCell {
   display: flex;
 }
@@ -192,6 +298,18 @@ onActivated(() => {
 .pricesCellCurrent {
   margin-left: 5px;
   color: rgb(var(--color-accent-2));
+}
+
+.stopLossPercent {
+  color: rgb(var(--color-danger-2));
+  @include title2;
+  font-weight: 600;
+}
+
+.commonTakeProfit {
+  color: rgb(var(--color-primary-1));
+  @include title2;
+  font-weight: 600;
 }
 
 .commentButton {
@@ -204,6 +322,10 @@ onActivated(() => {
 }
 
 .swapButton {
+  color: rgb(var(--color-accent-2));
+}
+
+.dateClose {
   color: rgb(var(--color-accent-2));
 }
 

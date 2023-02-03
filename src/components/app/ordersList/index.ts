@@ -2,6 +2,12 @@ import { TableColumn, TableRecord } from '@/components/core/table';
 import { currency } from '@/api/types/currency';
 import { Order } from '@/api/types/order';
 import { ActiveSubOrderTableItem } from '@/components/app/activeOrdersList/activeSubOrdersTable';
+import { ClosedOrdersTableColumnSlug } from '@/components/app/closedOrdersList';
+import { ClosedSubOrderTableItem } from '@/components/app/closedOrdersList/closedSubOrdersTable';
+
+export interface OrdersListProps {
+  listType: 'active' | 'closed',
+}
 
 export type ActiveOrdersTableColumnSlug =
   'pair'
@@ -37,3 +43,23 @@ export type ActiveOrdersTableRecord = TableRecord<ActiveOrdersTableColumnSlug, {
   comment: Order,
   options: Order,
 }, ActiveSubOrderTableItem[]>;
+
+export type ClosedOrdersTableRecord = TableRecord<ClosedOrdersTableColumnSlug, {
+  pair: currency,
+  type: Order['side'],
+  volume: number,
+  coins: number,
+  prices: {
+    order: number,
+    close: number,
+  },
+  results: {
+    pnl: number,
+    pnlPercent: number,
+  },
+  date: {
+    open: string,
+    close: string,
+  },
+  options: Order,
+}, ClosedSubOrderTableItem[]>;

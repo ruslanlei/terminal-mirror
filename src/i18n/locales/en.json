@@ -204,6 +204,10 @@
       "pnl": "PNL {value}",
       "tp": "TP",
       "date": "Date",
+      "dateOpenClose": {
+        "open": "Date open {close}",
+        "close": "/ close"
+      },
       "comment": "Comment"
     },
     "subOrder": {

@@ -32,8 +32,9 @@
         mode="out-in"
       >
         <KeepAlive>
-          <ActiveOrdersList
+          <OrdersList
             v-if="activeTab === 'orders' && ordersListType === 'current'"
+            list-type="active"
             :class="$style.ordersList"
           />
         </KeepAlive>
@@ -43,8 +44,9 @@
         mode="out-in"
       >
         <KeepAlive>
-          <ClosedOrdersList
+          <OrdersList
             v-if="activeTab === 'orders' && ordersListType === 'closed'"
+            list-type="closed"
             :class="$style.ordersList"
           />
         </KeepAlive>
@@ -57,8 +59,7 @@
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Selector from '@/components/core/selector/Selector.vue';
-import ActiveOrdersList from '@/components/app/activeOrdersList/ActiveOrdersList.vue';
-import ClosedOrdersList from '@/components/app/closedOrdersList/ClosedOrdersList.vue';
+import OrdersList from '@/components/app/ordersList/OrdersList.vue';
 import {
   MainSelectorOptions,
   MainSelectorOptionValue,

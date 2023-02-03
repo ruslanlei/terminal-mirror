@@ -1,3 +1,6 @@
+import { uuid } from '@/utils/uuid';
+import { DeepPartial } from '@/utils/typescript';
+
 export type TableColumn<S = string> = {
   label: string,
   slug: S,

@@ -6,44 +6,15 @@ import { calculatePercentOfDifference } from '@/math/helpers/percents';
 import { calculatePnl } from '@/math/formulas/pnl';
 import { calculateCommonTakeProfitPercent } from '@/math/formulas/takeProfit';
 import { humanizeDate } from '@/utils/date';
-import { ActiveSubOrderTableItem } from '@/components/app/activeOrdersList/activeSubOrdersTable';
-import { TableRecord } from '@/components/core/table';
-import { uuid } from '@/utils/uuid';
 import { ActiveOrdersTableRecord, ClosedOrdersTableRecord } from '@/components/app/ordersList';
+import { ActiveSubOrderTableItem } from '@/components/app/ordersList/subOrdersTable';
+import { createEmptyRecord, setChildrenToTableRecord, setDataToTableRecord } from '@/components/core/table/helpers';
 
-type DeepPartial<T> = T extends object ? {
-    [P in keyof T]?: DeepPartial<T[P]>;
-} : T;
-
-const createEmptyRecord = (id?: string | number): TableRecord => ({
-  id: id || uuid(),
-  data: {},
-});
-
-const setDataToRecord2 = <TR extends TableRecord>(
-  record: DeepPartial<TR>,
-  data: DeepPartial<TR>['data'],
-): DeepPartial<TR> => ({
-    ...record,
-    data: {
-      ...record.data,
-      ...data,
-    },
-  });
-
-const setChildrenToRecord2 = <TR extends TableRecord>(
-  record: DeepPartial<TR>,
-  children: DeepPartial<TR>['children'],
-) => ({
-    ...record,
-    children: [
-      ...(record?.children ? record.children : []),
-      ...children,
-    ],
-  });
-
-const setDataToRecord = setDataToRecord2<ActiveOrdersTableRecord | ClosedOrdersTableRecord>;
-const setChildrenToRecord = setChildrenToRecord2<ActiveOrdersTableRecord | ClosedOrdersTableRecord>;
+const setDataToRecord = setDataToTableRecord<ActiveOrdersTableRecord | ClosedOrdersTableRecord>;
+const setChildrenToRecord = setChildrenToTableRecord<
+    ActiveOrdersTableRecord
+    | ClosedOrdersTableRecord
+>;
 type AccumulatingRecord = ReturnType<typeof setDataToRecord>;
 
 const setCommonData = curry((

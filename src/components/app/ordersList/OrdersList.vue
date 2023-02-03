@@ -158,6 +158,9 @@
       </template>
 
       <template #column(date)>
+        <div v-if="listType === 'active'">
+          {{ t('ordersList.column.date') }}
+        </div>
         <i18n-t
           v-if="listType === 'closed'"
           tag="span"
@@ -171,8 +174,22 @@
         </i18n-t>
       </template>
       <template #cell(date)="{ data }">
-        {{ data }}
+        <div
+          :class="$style.date"
+        >
+          <template v-if="listType === 'active'">
+            {{ data }}
+          </template>
+          <template v-if="listType === 'closed'">
+            {{ data.open }}
+            <InlineSpace />
+            <span :class="$style.dateClose">
+              {{ data.close }}
+            </span>
+          </template>
+        </div>
       </template>
+
       <template #cell(comment)>
         <button
           type="button"
@@ -333,6 +350,12 @@ onActivated(() => {
 
 .commentButton {
   color: rgb(var(--color-accent-2));
+}
+
+.date {
+  color: rgb(var(--color-accent-1));
+  @include title2;
+  font-weight: 600 !important;
 }
 
 .orderOptions {

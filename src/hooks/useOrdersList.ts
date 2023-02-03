@@ -1,4 +1,4 @@
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import {
   ActiveOrdersTableRecord,
@@ -200,6 +200,8 @@ export const useOrdersList = (
 
     orders.value = data;
   };
+
+  watch(() => props.listType, () => getList(true));
 
   return {
     columns,

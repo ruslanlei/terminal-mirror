@@ -333,7 +333,7 @@ onBeforeUnmount(removeListeners);
   .item {
     color: rgb(var(--color-accent-2));
     &.active {
-      //color: rgb(var(--color-accent-1));
+      color: rgb(var(--color-accent-1));
     }
   }
   .ghost {

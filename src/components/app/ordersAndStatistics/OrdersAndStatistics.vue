@@ -27,30 +27,13 @@
       </div>
     </div>
     <div :class="$style.content">
-      <transition
-        name="orderAndStatisticsTabContent"
-        mode="out-in"
-      >
-        <KeepAlive>
-          <OrdersList
-            v-if="activeTab === 'orders' && ordersListType === 'current'"
-            list-type="active"
-            :class="$style.ordersList"
-          />
-        </KeepAlive>
-      </transition>
-      <transition
-        name="orderAndStatisticsTabContent"
-        mode="out-in"
-      >
-        <KeepAlive>
-          <OrdersList
-            v-if="activeTab === 'orders' && ordersListType === 'closed'"
-            list-type="closed"
-            :class="$style.ordersList"
-          />
-        </KeepAlive>
-      </transition>
+      <KeepAlive>
+        <OrdersList
+          v-if="activeTab === 'orders'"
+          :list-type="ordersListType"
+          :class="$style.ordersList"
+        />
+      </KeepAlive>
     </div>
   </div>
 </template>
@@ -84,11 +67,11 @@ const mainSelectorOptions = computed<MainSelectorOptions>(() => [
   },
 ]);
 
-const ordersListType = ref<OrdersSelectorOptionValue>('current');
+const ordersListType = ref<OrdersSelectorOptionValue>('active');
 const orderListOptions = computed<OrdersSelectorOptions>(() => [
   {
     label: t('ordersAndStatistics.ordersTab.current'),
-    value: 'current',
+    value: 'active',
   },
   {
     label: t('ordersAndStatistics.ordersTab.closed'),

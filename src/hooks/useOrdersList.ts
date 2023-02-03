@@ -90,7 +90,7 @@ export const useOrdersList = (
       },
     ] : []),
     {
-      label: '',
+      label: t('ordersList.column.parameters'),
       slug: 'options',
       size: 0.7,
       align: 'center',

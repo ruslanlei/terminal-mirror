@@ -181,8 +181,26 @@
           <Icon icon="textAlignLeft" />
         </button>
       </template>
+
+      <template #column(options)="{ label }">
+        <span>
+          <template v-if="listType === 'closed'">
+            {{ label }}
+          </template>
+        </span>
+      </template>
       <template #cell(options)>
-        <div :class="$style.orderOptions">
+        <button
+          v-if="listType === 'closed'"
+          type="button"
+          :class="$style.commentButton"
+        >
+          <Icon icon="textAlignLeft" />
+        </button>
+        <div
+          v-if="listType === 'active'"
+          :class="$style.orderOptions"
+        >
           <button
             type="button"
             :class="$style.swapButton"
@@ -197,6 +215,7 @@
           </button>
         </div>
       </template>
+
       <template #recordChildren="{ children }">
         <SubOrdersTable :orders="children" />
       </template>

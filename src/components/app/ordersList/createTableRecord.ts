@@ -7,7 +7,7 @@ import { calculatePnl } from '@/math/formulas/pnl';
 import { calculateCommonTakeProfitPercent } from '@/math/formulas/takeProfit';
 import { humanizeDate } from '@/utils/date';
 import { ActiveOrdersTableRecord, ClosedOrdersTableRecord } from '@/components/app/ordersList';
-import { ActiveSubOrderTableItem } from '@/components/app/ordersList/subOrdersTable';
+import { SubOrderTableItem } from '@/components/app/ordersList/subOrdersTable';
 import { createEmptyRecord, setChildrenToTableRecord, setDataToTableRecord } from '@/components/core/table/helpers';
 
 const setDataToRecord = setDataToTableRecord<ActiveOrdersTableRecord | ClosedOrdersTableRecord>;
@@ -66,19 +66,23 @@ const setClosedOrderPricesData = curry((
   {
     prices: {
       order: order.price,
-      close: 0,
+      close: 17000,
     },
   },
 ));
 
 const setClosedOrderResultsData = curry((
+  pairData: PairServerData,
   record: AccumulatingRecord,
 ) => setDataToRecord(
   record,
   {
     results: {
-      pnl: 0,
-      pnlPercent: 0,
+      pnl: {
+        value: 231,
+        currency: pairData.quote,
+      },
+      pnlPercent: 0.5,
     },
   },
 ));
@@ -192,7 +196,7 @@ const setTakeProfitChildren = curry((
         pairData,
         masterData: order,
         orderIndex: takeProfits.length - index,
-      })) as ActiveSubOrderTableItem[]
+      })) as SubOrderTableItem[]
       : []),
   ],
 ));
@@ -243,7 +247,7 @@ export const createClosedOrderRecord = (
   setTakeProfitChildren(pairData, order, takeProfits),
   setCloseOrderDateData(order),
   setClosedOrderPricesData(order),
-  setClosedOrderResultsData,
+  setClosedOrderResultsData(pairData),
   setOrderVolumeData(order),
   setCommonData(pairData, order),
   createEmptyRecord,

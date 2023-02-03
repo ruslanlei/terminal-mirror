@@ -50,7 +50,10 @@
         {{ date }}
       </div>
     </template>
-    <template #cell(options)>
+    <template
+      v-if="listType === 'active'"
+      #cell(options)
+    >
       <button :class="$style.editButton">
         {{ t('ordersList.edit') }}
       </button>
@@ -70,7 +73,7 @@ import {
   ActiveSubOrdersColumn,
   ActiveSubOrdersRecord,
   ActiveSubOrdersTableProps,
-  ActiveSubOrderTableItem,
+  SubOrderTableItem,
 } from './index';
 
 const props = defineProps<ActiveSubOrdersTableProps>();
@@ -117,7 +120,7 @@ const columns = ref<ActiveSubOrdersColumn[]>([
 ]);
 
 const records = computed<ActiveSubOrdersRecord[]>(
-  () => props.orders.map((order: ActiveSubOrderTableItem) => {
+  () => props.orders.map((order: SubOrderTableItem) => {
     const label = ({
       tp: t('ordersList.subOrder.type.takeProfit', { index: order.orderIndex }),
       sl: t('ordersList.subOrder.type.stopLoss'),

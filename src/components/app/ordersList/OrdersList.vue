@@ -77,14 +77,23 @@
       <template #column(results)>
         {{ t('ordersList.column.results') }}
       </template>
-      <template #cell(results)="{ data: { pnlPercent, pnl } }">
+      <template #cell(results)="{ data: { pnlPercent, pnl: { value: pnl, currency } } }">
         <div :class="$style.results">
-          <div>
-            {{ pnlPercent }}
-          </div>
-          <div>
-            {{ pnl }}
-          </div>
+          <Typography
+            :text="t('common.percents', { value: pnlPercent })"
+            :state="[
+              isPositive(pnlPercent)
+                ? 'success'
+                : 'danger',
+              'bold',
+            ]"
+            size="title2"
+          />
+          <Typography
+            size="title4"
+            :text="t('common.currencyAmount', { amount: pnl, currency })"
+            :state="['accent2']"
+          />
         </div>
       </template>
 
@@ -234,7 +243,10 @@
       </template>
 
       <template #recordChildren="{ children }">
-        <SubOrdersTable :orders="children" />
+        <SubOrdersTable
+          :list-type="listType"
+          :orders="children"
+        />
       </template>
     </Table>
   </transition>
@@ -253,6 +265,7 @@ import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
 import { onActivated } from 'vue';
 import SubOrdersTable from '@/components/app/ordersList/subOrdersTable/SubOrdersTable.vue';
 import { useOrdersList } from '@/hooks/useOrdersList';
+import Typography from '@/components/app/typography/Typography.vue';
 import { OrdersListProps } from './index';
 
 const { t } = useI18n();

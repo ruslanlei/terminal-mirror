@@ -1,9 +1,7 @@
 import { TableColumn, TableRecord } from '@/components/core/table';
 import { currency } from '@/api/types/currency';
 import { Order } from '@/api/types/order';
-import { ActiveSubOrderTableItem } from '@/components/app/activeOrdersList/activeSubOrdersTable';
-import { ClosedOrdersTableColumnSlug } from '@/components/app/closedOrdersList';
-import { ClosedSubOrderTableItem } from '@/components/app/closedOrdersList/closedSubOrdersTable';
+import { SubOrderTableItem } from '@/components/app/ordersList/subOrdersTable';
 
 export interface OrdersListProps {
   listType: 'active' | 'closed',
@@ -42,7 +40,19 @@ export type ActiveOrdersTableRecord = TableRecord<ActiveOrdersTableColumnSlug, {
   date: string,
   comment: Order,
   options: Order,
-}, ActiveSubOrderTableItem[]>;
+}, SubOrderTableItem[]>;
+
+export type ClosedOrdersTableColumnSlug =
+    'pair'
+    | 'type'
+    | 'volume'
+    | 'coins'
+    | 'prices'
+    | 'results'
+    | 'date'
+    | 'options';
+
+export type ClosedOrdersTableColumn = TableColumn<ClosedOrdersTableColumnSlug>;
 
 export type ClosedOrdersTableRecord = TableRecord<ClosedOrdersTableColumnSlug, {
   pair: currency,
@@ -54,7 +64,10 @@ export type ClosedOrdersTableRecord = TableRecord<ClosedOrdersTableColumnSlug, {
     close: number,
   },
   results: {
-    pnl: number,
+    pnl: {
+      value: number,
+      currency: currency,
+    },
     pnlPercent: number,
   },
   date: {
@@ -62,4 +75,4 @@ export type ClosedOrdersTableRecord = TableRecord<ClosedOrdersTableColumnSlug, {
     close: string,
   },
   options: Order,
-}, ClosedSubOrderTableItem[]>;
+}, SubOrderTableItem[]>;

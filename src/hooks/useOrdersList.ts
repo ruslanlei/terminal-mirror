@@ -1,7 +1,8 @@
 import { computed, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import {
-  ActiveOrdersTableRecord,
+  ActiveOrdersTableColumn,
+  ActiveOrdersTableRecord, ClosedOrdersTableColumn,
   ClosedOrdersTableRecord,
   OrdersListProps,
 } from '@/components/app/ordersList';
@@ -47,7 +48,7 @@ export const useOrdersList = (
     {
       label: '',
       slug: 'prices',
-      size: 1.7,
+      size: 1.4,
     },
     ...(props.listType === 'active' ? [
       {
@@ -73,7 +74,7 @@ export const useOrdersList = (
       {
         label: '',
         slug: 'results',
-        size: 1.7,
+        size: 1,
       },
     ] : []),
     {

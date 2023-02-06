@@ -12,7 +12,7 @@ import { compose } from '@/utils/fp';
 import {
   collectActiveOrderRecord,
   collectClosedOrderRecord,
-} from '@/components/app/ordersList/createTableRecord';
+} from '@/components/app/ordersList/collectTableRecord';
 import { createEmptyRecord } from '@/components/core/table/helpers';
 
 interface GroupedOrder {

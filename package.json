@@ -8,7 +8,6 @@
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src"
   },
   "dependencies": {
-    "@types/ramda": "^0.28.22",
     "@vueuse/core": "^9.11.1",
     "animejs": "^3.2.1",
     "axios": "^1.2.3",
@@ -17,7 +16,6 @@
     "nprogress": "^0.2.0",
     "numeral": "^2.0.6",
     "pinia": "^2.0.29",
-    "ramda": "^0.28.0",
     "uuid": "^9.0.0",
     "vue": "^3.2.45",
     "vue-flatpickr-component": "^11.0.1",

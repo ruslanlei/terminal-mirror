@@ -1,7 +1,7 @@
 import { uuid } from '@/utils/uuid';
 import { DeepPartial } from '@/utils/typescript';
 import { TableRecord } from '@/components/core/table/index';
-import { curry } from '@/utils/fp';
+import { compose, reduce } from '@/utils/fp';
 
 export const createEmptyRecord = (id?: string | number): TableRecord => ({
   id: id || uuid(),
@@ -30,10 +30,28 @@ export const setChildrenToTableRecord = <TR extends TableRecord>(
     ],
   });
 
-export const collectTableRecord = curry((
-  mutations: (
-    (payload: any, record: any) => any
+export const collectTableRecord = <TR extends TableRecord, P>(
+  mixins: (
+    (payload: P) => DeepPartial<TR>['data']
   )[],
-  payload: any,
-  record: any,
-): any => mutations.reduce((record, mutate) => mutate(payload, record), record));
+  childrenMixins: (
+    (payload: P) => DeepPartial<TR>['children']
+  )[],
+  payload: P,
+  record: DeepPartial<TR>,
+) => compose(
+    reduce(
+      childrenMixins,
+      (
+        record: DeepPartial<TR>,
+        mixin: (payload: P) => DeepPartial<TR>['children'],
+      ) => setChildrenToTableRecord(record, mixin(payload)),
+    ),
+    reduce(
+      mixins,
+      (
+        record: DeepPartial<TR>,
+        mixin: (payload: P) => DeepPartial<TR>['data'],
+      ) => setDataToTableRecord(record, mixin(payload)),
+    ),
+  )(record);

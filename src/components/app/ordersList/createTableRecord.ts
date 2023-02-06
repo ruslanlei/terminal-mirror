@@ -1,4 +1,4 @@
-import { compose, curry } from '@/utils/fp';
+import { compose } from '@/utils/fp';
 import { PairServerData } from '@/api/types/pairServerData';
 import { Order, SubOrder } from '@/api/types/order';
 import { multiply, roundToDecimalPoint } from '@/math/float';
@@ -8,247 +8,237 @@ import { calculateCommonTakeProfitPercent } from '@/math/formulas/takeProfit';
 import { humanizeDate } from '@/utils/date';
 import { ActiveOrdersTableRecord, ClosedOrdersTableRecord } from '@/components/app/ordersList';
 import { SubOrderTableItem } from '@/components/app/ordersList/subOrdersTable';
-import { createEmptyRecord, setChildrenToTableRecord, setDataToTableRecord } from '@/components/core/table/helpers';
+import {
+  collectTableRecord,
+  setChildrenToTableRecord,
+  setDataToTableRecord,
+} from '@/components/core/table/helpers';
+import { DeepPartial } from '@/utils/typescript';
 
-const setDataToRecord = setDataToTableRecord<ActiveOrdersTableRecord | ClosedOrdersTableRecord>;
 const setChildrenToRecord = setChildrenToTableRecord<
     ActiveOrdersTableRecord
     | ClosedOrdersTableRecord
 >;
-type AccumulatingRecord = ReturnType<typeof setDataToRecord>;
 
-const setCommonData = curry((
-  pairData: PairServerData,
-  order: Order,
+interface CollectRecordPayload {
+    pairData: PairServerData,
+    pairPrice: number,
+    order: Order,
+    takeProfits: SubOrder[] | undefined,
+    stopLoss: SubOrder | undefined,
+}
+
+type AccumulatingRecord = DeepPartial<ActiveOrdersTableRecord>;
+
+const setCommonData = (
+  payload: CollectRecordPayload,
   record: AccumulatingRecord,
-): AccumulatingRecord => setDataToRecord(
+): AccumulatingRecord => setDataToTableRecord(
   record,
   {
-    pair: pairData.base,
-    type: order.side,
-    coins: order.quantity,
-    options: order,
+    pair: payload.pairData.base,
+    type: payload.order.side,
+    coins: payload.order.quantity,
+    options: payload.order,
   },
-));
+);
 
-const setOrderVolumeData = curry((
-  order: Order,
+const setOrderVolumeData = (
+  payload: CollectRecordPayload,
   record: AccumulatingRecord,
-): AccumulatingRecord => setDataToRecord(
+): AccumulatingRecord => setDataToTableRecord(
   record,
   {
     volume: compose(
       roundToDecimalPoint(6), /* TODO: change to base currency decimals */
       multiply,
-    )(order.quantity, order.price),
+    )(payload.order.quantity, payload.order.price),
   },
-));
+);
 
-const setActiveOrderPricesData = curry((
-  currentPrice: number,
-  order: Order,
+const setActiveOrderPricesData = (
+  payload: CollectRecordPayload,
   record: AccumulatingRecord,
-) => setDataToRecord(
+) => setDataToTableRecord(
   record,
   {
     prices: {
-      order: order.price,
-      current: currentPrice,
+      order: payload.order.price,
+      current: payload.pairPrice,
     },
   },
-));
+);
 
-const setClosedOrderPricesData = curry((
-  order: Order,
+const setClosedOrderPricesData = (
+  payload: CollectRecordPayload,
   record: AccumulatingRecord,
-) => setDataToRecord(
+) => setDataToTableRecord(
   record,
   {
     prices: {
-      order: order.price,
+      order: payload.order.price,
       close: 17000,
     },
   },
-));
+);
 
-const setClosedOrderResultsData = curry((
-  pairData: PairServerData,
+const setClosedOrderResultsData = (
+  payload: CollectRecordPayload,
   record: AccumulatingRecord,
-) => setDataToRecord(
+) => setDataToTableRecord(
   record,
   {
     results: {
       pnl: {
         value: 231,
-        currency: pairData.quote,
+        currency: payload.pairData.quote,
       },
       pnlPercent: 0.5,
     },
   },
-));
+);
 
-const setStopLossData = curry((
-  order: Order,
-  stopLoss: SubOrder | undefined,
+const setStopLossData = (
+  payload: CollectRecordPayload,
   record: AccumulatingRecord,
-) => setDataToRecord(
+) => setDataToTableRecord(
   record,
   {
-    ...(stopLoss ? {
+    ...(payload.stopLoss ? {
       sl: compose(
         roundToDecimalPoint(2),
         calculatePercentOfDifference,
-      )(order.price, stopLoss.price),
+      )(payload.order.price, payload.stopLoss.price),
     } : {
       sl: null,
     }),
   },
-));
+);
 
-const setPnlData = curry((
-  pairData: PairServerData,
-  pairPrice: number,
-  order: Order,
+const setPnlData = (
+  payload: CollectRecordPayload,
   record: AccumulatingRecord,
-) => setDataToRecord(
+) => setDataToTableRecord(
   record,
   {
     pnl: {
-      currency: pairData.quote,
+      currency: payload.pairData.quote,
       value: compose(
         roundToDecimalPoint(2),
         calculatePnl,
       )(
-        order.price,
-        order.quantity,
-        pairPrice,
+        payload.order.price,
+        payload.order.quantity,
+        payload.pairPrice,
       ),
     },
   },
-));
+);
 
-const setTakeProfitData = curry((
-  order: Order,
-  takeProfits: SubOrder[] | undefined,
+const setTakeProfitData = (
+  payload: CollectRecordPayload,
   record: AccumulatingRecord,
-) => setDataToRecord(
+) => setDataToTableRecord(
   record,
   {
-    ...(takeProfits?.length ? {
+    ...(payload.takeProfits?.length ? {
       tp: compose(
         roundToDecimalPoint(2),
         calculateCommonTakeProfitPercent,
       )(
-        order.price,
-        order.quantity,
-        takeProfits,
+        payload.order.price,
+        payload.order.quantity,
+        payload.takeProfits,
       ),
     } : {
       tp: null,
     }),
   },
-));
+);
 
-const setActiveOrderDateData = curry((
-  order: Order,
+const setActiveOrderDateData = (
+  payload: CollectRecordPayload,
   record: AccumulatingRecord,
-) => setDataToRecord(
+) => setDataToTableRecord(
   record,
   {
-    date: humanizeDate(order.created),
+    date: humanizeDate(payload.order.created),
   },
-));
+);
 
-const setCloseOrderDateData = curry((
-  order: Order,
+const setCloseOrderDateData = (
+  payload: CollectRecordPayload,
   record: AccumulatingRecord,
-) => setDataToRecord(
+) => setDataToTableRecord(
   record,
   {
     date: {
-      open: humanizeDate(order.created),
-      close: humanizeDate(order.created),
+      open: humanizeDate(payload.order.created),
+      close: humanizeDate(payload.order.created),
     },
   },
-));
+);
 
-const setCommentData = curry((
-  order: Order,
+const setCommentData = (
+  payload: CollectRecordPayload,
   record: AccumulatingRecord,
-) => setDataToRecord(
+) => setDataToTableRecord(
   record,
   {
-    comment: order,
+    comment: payload.order,
   },
-));
+);
 
-const setTakeProfitChildren = curry((
-  pairData: PairServerData,
-  order: Order,
-  takeProfits: SubOrder[] | undefined,
+const setTakeProfitChildren = (
+  payload: CollectRecordPayload,
   record: AccumulatingRecord,
 ) => setChildrenToRecord(
   record,
   [
-    ...(takeProfits?.length
-      ? takeProfits.map((subOrder: Order, index: number) => ({
+    ...(payload.takeProfits?.length
+      ? payload.takeProfits.map((subOrder: Order, index: number) => ({
         ...subOrder,
-        pairData,
-        masterData: order,
-        orderIndex: takeProfits.length - index,
+        pairData: payload.pairData,
+        masterData: payload.order,
+        orderIndex: (payload.takeProfits?.length || 0) - index,
       })) as SubOrderTableItem[]
       : []),
   ],
-));
+);
 
-const setStopLossChildren = curry((
-  pairData: PairServerData,
-  order: Order,
-  stopLoss: SubOrder | undefined,
+const setStopLossChildren = (
+  payload: CollectRecordPayload,
   record: AccumulatingRecord,
 ) => setChildrenToRecord(
   record,
   [
-    ...(stopLoss ? [{
-      ...stopLoss,
-      pairData,
-      masterData: order,
+    ...(payload.stopLoss ? [{
+      ...payload.stopLoss,
+      pairData: payload.pairData,
+      masterData: payload.order,
     }] : []),
   ],
-));
+);
 
-export const createActiveOrderRecord = (
-  pairData: PairServerData,
-  pairPrice: number,
-  takeProfits: SubOrder[] | undefined,
-  stopLoss: SubOrder | undefined,
-  order: Order,
-) => compose(
-  setStopLossChildren(pairData, order, stopLoss),
-  setTakeProfitChildren(pairData, order, takeProfits),
-  setCommentData(order),
-  setActiveOrderDateData(order),
-  setTakeProfitData(order, takeProfits),
-  setPnlData(pairData, pairPrice, order),
-  setStopLossData(order, stopLoss),
-  setActiveOrderPricesData(pairPrice, order),
-  setOrderVolumeData(order),
-  setCommonData(pairData, order),
-  createEmptyRecord,
-)(order.id);
+export const collectActiveOrderRecord = collectTableRecord([
+  setStopLossChildren,
+  setTakeProfitChildren,
+  setCommentData,
+  setActiveOrderDateData,
+  setTakeProfitData,
+  setPnlData,
+  setStopLossData,
+  setActiveOrderPricesData,
+  setOrderVolumeData,
+  setCommonData,
+]);
 
-export const createClosedOrderRecord = (
-  pairData: PairServerData,
-  takeProfits: SubOrder[] | undefined,
-  stopLoss: SubOrder | undefined,
-  order: Order,
-) => compose(
-  setStopLossChildren(pairData, order, stopLoss),
-  setTakeProfitChildren(pairData, order, takeProfits),
-  setCloseOrderDateData(order),
-  setClosedOrderPricesData(order),
-  setClosedOrderResultsData(pairData),
-  setOrderVolumeData(order),
-  setCommonData(pairData, order),
-  createEmptyRecord,
-)(order.id);
+export const collectClosedOrderRecord = collectTableRecord([
+  setStopLossChildren,
+  setTakeProfitChildren,
+  setCloseOrderDateData,
+  setClosedOrderPricesData,
+  setClosedOrderResultsData,
+  setOrderVolumeData,
+  setCommonData,
+]);

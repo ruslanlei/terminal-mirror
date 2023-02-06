@@ -1,8 +1,7 @@
 import { computed, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import {
-  ActiveOrdersTableColumn,
-  ActiveOrdersTableRecord, ClosedOrdersTableColumn,
+  ActiveOrdersTableRecord,
   ClosedOrdersTableRecord,
   OrdersListProps,
 } from '@/components/app/ordersList';
@@ -10,7 +9,11 @@ import { useMarketStore } from '@/stores/market';
 import { Order, SubOrder } from '@/api/types/order';
 import { add, roundToDecimalPoint } from '@/math/float';
 import { compose } from '@/utils/fp';
-import { createActiveOrderRecord, createClosedOrderRecord } from '@/components/app/ordersList/createTableRecord';
+import {
+  collectActiveOrderRecord,
+  collectClosedOrderRecord,
+} from '@/components/app/ordersList/createTableRecord';
+import { createEmptyRecord } from '@/components/core/table/helpers';
 
 interface GroupedOrder {
   order: Order,
@@ -130,13 +133,16 @@ export const useOrdersList = (
         throw new Error('[Orders list]: pair data not found');
       }
 
-      return createActiveOrderRecord(
-        pairData,
-        marketStore.activePairPrice,
-        takeProfits,
-        stopLoss,
-        order,
-      );
+      return compose(
+        collectActiveOrderRecord({
+          pairData,
+          pairPrice: marketStore.activePairPrice,
+          takeProfits,
+          stopLoss,
+          order,
+        }),
+        createEmptyRecord,
+      )(order.id);
     });
 
   const mapOrdersToClosedOrderTableRecords = (
@@ -149,12 +155,16 @@ export const useOrdersList = (
         throw new Error('[Orders list]: pair data not found');
       }
 
-      return createClosedOrderRecord(
-        pairData,
-        takeProfits,
-        stopLoss,
-        order,
-      );
+      return compose(
+        collectClosedOrderRecord({
+          pairData,
+          pairPrice: marketStore.activePairPrice,
+          takeProfits,
+          stopLoss,
+          order,
+        }),
+        createEmptyRecord,
+      )(order.id);
     });
 
   const orders = ref<Order[]>([]);

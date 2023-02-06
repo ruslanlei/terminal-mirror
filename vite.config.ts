@@ -5,6 +5,7 @@ import pagesPlugin from 'vite-plugin-pages';
 import svgLoader from 'vite-svg-loader';
 import vueTypeImportsPlugin from 'vite-plugin-vue-type-imports';
 import compressionPlugin from 'vite-plugin-compression';
+import { visualizer } from 'rollup-plugin-visualizer';
 import path from 'path';
 
 // https://vitejs.dev/config/
@@ -22,6 +23,7 @@ export default defineConfig({
     }),
     vueTypeImportsPlugin(),
     compressionPlugin(),
+    visualizer(),
   ],
   resolve: {
     alias: {

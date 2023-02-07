@@ -1,12 +1,12 @@
 import {
   compose,
-  curry,
+  curry, log,
 } from '@/utils/fp';
 import { PairServerData } from '@/api/types/pairServerData';
 import { MasterOrder, Order, SubOrder } from '@/api/types/order';
 import { multiply, roundToDecimalPoint } from '@/helpers/math/float';
 import { calculatePercentOfDifference } from '@/helpers/math/percents';
-import { calculatePnl } from '@/helpers/math/formulas/pnl';
+import { calculatePnl, calculatePnlPercent } from '@/helpers/math/formulas/pnl';
 import { calculateCommonTakeProfitPercent } from '@/helpers/math/formulas/takeProfit';
 import { humanizeDate } from '@/utils/date';
 import { ActiveOrdersTableRecord, ClosedOrdersTableRecord } from '@/components/app/ordersList';
@@ -75,7 +75,15 @@ const closedOrderResultsMixin = (
       ]),
       currency: pairData.quote,
     },
-    pnlPercent: 0.5,
+    pnlPercent: compose(
+      roundToDecimalPoint(2),
+      calculatePnlPercent(order.price, order.quantity),
+      reduceSubOrderListToCommonPnl(order),
+      getOrdersWithStatus('executed'),
+    )([
+      ...(takeProfits || []),
+      ...(stopLoss ? [stopLoss] : []),
+    ]),
   },
 });
 

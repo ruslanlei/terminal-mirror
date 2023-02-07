@@ -26,6 +26,5 @@
 body {
   animation: 0.5s body;
   background-color: rgba(var(--color-background-1), 1);
-  //overflow: hidden;
   @include scrollbarDefault();
 }

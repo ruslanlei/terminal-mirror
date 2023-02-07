@@ -1,6 +1,6 @@
 import { TableColumn, TableRecord } from '@/components/core/table';
 import { currency } from '@/api/types/currency';
-import { Order, SubOrder } from '@/api/types/order';
+import { MasterOrder, SubOrder } from '@/api/types/order';
 import { PairServerData } from '@/api/types/pairServerData';
 import { OrdersListProps } from '@/components/app/ordersList';
 
@@ -14,26 +14,26 @@ export type ActiveSubOrdersColumnSlug =
 
 export type ActiveSubOrdersColumn = TableColumn<ActiveSubOrdersColumnSlug>;
 
-export type ActiveSubOrdersRecord = TableRecord<ActiveSubOrdersColumnSlug, {
+export type ActiveSubOrderRecord = TableRecord<ActiveSubOrdersColumnSlug, {
   type: {
     value: 'tp' | 'sl',
-    label: string,
+    index: number,
   },
   masterType: string,
   quantity: {
     value: number,
-    percent: string,
+    percent: number,
   },
   volume: {
     value: number,
     currency: currency,
   },
   date: string,
-  options: any,
+  options: SubOrder,
 }>;
 
 export interface SubOrderTableItem extends SubOrder {
-  masterData: Order,
+  masterOrder: MasterOrder,
   pairData: PairServerData,
   orderIndex?: number,
 }

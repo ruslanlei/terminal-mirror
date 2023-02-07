@@ -6,7 +6,7 @@ import {
   OrdersListProps,
 } from '@/components/app/ordersList';
 import { useMarketStore } from '@/stores/market';
-import { Order, SubOrder } from '@/api/types/order';
+import { MasterOrder, Order, SubOrder } from '@/api/types/order';
 import { add, roundToDecimalPoint } from '@/math/float';
 import { compose } from '@/utils/fp';
 import {
@@ -16,7 +16,7 @@ import {
 import { createEmptyRecord } from '@/components/core/table/helpers';
 
 interface GroupedOrder {
-  order: Order,
+  order: MasterOrder,
   takeProfits: SubOrder[],
   stopLoss: SubOrder | undefined,
 }
@@ -103,9 +103,10 @@ export const useOrdersList = (
 
   const groupOrders = (
     orders: Order[],
-  ): GroupedOrder[] => orders
-    .filter((order: Order) => order.order_type === 'limit')
-    .map((order: Order) => {
+  ): GroupedOrder[] => (
+    orders.filter((order: Order) => order.order_type === 'limit') as MasterOrder[]
+  )
+    .map((order: MasterOrder) => {
       const relatedTakeProfits = (
         orders.filter(
           (targetOrder: Order) => targetOrder.order_type === 'tp' && targetOrder.master === order.id,

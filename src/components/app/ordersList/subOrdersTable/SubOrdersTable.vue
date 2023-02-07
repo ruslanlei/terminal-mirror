@@ -5,13 +5,13 @@
     :is-head-visible="false"
     :state="['smSize', 'subOrdersColor']"
   >
-    <template #cell(type)="{ data: { value: type, label } }">
+    <template #cell(type)="{ data: { value: type, index } }">
       <div :class="[$style.orderType, $style[type]]">
-        {{ label }}
+        {{ t(orderLabelMap[type], { index }) }}
       </div>
     </template>
     <template #cell(masterType)="{ data: masterType }">
-      {{ masterType }}
+      {{ t(orderLabelMap[masterType]) }}
     </template>
     <template #cell(quantity)="{ data: { value, percent } }">
       <i18n-t
@@ -24,7 +24,12 @@
         </template>
         <template #percentage>
           <span :class="$style.quantityPercent">
-            {{ percent }}
+            {{
+              t(
+                'ordersList.subOrder.quantityPercent',
+                { percent: t('common.percents', { value: percent }) },
+              )
+            }}
           </span>
         </template>
       </i18n-t>
@@ -62,115 +67,27 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
 import Table from '@/components/core/table/Table.vue';
 import { useI18n } from 'vue-i18n';
-import { humanizeDate } from '@/utils/date';
-import { compose } from '@/utils/fp';
-import { roundToDecimalPoint } from '@/math/float';
-import { valueToPercents } from '@/math/helpers/percents';
+import { useSubOrdersList } from '@/hooks/useSubOrdersList';
 import {
-  ActiveSubOrdersColumn,
-  ActiveSubOrdersRecord,
   ActiveSubOrdersTableProps,
-  SubOrderTableItem,
 } from './index';
 
 const props = defineProps<ActiveSubOrdersTableProps>();
 
 const { t } = useI18n();
 
-const columns = ref<ActiveSubOrdersColumn[]>([
-  {
-    label: '',
-    slug: 'type',
-    size: 1,
-    align: 'center',
-  },
-  {
-    label: '',
-    slug: 'masterType',
-    size: 1,
-    align: 'center',
-  },
-  {
-    label: '',
-    slug: 'quantity',
-    size: 2,
-    align: 'center',
-  },
-  {
-    label: '',
-    slug: 'volume',
-    size: 1.6,
-    align: 'center',
-  },
-  {
-    label: '',
-    slug: 'date',
-    size: 1.6,
-    align: 'center',
-  },
-  {
-    label: '',
-    slug: 'options',
-    size: 1.6,
-    align: 'center',
-  },
-]);
+const {
+  columns,
+  records,
+} = useSubOrdersList(props);
 
-const records = computed<ActiveSubOrdersRecord[]>(
-  () => props.orders.map((order: SubOrderTableItem) => {
-    const label = ({
-      tp: t('ordersList.subOrder.type.takeProfit', { index: order.orderIndex }),
-      sl: t('ordersList.subOrder.type.stopLoss'),
-    }[order.order_type]);
-
-    const masterType = ({
-      limit: t('ordersList.subOrder.masterType.limit'),
-    }.limit);
-
-    const percentOfMasterQuantity = compose(
-      roundToDecimalPoint(2),
-      valueToPercents,
-    )(order.masterData.quantity, order.quantity);
-
-    const percentOfMasterQuantityLabel = t(
-      'ordersList.subOrder.quantityPercent',
-      {
-        percent: t(
-          'common.percents',
-          {
-            value: percentOfMasterQuantity,
-          },
-        ),
-      },
-    );
-
-    const date = humanizeDate(order.created);
-
-    return {
-      id: order.id,
-      data: {
-        type: {
-          value: order.order_type,
-          label,
-        },
-        masterType,
-        quantity: {
-          value: order.quantity,
-          percent: percentOfMasterQuantityLabel,
-        },
-        volume: {
-          value: order.price,
-          currency: order.pairData.quote,
-        },
-        date,
-        options: {},
-      },
-    };
-  }),
-);
+const orderLabelMap = {
+  tp: 'ordersList.subOrder.type.takeProfit',
+  sl: 'ordersList.subOrder.type.stopLoss',
+  limit: 'ordersList.subOrder.masterType.limit',
+};
 </script>
 
 <style lang="scss" module>

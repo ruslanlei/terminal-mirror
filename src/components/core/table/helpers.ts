@@ -1,7 +1,7 @@
 import { uuid } from '@/utils/uuid';
 import { DeepPartial } from '@/utils/typescript';
 import { TableRecord } from '@/components/core/table/index';
-import { compose, reduce } from '@/utils/fp';
+import { compose, reduceRight } from '@/utils/fp';
 
 export const createEmptyRecord = (id?: string | number): TableRecord => ({
   id: id || uuid(),
@@ -39,19 +39,19 @@ export const collectTableRecord = <TR extends TableRecord, P>(
   )[],
   payload: P,
   record: DeepPartial<TR>,
-) => compose(
-    reduce(
-      childrenMixins,
-      (
-        record: DeepPartial<TR>,
-        mixin: (payload: P) => DeepPartial<TR>['children'],
-      ) => setChildrenToTableRecord(record, mixin(payload)),
-    ),
-    reduce(
-      mixins,
-      (
-        record: DeepPartial<TR>,
-        mixin: (payload: P) => DeepPartial<TR>['data'],
-      ) => setDataToTableRecord(record, mixin(payload)),
-    ),
-  )(record);
+): TR => compose(
+  reduceRight(
+    childrenMixins,
+    (
+      record: DeepPartial<TR>,
+      mixin: (payload: P) => DeepPartial<TR>['children'],
+    ) => setChildrenToTableRecord(record, mixin(payload)),
+  ),
+  reduceRight(
+    mixins,
+    (
+      record: DeepPartial<TR>,
+      mixin: (payload: P) => DeepPartial<TR>['data'],
+    ) => setDataToTableRecord(record, mixin(payload)),
+  ),
+)(record) as TR;

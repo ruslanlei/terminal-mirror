@@ -1,6 +1,6 @@
 import { compose, curry } from '@/utils/fp';
 import { PairServerData } from '@/api/types/pairServerData';
-import { Order, SubOrder } from '@/api/types/order';
+import { MasterOrder, Order, SubOrder } from '@/api/types/order';
 import { multiply, roundToDecimalPoint } from '@/math/float';
 import { calculatePercentOfDifference } from '@/math/helpers/percents';
 import { calculatePnl } from '@/math/formulas/pnl';
@@ -13,7 +13,7 @@ import { collectTableRecord } from '@/components/core/table/helpers';
 interface CollectRecordPayload {
     pairData: PairServerData,
     pairPrice: number,
-    order: Order,
+    order: MasterOrder,
     takeProfits: SubOrder[] | undefined,
     stopLoss: SubOrder | undefined,
 }
@@ -140,7 +140,7 @@ const takeProfitChildrenMixin = (
     ? payload.takeProfits.map((subOrder: Order, index: number) => ({
       ...subOrder,
       pairData: payload.pairData,
-      masterData: payload.order,
+      masterOrder: payload.order,
       orderIndex: (payload.takeProfits?.length || 0) - index,
     })) as SubOrderTableItem[]
     : []),
@@ -152,7 +152,7 @@ const stopLossChildrenMixin = (
   ...(payload.stopLoss ? [{
     ...payload.stopLoss,
     pairData: payload.pairData,
-    masterData: payload.order,
+    masterOrder: payload.order,
   }] : []),
 ];
 

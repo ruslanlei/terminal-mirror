@@ -2,11 +2,13 @@ import flowRight from 'lodash/flowRight';
 import curry from 'lodash/curry';
 import map from 'lodash/map';
 import lodashReduce from 'lodash/reduce';
+import lodashReduceRight from 'lodash/reduceRight';
 import lodashIsEqual from 'lodash/isEqual';
 
 export const isEqual = curry(lodashIsEqual);
 
 export const reduce = curry(lodashReduce);
+export const reduceRight = curry(lodashReduceRight);
 
 export const log = curry((
   message: string | number,

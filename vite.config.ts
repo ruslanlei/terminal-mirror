@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import eslintPlugin from 'vite-plugin-eslint';
@@ -10,6 +11,18 @@ import path from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  optimizeDeps: {
+    disabled: false,
+  },
+  build: {
+    commonjsOptions: {
+      include: [],
+    },
+    rollupOptions: {
+      preset: 'safest',
+      propertyReadSideEffects: true,
+    },
+  },
   plugins: [
     vue({
       reactivityTransform: true,
@@ -23,7 +36,10 @@ export default defineConfig({
     }),
     vueTypeImportsPlugin(),
     compressionPlugin(),
-    visualizer(),
+    visualizer({
+      gzipSize: true,
+      template: 'network',
+    }),
   ],
   resolve: {
     alias: {

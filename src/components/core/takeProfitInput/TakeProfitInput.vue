@@ -67,9 +67,9 @@ import NumberInput from '@/components/core/numberInput/NumberInput.vue';
 import { useLocalValue } from '@/hooks/useLocalValue';
 import {
   roundToDecimalPoint,
-} from '@/math/float';
+} from '@/helpers/math/float';
 import { compose } from '@/utils/fp';
-import { addPercents, calculateIncreasePercent } from '@/math/helpers/percents';
+import { addPercents, calculateIncreasePercent } from '@/helpers/math/percents';
 
 const props = defineProps<TakeProfitInputProps>();
 

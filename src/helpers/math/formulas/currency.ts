@@ -1,8 +1,8 @@
 import {
   add, divideRight, multiply, subtractRight,
-} from '@/math/float';
+} from '@/helpers/math/float';
 import { compose, curry } from '@/utils/fp';
-import { calculateOnePercent } from '@/math/helpers/percents';
+import { calculateOnePercent } from '@/helpers/math/percents';
 
 export const convertQuoteBalanceToBase = curry((
   baseCurrencyPrice: number,

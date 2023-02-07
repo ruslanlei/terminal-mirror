@@ -27,3 +27,7 @@ export interface Order {
 export interface SubOrder extends Order {
   order_type: 'tp' | 'sl',
 }
+
+export interface MasterOrder extends Order {
+  order_type: 'limit',
+}

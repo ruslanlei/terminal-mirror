@@ -103,11 +103,11 @@ import { useOrderFormInject } from '@/hooks/useOrderFormInject';
 import {
   calculateOriginalPriceByVolumeDifference,
   calculateVolumeDifference,
-} from '@/math/formulas/order';
-import { roundToDecimalPoint } from '@/math/float';
+} from '@/helpers/math/formulas/order';
+import { roundToDecimalPoint } from '@/helpers/math/float';
 import { compose } from '@/utils/fp';
-import { calculatePercentOfDifference, decreaseByPercent } from '@/math/helpers/percents';
-import { calculatePriceByPercentOfDeposit, calculateVolumeDifferenceInPercentsOfDeposit } from '@/math/formulas/stopLoss';
+import { calculatePercentOfDifference, decreaseByPercent } from '@/helpers/math/percents';
+import { calculatePriceByPercentOfDeposit, calculateVolumeDifferenceInPercentsOfDeposit } from '@/helpers/math/formulas/stopLoss';
 import { OrderFormStopLossPartEmits } from './index';
 
 const { t } = useI18n();

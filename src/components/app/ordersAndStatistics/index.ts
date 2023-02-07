@@ -6,7 +6,7 @@ export type MainSelectorOptions = SelectorOption<
   MainSelectorOptionValue
 >[];
 
-export type OrdersSelectorOptionValue = 'current' | 'closed';
+export type OrdersSelectorOptionValue = 'active' | 'closed';
 export type OrdersSelectorOptions = SelectorOption<
   OrdersSelectorOptionValue
 >[];

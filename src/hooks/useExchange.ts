@@ -7,12 +7,12 @@ import {
   divideRight,
   multiply,
   roundToDecimalPoint,
-} from '@/math/float';
+} from '@/helpers/math/float';
 import { Currency } from '@/types/currency';
 import {
   incrementQuoteDepositByBaseStep,
   decrementQuoteDepositByBaseStep,
-} from '@/math/formulas/currency';
+} from '@/helpers/math/formulas/currency';
 
 export interface QuoteCurrency extends Currency {
     leverage: number,

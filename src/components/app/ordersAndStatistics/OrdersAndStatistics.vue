@@ -27,28 +27,13 @@
       </div>
     </div>
     <div :class="$style.content">
-      <transition
-        name="orderAndStatisticsTabContent"
-        mode="out-in"
-      >
-        <KeepAlive>
-          <ActiveOrdersList
-            v-if="activeTab === 'orders' && ordersListType === 'current'"
-            :class="$style.ordersList"
-          />
-        </KeepAlive>
-      </transition>
-      <transition
-        name="orderAndStatisticsTabContent"
-        mode="out-in"
-      >
-        <KeepAlive>
-          <ClosedOrdersList
-            v-if="activeTab === 'orders' && ordersListType === 'closed'"
-            :class="$style.ordersList"
-          />
-        </KeepAlive>
-      </transition>
+      <KeepAlive>
+        <OrdersList
+          v-if="activeTab === 'orders'"
+          :list-type="ordersListType"
+          :class="$style.ordersList"
+        />
+      </KeepAlive>
     </div>
   </div>
 </template>
@@ -57,8 +42,7 @@
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Selector from '@/components/core/selector/Selector.vue';
-import ActiveOrdersList from '@/components/app/activeOrdersList/ActiveOrdersList.vue';
-import ClosedOrdersList from '@/components/app/closedOrdersList/ClosedOrdersList.vue';
+import OrdersList from '@/components/app/ordersList/OrdersList.vue';
 import {
   MainSelectorOptions,
   MainSelectorOptionValue,
@@ -83,11 +67,11 @@ const mainSelectorOptions = computed<MainSelectorOptions>(() => [
   },
 ]);
 
-const ordersListType = ref<OrdersSelectorOptionValue>('current');
+const ordersListType = ref<OrdersSelectorOptionValue>('active');
 const orderListOptions = computed<OrdersSelectorOptions>(() => [
   {
     label: t('ordersAndStatistics.ordersTab.current'),
-    value: 'current',
+    value: 'active',
   },
   {
     label: t('ordersAndStatistics.ordersTab.closed'),

@@ -72,11 +72,11 @@
         </template>
         <template
           v-if="record.children && 'recordChildren' in $slots"
-          #children="data"
+          #children="{ data }"
         >
           <slot
             name="recordChildren"
-            v-bind="data"
+            :children="data"
           />
         </template>
       </TableRow>

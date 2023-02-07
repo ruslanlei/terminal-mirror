@@ -55,7 +55,7 @@ export type ClosedSubOrdersColumn = TableColumn<ClosedSubOrdersColumnSlug>;
 export type ClosedSubOrdersRecord = TableRecord<ClosedSubOrdersColumnSlug, {
   type: {
     value: 'tp' | 'sl',
-    label: string,
+    index: number,
   },
   masterType: string,
   quantity: {

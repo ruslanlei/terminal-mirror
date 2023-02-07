@@ -1,7 +1,9 @@
-import { compose, curry } from '@/utils/fp';
+import {
+  compose, curry, filter, reduce,
+} from '@/utils/fp';
 import { PairServerData } from '@/api/types/pairServerData';
 import { MasterOrder, Order, SubOrder } from '@/api/types/order';
-import { multiply, roundToDecimalPoint } from '@/math/float';
+import { add, multiply, roundToDecimalPoint } from '@/math/float';
 import { calculatePercentOfDifference } from '@/math/helpers/percents';
 import { calculatePnl } from '@/math/formulas/pnl';
 import { calculateCommonTakeProfitPercent } from '@/math/formulas/takeProfit';
@@ -9,6 +11,7 @@ import { humanizeDate } from '@/utils/date';
 import { ActiveOrdersTableRecord, ClosedOrdersTableRecord } from '@/components/app/ordersList';
 import { SubOrderTableItem } from '@/components/app/ordersList/subOrdersTable';
 import { collectTableRecord } from '@/components/core/table/helpers';
+import { calculateVolumeDifference } from '@/math/formulas/order';
 
 interface CollectRecordPayload {
     pairData: PairServerData,
@@ -55,16 +58,39 @@ const closedOrderPricesMixin = (
 });
 
 const closedOrderResultsMixin = (
-  payload: CollectRecordPayload,
-) => ({
-  results: {
-    pnl: {
-      value: 231,
-      currency: payload.pairData.quote,
+  {
+    order, pairData, takeProfits, stopLoss,
+  }: CollectRecordPayload,
+) => {
+  const executedOrders = filter([
+    ...(takeProfits || []),
+    ...(stopLoss ? [stopLoss] : []),
+  ], (
+    order: Order,
+  ) => order.status === 'executed');
+
+  const pnl = reduce(
+    executedOrders,
+    (commonPnl: number, subOrder: Order) => compose(
+      calculateVolumeDifference(
+        order.quantity,
+        order.price,
+      ),
+      add(commonPnl),
+    )(subOrder.price),
+    0,
+  );
+
+  return {
+    results: {
+      pnl: {
+        value: roundToDecimalPoint(2, pnl),
+        currency: pairData.quote,
+      },
+      pnlPercent: 0.5,
     },
-    pnlPercent: 0.5,
-  },
-});
+  };
+};
 
 const stopLossDataMixin = (
   payload: CollectRecordPayload,

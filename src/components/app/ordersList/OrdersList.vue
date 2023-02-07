@@ -78,22 +78,24 @@
         {{ t('ordersList.column.results') }}
       </template>
       <template #cell(results)="{ data: { pnlPercent, pnl: { value: pnl, currency } } }">
-        <div :class="$style.results">
-          <Typography
-            :text="t('common.percents', { value: pnlPercent })"
-            :state="[
-              isPositive(pnlPercent)
-                ? 'success'
-                : 'danger',
-              'bold',
-            ]"
-            size="title2"
-          />
-          <Typography
-            size="title4"
-            :text="t('common.currencyAmount', { amount: pnl, currency })"
-            :state="['accent2']"
-          />
+        <div :class="$style.resultsWrapper">
+          <div :class="$style.results">
+            <Typography
+              :text="t('common.percents', { value: pnlPercent })"
+              :state="[
+                isPositive(pnlPercent)
+                  ? 'success'
+                  : 'danger',
+                'bold',
+              ]"
+              size="title2"
+            />
+            <Typography
+              size="title4"
+              :text="t('common.currencyAmount', { amount: pnl, currency })"
+              :state="['accent2']"
+            />
+          </div>
         </div>
       </template>
 
@@ -348,6 +350,13 @@ onActivated(() => {
   margin-left: 5px;
   color: rgb(var(--color-accent-2));
 }
+
+.resultsWrapper {
+  max-height: 20px;
+  display: flex;
+  align-items: center;
+}
+.results {}
 
 .stopLossPercent {
   color: rgb(var(--color-danger-2));

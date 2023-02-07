@@ -7,7 +7,7 @@ import {
 } from '@/components/app/ordersList';
 import { useMarketStore } from '@/stores/market';
 import { MasterOrder, Order, SubOrder } from '@/api/types/order';
-import { add, roundToDecimalPoint } from '@/math/float';
+import { add, roundToDecimalPoint } from '@/helpers/math/float';
 import { compose } from '@/utils/fp';
 import {
   collectActiveOrderRecord,

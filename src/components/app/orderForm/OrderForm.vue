@@ -81,7 +81,7 @@ import { useOrderCreate } from '@/hooks/useOrderCreate';
 import { OrderFormInjectionKey, OrderFormTab } from '@/components/app/orderForm/index';
 import { Tab } from '@/components/core/tabs';
 
-import { divideRight, roundToDecimalPoint } from '@/math/float';
+import { divideRight, roundToDecimalPoint } from '@/helpers/math/float';
 import { compose } from '@/utils/fp';
 import OrderFormInputPart from './composables/orderFormInputPart/OrderFormInputPart.vue';
 import OrderFormTakeProfitPart from './composables/orderFormTakeProfitPart/OrderFormTakeProfitPart.vue';

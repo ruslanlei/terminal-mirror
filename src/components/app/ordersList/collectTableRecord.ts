@@ -3,15 +3,15 @@ import {
 } from '@/utils/fp';
 import { PairServerData } from '@/api/types/pairServerData';
 import { MasterOrder, Order, SubOrder } from '@/api/types/order';
-import { add, multiply, roundToDecimalPoint } from '@/math/float';
-import { calculatePercentOfDifference } from '@/math/percents';
-import { calculatePnl } from '@/math/formulas/pnl';
-import { calculateCommonTakeProfitPercent } from '@/math/formulas/takeProfit';
+import { add, multiply, roundToDecimalPoint } from '@/helpers/math/float';
+import { calculatePercentOfDifference } from '@/helpers/math/percents';
+import { calculatePnl } from '@/helpers/math/formulas/pnl';
+import { calculateCommonTakeProfitPercent } from '@/helpers/math/formulas/takeProfit';
 import { humanizeDate } from '@/utils/date';
 import { ActiveOrdersTableRecord, ClosedOrdersTableRecord } from '@/components/app/ordersList';
 import { SubOrderTableItem } from '@/components/app/ordersList/subOrdersTable';
 import { collectTableRecord } from '@/components/core/table/helpers';
-import { calculateVolumeDifference } from '@/math/formulas/order';
+import { calculateVolumeDifference } from '@/helpers/math/formulas/order';
 import { reduce } from 'ramda';
 import { reduceSubOrderListToCommonPnl } from '@/helpers/orders';
 

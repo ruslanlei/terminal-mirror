@@ -17,14 +17,14 @@ import {
   spreadOrderQuantityBetweenTakeProfits,
   mapTakeProfitPricesByIncreasePercent,
   reduceTakeProfitsToAmountOfProfitAndRound,
-} from '@/math/formulas/takeProfit';
+} from '@/helpers/math/formulas/takeProfit';
 import { arrayOf, compose } from '@/utils/fp';
-import { decreaseByPercent } from '@/math/percents';
+import { decreaseByPercent } from '@/helpers/math/percents';
 import {
   calculateAndRoundLiquidationPrice,
   calculateAndRoundPledge, calculateVolumeDifference,
-} from '@/math/formulas/order';
-import { roundToDecimalPoint } from '@/math/float';
+} from '@/helpers/math/formulas/order';
+import { roundToDecimalPoint } from '@/helpers/math/float';
 
 export interface OrderModel extends CreateOrderDTO {
   leverage: number,

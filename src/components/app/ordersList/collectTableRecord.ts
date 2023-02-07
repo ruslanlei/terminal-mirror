@@ -1,9 +1,10 @@
 import {
-  compose, curry, filter,
+  compose,
+  curry,
 } from '@/utils/fp';
 import { PairServerData } from '@/api/types/pairServerData';
 import { MasterOrder, Order, SubOrder } from '@/api/types/order';
-import { add, multiply, roundToDecimalPoint } from '@/helpers/math/float';
+import { multiply, roundToDecimalPoint } from '@/helpers/math/float';
 import { calculatePercentOfDifference } from '@/helpers/math/percents';
 import { calculatePnl } from '@/helpers/math/formulas/pnl';
 import { calculateCommonTakeProfitPercent } from '@/helpers/math/formulas/takeProfit';
@@ -11,9 +12,7 @@ import { humanizeDate } from '@/utils/date';
 import { ActiveOrdersTableRecord, ClosedOrdersTableRecord } from '@/components/app/ordersList';
 import { SubOrderTableItem } from '@/components/app/ordersList/subOrdersTable';
 import { collectTableRecord } from '@/components/core/table/helpers';
-import { calculateVolumeDifference } from '@/helpers/math/formulas/order';
-import { reduce } from 'ramda';
-import { reduceSubOrderListToCommonPnl } from '@/helpers/orders';
+import { getOrdersWithStatus, reduceSubOrderListToCommonPnl } from '@/helpers/orders';
 
 interface CollectRecordPayload {
     pairData: PairServerData,
@@ -51,10 +50,10 @@ const activeOrderPricesMixin = (
 });
 
 const closedOrderPricesMixin = (
-  payload: CollectRecordPayload,
+  { order }: CollectRecordPayload,
 ) => ({
   prices: {
-    order: payload.order.price,
+    order: order.price,
     close: 17000,
   },
 });
@@ -63,27 +62,22 @@ const closedOrderResultsMixin = (
   {
     order, pairData, takeProfits, stopLoss,
   }: CollectRecordPayload,
-) => {
-  const executedOrders = filter([
-    ...(takeProfits || []),
-    ...(stopLoss ? [stopLoss] : []),
-  ], (
-    order: Order,
-  ) => order.status === 'executed');
-
-  return {
-    results: {
-      pnl: {
-        value: compose(
-          roundToDecimalPoint(2),
-          reduceSubOrderListToCommonPnl(order),
-        )(executedOrders),
-        currency: pairData.quote,
-      },
-      pnlPercent: 0.5,
+) => ({
+  results: {
+    pnl: {
+      value: compose(
+        roundToDecimalPoint(2),
+        reduceSubOrderListToCommonPnl(order),
+        getOrdersWithStatus('executed'),
+      )([
+        ...(takeProfits || []),
+        ...(stopLoss ? [stopLoss] : []),
+      ]),
+      currency: pairData.quote,
     },
-  };
-};
+    pnlPercent: 0.5,
+  },
+});
 
 const stopLossDataMixin = (
   payload: CollectRecordPayload,

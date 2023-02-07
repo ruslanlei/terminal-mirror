@@ -1,5 +1,7 @@
-import { compose, curry, reduce } from '@/utils/fp';
-import { Order, SubOrder } from '@/api/types/order';
+import {
+  compose, curry, filter, reduce,
+} from '@/utils/fp';
+import { Order, OrderStatus, SubOrder } from '@/api/types/order';
 import { calculateVolumeDifference } from '@/helpers/math/formulas/order';
 import { add } from '@/helpers/math/float';
 
@@ -16,4 +18,12 @@ export const reduceSubOrderListToCommonPnl = curry((
     add(commonPnl),
   )(subOrder.price),
   0,
+));
+
+export const getOrdersWithStatus = curry((
+  status: OrderStatus,
+  orders: Order[],
+) => filter(
+  orders,
+  (order: Order) => order.status === status,
 ));

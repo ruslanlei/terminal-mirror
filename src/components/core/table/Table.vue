@@ -164,7 +164,6 @@ onBeforeUnmount(() => {
 // default state
 .table {
   color: white;
-  overflow: hidden;
   &.list {
     .head {
       display: grid;

@@ -56,6 +56,8 @@ const stickyElementStyles = computed(() => ({
 }
 
 .main {
+  display: flex;
+  flex-direction: column;
 }
 
 .chart {
@@ -71,6 +73,8 @@ const stickyElementStyles = computed(() => ({
 
 .orders {
   margin-top: 20px;
+  overflow: hidden;
+  flex-grow: 1;
 }
 
 .sideBar {

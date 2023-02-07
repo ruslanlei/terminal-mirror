@@ -19,7 +19,7 @@ import {
   reduceTakeProfitsToAmountOfProfitAndRound,
 } from '@/math/formulas/takeProfit';
 import { arrayOf, compose } from '@/utils/fp';
-import { decreaseByPercent } from '@/math/helpers/percents';
+import { decreaseByPercent } from '@/math/percents';
 import {
   calculateAndRoundLiquidationPrice,
   calculateAndRoundPledge, calculateVolumeDifference,

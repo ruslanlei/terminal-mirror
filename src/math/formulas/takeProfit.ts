@@ -12,7 +12,7 @@ import {
   roundToDecimalPoint,
   subtractRight,
 } from '@/math/float';
-import { calculateOnePercent } from '@/math/helpers/percents';
+import { calculateOnePercent } from '@/math/percents';
 
 export const reduceTakeProfitsToAmountOfProfit = (
   takeProfits: TakeProfit[],

@@ -261,7 +261,7 @@ import InlineSpace from '@/components/core/inlineSpace/InlineSpace.vue';
 import CurrencyLogo from '@/components/core/currencyLogo/CurrencyLogo.vue';
 import ListSkeleton from '@/components/app/listSkeleton/ListSkeleton.vue';
 import Icon from '@/components/core/icon/Icon.vue';
-import { isPositive } from '@/math/helpers/number';
+import { isPositive } from '@/helpers/number';
 import Badge from '@/components/core/badge/Badge.vue';
 import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
 import { onActivated } from 'vue';

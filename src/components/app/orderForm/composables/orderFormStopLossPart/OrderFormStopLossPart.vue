@@ -106,7 +106,7 @@ import {
 } from '@/math/formulas/order';
 import { roundToDecimalPoint } from '@/math/float';
 import { compose } from '@/utils/fp';
-import { calculatePercentOfDifference, decreaseByPercent } from '@/math/helpers/percents';
+import { calculatePercentOfDifference, decreaseByPercent } from '@/math/percents';
 import { calculatePriceByPercentOfDeposit, calculateVolumeDifferenceInPercentsOfDeposit } from '@/math/formulas/stopLoss';
 import { OrderFormStopLossPartEmits } from './index';
 

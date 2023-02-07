@@ -8,7 +8,7 @@ export const createEmptyRecord = (id?: string | number): TableRecord => ({
   data: {},
 });
 
-export const setDataToTableRecord = <TR extends TableRecord>(
+export const mixTableRecordData = <TR extends TableRecord>(
   record: DeepPartial<TR>,
   data: DeepPartial<TR>['data'],
 ): DeepPartial<TR> => ({
@@ -19,7 +19,7 @@ export const setDataToTableRecord = <TR extends TableRecord>(
     },
   });
 
-export const setChildrenToTableRecord = <TR extends TableRecord>(
+export const mixTableRecordChildren = <TR extends TableRecord>(
   record: DeepPartial<TR>,
   children: DeepPartial<TR>['children'],
 ) => ({
@@ -45,13 +45,13 @@ export const collectTableRecord = <TR extends TableRecord, P>(
     (
       record: DeepPartial<TR>,
       mixin: (payload: P) => DeepPartial<TR>['children'],
-    ) => setChildrenToTableRecord(record, mixin(payload)),
+    ) => mixTableRecordChildren(record, mixin(payload)),
   ),
   reduceRight(
     mixins,
     (
       record: DeepPartial<TR>,
       mixin: (payload: P) => DeepPartial<TR>['data'],
-    ) => setDataToTableRecord(record, mixin(payload)),
+    ) => mixTableRecordData(record, mixin(payload)),
   ),
 )(record) as TR;

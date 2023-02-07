@@ -7,7 +7,7 @@ import {
   checkIsRoundedValueEqualToPercentOfTotal,
   percentsToRoundedValue,
   valueToRoundedPercents,
-} from '@/math/helpers/percents';
+} from '@/math/percents';
 
 export const useDepositInput = (
   props: DepositInputProps,

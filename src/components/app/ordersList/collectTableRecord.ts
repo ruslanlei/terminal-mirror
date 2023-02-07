@@ -1,10 +1,10 @@
 import {
-  compose, curry, filter, reduce,
+  compose, curry, filter,
 } from '@/utils/fp';
 import { PairServerData } from '@/api/types/pairServerData';
 import { MasterOrder, Order, SubOrder } from '@/api/types/order';
 import { add, multiply, roundToDecimalPoint } from '@/math/float';
-import { calculatePercentOfDifference } from '@/math/helpers/percents';
+import { calculatePercentOfDifference } from '@/math/percents';
 import { calculatePnl } from '@/math/formulas/pnl';
 import { calculateCommonTakeProfitPercent } from '@/math/formulas/takeProfit';
 import { humanizeDate } from '@/utils/date';
@@ -12,6 +12,8 @@ import { ActiveOrdersTableRecord, ClosedOrdersTableRecord } from '@/components/a
 import { SubOrderTableItem } from '@/components/app/ordersList/subOrdersTable';
 import { collectTableRecord } from '@/components/core/table/helpers';
 import { calculateVolumeDifference } from '@/math/formulas/order';
+import { reduce } from 'ramda';
+import { reduceSubOrderListToCommonPnl } from '@/helpers/orders';
 
 interface CollectRecordPayload {
     pairData: PairServerData,
@@ -69,22 +71,13 @@ const closedOrderResultsMixin = (
     order: Order,
   ) => order.status === 'executed');
 
-  const pnl = reduce(
-    executedOrders,
-    (commonPnl: number, subOrder: Order) => compose(
-      calculateVolumeDifference(
-        order.quantity,
-        order.price,
-      ),
-      add(commonPnl),
-    )(subOrder.price),
-    0,
-  );
-
   return {
     results: {
       pnl: {
-        value: roundToDecimalPoint(2, pnl),
+        value: compose(
+          roundToDecimalPoint(2),
+          reduceSubOrderListToCommonPnl(order),
+        )(executedOrders),
         currency: pairData.quote,
       },
       pnlPercent: 0.5,

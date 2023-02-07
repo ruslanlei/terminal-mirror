@@ -5,7 +5,7 @@ import {
   subtract,
 } from '@/math/float';
 import { calculateVolumeDifference } from '@/math/formulas/order';
-import { calculateOnePercent } from '@/math/helpers/percents';
+import { calculateOnePercent } from '@/math/percents';
 
 export const calculateVolumeDifferenceInPercentsOfDeposit = curry((
   quantity: number,

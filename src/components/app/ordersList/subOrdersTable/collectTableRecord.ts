@@ -1,7 +1,7 @@
 import { ActiveSubOrderRecord, SubOrderTableItem } from '@/components/app/ordersList/subOrdersTable/index';
 import { compose, curry } from '@/utils/fp';
 import { roundToDecimalPoint } from '@/math/float';
-import { valueToPercents } from '@/math/helpers/percents';
+import { valueToPercents } from '@/math/percents';
 import { humanizeDate } from '@/utils/date';
 import { MasterOrder } from '@/api/types/order';
 import { PairServerData } from '@/api/types/pairServerData';

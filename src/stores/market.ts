@@ -9,6 +9,7 @@ import { Order, OrderStatus } from '@/api/types/order';
 import { processServerErrors, requestMany } from '@/api/common';
 import { getOrdersList } from '@/api/endpoints/orders/getList';
 import { PairServerData } from '@/api/types/pairServerData';
+import { flatten } from '@/utils/array';
 
 export type MarketType = 'emulator' | 'real';
 
@@ -111,15 +112,31 @@ export const useMarketStore = defineStore('market', () => {
   };
 
   const getOrderList = async (
-    status: OrderStatus,
+    orderType?: 'active' | 'closed',
   ) => {
-    const response = await getOrdersList(status);
+    let response;
+    if (orderType === 'closed') {
+      response = await requestMany<Order[][]>([
+        getOrdersList('expired'),
+        getOrdersList('canceled'),
+        getOrdersList('executed'),
+        getOrdersList('closed'),
+      ]);
+    } else {
+      response = await requestMany<Order[][]>([
+        getOrdersList('new'),
+        getOrdersList('filled'),
+      ]);
+    }
 
     if (!response.result) {
       processServerErrors(response.data, t('order.failedToGetList'));
     }
 
-    return response;
+    return {
+      result: response.result,
+      data: flatten(response.data),
+    };
   };
 
   return {

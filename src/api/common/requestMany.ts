@@ -1,10 +1,10 @@
 import { ApiResponse } from '@/api/httpTransport';
 
-export type MultiRequestResponse = Pick<ApiResponse, 'result' | 'data'>;
+export type MultiRequestResponse<R> = Pick<ApiResponse<R>, 'result' | 'data'>;
 
-export const requestMany = async (
+export const requestMany = async <R>(
   requests: Promise<ApiResponse>[],
-): Promise<MultiRequestResponse> => {
+): Promise<MultiRequestResponse<R>> => {
   const results = await Promise.all(requests);
 
   const commonResult = !results.map(
@@ -13,6 +13,6 @@ export const requestMany = async (
 
   return {
     result: commonResult,
-    data: results.map(({ data }) => data),
+    data: results.map(({ data }) => data) as R,
   };
 };

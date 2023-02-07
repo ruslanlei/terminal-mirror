@@ -204,7 +204,7 @@ export const useOrdersList = (
       isLoading.value = true;
     }
 
-    const { result, data } = await marketStore.getOrderList('new');
+    const { result, data } = await marketStore.getOrderList(props.listType);
 
     isLoading.value = false;
 

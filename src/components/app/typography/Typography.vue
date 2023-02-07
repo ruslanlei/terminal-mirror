@@ -96,4 +96,8 @@ const computedState = useComputedState(props);
 .bold {
   font-weight: 600;
 }
+
+.medium {
+  font-weight: 500;
+}
 </style>

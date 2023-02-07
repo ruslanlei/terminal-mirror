@@ -1,6 +1,6 @@
 import {
   compose,
-  curry, log,
+  curry,
 } from '@/utils/fp';
 import { PairServerData } from '@/api/types/pairServerData';
 import { MasterOrder, Order, SubOrder } from '@/api/types/order';

@@ -1,4 +1,8 @@
-import { ActiveSubOrderRecord, SubOrderTableItem } from '@/components/app/ordersList/subOrdersTable/index';
+import {
+  ActiveSubOrderRecord,
+  ClosedSubOrdersRecord,
+  SubOrderTableItem,
+} from '@/components/app/ordersList/subOrdersTable/index';
 import { compose, curry } from '@/utils/fp';
 import { roundToDecimalPoint } from '@/helpers/math/float';
 import { valueToPercents } from '@/helpers/math/percents';
@@ -40,11 +44,21 @@ const quantityMixin = (
   },
 });
 
-const volumeMixin = (
+const activeOrderVolumeMixin = (
   { order, pairData }: CollectRecordPayload,
 ) => ({
   volume: {
     value: order.price,
+    currency: pairData.quote,
+  },
+});
+
+const closedOrderVolumeMixin = (
+  { order, pairData }: CollectRecordPayload,
+) => ({
+  volume: {
+    orderType: order.order_type,
+    value: order.status === 'executed' ? order.price : null,
     currency: pairData.quote,
   },
 });
@@ -67,7 +81,18 @@ export const collectActiveSubOrderRecord = curry(collectTableRecord<
 >)([
   optionsMixin,
   dateMixin,
-  volumeMixin,
+  activeOrderVolumeMixin,
+  quantityMixin,
+  masterTypeMixin,
+  orderTypeMixin,
+], []);
+
+export const collectClosedSubOrderRecord = curry(collectTableRecord<
+  ClosedSubOrdersRecord,
+  CollectRecordPayload
+>)([
+  dateMixin,
+  closedOrderVolumeMixin,
   quantityMixin,
   masterTypeMixin,
   orderTypeMixin,

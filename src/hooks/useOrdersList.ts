@@ -152,6 +152,8 @@ export const useOrdersList = (
     .map(({ order, takeProfits, stopLoss }: GroupedOrder) => {
       const pairData = marketStore.pairsMap?.[order.pair];
 
+      console.log('test');
+
       if (!pairData) {
         throw new Error('[Orders list]: pair data not found');
       }
@@ -159,10 +161,10 @@ export const useOrdersList = (
       return compose(
         collectClosedOrderRecord({
           pairData,
-          pairPrice: marketStore.activePairPrice,
           takeProfits,
           stopLoss,
           order,
+          pairPrice: 0,
         }),
         createEmptyRecord,
       )(order.id);

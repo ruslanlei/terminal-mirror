@@ -34,21 +34,35 @@
         </template>
       </i18n-t>
     </template>
-    <template #cell(volume)="{ data: { value, currency } }">
-      <i18n-t
-        keypath="ordersList.subOrder.volume"
-        tag="div"
-        :class="$style.volume"
+    <template #cell(volume)="{ data: { value, currency, orderType } }">
+      <Typography
+        v-if="value"
+        size="title2"
+        :state="[
+          'bold',
+          listType === 'active' && 'accent1',
+          (listType === 'closed' && orderType === 'tp') && 'success',
+          (listType === 'closed' && orderType === 'sl') && 'danger',
+        ]"
       >
-        <template #volume>
-          {{ value }}
-        </template>
-        <template #currency>
-          <span :class="$style.volumeCurrency">
-            {{ currency }}
-          </span>
-        </template>
-      </i18n-t>
+        <i18n-t
+          keypath="ordersList.subOrder.volume"
+          tag="span"
+        >
+          <template #volume>
+            {{ value }}
+          </template>
+          <template #currency>
+            <Typography
+              :is-inline="true"
+              :class="$style.volumeCurrency"
+              state="medium"
+            >
+              {{ currency }}
+            </Typography>
+          </template>
+        </i18n-t>
+      </Typography>
     </template>
     <template #cell(date)="{ data: date }">
       <div :class="$style.date">
@@ -70,6 +84,7 @@
 import Table from '@/components/core/table/Table.vue';
 import { useI18n } from 'vue-i18n';
 import { useSubOrdersList } from '@/hooks/useSubOrdersList';
+import Typography from '@/components/app/typography/Typography.vue';
 import {
   ActiveSubOrdersTableProps,
 } from './index';
@@ -112,12 +127,6 @@ const orderLabelMap = {
 
 .quantityPercent {
   color: rgb(var(--color-accent-2));
-}
-
-.volume {
-  @include title2;
-  font-weight: 600;
-  color: rgb(var(--color-accent-1));
 }
 
 .volumeCurrency {

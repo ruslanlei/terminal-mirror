@@ -40,30 +40,32 @@ export interface SubOrderTableItem extends SubOrder {
 
 export interface ActiveSubOrdersTableProps {
   orders: SubOrderTableItem[],
-  listType?: OrdersListProps['listType'],
+  listType: OrdersListProps['listType'],
 }
 
 export type ClosedSubOrdersColumnSlug =
     'type'
     | 'masterType'
     | 'quantity'
-    | 'pnl'
-    | 'date';
+    | 'volume'
+    | 'date'
+    | 'options';
 
 export type ClosedSubOrdersColumn = TableColumn<ClosedSubOrdersColumnSlug>;
 
 export type ClosedSubOrdersRecord = TableRecord<ClosedSubOrdersColumnSlug, {
   type: {
+    orderType: 'tp' | 'sl',
     value: 'tp' | 'sl',
     index: number,
   },
   masterType: string,
   quantity: {
     value: number,
-    percent: string,
+    percent: number,
   },
-  pnl: {
-    value: number,
+  volume: {
+    value: number | null,
     currency: currency,
   },
   date: string,

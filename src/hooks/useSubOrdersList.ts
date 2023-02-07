@@ -1,17 +1,22 @@
 import { computed, ref } from 'vue';
 import {
   ActiveSubOrderRecord,
+  ActiveSubOrdersTableProps,
+  SubOrderTableItem,
+  ClosedSubOrdersColumn,
   ActiveSubOrdersColumn,
-  ActiveSubOrdersTableProps, SubOrderTableItem,
 } from '@/components/app/ordersList/subOrdersTable';
 import { compose } from '@/utils/fp';
-import { collectActiveSubOrderRecord } from '@/components/app/ordersList/subOrdersTable/collectTableRecord';
+import {
+  collectActiveSubOrderRecord,
+  collectClosedSubOrderRecord,
+} from '@/components/app/ordersList/subOrdersTable/collectTableRecord';
 import { createEmptyRecord } from '@/components/core/table/helpers';
 
 export const useSubOrdersList = (
   props: ActiveSubOrdersTableProps,
 ) => {
-  const columns = ref<ActiveSubOrdersColumn[]>([
+  const columns = ref([
     {
       label: '',
       slug: 'type',
@@ -42,15 +47,17 @@ export const useSubOrdersList = (
       size: 1.6,
       align: 'center',
     },
-    {
-      label: '',
-      slug: 'options',
-      size: 1.6,
-      align: 'center',
-    },
+    ...(props.listType === 'active' ? [
+      {
+        label: '',
+        slug: 'options',
+        size: 1.6,
+        align: 'center',
+      },
+    ] : []),
   ]);
 
-  const records = computed<ActiveSubOrderRecord[]>(() => props.orders.map((
+  const activeOrderRecords = computed<ActiveSubOrderRecord[]>(() => props.orders.map((
     order: SubOrderTableItem,
   ) => compose(
     collectActiveSubOrderRecord({
@@ -60,6 +67,22 @@ export const useSubOrdersList = (
     }),
     createEmptyRecord,
   )(order.id)));
+
+  const closedOrderRecords = computed<ActiveSubOrderRecord[]>(() => props.orders.map((
+    order: SubOrderTableItem,
+  ) => compose(
+    collectClosedSubOrderRecord({
+      order,
+      pairData: order.pairData,
+      masterOrder: order.masterOrder,
+    }),
+    createEmptyRecord,
+  )(order.id)));
+
+  const records = computed(() => ({
+    active: activeOrderRecords.value,
+    closed: closedOrderRecords.value,
+  }[props.listType]));
 
   return {
     columns,

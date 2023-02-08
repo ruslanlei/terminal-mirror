@@ -8,7 +8,7 @@ export {
 
 type DateValue = Date | string;
 
-export const toISOSString = (
+export const toISOString = (
   date: DateValue,
 ) => dayjs(date).toISOString();
 
@@ -20,3 +20,15 @@ export const subtractMonths = curry((
   months: number,
   date: DateValue,
 ) => dayjs(date).subtract(months, 'months'));
+
+export const subtractYears = curry((
+  years: number,
+  date: DateValue,
+) => dayjs(date).subtract(years, 'years'));
+
+export const toTimestamp = (
+  date: DateValue,
+) => {
+  console.log(date, dayjs(date).unix());
+  return dayjs(date).unix();
+};

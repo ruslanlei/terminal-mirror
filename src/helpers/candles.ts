@@ -5,9 +5,9 @@ import { toTimestamp } from '@/utils/date';
 export const transformCandlesForChart = (
   candles: Candle[],
 ): ChartCandle[] => candles.map((candle: Candle) => ({
-  high: candle[0],
-  open: candle[1],
-  close: candle[2],
-  low: candle[3],
+  open: candle[0],
+  high: candle[1],
+  low: candle[2],
+  close: candle[3],
   time: toTimestamp(candle[6]),
 }));

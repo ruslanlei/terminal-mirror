@@ -11,6 +11,4 @@ import { transformCandlesForChart } from '@/helpers/candles';
 const emulatorStore = useEmulatorStore();
 
 const candles = computed(() => transformCandlesForChart(emulatorStore.candles));
-
-emulatorStore.getCandles();
 </script>

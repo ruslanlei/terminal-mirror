@@ -42,13 +42,17 @@ const initChart = () => createChart(chartContainer.value, {
   },
 });
 
-
 const candles = ref<ISeriesApi<'Candlestick'>>();
 const addCandles = (
   chart: IChartApi,
-) => chart.addCandlestickSeries();
+) => chart.addCandlestickSeries({
+  upColor: getCssRgbColor('--color-success'),
+  downColor: getCssRgbColor('--color-danger'),
+  wickUpColor: getCssRgbColor('--color-success'),
+  wickDownColor: getCssRgbColor('--color-danger'),
+  borderVisible: true,
+});
 watch(() => props.data, () => {
-  console.log('test');
   candles.value?.setData(props.data);
 });
 

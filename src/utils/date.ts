@@ -28,7 +28,4 @@ export const subtractYears = curry((
 
 export const toTimestamp = (
   date: DateValue,
-) => {
-  console.log(date, dayjs(date).unix());
-  return dayjs(date).unix();
-};
+) => dayjs(date).unix();

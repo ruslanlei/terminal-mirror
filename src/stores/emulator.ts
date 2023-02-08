@@ -1,6 +1,6 @@
 import { defineStore, storeToRefs } from 'pinia';
 import { useStorage } from '@vueuse/core';
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { useMarketStore } from '@/stores/market';
 import { simulate } from '@/api/endpoints/emulator/simulate';
 import { compose } from '@/utils/fp';
@@ -23,6 +23,7 @@ export type PlayerSpeed = 1 | 2 | 10 | 100 | 1000 | 24000;
 export const useEmulatorStore = defineStore('emulator', () => {
   const marketStore = useMarketStore();
   const {
+    activePair,
     activePairData,
   } = storeToRefs(marketStore);
 
@@ -67,6 +68,7 @@ export const useEmulatorStore = defineStore('emulator', () => {
       candles.value = data.data;
     }
   };
+  watch(activePair, handleGetCandles, { immediate: true });
 
   // simulate
   const handleSimulate = async () => {

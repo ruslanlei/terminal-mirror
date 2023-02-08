@@ -4,7 +4,7 @@ import {
 } from '@/utils/fp';
 import { PairServerData } from '@/api/types/pairServerData';
 import { MasterOrder, Order, SubOrder } from '@/api/types/order';
-import { multiply, roundToDecimalPoint } from '@/helpers/math/float';
+import { multiply, roundToDecimalPoint } from '@/helpers/number';
 import { calculatePercentOfDifference } from '@/helpers/math/percents';
 import { calculatePnl, calculatePnlPercent } from '@/helpers/math/formulas/pnl';
 import { calculateCommonTakeProfitPercent } from '@/helpers/math/formulas/takeProfit';

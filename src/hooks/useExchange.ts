@@ -7,7 +7,7 @@ import {
   divideRight,
   multiply,
   roundToDecimalPoint,
-} from '@/helpers/math/float';
+} from '@/helpers/number';
 import { Currency } from '@/types/currency';
 import {
   incrementQuoteDepositByBaseStep,

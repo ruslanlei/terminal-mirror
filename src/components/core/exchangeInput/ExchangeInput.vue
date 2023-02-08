@@ -29,7 +29,7 @@ import NumberInput from '@/components/core/numberInput/NumberInput.vue';
 import { NumberInputNormalizer } from '@/components/core/numberInput';
 import { useExchange } from '@/hooks/useExchange';
 import { compose } from '@/utils/fp';
-import { divideRight, multiply, roundToDecimalPoint } from '@/helpers/math/float';
+import { divideRight, multiply, roundToDecimalPoint } from '@/helpers/number';
 import { ExchangeInputProps, ExchangeInputEmits } from './index';
 
 const props = defineProps<ExchangeInputProps>();

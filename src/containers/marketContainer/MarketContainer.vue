@@ -73,7 +73,7 @@ const stickyElementStyles = computed(() => ({
 
 .orders {
   margin-top: 20px;
-  overflow: hidden;
+  //overflow: hidden;
   flex-grow: 1;
 }
 

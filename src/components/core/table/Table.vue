@@ -146,7 +146,10 @@ onMounted(() => {
   playAnimation({
     targets: `[data-id="${tableId.value}"]`,
     translateY: [200, 0],
-    opacity: [0, 1],
+    opacity: {
+      value: [0, 1],
+      delay: 100,
+    },
     duration: 800,
     easing: 'easeOutQuint',
     delay: anime.stagger(40, { from: 'first' }),
@@ -164,6 +167,7 @@ onBeforeUnmount(() => {
 // default state
 .table {
   color: white;
+  overflow: hidden;
   &.list {
     .head {
       display: grid;
@@ -198,10 +202,6 @@ onBeforeUnmount(() => {
         justify-content: flex-end;
       }
     }
-  }
-  &.grid {
-    display: grid;
-    .gridItem {}
   }
 }
 

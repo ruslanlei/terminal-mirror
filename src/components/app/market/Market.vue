@@ -10,7 +10,7 @@
       <OrdersAndStatistics />
     </template>
     <template #sidebar>
-      <Sidebar />
+      <MarketSidebar />
     </template>
     <template #playerControls>
       <PlayerControls />
@@ -23,7 +23,7 @@ import MarketContainer from '@/containers/marketContainer/MarketContainer.vue';
 import PlayerControls from '@/components/app/playerControls/PlayerControls.vue';
 
 import MarketTools from '@/components/app/marketTools/MarketTools.vue';
-import Sidebar from '@/components/app/sidebar/Sidebar.vue';
+import MarketSidebar from '@/components/app/marketSidebar/MarketSidebar.vue';
 import OrdersAndStatistics from '@/components/app/ordersAndStatistics/OrdersAndStatistics.vue';
 import { useMarketStore } from '@/stores/market';
 import NumberInput from '@/components/core/numberInput/NumberInput.vue';

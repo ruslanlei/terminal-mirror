@@ -6,7 +6,7 @@ export {
   now as dateNow,
 };
 
-type DateValue = Date | string;
+type DateValue = Date | number| string;
 
 export const toISOString = (
   date: DateValue,

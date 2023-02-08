@@ -7,11 +7,16 @@ import { compose } from '@/utils/fp';
 import {
   dateNow,
   subtractMonths,
-  subtractYears,
   toISOString,
 } from '@/utils/date';
 import { getCandles } from '@/api/endpoints/marketdata/candles';
 import { Candle } from '@/api/types/marketData';
+
+const getDefaultEmulatorDateFrom = () => compose(
+  toISOString,
+  subtractMonths(4),
+  dateNow,
+)();
 
 const getDefaultEmulatorDate = () => compose(
   toISOString,
@@ -28,6 +33,9 @@ export const useEmulatorStore = defineStore('emulator', () => {
   } = storeToRefs(marketStore);
 
   // player controls
+  const chartDateFrom = useStorage('chartDateFrom', getDefaultEmulatorDateFrom());
+  const chartDateTo = useStorage('chartDateTo', getDefaultEmulatorDate());
+
   const emulatorDate = useStorage('emulatorDate', getDefaultEmulatorDate());
 
   const isPlaying = ref(false);
@@ -79,6 +87,8 @@ export const useEmulatorStore = defineStore('emulator', () => {
   };
 
   return {
+    chartDateFrom,
+    chartDateTo,
     emulatorDate,
     isPlaying,
     speed,

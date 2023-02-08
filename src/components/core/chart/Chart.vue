@@ -1,8 +1,18 @@
 <template>
-  <div
-    ref="chartContainer"
-    :class="$style.chart"
-  />
+  <div :class="$style.chart">
+    <div
+      ref="chartContainer"
+      :class="$style.container"
+    />
+    <transition name="skeletonTransition">
+      <div
+        v-if="isLoading"
+        :class="$style.loaderCap"
+      >
+        <Loader />
+      </div>
+    </transition>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -14,6 +24,7 @@ import {
 } from 'vue';
 import { createChart, IChartApi, ISeriesApi } from 'lightweight-charts';
 import { getCssRgbColor } from '@/utils/dom';
+import Loader from '@/components/core/loader/Loader.vue';
 import { ChartProps } from './index';
 
 const props = defineProps<ChartProps>();
@@ -40,6 +51,9 @@ const initChart = () => createChart(chartContainer.value, {
       style: 3,
     },
   },
+  timeScale: {
+    lockVisibleTimeRangeOnResize: true,
+  },
 });
 
 const candles = ref<ISeriesApi<'Candlestick'>>();
@@ -59,6 +73,8 @@ watch(() => props.data, () => {
 onMounted(() => {
   chart.value = initChart();
   candles.value = addCandles(chart.value);
+
+  console.log(chart.value?.timeScale());
 });
 
 onBeforeUnmount(() => {
@@ -69,5 +85,27 @@ onBeforeUnmount(() => {
 </script>
 
 <style lang="scss" module>
-.chart {}
+.chart {
+  position: relative;
+}
+
+.container {
+  height: 100%;
+  width: 100%;
+}
+
+.loaderCap {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(var(--color-background-1), 0.9);
+  border-radius: 10px;
+}
+</style>
+
+<style lang="scss">
+@import "@/assets/styles/transitions.scss";
 </style>

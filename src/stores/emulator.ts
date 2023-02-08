@@ -40,29 +40,26 @@ export const useEmulatorStore = defineStore('emulator', () => {
   // candles
   const candles = ref<Candle[]>([]);
 
+  const isLoadingCandles = ref(false);
   const handleGetCandles = async () => {
     if (!activePairData.value) return;
 
     const dateFrom = compose(
       toISOString,
-      subtractYears(1),
-      subtractMonths(1),
+      subtractMonths(3),
     )(emulatorDate.value);
 
-    const dateTo = compose(
-      toISOString,
-      subtractYears(1),
-    )(emulatorDate.value);
-
+    isLoadingCandles.value = true;
     const {
       result,
       data,
     } = await getCandles({
       pair: activePairData.value.alias,
       date_from: dateFrom,
-      date_to: dateTo,
+      date_to: emulatorDate.value,
       size: 86400,
     });
+    isLoadingCandles.value = false;
 
     if (result) {
       candles.value = data.data;
@@ -87,6 +84,7 @@ export const useEmulatorStore = defineStore('emulator', () => {
     speed,
     setSpeed,
     candles,
+    isLoadingCandles,
     getCandles: handleGetCandles,
     simulate: handleSimulate,
   };

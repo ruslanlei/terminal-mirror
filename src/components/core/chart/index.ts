@@ -8,5 +8,6 @@ export interface ChartCandle {
   time: number,
 }
 export interface ChartProps {
+  isLoading: boolean,
   data: any[],
 }

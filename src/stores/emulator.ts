@@ -3,12 +3,20 @@ import { useStorage } from '@vueuse/core';
 import { ref } from 'vue';
 import { useMarketStore } from '@/stores/market';
 import { simulate } from '@/api/endpoints/emulator/simulate';
+import { compose } from '@/utils/fp';
+import { dateNow, subtractMonths, toISOSString } from '@/utils/date';
+
+const getDefaultEmulatorDate = () => compose(
+  toISOSString,
+  subtractMonths(1),
+  dateNow,
+)();
 
 export type PlayerSpeed = 1 | 2 | 10 | 100 | 1000 | 24000;
 export const useEmulatorStore = defineStore('emulator', () => {
   const marketStore = useMarketStore();
 
-  const currentDate = useStorage('emulatorDate', new Date().toISOString());
+  const emulatorDate = useStorage('emulatorDate', getDefaultEmulatorDate());
 
   const isPlaying = ref(false);
 
@@ -20,7 +28,7 @@ export const useEmulatorStore = defineStore('emulator', () => {
   const handleSimulate = async () => {
     await simulate({
       pair: marketStore.activePair,
-      date_from: currentDate.value,
+      date_from: emulatorDate.value,
       candle_size: 3600,
       compression: 36000,
       tiks: 1,
@@ -28,7 +36,7 @@ export const useEmulatorStore = defineStore('emulator', () => {
   };
 
   return {
-    currentDate,
+    emulatorDate,
     isPlaying,
     speed,
     setSpeed,

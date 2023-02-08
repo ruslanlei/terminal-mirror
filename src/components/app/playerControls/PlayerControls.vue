@@ -7,7 +7,7 @@
       <div :class="$style.label">
         {{ t('emulator.player.label') }}
       </div>
-      <Datepicker v-model="currentDate" />
+      <Datepicker v-model="emulatorDate" />
     </header>
     <div :class="$style.controls">
       <PlayButton
@@ -56,7 +56,7 @@ import RewindButton from './rewindButton/RewindButton.vue';
 const { t } = useI18n();
 
 const emulatorStore = useEmulatorStore();
-const { currentDate, speed, isPlaying } = storeToRefs(emulatorStore);
+const { emulatorDate, speed, isPlaying } = storeToRefs(emulatorStore);
 
 const playerSpeedList: PlayerSpeed[] = [1, 2, 10, 100, 1000, 24000];
 

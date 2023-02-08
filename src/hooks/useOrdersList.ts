@@ -152,8 +152,6 @@ export const useOrdersList = (
     .map(({ order, takeProfits, stopLoss }: GroupedOrder) => {
       const pairData = marketStore.pairsMap?.[order.pair];
 
-      console.log('test');
-
       if (!pairData) {
         throw new Error('[Orders list]: pair data not found');
       }

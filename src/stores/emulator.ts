@@ -10,6 +10,7 @@ import {
   subtractYears,
   toISOString,
 } from '@/utils/date';
+import { multiply } from '@/helpers/number';
 
 export const getDefaultEmulatorDate = () => compose(
   toISOString,
@@ -30,20 +31,24 @@ export const useEmulatorStore = defineStore('emulator', () => {
     speed.value = value;
   };
 
-  const candleSize = ref<number>(15);
+  const candleSize = ref<number>(300);
+
+  const compression = ref(12);
 
   // simulate
-  const handleSimulate = () => {
+  const handleSimulate = (tiks = 1) => {
     emulatorDate.value = compose(
       toISOString,
-      addSeconds(candleSize.value),
+      addSeconds(
+        multiply(candleSize.value, tiks),
+      ),
     )(emulatorDate.value);
 
     return simulate({
       pair: marketStore.activePair,
       date_from: emulatorDate.value,
       candle_size: candleSize.value,
-      compression: candleSize.value,
+      compression: multiply(candleSize.value, compression.value),
       tiks: 1,
     });
   };

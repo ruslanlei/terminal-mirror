@@ -75,11 +75,35 @@ export const useMarketChart = () => {
 
   const computedCandles = computed(() => transformCandlesForChart(candles.value));
 
-  watch(isPlaying, async () => {
-    const { result, data } = await emulatorStore.simulate();
+  const tiks = ref(1);
+  const timer = ref();
+
+  // TODO: Fix this trash
+  const simulate = async () => {
+    timer.value = setInterval(() => {
+      tiks.value += 1;
+    }, 1000);
+
+    const { result, data } = await emulatorStore.simulate(tiks.value);
 
     if (result) {
       appendCandles(data.candles);
+    }
+
+    simulate();
+
+    tiks.value = 1;
+  };
+
+  // request must be made in queue, not at the same time
+  // while request happening need to count tiks and put them on next req
+  // calculate tiks while req happens
+
+  watch(isPlaying, () => {
+    if (isPlaying) {
+      simulate();
+    } else {
+      // clearInterval(timer.value);
     }
   });
 

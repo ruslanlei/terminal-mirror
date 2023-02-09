@@ -1,9 +1,9 @@
 import { useEmulatorStore } from '@/stores/emulator';
 import { storeToRefs } from 'pinia';
 import { useMarketStore } from '@/stores/market';
-import { compose } from '@/utils/fp';
+import { compose, log } from '@/utils/fp';
 import {
-  dateNow, subtractDays, subtractMinutes, subtractMonths, subtractYears, toISOString,
+  dateNow, subtractDays, subtractMinutes, subtractMonths, subtractYears, toISOString, toTimestamp,
 } from '@/utils/date';
 import { useStorage } from '@vueuse/core';
 import { computed, ref, watch } from 'vue';
@@ -11,6 +11,7 @@ import { Candle } from '@/api/types/marketData';
 import { getCandles } from '@/api/endpoints/marketdata/candles';
 import { transformCandlesForChart } from '@/helpers/candles';
 import { concat, filterByUniqueKey } from '@/utils/array';
+import { multiply, subtractRight } from '@/helpers/number';
 
 export const useMarketChart = () => {
   const emulatorStore = useEmulatorStore();
@@ -50,9 +51,17 @@ export const useMarketChart = () => {
   const handleGetCandles = async () => {
     if (!activePairData.value) return;
 
+    // TODO: FIX THIS
     const dateFrom = compose(
       toISOString,
-      subtractMinutes(5),
+      subtractRight(
+        multiply(
+          multiply(candleSize.value, 1000),
+          60,
+        ),
+      ),
+      log('test'),
+      toTimestamp,
     )(emulatorDate.value);
 
     isLoadingCandles.value = true;

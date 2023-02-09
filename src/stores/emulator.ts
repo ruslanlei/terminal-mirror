@@ -5,14 +5,15 @@ import { useMarketStore } from '@/stores/market';
 import { simulate } from '@/api/endpoints/emulator/simulate';
 import { compose } from '@/utils/fp';
 import {
+  addSeconds,
   dateNow,
-  subtractMonths,
+  subtractYears,
   toISOString,
 } from '@/utils/date';
 
 export const getDefaultEmulatorDate = () => compose(
   toISOString,
-  subtractMonths(1),
+  subtractYears(1),
   dateNow,
 )();
 
@@ -29,13 +30,20 @@ export const useEmulatorStore = defineStore('emulator', () => {
     speed.value = value;
   };
 
+  const candleSize = ref<number>(15);
+
   // simulate
-  const handleSimulate = async () => {
-    await simulate({
+  const handleSimulate = () => {
+    emulatorDate.value = compose(
+      toISOString,
+      addSeconds(candleSize.value),
+    )(emulatorDate.value);
+
+    return simulate({
       pair: marketStore.activePair,
       date_from: emulatorDate.value,
-      candle_size: 3600,
-      compression: 36000,
+      candle_size: candleSize.value,
+      compression: candleSize.value,
       tiks: 1,
     });
   };
@@ -45,6 +53,7 @@ export const useEmulatorStore = defineStore('emulator', () => {
     isPlaying,
     speed,
     setSpeed,
+    candleSize,
     simulate: handleSimulate,
   };
 });

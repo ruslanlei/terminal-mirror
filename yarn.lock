@@ -888,6 +888,11 @@ cliui@^8.0.1:
     strip-ansi "^6.0.1"
     wrap-ansi "^7.0.0"
 
+collect.js@^4.34.3:
+  version "4.34.3"
+  resolved "https://registry.yarnpkg.com/collect.js/-/collect.js-4.34.3.tgz#8169aff62d18a973b2ea23ace76da03517463ac1"
+  integrity sha512-aFr67xDazPwthsGm729mnClgNuh15JEagU6McKBKqxuHOkWL7vMFzGbhsXDdPZ+H6ia5QKIMGYuGOMENBHnVpg==
+
 color-convert@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/color-convert/-/color-convert-2.0.1.tgz#72d3a68d598c9bdb3af2ad1e84f21d896abd4de3"

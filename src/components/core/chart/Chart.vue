@@ -24,7 +24,7 @@ import { getCssRgbColor } from '@/utils/dom';
 import { useLocalValue } from '@/hooks/useLocalValue';
 import { toISOString, toTimestamp } from '@/utils/date';
 import { compose } from '@/utils/fp';
-import { divide, multiply } from '@/helpers/number';
+import { divide, divideRight, multiply } from '@/helpers/number';
 import { ChartEmits, ChartProps } from './index';
 
 const props = defineProps<ChartProps>();
@@ -67,16 +67,16 @@ const localDateFrom = useLocalValue<string>(props, emits, 'dateFrom');
 const localDateTo = useLocalValue<string>(props, emits, 'dateTo');
 
 watch([localDateTo, localDateFrom], () => {
-  timeScale.value?.setVisibleRange({
-    from: compose(
-      divide(1000),
-      toTimestamp,
-    )(localDateFrom.value) as Time,
-    to: compose(
-      divide(1000),
-      toTimestamp,
-    )(localDateTo.value) as Time,
-  });
+  // timeScale.value?.setVisibleRange({
+  //   from: compose(
+  //     divideRight(1000),
+  //     toTimestamp,
+  //   )(localDateFrom.value) as Time,
+  //   to: compose(
+  //     divideRight(1000),
+  //     toTimestamp,
+  //   )(localDateTo.value) as Time,
+  // });
 }, { immediate: true });
 
 const candles = ref<ISeriesApi<'Candlestick'>>();

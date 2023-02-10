@@ -1,6 +1,11 @@
 import { Candle } from '@/api/types/marketData';
 import { ChartCandle } from '@/components/core/chart';
-import { toISOString, toSecondsTimestamp, toTimestamp } from '@/utils/date';
+import {
+  addSeconds,
+  toISOString,
+  toSecondsTimestamp,
+  toTimestamp,
+} from '@/utils/date';
 import { compose, curry } from '@/utils/fp';
 import { concat, filterNoneUniqueByKey } from '@/utils/array';
 import { multiply, subtractRight } from '@/helpers/number';
@@ -25,6 +30,23 @@ export const mixCandles = (
     candles,
     newCandles,
   ),
+);
+
+export const increaseDateByTiksAndCompression = curry(
+  (
+    candleSize: number, // in seconds
+    compression: number,
+    tiks: number,
+    date: Date | number | string,
+  ) => compose(
+    toISOString,
+    addSeconds(
+      multiply(
+        multiply(candleSize, tiks),
+        compression,
+      ),
+    ),
+  )(date),
 );
 
 export const decreaseDateByAmountOfCandles = curry((

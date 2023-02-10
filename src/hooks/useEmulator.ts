@@ -1,14 +1,12 @@
-import { nextTick, ref, watch } from 'vue';
-import { compose } from '@/utils/fp';
-import { addSeconds, toISOString } from '@/utils/date';
-import { multiply } from '@/helpers/number';
+import { nextTick, ref } from 'vue';
 import { useIntervalFn } from '@vueuse/core';
 import { useEmulatorStore } from '@/stores/emulator';
 import { storeToRefs } from 'pinia';
 import { Candle } from '@/api/types/marketData';
+import { increaseDateByTiksAndCompression } from '@/helpers/candles';
 
 export const useEmulator = (
-  callback: (newCandles: Candle[]) => void,
+  newCandlesCallback: (newCandles: Candle[]) => void,
 ) => {
   const emulatorStore = useEmulatorStore();
   const {
@@ -20,23 +18,24 @@ export const useEmulator = (
 
   const isEmulating = ref(false);
   const requiredTiks = ref(1);
-  const emulateTiks = async (amount = 1) => {
+
+  const increaseEmulatorDate = (tiks: number) => {
+    emulatorDate.value = increaseDateByTiksAndCompression(
+      candleSize.value,
+      compression.value,
+      tiks,
+      emulatorDate.value,
+    );
+  };
+  const simulateTiks = async (tiksAmount = 1) => {
     isEmulating.value = true;
 
-    const { result, data } = await emulatorStore.simulate(amount);
+    const { result, data } = await emulatorStore.simulate(tiksAmount);
 
-    emulatorDate.value = compose(
-      toISOString,
-      addSeconds(
-        multiply(
-          multiply(candleSize.value, amount),
-          compression.value,
-        ),
-      ),
-    )(emulatorDate.value);
+    increaseEmulatorDate(tiksAmount);
 
     if (result) {
-      callback(data.candles);
+      newCandlesCallback(data.candles);
     }
 
     await nextTick();
@@ -50,7 +49,7 @@ export const useEmulator = (
       return;
     }
 
-    emulateTiks(requiredTiks.value);
+    simulateTiks(requiredTiks.value);
     requiredTiks.value = 1;
   };
 

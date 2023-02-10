@@ -12,7 +12,7 @@ import {
   ref,
   onBeforeUnmount,
   onMounted,
-  watch,
+  watch, nextTick,
 } from 'vue';
 import {
   createChart,
@@ -91,8 +91,12 @@ const addCandles = (
 });
 watch(() => props.data, () => {
   candles.value?.setData(props.data);
-  // chart.value?.timeScale().fitContent();
 }, { immediate: true });
+
+const unwatchFirstData = watch(() => props.data, () => {
+  chart.value?.timeScale().fitContent();
+  unwatchFirstData();
+});
 
 onMounted(() => {
   chart.value = initChart();

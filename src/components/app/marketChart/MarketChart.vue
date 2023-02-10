@@ -17,7 +17,6 @@ import {
   dateNow,
   subtractMonths,
   toISOString,
-  toTimestamp,
 } from '@/utils/date';
 import { useStorage } from '@vueuse/core';
 import { Candle } from '@/api/types/marketData';
@@ -42,22 +41,8 @@ const getDefaultChartDateFrom = () => compose(
   dateNow,
 )();
 
-const chartDateFrom = useStorage('chartDateFrom', getDefaultChartDateFrom());
-const chartDateTo = useStorage('chartDateTo', emulatorDate.value);
-
-const dateFrom = computed({
-  get: () => toTimestamp(chartDateFrom.value),
-  set: (value: number) => {
-    chartDateFrom.value = toISOString(value);
-  },
-});
-
-const dateTo = computed({
-  get: () => toTimestamp(chartDateTo.value),
-  set: (value: number) => {
-    chartDateTo.value = toISOString(value);
-  },
-});
+const chartDateFrom = useStorage<string>('chartDateFrom', getDefaultChartDateFrom());
+const chartDateTo = useStorage<string>('chartDateTo', emulatorDate.value);
 
 const candles = ref<Candle[]>([]);
 
@@ -87,7 +72,7 @@ const handleGetCandles = async () => {
     candles.value = data.data;
   }
 };
-watch([activePair, dateFrom, dateTo], handleGetCandles, { immediate: true });
+watch(activePair, handleGetCandles, { immediate: true });
 
 const computedCandles = computed(() => transformCandlesForChart(candles.value));
 </script>

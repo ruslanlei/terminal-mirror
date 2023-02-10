@@ -15,17 +15,20 @@ import {
   watch,
 } from 'vue';
 import {
-  createChart, IChartApi, ISeriesApi, ITimeScaleApi, UTCTimestamp,
+  createChart,
+  IChartApi,
+  ISeriesApi,
+  ITimeScaleApi, Time,
 } from 'lightweight-charts';
 import { getCssRgbColor } from '@/utils/dom';
 import { useLocalValue } from '@/hooks/useLocalValue';
+import { toISOString, toTimestamp } from '@/utils/date';
+import { compose } from '@/utils/fp';
+import { divide, multiply } from '@/helpers/number';
 import { ChartEmits, ChartProps } from './index';
 
 const props = defineProps<ChartProps>();
 const emits = defineEmits<ChartEmits>();
-
-const localDateFrom = useLocalValue<UTCTimestamp>(props, emits, 'dateFrom');
-const localDateTo = useLocalValue<UTCTimestamp>(props, emits, 'dateTo');
 
 const chartContainer = ref();
 
@@ -60,6 +63,22 @@ const getTimeScale = (
   chart: IChartApi,
 ) => chart.timeScale();
 
+const localDateFrom = useLocalValue<string>(props, emits, 'dateFrom');
+const localDateTo = useLocalValue<string>(props, emits, 'dateTo');
+
+watch([localDateTo, localDateFrom], () => {
+  timeScale.value?.setVisibleRange({
+    from: compose(
+      divide(1000),
+      toTimestamp,
+    )(localDateFrom.value) as Time,
+    to: compose(
+      divide(1000),
+      toTimestamp,
+    )(localDateTo.value) as Time,
+  });
+}, { immediate: true });
+
 const candles = ref<ISeriesApi<'Candlestick'>>();
 const addCandles = (
   chart: IChartApi,
@@ -72,32 +91,29 @@ const addCandles = (
 });
 watch(() => props.data, () => {
   candles.value?.setData(props.data);
-});
-
-// TODO: Get visible dates: chart.value?.timeScale().getVisibleRange()
-// TODO: Get visible dates:
-//  chart.value?.timeScale().setVisibleRange({
-//  from: (new Date(Date.UTC(2018, 0, 1, 0, 0, 0, 0))).getTime() / 1000,
-//  to: (new Date(Date.UTC(2018, 1, 1, 0, 0, 0, 0))).getTime() / 1000,
-// })
+  chart.value?.timeScale().fitContent();
+}, { immediate: true });
 
 onMounted(() => {
   chart.value = initChart();
   candles.value = addCandles(chart.value);
   timeScale.value = getTimeScale(chart.value);
 
-  console.log(localDateFrom.value, localDateTo.value);
-
   timeScale.value.subscribeVisibleTimeRangeChange((newVisibleTimeRange) => {
-    console.log(newVisibleTimeRange);
-  });
+    if (newVisibleTimeRange?.from) {
+      localDateFrom.value = compose(
+        toISOString,
+        multiply(1000),
+      )(newVisibleTimeRange.from as number);
+    }
 
-  setTimeout(() => {
-    chart.value?.timeScale().setVisibleRange({
-      from: localDateFrom.value,
-      to: localDateTo.value,
-    });
-  }, 2000);
+    if (newVisibleTimeRange?.to) {
+      localDateTo.value = compose(
+        toISOString,
+        multiply(1000),
+      )(newVisibleTimeRange.to as number);
+    }
+  });
 });
 
 onBeforeUnmount(() => {
@@ -113,6 +129,7 @@ onBeforeUnmount(() => {
   transition: 300ms opacity;
   &.isLoading {
     opacity: 0.1;
+    pointer-events: none;
   }
 }
 

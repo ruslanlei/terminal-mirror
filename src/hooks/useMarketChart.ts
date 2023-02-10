@@ -46,7 +46,7 @@ export const useMarketChart = () => {
   const candles = ref<Candle[]>([]);
 
   const appendCandles = (newCandles: Candle[]) => {
-    candles.value = compose(
+    candles.value = compose( // FIXME: move this logic to "mixCandles" func.
       filterByUniqueKey(6), // 7 element in array is iso date of candle,
     )(
       concat(candles.value, newCandles),
@@ -91,12 +91,19 @@ export const useMarketChart = () => {
 
   const computedCandles = computed(() => transformCandlesForChart(candles.value));
 
-  const isLoading = ref(false);
+  const isSimulating = ref(false);
   const tiks = ref(1);
 
   // FIXME
+  watch(emulatorDate, async () => {
+    if (isSimulating.value) return;
+
+    await handleGetCandles();
+  });
+
+  // FIXME
   const simulate = async (tiks = 1) => {
-    isLoading.value = true;
+    isSimulating.value = true;
 
     const { result, data } = await emulatorStore.simulate(tiks);
 
@@ -114,23 +121,16 @@ export const useMarketChart = () => {
       appendCandles(data.candles);
     }
 
-    nextTick(() => {
-      isLoading.value = false;
-    });
-  };
+    await nextTick();
 
-  // FIXME
-  watch(emulatorDate, () => {
-    if (!isLoading.value) {
-      handleGetCandles();
-    }
-  });
+    isSimulating.value = false;
+  };
 
   const {
     resume: playEmulator,
     pause: pauseEmulator,
   } = useIntervalFn(() => {
-    if (isLoading.value) {
+    if (isSimulating.value) {
       tiks.value += 1;
       return;
     }

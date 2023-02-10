@@ -1,9 +1,9 @@
 export type Candle = [
-  number, // open
-  number, // high
-  number, // low
-  number, // close
+  number, // open price
+  number, // high price
+  number, // low price
+  number, // close price
   number,
   number,
-  string
+  string // iso date string of candle
 ]

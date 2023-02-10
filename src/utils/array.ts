@@ -8,7 +8,7 @@ export { flatten, concat };
 
 export const arrayFrom = (value: any | any[]) => (Array.isArray(value) ? value : [value]);
 
-export const filterByUniqueKey = curry((
+export const filterNoneUniqueByKey = curry((
   key: string | number,
   array: any[],
 ) => collect(array).unique(key).all());

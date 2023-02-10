@@ -1,5 +1,13 @@
-import { useEmulatorStore } from '@/stores/emulator';
+import {
+  computed,
+  nextTick,
+  ref,
+  watch,
+} from 'vue';
 import { storeToRefs } from 'pinia';
+import { useIntervalFn, useStorage } from '@vueuse/core';
+
+import { useEmulatorStore } from '@/stores/emulator';
 import { useMarketStore } from '@/stores/market';
 import { compose, log } from '@/utils/fp';
 import {
@@ -9,14 +17,8 @@ import {
   toISOString,
   toTimestamp,
 } from '@/utils/date';
-import { useIntervalFn, useStorage } from '@vueuse/core';
-import {
-  computed, nextTick, ref, watch,
-} from 'vue';
 import { Candle } from '@/api/types/marketData';
-import { getCandles } from '@/api/endpoints/marketdata/candles';
-import { transformCandlesForChart } from '@/helpers/candles';
-import { concat, filterByUniqueKey } from '@/utils/array';
+import { mixCandles, transformCandlesForChart } from '@/helpers/candles';
 import { multiply, subtractRight } from '@/helpers/number';
 
 export const useMarketChart = () => {
@@ -46,16 +48,12 @@ export const useMarketChart = () => {
   const candles = ref<Candle[]>([]);
 
   const appendCandles = (newCandles: Candle[]) => {
-    candles.value = compose( // FIXME: move this logic to "mixCandles" func.
-      filterByUniqueKey(6), // 7 element in array is iso date of candle,
-    )(
-      concat(candles.value, newCandles),
-    );
+    candles.value = mixCandles(candles.value, newCandles);
   };
 
   const isLoadingCandles = ref(false);
 
-  const handleGetCandles = async () => {
+  const getCandles = async () => {
     if (!activePairData.value) return;
 
     // FIXME
@@ -75,7 +73,7 @@ export const useMarketChart = () => {
     const {
       result,
       data,
-    } = await getCandles({
+    } = await marketStore.getCandles({
       pair: activePairData.value.alias,
       date_from: dateFrom,
       date_to: emulatorDate.value,
@@ -87,7 +85,7 @@ export const useMarketChart = () => {
       candles.value = data.data;
     }
   };
-  watch(activePair, handleGetCandles, { immediate: true });
+  watch(activePair, getCandles, { immediate: true });
 
   const computedCandles = computed(() => transformCandlesForChart(candles.value));
 
@@ -98,7 +96,7 @@ export const useMarketChart = () => {
   watch(emulatorDate, async () => {
     if (isSimulating.value) return;
 
-    await handleGetCandles();
+    await getCandles();
   });
 
   // FIXME

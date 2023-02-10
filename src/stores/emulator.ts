@@ -36,24 +36,13 @@ export const useEmulatorStore = defineStore('emulator', () => {
   const compression = ref(12);
 
   // simulate
-  const handleSimulate = (tiks: number) => {
-    console.log(tiks);
-
-    emulatorDate.value = compose(
-      toISOString,
-      addSeconds(
-        multiply(candleSize.value, tiks),
-      ),
-    )(emulatorDate.value);
-
-    return simulate({
-      pair: marketStore.activePair,
-      date_from: emulatorDate.value,
-      candle_size: candleSize.value,
-      compression: multiply(candleSize.value, compression.value),
-      tiks,
-    });
-  };
+  const handleSimulate = (tiks: number) => simulate({
+    pair: marketStore.activePair,
+    date_from: emulatorDate.value,
+    candle_size: candleSize.value,
+    compression: multiply(candleSize.value, compression.value),
+    tiks,
+  });
 
   return {
     emulatorDate,
@@ -61,6 +50,7 @@ export const useEmulatorStore = defineStore('emulator', () => {
     speed,
     setSpeed,
     candleSize,
+    compression,
     simulate: handleSimulate,
   };
 });

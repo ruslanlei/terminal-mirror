@@ -3,6 +3,7 @@ import { storeToRefs } from 'pinia';
 import { useMarketStore } from '@/stores/market';
 import { compose, log } from '@/utils/fp';
 import {
+  addSeconds,
   dateNow,
   subtractMonths,
   toISOString,
@@ -22,6 +23,7 @@ export const useMarketChart = () => {
     emulatorDate,
     isPlaying,
     candleSize,
+    compression,
   } = storeToRefs(emulatorStore);
 
   const marketStore = useMarketStore();
@@ -94,13 +96,30 @@ export const useMarketChart = () => {
 
   const simulate = async (tiks = 1) => {
     isLoading.value = true;
+
     const { result, data } = await emulatorStore.simulate(tiks);
+
+    emulatorDate.value = compose(
+      toISOString,
+      addSeconds(
+        multiply(
+          multiply(candleSize.value, tiks),
+          compression.value,
+        ),
+      ),
+    )(emulatorDate.value);
     isLoading.value = false;
 
     if (result) {
       appendCandles(data.candles);
     }
   };
+
+  watch(emulatorDate, () => {
+    if (!isLoading.value) {
+      // handleGetCandles();
+    }
+  });
 
   const playEmulator = () => {
     timer.value = setInterval(() => {

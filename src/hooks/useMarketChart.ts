@@ -9,7 +9,7 @@ import {
   toISOString,
   toTimestamp,
 } from '@/utils/date';
-import { useStorage } from '@vueuse/core';
+import { useIntervalFn, useStorage } from '@vueuse/core';
 import {
   computed, nextTick, ref, watch,
 } from 'vue';
@@ -91,10 +91,8 @@ export const useMarketChart = () => {
 
   const computedCandles = computed(() => transformCandlesForChart(candles.value));
 
-  const tiks = ref(1);
-  const timer = ref();
-
   const isLoading = ref(false);
+  const tiks = ref(1);
 
   // FIXME
   const simulate = async (tiks = 1) => {
@@ -128,29 +126,26 @@ export const useMarketChart = () => {
     }
   });
 
-  const playEmulator = () => {
-    timer.value = setInterval(() => {
-      if (isLoading.value) {
-        tiks.value += 1;
-        return;
-      }
-
-      simulate(tiks.value);
-      tiks.value = 1;
-    }, 1000);
-  };
-
-  const stopSimulating = () => {
-    clearInterval(timer.value);
-  };
-
-  watch(isPlaying, () => {
-    if (isPlaying.value) {
-      playEmulator();
-    } else {
-      stopSimulating();
+  const {
+    resume: playEmulator,
+    pause: pauseEmulator,
+  } = useIntervalFn(() => {
+    if (isLoading.value) {
+      tiks.value += 1;
+      return;
     }
+
+    simulate(tiks.value);
+    tiks.value = 1;
+  }, 1000, {
+    immediate: false,
   });
+
+  watch(isPlaying, () => (
+    isPlaying.value
+      ? playEmulator
+      : pauseEmulator
+  )());
 
   return {
     chartDateFrom,

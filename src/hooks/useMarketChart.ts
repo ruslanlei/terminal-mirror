@@ -3,7 +3,10 @@ import { storeToRefs } from 'pinia';
 import { useMarketStore } from '@/stores/market';
 import { compose, log } from '@/utils/fp';
 import {
-  dateNow, subtractDays, subtractMinutes, subtractMonths, subtractYears, toISOString, toTimestamp,
+  dateNow,
+  subtractMonths,
+  toISOString,
+  toTimestamp,
 } from '@/utils/date';
 import { useStorage } from '@vueuse/core';
 import { computed, ref, watch } from 'vue';
@@ -87,32 +90,39 @@ export const useMarketChart = () => {
   const tiks = ref(1);
   const timer = ref();
 
-  // TODO: Fix this trash
-  const simulate = async () => {
-    timer.value = setInterval(() => {
-      tiks.value += 1;
-    }, 1000);
+  const isLoading = ref(false);
 
-    const { result, data } = await emulatorStore.simulate(tiks.value);
+  const simulate = async (tiks = 1) => {
+    isLoading.value = true;
+    const { result, data } = await emulatorStore.simulate(tiks);
+    isLoading.value = false;
 
     if (result) {
       appendCandles(data.candles);
     }
-
-    simulate();
-
-    tiks.value = 1;
   };
 
-  // request must be made in queue, not at the same time
-  // while request happening need to count tiks and put them on next req
-  // calculate tiks while req happens
+  const playEmulator = () => {
+    timer.value = setInterval(() => {
+      if (isLoading.value) {
+        tiks.value += 1;
+        return;
+      }
+
+      simulate(tiks.value);
+      tiks.value = 1;
+    }, 1000);
+  };
+
+  const stopSimulating = () => {
+    clearInterval(timer.value);
+  };
 
   watch(isPlaying, () => {
     if (isPlaying) {
-      simulate();
+      playEmulator();
     } else {
-      // clearInterval(timer.value);
+      stopSimulating();
     }
   });
 

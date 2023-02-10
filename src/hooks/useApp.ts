@@ -27,7 +27,7 @@ export const useApp = () => {
   onMounted(() => {
     if (sessionStore.token) {
       profileStore.getProfile();
-      marketStore.getPairs();
+      // marketStore.getPairs();
     }
   });
 };

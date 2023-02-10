@@ -51,8 +51,11 @@ export const useMarketStore = defineStore('market', () => {
 
   const activePairPrice = ref(0);
 
+  const isFetchingPairs = ref(false);
   const handleGetPairs = async () => {
+    isFetchingPairs.value = true;
     const { result, data } = await getPairs();
+    isFetchingPairs.value = false;
 
     if (!result) {
       toastStore.showDanger({
@@ -147,6 +150,7 @@ export const useMarketStore = defineStore('market', () => {
     setPair,
     activePairData,
     activePairPrice,
+    isFetchingPairs,
     getPairs: handleGetPairs,
     createOrder: handleCreateOrder,
     createListOfTakeProfits,

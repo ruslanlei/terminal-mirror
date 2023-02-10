@@ -36,7 +36,9 @@ export const useEmulatorStore = defineStore('emulator', () => {
   const compression = ref(12);
 
   // simulate
-  const handleSimulate = (tiks = 1) => {
+  const handleSimulate = (tiks: number) => {
+    console.log(tiks);
+
     emulatorDate.value = compose(
       toISOString,
       addSeconds(
@@ -49,7 +51,7 @@ export const useEmulatorStore = defineStore('emulator', () => {
       date_from: emulatorDate.value,
       candle_size: candleSize.value,
       compression: multiply(candleSize.value, compression.value),
-      tiks: 1,
+      tiks,
     });
   };
 

@@ -91,7 +91,7 @@ const addCandles = (
 });
 watch(() => props.data, () => {
   candles.value?.setData(props.data);
-  chart.value?.timeScale().fitContent();
+  // chart.value?.timeScale().fitContent();
 }, { immediate: true });
 
 onMounted(() => {

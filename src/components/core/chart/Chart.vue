@@ -1,17 +1,9 @@
 <template>
-  <div :class="$style.chart">
+  <div :class="[$style.chart, isLoading && $style.isLoading]">
     <div
       ref="chartContainer"
       :class="$style.container"
     />
-    <transition name="skeletonTransition">
-      <div
-        v-if="isLoading"
-        :class="$style.loaderCap"
-      >
-        <Loader />
-      </div>
-    </transition>
   </div>
 </template>
 
@@ -26,7 +18,6 @@ import {
   createChart, IChartApi, ISeriesApi, ITimeScaleApi, UTCTimestamp,
 } from 'lightweight-charts';
 import { getCssRgbColor } from '@/utils/dom';
-import Loader from '@/components/core/loader/Loader.vue';
 import { useLocalValue } from '@/hooks/useLocalValue';
 import { ChartEmits, ChartProps } from './index';
 
@@ -119,6 +110,10 @@ onBeforeUnmount(() => {
 <style lang="scss" module>
 .chart {
   position: relative;
+  transition: 300ms opacity;
+  &.isLoading {
+    opacity: 0.1;
+  }
 }
 
 .container {

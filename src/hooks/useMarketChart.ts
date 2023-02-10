@@ -6,6 +6,7 @@ import {
 import { storeToRefs } from 'pinia';
 import { useStorage } from '@vueuse/core';
 
+import { Candle } from '@/api/types/marketData';
 import { useEmulatorStore } from '@/stores/emulator';
 import { useMarketStore } from '@/stores/market';
 import { compose } from '@/utils/fp';
@@ -14,8 +15,11 @@ import {
   subtractMonths,
   toISOString,
 } from '@/utils/date';
-import { Candle } from '@/api/types/marketData';
-import { decreaseDateByAmountOfCandles, mixCandles, transformCandlesForChart } from '@/helpers/candles';
+import {
+  mixCandles,
+  transformCandlesForChart,
+  decreaseDateByAmountOfCandles,
+} from '@/helpers/candles';
 
 export const getDefaultChartDateFrom = () => compose(
   toISOString,
@@ -34,6 +38,7 @@ export const useMarketChart = () => {
   const {
     activePair,
     activePairData,
+    marketType,
   } = storeToRefs(marketStore);
 
   const candles = ref<Candle[]>([]);
@@ -45,7 +50,7 @@ export const useMarketChart = () => {
   const chartDateTo = useStorage<string>('chartDateTo', emulatorDate.value);
 
   const dateTo = computed(
-    () => (marketStore.marketType === 'emulator'
+    () => (marketType.value === 'emulator'
       ? emulatorDate.value
       : emulatorDate.value), // FIXME: While realising real market
   );
@@ -79,7 +84,7 @@ export const useMarketChart = () => {
       candles.value = data.data;
     }
   };
-  watch(activePair, fetchCandles, { immediate: true });
+  watch([activePair, marketType], fetchCandles, { immediate: true });
 
   const computedCandles = computed(() => transformCandlesForChart(candles.value));
 

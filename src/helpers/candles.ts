@@ -1,6 +1,6 @@
 import { Candle } from '@/api/types/marketData';
 import { ChartCandle } from '@/components/core/chart';
-import { toISOString, toTimestamp } from '@/utils/date';
+import { toISOString, toSecondsTimestamp, toTimestamp } from '@/utils/date';
 import { compose, curry } from '@/utils/fp';
 import { concat, filterNoneUniqueByKey } from '@/utils/array';
 import { multiply, subtractRight } from '@/helpers/number';
@@ -12,7 +12,7 @@ export const transformCandlesForChart = (
   high: candle[1],
   low: candle[2],
   close: candle[3],
-  time: toTimestamp(candle[6]),
+  time: toSecondsTimestamp(candle[6]),
 }));
 
 export const mixCandles = (

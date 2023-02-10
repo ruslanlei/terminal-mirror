@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
-import { curry } from '@/utils/fp';
+import { compose, curry } from '@/utils/fp';
 import now from 'lodash/now';
+import { divideRight } from '@/helpers/number';
 
 export {
   now as dateNow,
@@ -20,6 +21,16 @@ export const addSeconds = curry((
   seconds: number,
   date: DateValue,
 ) => dayjs(date).add(seconds, 'seconds'));
+
+export const subtractSeconds = curry((
+  seconds: number,
+  date: DateValue,
+) => dayjs(date).subtract(seconds, 'seconds'));
+
+export const addMinutes = curry((
+  minutes: number,
+  date: DateValue,
+) => dayjs(date).add(minutes, 'minutes'));
 
 export const subtractMinutes = curry((
   minutes: number,
@@ -49,3 +60,10 @@ export const subtractYears = curry((
 export const toTimestamp = (
   date: DateValue,
 ) => dayjs(date).valueOf();
+
+export const toSecondsTimestamp = (
+  date: DateValue,
+) => compose(
+  divideRight(1000),
+  toTimestamp,
+)(date);

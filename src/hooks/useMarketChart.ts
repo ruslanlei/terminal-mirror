@@ -10,7 +10,9 @@ import {
   toTimestamp,
 } from '@/utils/date';
 import { useStorage } from '@vueuse/core';
-import { computed, ref, watch } from 'vue';
+import {
+  computed, nextTick, ref, watch,
+} from 'vue';
 import { Candle } from '@/api/types/marketData';
 import { getCandles } from '@/api/endpoints/marketdata/candles';
 import { transformCandlesForChart } from '@/helpers/candles';
@@ -56,7 +58,7 @@ export const useMarketChart = () => {
   const handleGetCandles = async () => {
     if (!activePairData.value) return;
 
-    // TODO: FIX THIS
+    // FIXME
     const dateFrom = compose(
       toISOString,
       subtractRight(
@@ -94,6 +96,7 @@ export const useMarketChart = () => {
 
   const isLoading = ref(false);
 
+  // FIXME
   const simulate = async (tiks = 1) => {
     isLoading.value = true;
 
@@ -108,16 +111,20 @@ export const useMarketChart = () => {
         ),
       ),
     )(emulatorDate.value);
-    isLoading.value = false;
 
     if (result) {
       appendCandles(data.candles);
     }
+
+    nextTick(() => {
+      isLoading.value = false;
+    });
   };
 
+  // FIXME
   watch(emulatorDate, () => {
     if (!isLoading.value) {
-      // handleGetCandles();
+      handleGetCandles();
     }
   });
 
@@ -138,7 +145,7 @@ export const useMarketChart = () => {
   };
 
   watch(isPlaying, () => {
-    if (isPlaying) {
+    if (isPlaying.value) {
       playEmulator();
     } else {
       stopSimulating();

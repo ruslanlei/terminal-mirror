@@ -5,7 +5,6 @@ import { useMarketStore } from '@/stores/market';
 import { simulate } from '@/api/endpoints/emulator/simulate';
 import { compose } from '@/utils/fp';
 import {
-  addSeconds,
   dateNow,
   subtractYears,
   toISOString,
@@ -18,7 +17,6 @@ export const getDefaultEmulatorDate = () => compose(
   dateNow,
 )();
 
-export type PlayerSpeed = 1 | 2 | 10 | 100 | 1000 | 24000;
 export const useEmulatorStore = defineStore('emulator', () => {
   const marketStore = useMarketStore();
 
@@ -26,28 +24,30 @@ export const useEmulatorStore = defineStore('emulator', () => {
 
   const isPlaying = ref(false);
 
-  const speed = useStorage<PlayerSpeed>('emulatorSpeed', 1);
-  const setSpeed = (value: PlayerSpeed) => {
-    speed.value = value;
+  const candlesPerSecond = useStorage<number>('emulatorSpeed', 1);
+  const setSpeed = (value: number) => {
+    candlesPerSecond.value = value;
   };
 
-  const candleSize = ref<number>(300);
+  const candleSize = ref<number>(900);
 
-  const compression = ref(12);
+  const compression = ref<number>(5);
 
-  // simulate
   const handleSimulate = (tiks: number) => simulate({
     pair: marketStore.activePair,
     date_from: emulatorDate.value,
     candle_size: candleSize.value,
-    compression: multiply(candleSize.value, compression.value),
+    compression: compose(
+      multiply(candlesPerSecond.value),
+      multiply(candleSize.value),
+    )(compression.value),
     tiks,
   });
 
   return {
     emulatorDate,
     isPlaying,
-    speed,
+    candlesPerSecond,
     setSpeed,
     candleSize,
     compression,

@@ -1,9 +1,11 @@
-import { nextTick, ref } from 'vue';
+import { computed, nextTick, ref } from 'vue';
 import { useIntervalFn } from '@vueuse/core';
 import { useEmulatorStore } from '@/stores/emulator';
 import { storeToRefs } from 'pinia';
 import { Candle } from '@/api/types/marketData';
-import { increaseDateByTiksAndCompression } from '@/helpers/candles';
+import { multiply } from '@/helpers/number';
+import { compose } from '@/utils/fp';
+import { addSeconds, secondsToMilliseconds, toISOString } from '@/utils/date';
 
 export const useEmulator = (
   newCandlesCallback: (newCandles: Candle[]) => void,
@@ -14,18 +16,23 @@ export const useEmulator = (
     isPlaying,
     candleSize,
     compression,
+    candlesPerSecond,
   } = storeToRefs(emulatorStore);
 
   const isEmulating = ref(false);
   const requiredTiks = ref(1);
 
   const increaseEmulatorDate = (tiks: number) => {
-    emulatorDate.value = increaseDateByTiksAndCompression(
-      candleSize.value,
-      compression.value,
-      tiks,
-      emulatorDate.value,
-    );
+    const shiftInSeconds = compose(
+      multiply(tiks),
+      multiply(compression.value),
+      multiply(candleSize.value),
+    )(candlesPerSecond.value);
+
+    emulatorDate.value = compose(
+      toISOString,
+      addSeconds(shiftInSeconds),
+    )(emulatorDate.value);
   };
   const simulateTiks = async (tiksAmount = 1) => {
     isEmulating.value = true;
@@ -53,12 +60,16 @@ export const useEmulator = (
     requiredTiks.value = 1;
   };
 
+  const computedInterval = computed(
+    () => secondsToMilliseconds(compression.value),
+  );
+
   const {
     resume: playEmulator,
     pause: pauseEmulator,
   } = useIntervalFn(
     emulateOrCountTiks,
-    1000,
+    computedInterval,
     { immediate: false },
   );
 

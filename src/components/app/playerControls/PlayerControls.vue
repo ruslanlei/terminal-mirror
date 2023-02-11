@@ -19,10 +19,10 @@
         :class="$style.rewindButton"
       />
       <RangeSlider
-        v-model="localSpeed"
+        v-model="candlesPerSecond"
         :class="$style.speedSlider"
-        :min="0"
-        :max="5"
+        :min="1"
+        :max="6"
       />
       <AnimatedText
         :text="displaySpeed"
@@ -48,7 +48,7 @@ import RangeSlider from '@/components/core/rangeSlider/RangeSlider.vue';
 import Button from '@/components/core/button/Button.vue';
 import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
 
-import { PlayerSpeed, useEmulatorStore } from '@/stores/emulator';
+import { useEmulatorStore } from '@/stores/emulator';
 import { storeToRefs } from 'pinia';
 import PlayButton from './playButton/PlayButton.vue';
 import RewindButton from './rewindButton/RewindButton.vue';
@@ -56,16 +56,9 @@ import RewindButton from './rewindButton/RewindButton.vue';
 const { t } = useI18n();
 
 const emulatorStore = useEmulatorStore();
-const { emulatorDate, speed, isPlaying } = storeToRefs(emulatorStore);
+const { emulatorDate, candlesPerSecond, isPlaying } = storeToRefs(emulatorStore);
 
-const playerSpeedList: PlayerSpeed[] = [1, 2, 10, 100, 1000, 24000];
-
-const localSpeed = computed({
-  get: () => playerSpeedList.findIndex((value: PlayerSpeed) => value === speed.value),
-  set: (value: number) => emulatorStore.setSpeed(playerSpeedList[value]),
-});
-
-const displaySpeed = computed(() => `x${speed.value}`);
+const displaySpeed = computed(() => `CPS: ${candlesPerSecond.value}`);
 </script>
 
 <style lang="scss" module>

@@ -7,7 +7,7 @@ import {
 } from '@/components/app/ordersList';
 import { useMarketStore } from '@/stores/market';
 import { MasterOrder, Order, SubOrder } from '@/api/types/order';
-import { add, roundToDecimalPoint } from '@/helpers/math/float';
+import { add, roundToDecimalPoint } from '@/helpers/number';
 import { compose } from '@/utils/fp';
 import {
   collectActiveOrderRecord,
@@ -151,8 +151,6 @@ export const useOrdersList = (
   ) => orders
     .map(({ order, takeProfits, stopLoss }: GroupedOrder) => {
       const pairData = marketStore.pairsMap?.[order.pair];
-
-      console.log('test');
 
       if (!pairData) {
         throw new Error('[Orders list]: pair data not found');

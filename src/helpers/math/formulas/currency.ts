@@ -1,6 +1,6 @@
 import {
   add, divideRight, multiply, subtractRight,
-} from '@/helpers/math/float';
+} from '@/helpers/number';
 import { compose, curry } from '@/utils/fp';
 import { calculateOnePercent } from '@/helpers/math/percents';
 

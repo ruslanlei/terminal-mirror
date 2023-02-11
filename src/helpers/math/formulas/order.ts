@@ -5,7 +5,7 @@ import {
   roundToDecimalPoint,
   subtract,
   subtractRight,
-} from '@/helpers/math/float';
+} from '@/helpers/number';
 
 export const calculateRisk = curry((
   originalPrice: number,

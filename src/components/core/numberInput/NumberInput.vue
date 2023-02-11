@@ -86,7 +86,7 @@ import { useLocalValue } from '@/hooks/useLocalValue';
 import FieldError from '@/components/core/fieldError/FieldError.vue';
 import Icon from '@/components/core/icon/Icon.vue';
 import { useComputedState } from '@/hooks/useComputedState';
-import { add, subtract, roundToDecimalPoint } from '@/helpers/math/float';
+import { add, subtract, roundToDecimalPoint } from '@/helpers/number';
 import { NumberInputEmits, NumberInputNormalizer, NumberInputProps } from './index';
 
 const props = withDefaults(
@@ -250,6 +250,9 @@ const states = useComputedState(props);
 }
 
 .sm {
+  .label + .field {
+    margin-top: 10px;
+  }
   .field {
     @include title4;
     border-radius: 5px;
@@ -274,6 +277,9 @@ const states = useComputedState(props);
 }
 
 .defaultColor {
+  .label {
+    color: rgb(var(--color-accent-1));
+  }
   .field {
     color: rgb(var(--color-accent-1));
     border: 1px solid rgb(var(--color-accent-2));

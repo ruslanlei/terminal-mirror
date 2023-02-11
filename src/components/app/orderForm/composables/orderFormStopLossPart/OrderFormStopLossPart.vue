@@ -104,7 +104,7 @@ import {
   calculateOriginalPriceByVolumeDifference,
   calculateVolumeDifference,
 } from '@/helpers/math/formulas/order';
-import { roundToDecimalPoint } from '@/helpers/math/float';
+import { roundToDecimalPoint } from '@/helpers/number';
 import { compose } from '@/utils/fp';
 import { calculatePercentOfDifference, decreaseByPercent } from '@/helpers/math/percents';
 import { calculatePriceByPercentOfDeposit, calculateVolumeDifferenceInPercentsOfDeposit } from '@/helpers/math/formulas/stopLoss';

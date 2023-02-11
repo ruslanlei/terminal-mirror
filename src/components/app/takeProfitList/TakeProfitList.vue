@@ -43,7 +43,7 @@ import TakeProfitInput from '@/components/core/takeProfitInput/TakeProfitInput.v
 import { useLocalValue } from '@/hooks/useLocalValue';
 import { TakeProfitListEmit, TakeProfitListProps } from '@/components/app/takeProfitList/index';
 import { TakeProfit } from '@/stores/market';
-import { subtract } from '@/helpers/math/float';
+import { subtract } from '@/helpers/number';
 import { reduceTakeProfitsToQuantitiesSum } from '@/helpers/math/formulas/takeProfit';
 import { awaitFrame } from '@/utils/window';
 

@@ -3,7 +3,7 @@ import {
   add,
   multiply,
   subtractRight,
-} from '@/helpers/math/float';
+} from '@/helpers/number';
 import { calculatePercentOfDifference } from '@/helpers/math/percents';
 
 export const calculatePnl = curry((

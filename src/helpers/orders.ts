@@ -3,7 +3,7 @@ import {
 } from '@/utils/fp';
 import { Order, OrderStatus, SubOrder } from '@/api/types/order';
 import { calculateVolumeDifference } from '@/helpers/math/formulas/order';
-import { add } from '@/helpers/math/float';
+import { add } from '@/helpers/number';
 
 export const reduceSubOrderListToCommonPnl = curry((
   order: Order,

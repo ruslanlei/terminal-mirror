@@ -4,7 +4,7 @@ import {
   SubOrderTableItem,
 } from '@/components/app/ordersList/subOrdersTable/index';
 import { compose, curry } from '@/utils/fp';
-import { roundToDecimalPoint } from '@/helpers/math/float';
+import { roundToDecimalPoint } from '@/helpers/number';
 import { valueToPercents } from '@/helpers/math/percents';
 import { humanizeDate } from '@/utils/date';
 import { MasterOrder } from '@/api/types/order';

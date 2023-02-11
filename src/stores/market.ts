@@ -10,6 +10,7 @@ import { processServerErrors, requestMany } from '@/api/common';
 import { getOrdersList } from '@/api/endpoints/orders/getList';
 import { PairServerData } from '@/api/types/pairServerData';
 import { flatten } from '@/utils/array';
+import { getCandles, GetCandlesDTO } from '@/api/endpoints/marketdata/candles';
 
 export type MarketType = 'emulator' | 'real';
 
@@ -51,8 +52,11 @@ export const useMarketStore = defineStore('market', () => {
 
   const activePairPrice = ref(0);
 
+  const isFetchingPairs = ref(false);
   const handleGetPairs = async () => {
+    isFetchingPairs.value = true;
     const { result, data } = await getPairs();
+    isFetchingPairs.value = false;
 
     if (!result) {
       toastStore.showDanger({
@@ -62,6 +66,18 @@ export const useMarketStore = defineStore('market', () => {
     }
 
     pairs.value = data;
+  };
+
+  const handleGetCandles = async (
+    payload: GetCandlesDTO,
+  ) => {
+    const response = await getCandles(payload);
+
+    if (!response.result) {
+      console.log('Failed to get cnadles');
+    }
+
+    return response;
   };
 
   const handleCreateOrder = async (dto: CreateOrderDTO) => {
@@ -147,7 +163,9 @@ export const useMarketStore = defineStore('market', () => {
     setPair,
     activePairData,
     activePairPrice,
+    isFetchingPairs,
     getPairs: handleGetPairs,
+    getCandles: handleGetCandles,
     createOrder: handleCreateOrder,
     createListOfTakeProfits,
     createStopLoss,

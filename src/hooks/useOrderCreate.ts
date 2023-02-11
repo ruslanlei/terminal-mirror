@@ -24,7 +24,7 @@ import {
   calculateAndRoundLiquidationPrice,
   calculateAndRoundPledge, calculateVolumeDifference,
 } from '@/helpers/math/formulas/order';
-import { roundToDecimalPoint } from '@/helpers/math/float';
+import { roundToDecimalPoint } from '@/helpers/number';
 
 export interface OrderModel extends CreateOrderDTO {
   leverage: number,

@@ -7,8 +7,11 @@
       <slot name="tools" />
     </div>
     <main :class="$style.main">
-      <div :class="$style.chart">
-        <slot name="chart" />
+      <div :class="$style.chartWrapper">
+        <slot
+          name="chart"
+          :chart-class="$style.chart"
+        />
       </div>
       <div :class="$style.chartDivider" />
       <div :class="$style.orders">
@@ -56,10 +59,16 @@ const stickyElementStyles = computed(() => ({
 }
 
 .main {
+  display: flex;
+  flex-direction: column;
+}
+
+.chartWrapper {
+  height: 500px;
 }
 
 .chart {
-  height: 500px;
+  height: 100%;
 }
 
 .chartDivider {
@@ -71,6 +80,8 @@ const stickyElementStyles = computed(() => ({
 
 .orders {
   margin-top: 20px;
+  //overflow: hidden;
+  flex-grow: 1;
 }
 
 .sideBar {

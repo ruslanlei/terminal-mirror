@@ -215,6 +215,18 @@ export const useOrdersList = (
 
   watch(() => props.listType, () => getList(true));
 
+  const onOrderCreate = async () => {
+    await getList(false);
+  };
+
+  const subscribeOrderCreate = () => {
+    marketStore.subscribeOrderCreate(onOrderCreate);
+  };
+
+  const unsubscribeOrderCreate = () => {
+    marketStore.unsubscribeOrderCreate(onOrderCreate);
+  };
+
   return {
     columns,
     orders,
@@ -222,5 +234,7 @@ export const useOrdersList = (
     commonPnl,
     isLoading,
     getList,
+    subscribeOrderCreate,
+    unsubscribeOrderCreate,
   };
 };

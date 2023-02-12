@@ -5,12 +5,13 @@ import { useStorage } from '@vueuse/core';
 import { getPairs } from '@/api/endpoints/marketdata/stats';
 import { useToastStore } from '@/stores/toasts';
 import { createOrder, CreateOrderDTO } from '@/api/endpoints/orders/create';
-import { Order, OrderStatus } from '@/api/types/order';
+import { Order } from '@/api/types/order';
 import { processServerErrors, requestMany } from '@/api/common';
 import { getOrdersList } from '@/api/endpoints/orders/getList';
 import { PairServerData } from '@/api/types/pairServerData';
 import { flatten } from '@/utils/array';
 import { getCandles, GetCandlesDTO } from '@/api/endpoints/marketdata/candles';
+import { createEventBus } from '@/utils/eventBus';
 
 export type MarketType = 'emulator' | 'real';
 
@@ -24,10 +25,28 @@ export interface StopLoss {
   quantity: number,
 }
 
+export enum marketEvent {
+  CREATE_ORDER = 'createOrder'
+}
+
 export const useMarketStore = defineStore('market', () => {
   const { t } = useI18n();
 
   const toastStore = useToastStore();
+
+  const marketEventBus = createEventBus();
+
+  const subscribeOrderCreate = (
+    callback: () => void,
+  ) => {
+    marketEventBus.on(marketEvent.CREATE_ORDER, callback);
+  };
+
+  const unsubscribeOrderCreate = (
+    callback: () => void,
+  ) => {
+    marketEventBus.detach(marketEvent.CREATE_ORDER, callback);
+  };
 
   const marketType = useStorage<MarketType>('marketType', 'emulator');
 
@@ -86,6 +105,8 @@ export const useMarketStore = defineStore('market', () => {
     if (!response.result) {
       processServerErrors(response.data, t('order.failedToCreate'));
     }
+
+    marketEventBus.emit(marketEvent.CREATE_ORDER);
 
     return response;
   };
@@ -156,6 +177,8 @@ export const useMarketStore = defineStore('market', () => {
   };
 
   return {
+    subscribeOrderCreate,
+    unsubscribeOrderCreate,
     pairs,
     pairsMap,
     marketType,

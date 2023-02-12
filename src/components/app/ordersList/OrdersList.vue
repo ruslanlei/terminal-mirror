@@ -265,7 +265,7 @@ import Icon from '@/components/core/icon/Icon.vue';
 import { isPositive } from '@/helpers/number';
 import Badge from '@/components/core/badge/Badge.vue';
 import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
-import { onActivated } from 'vue';
+import { onActivated, onBeforeUnmount, onDeactivated } from 'vue';
 import SubOrdersTable from '@/components/app/ordersList/subOrdersTable/SubOrdersTable.vue';
 import { useOrdersList } from '@/hooks/useOrdersList';
 import Typography from '@/components/app/typography/Typography.vue';
@@ -289,6 +289,8 @@ const {
   isLoading,
   getList,
   commonPnl,
+  subscribeOrderCreate,
+  unsubscribeOrderCreate,
 } = useOrdersList(props);
 
 const fakeDelete = (id: number) => {
@@ -300,7 +302,11 @@ const fakeDelete = (id: number) => {
 onActivated(() => {
   const showLoading = !orders.value?.length;
   getList(showLoading);
+  subscribeOrderCreate();
 });
+
+onDeactivated(unsubscribeOrderCreate);
+onBeforeUnmount(unsubscribeOrderCreate);
 </script>
 
 <style lang="scss" module>

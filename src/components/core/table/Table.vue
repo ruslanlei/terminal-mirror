@@ -352,12 +352,12 @@ onMounted(() => {
 .tableElementAppearance {
   &-enter-active,
   &-leave-active {
-    transition: opacity 300ms, transform 300ms, height 300ms;
+    transition: opacity 270ms, transform 300ms, height 300ms;
   }
   &-enter-from,
   &-leave-to {
     opacity: 0;
-    transform: scale(0.8) translateY(26px);
+    transform: scale(0.9) translateY(-42px);
     height: 0 !important;
   }
 }

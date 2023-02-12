@@ -3,7 +3,9 @@
     "search": "Search",
     "save": "Save",
     "currencyAmount": "{amount} {currency}",
-    "percents": "{value}%"
+    "percents": "{value}%",
+    "no": "No",
+    "yes": "Yes"
   },
   "validationError": {
     "email": "Value is not valid email",

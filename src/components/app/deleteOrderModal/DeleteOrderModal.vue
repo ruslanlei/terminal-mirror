@@ -1,7 +1,5 @@
 <template>
-  <Modal
-    :class="$style.deleteOrderModal"
-  >
+  <Modal :class="$style.deleteOrderModal">
     <Picture
       :class="$style.illustration"
       :srcset="illustrationSrcSet"
@@ -13,30 +11,46 @@
     >
       {{ t('deleteOrder.label') }}
     </Typography>
-    <Typography
-      v-if="showPnl"
-      size="title1"
-      :state="['accent1', 'medium']"
-      :class="$style.pnl"
-    >
-      <i18n-t
-        tag="span"
-        keypath="deleteOrder.pnl"
+    <transition name="orderModalPnlTransition">
+      <Typography
+        v-if="showPnl"
+        size="title1"
+        :state="['accent1', 'medium']"
+        :class="$style.pnl"
       >
-        <template #pnl>
-          <Typography
-            :is-inline="true"
-            :state="[
-              isPositive(pnl)
-                ? 'success'
-                : 'danger'
-            ]"
-          >
-            {{ t('common.currencyAmount', { amount: pnl, currency: orderCurrency }) }}
-          </Typography>
-        </template>
-      </i18n-t>
-    </Typography>
+        <i18n-t
+          tag="span"
+          keypath="deleteOrder.pnl"
+        >
+          <template #pnl>
+            <Typography
+              :is-inline="true"
+              :state="[
+                isPositive(pnl)
+                  ? 'success'
+                  : 'danger'
+              ]"
+            >
+              {{ t('common.currencyAmount', { amount: pnl, currency: orderCurrency }) }}
+            </Typography>
+          </template>
+        </i18n-t>
+      </Typography>
+    </transition>
+    <div :class="$style.controls">
+      <Button
+        :class="$style.control"
+        :state="['successColor', 'mdSize']"
+      >
+        {{ t('common.no') }}
+      </Button>
+      <Button
+        :class="$style.control"
+        :state="['dangerColor', 'mdSize']"
+      >
+        {{ t('common.yes') }}
+      </Button>
+    </div>
   </Modal>
 </template>
 
@@ -51,6 +65,7 @@ import Modal from '@/components/core/modal/Modal.vue';
 import Picture from '@/components/core/picture/Picture.vue';
 import { collectSrcSet } from '@/helpers/dom';
 import Typography from '@/components/app/typography/Typography.vue';
+import Button from '@/components/core/button/Button.vue';
 import { Order, SubOrder } from '@/api/types/order';
 import { reduceTakeProfitsToQuantitiesSum } from '@/helpers/math/formulas/takeProfit';
 import { calculatePnl } from '@/helpers/math/formulas/pnl';
@@ -78,7 +93,8 @@ const emulatorStore = useEmulatorStore();
 
 const order = ref(cloneDeep(props.order));
 
-const showPnl = computed(() => order.value.status === 'filled');
+// const showPnl = computed(() => order.value.status === 'filled');
+const showPnl = ref(false);
 
 const orderCurrency = computed(() => marketStore.pairsMap[order.value.pair].quote);
 
@@ -157,5 +173,33 @@ onBeforeUnmount(() => {
 
 .pnl {
   margin-top: 20px;
+  & + .controls {
+    margin-top: 64px;
+  }
+}
+
+.controls {
+  margin-top: 104px;
+  display: flex;
+  gap: 20px;
+}
+
+.control {
+  padding: 12px;
+}
+</style>
+
+<style lang="scss">
+.orderModalPnlTransition {
+  &-enter-active,
+  &-leave-active {
+    transition: opacity 200ms, transform 200ms;
+  }
+
+  &-enter-from,
+  &-leave-to {
+    opacity: 0;
+    transform: translateY(10%);
+  }
 }
 </style>

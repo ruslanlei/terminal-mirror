@@ -153,7 +153,16 @@ const computedElementSelector = computed(
   () => `[data-table-element-id="${tableId.value}"]`,
 );
 
-onMounted(() => {
+const playAppearAnimation = () => {
+  const onAnimationComplete = () => {
+    anime.remove(computedElementSelector.value);
+
+    compose(
+      removeCssProperty(['opacity', 'transform']),
+      arrayOfElements,
+    )(computedElementSelector.value);
+  };
+
   playAnimation({
     targets: computedElementSelector.value,
     translateY: [200, 0],
@@ -164,19 +173,12 @@ onMounted(() => {
     duration: 800,
     easing: 'easeOutQuint',
     delay: anime.stagger(40, { from: 'first' }),
-    loopComplete: () => {
-      anime.remove(computedElementSelector.value);
-
-      compose(
-        removeCssProperty(['opacity', 'transform']),
-        arrayOfElements,
-      )(computedElementSelector.value);
-    },
+    loopComplete: onAnimationComplete,
   });
-});
+};
 
-onBeforeUnmount(() => {
-  anime.remove(`[data-id="${tableId.value}"]`);
+onMounted(() => {
+  playAppearAnimation();
 });
 </script>
 

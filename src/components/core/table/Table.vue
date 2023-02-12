@@ -92,7 +92,6 @@
 import {
   ref,
   computed,
-  onBeforeUnmount,
   onMounted,
 } from 'vue';
 import { useTable } from '@/hooks/useTable';
@@ -103,7 +102,7 @@ import anime from 'animejs';
 import { uuid } from '@/utils/uuid';
 import { arrayOfElements } from '@/helpers/dom';
 import { compose } from '@/utils/fp';
-import { removeCssPropertiesFromElementList, removeCssProperty } from '@/helpers/style';
+import { removeCssProperty } from '@/helpers/style';
 import {
   tableType,
   TableRecord,

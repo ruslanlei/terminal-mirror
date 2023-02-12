@@ -45,47 +45,51 @@
       name="tableElementAppearance"
       @before-leave="onElementRemove"
     >
-      <TableRow
+      <div
         v-for="record in computedRecords"
         :key="record.id"
-        :grid-columns="computedListColumns"
-        :record="record"
-        :columns="columns"
-        :state="state"
+        :class="$style.tableRowContainer"
         :data-table-element-id="tableId"
-        :class="$style.tableRow"
-        @click="onRowClick(record.id)"
-        @cell-click="onCellClick(record.id, $event)"
       >
-        <template #default>
-          <button
-            v-for="column in columns"
-            :key="column.slug"
-            type="button"
-            :class="[
-              $style.recordColumn,
-              $style[column.align],
-            ]"
-            @click="onCellClick(record.id, column.isSelect)"
+        <TableRow
+          :grid-columns="computedListColumns"
+          :record="record"
+          :columns="columns"
+          :state="state"
+          :class="$style.tableRow"
+          @click="onRowClick(record.id)"
+          @cell-click="onCellClick(record.id, $event)"
+        >
+          <template #default>
+            <button
+              v-for="column in columns"
+              :key="column.slug"
+              type="button"
+              :class="[
+                $style.recordColumn,
+                $style[column.align],
+              ]"
+              @click="onCellClick(record.id, column.isSelect)"
+            >
+              <slot
+                :name="`cell(${column.slug})`"
+                :record="record"
+                :data="record.data[column.slug]"
+                :is-selected="record.isSelected"
+              />
+            </button>
+          </template>
+          <template
+            v-if="record.children && 'recordChildren' in $slots"
+            #children="{ data }"
           >
             <slot
-              :name="`cell(${column.slug})`"
-              :record="record"
-              :data="record.data[column.slug]"
-              :is-selected="record.isSelected"
+              name="recordChildren"
+              :children="data"
             />
-          </button>
-        </template>
-        <template
-          v-if="record.children && 'recordChildren' in $slots"
-          #children="{ data }"
-        >
-          <slot
-            name="recordChildren"
-            :children="data"
-          />
-        </template>
-      </TableRow>
+          </template>
+        </TableRow>
+      </div>
     </transition-group>
   </div>
 </template>
@@ -247,7 +251,15 @@ onMounted(() => {
 }
 
 .tableRow {
+  width: 100%;
+}
+
+.tableRowContainer {
+  width: 100%;
   z-index: 2;
+  display: flex;
+  align-items: center;
+  position: relative;
 }
 
 .recordColumn {}
@@ -338,12 +350,12 @@ onMounted(() => {
 .tableElementAppearance {
   &-enter-active,
   &-leave-active {
-    transition: opacity 160ms, transform 200ms, height 200ms;
+    transition: opacity 300ms, transform 300ms, height 300ms;
   }
   &-enter-from,
   &-leave-to {
     opacity: 0;
-    transform: scale(0.8);
+    transform: scale(0.8) translateY(26px);
     height: 0 !important;
   }
 }

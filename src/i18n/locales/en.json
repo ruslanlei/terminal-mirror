@@ -189,7 +189,8 @@
     "failedToGetList": "Failed to get list of orders"
   },
   "deleteOrder": {
-    "label": "Are you sure you want close position?"
+    "label": "Are you sure you want close position?",
+    "pnl": "by PNL of position {pnl}"
   },
   "ordersList": {
     "column": {

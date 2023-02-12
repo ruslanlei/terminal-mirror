@@ -13,8 +13,29 @@
     >
       {{ t('deleteOrder.label') }}
     </Typography>
-    <Typography v-if="showPnl">
-      heh
+    <Typography
+      v-if="showPnl"
+      size="title1"
+      :state="['accent1', 'medium']"
+      :class="$style.pnl"
+    >
+      <i18n-t
+        tag="span"
+        keypath="deleteOrder.pnl"
+      >
+        <template #pnl>
+          <Typography
+            :is-inline="true"
+            :state="[
+              isPositive(pnl)
+                ? 'success'
+                : 'danger'
+            ]"
+          >
+            {{ t('common.currencyAmount', { amount: pnl, currency: orderCurrency }) }}
+          </Typography>
+        </template>
+      </i18n-t>
     </Typography>
   </Modal>
 </template>
@@ -33,7 +54,7 @@ import Typography from '@/components/app/typography/Typography.vue';
 import { Order, SubOrder } from '@/api/types/order';
 import { reduceTakeProfitsToQuantitiesSum } from '@/helpers/math/formulas/takeProfit';
 import { calculatePnl } from '@/helpers/math/formulas/pnl';
-import { subtractRight } from '@/helpers/number';
+import { isPositive, subtractRight } from '@/helpers/number';
 import { useMarketStore } from '@/stores/market';
 import { useEmulatorStore } from '@/stores/emulator';
 import { compose, filter } from '@/utils/fp';
@@ -58,6 +79,8 @@ const emulatorStore = useEmulatorStore();
 const order = ref(cloneDeep(props.order));
 
 const showPnl = computed(() => order.value.status === 'filled');
+
+const orderCurrency = computed(() => marketStore.pairsMap[order.value.pair].quote);
 
 const takeProfits = ref<SubOrder[]>([]);
 const setTakeProfits = (tps: SubOrder[]) => {
@@ -130,5 +153,9 @@ onBeforeUnmount(() => {
 .label {
   max-width: 50%;
   font-size: 24px;
+}
+
+.pnl {
+  margin-top: 20px;
 }
 </style>

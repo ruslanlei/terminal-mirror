@@ -188,6 +188,9 @@
     "successfullyCreated": "Order(s) has been successfully created",
     "failedToGetList": "Failed to get list of orders"
   },
+  "deleteOrder": {
+    "label": "Are you sure you want close position?"
+  },
   "ordersList": {
     "column": {
       "pair": "Pair",

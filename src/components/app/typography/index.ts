@@ -2,6 +2,7 @@ export type TypographyState =
     'success'
     | 'danger'
     | 'bold'
+    | 'semiBold'
     | 'medium'
     | 'accent1'
     | 'accent2';

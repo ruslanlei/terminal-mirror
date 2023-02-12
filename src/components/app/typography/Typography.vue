@@ -94,6 +94,10 @@ const computedState = useComputedState(props);
 }
 
 .bold {
+  font-weight: 700;
+}
+
+.semiBold {
   font-weight: 600;
 }
 

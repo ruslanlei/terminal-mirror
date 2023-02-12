@@ -86,7 +86,7 @@
                 isPositive(pnlPercent)
                   ? 'success'
                   : 'danger',
-                'bold',
+                'semiBold',
               ]"
               size="title2"
             />
@@ -238,7 +238,7 @@
           <button
             type="button"
             :class="$style.deleteButton"
-            @click="fakeDelete(record.id)"
+            @click="deleteOrder(record.id)"
           >
             <Icon icon="cross" />
           </button>
@@ -291,13 +291,8 @@ const {
   commonPnl,
   subscribeOrderCreate,
   unsubscribeOrderCreate,
+  deleteOrder,
 } = useOrdersList(props);
-
-const fakeDelete = (id: number) => {
-  orders.value = orders.value.filter(
-    (order: Order) => order.id !== id,
-  );
-};
 
 onActivated(() => {
   const showLoading = !orders.value?.length;

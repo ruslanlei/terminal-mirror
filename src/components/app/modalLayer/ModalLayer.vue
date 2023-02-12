@@ -4,19 +4,21 @@
       [$style.modalLayer]: true,
       [$style.active]: isAnyActiveModals
     }"
+    @click.self="closeModal(displayModal.id)"
   >
-    <div
-      :class="[$style.backdrop, !isAnyActiveModals && $style.hidden]"
-      @click="closeModal(displayModal.id)"
-    />
     <div :class="$style.modal">
-      <component
-        :is="displayModal.component"
-        v-if="isAnyActiveModals"
-        v-bind="displayModal.payload"
-        :class="$style.modal"
-        @close="closeModal(displayModal.id)"
-      />
+      <transition
+        name="modalTransition"
+        mode="out-in"
+      >
+        <component
+          :is="displayModal.component"
+          v-if="isAnyActiveModals"
+          v-bind="displayModal.payload"
+          :class="$style.modal"
+          @close="closeModal(displayModal.id)"
+        />
+      </transition>
     </div>
   </div>
 </template>
@@ -26,12 +28,14 @@ import { computed } from 'vue';
 import { useModalStore, Modal, modalType } from '@/stores/modals';
 import ConfirmModal from '@/components/app/confirmModal/ConfirmModal.vue';
 import SuccessSignUpModal from '@/components/app/successSignUpModal/SuccessSignUpModal.vue';
+import DeleteOrderModal from '@/components/app/deleteOrderModal/DeleteOrderModal.vue';
 
 const modalsStore = useModalStore();
 
 const modalsMap = {
   [modalType.CONFIRM]: ConfirmModal,
   [modalType.SUCCESS_SIGN_UP]: SuccessSignUpModal,
+  [modalType.DELETE_ORDER]: DeleteOrderModal,
 };
 
 const modals = computed(() => modalsStore.list.map((modal) => ({
@@ -58,14 +62,11 @@ const closeModal = (modalId: Modal['id']) => {
   min-height: 100%;
   pointer-events: none;
   @include scrollbarDefault();
-  & > * {
-    pointer-events: all;
-  }
+  transition: background-color 300ms, backdrop-filter 300ms;
   &.active {
     pointer-events: all;
-    .layer {
-      background-color: rgba(0,0,0, 0.2);
-    }
+    background-color: rgba(var(--color-background-1), 0.4);
+    backdrop-filter: blur(20px);
   }
 }
 
@@ -75,16 +76,18 @@ const closeModal = (modalId: Modal['id']) => {
   position: relative;
   z-index: 2;
 }
+</style>
 
-.backdrop {
-  cursor: pointer;
-  position: absolute;
-  inset: 0;
-  background-color: rgba(var(--color-background-1), 0.4);
-  transition: opacity 200ms;
-  &.hidden {
+<style lang="scss">
+.modalTransition {
+  &-enter-active,
+  &-leave-active {
+    transition: opacity 160ms;
+  }
+
+  &-enter-from,
+  &-leave-to {
     opacity: 0;
-    pointer-events: none;
   }
 }
 </style>

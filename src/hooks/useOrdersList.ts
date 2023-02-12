@@ -1,19 +1,13 @@
 import { computed, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import {
-  ActiveOrdersTableRecord,
-  ClosedOrdersTableRecord,
-  OrdersListProps,
-} from '@/components/app/ordersList';
+import { ActiveOrdersTableRecord, ClosedOrdersTableRecord, OrdersListProps } from '@/components/app/ordersList';
 import { useMarketStore } from '@/stores/market';
 import { MasterOrder, Order, SubOrder } from '@/api/types/order';
 import { add, roundToDecimalPoint } from '@/helpers/number';
 import { compose } from '@/utils/fp';
-import {
-  collectActiveOrderRecord,
-  collectClosedOrderRecord,
-} from '@/components/app/ordersList/collectTableRecord';
+import { collectActiveOrderRecord, collectClosedOrderRecord } from '@/components/app/ordersList/collectTableRecord';
 import { createEmptyRecord } from '@/components/core/table/helpers';
+import { modalType, useModalStore } from '@/stores/modals';
 
 interface GroupedOrder {
   order: MasterOrder,
@@ -26,6 +20,7 @@ export const useOrdersList = (
 ) => {
   const { t } = useI18n();
   const marketStore = useMarketStore();
+  const modalStore = useModalStore();
 
   const columns = computed(() => [
     {
@@ -215,6 +210,17 @@ export const useOrdersList = (
 
   watch(() => props.listType, () => getList(true));
 
+  const deleteOrder = async (
+    orderId: Order['id'],
+  ) => {
+    modalStore.showModal({
+      type: modalType.DELETE_ORDER,
+      payload: {
+        orderId,
+      },
+    });
+  };
+
   const onOrderCreate = async () => {
     await getList(false);
   };
@@ -236,5 +242,6 @@ export const useOrdersList = (
     getList,
     subscribeOrderCreate,
     unsubscribeOrderCreate,
+    deleteOrder,
   };
 };

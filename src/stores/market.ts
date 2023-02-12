@@ -8,7 +8,7 @@ import { createOrder, CreateOrderDTO } from '@/api/endpoints/orders/create';
 import { Order } from '@/api/types/order';
 import { processServerErrors, requestMany } from '@/api/common';
 import { getOrdersList } from '@/api/endpoints/orders/getList';
-import { PairServerData } from '@/api/types/pairServerData';
+import { PairData } from '@/api/types/pair';
 import { flatten } from '@/utils/array';
 import { getCandles, GetCandlesDTO } from '@/api/endpoints/marketdata/candles';
 import { createEventBus } from '@/utils/eventBus';
@@ -50,22 +50,22 @@ export const useMarketStore = defineStore('market', () => {
 
   const marketType = useStorage<MarketType>('marketType', 'emulator');
 
-  const pairs = useStorage<PairServerData[]>('pairs', []);
+  const pairs = useStorage<PairData[]>('pairs', []);
 
-  const pairsMap = computed<Record<PairServerData['id'], PairServerData>>(
-    () => pairs.value.reduce((acc, pair: PairServerData) => ({
+  const pairsMap = computed<Record<PairData['id'], PairData>>(
+    () => pairs.value.reduce((acc, pair: PairData) => ({
       ...acc,
       [pair.id]: pair,
     }), {}),
   );
 
-  const activePair = useStorage<PairServerData['id']>('activePair', 1);
+  const activePair = useStorage<PairData['id']>('activePair', 1);
 
-  const setPair = (pairId: PairServerData['id']) => {
+  const setPair = (pairId: PairData['id']) => {
     activePair.value = pairId;
   };
 
-  const activePairData = computed<PairServerData | undefined>(
+  const activePairData = computed<PairData | undefined>(
     () => pairsMap.value[activePair.value],
   );
 

@@ -2,7 +2,7 @@ import {
   compose,
   curry,
 } from '@/utils/fp';
-import { PairServerData } from '@/api/types/pairServerData';
+import { PairData } from '@/api/types/pair';
 import { MasterOrder, Order, SubOrder } from '@/api/types/order';
 import { multiply, roundToDecimalPoint } from '@/helpers/number';
 import { calculatePercentOfDifference } from '@/helpers/math/percents';
@@ -15,7 +15,7 @@ import { collectTableRecord } from '@/components/core/table/helpers';
 import { getOrdersWithStatus, reduceSubOrderListToCommonPnl } from '@/helpers/orders';
 
 interface CollectRecordPayload {
-    pairData: PairServerData,
+    pairData: PairData,
     pairPrice: number,
     order: MasterOrder,
     takeProfits: SubOrder[] | undefined,

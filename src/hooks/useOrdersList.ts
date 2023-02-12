@@ -8,6 +8,7 @@ import { compose } from '@/utils/fp';
 import { collectActiveOrderRecord, collectClosedOrderRecord } from '@/components/app/ordersList/collectTableRecord';
 import { createEmptyRecord } from '@/components/core/table/helpers';
 import { modalType, useModalStore } from '@/stores/modals';
+import { awaitTimeout } from '@/utils/promise';
 
 interface GroupedOrder {
   order: MasterOrder,
@@ -223,16 +224,27 @@ export const useOrdersList = (
     });
   };
 
-  const onOrdersListUpdate = async () => {
+  const onOrderCreate = async () => {
     await getList(false);
   };
 
+  const onOrderDelete = async (
+    orderId: Order['id'],
+  ) => {
+    await awaitTimeout(200);
+    orders.value = orders.value.filter(
+      (order: Order) => order.id !== orderId && order.master !== orderId,
+    );
+  };
+
   const subscribeOrderCreate = () => {
-    marketStore.subscribeOrdersListUpdate(onOrdersListUpdate);
+    marketStore.subscribeOrderCreated(onOrderCreate);
+    marketStore.subscribeOrderDelete(onOrderDelete);
   };
 
   const unsubscribeOrderCreate = () => {
-    marketStore.subscribeOrdersListUpdate(onOrdersListUpdate);
+    marketStore.unsubscribeOrderCreated(onOrderCreate);
+    marketStore.unsubscribeOrderDelete(onOrderDelete);
   };
 
   return {

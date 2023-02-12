@@ -31,3 +31,25 @@ export const removeCssProperty = curry((
 
   return element;
 });
+
+export const addCssProperty = curry((
+  property: [
+    keyof CSSStyleDeclaration,
+    string | number,
+  ],
+  element: HTMLElement,
+) => {
+  const [
+    cssProperty,
+    cssPropertyValue,
+  ] = property;
+
+  // @ts-ignore
+  element.style[cssProperty] = String(cssPropertyValue);
+
+  return element;
+});
+
+export const toCssPxValue = (
+  value: number,
+) => `${value}px`;

@@ -43,6 +43,7 @@
       tag="div"
       :class="$style.records"
       name="tableElementAppearance"
+      @before-leave="onElementRemove"
     >
       <TableRow
         v-for="record in computedRecords"
@@ -52,6 +53,7 @@
         :columns="columns"
         :state="state"
         :data-table-element-id="tableId"
+        :class="$style.tableRow"
         @click="onRowClick(record.id)"
         @cell-click="onCellClick(record.id, $event)"
       >
@@ -102,7 +104,7 @@ import anime from 'animejs';
 import { uuid } from '@/utils/uuid';
 import { arrayOfElements } from '@/helpers/dom';
 import { compose } from '@/utils/fp';
-import { removeCssProperty } from '@/helpers/style';
+import { addCssProperty, removeCssProperty, toCssPxValue } from '@/helpers/style';
 import {
   tableType,
   TableRecord,
@@ -151,6 +153,17 @@ const tableId = ref(uuid());
 const computedElementSelector = computed(
   () => `[data-table-element-id="${tableId.value}"]`,
 );
+
+const onElementRemove = (leavingElement: HTMLElement) => {
+  const {
+    height,
+  } = leavingElement.getBoundingClientRect();
+
+  compose(
+    addCssProperty(['zIndex', 1]),
+    addCssProperty(['height', toCssPxValue(height)]),
+  )(leavingElement);
+};
 
 const playAppearAnimation = () => {
   const onAnimationComplete = () => {
@@ -223,6 +236,10 @@ onMounted(() => {
       }
     }
   }
+}
+
+.tableRow {
+  z-index: 2;
 }
 
 .recordColumn {}
@@ -313,13 +330,13 @@ onMounted(() => {
 .tableElementAppearance {
   &-enter-active,
   &-leave-active {
-    transition: opacity 200ms, transform 200ms/*, height 200ms*/;
+    transition: opacity 160ms, transform 200ms, height 200ms;
   }
   &-enter-from,
   &-leave-to {
     opacity: 0;
     transform: scale(0.8);
-    //height: 0;
+    height: 0 !important;
   }
 }
 </style>

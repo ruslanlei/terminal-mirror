@@ -140,6 +140,7 @@ onBeforeUnmount(removeListeners);
 
 .ordersListColor {
   transition: background-color 150ms;
+  background-color: rgb(var(--color-background-1));
   &:hover {
     background-color: rgb(var(--color-background-3));
   }

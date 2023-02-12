@@ -229,12 +229,12 @@
           v-if="listType === 'active'"
           :class="$style.orderOptions"
         >
-          <button
-            type="button"
-            :class="$style.swapButton"
-          >
-            <Icon icon="swap" />
-          </button>
+          <!--          <button-->
+          <!--            type="button"-->
+          <!--            :class="$style.swapButton"-->
+          <!--          >-->
+          <!--            <Icon icon="swap" />-->
+          <!--          </button>-->
           <button
             type="button"
             :class="$style.deleteButton"

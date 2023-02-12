@@ -13,7 +13,7 @@
     </Typography>
     <transition name="orderModalPnlTransition">
       <Typography
-        v-if="showPnl"
+        v-if="isOrderFilled"
         size="title1"
         :state="['accent1', 'medium']"
         :class="$style.pnl"
@@ -41,12 +41,15 @@
       <Button
         :class="$style.control"
         :state="['successColor', 'mdSize']"
+        @click="close"
       >
         {{ t('common.no') }}
       </Button>
       <Button
         :class="$style.control"
         :state="['dangerColor', 'mdSize']"
+        :is-loading="isDeleting"
+        @click="handleDelete"
       >
         {{ t('common.yes') }}
       </Button>
@@ -74,12 +77,14 @@ import { useMarketStore } from '@/stores/market';
 import { useEmulatorStore } from '@/stores/emulator';
 import { compose, filter } from '@/utils/fp';
 import { cloneDeep } from '@/utils/object';
-import { DeleteOrderModalProps } from './index';
+import { DeleteOrderModalEmits, DeleteOrderModalProps } from './index';
 
 import IllustrationPng from './assets/illustration.png';
 import IllustrationWebp from './assets/illustration.webp';
 
 const props = defineProps<DeleteOrderModalProps>();
+
+const emit = defineEmits<DeleteOrderModalEmits>();
 
 const illustrationSrcSet = computed(() => collectSrcSet([
   IllustrationWebp,
@@ -91,10 +96,13 @@ const { t } = useI18n();
 const marketStore = useMarketStore();
 const emulatorStore = useEmulatorStore();
 
+const close = () => {
+  emit('close');
+};
+
 const order = ref(cloneDeep(props.order));
 
-// const showPnl = computed(() => order.value.status === 'filled');
-const showPnl = ref(false);
+const isOrderFilled = computed(() => order.value.status === 'filled');
 
 const orderCurrency = computed(() => marketStore.pairsMap[order.value.pair].quote);
 
@@ -145,6 +153,25 @@ if (props.takeProfits) {
   setTakeProfits(props.takeProfits);
   emulatorStore.subscribeSimulateEvent(onEmulatorEvent);
 }
+
+const isDeleting = ref(false);
+const handleDelete = async () => {
+  isDeleting.value = true;
+
+  const {
+    result,
+  } = await (
+    isOrderFilled.value
+      ? marketStore.closeOrder
+      : marketStore.deleteOrder
+  )(order.value.id);
+
+  isDeleting.value = false;
+
+  if (result) {
+    close();
+  }
+};
 
 onBeforeUnmount(() => {
   emulatorStore.unsubscribeSimulateEvent(onEmulatorEvent);

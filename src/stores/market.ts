@@ -12,6 +12,8 @@ import { PairData } from '@/api/types/pair';
 import { flatten } from '@/utils/array';
 import { getCandles, GetCandlesDTO } from '@/api/endpoints/marketdata/candles';
 import { createEventBus } from '@/utils/eventBus';
+import { deleteOrder } from '@/api/endpoints/orders/delete';
+import { closeOrder } from '@/api/endpoints/orders/cancel';
 
 export type MarketType = 'emulator' | 'real';
 
@@ -26,7 +28,7 @@ export interface StopLoss {
 }
 
 export enum marketEvent {
-  CREATE_ORDER = 'createOrder'
+  SOME_OF_ORDERS_UPDATED = 'ordersUpdated',
 }
 
 export const useMarketStore = defineStore('market', () => {
@@ -36,17 +38,13 @@ export const useMarketStore = defineStore('market', () => {
 
   const marketEventBus = createEventBus();
 
-  const subscribeOrderCreate = (
+  const subscribeOrdersListUpdate = (
     callback: () => void,
-  ) => {
-    marketEventBus.on(marketEvent.CREATE_ORDER, callback);
-  };
+  ) => { marketEventBus.on(marketEvent.SOME_OF_ORDERS_UPDATED, callback); };
 
-  const unsubscribeOrderCreate = (
+  const unsubscribeOrdersListUpdate = (
     callback: () => void,
-  ) => {
-    marketEventBus.detach(marketEvent.CREATE_ORDER, callback);
-  };
+  ) => { marketEventBus.detach(marketEvent.SOME_OF_ORDERS_UPDATED, callback); };
 
   const marketType = useStorage<MarketType>('marketType', 'emulator');
 
@@ -106,7 +104,7 @@ export const useMarketStore = defineStore('market', () => {
       processServerErrors(response.data, t('order.failedToCreate'));
     }
 
-    marketEventBus.emit(marketEvent.CREATE_ORDER);
+    marketEventBus.emit(marketEvent.SOME_OF_ORDERS_UPDATED);
 
     return response;
   };
@@ -176,9 +174,33 @@ export const useMarketStore = defineStore('market', () => {
     };
   };
 
+  const handleDeleteOrder = async (
+    orderId: Order['id'],
+  ) => {
+    const response = await deleteOrder(orderId);
+
+    if (response.result) {
+      marketEventBus.emit(marketEvent.SOME_OF_ORDERS_UPDATED);
+    }
+
+    return response;
+  };
+
+  const handleCloseOrder = async (
+    orderId: Order['id'],
+  ) => {
+    const response = await closeOrder(orderId);
+
+    if (response.result) {
+      marketEventBus.emit(marketEvent.SOME_OF_ORDERS_UPDATED);
+    }
+
+    return response;
+  };
+
   return {
-    subscribeOrderCreate,
-    unsubscribeOrderCreate,
+    subscribeOrdersListUpdate,
+    unsubscribeOrdersListUpdate,
     pairs,
     pairsMap,
     marketType,
@@ -193,5 +215,7 @@ export const useMarketStore = defineStore('market', () => {
     createListOfTakeProfits,
     createStopLoss,
     getOrderList,
+    deleteOrder: handleDeleteOrder,
+    closeOrder: handleCloseOrder,
   };
 });

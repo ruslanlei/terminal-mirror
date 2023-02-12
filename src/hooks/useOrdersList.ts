@@ -223,16 +223,16 @@ export const useOrdersList = (
     });
   };
 
-  const onOrderCreate = async () => {
+  const onOrdersListUpdate = async () => {
     await getList(false);
   };
 
   const subscribeOrderCreate = () => {
-    marketStore.subscribeOrderCreate(onOrderCreate);
+    marketStore.subscribeOrdersListUpdate(onOrdersListUpdate);
   };
 
   const unsubscribeOrderCreate = () => {
-    marketStore.unsubscribeOrderCreate(onOrderCreate);
+    marketStore.subscribeOrdersListUpdate(onOrdersListUpdate);
   };
 
   return {

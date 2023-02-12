@@ -216,6 +216,8 @@ onMounted(() => {
   &.list {
     .head {
       display: grid;
+      position: relative;
+      z-index: 3;
     }
     .records {}
     &.rowsClickable {

@@ -15,7 +15,7 @@ export const useEmulator = (
     emulatorDate,
     isPlaying,
     candleSize,
-    compression,
+    compressionFactor,
     candlesPerSecond,
   } = storeToRefs(emulatorStore);
 
@@ -25,9 +25,9 @@ export const useEmulator = (
   const increaseEmulatorDate = (tiks: number) => {
     const shiftInSeconds = compose(
       multiply(tiks),
-      multiply(compression.value),
-      multiply(candleSize.value),
-    )(candlesPerSecond.value);
+      multiply(compressionFactor.value),
+      multiply(candlesPerSecond.value),
+    )(candleSize.value);
 
     emulatorDate.value = compose(
       toISOString,
@@ -61,7 +61,7 @@ export const useEmulator = (
   };
 
   const computedInterval = computed(
-    () => secondsToMilliseconds(compression.value),
+    () => secondsToMilliseconds(compressionFactor.value),
   );
 
   const {

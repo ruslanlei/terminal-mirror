@@ -217,7 +217,7 @@
           </template>
         </span>
       </template>
-      <template #cell(options)="{ record }">
+      <template #cell(options)="{ data: { order, takeProfits } }">
         <button
           v-if="listType === 'closed'"
           type="button"
@@ -238,7 +238,7 @@
           <button
             type="button"
             :class="$style.deleteButton"
-            @click="deleteOrder(record.id)"
+            @click="deleteOrder(order, takeProfits)"
           >
             <Icon icon="cross" />
           </button>

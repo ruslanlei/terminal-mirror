@@ -211,12 +211,14 @@ export const useOrdersList = (
   watch(() => props.listType, () => getList(true));
 
   const deleteOrder = async (
-    orderId: Order['id'],
+    order: Order,
+    takeProfits: SubOrder[] | undefined,
   ) => {
     modalStore.showModal({
       type: modalType.DELETE_ORDER,
       payload: {
-        orderId,
+        order,
+        takeProfits,
       },
     });
   };

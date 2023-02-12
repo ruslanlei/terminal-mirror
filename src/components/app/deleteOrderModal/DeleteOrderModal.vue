@@ -13,22 +13,35 @@
     >
       {{ t('deleteOrder.label') }}
     </Typography>
+    <Typography v-if="showPnl">
+      heh
+    </Typography>
   </Modal>
 </template>
 
 <script setup lang="ts">
+import {
+  ref,
+  computed,
+  onBeforeUnmount,
+} from 'vue';
+import { useI18n } from 'vue-i18n';
 import Modal from '@/components/core/modal/Modal.vue';
 import Picture from '@/components/core/picture/Picture.vue';
-import { computed } from 'vue';
 import { collectSrcSet } from '@/helpers/dom';
 import Typography from '@/components/app/typography/Typography.vue';
-import { useI18n } from 'vue-i18n';
+import { Order, SubOrder } from '@/api/types/order';
+import { reduceTakeProfitsToQuantitiesSum } from '@/helpers/math/formulas/takeProfit';
+import { calculatePnl } from '@/helpers/math/formulas/pnl';
+import { subtractRight } from '@/helpers/number';
+import { useMarketStore } from '@/stores/market';
+import { useEmulatorStore } from '@/stores/emulator';
+import { compose, filter } from '@/utils/fp';
+import { cloneDeep } from '@/utils/object';
 import { DeleteOrderModalProps } from './index';
 
 import IllustrationPng from './assets/illustration.png';
 import IllustrationWebp from './assets/illustration.webp';
-
-const { t } = useI18n();
 
 const props = defineProps<DeleteOrderModalProps>();
 
@@ -36,6 +49,67 @@ const illustrationSrcSet = computed(() => collectSrcSet([
   IllustrationWebp,
   IllustrationPng,
 ]));
+
+const { t } = useI18n();
+
+const marketStore = useMarketStore();
+const emulatorStore = useEmulatorStore();
+
+const order = ref(cloneDeep(props.order));
+
+const showPnl = computed(() => order.value.status === 'filled');
+
+const takeProfits = ref<SubOrder[]>([]);
+const setTakeProfits = (tps: SubOrder[]) => {
+  takeProfits.value = compose(
+    cloneDeep,
+    filter(
+      tps,
+      (takeProfit: SubOrder) => takeProfit.status === 'executed',
+    ),
+  )();
+};
+
+const takeProfitsQuantitySum = computed(
+  () => reduceTakeProfitsToQuantitiesSum(takeProfits.value),
+);
+
+const pnl = computed(() => {
+  const quantity = subtractRight(
+    takeProfitsQuantitySum.value,
+    props.order.quantity,
+  );
+
+  return calculatePnl(
+    props.order.price,
+    quantity,
+    marketStore.activePairPrice,
+  );
+});
+
+const onEmulatorEvent = (updatedOrder: Order) => {
+  if (updatedOrder.id === order.value.id) {
+    order.value = cloneDeep(updatedOrder);
+    return;
+  }
+
+  const takeProfitIndex = takeProfits.value.findIndex(
+    (takeProfit) => takeProfit.id === order.value.id,
+  );
+
+  if (takeProfitIndex !== -1) {
+    takeProfits.value[takeProfitIndex] = updatedOrder as SubOrder;
+  }
+};
+
+if (props.takeProfits) {
+  setTakeProfits(props.takeProfits);
+  emulatorStore.subscribeSimulateEvent(onEmulatorEvent);
+}
+
+onBeforeUnmount(() => {
+  emulatorStore.unsubscribeSimulateEvent(onEmulatorEvent);
+});
 </script>
 
 <style lang="scss" module>

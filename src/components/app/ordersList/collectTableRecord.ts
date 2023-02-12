@@ -23,12 +23,19 @@ interface CollectRecordPayload {
 }
 
 const commonDataMixin = (
-  payload: CollectRecordPayload,
+  {
+    pairData,
+    order,
+    takeProfits,
+  }: CollectRecordPayload,
 ) => ({
-  pair: payload.pairData.base,
-  type: payload.order.side,
-  coins: payload.order.quantity,
-  options: payload.order,
+  pair: pairData.base,
+  type: order.side,
+  coins: order.quantity,
+  options: {
+    order,
+    takeProfits,
+  },
 });
 
 const orderVolumeMixin = (

@@ -1,7 +1,7 @@
 <template>
   <div :class="$style.debugPanel">
     <NumberInput
-      v-model="emulatorStore.compression"
+      v-model="emulatorStore.compressionFactor"
       :min="1"
       :max="20"
       label="Candles request interval (seconds)"

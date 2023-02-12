@@ -74,7 +74,7 @@ export const useMarketStore = defineStore('market', () => {
     const response = await getCandles(payload);
 
     if (!response.result) {
-      console.log('Failed to get cnadles');
+      console.log('Failed to get candles');
     }
 
     return response;

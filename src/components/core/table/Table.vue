@@ -39,7 +39,11 @@
         </slot>
       </button>
     </div>
-    <div :class="$style.records">
+    <transition-group
+      tag="div"
+      :class="$style.records"
+      name="tableElementAppearance"
+    >
       <TableRow
         v-for="record in computedRecords"
         :key="record.id"
@@ -47,7 +51,7 @@
         :record="record"
         :columns="columns"
         :state="state"
-        :data-id="tableId"
+        :data-table-element-id="tableId"
         @click="onRowClick(record.id)"
         @cell-click="onCellClick(record.id, $event)"
       >
@@ -80,7 +84,7 @@
           />
         </template>
       </TableRow>
-    </div>
+    </transition-group>
   </div>
 </template>
 
@@ -97,6 +101,9 @@ import { useComputedState } from '@/hooks/useComputedState';
 import { playAnimation } from '@/utils/animation';
 import anime from 'animejs';
 import { uuid } from '@/utils/uuid';
+import { arrayOfElements } from '@/helpers/dom';
+import { compose } from '@/utils/fp';
+import { removeCssPropertiesFromElementList, removeCssProperty } from '@/helpers/style';
 import {
   tableType,
   TableRecord,
@@ -142,9 +149,13 @@ const {
 
 const tableId = ref(uuid());
 
+const computedElementSelector = computed(
+  () => `[data-table-element-id="${tableId.value}"]`,
+);
+
 onMounted(() => {
   playAnimation({
-    targets: `[data-id="${tableId.value}"]`,
+    targets: computedElementSelector.value,
     translateY: [200, 0],
     opacity: {
       value: [0, 1],
@@ -153,6 +164,14 @@ onMounted(() => {
     duration: 800,
     easing: 'easeOutQuint',
     delay: anime.stagger(40, { from: 'first' }),
+    loopComplete: () => {
+      anime.remove(computedElementSelector.value);
+
+      compose(
+        removeCssProperty(['opacity', 'transform']),
+        arrayOfElements,
+      )(computedElementSelector.value);
+    },
   });
 });
 
@@ -285,6 +304,21 @@ onBeforeUnmount(() => {
 .ordersListColor {
   .head {
     background-color: rgb(var(--color-background-2));
+  }
+}
+</style>
+
+<style lang="scss">
+.tableElementAppearance {
+  &-enter-active,
+  &-leave-active {
+    transition: opacity 200ms, transform 200ms/*, height 200ms*/;
+  }
+  &-enter-from,
+  &-leave-to {
+    opacity: 0;
+    transform: scale(0.8);
+    //height: 0;
   }
 }
 </style>

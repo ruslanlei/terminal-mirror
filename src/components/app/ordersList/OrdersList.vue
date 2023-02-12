@@ -217,7 +217,7 @@
           </template>
         </span>
       </template>
-      <template #cell(options)>
+      <template #cell(options)="{ record }">
         <button
           v-if="listType === 'closed'"
           type="button"
@@ -238,6 +238,7 @@
           <button
             type="button"
             :class="$style.deleteButton"
+            @click="fakeDelete(record.id)"
           >
             <Icon icon="cross" />
           </button>
@@ -268,6 +269,8 @@ import { onActivated } from 'vue';
 import SubOrdersTable from '@/components/app/ordersList/subOrdersTable/SubOrdersTable.vue';
 import { useOrdersList } from '@/hooks/useOrdersList';
 import Typography from '@/components/app/typography/Typography.vue';
+import { TableRecord } from '@/components/core/table';
+import { Order } from '@/api/types/order';
 import { OrdersListProps } from './index';
 
 const { t } = useI18n();
@@ -287,6 +290,12 @@ const {
   getList,
   commonPnl,
 } = useOrdersList(props);
+
+const fakeDelete = (id: number) => {
+  orders.value = orders.value.filter(
+    (order: Order) => order.id !== id,
+  );
+};
 
 onActivated(() => {
   const showLoading = !orders.value?.length;

@@ -104,7 +104,12 @@ import anime from 'animejs';
 import { uuid } from '@/utils/uuid';
 import { arrayOfElements } from '@/helpers/dom';
 import { compose } from '@/utils/fp';
-import { addCssProperty, removeCssProperty, toCssPxValue } from '@/helpers/style';
+import {
+  addCssProperty,
+  getRect,
+  removeCssProperty,
+  toCssPxValue,
+} from '@/helpers/style';
 import {
   tableType,
   TableRecord,
@@ -154,15 +159,18 @@ const computedElementSelector = computed(
   () => `[data-table-element-id="${tableId.value}"]`,
 );
 
-const onElementRemove = (leavingElement: HTMLElement) => {
+const onElementRemove = (removingElement: HTMLElement) => {
+  // add exact height to make element
+  // animate it on remove animation.
+
   const {
     height,
-  } = leavingElement.getBoundingClientRect();
+  } = getRect(removingElement);
 
   compose(
     addCssProperty(['zIndex', 1]),
     addCssProperty(['height', toCssPxValue(height)]),
-  )(leavingElement);
+  )(removingElement);
 };
 
 const playAppearAnimation = () => {

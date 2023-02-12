@@ -53,3 +53,7 @@ export const addCssProperty = curry((
 export const toCssPxValue = (
   value: number,
 ) => `${value}px`;
+
+export const getRect = (
+  element: HTMLElement,
+) => element.getBoundingClientRect();

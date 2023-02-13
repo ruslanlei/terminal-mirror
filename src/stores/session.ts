@@ -12,6 +12,7 @@ import { resetPassword, ResetPasswordDTO } from '@/api/endpoints/auth/resetPassw
 import { useProfileStore } from '@/stores/profile';
 import { verifyEmail, VerifyEmailDTO } from '@/api/endpoints/auth/verifyEmail';
 import { passwordResetConfirm } from '@/api/endpoints/auth/passwordResetConfirm';
+import { processServerErrors } from '@/api/common';
 
 export const checkAuth = (
   isAuthorized: boolean,
@@ -74,10 +75,7 @@ export const useSessionStore = defineStore('session', () => {
       setToken(data.key, !remember);
       await profileStore.getProfile();
     } else {
-      toastStore.showDanger({
-        text: t('auth.signIn.failed'),
-        duration: 5000,
-      });
+      processServerErrors(data, t('auth.signIn.failed'));
     }
   };
 
@@ -90,10 +88,7 @@ export const useSessionStore = defineStore('session', () => {
         duration: 5000,
       });
     } else {
-      toastStore.showDanger({
-        text: t('auth.signUp.failed'),
-        duration: 5000,
-      });
+      processServerErrors(response.data, t('auth.signUp.failed'));
     }
 
     return response;

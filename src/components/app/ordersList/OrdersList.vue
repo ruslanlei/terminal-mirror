@@ -151,6 +151,7 @@
       </template>
       <template #cell(pnl)="{ data: { value, currency } }">
         <Badge
+          v-if="value"
           :state="isPositive(value) ? 'success' : 'danger'"
           size="sm"
         >

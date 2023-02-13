@@ -179,7 +179,7 @@ export const useOrdersList = (
   ) => compose(
     roundToDecimalPoint(2),
     add,
-  )(commonPnl, record.data.pnl.value), 0));
+  )(commonPnl, (record.data.pnl.value || 0)), 0));
 
   const closedOrderRecords = computed<ClosedOrdersTableRecord[]>(
     () => compose(

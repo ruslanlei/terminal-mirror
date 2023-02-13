@@ -160,4 +160,8 @@ onBeforeUnmount(removeListeners);
     }
   }
 }
+
+.semiTransparent {
+  opacity: 0.5;
+}
 </style>

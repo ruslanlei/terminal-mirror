@@ -55,7 +55,12 @@
           :grid-columns="computedListColumns"
           :record="record"
           :columns="columns"
-          :state="state"
+          :state="[
+            ...state,
+            ...(record?.state
+              ? record.state
+              : []),
+          ]"
           :class="$style.tableRow"
           @click="onRowClick(record.id)"
           @cell-click="onCellClick(record.id, $event)"

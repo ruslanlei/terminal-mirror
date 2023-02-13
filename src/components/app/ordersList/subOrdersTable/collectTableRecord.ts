@@ -85,7 +85,7 @@ export const collectActiveSubOrderRecord = curry(collectTableRecord<
   quantityMixin,
   masterTypeMixin,
   orderTypeMixin,
-], []);
+], [], []);
 
 export const collectClosedSubOrderRecord = curry(collectTableRecord<
   ClosedSubOrdersRecord,
@@ -96,4 +96,4 @@ export const collectClosedSubOrderRecord = curry(collectTableRecord<
   quantityMixin,
   masterTypeMixin,
   orderTypeMixin,
-], []);
+], [], []);

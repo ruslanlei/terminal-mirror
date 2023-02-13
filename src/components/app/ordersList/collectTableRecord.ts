@@ -13,6 +13,7 @@ import { ActiveOrdersTableRecord, ClosedOrdersTableRecord } from '@/components/a
 import { SubOrderTableItem } from '@/components/app/ordersList/subOrdersTable';
 import { collectTableRecord } from '@/components/core/table/helpers';
 import { getOrdersWithStatus, reduceSubOrderListToCommonPnl } from '@/helpers/orders';
+import { TableRowState } from '@/components/core/table/tableRow';
 
 interface CollectRecordPayload {
     pairData: PairData,
@@ -108,18 +109,24 @@ const stopLossDataMixin = (
 });
 
 const pnlMixin = (
-  payload: CollectRecordPayload,
+  { order, pairData, pairPrice }: CollectRecordPayload,
 ) => ({
   pnl: {
-    currency: payload.pairData.quote,
-    value: compose(
-      roundToDecimalPoint(2),
-      calculatePnl,
-    )(
-      payload.order.price,
-      payload.order.quantity,
-      payload.pairPrice,
-    ),
+    currency: pairData.quote,
+    ...(order.status !== 'new'
+      ? {
+        value: compose(
+          roundToDecimalPoint(2),
+          calculatePnl,
+        )(
+          order.price,
+          order.quantity,
+          pairPrice,
+        ),
+      }
+      : {
+        value: null,
+      }),
   },
 });
 
@@ -184,22 +191,32 @@ const stopLossChildrenMixin = (
   }] : []),
 ];
 
+const notFilledOrderStateMixin = (
+  { order }: CollectRecordPayload,
+): TableRowState[] => [
+  ...(order.status === 'new' ? ['semiTransparent'] : []) as TableRowState[],
+];
+
 export const collectActiveOrderRecord = curry(collectTableRecord<
   ActiveOrdersTableRecord,
   CollectRecordPayload
->)([
-  commentMixin,
-  activeOrderDateMixin,
-  takeProfitDataMixin,
-  pnlMixin,
-  stopLossDataMixin,
-  activeOrderPricesMixin,
-  orderVolumeMixin,
-  commonDataMixin,
-], [
-  stopLossChildrenMixin,
-  takeProfitChildrenMixin,
-]);
+>)(
+  [
+    commentMixin,
+    activeOrderDateMixin,
+    takeProfitDataMixin,
+    pnlMixin,
+    stopLossDataMixin,
+    activeOrderPricesMixin,
+    orderVolumeMixin,
+    commonDataMixin,
+  ],
+  [notFilledOrderStateMixin],
+  [
+    stopLossChildrenMixin,
+    takeProfitChildrenMixin,
+  ],
+);
 
 export const collectClosedOrderRecord = curry(collectTableRecord<
   ClosedOrdersTableRecord,
@@ -210,7 +227,7 @@ export const collectClosedOrderRecord = curry(collectTableRecord<
   closedOrderResultsMixin,
   orderVolumeMixin,
   commonDataMixin,
-], [
+], [], [
   stopLossChildrenMixin,
   takeProfitChildrenMixin,
 ]);

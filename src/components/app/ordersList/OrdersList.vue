@@ -119,24 +119,33 @@
         <i18n-t keypath="ordersList.column.pnl">
           <template #value>
             <InlineSpace />
-            <i18n-t
-              :class="$style.pnlColumnValue"
-              tag="div"
-              keypath="common.currencyAmount"
+            <Typography
+              :state="[
+                'semiBold',
+                isPositive(commonPnl)
+                  ? 'success'
+                  : 'danger',
+              ]"
             >
-              <template #amount>
-                <AnimatedText
-                  :text="commonPnl"
-                  animation-type="verticalAuto"
-                >
-                  {{ commonPnl }}
-                </AnimatedText>
-              </template>
-              <template #currency>
-                <InlineSpace />
-                {{ '$' }}
-              </template>
-            </i18n-t>
+              <i18n-t
+                :class="$style.pnlColumnValue"
+                tag="span"
+                keypath="common.currencyAmount"
+              >
+                <template #amount>
+                  <AnimatedText
+                    :text="commonPnl"
+                    animation-type="verticalAuto"
+                  >
+                    {{ commonPnl }}
+                  </AnimatedText>
+                </template>
+                <template #currency>
+                  <InlineSpace />
+                  {{ '$' }}
+                </template>
+              </i18n-t>
+            </Typography>
           </template>
         </i18n-t>
       </template>
@@ -319,7 +328,7 @@ onBeforeUnmount(unsubscribeOrderCreate);
 }
 
 .pnlColumnValue {
-  color: rgb(var(--color-success));
+  //color: rgb(var(--color-success));
   font-weight: 600;
   display: flex;
 }

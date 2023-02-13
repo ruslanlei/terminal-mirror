@@ -92,7 +92,8 @@
   "emulator": {
     "player": {
       "label": "Player",
-      "prematureResult": "Calculate result"
+      "prematureResult": "Calculate result",
+      "orderInteractionsWarning": "Editing or adding orders will pause the player"
     }
   },
   "currencyStats": {

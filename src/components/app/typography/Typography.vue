@@ -104,4 +104,8 @@ const computedState = useComputedState(props);
 .medium {
   font-weight: 500;
 }
+
+.alignCenter {
+  text-align: center;
+}
 </style>

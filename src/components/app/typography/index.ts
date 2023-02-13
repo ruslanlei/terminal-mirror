@@ -3,6 +3,7 @@ export type TypographyState =
     | 'danger'
     | 'bold'
     | 'semiBold'
+    | 'alignCenter'
     | 'medium'
     | 'accent1'
     | 'accent2';

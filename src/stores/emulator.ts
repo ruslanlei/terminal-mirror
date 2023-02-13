@@ -12,6 +12,7 @@ import {
 import { multiply } from '@/helpers/number';
 import { createEventBus } from '@/utils/eventBus';
 import { Order } from '@/api/types/order';
+import { processServerErrors } from '@/api/common';
 
 export const getDefaultEmulatorDate = () => compose(
   toISOString,
@@ -40,6 +41,10 @@ export const useEmulatorStore = defineStore('emulator', () => {
 
   const isPlaying = ref(false);
 
+  const turnOffPlayer = () => {
+    isPlaying.value = false;
+  };
+
   const candlesPerSecond = useStorage<number>('candlesPerSecond', 1);
   const setSpeed = (value: number) => {
     candlesPerSecond.value = value;
@@ -66,7 +71,7 @@ export const useEmulatorStore = defineStore('emulator', () => {
     if (response.result) {
       response.data.events.forEach(emitSimulateEvent);
     } else {
-      console.log('Error while simulate');
+      processServerErrors(response.data);
     }
 
     return response;
@@ -77,6 +82,7 @@ export const useEmulatorStore = defineStore('emulator', () => {
     unsubscribeSimulateEvent,
     emulatorDate,
     isPlaying,
+    turnOffPlayer,
     candlesPerSecond,
     setSpeed,
     candleSize,

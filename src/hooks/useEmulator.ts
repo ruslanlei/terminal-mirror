@@ -1,4 +1,6 @@
-import { computed, nextTick, ref } from 'vue';
+import {
+  computed, nextTick, ref, watch,
+} from 'vue';
 import { useIntervalFn } from '@vueuse/core';
 import { useEmulatorStore } from '@/stores/emulator';
 import { storeToRefs } from 'pinia';
@@ -34,6 +36,8 @@ export const useEmulator = (
       addSeconds(shiftInSeconds),
     )(emulatorDate.value);
   };
+
+  const isLastTikFailed = ref(false);
   const simulateTiks = async (tiksAmount = 1) => {
     isEmulating.value = true;
 
@@ -43,6 +47,8 @@ export const useEmulator = (
 
     if (result) {
       newCandlesCallback(data.candles);
+    } else {
+      isLastTikFailed.value = true;
     }
 
     await nextTick();
@@ -70,8 +76,21 @@ export const useEmulator = (
   } = useIntervalFn(
     emulateOrCountTiks,
     computedInterval,
-    { immediate: false },
+    {
+      immediate: false,
+      immediateCallback: true,
+    },
   );
+
+  watch(isLastTikFailed, () => {
+    if (!isLastTikFailed.value) return;
+
+    pauseEmulator();
+
+    emulatorStore.turnOffPlayer();
+
+    isLastTikFailed.value = false;
+  });
 
   return {
     emulatorDate,

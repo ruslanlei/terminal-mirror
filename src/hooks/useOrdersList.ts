@@ -225,12 +225,15 @@ export const useOrdersList = (
   };
 
   const onOrderCreate = async () => {
+    if (props.listType !== 'active') return;
     await getList(false);
   };
 
   const onOrderDelete = async (
     orderId: Order['id'],
   ) => {
+    if (props.listType !== 'active') return;
+
     await awaitTimeout(300);
     orders.value = orders.value.filter(
       (order: Order) => order.id !== orderId && order.master !== orderId,

@@ -3,7 +3,7 @@ import { defineStore } from 'pinia';
 import { useStorage } from '@vueuse/core';
 import { useMarketStore } from '@/stores/market';
 import { simulate } from '@/api/endpoints/emulator/simulate';
-import { compose } from '@/utils/fp';
+import { compose, curry } from '@/utils/fp';
 import {
   dateNow,
   subtractYears,
@@ -26,29 +26,15 @@ export enum emulatorEvent {
 export const useEmulatorStore = defineStore('emulator', () => {
   const marketStore = useMarketStore();
 
-  const emulatorEventBus = createEventBus();
+  const {
+    subscribeEvent,
+    unsubscribeEvent,
+    emitEvent,
+  } = createEventBus<emulatorEvent>();
 
-  const subscribeSimulateEvent = (
-    callback: (order: Order) => void,
-  ) => {
-    emulatorEventBus.on(emulatorEvent.ORDER_CHANGED_STATUS, callback);
-  };
-
-  const unsubscribeSimulateEvent = (
-    callback: (order: Order) => void,
-  ) => {
-    emulatorEventBus.detach(emulatorEvent.ORDER_CHANGED_STATUS, callback);
-  };
-
-  const emitSimulateEvent = (
-    order: Order,
-  ) => {
-    emulatorEventBus.emit(
-      emulatorEvent.ORDER_CHANGED_STATUS,
-      null,
-      order,
-    );
-  };
+  const subscribeSimulateEvent = curry(subscribeEvent<Order>)(emulatorEvent.ORDER_CHANGED_STATUS);
+  const unsubscribeSimulateEvent = curry(unsubscribeEvent)(emulatorEvent.ORDER_CHANGED_STATUS);
+  const emitSimulateEvent = curry(emitEvent<Order>)(emulatorEvent.ORDER_CHANGED_STATUS);
 
   const emulatorDate = useStorage('emulatorDate', getDefaultEmulatorDate());
 

@@ -14,6 +14,7 @@ import { getCandles, GetCandlesDTO } from '@/api/endpoints/marketdata/candles';
 import { createEventBus } from '@/utils/eventBus';
 import { deleteOrder } from '@/api/endpoints/orders/delete';
 import { closeOrder } from '@/api/endpoints/orders/cancel';
+import { curry } from '@/utils/fp';
 
 export type MarketType = 'emulator' | 'real';
 
@@ -37,29 +38,18 @@ export const useMarketStore = defineStore('market', () => {
 
   const toastStore = useToastStore();
 
-  const marketEventBus = createEventBus();
+  const {
+    subscribeEvent,
+    unsubscribeEvent,
+    emitEvent,
+  } = createEventBus<marketEvent>();
 
-  const subscribeOrderDelete = (
-    callback: (orderId: Order['id']) => void,
-  ) => { marketEventBus.on(marketEvent.ORDER_DELETED_OR_CLOSED, callback); };
+  const subscribeOrderDelete = curry(subscribeEvent<Order['id']>)(marketEvent.ORDER_DELETED_OR_CLOSED);
+  const unsubscribeOrderDelete = curry(unsubscribeEvent)(marketEvent.ORDER_DELETED_OR_CLOSED);
+  const emitOrderDeleteOrClose = curry(emitEvent<Order['id']>)(marketEvent.ORDER_DELETED_OR_CLOSED);
 
-  const unsubscribeOrderDelete = (
-    callback: (orderId: Order['id']) => void,
-  ) => { marketEventBus.detach(marketEvent.ORDER_DELETED_OR_CLOSED, callback); };
-
-  const emitOrderDeleteOrClose = (
-    orderId: Order['id'],
-  ) => {
-    marketEventBus.emit(marketEvent.ORDER_DELETED_OR_CLOSED, null, orderId);
-  };
-
-  const subscribeOrderCreated = (
-    callback: () => void,
-  ) => { marketEventBus.on(marketEvent.ORDER_CREATED, callback); };
-
-  const unsubscribeOrderCreated = (
-    callback: () => void,
-  ) => { marketEventBus.detach(marketEvent.ORDER_CREATED, callback); };
+  const subscribeOrderCreated = curry(subscribeEvent<Order['id']>)(marketEvent.ORDER_CREATED);
+  const unsubscribeOrderCreated = curry(unsubscribeEvent)(marketEvent.ORDER_CREATED);
 
   const marketType = useStorage<MarketType>('marketType', 'emulator');
 
@@ -119,7 +109,7 @@ export const useMarketStore = defineStore('market', () => {
       processServerErrors(response.data, t('order.failedToCreate'));
     }
 
-    marketEventBus.emit(marketEvent.ORDER_CREATED);
+    emitEvent(marketEvent.ORDER_CREATED, undefined);
 
     return response;
   };
@@ -214,6 +204,9 @@ export const useMarketStore = defineStore('market', () => {
   };
 
   return {
+    subscribeEvent,
+    unsubscribeEvent,
+    emitEvent,
     subscribeOrderDelete,
     unsubscribeOrderDelete,
     subscribeOrderCreated,

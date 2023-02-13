@@ -231,7 +231,7 @@ export const useOrdersList = (
   const onOrderDelete = async (
     orderId: Order['id'],
   ) => {
-    await awaitTimeout(200);
+    await awaitTimeout(300);
     orders.value = orders.value.filter(
       (order: Order) => order.id !== orderId && order.master !== orderId,
     );

@@ -64,6 +64,7 @@
             {{ data.order }}
           </span>
           <span :class="$style.pricesCellCurrent">
+            {{ '/' }}
             <template v-if="listType === 'active'">
               {{ data.current }}
             </template>

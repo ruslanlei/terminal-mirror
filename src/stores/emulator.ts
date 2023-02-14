@@ -1,5 +1,5 @@
-import { ref } from 'vue';
-import { defineStore } from 'pinia';
+import { computed, ref, watch } from 'vue';
+import { defineStore, storeToRefs } from 'pinia';
 import { useStorage } from '@vueuse/core';
 import { useMarketStore } from '@/stores/market';
 import { simulate } from '@/api/endpoints/emulator/simulate';
@@ -13,6 +13,7 @@ import { multiply } from '@/helpers/number';
 import { createEventBus } from '@/utils/eventBus';
 import { Order } from '@/api/types/order';
 import { processServerErrors } from '@/api/common';
+import { PairData } from '@/api/types/pair';
 
 export const getDefaultEmulatorDate = () => compose(
   toISOString,
@@ -24,8 +25,13 @@ export enum emulatorEvent {
   ORDER_CHANGED_STATUS = 'orderChangedStatus'
 }
 
+export type PlayerDatesMap = Record<PairData['id'], string>;
+
 export const useEmulatorStore = defineStore('emulator', () => {
   const marketStore = useMarketStore();
+  const {
+    activePair,
+  } = storeToRefs(marketStore);
 
   const {
     subscribeEvent,
@@ -37,10 +43,23 @@ export const useEmulatorStore = defineStore('emulator', () => {
   const unsubscribeSimulateEvent = curry(unsubscribeEvent)(emulatorEvent.ORDER_CHANGED_STATUS);
   const emitSimulateEvent = curry(emitEvent<Order>)(emulatorEvent.ORDER_CHANGED_STATUS);
 
-  const emulatorDate = useStorage('emulatorDate', getDefaultEmulatorDate());
+  const playerDatesMap = useStorage<PlayerDatesMap>('playerDatesMap', {
+    1: getDefaultEmulatorDate(),
+  });
+  watch(activePair, () => {
+    if (playerDatesMap.value?.[activePair.value]) return;
+
+    playerDatesMap.value[activePair.value] = getDefaultEmulatorDate();
+  }, { immediate: true });
+
+  const emulatorDate = computed({
+    get: () => playerDatesMap.value?.[activePair.value],
+    set: (value: string) => {
+      playerDatesMap.value[activePair.value] = value;
+    },
+  });
 
   const isPlaying = ref(false);
-
   const turnOffPlayer = () => {
     isPlaying.value = false;
   };

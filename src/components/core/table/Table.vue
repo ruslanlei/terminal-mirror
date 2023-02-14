@@ -39,48 +39,63 @@
         </slot>
       </button>
     </div>
-    <div :class="$style.records">
-      <TableRow
+    <transition-group
+      tag="div"
+      :class="$style.records"
+      name="tableElementAppearance"
+      @before-leave="onElementRemove"
+    >
+      <div
         v-for="record in computedRecords"
         :key="record.id"
-        :grid-columns="computedListColumns"
-        :record="record"
-        :columns="columns"
-        :state="state"
-        :data-id="tableId"
-        @click="onRowClick(record.id)"
-        @cell-click="onCellClick(record.id, $event)"
+        :class="$style.tableRowContainer"
+        :data-table-element-id="tableId"
       >
-        <template #default>
-          <button
-            v-for="column in columns"
-            :key="column.slug"
-            type="button"
-            :class="[
-              $style.recordColumn,
-              $style[column.align],
-            ]"
-            @click="onCellClick(record.id, column.isSelect)"
+        <TableRow
+          :grid-columns="computedListColumns"
+          :record="record"
+          :columns="columns"
+          :state="[
+            ...state,
+            ...(record?.state
+              ? record.state
+              : []),
+          ]"
+          :class="$style.tableRow"
+          @click="onRowClick(record.id)"
+          @cell-click="onCellClick(record.id, $event)"
+        >
+          <template #default>
+            <button
+              v-for="column in columns"
+              :key="column.slug"
+              type="button"
+              :class="[
+                $style.recordColumn,
+                $style[column.align],
+              ]"
+              @click="onCellClick(record.id, column.isSelect)"
+            >
+              <slot
+                :name="`cell(${column.slug})`"
+                :record="record"
+                :data="record.data[column.slug]"
+                :is-selected="record.isSelected"
+              />
+            </button>
+          </template>
+          <template
+            v-if="record.children && 'recordChildren' in $slots"
+            #children="{ data }"
           >
             <slot
-              :name="`cell(${column.slug})`"
-              :record="record"
-              :data="record.data[column.slug]"
-              :is-selected="record.isSelected"
+              name="recordChildren"
+              :children="data"
             />
-          </button>
-        </template>
-        <template
-          v-if="record.children && 'recordChildren' in $slots"
-          #children="{ data }"
-        >
-          <slot
-            name="recordChildren"
-            :children="data"
-          />
-        </template>
-      </TableRow>
-    </div>
+          </template>
+        </TableRow>
+      </div>
+    </transition-group>
   </div>
 </template>
 
@@ -88,7 +103,6 @@
 import {
   ref,
   computed,
-  onBeforeUnmount,
   onMounted,
 } from 'vue';
 import { useTable } from '@/hooks/useTable';
@@ -97,6 +111,14 @@ import { useComputedState } from '@/hooks/useComputedState';
 import { playAnimation } from '@/utils/animation';
 import anime from 'animejs';
 import { uuid } from '@/utils/uuid';
+import { arrayOfElements } from '@/helpers/dom';
+import { compose } from '@/utils/fp';
+import {
+  addCssProperty,
+  getRect,
+  removeCssProperty,
+  toCssPxValue,
+} from '@/helpers/style';
 import {
   tableType,
   TableRecord,
@@ -142,9 +164,36 @@ const {
 
 const tableId = ref(uuid());
 
-onMounted(() => {
+const computedElementSelector = computed(
+  () => `[data-table-element-id="${tableId.value}"]`,
+);
+
+const onElementRemove = (removingElement: HTMLElement) => {
+  // add exact height to make element
+  // animate it on remove animation.
+
+  const {
+    height,
+  } = getRect(removingElement);
+
+  compose(
+    addCssProperty(['zIndex', 1]),
+    addCssProperty(['height', toCssPxValue(height)]),
+  )(removingElement);
+};
+
+const playAppearAnimation = () => {
+  const onAnimationComplete = () => {
+    anime.remove(computedElementSelector.value);
+
+    compose(
+      removeCssProperty(['opacity', 'transform']),
+      arrayOfElements,
+    )(computedElementSelector.value);
+  };
+
   playAnimation({
-    targets: `[data-id="${tableId.value}"]`,
+    targets: computedElementSelector.value,
     translateY: [200, 0],
     opacity: {
       value: [0, 1],
@@ -153,11 +202,12 @@ onMounted(() => {
     duration: 800,
     easing: 'easeOutQuint',
     delay: anime.stagger(40, { from: 'first' }),
+    loopComplete: onAnimationComplete,
   });
-});
+};
 
-onBeforeUnmount(() => {
-  anime.remove(`[data-id="${tableId.value}"]`);
+onMounted(() => {
+  playAppearAnimation();
 });
 </script>
 
@@ -171,6 +221,8 @@ onBeforeUnmount(() => {
   &.list {
     .head {
       display: grid;
+      position: relative;
+      z-index: 3;
     }
     .records {}
     &.rowsClickable {
@@ -203,6 +255,18 @@ onBeforeUnmount(() => {
       }
     }
   }
+}
+
+.tableRow {
+  width: 100%;
+}
+
+.tableRowContainer {
+  width: 100%;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  position: relative;
 }
 
 .recordColumn {}
@@ -285,6 +349,21 @@ onBeforeUnmount(() => {
 .ordersListColor {
   .head {
     background-color: rgb(var(--color-background-2));
+  }
+}
+</style>
+
+<style lang="scss">
+.tableElementAppearance {
+  &-enter-active,
+  &-leave-active {
+    transition: opacity 270ms, transform 300ms, height 300ms;
+  }
+  &-enter-from,
+  &-leave-to {
+    opacity: 0;
+    transform: scale(0.9) translateY(-42px);
+    height: 0 !important;
   }
 }
 </style>

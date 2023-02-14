@@ -5,12 +5,17 @@ import { useStorage } from '@vueuse/core';
 import { getPairs } from '@/api/endpoints/marketdata/stats';
 import { useToastStore } from '@/stores/toasts';
 import { createOrder, CreateOrderDTO } from '@/api/endpoints/orders/create';
-import { Order, OrderStatus } from '@/api/types/order';
+import { Order } from '@/api/types/order';
 import { processServerErrors, requestMany } from '@/api/common';
 import { getOrdersList } from '@/api/endpoints/orders/getList';
-import { PairServerData } from '@/api/types/pairServerData';
+import { PairData } from '@/api/types/pair';
 import { flatten } from '@/utils/array';
 import { getCandles, GetCandlesDTO } from '@/api/endpoints/marketdata/candles';
+import { createEventBus } from '@/utils/eventBus';
+import { deleteOrder } from '@/api/endpoints/orders/delete';
+import { closeOrder } from '@/api/endpoints/orders/cancel';
+import { curry } from '@/utils/fp';
+import { OrderModel } from '@/hooks/useOrderCreate';
 
 export type MarketType = 'emulator' | 'real';
 
@@ -24,29 +29,48 @@ export interface StopLoss {
   quantity: number,
 }
 
+export enum marketEvent {
+  ORDER_CREATED = 'orderCreated',
+  ORDER_DELETED_OR_CLOSED = 'orderDeletedOrClosed',
+}
+
 export const useMarketStore = defineStore('market', () => {
   const { t } = useI18n();
 
   const toastStore = useToastStore();
 
+  const {
+    subscribeEvent,
+    unsubscribeEvent,
+    emitEvent,
+  } = createEventBus<marketEvent>();
+
+  const subscribeOrderDelete = curry(subscribeEvent<Order['id']>)(marketEvent.ORDER_DELETED_OR_CLOSED);
+  const unsubscribeOrderDelete = curry(unsubscribeEvent)(marketEvent.ORDER_DELETED_OR_CLOSED);
+  const emitOrderDeleteOrClose = curry(emitEvent<Order['id']>)(marketEvent.ORDER_DELETED_OR_CLOSED);
+
+  const subscribeOrderCreated = curry(subscribeEvent<Order['id']>)(marketEvent.ORDER_CREATED);
+  const unsubscribeOrderCreated = curry(unsubscribeEvent)(marketEvent.ORDER_CREATED);
+  const emitOrderCreated = curry(emitEvent<Order['id'] | null>)(marketEvent.ORDER_CREATED);
+
   const marketType = useStorage<MarketType>('marketType', 'emulator');
 
-  const pairs = useStorage<PairServerData[]>('pairs', []);
+  const pairs = useStorage<PairData[]>('pairs', []);
 
-  const pairsMap = computed<Record<PairServerData['id'], PairServerData>>(
-    () => pairs.value.reduce((acc, pair: PairServerData) => ({
+  const pairsMap = computed<Record<PairData['id'], PairData>>(
+    () => pairs.value.reduce((acc, pair: PairData) => ({
       ...acc,
       [pair.id]: pair,
     }), {}),
   );
 
-  const activePair = useStorage<PairServerData['id']>('activePair', 1);
+  const activePair = useStorage<PairData['id']>('activePair', 1);
 
-  const setPair = (pairId: PairServerData['id']) => {
+  const setPair = (pairId: PairData['id']) => {
     activePair.value = pairId;
   };
 
-  const activePairData = computed<PairServerData | undefined>(
+  const activePairData = computed<PairData | undefined>(
     () => pairsMap.value[activePair.value],
   );
 
@@ -74,7 +98,7 @@ export const useMarketStore = defineStore('market', () => {
     const response = await getCandles(payload);
 
     if (!response.result) {
-      console.log('Failed to get cnadles');
+      processServerErrors(response.data);
     }
 
     return response;
@@ -127,6 +151,42 @@ export const useMarketStore = defineStore('market', () => {
     return response;
   };
 
+  const createOrderGroup = async (
+    orderModel: OrderModel,
+    takeProfits?: TakeProfit[],
+    stopLossPrice?: number,
+  ) => {
+    const response = await createOrder(orderModel);
+
+    const subOrderSide = orderModel.side === 'buy' ? 'sell' : 'buy';
+
+    if (takeProfits) {
+      const response = await createListOfTakeProfits(
+        takeProfits,
+        subOrderSide,
+      );
+
+      if (!response.result) return response;
+    }
+
+    if (stopLossPrice) {
+      const response = await createStopLoss({
+        price: stopLossPrice,
+        quantity: orderModel.quantity,
+      }, subOrderSide);
+
+      if (!response.result) return response;
+    }
+
+    toastStore.showSuccess({
+      text: t('order.successfullyCreated'),
+    });
+
+    emitOrderCreated(null);
+
+    return response;
+  };
+
   const getOrderList = async (
     orderType?: 'active' | 'closed',
   ) => {
@@ -155,7 +215,38 @@ export const useMarketStore = defineStore('market', () => {
     };
   };
 
+  const handleDeleteOrder = async (
+    orderId: Order['id'],
+  ) => {
+    const response = await deleteOrder(orderId);
+
+    if (response.result) {
+      emitOrderDeleteOrClose(orderId);
+    }
+
+    return response;
+  };
+
+  const handleCloseOrder = async (
+    orderId: Order['id'],
+  ) => {
+    const response = await closeOrder(orderId);
+
+    if (response.result) {
+      emitOrderDeleteOrClose(orderId);
+    }
+
+    return response;
+  };
+
   return {
+    subscribeEvent,
+    unsubscribeEvent,
+    emitEvent,
+    subscribeOrderDelete,
+    unsubscribeOrderDelete,
+    subscribeOrderCreated,
+    unsubscribeOrderCreated,
     pairs,
     pairsMap,
     marketType,
@@ -170,5 +261,8 @@ export const useMarketStore = defineStore('market', () => {
     createListOfTakeProfits,
     createStopLoss,
     getOrderList,
+    deleteOrder: handleDeleteOrder,
+    closeOrder: handleCloseOrder,
+    createOrderGroup,
   };
 });

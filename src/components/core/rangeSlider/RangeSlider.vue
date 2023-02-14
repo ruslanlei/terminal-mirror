@@ -25,6 +25,7 @@ import {
 } from 'vue';
 import { useEnvironmentObserver } from '@/hooks/useEnvironmentObserver';
 import { useLocalValue } from '@/hooks/useLocalValue';
+import { awaitFrame } from '@/utils/window';
 import { RangeSliderEmits, RangeSliderProps } from './index';
 
 const props = withDefaults(
@@ -98,7 +99,9 @@ const onMouseUp = () => {
   window.removeEventListener('mousemove', onMouseMove);
   window.removeEventListener('mouseup', onMouseUp);
 };
-const onMouseDown = (event: MouseEvent) => {
+const onMouseDown = async (event: MouseEvent) => {
+  calculateSliderSizing();
+  await awaitFrame();
   isDragging.value = true;
   onMouseMove(event);
   window.addEventListener('mousemove', onMouseMove);

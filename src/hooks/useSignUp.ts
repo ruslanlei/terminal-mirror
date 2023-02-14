@@ -7,7 +7,7 @@ import { SignUpModel } from '@/api/endpoints/auth/signUp';
 import { useToastStore } from '@/stores/toasts';
 import { processServerErrors } from '@/api/common';
 import { FormErrorsList } from '@/form';
-import { OnlyLatinCharactersRegex } from '@/form/regex/onlyLatinCharacters';
+import { OnlyLatinCharactersAndNumbersRegex } from '@/form/regex/onlyLatinCharacters';
 
 export const useSignUp = () => {
   const { t } = useI18n();
@@ -31,7 +31,10 @@ export const useSignUp = () => {
     username: string()
       .required(() => t('validationError.required'))
       .min(3, () => t('validationError.minLength', { chars: 3 }))
-      .matches(OnlyLatinCharactersRegex, () => t('validationError.onlyLatinCharacters')),
+      .matches(
+        OnlyLatinCharactersAndNumbersRegex,
+        () => t('validationError.onlyLatinCharactersAndNumbers'),
+      ),
     email: string()
       .email(() => t('validationError.email'))
       .required(() => t('validationError.required')),

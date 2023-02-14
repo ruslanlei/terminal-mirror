@@ -39,7 +39,7 @@
         v-if="value"
         size="title2"
         :state="[
-          'bold',
+          'semiBold',
           listType === 'active' && 'accent1',
           (listType === 'closed' && orderType === 'tp') && 'success',
           (listType === 'closed' && orderType === 'sl') && 'danger',

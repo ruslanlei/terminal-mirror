@@ -64,6 +64,7 @@
             {{ data.order }}
           </span>
           <span :class="$style.pricesCellCurrent">
+            {{ '/' }}
             <template v-if="listType === 'active'">
               {{ data.current }}
             </template>
@@ -86,7 +87,7 @@
                 isPositive(pnlPercent)
                   ? 'success'
                   : 'danger',
-                'bold',
+                'semiBold',
               ]"
               size="title2"
             />
@@ -118,29 +119,39 @@
         <i18n-t keypath="ordersList.column.pnl">
           <template #value>
             <InlineSpace />
-            <i18n-t
-              :class="$style.pnlColumnValue"
-              tag="div"
-              keypath="common.currencyAmount"
+            <Typography
+              :state="[
+                'semiBold',
+                isPositive(commonPnl)
+                  ? 'success'
+                  : 'danger',
+              ]"
             >
-              <template #amount>
-                <AnimatedText
-                  :text="commonPnl"
-                  animation-type="verticalAuto"
-                >
-                  {{ commonPnl }}
-                </AnimatedText>
-              </template>
-              <template #currency>
-                <InlineSpace />
-                {{ '$' }}
-              </template>
-            </i18n-t>
+              <i18n-t
+                :class="$style.pnlColumnValue"
+                tag="span"
+                keypath="common.currencyAmount"
+              >
+                <template #amount>
+                  <AnimatedText
+                    :text="commonPnl"
+                    animation-type="verticalAuto"
+                  >
+                    {{ commonPnl }}
+                  </AnimatedText>
+                </template>
+                <template #currency>
+                  <InlineSpace />
+                  {{ '$' }}
+                </template>
+              </i18n-t>
+            </Typography>
           </template>
         </i18n-t>
       </template>
       <template #cell(pnl)="{ data: { value, currency } }">
         <Badge
+          v-if="value"
           :state="isPositive(value) ? 'success' : 'danger'"
           size="sm"
         >
@@ -217,7 +228,7 @@
           </template>
         </span>
       </template>
-      <template #cell(options)>
+      <template #cell(options)="{ data: { order, takeProfits } }">
         <button
           v-if="listType === 'closed'"
           type="button"
@@ -229,15 +240,16 @@
           v-if="listType === 'active'"
           :class="$style.orderOptions"
         >
-          <button
-            type="button"
-            :class="$style.swapButton"
-          >
-            <Icon icon="swap" />
-          </button>
+          <!--          <button-->
+          <!--            type="button"-->
+          <!--            :class="$style.swapButton"-->
+          <!--          >-->
+          <!--            <Icon icon="swap" />-->
+          <!--          </button>-->
           <button
             type="button"
             :class="$style.deleteButton"
+            @click="deleteOrder(order, takeProfits)"
           >
             <Icon icon="cross" />
           </button>
@@ -264,10 +276,12 @@ import Icon from '@/components/core/icon/Icon.vue';
 import { isPositive } from '@/helpers/number';
 import Badge from '@/components/core/badge/Badge.vue';
 import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
-import { onActivated } from 'vue';
+import { onActivated, onBeforeUnmount, onDeactivated } from 'vue';
 import SubOrdersTable from '@/components/app/ordersList/subOrdersTable/SubOrdersTable.vue';
 import { useOrdersList } from '@/hooks/useOrdersList';
 import Typography from '@/components/app/typography/Typography.vue';
+import { TableRecord } from '@/components/core/table';
+import { Order } from '@/api/types/order';
 import { OrdersListProps } from './index';
 
 const { t } = useI18n();
@@ -286,12 +300,19 @@ const {
   isLoading,
   getList,
   commonPnl,
+  subscribeOrderCreate,
+  unsubscribeOrderCreate,
+  deleteOrder,
 } = useOrdersList(props);
 
 onActivated(() => {
   const showLoading = !orders.value?.length;
   getList(showLoading);
+  subscribeOrderCreate();
 });
+
+onDeactivated(unsubscribeOrderCreate);
+onBeforeUnmount(unsubscribeOrderCreate);
 </script>
 
 <style lang="scss" module>
@@ -308,7 +329,7 @@ onActivated(() => {
 }
 
 .pnlColumnValue {
-  color: rgb(var(--color-success));
+  //color: rgb(var(--color-success));
   font-weight: 600;
   display: flex;
 }

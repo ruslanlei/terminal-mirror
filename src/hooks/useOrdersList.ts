@@ -1,19 +1,14 @@
 import { computed, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import {
-  ActiveOrdersTableRecord,
-  ClosedOrdersTableRecord,
-  OrdersListProps,
-} from '@/components/app/ordersList';
+import { ActiveOrdersTableRecord, ClosedOrdersTableRecord, OrdersListProps } from '@/components/app/ordersList';
 import { useMarketStore } from '@/stores/market';
 import { MasterOrder, Order, SubOrder } from '@/api/types/order';
 import { add, roundToDecimalPoint } from '@/helpers/number';
 import { compose } from '@/utils/fp';
-import {
-  collectActiveOrderRecord,
-  collectClosedOrderRecord,
-} from '@/components/app/ordersList/collectTableRecord';
+import { collectActiveOrderRecord, collectClosedOrderRecord } from '@/components/app/ordersList/collectTableRecord';
 import { createEmptyRecord } from '@/components/core/table/helpers';
+import { modalType, useModalStore } from '@/stores/modals';
+import { awaitTimeout } from '@/utils/promise';
 
 interface GroupedOrder {
   order: MasterOrder,
@@ -26,6 +21,7 @@ export const useOrdersList = (
 ) => {
   const { t } = useI18n();
   const marketStore = useMarketStore();
+  const modalStore = useModalStore();
 
   const columns = computed(() => [
     {
@@ -183,7 +179,7 @@ export const useOrdersList = (
   ) => compose(
     roundToDecimalPoint(2),
     add,
-  )(commonPnl, record.data.pnl.value), 0));
+  )(commonPnl, (record.data.pnl.value || 0)), 0));
 
   const closedOrderRecords = computed<ClosedOrdersTableRecord[]>(
     () => compose(
@@ -215,6 +211,46 @@ export const useOrdersList = (
 
   watch(() => props.listType, () => getList(true));
 
+  const deleteOrder = async (
+    order: Order,
+    takeProfits: SubOrder[] | undefined,
+  ) => {
+    modalStore.showModal({
+      type: modalType.DELETE_ORDER,
+      payload: {
+        order,
+        takeProfits,
+      },
+    });
+  };
+
+  const onOrderCreate = async () => {
+    if (props.listType !== 'active') return;
+
+    await getList(false);
+  };
+
+  const onOrderDelete = async (
+    orderId: Order['id'],
+  ) => {
+    if (props.listType !== 'active') return;
+
+    await awaitTimeout(300);
+    orders.value = orders.value.filter(
+      (order: Order) => order.id !== orderId && order.master !== orderId,
+    );
+  };
+
+  const subscribeOrderCreate = () => {
+    marketStore.subscribeOrderCreated(onOrderCreate);
+    marketStore.subscribeOrderDelete(onOrderDelete);
+  };
+
+  const unsubscribeOrderCreate = () => {
+    marketStore.unsubscribeOrderCreated(onOrderCreate);
+    marketStore.unsubscribeOrderDelete(onOrderDelete);
+  };
+
   return {
     columns,
     orders,
@@ -222,5 +258,8 @@ export const useOrdersList = (
     commonPnl,
     isLoading,
     getList,
+    subscribeOrderCreate,
+    unsubscribeOrderCreate,
+    deleteOrder,
   };
 };

@@ -15,8 +15,10 @@ export const createEventBus = <E extends string>() => {
 
   const emitEvent = <EventPayload>(
     event: E,
-    payload: EventPayload | undefined,
-  ) => { bus.emit(event, null, payload); };
+    payload: EventPayload | null,
+  ) => {
+    bus.emit(event, null, payload);
+  };
 
   return {
     bus,

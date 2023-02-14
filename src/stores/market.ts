@@ -15,6 +15,7 @@ import { createEventBus } from '@/utils/eventBus';
 import { deleteOrder } from '@/api/endpoints/orders/delete';
 import { closeOrder } from '@/api/endpoints/orders/cancel';
 import { curry } from '@/utils/fp';
+import { OrderModel } from '@/hooks/useOrderCreate';
 
 export type MarketType = 'emulator' | 'real';
 
@@ -50,6 +51,7 @@ export const useMarketStore = defineStore('market', () => {
 
   const subscribeOrderCreated = curry(subscribeEvent<Order['id']>)(marketEvent.ORDER_CREATED);
   const unsubscribeOrderCreated = curry(unsubscribeEvent)(marketEvent.ORDER_CREATED);
+  const emitOrderCreated = curry(emitEvent<Order['id'] | null>)(marketEvent.ORDER_CREATED);
 
   const marketType = useStorage<MarketType>('marketType', 'emulator');
 
@@ -96,7 +98,7 @@ export const useMarketStore = defineStore('market', () => {
     const response = await getCandles(payload);
 
     if (!response.result) {
-      console.log('Failed to get candles');
+      processServerErrors(response.data);
     }
 
     return response;
@@ -108,8 +110,6 @@ export const useMarketStore = defineStore('market', () => {
     if (!response.result) {
       processServerErrors(response.data, t('order.failedToCreate'));
     }
-
-    emitEvent(marketEvent.ORDER_CREATED, undefined);
 
     return response;
   };
@@ -147,6 +147,42 @@ export const useMarketStore = defineStore('market', () => {
     if (!response.result) {
       processServerErrors(response.data, t('order.failedToCreateStopLoss'));
     }
+
+    return response;
+  };
+
+  const createOrderGroup = async (
+    orderModel: OrderModel,
+    takeProfits?: TakeProfit[],
+    stopLossPrice?: number,
+  ) => {
+    const response = await createOrder(orderModel);
+
+    const subOrderSide = orderModel.side === 'buy' ? 'sell' : 'buy';
+
+    if (takeProfits) {
+      const response = await createListOfTakeProfits(
+        takeProfits,
+        subOrderSide,
+      );
+
+      if (!response.result) return response;
+    }
+
+    if (stopLossPrice) {
+      const response = await createStopLoss({
+        price: stopLossPrice,
+        quantity: orderModel.quantity,
+      }, subOrderSide);
+
+      if (!response.result) return response;
+    }
+
+    toastStore.showSuccess({
+      text: t('order.successfullyCreated'),
+    });
+
+    emitOrderCreated(null);
 
     return response;
   };
@@ -227,5 +263,6 @@ export const useMarketStore = defineStore('market', () => {
     getOrderList,
     deleteOrder: handleDeleteOrder,
     closeOrder: handleCloseOrder,
+    createOrderGroup,
   };
 });

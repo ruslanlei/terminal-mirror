@@ -226,6 +226,7 @@ export const useOrdersList = (
 
   const onOrderCreate = async () => {
     if (props.listType !== 'active') return;
+
     await getList(false);
   };
 

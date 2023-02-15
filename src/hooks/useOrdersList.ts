@@ -214,18 +214,18 @@ export const useOrdersList = (
 
   watch(() => props.listType, () => getList(true));
 
-  const deleteOrder = async (
-    order: Order,
-    takeProfits: SubOrder[] | undefined,
-  ) => {
-    modalStore.showModal({
-      type: modalType.DELETE_ORDER,
-      payload: {
-        order,
-        takeProfits,
-      },
-    });
-  };
+  // const deleteOrder = async (
+  //   order: Order,
+  //   takeProfits: SubOrder[] | undefined,
+  // ) => {
+  //   modalStore.showModal({
+  //     type: modalType.DELETE_ORDER,
+  //     payload: {
+  //       order,
+  //       takeProfits,
+  //     },
+  //   });
+  // };
 
   const onOrderCreate = async () => {
     if (props.listType !== 'active') return;
@@ -276,6 +276,17 @@ export const useOrdersList = (
       );
     },
   );
+
+  const deleteOrder = async (
+    order: Order,
+    takeProfits: SubOrder[] | undefined,
+  ) => {
+    if (emulatorStore.isPlaying) {
+      emulatorStore.turnOffPlayer();
+    }
+
+    await marketStore.removeOrder(order, takeProfits);
+  };
 
   return {
     columns,

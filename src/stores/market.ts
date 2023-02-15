@@ -5,7 +5,7 @@ import { useStorage } from '@vueuse/core';
 import { getPairs } from '@/api/endpoints/marketdata/stats';
 import { useToastStore } from '@/stores/toasts';
 import { createOrder, CreateOrderDTO } from '@/api/endpoints/orders/create';
-import { Order } from '@/api/types/order';
+import { Order, SubOrder } from '@/api/types/order';
 import { processServerErrors, requestMany } from '@/api/common';
 import { getOrdersList } from '@/api/endpoints/orders/getList';
 import { PairData } from '@/api/types/pair';
@@ -16,6 +16,8 @@ import { deleteOrder } from '@/api/endpoints/orders/delete';
 import { closeOrder } from '@/api/endpoints/orders/cancel';
 import { curry } from '@/utils/fp';
 import { OrderModel } from '@/hooks/useOrderCreate';
+import { modalType, useModalStore } from '@/stores/modals';
+import { useEmulatorStore } from '@/stores/emulator';
 
 export type MarketType = 'emulator' | 'real';
 
@@ -38,6 +40,7 @@ export const useMarketStore = defineStore('market', () => {
   const { t } = useI18n();
 
   const toastStore = useToastStore();
+  const modalStore = useModalStore();
 
   const {
     subscribeEvent,
@@ -239,6 +242,19 @@ export const useMarketStore = defineStore('market', () => {
     return response;
   };
 
+  const removeOrder = async (
+    order: Order,
+    takeProfits: SubOrder[] | undefined,
+  ) => {
+    modalStore.showModal({
+      type: modalType.DELETE_ORDER,
+      payload: {
+        order,
+        takeProfits,
+      },
+    });
+  };
+
   return {
     subscribeEvent,
     unsubscribeEvent,
@@ -264,5 +280,6 @@ export const useMarketStore = defineStore('market', () => {
     deleteOrder: handleDeleteOrder,
     closeOrder: handleCloseOrder,
     createOrderGroup,
+    removeOrder,
   };
 });

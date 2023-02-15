@@ -95,6 +95,8 @@ export const useMarketStore = defineStore('market', () => {
     pairs.value = data;
   };
 
+  const candleSize = ref<number>(900);
+
   const handleGetCandles = async (
     payload: GetCandlesDTO,
   ) => {
@@ -272,6 +274,7 @@ export const useMarketStore = defineStore('market', () => {
     activePairPrice,
     isFetchingPairs,
     getPairs: handleGetPairs,
+    candleSize,
     getCandles: handleGetCandles,
     createOrder: handleCreateOrder,
     createListOfTakeProfits,

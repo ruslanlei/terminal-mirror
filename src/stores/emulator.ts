@@ -31,6 +31,7 @@ export const useEmulatorStore = defineStore('emulator', () => {
   const marketStore = useMarketStore();
   const {
     activePair,
+    candleSize,
   } = storeToRefs(marketStore);
 
   const {
@@ -66,8 +67,6 @@ export const useEmulatorStore = defineStore('emulator', () => {
   const setSpeed = (value: number) => {
     candlesPerSecond.value = value;
   };
-
-  const candleSize = ref<number>(900);
 
   const compressionFactor = ref<number>(5);
 

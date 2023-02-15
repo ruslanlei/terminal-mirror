@@ -20,9 +20,13 @@
         ]"
       >
         <AnimatedText
+          v-if="currencyStat.value"
           :text="currencyStat.value"
           animation-type="verticalAuto"
         />
+        <Typography v-else>
+          {{ '-' }}
+        </Typography>
       </div>
     </div>
   </div>
@@ -31,6 +35,7 @@
 <script setup lang="ts">
 import Divider from '@/components/core/divider/Divider.vue';
 import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
+import Typography from '@/components/app/typography/Typography.vue';
 import { CurrencyStatsColumnProps } from './index';
 
 const props = defineProps<CurrencyStatsColumnProps>();

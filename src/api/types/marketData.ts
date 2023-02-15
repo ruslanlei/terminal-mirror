@@ -1,7 +1,7 @@
 export type Candle = [
   number, // open price
-  number, // high price
   number, // low price
+  number, // high price
   number, // close price
   number,
   number,

@@ -16,7 +16,10 @@
 
 <script setup lang="ts">
 import {
-  computed, nextTick, ref, toRefs, watch,
+  ref,
+  computed,
+  nextTick,
+  watch,
 } from 'vue';
 import { useI18n } from 'vue-i18n';
 import CurrencyLogo from '@/components/core/currencyLogo/CurrencyLogo.vue';

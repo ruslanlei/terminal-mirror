@@ -2,12 +2,12 @@ import { currency } from '@/api/types/currency';
 
 export interface IPairStats {
   currency: currency,
-  price: number,
-  amount: number | string,
-  change: number,
-  changePercents: number | string,
-  max: number,
-  min: number,
+  price: number | null,
+  amount: number | string | null,
+  change: number | null,
+  changePercents: number | string | null,
+  max: number | null,
+  min: number | null,
 }
 
 export interface CurrencyStatsProps {

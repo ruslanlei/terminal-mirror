@@ -19,6 +19,10 @@ export const transformCandlesForChart = (
   time: toSecondsTimestamp(candle[6]),
 }));
 
+export const getCandleClosePrice = (
+  candle: Candle,
+) => candle[3];
+
 export const mixCandles = (
   candles: Candle[],
   newCandles: Candle[],

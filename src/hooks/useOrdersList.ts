@@ -256,8 +256,12 @@ export const useOrdersList = (
 
   const unsubscribeSimulateEvent = emulatorStore.subscribeSimulateEvent(
     (updatedOrder: Order) => {
-      if (updatedOrder.order_type === 'limit' && props.listType === 'active') {
-        orders.value = findAndDelete(
+      if (
+        updatedOrder.order_type === 'limit'
+          && updatedOrder.status !== 'filled'
+          && props.listType === 'active'
+      ) {
+        findAndDelete(
           (order: Order) => order.id !== updatedOrder.id,
           orders.value,
         );
@@ -265,13 +269,11 @@ export const useOrdersList = (
         return;
       }
 
-      if ((updatedOrder.order_type === 'tp') || (updatedOrder.order_type === 'sl')) {
-        findAndUpdateObject(
-          (order: Order) => order.id === updatedOrder.id,
-          orders.value,
-          updatedOrder,
-        );
-      }
+      findAndUpdateObject(
+        (order: Order) => order.id === updatedOrder.id,
+        orders.value,
+        updatedOrder,
+      );
     },
   );
 

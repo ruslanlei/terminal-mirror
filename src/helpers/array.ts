@@ -6,10 +6,11 @@ export const findAndDelete = curry((
 ) => {
   const deletingIndex = array.findIndex(predicate);
 
-  return deletingIndex ? [
-    ...array.slice(0, deletingIndex),
-    ...array.slice(deletingIndex + 1),
-  ] : array;
+  const isElementFound = deletingIndex !== -1;
+
+  if (isElementFound) {
+    array.splice(deletingIndex, 1);
+  }
 });
 
 export const findAndUpdateObject = curry((

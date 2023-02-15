@@ -31,7 +31,7 @@
         size="sm"
         state="defaultColor"
         :step="0.01"
-        :is-disabled="isFieldsDependive"
+        :is-disabled="isDependentFieldsDisabled"
       >
         <template #append>
           {{ quoteCurrency?.name }}
@@ -62,7 +62,7 @@
         size="sm"
         state="defaultColor"
         :step="0.01"
-        :is-disabled="isFieldsDependive"
+        :is-disabled="isDependentFieldsDisabled"
       >
         <template #append>
           {{ '%' }}
@@ -107,7 +107,7 @@ import {
   calculateVolumeDifference,
 } from '@/helpers/math/formulas/order';
 import { roundToDecimalPoint } from '@/helpers/number';
-import { compose } from '@/utils/fp';
+import { compose, toAbsolute } from '@/utils/fp';
 import { calculatePercentOfDifference, decreaseByPercent } from '@/helpers/math/percents';
 import { calculatePriceByPercentOfDeposit, calculateVolumeDifferenceInPercentsOfDeposit } from '@/helpers/math/formulas/stopLoss';
 import { OrderFormStopLossPartEmits } from './index';
@@ -130,11 +130,12 @@ const {
   ratio,
 } = useOrderFormInject();
 
-const isFieldsDependive = computed(() => !model.quantity);
+const isDependentFieldsDisabled = computed(() => !model.quantity);
 
 const percentOfOrderPrice = computed({
   get: () => compose(
     roundToDecimalPoint(2),
+    toAbsolute,
     calculatePercentOfDifference,
   )(model.price, stopLossPrice.value),
 

@@ -1,6 +1,6 @@
 import {
   compose,
-  curry,
+  curry, toAbsolute,
 } from '@/utils/fp';
 import { PairData } from '@/api/types/pair';
 import { MasterOrder, Order, SubOrder } from '@/api/types/order';
@@ -101,6 +101,7 @@ const stopLossDataMixin = (
   ...(payload.stopLoss ? {
     sl: compose(
       roundToDecimalPoint(2),
+      toAbsolute,
       calculatePercentOfDifference,
     )(payload.order.price, payload.stopLoss.price),
   } : {

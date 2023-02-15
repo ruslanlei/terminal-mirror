@@ -8,7 +8,7 @@ import { processServerErrors } from '@/api/common';
 import { IPairStats } from '@/components/core/pairStats';
 import { currency } from '@/api/types/currency';
 import { compose } from '@/utils/fp';
-import { divideRight, roundToDecimalPoint } from '@/helpers/number';
+import { divideRight, roundToDecimalPoint, subtractRight } from '@/helpers/number';
 import { calculatePercentOfDifference } from '@/helpers/math/percents';
 import { percentFormat } from '@/utils/number';
 import { findMaxByKey, findMinByKey } from '@/utils/array';
@@ -45,14 +45,12 @@ export const useChartDataStore = defineStore('chartData', () => {
     if (lastPrice && firstPrice) {
       change = compose(
         roundToDecimalPoint(4),
-        divideRight(firstPrice),
+        subtractRight(firstPrice),
       )(lastPrice);
     }
 
     let changePercents = null;
     if (firstPrice && lastPrice) {
-      console.log(firstPrice, lastPrice);
-
       changePercents = compose(
         percentFormat,
         divideRight(100),

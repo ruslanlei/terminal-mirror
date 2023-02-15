@@ -1,4 +1,4 @@
-import { compose, curry } from '@/utils/fp';
+import { compose, curry, toAbsolute } from '@/utils/fp';
 import {
   add,
   multiply,
@@ -25,6 +25,7 @@ export const calculatePnlPercent = curry((
   const orderVolume = multiply(orderPrice, quantity);
 
   return compose(
+    toAbsolute,
     calculatePercentOfDifference(orderVolume),
     add(orderVolume),
   )(pnl);

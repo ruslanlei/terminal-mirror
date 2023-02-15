@@ -54,7 +54,6 @@ export const calculatePercentOfDifference = curry((
   total: number,
   comparingNumber: number,
 ) => compose(
-  toAbsolute,
   subtract(100),
   multiply(100),
   divideRight(total),

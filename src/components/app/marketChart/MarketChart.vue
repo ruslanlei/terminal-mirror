@@ -33,7 +33,7 @@ const {
 } = useEmulator();
 
 watch(emulatorDate, async () => {
-  if (isEmulating.value || isFetchingCandles) return;
+  if (isEmulating.value || isFetchingCandles.value) return;
 
   await fetchCandles();
 });

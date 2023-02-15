@@ -303,6 +303,7 @@ const {
   subscribeOrderCreate,
   unsubscribeOrderCreate,
   deleteOrder,
+  unsubscribeSimulateEvent,
 } = useOrdersList(props);
 
 onActivated(() => {
@@ -311,8 +312,14 @@ onActivated(() => {
   subscribeOrderCreate();
 });
 
-onDeactivated(unsubscribeOrderCreate);
-onBeforeUnmount(unsubscribeOrderCreate);
+onDeactivated(() => {
+  unsubscribeOrderCreate();
+  unsubscribeSimulateEvent();
+});
+onBeforeUnmount(() => {
+  unsubscribeOrderCreate();
+  unsubscribeSimulateEvent();
+});
 </script>
 
 <style lang="scss" module>

@@ -9,6 +9,8 @@ import { collectActiveOrderRecord, collectClosedOrderRecord } from '@/components
 import { createEmptyRecord } from '@/components/core/table/helpers';
 import { modalType, useModalStore } from '@/stores/modals';
 import { awaitTimeout } from '@/utils/promise';
+import { useEmulatorStore } from '@/stores/emulator';
+import { findAndDelete, findAndUpdateObject } from '@/helpers/array';
 
 interface GroupedOrder {
   order: MasterOrder,
@@ -21,6 +23,7 @@ export const useOrdersList = (
 ) => {
   const { t } = useI18n();
   const marketStore = useMarketStore();
+  const emulatorStore = useEmulatorStore();
   const modalStore = useModalStore();
 
   const columns = computed(() => [
@@ -251,6 +254,27 @@ export const useOrdersList = (
     marketStore.unsubscribeOrderDelete(onOrderDelete);
   };
 
+  const unsubscribeSimulateEvent = emulatorStore.subscribeSimulateEvent(
+    (updatedOrder: Order) => {
+      if (updatedOrder.order_type === 'limit' && props.listType === 'active') {
+        orders.value = findAndDelete(
+          (order: Order) => order.id !== updatedOrder.id,
+          orders.value,
+        );
+
+        return;
+      }
+
+      if ((updatedOrder.order_type === 'tp') || (updatedOrder.order_type === 'sl')) {
+        findAndUpdateObject(
+          (order: Order) => order.id === updatedOrder.id,
+          orders.value,
+          updatedOrder,
+        );
+      }
+    },
+  );
+
   return {
     columns,
     orders,
@@ -261,5 +285,6 @@ export const useOrdersList = (
     subscribeOrderCreate,
     unsubscribeOrderCreate,
     deleteOrder,
+    unsubscribeSimulateEvent,
   };
 };

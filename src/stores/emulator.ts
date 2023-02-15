@@ -29,12 +29,10 @@ export const useEmulatorStore = defineStore('emulator', () => {
 
   const {
     subscribeEvent,
-    unsubscribeEvent,
     emitEvent,
   } = createEventBus<emulatorEvent>();
 
   const subscribeSimulateEvent = curry(subscribeEvent<Order>)(emulatorEvent.ORDER_CHANGED_STATUS);
-  const unsubscribeSimulateEvent = curry(unsubscribeEvent)(emulatorEvent.ORDER_CHANGED_STATUS);
   const emitSimulateEvent = curry(emitEvent<Order>)(emulatorEvent.ORDER_CHANGED_STATUS);
 
   const emulatorDate = useStorage('emulatorDate', getDefaultEmulatorDate());
@@ -77,9 +75,18 @@ export const useEmulatorStore = defineStore('emulator', () => {
     return response;
   };
 
+  subscribeSimulateEvent((order: Order) => {
+    // for now its only possible to create
+    // only 1 limit order, so there is need
+    // to turn of player if limit order
+    // have been executed.
+    if (order.order_type === 'limit' && order.status === 'executed') {
+      turnOffPlayer();
+    }
+  });
+
   return {
     subscribeSimulateEvent,
-    unsubscribeSimulateEvent,
     emulatorDate,
     isPlaying,
     turnOffPlayer,

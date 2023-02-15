@@ -22,7 +22,6 @@ const {
   computedCandles,
   isFetchingCandles,
   fetchCandles,
-  appendCandles,
 } = useMarketChart();
 
 const {
@@ -31,7 +30,7 @@ const {
   isEmulating,
   playEmulator,
   pauseEmulator,
-} = useEmulator(appendCandles);
+} = useEmulator();
 
 watch(emulatorDate, async () => {
   if (isEmulating.value) return;

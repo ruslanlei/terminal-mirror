@@ -97,18 +97,6 @@ export const useMarketStore = defineStore('market', () => {
 
   const candleSize = ref<number>(900);
 
-  const handleGetCandles = async (
-    payload: GetCandlesDTO,
-  ) => {
-    const response = await getCandles(payload);
-
-    if (!response.result) {
-      processServerErrors(response.data);
-    }
-
-    return response;
-  };
-
   const handleCreateOrder = async (dto: CreateOrderDTO) => {
     const response = await createOrder(dto);
 
@@ -275,7 +263,6 @@ export const useMarketStore = defineStore('market', () => {
     isFetchingPairs,
     getPairs: handleGetPairs,
     candleSize,
-    getCandles: handleGetCandles,
     createOrder: handleCreateOrder,
     createListOfTakeProfits,
     createStopLoss,

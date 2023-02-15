@@ -1,17 +1,18 @@
 import {
-  computed, nextTick, ref, watch,
+  ref,
+  computed,
+  nextTick,
+  watch,
 } from 'vue';
 import { useIntervalFn } from '@vueuse/core';
 import { useEmulatorStore } from '@/stores/emulator';
 import { storeToRefs } from 'pinia';
-import { Candle } from '@/api/types/marketData';
 import { multiply } from '@/helpers/number';
 import { compose } from '@/utils/fp';
 import { addSeconds, secondsToMilliseconds, toISOString } from '@/utils/date';
+import { useChartDataStore } from '@/stores/chartData';
 
-export const useEmulator = (
-  newCandlesCallback: (newCandles: Candle[]) => void,
-) => {
+export const useEmulator = () => {
   const emulatorStore = useEmulatorStore();
   const {
     emulatorDate,
@@ -20,6 +21,8 @@ export const useEmulator = (
     compressionFactor,
     candlesPerSecond,
   } = storeToRefs(emulatorStore);
+
+  const chartDataStore = useChartDataStore();
 
   const isEmulating = ref(false);
   const requiredTiks = ref(1);
@@ -46,7 +49,7 @@ export const useEmulator = (
     increaseEmulatorDate(tiksAmount);
 
     if (result) {
-      newCandlesCallback(data.candles);
+      chartDataStore.appendCandles(data.candles);
     } else {
       isLastTikFailed.value = true;
     }

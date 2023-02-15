@@ -1,12 +1,10 @@
 import {
   computed,
-  ref,
   watch,
 } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useStorage } from '@vueuse/core';
 
-import { Candle } from '@/api/types/marketData';
 import { useEmulatorStore } from '@/stores/emulator';
 import { useMarketStore } from '@/stores/market';
 import { compose } from '@/utils/fp';
@@ -16,10 +14,10 @@ import {
   toISOString,
 } from '@/utils/date';
 import {
-  mixCandles,
   transformCandlesForChart,
   decreaseDateByAmountOfCandles,
 } from '@/helpers/candles';
+import { useChartDataStore } from '@/stores/chartData';
 
 export const getDefaultChartDateFrom = () => compose(
   toISOString,
@@ -37,14 +35,14 @@ export const useMarketChart = () => {
   const marketStore = useMarketStore();
   const {
     activePair,
-    activePairData,
     marketType,
   } = storeToRefs(marketStore);
 
-  const candles = ref<Candle[]>([]);
-  const appendCandles = (newCandles: Candle[]) => {
-    candles.value = mixCandles(candles.value, newCandles);
-  };
+  const chartDataStore = useChartDataStore();
+  const {
+    candles,
+    isFetchingCandles,
+  } = storeToRefs(chartDataStore);
 
   const chartDateFrom = useStorage<string>('chartDateFrom', getDefaultChartDateFrom());
   const chartDateTo = useStorage<string>('chartDateTo', emulatorDate.value);
@@ -63,26 +61,11 @@ export const useMarketChart = () => {
     ),
   );
 
-  const isFetchingCandles = ref(false);
-
   const fetchCandles = async () => {
-    if (!activePairData.value) return;
-
-    isFetchingCandles.value = true;
-    const {
-      result,
-      data,
-    } = await marketStore.getCandles({
-      pair: activePairData.value.alias,
-      date_from: dateFrom.value,
-      date_to: dateTo.value,
-      size: candleSize.value,
-    });
-    isFetchingCandles.value = false;
-
-    if (result) {
-      candles.value = data.data;
-    }
+    await chartDataStore.fetchCandles(
+      dateFrom.value,
+      dateTo.value,
+    );
   };
   watch([activePair, marketType], fetchCandles, { immediate: true });
 
@@ -94,6 +77,5 @@ export const useMarketChart = () => {
     computedCandles,
     isFetchingCandles,
     fetchCandles,
-    appendCandles,
   };
 };

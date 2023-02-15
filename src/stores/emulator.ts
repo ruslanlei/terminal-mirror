@@ -14,6 +14,7 @@ import { createEventBus } from '@/utils/eventBus';
 import { Order } from '@/api/types/order';
 import { processServerErrors } from '@/api/common';
 import { PairData } from '@/api/types/pair';
+import { useChartDataStore } from '@/stores/chartData';
 
 export const getDefaultEmulatorDate = () => compose(
   toISOString,
@@ -31,8 +32,12 @@ export const useEmulatorStore = defineStore('emulator', () => {
   const marketStore = useMarketStore();
   const {
     activePair,
-    candleSize,
   } = storeToRefs(marketStore);
+
+  const chartDataStore = useChartDataStore();
+  const {
+    candleSize,
+  } = storeToRefs(chartDataStore);
 
   const {
     subscribeEvent,

@@ -5,6 +5,19 @@
     :class="$style.ordersForm"
     @submit="handleSubmit"
   >
+    <div
+      :class="[
+        $style.playerOverlay,
+        !emulatorStore.isPlaying && $style.hidden,
+      ]"
+      @click="emulatorStore.turnOffPlayer"
+    >
+      <Typography
+        :text="t('emulator.player.orderInteractionsWarning')"
+        :state="['accent1', 'alignCenter', 'bold']"
+        size="title1"
+      />
+    </div>
     <OrderFromContainer>
       <template
         #orderDirectionSelector="{
@@ -83,11 +96,15 @@ import { Tab } from '@/components/core/tabs';
 
 import { divideRight, roundToDecimalPoint } from '@/helpers/number';
 import { compose } from '@/utils/fp';
+import Typography from '@/components/app/typography/Typography.vue';
+import { useEmulatorStore } from '@/stores/emulator';
 import OrderFormInputPart from './composables/orderFormInputPart/OrderFormInputPart.vue';
 import OrderFormTakeProfitPart from './composables/orderFormTakeProfitPart/OrderFormTakeProfitPart.vue';
 import OrderFormStopLossPart from './composables/orderFormStopLossPart/OrderFormStopLossPart.vue';
 
 const { t } = useI18n();
+
+const emulatorStore = useEmulatorStore();
 
 const settingsActiveTab = ref<OrderFormTab>('input');
 const openTab = (tab: OrderFormTab) => {
@@ -199,6 +216,26 @@ provide(OrderFormInjectionKey, {
 
 .ordersForm {
   height: 100%;
+  position: relative;
+}
+
+.playerOverlay {
+  cursor: pointer;
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  backdrop-filter: blur(20px);
+  background-color: rgba(var(--color-background-1), 0.7);
+  border-radius: 0 0 10px 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  transition: opacity 250ms;
+  &.hidden {
+    pointer-events: none;
+    opacity: 0;
+  }
 }
 
 .tabs {

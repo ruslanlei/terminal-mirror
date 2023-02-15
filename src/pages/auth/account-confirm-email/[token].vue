@@ -30,7 +30,7 @@ verify();
 </script>
 
 <style lang="scss" module>
-@import "src/assets/styles/utils";
+@import "../../../assets/styles/utils";
 
 .verifyEmail {
   padding: 20px 0;

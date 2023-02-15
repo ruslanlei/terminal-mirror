@@ -157,16 +157,6 @@ export const useOrderCreate = () => {
   };
   autoCalculateTakeProfits();
 
-  const createTakeProfits = () => {
-    const side = model.side === 'buy' ? 'sell' : 'buy';
-
-    return marketStore.createListOfTakeProfits(
-      takeProfits.value,
-      side,
-    );
-  };
-  // take profits -->
-
   // <-- stop loss
   const isStopLossEnabled = ref(true);
 
@@ -207,55 +197,25 @@ export const useOrderCreate = () => {
     quoteCurrency.value.decimals,
   ) : 0));
 
-  const createStopLoss = () => {
-    const side = model.side === 'buy' ? 'sell' : 'buy';
-
-    return marketStore.createStopLoss({
-      price: stopLossPrice.value,
-      quantity: model.quantity,
-    }, side);
-  };
-  // stop loss -- >
-
   // <-- submit
   const isLoading = ref(false);
 
   const handleSubmit = async () => {
     if (isLoading.value) return;
+
     isLoading.value = true;
 
-    const { result } = await marketStore.createOrder(model);
-
-    if (!result) {
-      isLoading.value = false;
-      return;
-    }
-
-    if (isTakeProfitsEnabled.value) {
-      const { result } = await createTakeProfits();
-
-      if (!result) {
-        isLoading.value = false;
-        return;
-      }
-    }
-
-    if (isStopLossEnabled.value) {
-      const { result } = await createStopLoss();
-
-      if (!result) {
-        isLoading.value = false;
-        return;
-      }
-    }
+    const { result } = await marketStore.createOrderGroup(
+      model,
+      takeProfits.value,
+      stopLossPrice.value,
+    );
 
     isLoading.value = false;
 
-    resetModel();
-
-    toastStore.showSuccess({
-      text: t('order.successfullyCreated'),
-    });
+    if (result) {
+      resetModel();
+    }
   };
   // submit -->
 

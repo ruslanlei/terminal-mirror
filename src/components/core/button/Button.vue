@@ -90,6 +90,11 @@ const computedState = useComputedState(props);
   background: rgb(var(--color-success));
 }
 
+.dangerColor {
+  color: rgba(var(--color-accent-1));
+  background: rgb(var(--color-danger));
+}
+
 .colored {
   color: rgba(var(--color-accent-1));
   background-color: rgb(var(--color-primary-1));

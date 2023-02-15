@@ -70,7 +70,7 @@ import CurrencyLogo from '@/components/core/currencyLogo/CurrencyLogo.vue';
 import Icon from '@/components/core/icon/Icon.vue';
 import { SortDirection } from '@/components/core/table';
 import { humanizeNumber } from '@/utils/number';
-import { PairServerData } from '@/api/types/pairServerData';
+import { PairData } from '@/api/types/pair';
 import {
   PairsTableColumn, PairsTableEmits,
   PairsTableProps,
@@ -103,7 +103,7 @@ const sortBy = ref(null);
 const sortDirection = ref(SortDirection.ASC);
 
 const computedRecords = computed<PairsTableRecord[]>(
-  () => props.pairs.map((pair: PairServerData) => ({
+  () => props.pairs.map((pair: PairData) => ({
     id: pair.id,
     data: {
       pairs: {
@@ -117,7 +117,7 @@ const computedRecords = computed<PairsTableRecord[]>(
   })),
 );
 
-const onRecordClick = (id: PairServerData['id']) => {
+const onRecordClick = (id: PairData['id']) => {
   emit('selectPair', id);
 };
 </script>

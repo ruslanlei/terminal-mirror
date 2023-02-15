@@ -9,6 +9,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import Picture from '@/components/core/picture/Picture.vue';
+import { collectSrcSet } from '@/helpers/dom';
 import { CertificateImageProps } from './index';
 
 import PurpleCertificatePng from '../assets/purpleCertificate.png';
@@ -18,8 +19,14 @@ import OrangeCertificateWebp from '../assets/orangeCertificate.webp';
 
 const props = defineProps<CertificateImageProps>();
 
-const purpleCertificateSrcset = computed(() => `${PurpleCertificateWebp}, ${PurpleCertificatePng}`);
-const orangeCertificateSrcset = computed(() => `${OrangeCertificateWebp}, ${OrangeCertificatePng}`);
+const purpleCertificateSrcset = computed(() => collectSrcSet([
+  PurpleCertificateWebp,
+  PurpleCertificatePng,
+]));
+const orangeCertificateSrcset = computed(() => collectSrcSet([
+  OrangeCertificateWebp,
+  OrangeCertificatePng,
+]));
 
 const computedSrc = computed(() => ({
   purple: PurpleCertificatePng,

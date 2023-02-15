@@ -1,3 +1,5 @@
+import { TableRowState } from '@/components/core/table/tableRow';
+
 export type TableColumn<S = string> = {
   label: string,
   slug: S,
@@ -20,6 +22,7 @@ export type TableRecord<
   id: string | number,
   data: Data,
   children?: Children,
+  state?: TableRowState | TableRowState[],
 }
 
 export type InnerTableRecord = TableRecord & {

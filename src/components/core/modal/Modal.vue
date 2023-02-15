@@ -11,6 +11,14 @@
       <Loader />
     </div>
     <div :class="[$style.content, contentClass]">
+      <div
+        v-if="showClose"
+        :class="$style.closeContainer"
+      >
+        <button :class="$style.closeButton">
+          <Icon icon="cross" />
+        </button>
+      </div>
       <slot />
     </div>
   </Card>
@@ -19,6 +27,7 @@
 <script setup lang="ts">
 import Card from '@/components/core/card/Card.vue';
 import Loader from '@/components/core/loader/Loader.vue';
+import Icon from '@/components/core/icon/Icon.vue';
 import { ModalProps } from './index';
 
 withDefaults(
@@ -54,5 +63,14 @@ withDefaults(
     opacity: 1;
     pointer-events: all;
   }
+}
+
+.closeContainer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.closeButton {
+  color: rgb(var(--color-accent-2));
 }
 </style>

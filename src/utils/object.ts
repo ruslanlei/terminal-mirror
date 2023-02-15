@@ -1,3 +1,5 @@
+import cloneDeep from 'lodash/cloneDeep';
+
 export const isObject = (item: any) => (typeof item === 'object' && !Array.isArray(item) && item !== null);
 
 export const createObjectWithValues = (
@@ -11,3 +13,7 @@ export const createObjectWithValues = (
       ? createObjectWithValues(value, setValue)
       : setValue,
   }), {});
+
+export {
+  cloneDeep,
+};

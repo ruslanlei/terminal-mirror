@@ -1,6 +1,6 @@
 import { TableColumn, TableRecord } from '@/components/core/table';
 import { currency } from '@/api/types/currency';
-import { Order } from '@/api/types/order';
+import { Order, SubOrder } from '@/api/types/order';
 import { SubOrderTableItem } from '@/components/app/ordersList/subOrdersTable';
 
 export interface OrdersListProps {
@@ -33,13 +33,16 @@ export type ActiveOrdersTableRecord = TableRecord<ActiveOrdersTableColumnSlug, {
   },
   sl: number | null,
   pnl: {
-    value: number,
+    value: number | null,
     currency: string,
   },
   tp: number | null,
   date: string,
   comment: Order,
-  options: Order,
+  options: {
+    order: Order,
+    takeProfits: SubOrder[] | undefined,
+  },
 }, SubOrderTableItem[]>;
 
 export type ClosedOrdersTableColumnSlug =
@@ -74,5 +77,8 @@ export type ClosedOrdersTableRecord = TableRecord<ClosedOrdersTableColumnSlug, {
     open: string,
     close: string,
   },
-  options: Order,
+  options: {
+    order: Order,
+    takeProfits: SubOrder[] | undefined,
+  },
 }, SubOrderTableItem[]>;

@@ -1,15 +1,19 @@
-import { ref } from 'vue';
-import { defineStore } from 'pinia';
+import { computed, ref, watch } from 'vue';
+import { defineStore, storeToRefs } from 'pinia';
 import { useStorage } from '@vueuse/core';
 import { useMarketStore } from '@/stores/market';
 import { simulate } from '@/api/endpoints/emulator/simulate';
-import { compose } from '@/utils/fp';
+import { compose, curry } from '@/utils/fp';
 import {
   dateNow,
   subtractYears,
   toISOString,
 } from '@/utils/date';
 import { multiply } from '@/helpers/number';
+import { createEventBus } from '@/utils/eventBus';
+import { Order } from '@/api/types/order';
+import { processServerErrors } from '@/api/common';
+import { PairData } from '@/api/types/pair';
 
 export const getDefaultEmulatorDate = () => compose(
   toISOString,
@@ -17,40 +21,98 @@ export const getDefaultEmulatorDate = () => compose(
   dateNow,
 )();
 
+export enum emulatorEvent {
+  ORDER_CHANGED_STATUS = 'orderChangedStatus'
+}
+
+export type PlayerDatesMap = Record<PairData['id'], string>;
+
 export const useEmulatorStore = defineStore('emulator', () => {
   const marketStore = useMarketStore();
+  const {
+    activePair,
+  } = storeToRefs(marketStore);
 
-  const emulatorDate = useStorage('emulatorDate', getDefaultEmulatorDate());
+  const {
+    subscribeEvent,
+    emitEvent,
+  } = createEventBus<emulatorEvent>();
+
+  const subscribeSimulateEvent = curry(subscribeEvent<Order>)(emulatorEvent.ORDER_CHANGED_STATUS);
+  const emitSimulateEvent = curry(emitEvent<Order>)(emulatorEvent.ORDER_CHANGED_STATUS);
+
+  const playerDatesMap = useStorage<PlayerDatesMap>('playerDatesMap', {
+    1: getDefaultEmulatorDate(),
+  });
+  watch(activePair, () => {
+    if (playerDatesMap.value?.[activePair.value]) return;
+
+    playerDatesMap.value[activePair.value] = getDefaultEmulatorDate();
+  }, { immediate: true });
+
+  const emulatorDate = computed({
+    get: () => playerDatesMap.value?.[activePair.value],
+    set: (value: string) => {
+      playerDatesMap.value[activePair.value] = value;
+    },
+  });
 
   const isPlaying = ref(false);
+  const turnOffPlayer = () => {
+    isPlaying.value = false;
+  };
 
-  const candlesPerSecond = useStorage<number>('emulatorSpeed', 1);
+  const candlesPerSecond = useStorage<number>('candlesPerSecond', 1);
   const setSpeed = (value: number) => {
     candlesPerSecond.value = value;
   };
 
   const candleSize = ref<number>(900);
 
-  const compression = ref<number>(5);
+  const compressionFactor = ref<number>(5);
 
-  const handleSimulate = (tiks: number) => simulate({
-    pair: marketStore.activePair,
-    date_from: emulatorDate.value,
-    candle_size: candleSize.value,
-    compression: compose(
+  const handleSimulate = async (tiks: number) => {
+    const compression = compose(
       multiply(candlesPerSecond.value),
       multiply(candleSize.value),
-    )(compression.value),
-    tiks,
+    )(compressionFactor.value);
+
+    const response = await simulate({
+      pair: marketStore.activePair,
+      date_from: emulatorDate.value,
+      candle_size: candleSize.value,
+      compression,
+      tiks,
+    });
+
+    if (response.result) {
+      response.data.events.forEach(emitSimulateEvent);
+    } else {
+      processServerErrors(response.data);
+    }
+
+    return response;
+  };
+
+  subscribeSimulateEvent((order: Order) => {
+    // for now its only possible to create
+    // only 1 limit order, so there is need
+    // to turn of player if limit order
+    // have been executed.
+    if (order.order_type === 'limit' && order.status === 'executed') {
+      turnOffPlayer();
+    }
   });
 
   return {
+    subscribeSimulateEvent,
     emulatorDate,
     isPlaying,
+    turnOffPlayer,
     candlesPerSecond,
     setSpeed,
     candleSize,
-    compression,
+    compressionFactor,
     simulate: handleSimulate,
   };
 });

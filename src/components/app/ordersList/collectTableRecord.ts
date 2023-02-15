@@ -2,7 +2,7 @@ import {
   compose,
   curry,
 } from '@/utils/fp';
-import { PairServerData } from '@/api/types/pairServerData';
+import { PairData } from '@/api/types/pair';
 import { MasterOrder, Order, SubOrder } from '@/api/types/order';
 import { multiply, roundToDecimalPoint } from '@/helpers/number';
 import { calculatePercentOfDifference } from '@/helpers/math/percents';
@@ -13,9 +13,10 @@ import { ActiveOrdersTableRecord, ClosedOrdersTableRecord } from '@/components/a
 import { SubOrderTableItem } from '@/components/app/ordersList/subOrdersTable';
 import { collectTableRecord } from '@/components/core/table/helpers';
 import { getOrdersWithStatus, reduceSubOrderListToCommonPnl } from '@/helpers/orders';
+import { TableRowState } from '@/components/core/table/tableRow';
 
 interface CollectRecordPayload {
-    pairData: PairServerData,
+    pairData: PairData,
     pairPrice: number,
     order: MasterOrder,
     takeProfits: SubOrder[] | undefined,
@@ -23,12 +24,19 @@ interface CollectRecordPayload {
 }
 
 const commonDataMixin = (
-  payload: CollectRecordPayload,
+  {
+    pairData,
+    order,
+    takeProfits,
+  }: CollectRecordPayload,
 ) => ({
-  pair: payload.pairData.base,
-  type: payload.order.side,
-  coins: payload.order.quantity,
-  options: payload.order,
+  pair: pairData.base,
+  type: order.side,
+  coins: order.quantity,
+  options: {
+    order,
+    takeProfits,
+  },
 });
 
 const orderVolumeMixin = (
@@ -101,18 +109,24 @@ const stopLossDataMixin = (
 });
 
 const pnlMixin = (
-  payload: CollectRecordPayload,
+  { order, pairData, pairPrice }: CollectRecordPayload,
 ) => ({
   pnl: {
-    currency: payload.pairData.quote,
-    value: compose(
-      roundToDecimalPoint(2),
-      calculatePnl,
-    )(
-      payload.order.price,
-      payload.order.quantity,
-      payload.pairPrice,
-    ),
+    currency: pairData.quote,
+    ...(order.status !== 'new'
+      ? {
+        value: compose(
+          roundToDecimalPoint(2),
+          calculatePnl,
+        )(
+          order.price,
+          order.quantity,
+          pairPrice,
+        ),
+      }
+      : {
+        value: null,
+      }),
   },
 });
 
@@ -177,22 +191,32 @@ const stopLossChildrenMixin = (
   }] : []),
 ];
 
+const notFilledOrderStateMixin = (
+  { order }: CollectRecordPayload,
+): TableRowState[] => [
+  ...(order.status === 'new' ? ['semiTransparent'] : []) as TableRowState[],
+];
+
 export const collectActiveOrderRecord = curry(collectTableRecord<
   ActiveOrdersTableRecord,
   CollectRecordPayload
->)([
-  commentMixin,
-  activeOrderDateMixin,
-  takeProfitDataMixin,
-  pnlMixin,
-  stopLossDataMixin,
-  activeOrderPricesMixin,
-  orderVolumeMixin,
-  commonDataMixin,
-], [
-  stopLossChildrenMixin,
-  takeProfitChildrenMixin,
-]);
+>)(
+  [
+    commentMixin,
+    activeOrderDateMixin,
+    takeProfitDataMixin,
+    pnlMixin,
+    stopLossDataMixin,
+    activeOrderPricesMixin,
+    orderVolumeMixin,
+    commonDataMixin,
+  ],
+  [notFilledOrderStateMixin],
+  [
+    stopLossChildrenMixin,
+    takeProfitChildrenMixin,
+  ],
+);
 
 export const collectClosedOrderRecord = curry(collectTableRecord<
   ClosedOrdersTableRecord,
@@ -203,7 +227,7 @@ export const collectClosedOrderRecord = curry(collectTableRecord<
   closedOrderResultsMixin,
   orderVolumeMixin,
   commonDataMixin,
-], [
+], [], [
   stopLossChildrenMixin,
   takeProfitChildrenMixin,
 ]);

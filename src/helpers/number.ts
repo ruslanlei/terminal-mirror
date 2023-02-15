@@ -38,4 +38,4 @@ export const roundToDecimalPoint = curry(
   },
 );
 
-export const isPositive = (number: number): boolean => number > 0;
+export const isPositive = (number: number): boolean => number >= 0;

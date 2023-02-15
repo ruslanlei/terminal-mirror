@@ -31,6 +31,7 @@
         size="sm"
         state="defaultColor"
         :step="0.01"
+        :is-disabled="isFieldsDependive"
       >
         <template #append>
           {{ quoteCurrency?.name }}
@@ -61,6 +62,7 @@
         size="sm"
         state="defaultColor"
         :step="0.01"
+        :is-disabled="isFieldsDependive"
       >
         <template #append>
           {{ '%' }}
@@ -127,6 +129,8 @@ const {
   isStopLossEnabled,
   ratio,
 } = useOrderFormInject();
+
+const isFieldsDependive = computed(() => !model.quantity);
 
 const percentOfOrderPrice = computed({
   get: () => compose(

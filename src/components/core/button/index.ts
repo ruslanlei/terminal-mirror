@@ -5,6 +5,7 @@ export type ButtonState =
   | 'secondary1Color'
   | 'secondary2Color'
   | 'successColor'
+  | 'dangerColor'
   | 'smSize'
   | 'mdSize'
   | 'lgSize'

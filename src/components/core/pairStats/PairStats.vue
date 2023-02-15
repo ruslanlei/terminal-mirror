@@ -21,7 +21,7 @@ import {
 import { useI18n } from 'vue-i18n';
 import CurrencyLogo from '@/components/core/currencyLogo/CurrencyLogo.vue';
 import CurrencyStatsColumn from '@/components/app/currencyStatsColumn/CurrencyStatsColumn.vue';
-import { CurrencyStatsProps } from '@/components/core/currencyStats/index';
+import { CurrencyStatsProps } from '@/components/core/pairStats/index';
 import { CurrencyStat } from '@/components/app/currencyStatsColumn';
 
 const props = defineProps<CurrencyStatsProps>();
@@ -31,36 +31,36 @@ const { t } = useI18n();
 const computedCurrencyStats = computed<Array<CurrencyStat[]>>(() => [
   [
     {
-      label: t('currencyStats.price'),
+      label: t('pairStats.price'),
       value: props.stats.price,
       valueState: 'positive',
     },
     {
-      label: t('currencyStats.amount'),
+      label: t('pairStats.amount'),
       value: props.stats.amount,
       valueState: 'default',
     },
   ],
   [
     {
-      label: t('currencyStats.change'),
+      label: t('pairStats.change'),
       value: props.stats.change,
       valueState: 'negative',
     },
     {
-      label: t('currencyStats.in24hours'),
+      label: t('pairStats.in24hours'),
       value: props.stats.changePercents,
       valueState: 'default',
     },
   ],
   [
     {
-      label: t('currencyStats.max'),
+      label: t('pairStats.max'),
       value: props.stats.max,
       valueState: 'default',
     },
     {
-      label: t('currencyStats.min'),
+      label: t('pairStats.min'),
       value: props.stats.min,
       valueState: 'default',
     },

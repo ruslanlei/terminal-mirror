@@ -1,17 +1,17 @@
 <template>
-  <CurrencyStats :stats="computedStats" />
+  <PairStats :stats="computedStats" />
 </template>
 
 <script setup lang="ts">
 import { computed, reactive } from 'vue';
-import CurrencyStats from '@/components/core/currencyStats/CurrencyStats.vue';
-import { ICurrencyStats } from '@/components/core/currencyStats';
+import PairStats from '@/components/core/pairStats/PairStats.vue';
+import { IPairStats } from '@/components/core/pairStats';
 import { useMarketStore } from '@/stores/market';
 import { currency } from '@/api/types/currency';
 
 const marketStore = useMarketStore();
 
-const stats = reactive<ICurrencyStats>(({
+const stats = reactive<IPairStats>(({
   currency: currency.BTC,
   price: 16788,
   amount: '8990M',

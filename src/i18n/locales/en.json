@@ -96,7 +96,7 @@
       "orderInteractionsWarning": "Editing or adding orders will pause the player"
     }
   },
-  "currencyStats": {
+  "pairStats": {
     "price": "Price",
     "amount": "Amount",
     "change": "Change",

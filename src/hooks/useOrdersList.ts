@@ -7,7 +7,7 @@ import { add, roundToDecimalPoint } from '@/helpers/number';
 import { compose } from '@/utils/fp';
 import { collectActiveOrderRecord, collectClosedOrderRecord } from '@/components/app/ordersList/collectTableRecord';
 import { createEmptyRecord } from '@/components/core/table/helpers';
-import { modalType, useModalStore } from '@/stores/modals';
+import { useModalStore } from '@/stores/modals';
 import { awaitTimeout } from '@/utils/promise';
 import { useEmulatorStore } from '@/stores/emulator';
 import { findAndDelete, findAndUpdateObject } from '@/helpers/array';

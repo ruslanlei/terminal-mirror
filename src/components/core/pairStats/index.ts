@@ -1,6 +1,6 @@
 import { currency } from '@/api/types/currency';
 
-export interface ICurrencyStats {
+export interface IPairStats {
   currency: currency,
   price: number,
   amount: number | string,
@@ -11,5 +11,5 @@ export interface ICurrencyStats {
 }
 
 export interface CurrencyStatsProps {
-  stats: ICurrencyStats,
+  stats: IPairStats,
 }

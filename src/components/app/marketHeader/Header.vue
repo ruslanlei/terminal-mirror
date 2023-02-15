@@ -29,7 +29,7 @@
 import Header from '@/components/core/header/Header.vue';
 import MarketTypeSelector from '@/components/app/marketTypeSelector/MarketTypeSelector.vue';
 import Divider from '@/components/core/divider/Divider.vue';
-import SelectedCurrencyStats from '@/components/app/selectedCurrencyStats/SelectedCurrencyStats.vue';
+import SelectedCurrencyStats from '@/components/app/activePairStats/ActivePairStats.vue';
 import Balance from '@/components/app/balance/Balance.vue';
 import ProfileDropdown from '@/components/app/profileDropdown/ProfileDropdown.vue';
 </script>

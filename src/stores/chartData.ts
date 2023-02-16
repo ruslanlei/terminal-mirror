@@ -2,16 +2,12 @@ import { computed, ref } from 'vue';
 import { defineStore, storeToRefs } from 'pinia';
 import { useMarketStore } from '@/stores/market';
 import { Candle } from '@/api/types/marketData';
-import { getCandleClosePrice, mixCandles } from '@/helpers/candles';
+import { getCandleClosePrice, getCandleDate, mixCandles } from '@/helpers/candles';
 import { getCandles, GetCandlesDTO } from '@/api/endpoints/marketdata/candles';
 import { processServerErrors } from '@/api/common';
-import { IPairStats } from '@/components/core/pairStats';
-import { currency } from '@/api/types/currency';
 import { compose } from '@/utils/fp';
-import { divideRight, roundToDecimalPoint, subtractRight } from '@/helpers/number';
-import { calculatePercentOfDifference } from '@/helpers/math/percents';
-import { percentFormat } from '@/utils/number';
-import { findMaxByKey, findMinByKey } from '@/utils/array';
+import { subtractDays, toTimestamp } from '@/utils/date';
+import { isMoreThan } from '@/utils/boolean';
 
 export const useChartDataStore = defineStore('chartData', () => {
   const candleSize = ref<number>(900);
@@ -29,61 +25,6 @@ export const useChartDataStore = defineStore('chartData', () => {
   const appendCandles = (newCandles: Candle[]) => {
     candles.value = mixCandles(candles.value, newCandles);
   };
-
-  const pairStats = computed<IPairStats>(() => {
-    const firstCandle = candles.value.at(0);
-    const firstPrice = firstCandle
-      ? getCandleClosePrice(firstCandle)
-      : null;
-
-    const lastCandle = candles.value.at(-1);
-    const lastPrice = lastCandle
-      ? getCandleClosePrice(lastCandle)
-      : null;
-
-    let change = null;
-    if (lastPrice && firstPrice) {
-      change = compose(
-        roundToDecimalPoint(4),
-        subtractRight(firstPrice),
-      )(lastPrice);
-    }
-
-    let changePercents = null;
-    if (firstPrice && lastPrice) {
-      changePercents = compose(
-        percentFormat,
-        divideRight(100),
-        calculatePercentOfDifference,
-      )(firstPrice, lastPrice);
-    }
-
-    let max = null;
-    if (candles.value.length) {
-      max = findMaxByKey(
-        2, // 2 element of array is highest price in candle
-        candles.value,
-      );
-    }
-
-    let min = null;
-    if (candles.value.length) {
-      min = findMinByKey(
-        1, // 3 element of array is lowest price in candle
-        candles.value,
-      );
-    }
-
-    return {
-      currency: activePairData.value?.base || currency.BTC,
-      price: lastPrice,
-      amount: '8990M',
-      change,
-      changePercents,
-      max,
-      min,
-    };
-  });
 
   const isFetchingCandles = ref(false);
 
@@ -123,13 +64,42 @@ export const useChartDataStore = defineStore('chartData', () => {
     }
   };
 
+  const lastCandle = computed<Candle | null>(() => candles.value.at(-1) || null);
+
+  const firstCandleInLast24Hours = computed<Candle | null>(() => {
+    const lastCandle = candles.value.at(-1);
+
+    if (!lastCandle) return null;
+
+    const last24hoursCandles = candles.value.filter((candle: Candle) => compose(
+      isMoreThan(
+        compose(
+          toTimestamp,
+          subtractDays(1),
+          getCandleDate,
+        )(lastCandle),
+      ),
+      toTimestamp,
+      getCandleDate,
+    )(candle));
+
+    return last24hoursCandles?.[0] || null;
+  });
+
+  const currentPrice = computed(() => getCandleClosePrice(lastCandle.value));
+
+  const firstPriceWithinLast24Hours = computed<number | null>(
+    () => getCandleClosePrice(firstCandleInLast24Hours.value),
+  );
+
   return {
     candleSize,
     candles,
     appendCandles,
-    pairStats,
     isFetchingCandles,
     getCandles: handleGetCandles,
     fetchCandles,
+    currentPrice,
+    firstPriceWithinLast24Hours,
   };
 });

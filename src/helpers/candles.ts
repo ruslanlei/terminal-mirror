@@ -20,8 +20,12 @@ export const transformCandlesForChart = (
 }));
 
 export const getCandleClosePrice = (
+  candle?: Candle | null,
+) => candle?.[3] || null;
+
+export const getCandleDate = (
   candle: Candle,
-) => candle[3];
+) => candle?.[6] || null;
 
 export const mixCandles = (
   candles: Candle[],

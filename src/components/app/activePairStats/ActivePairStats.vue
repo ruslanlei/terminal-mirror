@@ -29,50 +29,44 @@ const {
   firstPriceWithinLast24Hours,
 } = storeToRefs(chartDataStore);
 
-const pairStats = computed<IPairStats>(() => {
-  let change = null;
-  if (currentPrice.value && firstPriceWithinLast24Hours.value) {
-    change = compose(
-      roundToDecimalPoint(4),
-      subtractRight(firstPriceWithinLast24Hours.value),
-    )(currentPrice.value);
-  }
+const change = computed(() => ((currentPrice.value && firstPriceWithinLast24Hours.value)
+  ? compose(
+    roundToDecimalPoint(4),
+    subtractRight(firstPriceWithinLast24Hours.value),
+  )(currentPrice.value)
+  : null));
 
-  let changePercents = null;
-  if (firstPriceWithinLast24Hours.value && currentPrice.value) {
-    changePercents = compose(
-      percentFormat,
-      divideRight(100),
-      calculatePercentOfDifference,
-    )(firstPriceWithinLast24Hours.value, currentPrice.value);
-  }
+const changePercents = computed(() => ((firstPriceWithinLast24Hours.value && currentPrice.value)
+  ? compose(
+    percentFormat,
+    divideRight(100),
+    calculatePercentOfDifference,
+  )(firstPriceWithinLast24Hours.value, currentPrice.value)
+  : null));
 
-  let max = null;
-  if (candles.value.length) {
-    max = findMaxByKey(
-      2, // 2 element of array is highest price in candle
-      candles.value,
-    );
-  }
+const max = computed(() => (candles.value.length
+  ? findMaxByKey(
+    2, // 3 element of array is highest price in candle
+    candles.value,
+  )
+  : null));
 
-  let min = null;
-  if (candles.value.length) {
-    min = findMinByKey(
-      1, // 3 element of array is lowest price in candle
-      candles.value,
-    );
-  }
+const min = computed(() => (candles.value.length
+  ? findMinByKey(
+    1, // 2 element of array is lowest price in candle
+    candles.value,
+  )
+  : null));
 
-  return {
-    currency: activePairData.value?.base || currency.BTC,
-    price: currentPrice.value,
-    amount: currentVolume.value ? humanizeNumber(currentVolume.value) : null,
-    change,
-    changePercents,
-    max,
-    min,
-  };
-});
+const pairStats = computed<IPairStats>(() => ({
+  currency: activePairData.value?.base || currency.BTC,
+  price: currentPrice.value,
+  amount: humanizeNumber(currentVolume.value ?? 0),
+  change: change.value,
+  changePercents: changePercents.value,
+  max: max.value,
+  min: min.value,
+}));
 </script>
 
 <style lang="scss">

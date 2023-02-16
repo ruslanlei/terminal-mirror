@@ -11,6 +11,7 @@ import { useModalStore } from '@/stores/modals';
 import { awaitTimeout } from '@/utils/promise';
 import { useEmulatorStore } from '@/stores/emulator';
 import { findAndDelete, findAndUpdateObject } from '@/helpers/array';
+import { useChartDataStore } from '@/stores/chartData';
 
 interface GroupedOrder {
   order: MasterOrder,
@@ -23,8 +24,8 @@ export const useOrdersList = (
 ) => {
   const { t } = useI18n();
   const marketStore = useMarketStore();
+  const chartDataStore = useChartDataStore();
   const emulatorStore = useEmulatorStore();
-  const modalStore = useModalStore();
 
   const columns = computed(() => [
     {
@@ -136,7 +137,7 @@ export const useOrdersList = (
       return compose(
         collectActiveOrderRecord({
           pairData,
-          pairPrice: marketStore.activePairPrice,
+          pairPrice: chartDataStore.getCurrentPriceByPairId(pairData.id),
           takeProfits,
           stopLoss,
           order,
@@ -213,19 +214,6 @@ export const useOrdersList = (
   };
 
   watch(() => props.listType, () => getList(true));
-
-  // const deleteOrder = async (
-  //   order: Order,
-  //   takeProfits: SubOrder[] | undefined,
-  // ) => {
-  //   modalStore.showModal({
-  //     type: modalType.DELETE_ORDER,
-  //     payload: {
-  //       order,
-  //       takeProfits,
-  //     },
-  //   });
-  // };
 
   const onOrderCreate = async () => {
     if (props.listType !== 'active') return;

@@ -17,7 +17,7 @@ import { TableRowState } from '@/components/core/table/tableRow';
 
 interface CollectRecordPayload {
     pairData: PairData,
-    pairPrice: number,
+    pairPrice: number | null,
     order: MasterOrder,
     takeProfits: SubOrder[] | undefined,
     stopLoss: SubOrder | undefined,
@@ -114,7 +114,7 @@ const pnlMixin = (
 ) => ({
   pnl: {
     currency: pairData.quote,
-    ...(order.status !== 'new'
+    ...(order.status !== 'new' && pairPrice
       ? {
         value: compose(
           roundToDecimalPoint(2),

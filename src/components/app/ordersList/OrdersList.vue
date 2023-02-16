@@ -66,7 +66,12 @@
           <span :class="$style.pricesCellCurrent">
             {{ '/' }}
             <template v-if="listType === 'active'">
-              {{ data.current }}
+              <template v-if="data.current">
+                {{ data.current }}
+              </template>
+              <template v-else>
+                {{ '-' }}
+              </template>
             </template>
             <template v-if="listType === 'closed'">
               {{ data.close }}

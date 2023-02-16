@@ -10,7 +10,7 @@ import { computed } from 'vue';
 import { IPairStats } from '@/components/core/pairStats';
 import { compose } from '@/utils/fp';
 import { divideRight, roundToDecimalPoint, subtractRight } from '@/helpers/number';
-import { percentFormat } from '@/utils/number';
+import { humanizeNumber, percentFormat } from '@/utils/number';
 import { calculatePercentOfDifference } from '@/helpers/math/percents';
 import { findMaxByKey, findMinByKey } from '@/utils/array';
 import { currency } from '@/api/types/currency';
@@ -25,6 +25,7 @@ const chartDataStore = useChartDataStore();
 const {
   candles,
   currentPrice,
+  currentVolume,
   firstPriceWithinLast24Hours,
 } = storeToRefs(chartDataStore);
 
@@ -65,7 +66,7 @@ const pairStats = computed<IPairStats>(() => {
   return {
     currency: activePairData.value?.base || currency.BTC,
     price: currentPrice.value,
-    amount: '8990M',
+    amount: currentVolume.value ? humanizeNumber(currentVolume.value) : null,
     change,
     changePercents,
     max,

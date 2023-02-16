@@ -19,15 +19,33 @@ export const transformCandlesForChart = (
   time: toSecondsTimestamp(candle[6]),
 }));
 
-export const getCandleClosePrice = (
-  candle?: Candle | null,
-) => candle?.[3] || null;
+export const getCandleField = curry((
+  field:
+    'openPrice'
+    | 'lowPrice'
+    | 'highPrice'
+    | 'closePrice'
+    | 'volume'
+    | 'amountOfOrders',
+  candle: Candle | null | undefined,
+) => {
+  const fieldIndex = ({
+    openPrice: 0,
+    lowPrice: 1,
+    highPrice: 2,
+    closePrice: 3,
+    volume: 4,
+    amountOfOrders: 5,
+  }[field]);
+
+  return candle?.[fieldIndex] as number || null;
+});
 
 export const getCandleDate = (
-  candle: Candle,
+  candle?: Candle | null,
 ) => candle?.[6] || null;
 
-export const mixCandles = (
+export const mixCandles = curry((
   candles: Candle[],
   newCandles: Candle[],
 ) => compose(
@@ -37,7 +55,7 @@ export const mixCandles = (
     candles,
     newCandles,
   ),
-);
+));
 
 export const decreaseDateByAmountOfCandles = curry((
   candleSize: number, // in seconds

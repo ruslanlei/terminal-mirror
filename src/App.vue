@@ -4,7 +4,6 @@
   <ToastLayer :class="$style.toastLayer" />
   <LevitatingLayer :class="$style.levitatingLayer" />
   <IconsMap />
-  <DebugPanel :class="$style.debugPanel" />
 </template>
 
 <script setup lang="ts">
@@ -14,7 +13,6 @@ import ModalLayer from '@/components/app/modalLayer/ModalLayer.vue';
 import LevitatingLayer from '@/components/app/leviatingLayer/LevitatingLayer.vue';
 import IconsMap from '@/components/core/icon/IconsMap.vue';
 import { useApp } from '@/hooks/useApp';
-import DebugPanel from '@/components/app/debugPanel/DebugPanel.vue';
 
 useApp();
 </script>

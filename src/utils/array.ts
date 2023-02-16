@@ -8,6 +8,10 @@ export { flatten, concat };
 
 export const arrayFrom = (value: any | any[]) => (Array.isArray(value) ? value : [value]);
 
+export const getLastElement = (
+  array: any[],
+) => array?.at(-1) || null;
+
 export const filterNoneUniqueByKey = curry((
   key: string | number,
   array: any[],

@@ -1,32 +1,21 @@
 <template>
-  <div
-    :class="[$style.container, $style[state]]"
-    :style="computedContainerStyles"
-  >
+  <div :class="[$style.container, $style[state]]">
     <transition
       name="currencyLogoAnimation"
       mode="out-in"
     >
-      <ComputedLogo :key="currency" />
+      <svg
+        :key="currency"
+        :class="$style.source"
+      >
+        <use :xlink:href="`#currency-logo-${currency}`" />
+      </svg>
     </transition>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
-import { currency } from '@/api/types/currency';
 import { CurrencyLogoProps } from './index';
-import AchainLogo from './assets/achain.svg';
-import AschLogo from './assets/asch.svg';
-import BnbLogo from './assets/bnb.svg';
-import BreadLogo from './assets/bread.svg';
-import BtcLogo from './assets/btc.svg';
-import CobinhoodLogo from './assets/cobinhood.svg';
-import DashLogo from './assets/dash.svg';
-import EthLogo from './assets/eth.svg';
-import IotLogo from './assets/iot.svg';
-import LitecoinLogo from './assets/litecoin.svg';
-import TetherLogo from './assets/tether.svg';
 
 const props = withDefaults(
   defineProps<CurrencyLogoProps>(),
@@ -34,51 +23,19 @@ const props = withDefaults(
     state: 'circle',
   },
 );
-
-const logoMap: Record<currency, any> = {
-  BTC: BtcLogo,
-  ETH: EthLogo,
-  BNB: BnbLogo,
-  DASH: DashLogo,
-  LTC: LitecoinLogo,
-  achain: AchainLogo,
-  asch: AschLogo,
-  bread: BreadLogo,
-  cobinhood: CobinhoodLogo,
-  iot: IotLogo,
-  tether: TetherLogo,
-};
-
-const colorMap: Record<currency, string> = {
-  BTC: '#F49D35',
-  ETH: '#627EEA',
-  BNB: '#F3BA2F',
-  DASH: '#2573C2',
-  LTC: '#BEBEBE',
-  achain: '#767DFF',
-  asch: '#FAA00D',
-  bread: '#FE5D86',
-  cobinhood: '#13BF99',
-  iot: '#102044',
-  tether: '#26A17B',
-};
-
-const ComputedLogo = computed(() => logoMap[props.currency]);
-
-const computedContainerStyles = computed(() => ({
-  backgroundColor: colorMap[props.currency],
-}));
 </script>
 
 <style lang="scss" module>
 .container {
   transition: 200ms background-color;
-}
-
-.circle {
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.circle {
   width: 24px;
   min-width: 24px;
   height: 24px;
@@ -87,14 +44,22 @@ const computedContainerStyles = computed(() => ({
 }
 
 .square {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   width: 30px;
   min-width: 30px;
   height: 40px;
   min-height: 40px;
   border-radius: 5px;
+}
+
+$svgWidth: 384px;
+$svgHeight: 512px;
+
+.source {
+  width: $svgWidth;
+  min-width: $svgWidth;
+  height: $svgHeight;
+  min-height: $svgHeight;
+  position: absolute;
 }
 </style>
 
@@ -105,7 +70,8 @@ const computedContainerStyles = computed(() => ({
     transition: transform 250ms, opacity 250ms;
   }
 
-  &-enter-from, &-leave-to {
+  &-enter-from,
+  &-leave-to {
     opacity: 0;
   }
 

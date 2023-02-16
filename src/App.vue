@@ -4,6 +4,7 @@
   <ToastLayer :class="$style.toastLayer" />
   <LevitatingLayer :class="$style.levitatingLayer" />
   <IconsMap />
+  <CurrencyLogoMap />
 </template>
 
 <script setup lang="ts">
@@ -13,6 +14,7 @@ import ModalLayer from '@/components/app/modalLayer/ModalLayer.vue';
 import LevitatingLayer from '@/components/app/leviatingLayer/LevitatingLayer.vue';
 import IconsMap from '@/components/core/icon/IconsMap.vue';
 import { useApp } from '@/hooks/useApp';
+import CurrencyLogoMap from '@/components/core/currencyLogo/CurrencyLogoMap.vue';
 
 useApp();
 </script>

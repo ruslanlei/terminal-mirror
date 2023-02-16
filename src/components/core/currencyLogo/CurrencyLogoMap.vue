@@ -1,32 +1,34 @@
 <template>
-  <div :class="$style.iconsMap">
+  <div :class="$style.currencyLogoMap">
     <component
       :is="component"
-      v-for="[icon, component] in icons"
-      :id="`icon-${icon}`"
+      v-for="[icon, component] in logos"
+      :id="`currency-logo-${icon}`"
       :key="icon"
     />
   </div>
 </template>
 
 <script setup lang="ts">
-const clearIconName = (icon: string) => icon
+
+const clearLogoName = (icon: string) => icon
   .replace(/\.\/assets\/(.*)\.svg$/, '$1')
   .split('/')
   .map((part) => (part.replace(/[\s]/g, '')))
   .join('_');
 
-const icons = (Object.entries(
+const logos = (Object.entries(
   import.meta.glob<any>('./assets/**/*.svg', { eager: true }),
 ))
   .map(([key, value]) => ([
-    clearIconName(key),
+    clearLogoName(key),
     value.default,
   ]));
+
 </script>
 
 <style lang="scss" module>
-.iconsMap {
+.currencyLogoMap {
   position: fixed;
   top: -9999px;
   right: -9999px;

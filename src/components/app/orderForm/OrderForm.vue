@@ -2,7 +2,10 @@
   <Form
     v-model="model"
     :validation-schema="validationSchema"
-    :class="$style.ordersForm"
+    :class="[
+      $style.ordersForm,
+      isFormDisabled && $style.disabled
+    ]"
     @submit="handleSubmit"
   >
     <div
@@ -112,6 +115,7 @@ const openTab = (tab: OrderFormTab) => {
 };
 
 const {
+  isFormDisabled,
   model,
   validationSchema,
   orderDirectionOptions,
@@ -220,6 +224,11 @@ provide(OrderFormInjectionKey, {
 .ordersForm {
   height: 100%;
   position: relative;
+  transition: opacity 200ms;
+  opacity: 1;
+  &.disabled {
+    opacity: 0.5;
+  }
 }
 
 .playerOverlay {

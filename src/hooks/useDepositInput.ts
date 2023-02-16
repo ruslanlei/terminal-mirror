@@ -52,7 +52,8 @@ export const useDepositInput = (
       localValue.value = percentsToRoundedValue(
         baseCurrencyDecimals.value,
         baseCurrencyBalance.value,
-      )(percents);
+        percents,
+      );
     },
   });
 
@@ -68,11 +69,14 @@ export const useDepositInput = (
 
   const checkIsValueEqualToPercent = (
     percents: number,
-  ) => checkIsRoundedValueEqualToPercentOfTotal(
-    baseCurrencyDecimals.value,
-    baseCurrencyBalance.value,
-    percents,
-  )(localValue.value);
+  ) => (!!baseCurrencyBalance.value
+    && checkIsRoundedValueEqualToPercentOfTotal(
+      baseCurrencyDecimals.value,
+      baseCurrencyBalance.value,
+      percents,
+      localValue.value,
+    )
+  );
 
   return {
     localValue,

@@ -23,6 +23,7 @@ import {
   calculateAndRoundPledge, calculateVolumeDifference,
 } from '@/helpers/math/formulas/order';
 import { roundToDecimalPoint } from '@/helpers/number';
+import { useChartDataStore } from '@/stores/chartData';
 
 export interface OrderModel extends CreateOrderDTO {
   leverage: number,
@@ -31,13 +32,22 @@ export interface OrderModel extends CreateOrderDTO {
 export const useOrderCreate = () => {
   const marketStore = useMarketStore();
   const {
+    activePair,
     activePairData,
     baseCurrencyDecimals,
     baseCurrencyStep,
     quoteCurrencyDecimals,
   } = storeToRefs(marketStore);
 
+  const chartDataStore = useChartDataStore();
+  const {
+    currentPrice,
+    isFetchingCandles,
+  } = storeToRefs(chartDataStore);
+
   const { t } = useI18n();
+
+  const isFormDisabled = computed(() => isFetchingCandles.value);
 
   const orderDirectionOptions = computed<SelectorProps['options']>(() => [
     {
@@ -59,10 +69,27 @@ export const useOrderCreate = () => {
     side: 'buy',
     order_type: 'limit',
     quantity: 0,
-    price: 16890,
+    price: 0,
     leverage: 1,
   });
   const { resetModel } = useModelReset(model);
+
+  const setPairPriceToModel = () => {
+    model.price = currentPrice.value || 0;
+  };
+
+  watch(activePair, () => {
+    if (isFetchingCandles.value) {
+      const unwatch = watch(isFetchingCandles, () => {
+        unwatch();
+        setPairPriceToModel();
+      });
+
+      return;
+    }
+
+    setPairPriceToModel();
+  }, { immediate: true });
 
   const balance = computed(() => 1250);
 
@@ -214,6 +241,7 @@ export const useOrderCreate = () => {
   // submit -->
 
   return {
+    isFormDisabled,
     model,
     validationSchema,
     isTakeProfitsEnabled,

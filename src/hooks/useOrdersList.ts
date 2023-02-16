@@ -7,7 +7,6 @@ import { add, roundToDecimalPoint } from '@/helpers/number';
 import { compose } from '@/utils/fp';
 import { collectActiveOrderRecord, collectClosedOrderRecord } from '@/components/app/ordersList/collectTableRecord';
 import { createEmptyRecord } from '@/components/core/table/helpers';
-import { useModalStore } from '@/stores/modals';
 import { awaitTimeout } from '@/utils/promise';
 import { useEmulatorStore } from '@/stores/emulator';
 import { findAndDelete, findAndUpdateObject } from '@/helpers/array';
@@ -246,6 +245,7 @@ export const useOrdersList = (
     (updatedOrder: Order) => {
       if (
         updatedOrder.order_type === 'limit'
+          && updatedOrder.status !== 'new'
           && updatedOrder.status !== 'filled'
           && props.listType === 'active'
       ) {

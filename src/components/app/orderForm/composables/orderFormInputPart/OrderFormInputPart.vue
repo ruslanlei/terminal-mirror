@@ -118,15 +118,20 @@ import { useOrderFormInject } from '@/hooks/useOrderFormInject';
 import { useExchange } from '@/hooks/useExchange';
 import { useMarketStore } from '@/stores/market';
 import { storeToRefs } from 'pinia';
+import { useEmulatorStore } from '@/stores/emulator';
 
 const { t } = useI18n();
+
+const emulatorStore = useEmulatorStore();
+const {
+  balance,
+} = storeToRefs(emulatorStore);
 
 const marketStore = useMarketStore();
 const {
   activePairData,
   baseCurrencyDecimals,
   quoteCurrencyDecimals,
-  balance,
   baseCurrencyStep,
 } = storeToRefs(marketStore);
 

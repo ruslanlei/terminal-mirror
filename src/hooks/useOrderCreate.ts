@@ -78,8 +78,6 @@ export const useOrderCreate = () => {
     model.price = currentPrice.value || 0;
   };
 
-  const balance = computed(() => 1250);
-
   const price = computed(() => model.price);
 
   const leverage = computed(() => model.leverage);
@@ -250,7 +248,6 @@ export const useOrderCreate = () => {
     takeProfitsIncomeSum,
     orderDirectionOptions,
     activePairData,
-    balance,
     quoteCurrencyDecimals,
     baseCurrencyDecimals,
     baseCurrencyStep,

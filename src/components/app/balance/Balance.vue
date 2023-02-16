@@ -13,21 +13,22 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useProfileStore } from '@/stores/profile';
 import { useMarketStore } from '@/stores/market';
 import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
+import { useEmulatorStore } from '@/stores/emulator';
+import { roundToDecimalPoint } from '@/helpers/number';
 
 const { t } = useI18n();
 
-const profileStore = useProfileStore();
 const marketStore = useMarketStore();
+const emulatorStore = useEmulatorStore();
 
 const computedLabel = computed(() => ({
   emulator: t('market.type.emulator'),
   real: t('market.type.real'),
 }[marketStore.marketType]));
 
-const balance = computed(() => `$ ${profileStore.balance}`);
+const balance = computed(() => `$ ${roundToDecimalPoint(2, emulatorStore.balance)}`);
 </script>
 
 <style lang="scss" module>

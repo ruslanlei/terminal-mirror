@@ -15,6 +15,7 @@ import { Order } from '@/api/types/order';
 import { processServerErrors } from '@/api/common';
 import { PairData } from '@/api/types/pair';
 import { useChartDataStore } from '@/stores/chartData';
+import { getBalance } from '@/api/endpoints/profile/getBalance';
 
 export const getDefaultEmulatorDate = () => compose(
   toISOString,
@@ -55,6 +56,20 @@ export const useEmulatorStore = defineStore('emulator', () => {
 
     playerDatesMap.value[activePair.value] = getDefaultEmulatorDate();
   }, { immediate: true });
+
+  const balance = useStorage('balance', 0);
+
+  const isFetchingBalance = ref(false);
+  const fetchBalance = async () => {
+    isFetchingBalance.value = true;
+
+    const { result, data } = await getBalance();
+    isFetchingBalance.value = false;
+
+    if (result) {
+      balance.value = data.balance;
+    }
+  };
 
   const emulatorDate = computed({
     get: () => playerDatesMap.value?.[activePair.value],
@@ -109,6 +124,8 @@ export const useEmulatorStore = defineStore('emulator', () => {
   });
 
   return {
+    balance,
+    fetchBalance,
     subscribeSimulateEvent,
     emulatorDate,
     isPlaying,

@@ -93,8 +93,6 @@ export const useMarketStore = defineStore('market', () => {
     pairs.value = data;
   };
 
-  const balance = computed(() => 6000);
-
   const baseCurrencyDecimals = ref(Number(import.meta.env.VITE_APP_BASE_CURRENCY_DECIMALS));
   const quoteCurrencyDecimals = ref(Number(import.meta.env.VITE_APP_QUOTE_CURRENCY_DECIMALS));
 
@@ -261,7 +259,6 @@ export const useMarketStore = defineStore('market', () => {
     marketType,
     activePair,
     setPair,
-    balance,
     quoteCurrencyDecimals,
     baseCurrencyDecimals,
     baseCurrencyStep,

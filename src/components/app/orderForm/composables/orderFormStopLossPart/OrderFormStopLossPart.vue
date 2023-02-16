@@ -111,6 +111,7 @@ import { calculatePercentOfDifference, decreaseByPercent } from '@/helpers/math/
 import { calculatePriceByPercentOfDeposit, calculateVolumeDifferenceInPercentsOfDeposit } from '@/helpers/math/formulas/stopLoss';
 import { useMarketStore } from '@/stores/market';
 import { storeToRefs } from 'pinia';
+import { useEmulatorStore } from '@/stores/emulator';
 import { OrderFormStopLossPartEmits } from './index';
 
 const { t } = useI18n();
@@ -121,9 +122,13 @@ const onSubmit = () => {
   emit('submit');
 };
 
-const marketStore = useMarketStore();
+const emulatorStore = useEmulatorStore();
 const {
   balance,
+} = storeToRefs(emulatorStore);
+
+const marketStore = useMarketStore();
+const {
   quoteCurrencyDecimals,
   baseCurrencyDecimals,
   baseCurrencyStep,

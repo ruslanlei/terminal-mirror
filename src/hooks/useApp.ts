@@ -5,6 +5,7 @@ import { useProfileStore } from '@/stores/profile';
 import { useTitleStore } from '@/stores/title';
 import { useI18nStore } from '@/stores/i18n';
 import { useCommonStore } from '@/stores/common';
+import { useEmulatorStore } from '@/stores/emulator';
 
 export const useApp = () => {
   const route = useRoute();
@@ -14,6 +15,7 @@ export const useApp = () => {
   useI18nStore();
   const sessionStore = useSessionStore();
   const profileStore = useProfileStore();
+  const emulatorStore = useEmulatorStore();
 
   watch(route, () => {
     window.scrollTo({
@@ -22,9 +24,10 @@ export const useApp = () => {
     });
   });
 
-  onMounted(() => {
+  onMounted(async () => {
     if (sessionStore.token) {
-      profileStore.getProfile();
+      await profileStore.getProfile();
+      await emulatorStore.fetchBalance();
     }
   });
 };

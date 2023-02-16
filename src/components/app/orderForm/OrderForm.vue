@@ -123,7 +123,6 @@ const {
   takeProfitsIncomeSum,
   isTakeProfitsEnabled,
   activePairData,
-  balance,
   baseCurrencyStep,
   price,
   leverage,

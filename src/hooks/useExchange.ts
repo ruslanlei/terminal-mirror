@@ -37,13 +37,10 @@ export const useExchange = (
   )(quoteDeposit);
 
   const maxQuoteCurrencyDeposit = computed(
-    () => decrementDeposit(balance.value),
+    () => balance.value,
   );
 
-  const maxQuoteCurrencyDepositLeveraged = computed(() => compose(
-    decrementDeposit,
-    multiply,
-  )(
+  const maxQuoteCurrencyDepositLeveraged = computed(() => multiply(
     balance.value,
     leverage.value,
   ));

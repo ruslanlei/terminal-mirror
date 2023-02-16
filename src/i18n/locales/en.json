@@ -14,7 +14,8 @@
     "passwordsMismatch": "Passwords should be equal to each other",
     "tokenInvalidOrNotProvided": "Passed token is invalid or not provided",
     "min": "Value must be greater than or equal to {min}",
-    "onlyLatinCharactersAndNumbers": "Field must contain only latin characters and numbers"
+    "onlyLatinCharactersAndNumbers": "Field must contain only latin characters and numbers",
+    "positive": "Number should be positive"
   },
   "placeholder": {
     "email": "Enter your email",

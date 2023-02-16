@@ -106,10 +106,7 @@ export const useOrderCreate = () => {
       baseCurrencyStep.value,
       () => t('validationError.min', { min: baseCurrencyStep.value }),
     ),
-    price: number().min(
-      1,
-      () => t('validationError.min', { min: 1 }),
-    ),
+    price: number().positive(() => t('validationError.positive')),
     leverage: number().min(1).max(20),
   });
 

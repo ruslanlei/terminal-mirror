@@ -4,7 +4,7 @@
     :validation-schema="validationSchema"
     :class="[
       $style.ordersForm,
-      isFormDisabled && $style.disabled
+      isFormDisabled && $style.disabled,
     ]"
     @submit="handleSubmit"
   >
@@ -228,6 +228,7 @@ provide(OrderFormInjectionKey, {
   opacity: 1;
   &.disabled {
     opacity: 0.5;
+    pointer-events: none;
   }
 }
 

@@ -78,19 +78,6 @@ export const useOrderCreate = () => {
     model.price = currentPrice.value || 0;
   };
 
-  watch(activePair, () => {
-    if (isFetchingCandles.value) {
-      const unwatch = watch(isFetchingCandles, () => {
-        unwatch();
-        setPairPriceToModel();
-      });
-
-      return;
-    }
-
-    setPairPriceToModel();
-  }, { immediate: true });
-
   const balance = computed(() => 1250);
 
   const price = computed(() => model.price);
@@ -236,6 +223,23 @@ export const useOrderCreate = () => {
     }
   };
   // submit -->
+
+  watch(activePair, () => {
+    if (isFetchingCandles.value) {
+      const unwatch = watch(isFetchingCandles, () => {
+        unwatch();
+        setPairPriceToModel();
+        autoCalculateStopLoss();
+        autoCalculateTakeProfits();
+      });
+
+      return;
+    }
+
+    setPairPriceToModel();
+    autoCalculateStopLoss();
+    autoCalculateTakeProfits();
+  }, { immediate: true });
 
   return {
     isFormDisabled,

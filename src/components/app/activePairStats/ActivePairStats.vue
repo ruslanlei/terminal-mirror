@@ -13,7 +13,6 @@ import { divideRight, roundToDecimalPoint, subtractRight } from '@/helpers/numbe
 import { humanizeNumber, percentFormat } from '@/utils/number';
 import { calculatePercentOfDifference } from '@/helpers/math/percents';
 import { findMaxByKey, findMinByKey } from '@/utils/array';
-import { currency } from '@/api/types/currency';
 import { storeToRefs } from 'pinia';
 
 const marketStore = useMarketStore();
@@ -59,7 +58,7 @@ const min = computed(() => (candles.value.length
   : null));
 
 const pairStats = computed<IPairStats>(() => ({
-  currency: activePairData.value?.base || currency.BTC,
+  currency: activePairData.value?.base || 'BTC',
   price: currentPrice.value,
   amount: humanizeNumber(currentVolume.value ?? 0),
   change: change.value,

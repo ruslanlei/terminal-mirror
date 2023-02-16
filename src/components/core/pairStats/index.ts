@@ -1,7 +1,5 @@
-import { currency } from '@/api/types/currency';
-
 export interface IPairStats {
-  currency: currency,
+  currency: string,
   price: number | null,
   amount: number | string | null,
   change: number | null,

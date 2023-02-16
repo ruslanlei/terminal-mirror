@@ -8,63 +8,54 @@ import {
   multiply,
   roundToDecimalPoint,
 } from '@/helpers/number';
-import { Currency } from '@/types/currency';
 import {
   incrementQuoteDepositByBaseStep,
   decrementQuoteDepositByBaseStep,
 } from '@/helpers/math/formulas/currency';
 
-export interface QuoteCurrency extends Currency {
-    leverage: number,
-    balance: number,
-}
-
-export interface BaseCurrency extends Currency {
-    price: number,
-}
-
 export const useExchange = (
-  baseCurrency: Ref<BaseCurrency>,
-  quoteCurrency: Ref<QuoteCurrency>,
+  quoteCurrencyDecimals: Ref<number>,
+  baseCurrencyStep: Ref<number>,
+  price: Ref<number>,
+  balance: Ref<number>,
+  leverage: Ref<number>,
 ) => {
   const incrementDeposit = (deposit: number) => compose(
-    roundToDecimalPoint(quoteCurrency.value.decimals),
+    roundToDecimalPoint(quoteCurrencyDecimals.value),
     incrementQuoteDepositByBaseStep(
-      baseCurrency.value.step,
-      baseCurrency.value.price,
+      baseCurrencyStep.value,
+      price.value,
     ),
   )(deposit);
 
   const decrementDeposit = (quoteDeposit: number) => compose(
-    roundToDecimalPoint(quoteCurrency.value.decimals),
+    roundToDecimalPoint(quoteCurrencyDecimals.value),
     decrementQuoteDepositByBaseStep(
-      baseCurrency.value.step,
-      baseCurrency.value.price,
+      baseCurrencyStep.value,
+      price.value,
     ),
   )(quoteDeposit);
 
   const maxQuoteCurrencyDeposit = computed(
-    () => decrementDeposit(quoteCurrency.value.balance),
+    () => decrementDeposit(balance.value),
   );
 
   const maxQuoteCurrencyDepositLeveraged = computed(() => compose(
     decrementDeposit,
     multiply,
   )(
-    quoteCurrency.value.balance,
-    quoteCurrency.value.leverage,
+    balance.value,
+    leverage.value,
   ));
 
   const maxBaseCurrencyDepositLeveraged = computed(
     () => divideRight(
-      baseCurrency.value.price,
+      price.value,
       maxQuoteCurrencyDepositLeveraged.value,
     ),
   );
 
   return {
-    baseCurrency,
-    quoteCurrency,
     incrementDeposit,
     decrementDeposit,
     maxQuoteCurrencyDeposit,

@@ -4,14 +4,12 @@ import {
   reactive,
   watch,
 } from 'vue';
+import { storeToRefs } from 'pinia';
+import { useI18n } from 'vue-i18n';
+import { number, object, string } from 'yup';
 import { CreateOrderDTO } from '@/api/endpoints/orders/create';
 import { TakeProfit, useMarketStore } from '@/stores/market';
 import { SelectorProps } from '@/components/core/selector';
-import { useI18n } from 'vue-i18n';
-import { number, object, string } from 'yup';
-import { BaseCurrency, QuoteCurrency } from '@/hooks/useExchange';
-import { currency } from '@/api/types/currency';
-import { useToastStore } from '@/stores/toasts';
 import { useModelReset } from '@/hooks/useModelReset';
 import {
   spreadOrderQuantityBetweenTakeProfits,
@@ -32,7 +30,12 @@ export interface OrderModel extends CreateOrderDTO {
 
 export const useOrderCreate = () => {
   const marketStore = useMarketStore();
-  const toastStore = useToastStore();
+  const {
+    activePairData,
+    baseCurrencyDecimals,
+    baseCurrencyStep,
+    quoteCurrencyDecimals,
+  } = storeToRefs(marketStore);
 
   const { t } = useI18n();
 
@@ -61,20 +64,11 @@ export const useOrderCreate = () => {
   });
   const { resetModel } = useModelReset(model);
 
-  const quoteCurrency = computed<QuoteCurrency>(() => ({
-    name: marketStore.activePairData?.quote || currency.USDT,
-    balance: 178299,
-    decimals: 2,
-    step: 0.01,
-    leverage: model.leverage,
-  }));
+  const balance = computed(() => 1250);
 
-  const baseCurrency = computed<BaseCurrency>(() => ({
-    name: marketStore.activePairData?.base || currency.BTC,
-    decimals: 3,
-    step: 0.001,
-    price: model.price,
-  }));
+  const price = computed(() => model.price);
+
+  const leverage = computed(() => model.leverage);
 
   const validationSchema = object().shape({
     pair: number().required(() => t('validationError.required')),
@@ -82,8 +76,8 @@ export const useOrderCreate = () => {
       .required(() => t('validationError.required'))
       .oneOf(['buy', 'sell']),
     quantity: number().min(
-      baseCurrency.value.step,
-      () => t('validationError.min', { min: baseCurrency.value.step }),
+      baseCurrencyStep.value,
+      () => t('validationError.min', { min: baseCurrencyStep.value }),
     ),
     price: number().min(
       1,
@@ -102,7 +96,7 @@ export const useOrderCreate = () => {
   const takeProfits = ref<TakeProfit[]>([]);
 
   const takeProfitsIncomeSum = computed(() => reduceTakeProfitsToAmountOfProfitAndRound(
-    quoteCurrency.value.decimals,
+    quoteCurrencyDecimals.value,
     takeProfits.value,
   ));
 
@@ -128,7 +122,7 @@ export const useOrderCreate = () => {
     );
   };
   watch(
-    [() => model.quantity, baseCurrency],
+    [() => model.quantity, price],
     autoCalculateTakeProfitAmounts,
     { deep: true },
   );
@@ -174,7 +168,7 @@ export const useOrderCreate = () => {
 
   const stopLossRisk = computed(
     () => compose(
-      roundToDecimalPoint(quoteCurrency.value.decimals),
+      roundToDecimalPoint(quoteCurrencyDecimals.value),
       calculateVolumeDifference,
     )(
       model.quantity,
@@ -187,14 +181,14 @@ export const useOrderCreate = () => {
     model.price,
     model.quantity,
     model.leverage,
-    quoteCurrency.value.decimals,
+    quoteCurrencyDecimals.value,
   ));
 
   const liquidationPrice = computed(() => (model.quantity ? calculateAndRoundLiquidationPrice(
     model.price,
     model.quantity,
     model.leverage,
-    quoteCurrency.value.decimals,
+    quoteCurrencyDecimals.value,
   ) : 0));
 
   // <-- submit
@@ -226,8 +220,14 @@ export const useOrderCreate = () => {
     takeProfits,
     takeProfitsIncomeSum,
     orderDirectionOptions,
-    quoteCurrency,
-    baseCurrency,
+    activePairData,
+    balance,
+    quoteCurrencyDecimals,
+    baseCurrencyDecimals,
+    baseCurrencyStep,
+    price,
+    leverage,
+
     maxTakeProfits,
     takeProfitsAmount,
     autoCalculateTakeProfits,

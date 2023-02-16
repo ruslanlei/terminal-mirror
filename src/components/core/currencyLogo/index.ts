@@ -1,6 +1,4 @@
-import { currency } from '@/api/types/currency';
-
 export interface CurrencyLogoProps {
-  currency: currency,
+  currency: string,
   state: 'circle' | 'square',
 }

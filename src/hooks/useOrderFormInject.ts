@@ -1,9 +1,8 @@
 import {
   ref,
   computed,
-  inject, ComputedRef,
+  inject,
 } from 'vue';
-import { currency } from '@/api/types/currency';
 import { OrderFormInjectionKey, OrderFormProvide } from '@/components/app/orderForm';
 
 export const useOrderFormInject = (): OrderFormProvide => inject<OrderFormProvide>(
@@ -20,20 +19,8 @@ export const useOrderFormInject = (): OrderFormProvide => inject<OrderFormProvid
     takeProfits: ref([]),
     isTakeProfitsEnabled: ref(false),
     takeProfitsIncomeSum: computed(() => 0),
-    quoteCurrency: computed(() => ({
-      name: currency.USDT,
-      balance: 0,
-      decimals: 2,
-      step: 0.01,
-      leverage: 1,
-    })),
-    baseCurrency: computed(() => ({
-      name: currency.BTC,
-      price: 20000,
-      decimals: 3,
-      step: 0.001,
-      balance: 0,
-    })),
+    leverage: computed(() => 0),
+    price: ref(0),
     maxTakeProfits: 5,
     takeProfitsAmount: ref(5),
     isStopLossEnabled: ref(false),

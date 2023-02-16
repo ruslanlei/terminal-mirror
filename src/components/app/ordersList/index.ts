@@ -1,5 +1,4 @@
 import { TableColumn, TableRecord } from '@/components/core/table';
-import { currency } from '@/api/types/currency';
 import { Order, SubOrder } from '@/api/types/order';
 import { SubOrderTableItem } from '@/components/app/ordersList/subOrdersTable';
 
@@ -23,7 +22,7 @@ export type ActiveOrdersTableColumnSlug =
 export type ActiveOrdersTableColumn = TableColumn<ActiveOrdersTableColumnSlug>;
 
 export type ActiveOrdersTableRecord = TableRecord<ActiveOrdersTableColumnSlug, {
-  pair: currency,
+  pair: string,
   type: Order['side'],
   volume: number,
   coins: number,
@@ -58,7 +57,7 @@ export type ClosedOrdersTableColumnSlug =
 export type ClosedOrdersTableColumn = TableColumn<ClosedOrdersTableColumnSlug>;
 
 export type ClosedOrdersTableRecord = TableRecord<ClosedOrdersTableColumnSlug, {
-  pair: currency,
+  pair: string,
   type: Order['side'],
   volume: number,
   coins: number,
@@ -69,7 +68,7 @@ export type ClosedOrdersTableRecord = TableRecord<ClosedOrdersTableColumnSlug, {
   results: {
     pnl: {
       value: number,
-      currency: currency,
+      currency: string,
     },
     pnlPercent: number,
   },

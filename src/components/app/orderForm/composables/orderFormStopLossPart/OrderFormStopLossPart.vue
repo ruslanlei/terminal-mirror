@@ -18,7 +18,7 @@
         :step="0.01"
       >
         <template #append>
-          {{ quoteCurrency?.name }}
+          {{ activePairData?.quote }}
         </template>
       </NumberInput>
     </template>
@@ -34,7 +34,7 @@
         :is-disabled="isDependentFieldsDisabled"
       >
         <template #append>
-          {{ quoteCurrency?.name }}
+          {{ activePairData?.quote }}
         </template>
       </NumberInput>
     </template>
@@ -74,7 +74,6 @@
         :ratio="ratio"
         :profit="profitDisplayValue"
         :risk="riskDisplayValue"
-        :quote-currency="quoteCurrency"
       />
     </template>
     <template #submit="{ buttonClass }">
@@ -110,6 +109,8 @@ import { roundToDecimalPoint } from '@/helpers/number';
 import { compose, toAbsolute } from '@/utils/fp';
 import { calculatePercentOfDifference, decreaseByPercent } from '@/helpers/math/percents';
 import { calculatePriceByPercentOfDeposit, calculateVolumeDifferenceInPercentsOfDeposit } from '@/helpers/math/formulas/stopLoss';
+import { useMarketStore } from '@/stores/market';
+import { storeToRefs } from 'pinia';
 import { OrderFormStopLossPartEmits } from './index';
 
 const { t } = useI18n();
@@ -120,9 +121,17 @@ const onSubmit = () => {
   emit('submit');
 };
 
+const marketStore = useMarketStore();
+const {
+  balance,
+  quoteCurrencyDecimals,
+  baseCurrencyDecimals,
+  baseCurrencyStep,
+  activePairData,
+} = storeToRefs(marketStore);
+
 const {
   model,
-  quoteCurrency,
   stopLossPrice,
   profitDisplayValue,
   riskDisplayValue,
@@ -141,7 +150,7 @@ const percentOfOrderPrice = computed({
 
   set: (percent: number) => {
     stopLossPrice.value = compose(
-      roundToDecimalPoint(quoteCurrency.value.decimals),
+      roundToDecimalPoint(quoteCurrencyDecimals.value),
       decreaseByPercent,
     )(model.price, percent);
   },
@@ -149,7 +158,7 @@ const percentOfOrderPrice = computed({
 
 const amountOfRisk = computed({
   get: () => compose(
-    roundToDecimalPoint(quoteCurrency.value.decimals),
+    roundToDecimalPoint(quoteCurrencyDecimals.value),
     calculateVolumeDifference,
   )(
     model.quantity,
@@ -159,7 +168,7 @@ const amountOfRisk = computed({
 
   set: (amountOfRisk: number) => {
     stopLossPrice.value = compose(
-      roundToDecimalPoint(quoteCurrency.value.decimals),
+      roundToDecimalPoint(quoteCurrencyDecimals.value),
       calculateOriginalPriceByVolumeDifference,
     )(
       model.price,
@@ -177,16 +186,16 @@ const percentOfDeposit = computed({
     model.quantity,
     model.price,
     stopLossPrice.value,
-    quoteCurrency.value.balance,
+    balance.value,
   ),
 
   set: (percentOfDeposit: number) => {
     stopLossPrice.value = compose(
-      roundToDecimalPoint(quoteCurrency.value.decimals),
+      roundToDecimalPoint(quoteCurrencyDecimals.value),
       calculatePriceByPercentOfDeposit(
         model.quantity,
         model.price,
-        quoteCurrency.value.balance,
+        balance.value,
       ),
     )(percentOfDeposit);
   },

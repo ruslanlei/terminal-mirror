@@ -118,8 +118,11 @@ const {
   takeProfits,
   takeProfitsIncomeSum,
   isTakeProfitsEnabled,
-  quoteCurrency,
-  baseCurrency,
+  activePairData,
+  balance,
+  baseCurrencyStep,
+  price,
+  leverage,
   autoCalculateTakeProfits,
   maxTakeProfits,
   takeProfitsAmount,
@@ -179,7 +182,7 @@ const profitDisplayValue = computed(() => t('order.takeProfit.profitValue', {
   profit:
     t('common.currencyAmount', {
       amount: takeProfitsIncomeSum.value,
-      currency: quoteCurrency.value.name,
+      currency: activePairData.value?.quote,
     }),
 }));
 
@@ -187,7 +190,7 @@ const riskDisplayValue = computed(() => t('order.takeProfit.riskValue', {
   risk:
     t('common.currencyAmount', {
       amount: stopLossRisk.value,
-      currency: quoteCurrency.value.name,
+      currency: activePairData.value?.quote,
     }),
 }));
 
@@ -196,8 +199,8 @@ provide(OrderFormInjectionKey, {
   takeProfits,
   takeProfitsIncomeSum,
   isTakeProfitsEnabled,
-  quoteCurrency,
-  baseCurrency,
+  leverage,
+  price,
   maxTakeProfits,
   takeProfitsAmount,
   isStopLossEnabled,

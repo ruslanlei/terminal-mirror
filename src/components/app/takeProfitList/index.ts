@@ -1,4 +1,3 @@
-import { Currency } from '@/types/currency';
 import { TakeProfit } from '@/stores/market';
 
 export interface TakeProfitListProps {
@@ -6,7 +5,8 @@ export interface TakeProfitListProps {
   takeProfitsAmount: number,
   orderPrice: number,
   orderQuantity: number,
-  currency: Currency,
+  baseCurrencyStep: number,
+  baseCurrencyDecimals: number,
 }
 
 export interface TakeProfitListEmit {

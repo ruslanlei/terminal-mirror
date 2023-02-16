@@ -1,5 +1,4 @@
 import { TableColumn, TableRecord } from '@/components/core/table';
-import { currency } from '@/api/types/currency';
 import { MasterOrder, SubOrder } from '@/api/types/order';
 import { PairData } from '@/api/types/pair';
 import { OrdersListProps } from '@/components/app/ordersList';
@@ -26,7 +25,7 @@ export type ActiveSubOrderRecord = TableRecord<ActiveSubOrdersColumnSlug, {
   },
   volume: {
     value: number,
-    currency: currency,
+    currency: string,
   },
   date: string,
   options: SubOrder,
@@ -66,7 +65,7 @@ export type ClosedSubOrdersRecord = TableRecord<ClosedSubOrdersColumnSlug, {
   },
   volume: {
     value: number | null,
-    currency: currency,
+    currency: string,
   },
   date: string,
 }>;

@@ -60,7 +60,7 @@
           :normalize-on-keydown="true"
         />
         <div :class="$style.percentSymbol">
-          %
+          {{ '%' }}
         </div>
       </div>
     </div>
@@ -80,7 +80,6 @@ import { DepositInputEmits, DepositInputProps } from './index';
 const props = withDefaults(
   defineProps<DepositInputProps>(),
   {
-    decimals: 2,
     leverage: 1,
   },
 );

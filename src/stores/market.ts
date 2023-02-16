@@ -10,14 +10,12 @@ import { processServerErrors, requestMany } from '@/api/common';
 import { getOrdersList } from '@/api/endpoints/orders/getList';
 import { PairData } from '@/api/types/pair';
 import { flatten } from '@/utils/array';
-import { getCandles, GetCandlesDTO } from '@/api/endpoints/marketdata/candles';
 import { createEventBus } from '@/utils/eventBus';
 import { deleteOrder } from '@/api/endpoints/orders/delete';
 import { closeOrder } from '@/api/endpoints/orders/cancel';
 import { curry } from '@/utils/fp';
 import { OrderModel } from '@/hooks/useOrderCreate';
 import { modalType, useModalStore } from '@/stores/modals';
-import { useEmulatorStore } from '@/stores/emulator';
 
 export type MarketType = 'emulator' | 'real';
 
@@ -95,7 +93,12 @@ export const useMarketStore = defineStore('market', () => {
     pairs.value = data;
   };
 
-  const candleSize = ref<number>(900);
+  const balance = computed(() => 6000);
+
+  const baseCurrencyDecimals = ref(Number(import.meta.env.VITE_APP_BASE_CURRENCY_DECIMALS));
+  const quoteCurrencyDecimals = ref(Number(import.meta.env.VITE_APP_QUOTE_CURRENCY_DECIMALS));
+
+  const baseCurrencyStep = ref(0.001);
 
   const handleCreateOrder = async (dto: CreateOrderDTO) => {
     const response = await createOrder(dto);
@@ -258,11 +261,14 @@ export const useMarketStore = defineStore('market', () => {
     marketType,
     activePair,
     setPair,
+    balance,
+    quoteCurrencyDecimals,
+    baseCurrencyDecimals,
+    baseCurrencyStep,
     activePairData,
     activePairPrice,
     isFetchingPairs,
     getPairs: handleGetPairs,
-    candleSize,
     createOrder: handleCreateOrder,
     createListOfTakeProfits,
     createStopLoss,

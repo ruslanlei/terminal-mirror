@@ -12,7 +12,7 @@
         :append-min-width="35"
       >
         <template #append>
-          {{ quoteCurrency.name }}
+          {{ activePairData?.quote }}
         </template>
       </FormNumberInput>
     </template>
@@ -26,14 +26,14 @@
         :min="0"
         :max="maxBaseCurrencyDepositLeveraged"
         state="defaultColor"
-        :decimals="baseCurrency.decimals"
-        :step="baseCurrency.step"
+        :decimals="baseCurrencyDecimals"
+        :step="baseCurrencyStep"
         save-on="blur"
         :show-error-icon="false"
         :append-min-width="35"
       >
         <template #append>
-          {{ baseCurrency.name }}
+          {{ activePairData?.base }}
         </template>
       </FormNumberInput>
     </template>
@@ -44,13 +44,17 @@
       <FormExchangeInput
         name="quantity"
         :state="['defaultColor', 'smSize']"
-        :base-currency="baseCurrency"
-        :quote-currency="quoteCurrency"
+        :base-currency-decimals="baseCurrencyDecimals"
+        :quote-currency-decimals="quoteCurrencyDecimals"
+        :base-currency-step="baseCurrencyStep"
+        :balance="balance"
+        :leverage="leverage"
+        :price="price"
         save-on="blur"
         :append-min-width="35"
       >
         <template #quoteCurrency>
-          {{ quoteCurrency.name }}
+          {{ activePairData?.quote }}
         </template>
       </FormExchangeInput>
     </template>
@@ -60,8 +64,12 @@
     <template #depositInput>
       <FormDepositInput
         name="quantity"
-        :quote-currency="quoteCurrency"
-        :base-currency="baseCurrency"
+        :base-currency-decimals="baseCurrencyDecimals"
+        :quote-currency-decimals="quoteCurrencyDecimals"
+        :base-currency-step="baseCurrencyStep"
+        :balance="balance"
+        :leverage="leverage"
+        :price="price"
       />
     </template>
     <template #leverageLabel>
@@ -107,13 +115,24 @@ import OrderFormInputPartContainer from '@/containers/orderFormInputPartContaine
 import { FormDepositInput, FormExchangeInput, FormNumberInput } from '@/form';
 import { useOrderFormInject } from '@/hooks/useOrderFormInject';
 import { useExchange } from '@/hooks/useExchange';
+import { useMarketStore } from '@/stores/market';
+import { storeToRefs } from 'pinia';
 
 const { t } = useI18n();
 
+const marketStore = useMarketStore();
+const {
+  activePairData,
+  baseCurrencyDecimals,
+  quoteCurrencyDecimals,
+  balance,
+  baseCurrencyStep,
+} = storeToRefs(marketStore);
+
 const {
   model,
-  quoteCurrency,
-  baseCurrency,
+  price,
+  leverage,
   pledge,
   liquidationPrice,
   ratio,
@@ -124,8 +143,11 @@ const {
 const {
   maxBaseCurrencyDepositLeveraged,
 } = useExchange(
-  baseCurrency,
-  quoteCurrency,
+  quoteCurrencyDecimals,
+  baseCurrencyStep,
+  price,
+  balance,
+  leverage,
 );
 </script>
 

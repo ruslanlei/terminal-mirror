@@ -14,8 +14,12 @@ export const useDepositInput = (
   emit: DepositInputEmits,
 ) => {
   const {
-    baseCurrency,
-    quoteCurrency,
+    quoteCurrencyDecimals,
+    baseCurrencyDecimals,
+    baseCurrencyStep,
+    price,
+    balance,
+    leverage,
   } = toRefs(props);
 
   const localValue = useLocalValue<number>(props, emit, 'modelValue');
@@ -24,8 +28,11 @@ export const useDepositInput = (
     maxQuoteCurrencyDeposit,
     maxQuoteCurrencyDepositLeveraged,
   } = useExchange(
-    baseCurrency,
-    quoteCurrency,
+    quoteCurrencyDecimals,
+    baseCurrencyStep,
+    price,
+    balance,
+    leverage,
   );
 
   const showLeveragedBalance = computed(
@@ -33,7 +40,7 @@ export const useDepositInput = (
   );
 
   const baseCurrencyBalance = computed(() => convertQuoteBalanceToBase(
-    baseCurrency.value.price,
+    price.value,
     maxQuoteCurrencyDepositLeveraged.value,
   ));
 
@@ -43,7 +50,7 @@ export const useDepositInput = (
     ),
     set: (percents: number) => {
       localValue.value = percentsToRoundedValue(
-        baseCurrency.value.decimals,
+        baseCurrencyDecimals.value,
         baseCurrencyBalance.value,
       )(percents);
     },
@@ -62,15 +69,13 @@ export const useDepositInput = (
   const checkIsValueEqualToPercent = (
     percents: number,
   ) => checkIsRoundedValueEqualToPercentOfTotal(
-    baseCurrency.value.decimals,
+    baseCurrencyDecimals.value,
     baseCurrencyBalance.value,
     percents,
   )(localValue.value);
 
   return {
     localValue,
-    baseCurrency,
-    quoteCurrency,
     showLeveragedBalance,
     baseCurrencyBalance,
     localValueInPercents,

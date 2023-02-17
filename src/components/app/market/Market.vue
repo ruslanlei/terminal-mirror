@@ -4,7 +4,6 @@
       <MarketTools />
     </template>
     <template #chart="{ chartClass }">
-      <!--      <NumberInput v-model="marketStore.activePairPrice" />-->
       <MarketChart :class="chartClass" />
     </template>
     <template #orders>

@@ -26,6 +26,7 @@ onMounted(() => {
     playAnimation({
       targets: `[data-skeleton-id="${id}"]`,
       opacity: [1, 0.55, 1],
+      scale: [1, 0.99, 1],
       loop: true,
       delay: anime.stagger(160, { from: 'first' }),
       easing: 'easeInOutSine',

@@ -6,6 +6,7 @@
     :records="computedRecords"
     :state="state"
     :is-rows-clickable="true"
+    appearance-animation-type="bubbling"
     @record-click="onRecordClick"
   >
     <template

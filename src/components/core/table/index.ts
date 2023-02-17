@@ -61,4 +61,5 @@ export interface TableProps {
   state?: TableState | TableState[],
   isRowsClickable?: boolean,
   isHeadVisible?: boolean,
+  appearanceAnimationType: 'bubbling' | 'elevating'
 }

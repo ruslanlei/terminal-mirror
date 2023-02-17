@@ -132,6 +132,7 @@ const props = withDefaults(
   {
     type: 'list' as tableType.LIST,
     isHeadVisible: true,
+    appearanceAnimationType: 'elevating',
   },
 );
 const emit = defineEmits<{(e: 'update:selectedRecords', value: SelectedRecords): void,
@@ -199,7 +200,9 @@ const playAppearAnimation = () => {
       value: [0, 1],
       delay: 100,
     },
-    scale: [0.2, 1],
+    ...(props.appearanceAnimationType === 'bubbling' ? {
+      scale: [0.2, 1],
+    } : {}),
     duration: 800,
     easing: 'easeOutQuint',
     delay: anime.stagger(40, { from: 'first' }),

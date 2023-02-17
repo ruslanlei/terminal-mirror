@@ -24,7 +24,8 @@ export const getDefaultEmulatorDate = () => compose(
 )();
 
 export enum emulatorEvent {
-  ORDER_CHANGED_STATUS = 'orderChangedStatus'
+  ORDER_CHANGED_STATUS = 'orderChangedStatus',
+  SIMULATION_ENDED = 'simulationEnded',
 }
 
 export type PlayerDatesMap = Record<PairData['id'], string>;
@@ -47,6 +48,9 @@ export const useEmulatorStore = defineStore('emulator', () => {
 
   const subscribeSimulateEvent = curry(subscribeEvent<Order>)(emulatorEvent.ORDER_CHANGED_STATUS);
   const emitSimulateEvent = curry(emitEvent<Order>)(emulatorEvent.ORDER_CHANGED_STATUS);
+
+  const subscribeSimulationEndedEvent = curry(subscribeEvent)(emulatorEvent.SIMULATION_ENDED);
+  const emitSimulationEndedEvent = curry(emitEvent)(emulatorEvent.SIMULATION_ENDED);
 
   const playerDatesMap = useStorage<PlayerDatesMap>('playerDatesMap', {
     1: getDefaultEmulatorDate(),
@@ -108,6 +112,7 @@ export const useEmulatorStore = defineStore('emulator', () => {
       response.data.events.forEach(emitSimulateEvent);
     } else {
       processServerErrors(response.data);
+      emitSimulationEndedEvent(null);
     }
 
     return response;
@@ -121,7 +126,15 @@ export const useEmulatorStore = defineStore('emulator', () => {
     if (order.order_type === 'limit' && order.status === 'executed') {
       turnOffPlayer();
     }
+    fetchBalance();
   });
+
+  subscribeSimulationEndedEvent(() => {
+    fetchBalance();
+    turnOffPlayer();
+  });
+
+  marketStore.subscribeOrderCreated(fetchBalance);
 
   return {
     balance,

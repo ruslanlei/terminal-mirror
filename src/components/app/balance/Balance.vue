@@ -4,9 +4,11 @@
       :class="$style.label"
       :text="computedLabel"
     />
-    <div :class="$style.value">
-      {{ balance }}
-    </div>
+    <AnimatedText
+      :class="$style.value"
+      :text="balance"
+      animation-type="verticalAuto"
+    />
   </div>
 </template>
 
@@ -28,7 +30,10 @@ const computedLabel = computed(() => ({
   real: t('market.type.real'),
 }[marketStore.marketType]));
 
-const balance = computed(() => `$ ${roundToDecimalPoint(2, emulatorStore.balance)}`);
+const balance = computed(() => t('common.currencyAmount', {
+  amount: roundToDecimalPoint(2, emulatorStore.balance),
+  currency: marketStore.activePairData?.quote,
+}));
 </script>
 
 <style lang="scss" module>

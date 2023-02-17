@@ -43,9 +43,9 @@ watch(text, (value, oldValue) => {
     }
 
     if (value > (oldValue || 0)) {
-      computedAnimationType.value = 'verticalForward';
-    } else {
       computedAnimationType.value = 'verticalBack';
+    } else {
+      computedAnimationType.value = 'verticalForward';
     }
   }
 }, { immediate: true });

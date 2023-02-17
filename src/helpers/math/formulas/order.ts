@@ -20,21 +20,6 @@ export const calculateRisk = curry((
   multiply(comparingPrice, quantity),
 ));
 
-export const calculateCurrentQuantity = curry((
-  orderQuantity: number,
-  takeProfits: SubOrder[] | null,
-) => compose(
-  subtractRight(
-    compose(
-      reduceTakeProfitsToQuantitiesSum,
-      filter,
-    )(
-      takeProfits || [],
-      (takeProfit: SubOrder) => takeProfit.status === 'executed',
-    ),
-  ),
-)(orderQuantity));
-
 export const calculateVolumeDifference = curry((
   quantity: number,
   originalPrice: number,

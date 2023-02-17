@@ -14,7 +14,6 @@ import { SubOrderTableItem } from '@/components/app/ordersList/subOrdersTable';
 import { collectTableRecord } from '@/components/core/table/helpers';
 import { getOrdersWithStatus, reduceSubOrderListToCommonPnl } from '@/helpers/orders';
 import { TableRowState } from '@/components/core/table/tableRow';
-import { calculateCurrentQuantity } from '@/helpers/math/formulas/order';
 
 interface CollectRecordPayload {
     pairData: PairData,
@@ -115,7 +114,6 @@ const pnlMixin = (
     order,
     pairData,
     pairPrice,
-    takeProfits,
   }: CollectRecordPayload,
 ) => ({
   pnl: {
@@ -126,7 +124,7 @@ const pnlMixin = (
           roundToDecimalPoint(6),
           calculatePnl(
             order.price,
-            calculateCurrentQuantity(order.quantity, takeProfits || null),
+            order.position,
           ),
         )(pairPrice),
       }

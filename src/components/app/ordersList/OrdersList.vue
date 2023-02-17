@@ -305,26 +305,17 @@ const {
   isLoading,
   getList,
   commonPnl,
-  subscribeOrderCreate,
-  unsubscribeOrderCreate,
+  clearSubscriptions,
   deleteOrder,
-  unsubscribeSimulateEvent,
 } = useOrdersList(props);
 
 onActivated(() => {
   const showLoading = !orders.value?.length;
   getList(showLoading);
-  subscribeOrderCreate();
 });
 
-onDeactivated(() => {
-  unsubscribeOrderCreate();
-  unsubscribeSimulateEvent();
-});
-onBeforeUnmount(() => {
-  unsubscribeOrderCreate();
-  unsubscribeSimulateEvent();
-});
+onDeactivated(clearSubscriptions);
+onBeforeUnmount(clearSubscriptions);
 </script>
 
 <style lang="scss" module>

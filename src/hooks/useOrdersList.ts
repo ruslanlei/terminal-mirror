@@ -214,32 +214,22 @@ export const useOrdersList = (
 
   watch(() => props.listType, () => getList(true));
 
-  const onOrderCreate = async () => {
+  const unsubscribeOrderCreate = marketStore.subscribeOrderCreated(async () => {
     if (props.listType !== 'active') return;
 
     await getList(false);
-  };
+  });
 
-  const onOrderDelete = async (
+  const unsubscribeOrderDelete = marketStore.subscribeOrderDelete(async (
     orderId: Order['id'],
   ) => {
     if (props.listType !== 'active') return;
 
-    await awaitTimeout(300);
+    await awaitTimeout(300); // FIXME: awaiting for modal close animation
     orders.value = orders.value.filter(
       (order: Order) => order.id !== orderId && order.master !== orderId,
     );
-  };
-
-  const subscribeOrderCreate = () => {
-    marketStore.subscribeOrderCreated(onOrderCreate);
-    marketStore.subscribeOrderDelete(onOrderDelete);
-  };
-
-  const unsubscribeOrderCreate = () => {
-    marketStore.unsubscribeOrderCreated(onOrderCreate);
-    marketStore.unsubscribeOrderDelete(onOrderDelete);
-  };
+  });
 
   const unsubscribeSimulateEvent = emulatorStore.subscribeSimulateEvent(
     (updatedOrder: Order) => {
@@ -265,6 +255,13 @@ export const useOrdersList = (
     },
   );
 
+  // FIXME: need to fix backend events.
+  //  for now limit order returns with
+  //  "filled" status even if it executed
+  //  if at the same time was executed TP
+  //  or SL
+  const unsubscribeSimulationEndedEvent = emulatorStore.subscribeSimulationEndedEvent(getList);
+
   const deleteOrder = async (
     order: Order,
     takeProfits: SubOrder[] | undefined,
@@ -276,6 +273,13 @@ export const useOrdersList = (
     await marketStore.removeOrder(order, takeProfits);
   };
 
+  const clearSubscriptions = () => {
+    unsubscribeOrderCreate();
+    unsubscribeOrderDelete();
+    unsubscribeSimulateEvent();
+    unsubscribeSimulationEndedEvent();
+  };
+
   return {
     columns,
     orders,
@@ -283,9 +287,7 @@ export const useOrdersList = (
     commonPnl,
     isLoading,
     getList,
-    subscribeOrderCreate,
-    unsubscribeOrderCreate,
+    clearSubscriptions,
     deleteOrder,
-    unsubscribeSimulateEvent,
   };
 };

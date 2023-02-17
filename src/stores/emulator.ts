@@ -109,7 +109,10 @@ export const useEmulatorStore = defineStore('emulator', () => {
     });
 
     if (response.result) {
-      response.data.events.forEach(emitSimulateEvent);
+      response.data.events.forEach((o: any) => {
+        console.log(o);
+        emitSimulateEvent(o);
+      });
     } else {
       processServerErrors(response.data);
       emitSimulationEndedEvent(null);
@@ -140,6 +143,7 @@ export const useEmulatorStore = defineStore('emulator', () => {
     balance,
     fetchBalance,
     subscribeSimulateEvent,
+    subscribeSimulationEndedEvent,
     emulatorDate,
     isPlaying,
     turnOffPlayer,

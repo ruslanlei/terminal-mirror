@@ -5,7 +5,11 @@ import { useStorage } from '@vueuse/core';
 import { getPairs } from '@/api/endpoints/marketdata/stats';
 import { useToastStore } from '@/stores/toasts';
 import { createOrder, CreateOrderDTO } from '@/api/endpoints/orders/create';
-import { Order, SubOrder } from '@/api/types/order';
+import {
+  Order,
+  StopLoss,
+  TakeProfit,
+} from '@/api/types/order';
 import { processServerErrors, requestMany } from '@/api/common';
 import { getOrdersList } from '@/api/endpoints/orders/getList';
 import { PairData } from '@/api/types/pair';
@@ -18,16 +22,6 @@ import { OrderModel } from '@/hooks/useOrderCreate';
 import { modalType, useModalStore } from '@/stores/modals';
 
 export type MarketType = 'emulator' | 'real';
-
-export interface TakeProfit {
-  price: number,
-  quantity: number,
-}
-
-export interface StopLoss {
-  price: number,
-  quantity: number,
-}
 
 export enum marketEvent {
   ORDER_CREATED = 'orderCreated',
@@ -114,10 +108,10 @@ export const useMarketStore = defineStore('market', () => {
   ) => {
     const response = await requestMany(
       takeProfits.map((takeProfit: TakeProfit) => createOrder({
+        ...takeProfit,
         pair: activePair.value,
         side,
         order_type: 'tp',
-        ...takeProfit,
       })),
     );
 
@@ -130,12 +124,12 @@ export const useMarketStore = defineStore('market', () => {
     return response;
   };
 
-  const createStopLoss = async (stopLoss: StopLoss, side: Order['side']) => {
+  const createStopLoss = async (stopLoss: Pick<StopLoss, 'price' | 'quantity'>, side: Order['side']) => {
     const response = await createOrder({
+      ...stopLoss,
       pair: activePair.value,
       side,
       order_type: 'sl',
-      ...stopLoss,
     });
 
     if (!response.result) {
@@ -235,7 +229,7 @@ export const useMarketStore = defineStore('market', () => {
 
   const removeOrder = async (
     order: Order,
-    takeProfits: SubOrder[] | undefined,
+    takeProfits: TakeProfit[] | undefined,
   ) => {
     modalStore.showModal({
       type: modalType.DELETE_ORDER,

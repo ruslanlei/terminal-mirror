@@ -1,5 +1,7 @@
 import {
-  compose, curry, filter, log, toAbsolute,
+  compose,
+  curry,
+  toAbsolute,
 } from '@/utils/fp';
 import {
   divideRight,
@@ -8,8 +10,6 @@ import {
   subtract,
   subtractRight,
 } from '@/helpers/number';
-import { reduceTakeProfitsToQuantitiesSum } from '@/helpers/math/formulas/takeProfit';
-import { SubOrder } from '@/api/types/order';
 
 export const calculateRisk = curry((
   originalPrice: number,

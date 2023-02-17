@@ -2,7 +2,9 @@ import { computed, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { ActiveOrdersTableRecord, ClosedOrdersTableRecord, OrdersListProps } from '@/components/app/ordersList';
 import { useMarketStore } from '@/stores/market';
-import { MasterOrder, Order, SubOrder } from '@/api/types/order';
+import {
+  MasterOrder, Order, StopLoss, TakeProfit,
+} from '@/api/types/order';
 import { add, roundToDecimalPoint } from '@/helpers/number';
 import { compose } from '@/utils/fp';
 import { collectActiveOrderRecord, collectClosedOrderRecord } from '@/components/app/ordersList/collectTableRecord';
@@ -14,8 +16,8 @@ import { useChartDataStore } from '@/stores/chartData';
 
 interface GroupedOrder {
   order: MasterOrder,
-  takeProfits: SubOrder[],
-  stopLoss: SubOrder | undefined,
+  takeProfits: TakeProfit[],
+  stopLoss: StopLoss | undefined,
 }
 
 export const useOrdersList = (
@@ -109,12 +111,12 @@ export const useOrdersList = (
       const relatedTakeProfits = (
         orders.filter(
           (targetOrder: Order) => targetOrder.order_type === 'tp' && targetOrder.master === order.id,
-        ) as SubOrder[]
-      ).sort((orderA: SubOrder, orderB: SubOrder) => orderB.price - orderA.price);
+        ) as TakeProfit[]
+      ).sort((orderA: TakeProfit, orderB: TakeProfit) => orderB.price - orderA.price);
 
       const relatedStopLoss = orders.filter(
         (targetOrder: Order) => targetOrder.order_type === 'sl' && targetOrder.master === order.id,
-      )[0] as SubOrder | undefined;
+      )[0] as StopLoss | undefined;
 
       return {
         order,
@@ -264,7 +266,7 @@ export const useOrdersList = (
 
   const deleteOrder = async (
     order: Order,
-    takeProfits: SubOrder[] | undefined,
+    takeProfits: TakeProfit[] | undefined,
   ) => {
     if (emulatorStore.isPlaying) {
       emulatorStore.turnOffPlayer();

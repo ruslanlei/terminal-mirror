@@ -1,8 +1,8 @@
-import { Order, SubOrder } from '@/api/types/order';
+import { Order, TakeProfit } from '@/api/types/order';
 
 export interface DeleteOrderModalProps {
     order: Order,
-    takeProfits?: SubOrder[],
+    takeProfits?: TakeProfit[],
 }
 
 export interface DeleteOrderModalEmits {

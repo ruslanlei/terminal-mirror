@@ -1,4 +1,4 @@
-import { TakeProfit } from '@/stores/market';
+import { TakeProfit } from '@/api/types/order';
 
 export interface TakeProfitListProps {
   modelValue: TakeProfit[],

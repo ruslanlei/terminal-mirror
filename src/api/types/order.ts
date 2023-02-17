@@ -28,6 +28,14 @@ export interface SubOrder extends Order {
   order_type: 'tp' | 'sl',
 }
 
+export interface TakeProfit extends Order {
+  order_type: 'tp',
+}
+
+export interface StopLoss extends Order {
+  order_type: 'sl',
+}
+
 export interface MasterOrder extends Order {
   order_type: 'limit',
 }

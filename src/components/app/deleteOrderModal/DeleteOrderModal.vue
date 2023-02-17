@@ -69,7 +69,7 @@ import Picture from '@/components/core/picture/Picture.vue';
 import { collectSrcSet } from '@/helpers/dom';
 import Typography from '@/components/app/typography/Typography.vue';
 import Button from '@/components/core/button/Button.vue';
-import { Order, SubOrder } from '@/api/types/order';
+import { Order, TakeProfit } from '@/api/types/order';
 import { reduceTakeProfitsToQuantitiesSum } from '@/helpers/math/formulas/takeProfit';
 import { calculatePnl } from '@/helpers/math/formulas/pnl';
 import { isPositive, subtractRight } from '@/helpers/number';
@@ -106,13 +106,13 @@ const isOrderFilled = computed(() => order.value.status === 'filled');
 
 const orderCurrency = computed(() => marketStore.pairsMap[order.value.pair].quote);
 
-const takeProfits = ref<SubOrder[]>([]);
-const setTakeProfits = (tps: SubOrder[]) => {
+const takeProfits = ref<TakeProfit[]>([]);
+const setTakeProfits = (updatedTakeProfits: TakeProfit[]) => {
   takeProfits.value = compose(
     cloneDeep,
     filter(
-      tps,
-      (takeProfit: SubOrder) => takeProfit.status === 'executed',
+      updatedTakeProfits,
+      (takeProfit: TakeProfit) => takeProfit.status === 'executed',
     ),
   )();
 };
@@ -145,7 +145,7 @@ const onEmulatorEvent = (updatedOrder: Order) => {
   );
 
   if (takeProfitIndex !== -1) {
-    takeProfits.value[takeProfitIndex] = updatedOrder as SubOrder;
+    takeProfits.value[takeProfitIndex] = updatedOrder as TakeProfit;
   }
 };
 

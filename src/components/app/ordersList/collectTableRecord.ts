@@ -1,9 +1,15 @@
 import {
   compose,
-  curry, log, toAbsolute,
+  curry,
+  toAbsolute,
 } from '@/utils/fp';
 import { PairData } from '@/api/types/pair';
-import { MasterOrder, Order, SubOrder } from '@/api/types/order';
+import {
+  MasterOrder,
+  TakeProfit,
+  StopLoss,
+  Order,
+} from '@/api/types/order';
 import { multiply, roundToDecimalPoint } from '@/helpers/number';
 import { calculatePercentOfDifference } from '@/helpers/math/percents';
 import { calculatePnl, calculatePnlPercent } from '@/helpers/math/formulas/pnl';
@@ -19,8 +25,8 @@ interface CollectRecordPayload {
     pairData: PairData,
     pairPrice: number | null,
     order: MasterOrder,
-    takeProfits: SubOrder[] | undefined,
-    stopLoss: SubOrder | undefined,
+    takeProfits: TakeProfit[] | undefined,
+    stopLoss: StopLoss | undefined,
 }
 
 const commonDataMixin = (

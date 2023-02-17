@@ -8,7 +8,7 @@ import { storeToRefs } from 'pinia';
 import { useI18n } from 'vue-i18n';
 import { number, object, string } from 'yup';
 import { CreateOrderDTO } from '@/api/endpoints/orders/create';
-import { TakeProfit, useMarketStore } from '@/stores/market';
+import { useMarketStore } from '@/stores/market';
 import { SelectorProps } from '@/components/core/selector';
 import { useModelReset } from '@/hooks/useModelReset';
 import {
@@ -24,6 +24,7 @@ import {
 } from '@/helpers/math/formulas/order';
 import { roundToDecimalPoint } from '@/helpers/number';
 import { useChartDataStore } from '@/stores/chartData';
+import { TakeProfit } from '@/api/types/order';
 
 export interface OrderModel extends CreateOrderDTO {
   leverage: number,

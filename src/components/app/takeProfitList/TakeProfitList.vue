@@ -42,10 +42,10 @@ import { useI18n } from 'vue-i18n';
 import TakeProfitInput from '@/components/core/takeProfitInput/TakeProfitInput.vue';
 import { useLocalValue } from '@/hooks/useLocalValue';
 import { TakeProfitListEmit, TakeProfitListProps } from '@/components/app/takeProfitList/index';
-import { TakeProfit } from '@/stores/market';
 import { subtract } from '@/helpers/number';
 import { reduceTakeProfitsToQuantitiesSum } from '@/helpers/math/formulas/takeProfit';
 import { awaitFrame } from '@/utils/window';
+import { TakeProfit } from '@/api/types/order';
 
 const props = defineProps<TakeProfitListProps>();
 

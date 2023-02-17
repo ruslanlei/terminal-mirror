@@ -1,6 +1,6 @@
 import { OrderModel } from '@/hooks/useOrderCreate';
 import { ComputedRef, InjectionKey, Ref } from 'vue';
-import { TakeProfit } from '@/stores/market';
+import { TakeProfit } from '@/api/types/order';
 
 export type OrderFormTab = 'input' | 'tp' | 'sl' | 'slx';
 

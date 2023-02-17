@@ -4,7 +4,6 @@ import {
   map,
   reduce,
 } from '@/utils/fp';
-import { TakeProfit } from '@/stores/market';
 import {
   add,
   divide, divideRight,
@@ -13,6 +12,7 @@ import {
   subtractRight,
 } from '@/helpers/number';
 import { calculateOnePercent } from '@/helpers/math/percents';
+import { TakeProfit } from '@/api/types/order';
 
 export const reduceTakeProfitsToAmountOfProfit = (
   takeProfits: TakeProfit[],

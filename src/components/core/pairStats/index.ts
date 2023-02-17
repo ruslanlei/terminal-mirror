@@ -8,6 +8,6 @@ export interface IPairStats {
   min: number | null,
 }
 
-export interface CurrencyStatsProps {
+export interface PairStatsProps {
   stats: IPairStats,
 }

@@ -1,12 +1,12 @@
 <template>
-  <div :class="[$style.currencyStats, isHighlight && $style.highlight]">
+  <div :class="[$style.pairStats, isHighlight && $style.highlight]">
     <CurrencyLogo
       state="square"
       :currency="stats.currency"
     />
     <div :class="$style.stats">
-      <CurrencyStatsColumn
-        v-for="(statsColumn, index) in computedCurrencyStats"
+      <PairStatsColumn
+        v-for="(statsColumn, index) in computedPairStats"
         :key="index"
         :column-data="statsColumn"
       />
@@ -23,15 +23,15 @@ import {
 } from 'vue';
 import { useI18n } from 'vue-i18n';
 import CurrencyLogo from '@/components/core/currencyLogo/CurrencyLogo.vue';
-import CurrencyStatsColumn from '@/components/app/currencyStatsColumn/CurrencyStatsColumn.vue';
-import { CurrencyStatsProps } from '@/components/core/pairStats/index';
-import { CurrencyStat } from '@/components/app/currencyStatsColumn';
+import PairStatsColumn from '@/components/app/pairStatsColumn/PairStatsColumn.vue';
+import { PairStat } from '@/components/app/pairStatsColumn';
+import { PairStatsProps } from './index';
 
-const props = defineProps<CurrencyStatsProps>();
+const props = defineProps<PairStatsProps>();
 
 const { t } = useI18n();
 
-const computedCurrencyStats = computed<Array<CurrencyStat[]>>(() => [
+const computedPairStats = computed<Array<PairStat[]>>(() => [
   [
     {
       label: t('pairStats.price'),
@@ -89,7 +89,7 @@ watch(() => props.stats.currency, () => {
 </script>
 
 <style lang="scss" module>
-.currencyStats {
+.pairStats {
   display: flex;
   position: relative;
   &::before {

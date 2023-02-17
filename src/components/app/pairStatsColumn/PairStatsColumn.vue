@@ -1,27 +1,27 @@
 <template>
-  <div :class="$style.currencyStatsColumn">
+  <div :class="$style.pairStatsColumn">
     <div :class="$style.column">
       <div
-        v-for="(currencyStat, index) in columnData"
+        v-for="(pairStat, index) in columnData"
         :key="index"
         :class="$style.label"
       >
-        {{ currencyStat.label }}
+        {{ pairStat.label }}
       </div>
     </div>
     <Divider />
     <div :class="$style.column">
       <div
-        v-for="(currencyStat, index) in columnData"
+        v-for="(pairStat, index) in columnData"
         :key="index"
         :class="[
           $style.value,
-          $style[currencyStat.valueState],
+          $style[pairStat.valueState],
         ]"
       >
         <AnimatedText
-          v-if="currencyStat.value"
-          :text="currencyStat.value"
+          v-if="pairStat.value"
+          :text="pairStat.value"
           animation-type="verticalAuto"
         />
         <Typography v-else>
@@ -36,15 +36,15 @@
 import Divider from '@/components/core/divider/Divider.vue';
 import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
 import Typography from '@/components/app/typography/Typography.vue';
-import { CurrencyStatsColumnProps } from './index';
+import { PairStatsColumnProps } from './index';
 
-const props = defineProps<CurrencyStatsColumnProps>();
+const props = defineProps<PairStatsColumnProps>();
 </script>
 
 <style lang="scss" module>
 @import "src/assets/styles/utils";
 
-.currencyStatsColumn {
+.pairStatsColumn {
   display: flex;
   gap: 10px;
 }

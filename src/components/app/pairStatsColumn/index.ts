@@ -1,9 +1,9 @@
-export interface CurrencyStat {
+export interface PairStat {
   label: string,
   value: number | string | null,
   valueState: 'default' | 'positive' | 'negative'
 }
 
-export interface CurrencyStatsColumnProps {
-  columnData: CurrencyStat[]
+export interface PairStatsColumnProps {
+  columnData: PairStat[]
 }

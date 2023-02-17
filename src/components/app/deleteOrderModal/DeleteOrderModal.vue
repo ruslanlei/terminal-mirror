@@ -77,6 +77,7 @@ import { useMarketStore } from '@/stores/market';
 import { useEmulatorStore } from '@/stores/emulator';
 import { compose } from '@/utils/fp';
 import { cloneDeep } from '@/utils/object';
+import { filter } from '@/utils/array';
 import { DeleteOrderModalEmits, DeleteOrderModalProps } from './index';
 
 import IllustrationPng from './assets/illustration.png';
@@ -111,8 +112,8 @@ const setTakeProfits = (updatedTakeProfits: TakeProfit[]) => {
   takeProfits.value = compose(
     cloneDeep,
     filter(
-      updatedTakeProfits,
       (takeProfit: TakeProfit) => takeProfit.status === 'executed',
+      updatedTakeProfits,
     ),
   )();
 };

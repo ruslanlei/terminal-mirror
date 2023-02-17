@@ -8,7 +8,7 @@ import {
 } from 'rambda';
 import collect from 'collect.js';
 
-import { curry } from '@/utils/fp';
+import { curry, CurriedFunc } from '@/utils/fp';
 
 export { flatten, concat };
 
@@ -46,7 +46,12 @@ export const arraySum = (
 
 export const map = curry(rambdaMap<any, any>);
 export const reduce = curry(rambdaReduce<any, any>) as typeof rambdaReduce;
-export const reduceRight = curry(lodashReduceRight) as typeof lodashReduceRight;
 
-// @ts-ignore
-export const filter = curry(rambdaFilter<any, any>) as typeof rambdaFilter;
+export const reduceRight = curry(
+  lodashReduceRight,
+) as CurriedFunc<typeof lodashReduceRight<any, any>>;
+
+export const filter = curry(rambdaFilter) as CurriedFunc<(
+  predicate: (...args: any[]) => boolean,
+  array: any[],
+) => any>;

@@ -43,34 +43,30 @@ const mixTableRecordState = (
 });
 
 export const collectTableRecord = <TR extends TableRecord, P>(
-  mixins: (
-    (payload: P) => DeepPartial<TR>['data']
-  )[],
-  stateMixins: (
-    (payload: P) => TableRowState[]
-    )[],
-  childrenMixins: (
-    (payload: P) => DeepPartial<TR>['children']
-  )[],
+  mixins: {
+    data: ((payload: P) => DeepPartial<TR>['data'])[],
+    state?: ((payload: P) => TableRowState[])[],
+    children?: ((payload: P) => DeepPartial<TR>['children'])[],
+  },
   payload: P,
   record: DeepPartial<TR>,
 ): TR => compose(
   reduceRight(
-    childrenMixins,
+    mixins?.children || [],
     (
       record: DeepPartial<TR>,
       mixin: (payload: P) => DeepPartial<TR>['children'],
     ) => mixTableRecordChildren(record, mixin(payload)),
   ),
   reduceRight(
-    stateMixins,
+    mixins?.state || [],
     (
       record: DeepPartial<TR>,
       mixin: (payload: P) => TableRowState[],
     ) => mixTableRecordState(record, mixin(payload)),
   ),
   reduceRight(
-    mixins,
+    mixins.data,
     (
       record: DeepPartial<TR>,
       mixin: (payload: P) => DeepPartial<TR>['data'],

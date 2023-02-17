@@ -85,24 +85,29 @@ const notFilledOrderStateMixin = (
 export const collectActiveSubOrderRecord = curry(collectTableRecord<
   ActiveSubOrderRecord,
   CollectRecordPayload
->)([
-  optionsMixin,
-  dateMixin,
-  activeOrderVolumeMixin,
-  quantityMixin,
-  masterTypeMixin,
-  orderTypeMixin,
-], [
-  notFilledOrderStateMixin,
-], []);
+>)({
+  data: [
+    optionsMixin,
+    dateMixin,
+    activeOrderVolumeMixin,
+    quantityMixin,
+    masterTypeMixin,
+    orderTypeMixin,
+  ],
+  state: [
+    notFilledOrderStateMixin,
+  ],
+});
 
 export const collectClosedSubOrderRecord = curry(collectTableRecord<
   ClosedSubOrdersRecord,
   CollectRecordPayload
->)([
-  dateMixin,
-  closedOrderVolumeMixin,
-  quantityMixin,
-  masterTypeMixin,
-  orderTypeMixin,
-], [], []);
+>)({
+  data: [
+    dateMixin,
+    closedOrderVolumeMixin,
+    quantityMixin,
+    masterTypeMixin,
+    orderTypeMixin,
+  ],
+});

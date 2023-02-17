@@ -1,7 +1,6 @@
 import {
   compose,
   curry,
-  toAbsolute,
 } from '@/utils/fp';
 import {
   divideRight,
@@ -10,6 +9,7 @@ import {
   subtract,
   subtractRight,
 } from '@/helpers/number';
+import { toAbsolute } from '@/utils/number';
 
 export const calculateRisk = curry((
   originalPrice: number,
@@ -24,7 +24,7 @@ export const calculateVolumeDifference = curry((
   quantity: number,
   originalPrice: number,
   comparingPrice: number,
-) => compose(
+): number => compose(
   toAbsolute,
   calculateRisk,
 )(

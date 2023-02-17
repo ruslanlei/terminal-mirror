@@ -1,13 +1,25 @@
 import flatten from 'lodash/flatten';
 import concat from 'lodash/concat';
-import { map as rambdaMap } from 'rambda';
-
+import lodashReduceRight from 'lodash/reduceRight';
+import {
+  map as rambdaMap,
+  reduce as rambdaReduce,
+  filter as rambdaFilter,
+} from 'rambda';
 import collect from 'collect.js';
+
 import { curry } from '@/utils/fp';
 
 export { flatten, concat };
 
 export const arrayFrom = (value: any | any[]) => (Array.isArray(value) ? value : [value]);
+
+export const arrayOf = curry((
+  initializer: () => any,
+  length: number,
+) => Array(length).fill(0).map(initializer));
+
+export const getLength = (array: any[]) => array.length;
 
 export const getLastElement = (
   array: any[],
@@ -33,3 +45,8 @@ export const arraySum = (
 ) => collect(array).sum();
 
 export const map = curry(rambdaMap<any, any>);
+export const reduce = curry(rambdaReduce<any, any>) as typeof rambdaReduce;
+export const reduceRight = curry(lodashReduceRight) as typeof lodashReduceRight;
+
+// @ts-ignore
+export const filter = curry(rambdaFilter<any, any>) as typeof rambdaFilter;

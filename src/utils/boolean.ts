@@ -1,4 +1,7 @@
 import { curry } from '@/utils/fp';
+import lodashIsEqual from 'lodash/isEqual';
+
+export const isEqual = curry(lodashIsEqual);
 
 // right to left
 export const isMoreThan = curry((

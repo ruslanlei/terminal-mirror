@@ -106,12 +106,13 @@ import {
   calculateVolumeDifference,
 } from '@/helpers/math/formulas/order';
 import { roundToDecimalPoint } from '@/helpers/number';
-import { compose, toAbsolute } from '@/utils/fp';
+import { compose } from '@/utils/fp';
 import { calculatePercentOfDifference, decreaseByPercent } from '@/helpers/math/percents';
 import { calculatePriceByPercentOfDeposit, calculateVolumeDifferenceInPercentsOfDeposit } from '@/helpers/math/formulas/stopLoss';
 import { useMarketStore } from '@/stores/market';
 import { storeToRefs } from 'pinia';
 import { useEmulatorStore } from '@/stores/emulator';
+import { toAbsolute } from '@/utils/number';
 import { OrderFormStopLossPartEmits } from './index';
 
 const { t } = useI18n();

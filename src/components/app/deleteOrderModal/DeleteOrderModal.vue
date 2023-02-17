@@ -75,7 +75,7 @@ import { calculatePnl } from '@/helpers/math/formulas/pnl';
 import { isPositive, subtractRight } from '@/helpers/number';
 import { useMarketStore } from '@/stores/market';
 import { useEmulatorStore } from '@/stores/emulator';
-import { compose, filter } from '@/utils/fp';
+import { compose } from '@/utils/fp';
 import { cloneDeep } from '@/utils/object';
 import { DeleteOrderModalEmits, DeleteOrderModalProps } from './index';
 

@@ -1,7 +1,6 @@
 import {
   compose,
   curry,
-  toAbsolute,
 } from '@/utils/fp';
 import { PairData } from '@/api/types/pair';
 import {
@@ -20,6 +19,7 @@ import { SubOrderTableItem } from '@/components/app/ordersList/subOrdersTable';
 import { collectTableRecord } from '@/components/core/table/helpers';
 import { getOrdersWithStatus, reduceSubOrderListToCommonPnl } from '@/helpers/orders';
 import { TableRowState } from '@/components/core/table/tableRow';
+import { toAbsolute } from '@/utils/number';
 
 interface CollectRecordPayload {
     pairData: PairData,

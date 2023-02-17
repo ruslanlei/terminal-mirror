@@ -1,10 +1,11 @@
-import { compose, curry, toAbsolute } from '@/utils/fp';
+import { compose, curry } from '@/utils/fp';
 import {
   add,
   multiply,
   subtractRight,
 } from '@/helpers/number';
 import { calculatePercentOfDifference } from '@/helpers/math/percents';
+import { toAbsolute } from '@/utils/number';
 
 export const calculatePnl = curry((
   orderPrice: number,

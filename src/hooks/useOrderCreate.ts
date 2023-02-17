@@ -16,7 +16,7 @@ import {
   mapTakeProfitPricesByIncreasePercent,
   reduceTakeProfitsToAmountOfProfitAndRound,
 } from '@/helpers/math/formulas/takeProfit';
-import { arrayOf, compose } from '@/utils/fp';
+import { compose } from '@/utils/fp';
 import { decreaseByPercent } from '@/helpers/math/percents';
 import {
   calculateAndRoundLiquidationPrice,
@@ -25,6 +25,7 @@ import {
 import { roundToDecimalPoint } from '@/helpers/number';
 import { useChartDataStore } from '@/stores/chartData';
 import { TakeProfit } from '@/api/types/order';
+import { arrayOf } from '@/utils/array';
 
 export interface OrderModel extends CreateOrderDTO {
   leverage: number,

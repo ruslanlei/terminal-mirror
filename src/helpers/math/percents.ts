@@ -1,8 +1,6 @@
 import {
   compose,
   curry,
-  isEqual,
-  toAbsolute,
 } from '@/utils/fp';
 import {
   add,
@@ -11,6 +9,7 @@ import {
   roundToDecimalPoint, subtract,
   subtractRight,
 } from '@/helpers/number';
+import { isEqual } from '@/utils/boolean';
 
 export const calculateOnePercent = (
   total: number,
@@ -82,15 +81,6 @@ export const addPercents = curry((
   add(total),
   multiply(calculateOnePercent(total)),
 )(percentValue));
-
-export const checkIsValueEqualToPercentOfTotal = curry((
-  total: number,
-  percents: number,
-  comparisonValue: number,
-) => compose(
-  isEqual(comparisonValue),
-  percentsToValue(total),
-)(percents));
 
 export const checkIsRoundedValueEqualToPercentOfTotal = curry((
   decimals: number,

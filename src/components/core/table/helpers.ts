@@ -1,8 +1,9 @@
 import { uuid } from '@/utils/uuid';
 import { DeepPartial } from '@/utils/typescript';
 import { TableRecord } from '@/components/core/table/index';
-import { compose, reduceRight } from '@/utils/fp';
+import { compose } from '@/utils/fp';
 import { TableRowState } from '@/components/core/table/tableRow';
+import { reduceRight } from '@/utils/array';
 
 export const createEmptyRecord = (id?: string | number): TableRecord => ({
   id: id || uuid(),

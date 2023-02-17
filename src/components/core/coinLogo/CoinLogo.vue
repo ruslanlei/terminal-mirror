@@ -8,17 +8,17 @@
         :key="currency"
         :class="$style.source"
       >
-        <use :xlink:href="`#currency-logo-${currency}`" />
+        <use :xlink:href="`#coin-logo-${currency}`" />
       </svg>
     </transition>
   </div>
 </template>
 
 <script setup lang="ts">
-import { CurrencyLogoProps } from './index';
+import { CoinLogoProps } from './index';
 
 const props = withDefaults(
-  defineProps<CurrencyLogoProps>(),
+  defineProps<CoinLogoProps>(),
   {
     state: 'circle',
   },

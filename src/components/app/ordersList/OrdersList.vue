@@ -13,7 +13,7 @@
     >
       <template #cell(pair)="{ data: currency }">
         <div :class="$style.pairCell">
-          <CurrencyLogo :currency="currency" />
+          <CoinLogo :currency="currency" />
           <span :class="$style.pairName">
             {{ currency }}
           </span>
@@ -275,7 +275,7 @@
 import { useI18n } from 'vue-i18n';
 import Table from '@/components/core/table/Table.vue';
 import InlineSpace from '@/components/core/inlineSpace/InlineSpace.vue';
-import CurrencyLogo from '@/components/core/currencyLogo/CurrencyLogo.vue';
+import CoinLogo from '@/components/core/coinLogo/CoinLogo.vue';
 import ListSkeleton from '@/components/app/listSkeleton/ListSkeleton.vue';
 import Icon from '@/components/core/icon/Icon.vue';
 import { isPositive } from '@/helpers/number';
@@ -285,8 +285,6 @@ import { onActivated, onBeforeUnmount, onDeactivated } from 'vue';
 import SubOrdersTable from '@/components/app/ordersList/subOrdersTable/SubOrdersTable.vue';
 import { useOrdersList } from '@/hooks/useOrdersList';
 import Typography from '@/components/app/typography/Typography.vue';
-import { TableRecord } from '@/components/core/table';
-import { Order } from '@/api/types/order';
 import { OrdersListProps } from './index';
 
 const { t } = useI18n();

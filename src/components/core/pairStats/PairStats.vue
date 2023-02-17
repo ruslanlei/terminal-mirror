@@ -1,6 +1,6 @@
 <template>
   <div :class="[$style.pairStats, isHighlight && $style.highlight]">
-    <CurrencyLogo
+    <CoinLogo
       state="square"
       :currency="stats.currency"
     />
@@ -22,7 +22,7 @@ import {
   watch,
 } from 'vue';
 import { useI18n } from 'vue-i18n';
-import CurrencyLogo from '@/components/core/currencyLogo/CurrencyLogo.vue';
+import CoinLogo from '@/components/core/coinLogo/CoinLogo.vue';
 import PairStatsColumn from '@/components/app/pairStatsColumn/PairStatsColumn.vue';
 import { PairStat } from '@/components/app/pairStatsColumn';
 import { PairStatsProps } from './index';

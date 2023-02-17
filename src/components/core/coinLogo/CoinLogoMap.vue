@@ -1,9 +1,9 @@
 <template>
-  <div :class="$style.currencyLogoMap">
+  <div :class="$style.coinLogoMap">
     <component
       :is="component"
       v-for="[icon, component] in logos"
-      :id="`currency-logo-${icon}`"
+      :id="`coin-logo-${icon}`"
       :key="icon"
     />
   </div>
@@ -28,7 +28,7 @@ const logos = (Object.entries(
 </script>
 
 <style lang="scss" module>
-.currencyLogoMap {
+.coinLogoMap {
   position: fixed;
   top: -9999px;
   right: -9999px;

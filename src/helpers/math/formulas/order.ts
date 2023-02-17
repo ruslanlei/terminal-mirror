@@ -1,4 +1,6 @@
-import { compose, curry, toAbsolute } from '@/utils/fp';
+import {
+  compose, curry, filter, log, toAbsolute,
+} from '@/utils/fp';
 import {
   divideRight,
   multiply,
@@ -6,6 +8,8 @@ import {
   subtract,
   subtractRight,
 } from '@/helpers/number';
+import { reduceTakeProfitsToQuantitiesSum } from '@/helpers/math/formulas/takeProfit';
+import { SubOrder } from '@/api/types/order';
 
 export const calculateRisk = curry((
   originalPrice: number,
@@ -15,6 +19,21 @@ export const calculateRisk = curry((
   multiply(originalPrice, quantity),
   multiply(comparingPrice, quantity),
 ));
+
+export const calculateCurrentQuantity = curry((
+  orderQuantity: number,
+  takeProfits: SubOrder[] | null,
+) => compose(
+  subtractRight(
+    compose(
+      reduceTakeProfitsToQuantitiesSum,
+      filter,
+    )(
+      takeProfits || [],
+      (takeProfit: SubOrder) => takeProfit.status === 'executed',
+    ),
+  ),
+)(orderQuantity));
 
 export const calculateVolumeDifference = curry((
   quantity: number,

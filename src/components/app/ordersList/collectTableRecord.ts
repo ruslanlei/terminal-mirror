@@ -1,6 +1,6 @@
 import {
   compose,
-  curry, toAbsolute,
+  curry, log, toAbsolute,
 } from '@/utils/fp';
 import { PairData } from '@/api/types/pair';
 import { MasterOrder, Order, SubOrder } from '@/api/types/order';
@@ -14,6 +14,7 @@ import { SubOrderTableItem } from '@/components/app/ordersList/subOrdersTable';
 import { collectTableRecord } from '@/components/core/table/helpers';
 import { getOrdersWithStatus, reduceSubOrderListToCommonPnl } from '@/helpers/orders';
 import { TableRowState } from '@/components/core/table/tableRow';
+import { calculateCurrentQuantity } from '@/helpers/math/formulas/order';
 
 interface CollectRecordPayload {
     pairData: PairData,
@@ -110,20 +111,24 @@ const stopLossDataMixin = (
 });
 
 const pnlMixin = (
-  { order, pairData, pairPrice }: CollectRecordPayload,
+  {
+    order,
+    pairData,
+    pairPrice,
+    takeProfits,
+  }: CollectRecordPayload,
 ) => ({
   pnl: {
     currency: pairData.quote,
     ...(order.status !== 'new' && pairPrice
       ? {
         value: compose(
-          roundToDecimalPoint(2),
-          calculatePnl,
-        )(
-          order.price,
-          order.quantity,
-          pairPrice,
-        ),
+          roundToDecimalPoint(6),
+          calculatePnl(
+            order.price,
+            calculateCurrentQuantity(order.quantity, takeProfits || null),
+          ),
+        )(pairPrice),
       }
       : {
         value: null,
@@ -136,7 +141,7 @@ const takeProfitDataMixin = (
 ) => ({
   ...(payload.takeProfits?.length ? {
     tp: compose(
-      roundToDecimalPoint(2),
+      roundToDecimalPoint(6),
       calculateCommonTakeProfitPercent,
     )(
       payload.order.price,

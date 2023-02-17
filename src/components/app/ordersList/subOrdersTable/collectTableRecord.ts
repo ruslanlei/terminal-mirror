@@ -10,6 +10,7 @@ import { humanizeDate } from '@/utils/date';
 import { MasterOrder } from '@/api/types/order';
 import { PairData } from '@/api/types/pair';
 import { collectTableRecord } from '@/components/core/table/helpers';
+import { TableRowState } from '@/components/core/table/tableRow';
 
 interface CollectRecordPayload {
   order: SubOrderTableItem,
@@ -75,6 +76,12 @@ const optionsMixin = (
   options: order,
 });
 
+const notFilledOrderStateMixin = (
+  { order }: CollectRecordPayload,
+): TableRowState[] => [
+  ...(order.status === 'new' ? ['semiTransparent'] : []) as TableRowState[],
+];
+
 export const collectActiveSubOrderRecord = curry(collectTableRecord<
   ActiveSubOrderRecord,
   CollectRecordPayload
@@ -85,7 +92,9 @@ export const collectActiveSubOrderRecord = curry(collectTableRecord<
   quantityMixin,
   masterTypeMixin,
   orderTypeMixin,
-], [], []);
+], [
+  notFilledOrderStateMixin,
+], []);
 
 export const collectClosedSubOrderRecord = curry(collectTableRecord<
   ClosedSubOrdersRecord,

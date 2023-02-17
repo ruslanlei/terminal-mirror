@@ -26,6 +26,13 @@ import {
 import { useEnvironmentObserver } from '@/hooks/useEnvironmentObserver';
 import { useLocalValue } from '@/hooks/useLocalValue';
 import { awaitFrame } from '@/utils/window';
+import {
+  add,
+  divide, divideRight, multiply, subtract, subtractRight,
+} from '@/helpers/number';
+import { compose } from '@/utils/fp';
+import { roundNumber } from '@/utils/number';
+import { getRect } from '@/helpers/style';
 import { RangeSliderEmits, RangeSliderProps } from './index';
 
 const props = withDefaults(
@@ -45,12 +52,17 @@ const sliderSizing = ref({
   endLeft: 0,
   width: 0,
 });
-const computedStepSize = computed(() => sliderSizing.value.width / props.max);
+
+const computedStepSize = computed(() => compose(
+  divide(sliderSizing.value.width),
+  subtractRight,
+)(props.min, props.max));
+
 const calculateSliderSizing = () => {
   const {
     left,
     width,
-  } = slider.value.getBoundingClientRect();
+  } = getRect(slider.value);
 
   sliderSizing.value.beginningLeft = left;
   sliderSizing.value.endLeft = left + width;
@@ -60,7 +72,11 @@ const calculateSliderSizing = () => {
 // calculate value
 const localValue = useLocalValue<number>(props, emit, 'modelValue');
 const calculateValueByPosition = (pointerLeft: number) => {
-  localValue.value = Math.round(pointerLeft / computedStepSize.value);
+  localValue.value = compose(
+    roundNumber,
+    add(props.min),
+    divideRight(computedStepSize.value),
+  )(pointerLeft);
 };
 
 // dragging point
@@ -69,19 +85,19 @@ const computedDraggingPointStyles = computed(() => ({
   transform: `translateX(${activePointLeft.value}px)`,
 }));
 const calculatePositionByValue = () => {
-  activePointLeft.value = localValue.value * computedStepSize.value;
+  activePointLeft.value = multiply(subtract(localValue.value, props.min), computedStepSize.value);
 };
 const isDragging = ref(false);
 const onMouseMove = (event: MouseEvent) => {
   // calculate left relative to container
-  const pointLeft = event.clientX - sliderSizing.value.beginningLeft;
+  const pointLeft = subtract(event.clientX, sliderSizing.value.beginningLeft);
   let normalizedPointLeft = pointLeft;
   if (pointLeft < 0) {
     normalizedPointLeft = 0;
   }
-  const distanceToEndOfSlider = sliderSizing.value.endLeft - event.clientX;
+  const distanceToEndOfSlider = subtract(sliderSizing.value.endLeft, event.clientX);
   if (distanceToEndOfSlider <= 0) {
-    normalizedPointLeft = sliderSizing.value.endLeft - sliderSizing.value.beginningLeft;
+    normalizedPointLeft = subtract(sliderSizing.value.endLeft, sliderSizing.value.beginningLeft);
   }
 
   activePointLeft.value = normalizedPointLeft;

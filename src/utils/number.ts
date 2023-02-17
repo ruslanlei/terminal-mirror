@@ -8,4 +8,4 @@ export const percentFormat = (
   number: number,
 ) => numeral(number).format('0.00%').toUpperCase();
 
-export const { abs: toAbsolute } = Math;
+export const { abs: toAbsolute, round: roundNumber } = Math;

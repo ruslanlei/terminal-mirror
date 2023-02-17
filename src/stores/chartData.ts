@@ -14,7 +14,7 @@ import { subtractDays, toTimestamp } from '@/utils/date';
 import { isMoreThan } from '@/utils/boolean';
 import { useStorage } from '@vueuse/core';
 import { PairData } from '@/api/types/pair';
-import { getLastElement } from '@/utils/array';
+import { arraySum, getLastElement, map } from '@/utils/array';
 
 export type CandlesMap = Record<PairData['id'], Candle[]>;
 
@@ -29,6 +29,39 @@ export const useChartDataStore = defineStore('chartData', () => {
 
   const candlesMap = useStorage<CandlesMap>('candlesMap', {});
   const candles = computed<Candle[]>(() => candlesMap.value?.[activePair.value] || []);
+
+  const lastCandle = computed<Candle | null>(() => candles.value.at(-1) || null);
+
+  const candlesWithinLast24Hours = computed<Candle[]>(
+    () => (
+      lastCandle.value
+        ? candles.value.filter((candle: Candle) => compose(
+          isMoreThan(
+            compose(
+              toTimestamp,
+              subtractDays(1),
+              getCandleDate,
+            )(lastCandle.value),
+          ),
+          toTimestamp,
+          getCandleDate,
+        )(candle))
+        : []),
+  );
+
+  const firstCandleInLast24Hours = computed<Candle | null>(
+    () => candlesWithinLast24Hours.value?.[0] || null,
+  );
+
+  const currentPrice = computed(() => getCandleField('closePrice', lastCandle.value));
+  const firstPriceWithinLast24Hours = computed<number | null>(
+    () => getCandleField('closePrice', firstCandleInLast24Hours.value),
+  );
+
+  const amountOfTransactionsInLast24Hours = computed(() => compose(
+    arraySum,
+    map(getCandleField('amountOfOrders')),
+  )(candlesWithinLast24Hours.value));
 
   const setCandlesToCurrentPair = (candles: Candle[]) => {
     candlesMap.value[activePair.value] = candles;
@@ -89,35 +122,6 @@ export const useChartDataStore = defineStore('chartData', () => {
     }
   };
 
-  const lastCandle = computed<Candle | null>(() => candles.value.at(-1) || null);
-
-  const firstCandleInLast24Hours = computed<Candle | null>(() => {
-    const lastCandle = candles.value.at(-1);
-
-    if (!lastCandle) return null;
-
-    const last24hoursCandles = candles.value.filter((candle: Candle) => compose(
-      isMoreThan(
-        compose(
-          toTimestamp,
-          subtractDays(1),
-          getCandleDate,
-        )(lastCandle),
-      ),
-      toTimestamp,
-      getCandleDate,
-    )(candle));
-
-    return last24hoursCandles?.[0] || null;
-  });
-
-  const currentPrice = computed(() => getCandleField('closePrice', lastCandle.value));
-  const firstPriceWithinLast24Hours = computed<number | null>(
-    () => getCandleField('closePrice', firstCandleInLast24Hours.value),
-  );
-
-  const currentVolume = computed(() => getCandleField('volume', lastCandle.value));
-
   return {
     candleSize,
     candles,
@@ -127,7 +131,7 @@ export const useChartDataStore = defineStore('chartData', () => {
     getCandles: handleGetCandles,
     fetchCandles,
     currentPrice,
-    currentVolume,
+    amountOfTransactionsInLast24Hours,
     firstPriceWithinLast24Hours,
   };
 });

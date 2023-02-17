@@ -24,7 +24,7 @@ const chartDataStore = useChartDataStore();
 const {
   candles,
   currentPrice,
-  currentVolume,
+  amountOfTransactionsInLast24Hours,
   firstPriceWithinLast24Hours,
 } = storeToRefs(chartDataStore);
 
@@ -60,7 +60,7 @@ const min = computed(() => (candles.value.length
 const pairStats = computed<IPairStats>(() => ({
   currency: activePairData.value?.base || 'BTC',
   price: currentPrice.value,
-  amount: humanizeNumber(currentVolume.value ?? 0),
+  amount: humanizeNumber(amountOfTransactionsInLast24Hours.value),
   change: change.value,
   changePercents: changePercents.value,
   max: max.value,

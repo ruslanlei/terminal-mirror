@@ -1,5 +1,6 @@
 import flatten from 'lodash/flatten';
 import concat from 'lodash/concat';
+import { map as rambdaMap } from 'rambda';
 
 import collect from 'collect.js';
 import { curry } from '@/utils/fp';
@@ -26,3 +27,9 @@ export const findMinByKey = curry((
   key: string | number,
   array: (Record<any, any> | Array<any>)[],
 ) => collect(array).min(String(key)));
+
+export const arraySum = (
+  array: number[],
+) => collect(array).sum();
+
+export const map = curry(rambdaMap<any, any>);

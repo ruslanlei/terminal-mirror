@@ -121,7 +121,7 @@ const setTakeProfits = (updatedTakeProfits: TakeProfit[]) => {
 };
 
 const takeProfitsQuantitySum = computed(
-  () => reduceTakeProfitsToQuantitiesSum(takeProfits.value),
+  () => reduceTakeProfitsToQuantitiesSum(takeProfits.value || []),
 );
 
 const pnl = computed(() => {

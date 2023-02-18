@@ -1,6 +1,9 @@
 <template>
   <Card
-    :class="[$style.playerSettings, isRewinding && $style.disabled]"
+    :class="[
+      $style.playerSettings,
+      isRewinding && $style.disabled,
+    ]"
     state="background3"
   >
     <header :class="$style.header">
@@ -17,7 +20,7 @@
       <RewindButton
         :is-disabled="isPlaying"
         :class="$style.rewindButton"
-        @click="rewind"
+        @click="emulatorStore.rewind"
       />
       <RangeSlider
         v-model="candlesPerSecond"
@@ -51,22 +54,29 @@ import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
 
 import { useEmulatorStore } from '@/stores/emulator';
 import { storeToRefs } from 'pinia';
+import { useChartDataStore } from '@/stores/chartData';
 import PlayButton from './playButton/PlayButton.vue';
 import RewindButton from './rewindButton/RewindButton.vue';
 
 const { t } = useI18n();
 
+const chartDataStore = useChartDataStore();
+const { isFetchingCandles } = storeToRefs(chartDataStore);
+
 const emulatorStore = useEmulatorStore();
-const { emulatorDate, candlesPerSecond, isPlaying } = storeToRefs(emulatorStore);
+const {
+  emulatorDate,
+  candlesPerSecond,
+  isPlaying,
+  isRewinding,
+} = storeToRefs(emulatorStore);
 
 const displaySpeed = computed(() => `CPS: ${candlesPerSecond.value}`);
 
-const isRewinding = ref(false);
-const rewind = async () => {
-  isRewinding.value = true;
-  await emulatorStore.playTimeframe(1);
-  isRewinding.value = false;
-};
+const isDisabled = computed(() => [
+  isRewinding.value,
+  isFetchingCandles.value,
+].some(Boolean));
 </script>
 
 <style lang="scss" module>

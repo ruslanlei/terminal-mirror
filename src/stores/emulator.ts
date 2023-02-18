@@ -151,6 +151,13 @@ export const useEmulatorStore = defineStore('emulator', () => {
     return { result };
   };
 
+  const isRewinding = ref(false);
+  const rewind = async () => {
+    isRewinding.value = true;
+    await playTimeframe(1);
+    isRewinding.value = false;
+  };
+
   subscribeSimulateEvent((order: Order) => {
     // for now its only possible to create
     // only 1 limit order, so there is need
@@ -184,5 +191,7 @@ export const useEmulatorStore = defineStore('emulator', () => {
     simulate: handleSimulate,
     isFetchingEmulatorTimeframe,
     playTimeframe,
+    isRewinding,
+    rewind,
   };
 });

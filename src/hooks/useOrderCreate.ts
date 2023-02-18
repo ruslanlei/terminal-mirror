@@ -49,8 +49,6 @@ export const useOrderCreate = () => {
 
   const { t } = useI18n();
 
-  const isFormDisabled = computed(() => isFetchingCandles.value);
-
   const orderDirectionOptions = computed<SelectorProps['options']>(() => [
     {
       label: t('order.direction.long'),
@@ -242,7 +240,6 @@ export const useOrderCreate = () => {
   }, { immediate: true });
 
   return {
-    isFormDisabled,
     model,
     validationSchema,
     isTakeProfitsEnabled,

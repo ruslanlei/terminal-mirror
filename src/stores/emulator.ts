@@ -1,10 +1,13 @@
-import { computed, ref, watch } from 'vue';
+import {
+  computed, nextTick, ref, watch,
+} from 'vue';
 import { defineStore, storeToRefs } from 'pinia';
 import { useStorage } from '@vueuse/core';
 import { useMarketStore } from '@/stores/market';
 import { simulate } from '@/api/endpoints/emulator/simulate';
 import { compose, curry } from '@/utils/fp';
 import {
+  addSeconds,
   dateNow,
   subtractYears,
   toISOString,
@@ -109,16 +112,43 @@ export const useEmulatorStore = defineStore('emulator', () => {
     });
 
     if (response.result) {
-      response.data.events.forEach((o: any) => {
-        console.log(o);
-        emitSimulateEvent(o);
-      });
+      response.data.events.forEach(emitSimulateEvent);
     } else {
       processServerErrors(response.data);
       emitSimulationEndedEvent(null);
     }
 
     return response;
+  };
+
+  const increaseEmulatorDate = (tiks: number) => {
+    const shiftInSeconds = compose(
+      multiply(tiks),
+      multiply(compressionFactor.value),
+      multiply(candlesPerSecond.value),
+    )(candleSize.value);
+
+    emulatorDate.value = compose(
+      toISOString,
+      addSeconds(shiftInSeconds),
+    )(emulatorDate.value);
+  };
+
+  const isFetchingEmulatorTimeframe = ref(false);
+  const playTimeframe = async (tiksAmount = 1) => {
+    isFetchingEmulatorTimeframe.value = true;
+    const { result, data } = await handleSimulate(tiksAmount);
+
+    if (result) {
+      chartDataStore.appendCandles(data.candles);
+      increaseEmulatorDate(tiksAmount);
+    }
+
+    nextTick(() => {
+      isFetchingEmulatorTimeframe.value = false;
+    });
+
+    return { result };
   };
 
   subscribeSimulateEvent((order: Order) => {
@@ -152,5 +182,7 @@ export const useEmulatorStore = defineStore('emulator', () => {
     candleSize,
     compressionFactor,
     simulate: handleSimulate,
+    isFetchingEmulatorTimeframe,
+    playTimeframe,
   };
 });

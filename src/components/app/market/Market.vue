@@ -28,7 +28,6 @@ import { useMarketStore } from '@/stores/market';
 import MarketChart from '@/components/app/marketChart/MarketChart.vue';
 
 const marketStore = useMarketStore();
-marketStore.activePairPrice = 17000;
 
 await marketStore.getPairs();
 </script>

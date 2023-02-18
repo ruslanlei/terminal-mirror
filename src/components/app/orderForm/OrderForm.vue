@@ -223,12 +223,7 @@ provide(OrderFormInjectionKey, {
 .ordersForm {
   height: 100%;
   position: relative;
-  transition: opacity 200ms;
-  opacity: 1;
-  &.disabled {
-    opacity: 0.5;
-    pointer-events: none;
-  }
+  @include transparentOnDisabled;
 }
 
 .playerOverlay {

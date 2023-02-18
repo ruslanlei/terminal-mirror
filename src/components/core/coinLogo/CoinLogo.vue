@@ -51,8 +51,8 @@ const props = withDefaults(
   border-radius: 5px;
 }
 
-$svgWidth: 384px;
-$svgHeight: 512px;
+$svgWidth: 100px;
+$svgHeight: 120px;
 
 .source {
   width: $svgWidth;

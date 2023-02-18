@@ -1,6 +1,6 @@
 <template>
   <Card
-    :class="$style.playerSettings"
+    :class="[$style.playerSettings, isRewinding && $style.disabled]"
     state="background3"
   >
     <header :class="$style.header">
@@ -17,6 +17,7 @@
       <RewindButton
         :is-disabled="isPlaying"
         :class="$style.rewindButton"
+        @click="rewind"
       />
       <RangeSlider
         v-model="candlesPerSecond"
@@ -59,6 +60,13 @@ const emulatorStore = useEmulatorStore();
 const { emulatorDate, candlesPerSecond, isPlaying } = storeToRefs(emulatorStore);
 
 const displaySpeed = computed(() => `CPS: ${candlesPerSecond.value}`);
+
+const isRewinding = ref(false);
+const rewind = async () => {
+  isRewinding.value = true;
+  await emulatorStore.playTimeframe(1);
+  isRewinding.value = false;
+};
 </script>
 
 <style lang="scss" module>
@@ -70,6 +78,7 @@ const displaySpeed = computed(() => `CPS: ${candlesPerSecond.value}`);
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  @include transparentOnDisabled;
 }
 
 .header {

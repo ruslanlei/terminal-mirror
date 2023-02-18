@@ -69,8 +69,6 @@ export const useMarketStore = defineStore('market', () => {
     () => pairsMap.value[activePair.value],
   );
 
-  const activePairPrice = ref(0);
-
   const isFetchingPairs = ref(false);
   const handleGetPairs = async () => {
     isFetchingPairs.value = true;
@@ -257,7 +255,6 @@ export const useMarketStore = defineStore('market', () => {
     baseCurrencyDecimals,
     baseCurrencyStep,
     activePairData,
-    activePairPrice,
     isFetchingPairs,
     getPairs: handleGetPairs,
     createOrder: handleCreateOrder,

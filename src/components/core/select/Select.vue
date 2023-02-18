@@ -503,7 +503,7 @@ defineExpose({
       transform: rotate(180deg);
     }
     .trigger {
-      box-shadow: 0 0 0 rem(1px) rgba(var(--color-primary-1), 1);
+      box-shadow: 0 0 0 1px rgba(var(--color-primary-1), 1);
     }
   }
   &.disabled {

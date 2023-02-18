@@ -30,6 +30,7 @@ export const useMarketChart = () => {
   const {
     emulatorDate,
     candleSize,
+    isFetchingEmulatorTimeframe,
   } = storeToRefs(emulatorStore);
 
   const marketStore = useMarketStore();
@@ -76,6 +77,7 @@ export const useMarketChart = () => {
     chartDateTo,
     computedCandles,
     isFetchingCandles,
+    isFetchingEmulatorTimeframe,
     fetchCandles,
   };
 };

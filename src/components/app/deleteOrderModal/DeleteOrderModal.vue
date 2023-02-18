@@ -78,6 +78,7 @@ import { useEmulatorStore } from '@/stores/emulator';
 import { compose } from '@/utils/fp';
 import { cloneDeep } from '@/utils/object';
 import { filter } from '@/utils/array';
+import { useChartDataStore } from '@/stores/chartData';
 import { DeleteOrderModalEmits, DeleteOrderModalProps } from './index';
 
 import IllustrationPng from './assets/illustration.png';
@@ -95,6 +96,7 @@ const illustrationSrcSet = computed(() => collectSrcSet([
 const { t } = useI18n();
 
 const marketStore = useMarketStore();
+const chartDataStore = useChartDataStore();
 const emulatorStore = useEmulatorStore();
 
 const close = () => {
@@ -131,7 +133,7 @@ const pnl = computed(() => {
   return calculatePnl(
     props.order.price,
     quantity,
-    marketStore.activePairPrice,
+    chartDataStore.currentPrice || 0,
   );
 });
 

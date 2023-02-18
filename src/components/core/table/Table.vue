@@ -203,7 +203,7 @@ const playAppearAnimation = () => {
     ...(props.appearanceAnimationType === 'bubbling' ? {
       scale: [0.2, 1],
     } : {}),
-    duration: 800,
+    duration: 700,
     easing: 'easeOutQuint',
     delay: anime.stagger(40, { from: 'first' }),
     loopComplete: onAnimationComplete,

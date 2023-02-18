@@ -2,7 +2,7 @@
   <Card
     :class="[
       $style.playerSettings,
-      isRewinding && $style.disabled,
+      isDisabled && $style.disabled,
     ]"
     state="background3"
   >

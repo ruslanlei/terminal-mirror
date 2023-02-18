@@ -49,7 +49,7 @@ const orderVolumeMixin = (
   payload: CollectRecordPayload,
 ) => ({
   volume: compose(
-    roundToDecimalPoint(6), /* TODO: change to base currency decimals */
+    roundToDecimalPoint(6),
     multiply,
   )(payload.order.quantity, payload.order.price),
 });
@@ -68,7 +68,7 @@ const closedOrderPricesMixin = (
 ) => ({
   prices: {
     order: order.price,
-    close: 17000,
+    close: order.executed_price,
   },
 });
 
@@ -80,7 +80,7 @@ const closedOrderResultsMixin = (
   results: {
     pnl: {
       value: compose(
-        roundToDecimalPoint(2),
+        roundToDecimalPoint(6),
         reduceSubOrderListToCommonPnl(order),
         getOrdersWithStatus('executed'),
       )([
@@ -90,7 +90,7 @@ const closedOrderResultsMixin = (
       currency: pairData.quote,
     },
     pnlPercent: compose(
-      roundToDecimalPoint(2),
+      roundToDecimalPoint(6),
       calculatePnlPercent(order.price, order.quantity),
       reduceSubOrderListToCommonPnl(order),
       getOrdersWithStatus('executed'),
@@ -106,7 +106,7 @@ const stopLossDataMixin = (
 ) => ({
   ...(payload.stopLoss ? {
     sl: compose(
-      roundToDecimalPoint(2),
+      roundToDecimalPoint(6),
       toAbsolute,
       calculatePercentOfDifference,
     )(payload.order.price, payload.stopLoss.price),

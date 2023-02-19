@@ -7,10 +7,11 @@ import { useMarketStore } from '@/stores/market';
 import { simulate } from '@/api/endpoints/emulator/simulate';
 import { compose, curry } from '@/utils/fp';
 import {
+  addDays,
   addSeconds,
-  dateNow,
+  dateNow, millisecondsToSeconds,
   subtractYears,
-  toISOString,
+  toISOString, toTimestamp,
 } from '@/utils/date';
 import { multiply } from '@/helpers/number';
 import { createEventBus } from '@/utils/eventBus';
@@ -19,6 +20,7 @@ import { processServerErrors } from '@/api/common';
 import { PairData } from '@/api/types/pair';
 import { useChartDataStore } from '@/stores/chartData';
 import { getBalance } from '@/api/endpoints/profile/getBalance';
+import { isMoreThan } from '@/utils/boolean';
 
 export const getDefaultEmulatorDate = () => compose(
   toISOString,
@@ -37,6 +39,7 @@ export const useEmulatorStore = defineStore('emulator', () => {
   const marketStore = useMarketStore();
   const {
     activePair,
+    activePairData,
   } = storeToRefs(marketStore);
 
   const chartDataStore = useChartDataStore();
@@ -176,6 +179,60 @@ export const useEmulatorStore = defineStore('emulator', () => {
 
   marketStore.subscribeOrderCreated(fetchBalance);
 
+  const isCalculatingResult = ref(false);
+
+  const calculateResult = async () => {
+    if (!activePairData.value?.to_date) return;
+
+    isCalculatingResult.value = true;
+
+    let dateFrom = emulatorDate.value;
+
+    const candleSize = compose(
+      millisecondsToSeconds,
+      toTimestamp,
+      addDays(1),
+    )(0);
+
+    const compression = compose(
+      multiply(30),
+    )(candleSize);
+
+    let isSimulated = false;
+    while (!isSimulated) {
+      // eslint-disable-next-line no-await-in-loop
+      const { result } = await simulate({
+        pair: marketStore.activePair,
+        date_from: dateFrom,
+        candle_size: candleSize,
+        compression,
+        tiks: 1,
+      });
+
+      if (!result) {
+        isSimulated = true;
+      } else {
+        dateFrom = compose(
+          toISOString,
+          addSeconds(compression),
+        )(dateFrom);
+
+        const isDateBiggerThanExistingData = compose(
+          isMoreThan(
+            toTimestamp(activePairData.value?.to_date),
+          ),
+          toTimestamp,
+        )(dateFrom);
+
+        if (isDateBiggerThanExistingData) {
+          isSimulated = true;
+        }
+      }
+    }
+
+    isCalculatingResult.value = false;
+  };
+
   return {
     balance,
     fetchBalance,
@@ -193,5 +250,7 @@ export const useEmulatorStore = defineStore('emulator', () => {
     playTimeframe,
     isRewinding,
     rewind,
+    isCalculatingResult,
+    calculateResult,
   };
 });

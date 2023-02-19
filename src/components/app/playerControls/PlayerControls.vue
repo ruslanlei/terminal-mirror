@@ -37,6 +37,8 @@
     <Button
       :state="['mdSize', 'secondary1Color', 'interactive']"
       :class="$style.prematureResultButton"
+      :is-loading="isCalculatingResult"
+      @click="emulatorStore.calculateResult"
     >
       {{ t('emulator.player.prematureResult') }}
     </Button>
@@ -69,6 +71,7 @@ const {
   candlesPerSecond,
   isPlaying,
   isRewinding,
+  isCalculatingResult,
 } = storeToRefs(emulatorStore);
 
 const displaySpeed = computed(() => `CPS: ${candlesPerSecond.value}`);
@@ -76,6 +79,7 @@ const displaySpeed = computed(() => `CPS: ${candlesPerSecond.value}`);
 const isDisabled = computed(() => [
   isRewinding.value,
   isFetchingCandles.value,
+  isCalculatingResult.value,
 ].some(Boolean));
 </script>
 

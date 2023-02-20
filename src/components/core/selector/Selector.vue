@@ -364,7 +364,6 @@ onBeforeUnmount(removeListeners);
   &.options {
   }
   .item {
-    padding: 10px 5px;
     flex-grow: 1;
   }
   .ghost {

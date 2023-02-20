@@ -16,7 +16,7 @@
       :class="$style.list"
     >
       <template #option="{ option }">
-        <CoinLogo :coin="option.pairData.base" />
+        <FavoritesListItem :pair-data="option.pairData" />
       </template>
     </Selector>
     <Button
@@ -46,6 +46,7 @@ import CoinLogo from '@/components/core/coinLogo/CoinLogo.vue';
 import Typography from '@/components/app/typography/Typography.vue';
 import { FavoritesListEmits } from '@/components/app/favoritesList/index';
 import Button from '@/components/core/button/Button.vue';
+import FavoritesListItem from '@/components/app/favoritesList/favoritesListItem/FavoritesListItem.vue';
 
 const emit = defineEmits<FavoritesListEmits>();
 

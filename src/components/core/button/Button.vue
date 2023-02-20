@@ -4,11 +4,12 @@
     :class="[
       $style.button,
       isDisabled && $style.disabled,
+      $style[size],
       ...computedState,
     ]"
   >
     <div :class="[$style.loaderCap, !isLoading && $style.hidden]">
-      <Loader />
+      <Loader :size="computedLoaderSize" />
     </div>
     <div :class="[$style.inner, isLoading && $style.hidden]">
       <slot />
@@ -19,6 +20,7 @@
 <script setup lang="ts">
 import Loader from '@/components/core/loader/Loader.vue';
 import { useComputedState } from '@/hooks/useComputedState';
+import { computed } from 'vue';
 import { ButtonProps } from './index';
 
 const props = withDefaults(
@@ -31,6 +33,12 @@ const props = withDefaults(
 );
 
 const computedState = useComputedState(props);
+
+const computedLoaderSize = computed(
+  () => (props.size === 'lg'
+    ? 'md'
+    : 'sm'),
+);
 </script>
 
 <style lang="scss" module>
@@ -113,21 +121,21 @@ const computedState = useComputedState(props);
   }
 }
 
-.lgSize {
+.lg {
   padding: 15px;
   border-radius: 5px;
   @include text;
   font-weight: 600;
 }
 
-.mdSize {
+.md {
   padding: 8px;
   border-radius: 5px;
   @include title4;
   font-weight: 600;
 }
 
-.smSize {
+.sm {
   padding: 3.5px;
   border-radius: 5px;
   @include title5;

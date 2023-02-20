@@ -21,16 +21,16 @@ withDefaults(
   animation: rotation 1s linear infinite;
 }
 
-.lg {
-  width: 48px;
-  height: 48px;
-  border-top: 3px solid #FFF;
-  border-right: 3px solid transparent;
+.md {
+  width: 18px;
+  height: 18px;
+  border-top: 2px solid #FFF;
+  border-right: 2px solid transparent;
 }
 
-.md {
-  width: 24px;
-  height: 24px;
+.sm {
+  width: 18px;
+  height: 18px;
   border-top: 2px solid #FFF;
   border-right: 2px solid transparent;
 }

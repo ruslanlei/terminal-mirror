@@ -9,8 +9,8 @@
           checkIsValueEqualToPercent(option.percents)
             ? 'colored'
             : 'secondary2Color',
-          'smSize',
         ]"
+        size="sm"
         :class="$style.option"
         @click="setPercentOfBalance(option.percents)"
       >

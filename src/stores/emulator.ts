@@ -182,6 +182,7 @@ export const useEmulatorStore = defineStore('emulator', () => {
   });
 
   marketStore.subscribeOrderCreated(fetchBalance);
+  marketStore.subscribeOrderDelete(fetchBalance);
 
   const isCalculatingResult = ref(false);
 

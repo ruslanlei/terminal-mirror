@@ -80,7 +80,8 @@
       <Button
         type="button"
         :class="buttonClass"
-        :state="['primaryColor', 'mdSize']"
+        state="primaryColor"
+        size="md"
         @click="onSubmit"
       >
         {{ t('common.save') }}

@@ -40,14 +40,16 @@
     <div :class="$style.controls">
       <Button
         :class="$style.control"
-        :state="['successColor', 'mdSize']"
+        state="successColor"
+        size="md"
         @click="close"
       >
         {{ t('common.no') }}
       </Button>
       <Button
         :class="$style.control"
-        :state="['dangerColor', 'mdSize']"
+        state="dangerColor"
+        size="md"
         :is-loading="isDeleting"
         @click="handleDelete"
       >

@@ -53,7 +53,8 @@
               <template #submit>
                 <Button
                   type="submit"
-                  :state="['gradientColor', 'mdSize', 'interactive']"
+                  :state="['gradientColor', 'interactive']"
+                  size="md"
                   :class="$style.submit"
                   :is-loading="isLoading"
                 >

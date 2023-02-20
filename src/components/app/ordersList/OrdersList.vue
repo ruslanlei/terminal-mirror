@@ -333,7 +333,6 @@ onBeforeUnmount(clearSubscriptions);
 }
 
 .pnlColumnValue {
-  //color: rgb(var(--color-success));
   font-weight: 600;
   display: flex;
 }

@@ -6,15 +6,14 @@ export type ButtonState =
   | 'secondary2Color'
   | 'successColor'
   | 'dangerColor'
-  | 'smSize'
-  | 'mdSize'
-  | 'lgSize'
+  // | 'smSize'
+  // | 'mdSize'
+  // | 'lgSize'
   | 'interactive';
 
 export interface ButtonProps {
   state?: ButtonState | ButtonState[],
-  // state?: 'primary' | 'colored' | 'secondary1' | 'secondary2',
-  // size: 'sm' | 'md' | 'lg',
+  size: 'sm' | 'md' | 'lg',
   isDisabled?: boolean,
   isLoading?: boolean,
 }

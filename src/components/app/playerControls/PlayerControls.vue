@@ -39,7 +39,8 @@
       />
     </div>
     <Button
-      :state="['mdSize', 'secondary1Color', 'interactive']"
+      :state="['secondary1Color', 'interactive']"
+      size="md"
       :class="$style.prematureResultButton"
       :is-loading="isCalculatingResult"
       @click="emulatorStore.calculateResult"

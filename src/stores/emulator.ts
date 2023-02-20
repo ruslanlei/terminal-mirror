@@ -1,5 +1,8 @@
 import {
-  computed, nextTick, ref, watch,
+  computed,
+  nextTick,
+  ref,
+  watch,
 } from 'vue';
 import { defineStore, storeToRefs } from 'pinia';
 import { useStorage } from '@vueuse/core';
@@ -21,6 +24,7 @@ import { PairData } from '@/api/types/pair';
 import { useChartDataStore } from '@/stores/chartData';
 import { getBalance } from '@/api/endpoints/profile/getBalance';
 import { isMoreThan } from '@/utils/boolean';
+import { isExactOrder } from '@/helpers/orders';
 
 export const getDefaultEmulatorDate = () => compose(
   toISOString,
@@ -184,6 +188,10 @@ export const useEmulatorStore = defineStore('emulator', () => {
   const calculateResult = async () => {
     if (!activePairData.value?.to_date) return;
 
+    const {
+      to_date: maxDate,
+    } = activePairData.value;
+
     isCalculatingResult.value = true;
 
     let dateFrom = emulatorDate.value;
@@ -201,7 +209,7 @@ export const useEmulatorStore = defineStore('emulator', () => {
     let isSimulated = false;
     while (!isSimulated) {
       // eslint-disable-next-line no-await-in-loop
-      const { result } = await simulate({
+      const { result, data } = await simulate({
         pair: marketStore.activePair,
         date_from: dateFrom,
         candle_size: candleSize,
@@ -209,22 +217,30 @@ export const useEmulatorStore = defineStore('emulator', () => {
         tiks: 1,
       });
 
+      const isLimitOrderExecuted = data.events.some(
+        isExactOrder('limit', 'executed'),
+      );
+
       if (!result) {
         isSimulated = true;
       } else {
-        dateFrom = compose(
-          toISOString,
-          addSeconds(compression),
-        )(dateFrom);
+        if (isLimitOrderExecuted) {
+          emulatorDate.value = dateFrom;
+        } else {
+          dateFrom = compose(
+            toISOString,
+            addSeconds(compression),
+          )(dateFrom);
+        }
 
         const isDateBiggerThanExistingData = compose(
           isMoreThan(
-            toTimestamp(activePairData.value?.to_date),
+            toTimestamp(maxDate),
           ),
           toTimestamp,
         )(dateFrom);
 
-        if (isDateBiggerThanExistingData) {
+        if (isLimitOrderExecuted || isDateBiggerThanExistingData) {
           isSimulated = true;
         }
       }

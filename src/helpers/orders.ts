@@ -29,3 +29,9 @@ export const getOrdersWithStatus = curry((
   (order: Order) => order.status === status,
   orders,
 ));
+
+export const isExactOrder = curry((
+  orderType: Order['order_type'],
+  orderStatus: Order['status'],
+  order: Order,
+) => order.order_type === orderType && order.status === orderStatus);

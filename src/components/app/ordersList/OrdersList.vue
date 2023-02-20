@@ -13,7 +13,7 @@
     >
       <template #cell(pair)="{ data: currency }">
         <div :class="$style.pairCell">
-          <CoinLogo :currency="currency" />
+          <CoinLogo :coin="currency" />
           <span :class="$style.pairName">
             {{ currency }}
           </span>

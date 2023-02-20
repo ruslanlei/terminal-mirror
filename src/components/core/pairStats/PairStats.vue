@@ -2,11 +2,11 @@
   <div :class="[$style.pairStats, isHighlight && $style.highlight]">
     <CoinLogo
       state="square"
-      :currency="stats.currency"
+      :coin="coin"
     />
     <div :class="$style.stats">
       <PairStatsColumn
-        v-for="(statsColumn, index) in computedPairStats"
+        v-for="(statsColumn, index) in stats"
         :key="index"
         :column-data="statsColumn"
       />
@@ -17,62 +17,21 @@
 <script setup lang="ts">
 import {
   ref,
-  computed,
   nextTick,
   watch,
 } from 'vue';
 import { useI18n } from 'vue-i18n';
 import CoinLogo from '@/components/core/coinLogo/CoinLogo.vue';
 import PairStatsColumn from '@/components/app/pairStatsColumn/PairStatsColumn.vue';
-import { PairStat } from '@/components/app/pairStatsColumn';
 import { PairStatsProps } from './index';
 
 const props = defineProps<PairStatsProps>();
 
 const { t } = useI18n();
 
-const computedPairStats = computed<Array<PairStat[]>>(() => [
-  [
-    {
-      label: t('pairStats.price'),
-      value: props.stats.price,
-      valueState: 'positive',
-    },
-    {
-      label: t('pairStats.amount'),
-      value: props.stats.amount,
-      valueState: 'default',
-    },
-  ],
-  [
-    {
-      label: t('pairStats.change'),
-      value: props.stats.change,
-      valueState: 'negative',
-    },
-    {
-      label: t('pairStats.in24hours'),
-      value: props.stats.changePercents,
-      valueState: 'default',
-    },
-  ],
-  [
-    {
-      label: t('pairStats.max'),
-      value: props.stats.max,
-      valueState: 'default',
-    },
-    {
-      label: t('pairStats.min'),
-      value: props.stats.min,
-      valueState: 'default',
-    },
-  ],
-]);
-
 const isHighlight = ref(false);
 
-watch(() => props.stats.currency, () => {
+watch(() => props.coin, () => {
   if (isHighlight.value) {
     isHighlight.value = false;
     nextTick(() => {

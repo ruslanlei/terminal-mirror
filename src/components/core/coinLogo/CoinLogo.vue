@@ -1,14 +1,14 @@
 <template>
   <div :class="[$style.container, $style[state]]">
     <transition
-      name="currencyLogoAnimation"
+      name="coinLogoAnimation"
       mode="out-in"
     >
       <svg
-        :key="currency"
+        :key="coin"
         :class="$style.source"
       >
-        <use :xlink:href="`#coin-logo-${currency}`" />
+        <use :xlink:href="`#coin-logo-${coin}`" />
       </svg>
     </transition>
   </div>
@@ -64,7 +64,7 @@ $svgHeight: 120px;
 </style>
 
 <style lang="scss">
-.currencyLogoAnimation {
+.coinLogoAnimation {
   &-enter-active,
   &-leave-active {
     transition: transform 250ms, opacity 250ms;

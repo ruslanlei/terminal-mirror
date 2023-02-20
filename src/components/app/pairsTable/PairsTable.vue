@@ -37,7 +37,7 @@
         />
       </button>
       <CoinLogo
-        :currency="base"
+        :coin="base"
         :class="$style.currencyLogo"
       />
       <div :class="$style.pairName">

@@ -1,4 +1,4 @@
 export interface CoinLogoProps {
-  currency: string,
+  coin: string,
   state: 'circle' | 'square',
 }

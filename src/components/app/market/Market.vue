@@ -1,16 +1,13 @@
 <template>
-  <MarketContainer :is-favorites-visible="isFavoritesVisible">
+  <MarketContainer :is-favorites-visible="isFavoritesExpanded">
     <template #tools>
       <MarketTools />
     </template>
     <template #favorites="{ favoritesClass }">
-      <FavoritesList
-        :class="favoritesClass"
-        @click="isFavoritesVisible = !isFavoritesVisible"
-      />
+      <FavoritesList :class="favoritesClass" />
     </template>
     <template #chartHeader>
-      <MarketChartHeader />
+      <MarketChartHeader v-model:is-favorites-active="isFavoritesExpanded" />
     </template>
     <template #chart="{ chartClass }">
       <MarketChart :class="chartClass" />
@@ -41,7 +38,7 @@ import MarketChartHeader from '@/components/app/marketChartHeader/MarketChartHea
 
 const marketStore = useMarketStore();
 
-const isFavoritesVisible = ref(true);
+const isFavoritesExpanded = ref(true);
 
 await marketStore.getPairs();
 </script>

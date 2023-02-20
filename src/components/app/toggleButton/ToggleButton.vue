@@ -52,14 +52,16 @@ const computedStates = useComputedState(props);
     position: absolute;
     inset: -1px;
     background: var(--color-main-gradient);
-    clip-path: circle(0% at 0% 0);
-    transition: clip-path 170ms ease;
+    transition: transform 160ms ease, opacity 200ms;
+    transform: translateY(-30%);
     border-radius: inherit;
+    opacity: 0;
   }
   &.active {
     color: rgb(var(--color-accent-1));
     &::before {
-      clip-path: circle(150% at 0% 0);
+      transform: translateY(0);
+      opacity: 1;
     }
   }
 }

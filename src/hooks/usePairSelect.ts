@@ -24,10 +24,32 @@ export const usePairSelect = () => {
     marketStore.setPair(id);
   };
 
+  const isTogglingFavorite = ref(false);
+
+  const onToggleFavorite = async (
+    id: PairData['id'],
+  ) => {
+    if (isTogglingFavorite.value) return;
+
+    const isFavorite = marketStore.favoritePairs.includes(id);
+
+    isTogglingFavorite.value = true;
+
+    await (
+      isFavorite
+        ? marketStore.removeFromFavorites
+        : marketStore.addToFavorites
+    )(id);
+
+    isTogglingFavorite.value = false;
+  };
+
   return {
     query,
     pairs: computedPairs,
     getPairs: marketStore.getPairs,
     setPair,
+    isTogglingFavorite,
+    onToggleFavorite,
   };
 };

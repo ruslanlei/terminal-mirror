@@ -26,11 +26,11 @@
         </div>
       </div>
     </template>
-    <template #cell(pairs)="{ data: { isFavorite, base, quote } }">
+    <template #cell(common)="{ data: { isFavorite, pairId, base, quote } }">
       <button
         type="button"
         :class="$style.addToFavorites"
-        @click.stop
+        @click.stop="onToggleFavorite(pairId)"
       >
         <Typography
           :state="isFavorite ? 'accent1' : 'accent2' "
@@ -102,7 +102,7 @@ const marketStore = useMarketStore();
 const columns = computed<PairsTableColumn[]>(() => [
   {
     label: t('pairs.table.pairs'),
-    slug: 'pairs',
+    slug: 'common',
     sortable: true,
     size: 1,
   },
@@ -122,8 +122,9 @@ const computedRecords = computed<PairsTableRecord[]>(
   () => props.pairs.map((pair: PairData) => ({
     id: pair.id,
     data: {
-      pairs: {
+      common: {
         isFavorite: marketStore.favoritePairs.includes(pair.id),
+        pairId: pair.id,
         base: pair.base,
         quote: pair.quote,
       },
@@ -136,6 +137,12 @@ const computedRecords = computed<PairsTableRecord[]>(
 
 const onRecordClick = (record: PairsTableRecord) => {
   emit('selectPair', record.id as PairData['id']);
+};
+
+const onToggleFavorite = (
+  pairId: PairData['id'],
+) => {
+  emit('toggleFavorite', pairId);
 };
 </script>
 

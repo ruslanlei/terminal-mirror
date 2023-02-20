@@ -1,5 +1,5 @@
 <template>
-  <PairsSelectContainer>
+  <PairsSelectContainer :is-busy="isTogglingFavorite">
     <template #search>
       <Input
         v-model="query"
@@ -21,6 +21,7 @@
         :pairs="pairs"
         :state="['scrollable', 'tinySize', 'secondaryColor3']"
         @select-pair="setPair"
+        @toggle-favorite="onToggleFavorite"
       />
     </template>
   </PairsSelectContainer>
@@ -41,6 +42,8 @@ const {
   pairs,
   getPairs,
   setPair,
+  isTogglingFavorite,
+  onToggleFavorite,
 } = usePairSelect();
 
 getPairs();

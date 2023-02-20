@@ -21,6 +21,8 @@ import { curry } from '@/utils/fp';
 import { OrderModel } from '@/hooks/useOrderCreate';
 import { modalType, useModalStore } from '@/stores/modals';
 import { getFavorites } from '@/api/endpoints/profile/getFavorites';
+import { addToFavorites } from '@/api/endpoints/profile/addToFavorites';
+import { removeFromFavorites } from '@/api/endpoints/profile/removeFromFavorites';
 
 export type MarketType = 'emulator' | 'real';
 
@@ -81,6 +83,32 @@ export const useMarketStore = defineStore('market', () => {
     }
 
     favoritePairs.value = data.map((pairData) => pairData.pair);
+  };
+
+  const handleAddToFavorites = async (
+    id: PairData['id'],
+  ) => {
+    const response = await addToFavorites(id);
+
+    if (!response.result) {
+      processServerErrors(response.data);
+    } else {
+      favoritePairs.value.push(id);
+    }
+
+    return response;
+  };
+
+  const handleRemoveFromFavorites = async (
+    id: PairData['id'],
+  ) => {
+    const response = await removeFromFavorites(id);
+
+    if (!response.result) {
+      processServerErrors(response.data);
+    }
+
+    return response;
   };
 
   const isFetchingPairs = ref(false);
@@ -281,5 +309,7 @@ export const useMarketStore = defineStore('market', () => {
     closeOrder: handleCloseOrder,
     createOrderGroup,
     removeOrder,
+    addToFavorites: handleAddToFavorites,
+    removeFromFavorites: handleRemoveFromFavorites,
   };
 });

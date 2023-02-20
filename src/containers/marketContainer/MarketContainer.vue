@@ -7,12 +7,22 @@
       <slot name="tools" />
     </div>
     <main :class="$style.main">
-      <div :class="$style.chartContainer">
-        <div :class="$style.chartWrapper">
-          <slot
-            name="chart"
-            :chart-class="$style.chart"
-          />
+      <div :class="$style.chartView">
+        <div :class="[$style.favoritesContainer, !isFavoritesVisible && $style.hidden]">
+          <div :class="$style.favoritesWrapper">
+            <slot
+              name="favorites"
+              :favorites-class="$style.favorites"
+            />
+          </div>
+        </div>
+        <div :class="$style.chartContainer">
+          <div :class="$style.chartWrapper">
+            <slot
+              name="chart"
+              :chart-class="$style.chart"
+            />
+          </div>
         </div>
       </div>
       <div :class="$style.chartDivider" />
@@ -43,6 +53,9 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { size } from '@/enums/sizing';
+import { MarketContainerProps } from './index';
+
+const props = defineProps<MarketContainerProps>();
 
 const stickyElementStyles = computed(() => ({
   position: 'sticky',
@@ -68,7 +81,33 @@ const stickyElementStyles = computed(() => ({
   flex-direction: column;
 }
 
+.chartView {
+  display: flex;
+}
+
+.favoritesContainer {
+  padding-right: 20px;
+  transition: padding-right 200ms;
+  overflow: hidden;
+  &.hidden {
+    padding-right: 0;
+    .favoritesWrapper {
+      width: 0;
+    }
+  }
+}
+
+.favoritesWrapper {
+  transition: width 200ms;
+  width: 87px;
+}
+
+.favorites {
+  width: 100%;
+}
+
 .chartContainer {
+  flex-grow: 1;
   height: 500px;
   position: relative;
 }

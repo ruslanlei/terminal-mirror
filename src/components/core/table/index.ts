@@ -30,12 +30,6 @@ export type InnerTableRecord = TableRecord & {
 }
 
 export type SelectedRecords = Array<TableRecord['id']>
-
-export enum tableType {
-  LIST = 'list',
-  GRID = 'grid',
-}
-
 export enum SortDirection {
   ASC = 'asc',
   DESC = 'desc',
@@ -50,7 +44,6 @@ export type TableState = 'scrollable'
   | 'subOrdersColor';
 
 export interface TableProps {
-  type: tableType,
   columns: TableColumn[],
   records: Omit<TableRecord, 'isSelected'>[],
   selectedRecords?: SelectedRecords,

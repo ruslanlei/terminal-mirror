@@ -2,7 +2,6 @@
   <div
     :class="[
       $style.table,
-      $style[type],
       isRowsClickable && $style.rowsClickable,
       ...computedState,
     ]"
@@ -120,7 +119,6 @@ import {
   toCssPxValue,
 } from '@/helpers/style';
 import {
-  tableType,
   TableRecord,
   TableProps,
   TableColumn,
@@ -130,7 +128,6 @@ import {
 const props = withDefaults(
   defineProps<TableProps>(),
   {
-    type: 'list' as tableType.LIST,
     isHeadVisible: true,
     appearanceAnimationType: 'elevating',
   },
@@ -222,41 +219,44 @@ onMounted(() => {
 .table {
   color: white;
   overflow: hidden;
-  &.list {
-    .head {
-      display: grid;
-      position: relative;
-      z-index: 3;
+  display: flex;
+  flex-direction: column;
+  .head {
+    display: grid;
+    position: relative;
+    z-index: 3;
+  }
+  .records {
+    width: 100%;
+    flex-grow: 1;
+  }
+  &.rowsClickable {
+    .records {
+      cursor: pointer;
     }
-    .records {}
-    &.rowsClickable {
-      .records {
-        cursor: pointer;
-      }
+  }
+  .record {
+    display: grid;
+    &.selected {}
+    .recordColumn {}
+  }
+  .column {
+    &.clickable {
+      cursor: pointer;
+      user-select: none;
     }
-    .record {
-      display: grid;
-      &.selected {}
-      .recordColumn {}
+  }
+  .column, .recordColumn {
+    display: flex;
+    align-items: center;
+    &.center {
+      justify-content: center;
     }
-    .column {
-      &.clickable {
-        cursor: pointer;
-        user-select: none;
-      }
+    &.left {
+      justify-content: flex-start;
     }
-    .column, .recordColumn {
-      display: flex;
-      align-items: center;
-      &.center {
-        justify-content: center;
-      }
-      &.left {
-        justify-content: flex-start;
-      }
-      &.right {
-        justify-content: flex-end;
-      }
+    &.right {
+      justify-content: flex-end;
     }
   }
 }

@@ -16,8 +16,11 @@
         </div>
       </div>
       <div :class="$style.chartDivider" />
-      <div :class="$style.orders">
-        <slot name="orders" />
+      <div :class="$style.ordersWrapper">
+        <slot
+          name="orders"
+          :orders-class="$style.orders"
+        />
       </div>
     </main>
     <aside
@@ -86,9 +89,14 @@ const stickyElementStyles = computed(() => ({
   background-color: rgb(var(--color-background-3));
 }
 
-.orders {
+.ordersWrapper {
   margin-top: 20px;
-  //overflow: hidden;
+  flex-grow: 1;
+  display: flex;
+}
+
+.orders {
+  width: 100%;
   flex-grow: 1;
 }
 

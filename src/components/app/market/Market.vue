@@ -6,8 +6,8 @@
     <template #chart="{ chartClass }">
       <MarketChart :class="chartClass" />
     </template>
-    <template #orders>
-      <OrdersAndStatistics />
+    <template #orders="{ ordersClass }">
+      <OrdersAndStatistics :class="ordersClass" />
     </template>
     <template #sidebar>
       <MarketSidebar />

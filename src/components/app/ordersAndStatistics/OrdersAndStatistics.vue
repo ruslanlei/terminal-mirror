@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.ordersList">
+  <div :class="$style.ordersAndStatistics">
     <div :class="$style.header">
       <Selector
         v-model="activeTab"
@@ -93,7 +93,10 @@ const statisticsTabs = computed<StatisticsSelectorOptions>(() => [
 </script>
 
 <style lang="scss" module>
-.ordersList {}
+.ordersAndStatistics {
+  display: flex;
+  flex-direction: column;
+}
 
 .header {
   display: flex;
@@ -101,10 +104,17 @@ const statisticsTabs = computed<StatisticsSelectorOptions>(() => [
   align-items: center;
 }
 
+.content {
+  flex-grow: 1;
+  display: flex;
+}
+
 .additionalTab {}
 
 .ordersList {
+  width: 100%;
   margin-top: 20px;
+  flex-grow: 1;
 }
 </style>
 

@@ -9,10 +9,11 @@
       </Typography>
     </header>
     <Selector
-      v-model="activeOption"
+      v-model="marketStore.activePair"
       :thickening="0"
       :state="['vertical', 'blueGlassVerticalRight', 'specialFavoritesSize']"
       :options="options"
+      :class="$style.list"
     >
       <template #option="{ option }">
         <CoinLogo :coin="option.pairData.base" />
@@ -35,7 +36,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Card from '@/components/core/card/Card.vue';
 import Selector from '@/components/core/selector/Selector.vue';
@@ -44,7 +45,7 @@ import { PairData } from '@/api/types/pair';
 import CoinLogo from '@/components/core/coinLogo/CoinLogo.vue';
 import Typography from '@/components/app/typography/Typography.vue';
 import { FavoritesListEmits } from '@/components/app/favoritesList/index';
-import Button from "@/components/core/button/Button.vue";
+import Button from '@/components/core/button/Button.vue';
 
 const emit = defineEmits<FavoritesListEmits>();
 
@@ -56,19 +57,21 @@ const { t } = useI18n();
 
 const marketStore = useMarketStore();
 
-const activeOption = ref(1);
-
 const options = computed(() => marketStore.pairs.map((
   pairData: PairData,
 ) => ({
   label: '',
   value: pairData.id,
   pairData,
-})));
+})).slice(0, 5));
 </script>
 
 <style lang="scss" module>
-.favoritesList {}
+.favoritesList {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 
 .header, .closeButton {
   width: 100%;
@@ -76,6 +79,10 @@ const options = computed(() => marketStore.pairs.map((
   background-color: rgb(var(--color-background-2));
   z-index: 10;
   padding: 10px 0;
+}
+
+.list {
+  flex-grow: 1;
 }
 
 .header {

@@ -144,7 +144,18 @@ const computedGhostStyles = ref({
 const findActiveTab = () => {
   if (!container.value || !localValue.value) return;
 
-  const activeTabElement = optionRefs.value[localValue.value];
+  const activeTabElement = optionRefs.value?.[localValue.value];
+
+  if (!activeTabElement) {
+    Object.assign(computedGhostStyles.value, {
+      width: '0px',
+      height: 'auto',
+      left: '0px',
+      top: '0px',
+    });
+
+    return;
+  }
 
   const { left: containerLeft, top: containerTop } = container.value.getBoundingClientRect();
   const {
@@ -219,7 +230,7 @@ onBeforeUnmount(removeListeners);
 
 .ghost {
   position: absolute;
-  transition: 300ms left, 300ms top, 300ms width, 360ms background-color;
+  transition: 300ms left, 300ms top, 300ms width, 360ms background-color, 300ms opacity;
   border-radius: 5px;
   &.animated {
     animation: options-ghost .7s ease-in-out;

@@ -20,6 +20,7 @@ import { closeOrder } from '@/api/endpoints/orders/cancel';
 import { curry } from '@/utils/fp';
 import { OrderModel } from '@/hooks/useOrderCreate';
 import { modalType, useModalStore } from '@/stores/modals';
+import { getFavorites } from '@/api/endpoints/profile/getFavorites';
 
 export type MarketType = 'emulator' | 'real';
 
@@ -68,6 +69,19 @@ export const useMarketStore = defineStore('market', () => {
   const activePairData = computed<PairData | undefined>(
     () => pairsMap.value[activePair.value],
   );
+
+  const favoritePairs = useStorage<Array<PairData['id']>>('favoritePairs', []);
+
+  const fetchFavoritePairs = async () => {
+    const { result, data } = await getFavorites();
+
+    if (!result) {
+      processServerErrors(data);
+      return;
+    }
+
+    favoritePairs.value = data.map((pairData) => pairData.pair);
+  };
 
   const isFetchingPairs = ref(false);
   const handleGetPairs = async () => {
@@ -256,6 +270,8 @@ export const useMarketStore = defineStore('market', () => {
     baseCurrencyStep,
     activePairData,
     isFetchingPairs,
+    favoritePairs,
+    fetchFavoritePairs,
     getPairs: handleGetPairs,
     createOrder: handleCreateOrder,
     createListOfTakeProfits,

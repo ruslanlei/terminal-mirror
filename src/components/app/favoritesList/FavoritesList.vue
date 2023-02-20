@@ -63,13 +63,13 @@ const marketStore = useMarketStore();
 
 const chartDataStore = useChartDataStore();
 
-const options = computed(() => marketStore.pairs.slice(0, 5).map((
-  pairData: PairData,
+const options = computed(() => marketStore.favoritePairs.map((
+  pairId: PairData['id'],
 ) => ({
   label: '',
-  value: pairData.id,
-  pairData,
-  percentChange: chartDataStore.get24HoursPercentChangeByPairId(pairData.id),
+  value: pairId,
+  pairData: marketStore.pairsMap[pairId],
+  percentChange: chartDataStore.get24HoursPercentChangeByPairId(pairId),
 })));
 </script>
 

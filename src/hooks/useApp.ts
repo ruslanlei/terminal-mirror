@@ -6,6 +6,7 @@ import { useTitleStore } from '@/stores/title';
 import { useI18nStore } from '@/stores/i18n';
 import { useCommonStore } from '@/stores/common';
 import { useEmulatorStore } from '@/stores/emulator';
+import { useMarketStore } from '@/stores/market';
 
 export const useApp = () => {
   const route = useRoute();
@@ -15,6 +16,7 @@ export const useApp = () => {
   useI18nStore();
   const sessionStore = useSessionStore();
   const profileStore = useProfileStore();
+  const marketStore = useMarketStore();
   const emulatorStore = useEmulatorStore();
 
   watch(route, () => {
@@ -27,6 +29,7 @@ export const useApp = () => {
   onMounted(async () => {
     if (sessionStore.token) {
       await profileStore.getProfile();
+      await marketStore.fetchFavoritePairs();
       await emulatorStore.fetchBalance();
     }
   });

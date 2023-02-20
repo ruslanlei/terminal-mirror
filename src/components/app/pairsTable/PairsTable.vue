@@ -118,8 +118,8 @@ const computedRecords = computed<PairsTableRecord[]>(
   })),
 );
 
-const onRecordClick = (id: PairData['id']) => {
-  emit('selectPair', id);
+const onRecordClick = (record: PairsTableRecord) => {
+  emit('selectPair', record.id as PairData['id']);
 };
 </script>
 

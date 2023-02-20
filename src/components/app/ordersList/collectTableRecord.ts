@@ -22,11 +22,11 @@ import { TableRowState } from '@/components/core/table/tableRow';
 import { toAbsolute } from '@/utils/number';
 
 interface CollectRecordPayload {
-    pairData: PairData,
-    pairPrice: number | null,
-    order: MasterOrder,
-    takeProfits: TakeProfit[] | undefined,
-    stopLoss: StopLoss | undefined,
+  pairData: PairData,
+  pairPrice: number | null,
+  order: MasterOrder,
+  takeProfits: TakeProfit[] | undefined,
+  stopLoss: StopLoss | undefined,
 }
 
 const commonDataMixin = (
@@ -36,7 +36,7 @@ const commonDataMixin = (
     takeProfits,
   }: CollectRecordPayload,
 ) => ({
-  pair: pairData.base,
+  pair: pairData,
   type: order.side,
   coins: order.quantity,
   options: {

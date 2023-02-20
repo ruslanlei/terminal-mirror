@@ -282,6 +282,12 @@ export const useOrdersList = (
     unsubscribeSimulationEndedEvent();
   };
 
+  const onRecordClick = (
+    record: ActiveOrdersTableRecord | ClosedOrdersTableRecord,
+  ) => {
+    marketStore.setPair(record.data.pair.id);
+  };
+
   return {
     columns,
     orders,
@@ -291,5 +297,6 @@ export const useOrdersList = (
     getList,
     clearSubscriptions,
     deleteOrder,
+    onRecordClick,
   };
 };

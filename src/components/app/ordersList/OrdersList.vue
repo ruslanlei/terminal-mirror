@@ -10,12 +10,14 @@
       :records="records"
       :state="['ordersListColor', 'defaultSize']"
       :class="$style.ordersList"
+      :is-rows-clickable="true"
+      @record-click="onRecordClick"
     >
-      <template #cell(pair)="{ data: currency }">
+      <template #cell(pair)="{ data: { base } }">
         <div :class="$style.pairCell">
-          <CoinLogo :coin="currency" />
+          <CoinLogo :coin="base" />
           <span :class="$style.pairName">
-            {{ currency }}
+            {{ base }}
           </span>
         </div>
       </template>
@@ -285,9 +287,7 @@ import { onActivated, onBeforeUnmount, onDeactivated } from 'vue';
 import SubOrdersTable from '@/components/app/ordersList/subOrdersTable/SubOrdersTable.vue';
 import { useOrdersList } from '@/hooks/useOrdersList';
 import Typography from '@/components/app/typography/Typography.vue';
-import { OrdersListProps } from './index';
-
-const { t } = useI18n();
+import { ActiveOrdersTableRecord, ClosedOrdersTableRecord, OrdersListProps } from './index';
 
 const props = withDefaults(
   defineProps<OrdersListProps>(),
@@ -295,6 +295,8 @@ const props = withDefaults(
     listType: 'active',
   },
 );
+
+const { t } = useI18n();
 
 const {
   columns,
@@ -305,6 +307,7 @@ const {
   commonPnl,
   clearSubscriptions,
   deleteOrder,
+  onRecordClick,
 } = useOrdersList(props);
 
 onActivated(() => {

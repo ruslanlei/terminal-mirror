@@ -62,7 +62,7 @@
               : []),
           ]"
           :class="$style.tableRow"
-          @click="onRowClick(record.id)"
+          @click="onRowClick(record)"
           @cell-click="onCellClick(record.id, $event)"
         >
           <template #default>

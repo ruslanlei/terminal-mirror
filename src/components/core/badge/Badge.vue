@@ -21,6 +21,13 @@ defineProps<BadgeProps>();
 
 .badge {
   transition: 150ms background-color;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.default {
+  background-color: rgb(var(--color-background-3));
 }
 
 .success {
@@ -35,6 +42,13 @@ defineProps<BadgeProps>();
   padding: 3px 5px;
   border-radius: 5px;
   @include title5;
+  font-weight: 600;
+}
+
+.xs {
+  padding: 2px 5px;
+  border-radius: 5px;
+  @include title7;
   font-weight: 600;
 }
 </style>

@@ -25,6 +25,10 @@ export const getLastElement = (
   array: any[],
 ) => array?.at(-1) || null;
 
+export const getFirstElement = (
+  array: any[],
+) => array?.at(0) || null;
+
 export const filterNoneUniqueByKey = curry((
   key: string | number,
   array: any[],

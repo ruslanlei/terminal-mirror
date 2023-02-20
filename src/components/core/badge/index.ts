@@ -1,4 +1,4 @@
-export type BadgeState = 'success' | 'danger';
+export type BadgeState = 'success' | 'danger' | 'default';
 export type BadgeSize = 'sm';
 
 export interface BadgeProps {

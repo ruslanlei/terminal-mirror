@@ -3,18 +3,22 @@ import { defineStore, storeToRefs } from 'pinia';
 import { useMarketStore } from '@/stores/market';
 import { Candle } from '@/api/types/marketData';
 import {
-  getCandleDate,
-  getCandleField,
+  getCandleField, getCandlesWithin24HoursFromLastCandleDate,
   mixCandles,
 } from '@/helpers/candles';
 import { getCandles, GetCandlesDTO } from '@/api/endpoints/marketdata/candles';
 import { processServerErrors } from '@/api/common';
 import { compose } from '@/utils/fp';
-import { subtractDays, toTimestamp } from '@/utils/date';
-import { isMoreThan } from '@/utils/boolean';
 import { useStorage } from '@vueuse/core';
 import { PairData } from '@/api/types/pair';
-import { arraySum, getLastElement, map } from '@/utils/array';
+import {
+  arraySum,
+  getFirstElement,
+  getLastElement,
+  map,
+} from '@/utils/array';
+import { divideRight } from '@/helpers/number';
+import { calculatePercentOfDifference } from '@/helpers/math/percents';
 
 export type CandlesMap = Record<PairData['id'], Candle[]>;
 
@@ -33,20 +37,7 @@ export const useChartDataStore = defineStore('chartData', () => {
   const lastCandle = computed<Candle | null>(() => candles.value.at(-1) || null);
 
   const candlesWithinLast24Hours = computed<Candle[]>(
-    () => (
-      lastCandle.value
-        ? candles.value.filter((candle: Candle) => compose(
-          isMoreThan(
-            compose(
-              toTimestamp,
-              subtractDays(1),
-              getCandleDate,
-            )(lastCandle.value),
-          ),
-          toTimestamp,
-          getCandleDate,
-        )(candle))
-        : []),
+    () => getCandlesWithin24HoursFromLastCandleDate(candles.value),
   );
 
   const firstCandleInLast24Hours = computed<Candle | null>(
@@ -73,6 +64,34 @@ export const useChartDataStore = defineStore('chartData', () => {
     getCandleField('closePrice'),
     getLastElement,
   )(candlesMap.value?.[pairId]);
+
+  const get24HoursPercentChangeByPairId = (
+    pairId: PairData['id'],
+  ) => {
+    const last24HoursCandles = getCandlesWithin24HoursFromLastCandleDate(
+      candlesMap.value?.[pairId],
+    );
+
+    const firstPriceWithinLast24Hours = compose(
+      getCandleField('closePrice'),
+      getLastElement,
+    )(last24HoursCandles);
+
+    const lastPriceWithinLast24Hours = compose(
+      getCandleField('closePrice'),
+      getFirstElement,
+    )(last24HoursCandles);
+
+    return (
+      firstPriceWithinLast24Hours
+        && lastPriceWithinLast24Hours
+    )
+      ? compose(
+        divideRight(100),
+        calculatePercentOfDifference,
+      )(firstPriceWithinLast24Hours, lastPriceWithinLast24Hours)
+      : null;
+  };
 
   const clearCandles = () => {
     setCandlesToCurrentPair([]);
@@ -127,6 +146,7 @@ export const useChartDataStore = defineStore('chartData', () => {
     candles,
     appendCandles,
     getCurrentPriceByPairId,
+    get24HoursPercentChangeByPairId,
     isFetchingCandles,
     getCandles: handleGetCandles,
     fetchCandles,

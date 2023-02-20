@@ -1,13 +1,15 @@
 import { Candle } from '@/api/types/marketData';
 import { ChartCandle } from '@/components/core/chart';
 import {
+  subtractDays,
   toISOString,
   toSecondsTimestamp,
   toTimestamp,
 } from '@/utils/date';
 import { compose, curry } from '@/utils/fp';
-import { concat, filterNoneUniqueByKey } from '@/utils/array';
+import { concat, filterNoneUniqueByKey, getLastElement } from '@/utils/array';
 import { multiply, subtractRight } from '@/helpers/number';
+import { isMoreThan } from '@/utils/boolean';
 
 export const transformCandlesForChart = (
   candles: Candle[],
@@ -71,3 +73,19 @@ export const decreaseDateByAmountOfCandles = curry((
   ),
   toTimestamp,
 )(date));
+
+export const getCandlesWithin24HoursFromLastCandleDate = (
+  candles: Candle[],
+) => (candles?.length
+  ? candles.filter((candle: Candle) => compose(
+    isMoreThan(
+      compose(
+        toTimestamp,
+        subtractDays(1),
+        getCandleDate,
+      )(getLastElement(candles)),
+    ),
+    toTimestamp,
+    getCandleDate,
+  )(candle))
+  : []);

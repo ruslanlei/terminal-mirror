@@ -16,7 +16,10 @@
       :class="$style.list"
     >
       <template #option="{ option }">
-        <FavoritesListItem :pair-data="option.pairData" />
+        <FavoritesListItem
+          :last24-hours-percent-change="option.percentChange"
+          :pair-data="option.pairData"
+        />
       </template>
     </Selector>
     <Button
@@ -42,11 +45,11 @@ import Card from '@/components/core/card/Card.vue';
 import Selector from '@/components/core/selector/Selector.vue';
 import { useMarketStore } from '@/stores/market';
 import { PairData } from '@/api/types/pair';
-import CoinLogo from '@/components/core/coinLogo/CoinLogo.vue';
 import Typography from '@/components/app/typography/Typography.vue';
 import { FavoritesListEmits } from '@/components/app/favoritesList/index';
 import Button from '@/components/core/button/Button.vue';
 import FavoritesListItem from '@/components/app/favoritesList/favoritesListItem/FavoritesListItem.vue';
+import { useChartDataStore } from '@/stores/chartData';
 
 const emit = defineEmits<FavoritesListEmits>();
 
@@ -58,13 +61,16 @@ const { t } = useI18n();
 
 const marketStore = useMarketStore();
 
-const options = computed(() => marketStore.pairs.map((
+const chartDataStore = useChartDataStore();
+
+const options = computed(() => marketStore.pairs.slice(0, 5).map((
   pairData: PairData,
 ) => ({
   label: '',
   value: pairData.id,
   pairData,
-})).slice(0, 5));
+  percentChange: chartDataStore.get24HoursPercentChangeByPairId(pairData.id),
+})));
 </script>
 
 <style lang="scss" module>

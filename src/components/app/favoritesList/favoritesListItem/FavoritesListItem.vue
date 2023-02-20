@@ -25,11 +25,11 @@
     <div :class="$style.mainContent">
       <CoinLogo :coin="pairData.base" />
       <Badge
-        state="success"
-        size="sm"
+        :state="computedBadgeState"
+        size="xs"
         :class="$style.pnlBadge"
       >
-        {{ 0 }}
+        {{ displayPercentChange }}
       </Badge>
     </div>
   </div>
@@ -38,11 +38,29 @@
 <script setup lang="ts">
 import CoinLogo from '@/components/core/coinLogo/CoinLogo.vue';
 import Typography from '@/components/app/typography/Typography.vue';
-import { humanizeNumber } from '@/utils/number';
+import { humanizeNumber, percentFormat } from '@/utils/number';
 import Badge from '@/components/core/badge/Badge.vue';
+import { computed } from 'vue';
+import { compose } from '@/utils/fp';
 import { FavoritesListItemProps } from './index';
+import { isPositive, roundToDecimalPoint } from '../../../../helpers/number';
 
 const props = defineProps<FavoritesListItemProps>();
+
+const displayPercentChange = computed(() => compose(
+  percentFormat,
+  roundToDecimalPoint(2),
+)(props.last24HoursPercentChange || 0));
+
+const computedBadgeState = computed(() => [
+  props.last24HoursPercentChange == null
+    ? 'default'
+    : (
+      isPositive(props.last24HoursPercentChange)
+        ? 'success'
+        : 'danger'
+    ),
+]);
 </script>
 
 <style lang="scss" module>

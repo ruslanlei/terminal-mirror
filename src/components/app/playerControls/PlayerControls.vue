@@ -10,7 +10,11 @@
       <div :class="$style.label">
         {{ t('emulator.player.label') }}
       </div>
-      <Datepicker v-model="emulatorDate" />
+      <Datepicker
+        v-model="emulatorDate"
+        :max-date="activePairData?.to_date"
+        :min-date="activePairData?.from_date"
+      />
     </header>
     <div :class="$style.controls">
       <PlayButton
@@ -57,10 +61,16 @@ import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
 import { useEmulatorStore } from '@/stores/emulator';
 import { storeToRefs } from 'pinia';
 import { useChartDataStore } from '@/stores/chartData';
+import { useMarketStore } from '@/stores/market';
 import PlayButton from './playButton/PlayButton.vue';
 import RewindButton from './rewindButton/RewindButton.vue';
 
 const { t } = useI18n();
+
+const marketStore = useMarketStore();
+const {
+  activePairData,
+} = storeToRefs(marketStore);
 
 const chartDataStore = useChartDataStore();
 const { isFetchingCandles } = storeToRefs(chartDataStore);

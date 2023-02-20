@@ -5,6 +5,8 @@ export interface DatepickerProps {
   displayDataFormatter?: (unformattedDate: string) => string,
   state?: 'default',
   placement: DropdownProps['placement'],
+  maxDate?: Date | string,
+  minDate?: Date | string,
 }
 
 export interface DatepickerEmits {

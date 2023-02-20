@@ -67,6 +67,8 @@ const computedConfig = computed<Partial<FlatpickrConfig>>(() => ({
   inline: true,
   dateFormat: 'Z',
   locale: localesMap[locale.value],
+  maxDate: props.maxDate,
+  minDate: props.minDate,
 }));
 
 const computedIntl = computed(() => new Intl.DateTimeFormat(

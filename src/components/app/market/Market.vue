@@ -3,10 +3,14 @@
     <template #tools>
       <MarketTools />
     </template>
-    <template #favorites>
-      <button @click="isFavoritesVisible = !isFavoritesVisible">
-        favorites
-      </button>
+    <template #favorites="{ favoritesClass }">
+      <FavoritesList
+        :class="favoritesClass"
+        @click="isFavoritesVisible = !isFavoritesVisible"
+      />
+    </template>
+    <template #chartHeader>
+      <MarketChartHeader />
     </template>
     <template #chart="{ chartClass }">
       <MarketChart :class="chartClass" />
@@ -25,13 +29,15 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useMarketStore } from '@/stores/market';
 import MarketContainer from '@/containers/marketContainer/MarketContainer.vue';
 import PlayerControls from '@/components/app/playerControls/PlayerControls.vue';
 import MarketTools from '@/components/app/marketTools/MarketTools.vue';
 import MarketSidebar from '@/components/app/marketSidebar/MarketSidebar.vue';
 import OrdersAndStatistics from '@/components/app/ordersAndStatistics/OrdersAndStatistics.vue';
-import { useMarketStore } from '@/stores/market';
 import MarketChart from '@/components/app/marketChart/MarketChart.vue';
+import FavoritesList from '@/components/app/favoritesList/FavoritesList.vue';
+import MarketChartHeader from '@/components/app/marketChartHeader/MarketChartHeader.vue';
 
 const marketStore = useMarketStore();
 

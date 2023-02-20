@@ -16,12 +16,17 @@
             />
           </div>
         </div>
-        <div :class="$style.chartContainer">
-          <div :class="$style.chartWrapper">
-            <slot
-              name="chart"
-              :chart-class="$style.chart"
-            />
+        <div :class="$style.chartColumn">
+          <header :class="$style.chartHeader">
+            <slot name="chartHeader" />
+          </header>
+          <div :class="$style.chartContainer">
+            <div :class="$style.chartWrapper">
+              <slot
+                name="chart"
+                :chart-class="$style.chart"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -89,6 +94,7 @@ const stickyElementStyles = computed(() => ({
   padding-right: 20px;
   transition: padding-right 200ms;
   overflow: hidden;
+  height: 100%;
   &.hidden {
     padding-right: 0;
     .favoritesWrapper {
@@ -100,10 +106,18 @@ const stickyElementStyles = computed(() => ({
 .favoritesWrapper {
   transition: width 200ms;
   width: 87px;
+  height: 100%;
 }
 
 .favorites {
   width: 100%;
+  height: 100%;
+}
+
+.chartHeader {}
+
+.chartColumn {
+  flex-grow: 1;
 }
 
 .chartContainer {

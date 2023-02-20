@@ -5,6 +5,7 @@
       $style.button,
       isDisabled && $style.disabled,
       $style[size],
+      isWide && $style.wide,
       ...computedState,
     ]"
   >
@@ -29,6 +30,7 @@ const props = withDefaults(
     state: 'gradientColor',
     isDisabled: false,
     isLoading: false,
+    isWide: true,
   },
 );
 
@@ -45,13 +47,16 @@ const computedLoaderSize = computed(
 @import "src/assets/styles/utils";
 
 .button {
-  width: 100%;
   display: block;
   position: relative;
   transition: 160ms background-color;
   &:not(.disabled) {
     cursor: pointer;
   }
+}
+
+.wide {
+  width: 100%;
 }
 
 .loaderCap {

@@ -231,6 +231,7 @@
       "quantityPercent": "/ {percent} of position",
       "volume": "{volume} {currency}"
     },
+    "placeholder": "You don't have Orders. Create an order and it will appear here",
     "edit": "Edit"
   }
 }

@@ -6,95 +6,109 @@
       ...computedState,
     ]"
   >
-    <div
-      v-if="isHeadVisible"
-      :style="computedRowStyles"
-      :class="$style.head"
+    <transition
+      mode="out-in"
+      name="skeletonTransition"
     >
-      <button
-        v-for="column in columns"
-        :key="column.slug"
-        type="button"
-        :class="[
-          $style.column,
-          $style[column.align],
-          (column.sortable || column.isSelect) && $style.clickable,
-        ]"
-        @click="onColumnClick(column)"
-      >
-        <slot
-          :name="`column(${column.slug})`"
-          :column="column"
-          :data="column.data"
-          :label="column.label"
-          :slug="column.slug"
-          :is-all-records-selected="isAllRecordsSelected"
-          :is-sorted-by="sortBy === column.slug"
-          :sort-direction="sortDirection"
-          :is-sorted-asc="sortBy === column.slug && sortDirection === 'asc'"
-          :is-sorted-desc="sortBy === column.slug && sortDirection === 'desc'"
-        >
-          {{ column.label }}
-        </slot>
-      </button>
-    </div>
-    <transition-group
-      tag="div"
-      :class="$style.records"
-      name="tableElementAppearance"
-      @before-leave="onElementRemove"
-    >
-      <div
-        v-for="record in computedRecords"
-        :key="record.id"
-        :class="$style.tableRowContainer"
-        :data-table-element-id="tableId"
-      >
-        <TableRow
-          :grid-columns="computedListColumns"
-          :record="record"
-          :columns="columns"
-          :state="[
-            ...state,
-            ...(record?.state
-              ? record.state
-              : []),
-          ]"
-          :class="$style.tableRow"
-          @click="onRowClick(record)"
-          @cell-click="onCellClick(record.id, $event)"
-        >
-          <template #default>
+      <template v-if="computedRecords.length">
+        <div :class="$style.tableContent">
+          <div
+            v-if="isHeadVisible"
+            :style="computedRowStyles"
+            :class="$style.head"
+          >
             <button
               v-for="column in columns"
               :key="column.slug"
               type="button"
               :class="[
-                $style.recordColumn,
+                $style.column,
                 $style[column.align],
+                (column.sortable || column.isSelect) && $style.clickable,
               ]"
-              @click="onCellClick(record.id, column.isSelect)"
+              @click="onColumnClick(column)"
             >
               <slot
-                :name="`cell(${column.slug})`"
-                :record="record"
-                :data="record.data[column.slug]"
-                :is-selected="record.isSelected"
-              />
+                :name="`column(${column.slug})`"
+                :column="column"
+                :data="column.data"
+                :label="column.label"
+                :slug="column.slug"
+                :is-all-records-selected="isAllRecordsSelected"
+                :is-sorted-by="sortBy === column.slug"
+                :sort-direction="sortDirection"
+                :is-sorted-asc="sortBy === column.slug && sortDirection === 'asc'"
+                :is-sorted-desc="sortBy === column.slug && sortDirection === 'desc'"
+              >
+                {{ column.label }}
+              </slot>
             </button>
-          </template>
-          <template
-            v-if="record.children && 'recordChildren' in $slots"
-            #children="{ data }"
+          </div>
+          <transition-group
+            tag="div"
+            :class="$style.records"
+            name="tableElementAppearance"
+            @before-leave="onElementRemove"
           >
-            <slot
-              name="recordChildren"
-              :children="data"
-            />
-          </template>
-        </TableRow>
-      </div>
-    </transition-group>
+            <div
+              v-for="record in computedRecords"
+              :key="record.id"
+              :class="$style.tableRowContainer"
+              :data-table-element-id="tableId"
+            >
+              <TableRow
+                :grid-columns="computedListColumns"
+                :record="record"
+                :columns="columns"
+                :state="[
+                  ...state,
+                  ...(record?.state
+                    ? record.state
+                    : []),
+                ]"
+                :class="$style.tableRow"
+                @click="onRowClick(record)"
+                @cell-click="onCellClick(record.id, $event)"
+              >
+                <template #default>
+                  <button
+                    v-for="column in columns"
+                    :key="column.slug"
+                    type="button"
+                    :class="[
+                      $style.recordColumn,
+                      $style[column.align],
+                    ]"
+                    @click="onCellClick(record.id, column.isSelect)"
+                  >
+                    <slot
+                      :name="`cell(${column.slug})`"
+                      :record="record"
+                      :data="record.data[column.slug]"
+                      :is-selected="record.isSelected"
+                    />
+                  </button>
+                </template>
+                <template
+                  v-if="record.children && 'recordChildren' in $slots"
+                  #children="{ data }"
+                >
+                  <slot
+                    name="recordChildren"
+                    :children="data"
+                  />
+                </template>
+              </TableRow>
+            </div>
+          </transition-group>
+        </div>
+      </template>
+      <template v-else>
+        <div :class="$style.placeholder">
+          <slot name="placeholder" />
+        </div>
+      </template>
+    </transition>
   </div>
 </template>
 
@@ -129,6 +143,7 @@ const props = withDefaults(
   defineProps<TableProps>(),
   {
     isHeadVisible: true,
+    showHeadWhileEmpty: false,
     appearanceAnimationType: 'elevating',
   },
 );
@@ -261,6 +276,21 @@ onMounted(() => {
   }
 }
 
+.tableContent {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.placeholder {
+  flex-grow: 1;
+  display: flex;
+  & > * {
+    width: 100%;
+    flex-grow: 1;
+  }
+}
+
 .tableRow {
   width: 100%;
 }
@@ -358,6 +388,8 @@ onMounted(() => {
 </style>
 
 <style lang="scss">
+@import "src/assets/styles";
+
 .tableElementAppearance {
   &-enter-active,
   &-leave-active {

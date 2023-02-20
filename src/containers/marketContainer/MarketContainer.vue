@@ -93,6 +93,7 @@ const stickyElementStyles = computed(() => ({
   margin-top: 20px;
   flex-grow: 1;
   display: flex;
+  padding-bottom: 20px;
 }
 
 .orders {

@@ -273,6 +273,10 @@
             :orders="children"
           />
         </template>
+
+        <template #placeholder>
+          <OrdersListPlaceholder />
+        </template>
       </Table>
     </transition>
   </div>
@@ -292,6 +296,7 @@ import { onActivated, onBeforeUnmount, onDeactivated } from 'vue';
 import SubOrdersTable from '@/components/app/ordersList/subOrdersTable/SubOrdersTable.vue';
 import { useOrdersList } from '@/hooks/useOrdersList';
 import Typography from '@/components/app/typography/Typography.vue';
+import OrdersListPlaceholder from '@/components/app/ordersList/OrdersListPlaceholder.vue';
 import { ActiveOrdersTableRecord, ClosedOrdersTableRecord, OrdersListProps } from './index';
 
 const props = withDefaults(

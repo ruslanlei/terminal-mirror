@@ -10,7 +10,7 @@
       ref="container"
       :class="[
         $style.options,
-        ...states.map((s) => $style[s])
+        ...computedStates,
       ]"
     >
       <button
@@ -70,6 +70,7 @@ import {
 import { useLocalValue } from '@/hooks/useLocalValue';
 import { useEnvironmentObserver } from '@/hooks/useEnvironmentObserver';
 import { arrayFrom } from '@/utils/array';
+import { useComputedState } from '@/hooks/useComputedState';
 import { SelectorEmits, SelectorOption, SelectorProps } from './index';
 
 const props = withDefaults(
@@ -82,7 +83,7 @@ const props = withDefaults(
 );
 const emit = defineEmits<SelectorEmits>();
 
-const states = computed(() => arrayFrom(props.state));
+const computedStates = useComputedState(props);
 
 if (!props.modelValue) {
   throw new Error('[MultiSwitch Error]: modelValue is not passed (check v-model)');
@@ -145,8 +146,10 @@ const findActiveTab = () => {
 
   const activeTabElement = optionRefs.value[localValue.value];
 
-  const { left: containerLeft } = container.value.getBoundingClientRect();
-  const { width, height, left } = activeTabElement.getBoundingClientRect();
+  const { left: containerLeft, top: containerTop } = container.value.getBoundingClientRect();
+  const {
+    width, height, left, top,
+  } = activeTabElement.getBoundingClientRect();
 
   const { thickening } = props;
 
@@ -155,7 +158,7 @@ const findActiveTab = () => {
   computedGhostStyles.value.width = `${width + normalized}px`;
   computedGhostStyles.value.height = `${height + normalized}px`;
   computedGhostStyles.value.left = `${(left - containerLeft) - (normalized / 2)}px`;
-  computedGhostStyles.value.top = `${-(normalized / 2)}px`;
+  computedGhostStyles.value.top = `${(top - containerTop) - (normalized / 2)}px`;
 };
 
 const {
@@ -199,6 +202,10 @@ onBeforeUnmount(removeListeners);
   display: flex;
 }
 
+.vertical {
+  flex-direction: column;
+}
+
 .item {
   position: relative;
   z-index: 2;
@@ -212,7 +219,7 @@ onBeforeUnmount(removeListeners);
 
 .ghost {
   position: absolute;
-  transition: 300ms left, 300ms width, 360ms background-color;
+  transition: 300ms left, 300ms top, 300ms width, 360ms background-color;
   border-radius: 5px;
   &.animated {
     animation: options-ghost .7s ease-in-out;
@@ -324,6 +331,33 @@ onBeforeUnmount(removeListeners);
   }
   .ghost {
     background-color: rgb(var(--color-background-3));
+  }
+}
+
+.blueGlassVerticalRight {
+  &.options {
+  }
+  .item {
+    color: rgb(var(--color-accent-2));
+    &.active {
+      color: rgb(var(--color-accent-1));
+    }
+  }
+  .ghost {
+    background-color: rgb(var(--color-background-1));
+    border-right: 2px solid rgb(var(--color-primary-1));
+  }
+}
+
+.specialFavoritesSize {
+  &.options {
+  }
+  .item {
+    padding: 10px 5px;
+    flex-grow: 1;
+  }
+  .ghost {
+    border-radius: 0;
   }
 }
 

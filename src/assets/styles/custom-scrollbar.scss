@@ -1,32 +1,36 @@
-@mixin scrollbarDefault($absolute: false) {
+@mixin scrollbarDefault($width: 12px, $borderRadius: 0, $absolute: false) {
   @if ($absolute) {
     overflow-y: overlay;
   }
   &::-webkit-scrollbar-track {
     background: rgb(var(--color-background-2));
+    border-radius: $borderRadius;
   }
   &::-webkit-scrollbar-thumb {
     background-color: rgb(var(--color-background-3));
     outline: none;
+    border-radius: $borderRadius;
   }
   &::-webkit-scrollbar {
-    width: 12px;
+    width: $width;
   }
 }
 
-@mixin scrollbarSecondary($absolute: false) {
+@mixin scrollbarSecondary($width: 12px, $borderRadius: 6px, $absolute: false) {
   @if ($absolute) {
     overflow-y: overlay;
   }
   &::-webkit-scrollbar-track {
     background: rgb(var(--color-background-2));
+    border-radius: $borderRadius;
   }
   &::-webkit-scrollbar-thumb {
     background-color: rgb(var(--color-accent-3));
     outline: none;
+    border-radius: $borderRadius;
   }
   &::-webkit-scrollbar {
-    width: 12px;
+    width: $width;
   }
 }
 

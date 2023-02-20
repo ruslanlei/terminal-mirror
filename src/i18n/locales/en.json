@@ -6,7 +6,8 @@
     "percents": "{value}%",
     "slash": "{value1}/{value2}",
     "no": "No",
-    "yes": "Yes"
+    "yes": "Yes",
+    "hide": "Hide"
   },
   "validationError": {
     "email": "Value is not valid email",
@@ -90,6 +91,9 @@
       "real": "Real"
     },
     "failedToGetPairs": "Failed to get pairs"
+  },
+  "favorites": {
+    "label": "Favorites"
   },
   "emulator": {
     "player": {

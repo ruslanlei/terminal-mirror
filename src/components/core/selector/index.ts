@@ -23,7 +23,10 @@ type SelectorState =
   | 'secondaryColor2'
   | 'secondaryColor5'
   | 'simpleColor'
-  | 'lgSize';
+  | 'lgSize'
+  | 'blueGlassVerticalRight'
+  | 'specialFavoritesSize'
+  | 'vertical';
 
 export interface SelectorProps {
   options: SelectorOption[],

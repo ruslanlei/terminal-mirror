@@ -4,7 +4,10 @@
       <MarketTools />
     </template>
     <template #favorites="{ favoritesClass }">
-      <FavoritesList :class="favoritesClass" />
+      <FavoritesList
+        :class="favoritesClass"
+        @hide="hideFavorites"
+      />
     </template>
     <template #chartHeader>
       <MarketChartHeader v-model:is-favorites-active="isFavoritesExpanded" />
@@ -25,7 +28,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
 import { useMarketStore } from '@/stores/market';
 import MarketContainer from '@/containers/marketContainer/MarketContainer.vue';
 import PlayerControls from '@/components/app/playerControls/PlayerControls.vue';
@@ -35,10 +37,15 @@ import OrdersAndStatistics from '@/components/app/ordersAndStatistics/OrdersAndS
 import MarketChart from '@/components/app/marketChart/MarketChart.vue';
 import FavoritesList from '@/components/app/favoritesList/FavoritesList.vue';
 import MarketChartHeader from '@/components/app/marketChartHeader/MarketChartHeader.vue';
+import { useStorage } from '@vueuse/core';
 
 const marketStore = useMarketStore();
 
-const isFavoritesExpanded = ref(true);
+const isFavoritesExpanded = useStorage('isFavoritesVisible', false);
+
+const hideFavorites = () => {
+  isFavoritesExpanded.value = false;
+};
 
 await marketStore.getPairs();
 </script>

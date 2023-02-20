@@ -52,15 +52,13 @@ const computedStates = useComputedState(props);
     position: absolute;
     inset: -1px;
     background: var(--color-main-gradient);
-    transition: transform 160ms ease, opacity 200ms;
-    transform: translateY(-30%);
+    transition: opacity 200ms;
     border-radius: inherit;
     opacity: 0;
   }
   &.active {
     color: rgb(var(--color-accent-1));
     &::before {
-      transform: translateY(0);
       opacity: 1;
     }
   }

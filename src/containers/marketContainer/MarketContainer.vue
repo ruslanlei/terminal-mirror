@@ -70,6 +70,8 @@ const stickyElementStyles = computed(() => ({
 </script>
 
 <style lang="scss" module>
+@import "src/assets/styles/utils";
+
 .marketContainer {
   display: grid;
   grid-template-columns: 50px 1fr 320px;
@@ -84,6 +86,7 @@ const stickyElementStyles = computed(() => ({
 .main {
   display: flex;
   flex-direction: column;
+  gap: 20px;
 }
 
 .chartView {
@@ -104,14 +107,22 @@ const stickyElementStyles = computed(() => ({
 }
 
 .favoritesWrapper {
+  position: relative;
   transition: width 200ms;
   width: 87px;
   height: 100%;
+  overflow: hidden;
+  border-radius: 10px;
 }
 
 .favorites {
-  width: 100%;
+  position: absolute;
+  left: 0;
+  width: 87px;
   height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  @include scrollbarDefault(4px, 2px, false);
 }
 
 .chartHeader {}
@@ -144,7 +155,6 @@ const stickyElementStyles = computed(() => ({
 }
 
 .ordersWrapper {
-  margin-top: 20px;
   flex-grow: 1;
   display: flex;
   padding-bottom: 20px;

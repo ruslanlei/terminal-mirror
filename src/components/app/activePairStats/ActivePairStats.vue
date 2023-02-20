@@ -18,6 +18,7 @@ import { divideRight, roundToDecimalPoint, subtractRight } from '@/helpers/numbe
 import { humanizeNumber, percentFormat } from '@/utils/number';
 import { calculatePercentOfDifference } from '@/helpers/math/percents';
 import { findMaxByKey, findMinByKey } from '@/utils/array';
+import { isMoreThan } from '@/utils/boolean';
 
 const { t } = useI18n();
 
@@ -72,7 +73,13 @@ const computedPairStats = computed<IPairStats>(() => [
     {
       label: t('pairStats.price'),
       value: currentPrice.value,
-      valueState: 'positive',
+      valueState:
+        isMoreThan(
+          firstPriceWithinLast24Hours.value || 0,
+          currentPrice.value || 0,
+        )
+          ? 'positive'
+          : 'negative',
     },
     {
       label: t('pairStats.amount'),

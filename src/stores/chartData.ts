@@ -133,5 +133,6 @@ export const useChartDataStore = defineStore('chartData', () => {
     currentPrice,
     amountOfTransactionsInLast24Hours,
     firstPriceWithinLast24Hours,
+    firstCandleInLast24Hours,
   };
 });

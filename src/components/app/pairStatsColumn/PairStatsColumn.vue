@@ -11,13 +11,11 @@
     </div>
     <Divider />
     <div :class="$style.column">
-      <div
+      <Typography
         v-for="(pairStat, index) in columnData"
         :key="index"
-        :class="[
-          $style.value,
-          $style[pairStat.valueState],
-        ]"
+        size="title3"
+        :state="calculateValueState(pairStat)"
       >
         <AnimatedText
           v-if="pairStat.value"
@@ -27,7 +25,7 @@
         <Typography v-else>
           {{ '-' }}
         </Typography>
-      </div>
+      </Typography>
     </div>
   </div>
 </template>
@@ -36,9 +34,32 @@
 import Divider from '@/components/core/divider/Divider.vue';
 import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
 import Typography from '@/components/app/typography/Typography.vue';
-import { PairStatsColumnProps } from './index';
+import { isPositive } from '@/helpers/number';
+import { TypographyProps } from '@/components/app/typography';
+import { PairStat, PairStatsColumnProps } from './index';
 
 const props = defineProps<PairStatsColumnProps>();
+
+const calculateValueState = (
+  pairStat: PairStat,
+): TypographyProps['state'] => [
+  // default
+  'accent2',
+  'bold',
+
+  // calculated
+  ...(
+    (pairStat.valueState === 'auto' && typeof pairStat.value === 'number')
+      ? [
+        isPositive(pairStat.value)
+          ? 'success'
+          : 'danger',
+      ]
+      : []
+  ),
+  pairStat.valueState === 'positive' && 'success',
+  pairStat.valueState === 'negative' && 'danger',
+] as TypographyProps['state'];
 </script>
 
 <style lang="scss" module>

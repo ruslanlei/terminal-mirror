@@ -4,6 +4,7 @@
     "save": "Save",
     "currencyAmount": "{amount} {currency}",
     "percents": "{value}%",
+    "slash": "{value1}/{value2}",
     "no": "No",
     "yes": "Yes"
   },

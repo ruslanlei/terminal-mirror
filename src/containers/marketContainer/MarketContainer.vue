@@ -124,6 +124,7 @@ const stickyElementStyles = computed(() => ({
   flex-grow: 1;
   height: 500px;
   position: relative;
+  margin-top: 20px;
 }
 
 .chartWrapper {

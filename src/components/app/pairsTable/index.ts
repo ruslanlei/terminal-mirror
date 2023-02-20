@@ -7,6 +7,7 @@ export type PairsTableColumn = TableColumn<PairsTableColumnSlug>;
 
 export type PairsTableRecord = TableRecord<PairsTableColumnSlug, {
   pairs: {
+    isFavorite: boolean,
     base: PairData['base'],
     quote: PairData['quote'],
   },

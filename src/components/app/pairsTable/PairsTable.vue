@@ -26,15 +26,26 @@
         </div>
       </div>
     </template>
-    <template #cell(pairs)="{ data: { base, quote } }">
+    <template #cell(pairs)="{ data: { isFavorite, base, quote } }">
       <button
         type="button"
         :class="$style.addToFavorites"
+        @click.stop
       >
-        <Icon
-          :size="24"
-          icon="star"
-        />
+        <Typography
+          :state="isFavorite ? 'accent1' : 'accent2' "
+          is-inline
+        >
+          <transition
+            name="favoriteStarTransition"
+            mode="out-in"
+          >
+            <Icon
+              :size="24"
+              :icon="isFavorite ? 'starFilled' : 'star'"
+            />
+          </transition>
+        </Typography>
       </button>
       <CoinLogo
         :coin="base"
@@ -72,6 +83,8 @@ import Icon from '@/components/core/icon/Icon.vue';
 import { SortDirection } from '@/components/core/table';
 import { humanizeNumber } from '@/utils/number';
 import { PairData } from '@/api/types/pair';
+import { useMarketStore } from '@/stores/market';
+import Typography from '@/components/app/typography/Typography.vue';
 import {
   PairsTableColumn, PairsTableEmits,
   PairsTableProps,
@@ -83,6 +96,8 @@ const props = defineProps<PairsTableProps>();
 const emit = defineEmits<PairsTableEmits>();
 
 const { t } = useI18n();
+
+const marketStore = useMarketStore();
 
 const columns = computed<PairsTableColumn[]>(() => [
   {
@@ -108,6 +123,7 @@ const computedRecords = computed<PairsTableRecord[]>(
     id: pair.id,
     data: {
       pairs: {
+        isFavorite: marketStore.favoritePairs.includes(pair.id),
         base: pair.base,
         quote: pair.quote,
       },
@@ -171,5 +187,19 @@ const onRecordClick = (record: PairsTableRecord) => {
   @include title5;
   color: rgb(var(--color-accent-2));
   text-align: right;
+}
+</style>
+
+<style lang="scss">
+.favoriteStarTransition {
+  &-enter-active,
+  &-leave-active {
+    transition: opacity 200ms;
+  }
+
+  &-enter-from,
+  &-leave-to {
+    opacity: 0;
+  }
 }
 </style>

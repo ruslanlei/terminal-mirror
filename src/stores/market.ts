@@ -13,17 +13,18 @@ import {
 import { processServerErrors, requestMany } from '@/api/common';
 import { getOrdersList } from '@/api/endpoints/orders/getList';
 import { PairData } from '@/api/types/pair';
-import { flatten } from '@/utils/array';
+import { filter, flatten, map } from '@/utils/array';
 import { createEventBus } from '@/utils/eventBus';
 import { deleteOrder } from '@/api/endpoints/orders/delete';
 import { closeOrder } from '@/api/endpoints/orders/cancel';
-import { curry } from '@/utils/fp';
+import { compose, curry } from '@/utils/fp';
 import { OrderModel } from '@/hooks/useOrderCreate';
 import { modalType, useModalStore } from '@/stores/modals';
 import { FavoritePair, getFavorites } from '@/api/endpoints/profile/getFavorites';
 import { addToFavorites } from '@/api/endpoints/profile/addToFavorites';
 import { removeFromFavorites } from '@/api/endpoints/profile/removeFromFavorites';
 import { findAndDelete } from '@/helpers/array';
+import { getBalance } from '@/api/endpoints/profile/getBalance';
 
 export type MarketType = 'emulator' | 'real';
 
@@ -281,6 +282,34 @@ export const useMarketStore = defineStore('market', () => {
     return response;
   };
 
+  const deleteOrCloseAllExistingOrdersForCurrentPair = async () => {
+    const activePairActiveOrders = filter(
+      (order: Order) => order.pair === activePair.value,
+      activeOrders.value,
+    );
+
+    const response = await compose(
+      requestMany,
+      map((order: Order) => (
+        order.status === 'new'
+          ? deleteOrder(order.id)
+          : closeOrder(order.id)
+      )),
+      filter((order: Order) => order.order_type === 'limit'),
+    )(activePairActiveOrders);
+
+    if (response.result) {
+      activePairActiveOrders.forEach((order: Order) => {
+        emitOrderDeleteOrClose(order.id);
+      });
+      await getBalance();
+    } else {
+      processServerErrors(response.result);
+    }
+
+    return response;
+  };
+
   const removeOrder = async (
     order: Order,
     takeProfits: TakeProfit[] | undefined,
@@ -329,5 +358,6 @@ export const useMarketStore = defineStore('market', () => {
     removeOrder,
     addToFavorites: handleAddToFavorites,
     removeFromFavorites: handleRemoveFromFavorites,
+    deleteOrCloseAllExistingOrdersForCurrentPair,
   };
 });

@@ -9,7 +9,8 @@ export type TypographyState =
     | 'accent2';
 
 export type TypographySize =
-    'title1'
+    'h1'
+    | 'title1'
     | 'title2'
     | 'title3'
     | 'title4'

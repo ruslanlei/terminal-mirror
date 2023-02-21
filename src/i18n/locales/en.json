@@ -7,7 +7,8 @@
     "slash": "{value1}/{value2}",
     "no": "No",
     "yes": "Yes",
-    "hide": "Hide"
+    "hide": "Hide",
+    "cancel": "Cancel"
   },
   "validationError": {
     "email": "Value is not valid email",
@@ -238,5 +239,9 @@
     },
     "placeholder": "You don't have Orders. Create an order and it will appear here",
     "edit": "Edit"
+  },
+  "changePlayerDateModal": {
+    "label": "To change date in the player, you need to delete and/or close all existing orders. Delete and/or close orders right now?",
+    "submitText": "Close/delete all orders"
   }
 }

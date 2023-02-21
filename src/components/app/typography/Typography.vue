@@ -37,6 +37,10 @@ const computedState = useComputedState(props);
 
 .typography {}
 
+.h1 {
+  @include h1;
+}
+
 .title1 {
   @include title1;
 }

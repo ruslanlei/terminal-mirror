@@ -8,52 +8,58 @@
     </div>
     <div
       ref="container"
-      :class="[
-        $style.options,
-        ...computedStates,
-      ]"
     >
-      <button
-        v-for="option in options"
-        :ref="optionElement => { optionRefs[option.value] = optionElement }"
-        :key="option.value"
-        type="button"
+      <transition-group
+        name="selectorElementAppearance"
+        tag="div"
         :class="[
-          $style.item,
-          localValue === option.value && $style.active,
-          ...[localValue === option.value && option?.activeState
-            ? [$style[option.activeState]]
-            : []
-          ],
-          ...[option?.state
-            ? [$style[option.state]]
-            : []
-          ]
+          $style.options,
+          ...computedStates,
         ]"
-        :data-value="option.value"
-        @click="onOptionClick(option)"
+        @before-leave="onElementRemove"
       >
-        <slot
-          name="option"
-          :option="option"
-          :active-option="localValue"
-        >
-          {{ option.label }}
-        </slot>
-      </button>
-      <div
-        :style="computedGhostStyles"
-        :class="[
-          $style.ghost,
-          isGhostAppearAnimation && $style.animated,
-          ...[activeOption?.ghostState
-            ? [
-              $style[activeOption.ghostState]
+        <button
+          v-for="option in options"
+          :ref="optionElement => { optionRefs[option.value] = optionElement }"
+          :key="option.value"
+          type="button"
+          :class="[
+            $style.item,
+            localValue === option.value && $style.active,
+            ...[localValue === option.value && option?.activeState
+              ? [$style[option.activeState]]
+              : []
+            ],
+            ...[option?.state
+              ? [$style[option.state]]
+              : []
             ]
-            : []
-          ]
-        ]"
-      />
+          ]"
+          :data-value="option.value"
+          @click="onOptionClick(option)"
+        >
+          <slot
+            name="option"
+            :option="option"
+            :active-option="localValue"
+          >
+            {{ option.label }}
+          </slot>
+        </button>
+        <div
+          :style="computedGhostStyles"
+          :class="[
+            $style.ghost,
+            isGhostAppearAnimation && $style.animated,
+            ...[activeOption?.ghostState
+              ? [
+                $style[activeOption.ghostState]
+              ]
+              : []
+            ]
+          ]"
+        />
+      </transition-group>
     </div>
   </div>
 </template>
@@ -61,7 +67,6 @@
 <script setup lang="ts">
 import {
   ref,
-  computed,
   watch,
   onMounted,
   onBeforeUnmount,
@@ -69,8 +74,9 @@ import {
 } from 'vue';
 import { useLocalValue } from '@/hooks/useLocalValue';
 import { useEnvironmentObserver } from '@/hooks/useEnvironmentObserver';
-import { arrayFrom } from '@/utils/array';
 import { useComputedState } from '@/hooks/useComputedState';
+import { addCssProperty, getRect, toCssPxValue } from '@/helpers/style';
+import { compose } from '@/utils/fp';
 import { SelectorEmits, SelectorOption, SelectorProps } from './index';
 
 const props = withDefaults(
@@ -170,6 +176,20 @@ const findActiveTab = () => {
   computedGhostStyles.value.height = `${height + normalized}px`;
   computedGhostStyles.value.left = `${(left - containerLeft) - (normalized / 2)}px`;
   computedGhostStyles.value.top = `${(top - containerTop) - (normalized / 2)}px`;
+};
+
+const onElementRemove = (removingElement: HTMLElement) => {
+  // add exact height to make element
+  // animate it on remove animation.
+
+  const {
+    height,
+  } = getRect(removingElement);
+
+  compose(
+    addCssProperty(['zIndex', 1]),
+    addCssProperty(['height', toCssPxValue(height)]),
+  )(removingElement);
 };
 
 const {
@@ -421,5 +441,26 @@ onBeforeUnmount(removeListeners);
 
 .accent1TextColor {
   color: rgb(var(--color-accent-1)) !important;
+}
+</style>
+
+<style lang="scss">
+@import "src/assets/styles";
+
+.selectorElementAppearance {
+  &-enter-active,
+  &-leave-active {
+    transition: opacity 170ms, transform 200ms, height 200ms;
+  }
+  &-enter-from,
+  &-leave-to {
+    opacity: 0;
+    height: 0 !important;
+    transform: scale(0.9) translateY(10px);
+  }
+
+  &-enter-from {
+    transform: scale(0.9) translateY(-10px);
+  }
 }
 </style>

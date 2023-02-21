@@ -221,32 +221,36 @@ export const useMarketStore = defineStore('market', () => {
     return response;
   };
 
-  const getOrderList = async (
-    orderType?: 'active' | 'closed',
-  ) => {
-    let response;
-    if (orderType === 'closed') {
-      response = await requestMany<Order[][]>([
-        getOrdersList('expired'),
-        getOrdersList('canceled'),
-        getOrdersList('executed'),
-        getOrdersList('closed'),
-      ]);
-    } else {
-      response = await requestMany<Order[][]>([
-        getOrdersList('new'),
-        getOrdersList('filled'),
-      ]);
-    }
+  const activeOrders = ref<Order[]>([]);
+
+  const closedOrders = ref<Order[]>([]);
+
+  const getActiveOrdersList = async () => {
+    const response = await requestMany<Order[][]>([
+      getOrdersList('new'),
+      getOrdersList('filled'),
+    ]);
 
     if (!response.result) {
       processServerErrors(response.data, t('order.failedToGetList'));
     }
 
-    return {
-      result: response.result,
-      data: flatten(response.data),
-    };
+    activeOrders.value = flatten(response.data);
+  };
+
+  const getClosedOrdersList = async () => {
+    const response = await requestMany<Order[][]>([
+      getOrdersList('expired'),
+      getOrdersList('canceled'),
+      getOrdersList('executed'),
+      getOrdersList('closed'),
+    ]);
+
+    if (!response.result) {
+      processServerErrors(response.data, t('order.failedToGetList'));
+    }
+
+    closedOrders.value = flatten(response.data);
   };
 
   const handleDeleteOrder = async (
@@ -310,7 +314,10 @@ export const useMarketStore = defineStore('market', () => {
     createOrder: handleCreateOrder,
     createListOfTakeProfits,
     createStopLoss,
-    getOrderList,
+    activeOrders,
+    closedOrders,
+    getActiveOrdersList,
+    getClosedOrdersList,
     deleteOrder: handleDeleteOrder,
     closeOrder: handleCloseOrder,
     createOrderGroup,

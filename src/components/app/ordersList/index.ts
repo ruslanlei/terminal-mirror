@@ -1,7 +1,7 @@
 import { TableColumn, TableRecord } from '@/components/core/table';
 import { Order, TakeProfit } from '@/api/types/order';
 import { SubOrderTableItem } from '@/components/app/ordersList/subOrdersTable';
-import {PairData} from "@/api/types/pair";
+import { PairData } from '@/api/types/pair';
 
 export interface OrdersListProps {
   listType: 'active' | 'closed',

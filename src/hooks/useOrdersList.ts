@@ -13,6 +13,7 @@ import { awaitTimeout } from '@/utils/promise';
 import { useEmulatorStore } from '@/stores/emulator';
 import { findAndDelete, findAndUpdateObject } from '@/helpers/array';
 import { useChartDataStore } from '@/stores/chartData';
+import { storeToRefs } from 'pinia';
 
 interface GroupedOrder {
   order: MasterOrder,
@@ -25,6 +26,11 @@ export const useOrdersList = (
 ) => {
   const { t } = useI18n();
   const marketStore = useMarketStore();
+  const {
+    activeOrders,
+    closedOrders,
+  } = storeToRefs(marketStore);
+
   const chartDataStore = useChartDataStore();
   const emulatorStore = useEmulatorStore();
 
@@ -169,13 +175,16 @@ export const useOrdersList = (
       )(order.id);
     });
 
-  const orders = ref<Order[]>([]);
+  const orders = computed<Order[]>(() => ({
+    active: activeOrders.value,
+    closed: closedOrders.value,
+  }[props.listType]));
 
   const activeOrderRecords = computed<ActiveOrdersTableRecord[]>(
     () => compose(
       mapOrdersToActiveOrderTableRecords,
       groupOrders,
-    )(orders.value),
+    )(activeOrders.value),
   );
 
   const commonPnl = computed(() => activeOrderRecords.value.reduce((
@@ -190,7 +199,7 @@ export const useOrdersList = (
     () => compose(
       mapOrdersToClosedOrderTableRecords,
       groupOrders,
-    )(orders.value),
+    )(closedOrders.value),
   );
 
   const records = computed(() => ({
@@ -205,13 +214,14 @@ export const useOrdersList = (
       isLoading.value = true;
     }
 
-    const { result, data } = await marketStore.getOrderList(props.listType);
+    if (props.listType === 'active') {
+      await marketStore.getActiveOrdersList();
+    }
+    if (props.listType === 'closed') {
+      await marketStore.getClosedOrdersList();
+    }
 
     isLoading.value = false;
-
-    if (!result) return;
-
-    orders.value = data;
   };
 
   watch(() => props.listType, () => getList(true));
@@ -228,7 +238,7 @@ export const useOrdersList = (
     if (props.listType !== 'active') return;
 
     await awaitTimeout(300); // FIXME: awaiting for modal close animation
-    orders.value = orders.value.filter(
+    activeOrders.value = activeOrders.value.filter(
       (order: Order) => order.id !== orderId && order.master !== orderId,
     );
   });
@@ -243,7 +253,7 @@ export const useOrdersList = (
       ) {
         findAndDelete(
           (order: Order) => order.id !== updatedOrder.id,
-          orders.value,
+          activeOrders.value,
         );
 
         return;
@@ -251,7 +261,7 @@ export const useOrdersList = (
 
       findAndUpdateObject(
         (order: Order) => order.id === updatedOrder.id,
-        orders.value,
+        activeOrders.value,
         updatedOrder,
       );
     },

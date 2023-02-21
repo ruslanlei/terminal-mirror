@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.favoritesListItem">
+  <div :class="[$style.favoritesListItem, isActive && $style.active]">
     <div :class="$style.info">
       <div :class="$style.coinNames">
         <Typography
@@ -71,7 +71,7 @@ const computedBadgeState = computed(() => [
   background-color: rgba(var(--color-background-3), 0);
   transition: background-color 200ms;
   &:hover {
-    &:not(:active) {
+    &:not(.active) {
       background-color: rgba(var(--color-background-3), 1);
       .mainContent {
         opacity: 0;

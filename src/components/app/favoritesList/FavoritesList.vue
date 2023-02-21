@@ -15,10 +15,11 @@
       :options="options"
       :class="$style.list"
     >
-      <template #option="{ option }">
+      <template #option="{ option, activeOption }">
         <FavoritesListItem
           :last24-hours-percent-change="option.percentChange"
           :pair-data="option.pairData"
+          :is-active="activeOption === option.value"
         />
       </template>
     </Selector>
@@ -50,6 +51,7 @@ import { FavoritesListEmits } from '@/components/app/favoritesList/index';
 import Button from '@/components/core/button/Button.vue';
 import FavoritesListItem from '@/components/app/favoritesList/favoritesListItem/FavoritesListItem.vue';
 import { useChartDataStore } from '@/stores/chartData';
+import { FavoritePair } from '@/api/endpoints/profile/getFavorites';
 
 const emit = defineEmits<FavoritesListEmits>();
 
@@ -64,12 +66,12 @@ const marketStore = useMarketStore();
 const chartDataStore = useChartDataStore();
 
 const options = computed(() => marketStore.favoritePairs.map((
-  pairId: PairData['id'],
+  favoritePair: FavoritePair,
 ) => ({
   label: '',
-  value: pairId,
-  pairData: marketStore.pairsMap[pairId],
-  percentChange: chartDataStore.get24HoursPercentChangeByPairId(pairId),
+  value: favoritePair.pair,
+  pairData: marketStore.pairsMap[favoritePair.pair],
+  percentChange: chartDataStore.get24HoursPercentChangeByPairId(favoritePair.pair),
 })));
 </script>
 

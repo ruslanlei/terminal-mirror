@@ -20,9 +20,10 @@ import { closeOrder } from '@/api/endpoints/orders/cancel';
 import { curry } from '@/utils/fp';
 import { OrderModel } from '@/hooks/useOrderCreate';
 import { modalType, useModalStore } from '@/stores/modals';
-import { getFavorites } from '@/api/endpoints/profile/getFavorites';
+import { FavoritePair, getFavorites } from '@/api/endpoints/profile/getFavorites';
 import { addToFavorites } from '@/api/endpoints/profile/addToFavorites';
 import { removeFromFavorites } from '@/api/endpoints/profile/removeFromFavorites';
+import { findAndDelete } from '@/helpers/array';
 
 export type MarketType = 'emulator' | 'real';
 
@@ -72,7 +73,7 @@ export const useMarketStore = defineStore('market', () => {
     () => pairsMap.value[activePair.value],
   );
 
-  const favoritePairs = useStorage<Array<PairData['id']>>('favoritePairs', []);
+  const favoritePairs = useStorage<FavoritePair[]>('favoritePairs', []);
 
   const fetchFavoritePairs = async () => {
     const { result, data } = await getFavorites();
@@ -82,7 +83,7 @@ export const useMarketStore = defineStore('market', () => {
       return;
     }
 
-    favoritePairs.value = data.map((pairData) => pairData.pair);
+    favoritePairs.value = data;
   };
 
   const handleAddToFavorites = async (
@@ -93,19 +94,24 @@ export const useMarketStore = defineStore('market', () => {
     if (!response.result) {
       processServerErrors(response.data);
     } else {
-      favoritePairs.value.push(id);
+      favoritePairs.value.push(response.data);
     }
 
     return response;
   };
 
   const handleRemoveFromFavorites = async (
-    id: PairData['id'],
+    id: FavoritePair['id'],
   ) => {
     const response = await removeFromFavorites(id);
 
     if (!response.result) {
       processServerErrors(response.data);
+    } else {
+      findAndDelete(
+        (favoritePair: FavoritePair) => favoritePair.id === id,
+        favoritePairs.value,
+      );
     }
 
     return response;

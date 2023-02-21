@@ -41,6 +41,7 @@
             mode="out-in"
           >
             <Icon
+              :key="isFavorite"
               :size="24"
               :icon="isFavorite ? 'starFilled' : 'star'"
             />
@@ -123,7 +124,7 @@ const computedRecords = computed<PairsTableRecord[]>(
     id: pair.id,
     data: {
       common: {
-        isFavorite: marketStore.favoritePairs.includes(pair.id),
+        isFavorite: marketStore.favoritePairs.some((favoritePair) => favoritePair.pair === pair.id),
         pairId: pair.id,
         base: pair.base,
         quote: pair.quote,
@@ -201,12 +202,13 @@ const onToggleFavorite = (
 .favoriteStarTransition {
   &-enter-active,
   &-leave-active {
-    transition: opacity 200ms;
+    transition: transform 180ms, opacity 180ms;
   }
 
   &-enter-from,
   &-leave-to {
     opacity: 0;
+    transform: scale(0.6);
   }
 }
 </style>

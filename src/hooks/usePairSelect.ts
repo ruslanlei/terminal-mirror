@@ -31,15 +31,17 @@ export const usePairSelect = () => {
   ) => {
     if (isTogglingFavorite.value) return;
 
-    const isFavorite = marketStore.favoritePairs.includes(id);
+    const favoritePair = marketStore.favoritePairs.find(
+      (favoritePair) => favoritePair.pair === id,
+    );
 
     isTogglingFavorite.value = true;
 
-    await (
-      isFavorite
-        ? marketStore.removeFromFavorites
-        : marketStore.addToFavorites
-    )(id);
+    if (favoritePair) {
+      await marketStore.removeFromFavorites(favoritePair.id);
+    } else {
+      await marketStore.addToFavorites(id);
+    }
 
     isTogglingFavorite.value = false;
   };

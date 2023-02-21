@@ -5,6 +5,7 @@
     :container-gap="20"
     :distance="16"
     :is-disabled="blockCalendar"
+    @trigger-click="onTriggerClick"
   >
     <template #trigger>
       <button :class="[$style.trigger, $style[state]]">
@@ -91,6 +92,10 @@ watch([localValue, computedIntl], () => {
 }, { immediate: true });
 
 const isCalendarVisible = ref(false);
+
+const onTriggerClick = () => {
+  emit('triggerClick');
+};
 </script>
 
 <style lang="scss" module>

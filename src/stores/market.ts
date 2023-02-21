@@ -225,6 +225,10 @@ export const useMarketStore = defineStore('market', () => {
 
   const closedOrders = ref<Order[]>([]);
 
+  const isActiveOrdersForCurrentPairExists = computed(
+    () => activeOrders.value.some((order: Order) => order.pair === activePair.value),
+  );
+
   const getActiveOrdersList = async () => {
     const response = await requestMany<Order[][]>([
       getOrdersList('new'),
@@ -316,6 +320,7 @@ export const useMarketStore = defineStore('market', () => {
     createStopLoss,
     activeOrders,
     closedOrders,
+    isActiveOrdersForCurrentPairExists,
     getActiveOrdersList,
     getClosedOrdersList,
     deleteOrder: handleDeleteOrder,

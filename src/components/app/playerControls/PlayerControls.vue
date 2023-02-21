@@ -14,6 +14,8 @@
         v-model="emulatorDate"
         :max-date="activePairData?.to_date"
         :min-date="activePairData?.from_date"
+        :block-calendar="isActiveOrdersForCurrentPairExists"
+        @trigger-click="onDatepickerClick"
       />
     </header>
     <div :class="$style.controls">
@@ -51,7 +53,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Card from '@/components/core/card/Card.vue';
 import Datepicker from '@/components/core/datepicker/Datepicker.vue';
@@ -63,14 +65,18 @@ import { useEmulatorStore } from '@/stores/emulator';
 import { storeToRefs } from 'pinia';
 import { useChartDataStore } from '@/stores/chartData';
 import { useMarketStore } from '@/stores/market';
+import { modalType, useModalStore } from '@/stores/modals';
 import PlayButton from './playButton/PlayButton.vue';
 import RewindButton from './rewindButton/RewindButton.vue';
 
 const { t } = useI18n();
 
+const modalStore = useModalStore();
+
 const marketStore = useMarketStore();
 const {
   activePairData,
+  isActiveOrdersForCurrentPairExists,
 } = storeToRefs(marketStore);
 
 const chartDataStore = useChartDataStore();
@@ -92,6 +98,14 @@ const isDisabled = computed(() => [
   isFetchingCandles.value,
   isCalculatingResult.value,
 ].some(Boolean));
+
+const onDatepickerClick = () => {
+  if (!isActiveOrdersForCurrentPairExists.value) return;
+
+  modalStore.showModal({
+    type: modalType.CHANGE_PLAYER_DATE_ALERT,
+  });
+};
 </script>
 
 <style lang="scss" module>

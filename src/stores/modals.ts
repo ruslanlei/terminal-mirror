@@ -6,6 +6,7 @@ export enum modalType {
   CONFIRM = 'confirm',
   SUCCESS_SIGN_UP = 'successSignUp',
   DELETE_ORDER = 'deleteOrder',
+  CHANGE_PLAYER_DATE_ALERT = 'changePlayerDateAlert'
 }
 
 export type Modal = {

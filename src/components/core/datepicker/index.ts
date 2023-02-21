@@ -12,4 +12,5 @@ export interface DatepickerProps {
 
 export interface DatepickerEmits {
   (e: 'update:modelValue', value: string): void,
+  (e: 'triggerClick'): void,
 }

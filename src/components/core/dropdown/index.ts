@@ -14,4 +14,5 @@ export interface DropdownProps {
 
 export interface DropdownEmits {
   (e: 'update:isVisible', value: boolean): void,
+  (e: 'triggerClick'): void,
 }

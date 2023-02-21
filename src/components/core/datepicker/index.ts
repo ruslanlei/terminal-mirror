@@ -7,6 +7,7 @@ export interface DatepickerProps {
   placement: DropdownProps['placement'],
   maxDate?: Date | string,
   minDate?: Date | string,
+  blockCalendar?: boolean,
 }
 
 export interface DatepickerEmits {

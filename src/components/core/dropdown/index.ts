@@ -9,6 +9,7 @@ export interface DropdownProps {
   keepWithinWindowHorizontal?: boolean,
   containerGap?: number,
   automaticReplace?: boolean,
+  isDisabled?: boolean,
 }
 
 export interface DropdownEmits {

@@ -4,6 +4,7 @@
     :placement="placement"
     :container-gap="20"
     :distance="16"
+    :is-disabled="blockCalendar"
   >
     <template #trigger>
       <button :class="[$style.trigger, $style[state]]">

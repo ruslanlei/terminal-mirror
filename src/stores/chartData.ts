@@ -3,7 +3,8 @@ import { defineStore, storeToRefs } from 'pinia';
 import { useMarketStore } from '@/stores/market';
 import { Candle } from '@/api/types/marketData';
 import {
-  getCandleField, getCandlesWithin24HoursFromLastCandleDate,
+  getCandleField,
+  getCandlesWithin24HoursFromLastCandleDate,
   mixCandles,
 } from '@/helpers/candles';
 import { getCandles, GetCandlesDTO } from '@/api/endpoints/marketdata/candles';
@@ -34,14 +35,14 @@ export const useChartDataStore = defineStore('chartData', () => {
   const candlesMap = useStorage<CandlesMap>('candlesMap', {});
   const candles = computed<Candle[]>(() => candlesMap.value?.[activePair.value] || []);
 
-  const lastCandle = computed<Candle | null>(() => candles.value.at(-1) || null);
+  const lastCandle = computed<Candle | null>(() => getLastElement(candles.value));
 
   const candlesWithinLast24Hours = computed<Candle[]>(
     () => getCandlesWithin24HoursFromLastCandleDate(candles.value),
   );
 
   const firstCandleInLast24Hours = computed<Candle | null>(
-    () => candlesWithinLast24Hours.value?.[0] || null,
+    () => getFirstElement(candlesWithinLast24Hours.value),
   );
 
   const currentPrice = computed(() => getCandleField('closePrice', lastCandle.value));

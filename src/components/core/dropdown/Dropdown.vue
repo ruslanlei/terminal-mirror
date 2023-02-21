@@ -249,7 +249,7 @@ watch(localIsVisible, () => {
 });
 
 const onTriggerClick = () => {
-  if (!props.toggleByClick) return;
+  if (!props.toggleByClick || props.isDisabled) return;
 
   localIsVisible.value = !localIsVisible.value;
 };

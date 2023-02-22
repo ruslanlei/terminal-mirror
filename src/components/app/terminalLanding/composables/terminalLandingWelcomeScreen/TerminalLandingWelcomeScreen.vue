@@ -64,6 +64,7 @@ const illustrationSrcset = computed(() => collectSrcSet([
 <style lang="scss" module>
 .terminalLandingWelcomeScreen {
   height: calc(100 * var(--vh));
+  position: relative;
 }
 
 .tradingViewBadge {
@@ -76,6 +77,36 @@ const illustrationSrcset = computed(() => collectSrcSet([
   display: flex;
   flex-direction: column;
   align-items: center;
+  &::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    pointer-events: none;
+    height: calc(40 * var(--vh));
+    width: 100%;
+    background:
+        linear-gradient(
+            to bottom,
+            rgb(var(--color-background-1)),
+            rgba(var(--color-background-1), 0)
+        );
+  }
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: 0;
+    pointer-events: none;
+    height: calc(40 * var(--vh));
+    width: 100%;
+    background:
+        linear-gradient(
+            to top,
+            rgb(var(--color-background-1)),
+            rgba(var(--color-background-1), 0)
+        );
+  }
 }
 
 .label {

@@ -15,6 +15,7 @@
 <style lang="scss" module>
 .terminalLandingContainer {
   height: 3000px; // temporary
+  background-color: rgb(var(--color-background-1));
 }
 
 .header {

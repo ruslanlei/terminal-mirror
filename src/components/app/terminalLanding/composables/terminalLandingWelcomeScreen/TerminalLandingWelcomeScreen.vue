@@ -4,7 +4,7 @@
     :srcset="illustrationSrcset"
     :content-class="$style.content"
   >
-    test
+    <BadgeSupportedByTradingView />
   </ImageBackgroundBlock>
 </template>
 
@@ -16,6 +16,7 @@ import { collectSrcSet } from '@/helpers/dom';
 import BackgroundPng from '@/assets/images/auth/background.png';
 import BackgroundWebp from '@/assets/images/auth/background.webp';
 import BackgroundAvif from '@/assets/images/auth/background.avif';
+import BadgeSupportedByTradingView from '@/components/app/badgeSupportedByTradingView/BadgeSupportedByTradingView.vue';
 
 const illustrationSrcset = computed(() => collectSrcSet([
   BackgroundAvif,
@@ -32,5 +33,9 @@ const illustrationSrcset = computed(() => collectSrcSet([
 .content {
   background-color: rgba(var(--color-background-1), 0.8);
   padding-top: 126px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 </style>

@@ -8,7 +8,8 @@
     "no": "No",
     "yes": "Yes",
     "hide": "Hide",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "supportedBy": "Supported by - {supporter}"
   },
   "validationError": {
     "email": "Value is not valid email",

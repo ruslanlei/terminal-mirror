@@ -24,7 +24,7 @@
     <div :class="$style.rightColumn">
       <Button
         :state="['gradientColor']"
-        size="lg"
+        size="xl"
         :is-wide="false"
         :class="$style.signUpButton"
       >

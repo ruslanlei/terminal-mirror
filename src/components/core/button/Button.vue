@@ -137,10 +137,27 @@ const computedLoaderSize = computed(
   }
 }
 
+.borderedDefault {
+  color: rgba(var(--color-accent-1));
+  border: 2px solid rgba(var(--color-accent-2), 0.2);
+  &:hover {
+    background-color: rgb(var(--color-background-4));
+  }
+}
+
+.xl {
+  border-radius: 10px;
+  @include text;
+  line-height: 24px;
+  font-weight: 600;
+  padding: 16px;
+}
+
 .lg {
   padding: 15px;
   border-radius: 5px;
   @include text;
+  line-height: 24px;
   font-weight: 600;
 }
 

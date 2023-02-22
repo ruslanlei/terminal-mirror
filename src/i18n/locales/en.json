@@ -255,8 +255,13 @@
     },
     "welcomeScreen": {
       "label": {
-        "part1": "Погружение в трейдинг",
-        "part2": "без потери реальных денег"
+        "part1": "Dive into trading",
+        "part2": "without losing real money"
+      },
+      "description": "Our training terminal helps to safely understand the principles of the crypto market even for a beginner, and helps to safely move on to real trading and earnings on cryptocurrency.",
+      "options": {
+        "tryForFree": "Try for 2 days",
+        "openTerminal": "Go to \"Terminal\""
       }
     }
   }

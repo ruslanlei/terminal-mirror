@@ -8,11 +8,12 @@ export type ButtonState =
   | 'dangerColor'
   | 'interactive'
   | 'textAccent1'
+  | 'borderedDefault'
   | 'textAccent2';
 
 export interface ButtonProps {
   state?: ButtonState | ButtonState[],
-  size?: 'sm' | 'md' | 'lg',
+  size?: 'sm' | 'md' | 'lg' | 'xl',
   isWide?: boolean,
   isDisabled?: boolean,
   isLoading?: boolean,

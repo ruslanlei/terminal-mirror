@@ -19,6 +19,24 @@
         {{ t('terminalLanding.welcomeScreen.label.part2') }}
       </Typography>
     </Typography>
+    <Typography
+      size="title1"
+      :state="['accent1', 'alignCenter']"
+      :class="$style.description"
+    >
+      {{ t('terminalLanding.welcomeScreen.description') }}
+    </Typography>
+    <div :class="$style.options">
+      <Button size="xl">
+        {{ t('terminalLanding.welcomeScreen.options.tryForFree') }}
+      </Button>
+      <Button
+        size="xl"
+        state="borderedDefault"
+      >
+        {{ t('terminalLanding.welcomeScreen.options.openTerminal') }}
+      </Button>
+    </div>
   </ImageBackgroundBlock>
 </template>
 
@@ -32,6 +50,7 @@ import BackgroundWebp from '@/assets/images/auth/background.webp';
 import BackgroundAvif from '@/assets/images/auth/background.avif';
 import BadgeSupportedByTradingView from '@/components/app/badgeSupportedByTradingView/BadgeSupportedByTradingView.vue';
 import Typography from '@/components/app/typography/Typography.vue';
+import Button from '@/components/core/button/Button.vue';
 
 const { t } = useI18n();
 
@@ -62,5 +81,22 @@ const illustrationSrcset = computed(() => collectSrcSet([
 .label {
   max-width: 1030px;
   margin-top: 20px;
+}
+
+.description {
+  margin-top: 20px;
+  max-width: 820px;
+  line-height: 180%;
+}
+
+.options {
+  margin-top: 60px;
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  gap: 20px;
+  & > * {
+    flex-grow: 1;
+  }
 }
 </style>

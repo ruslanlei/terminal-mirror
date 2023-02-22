@@ -263,6 +263,9 @@
         "tryForFree": "Try for 2 days",
         "openTerminal": "Go to \"Terminal\""
       }
+    },
+    "learnToEarn": {
+      "label": "Learn to earn with us"
     }
   }
 }

@@ -23,7 +23,7 @@ const props = withDefaults(
   {
     isInline: false,
     state: () => [],
-    size: () => [],
+    size: () => null,
   },
 );
 
@@ -35,10 +35,16 @@ const computedState = useComputedState(props);
 <style lang="scss" module>
 @import "src/assets/styles/utils";
 
-.typography {}
+.typography {
+  @include massive1;
+}
 
 .massive1 {
-  font-size: 56px;
+  @include massive2;
+}
+
+.massive2 {
+  font-size: 38px;
 }
 
 .h1 {

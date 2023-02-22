@@ -86,11 +86,11 @@ const illustrationSrcset = computed(() => collectSrcSet([
     height: calc(40 * var(--vh));
     width: 100%;
     background:
-        linear-gradient(
-            to bottom,
-            rgb(var(--color-background-1)),
-            rgba(var(--color-background-1), 0)
-        );
+      linear-gradient(
+        to bottom,
+        rgb(var(--color-background-1)),
+        rgba(var(--color-background-1), 0)
+      );
   }
   &::after {
     content: '';
@@ -101,11 +101,11 @@ const illustrationSrcset = computed(() => collectSrcSet([
     height: calc(40 * var(--vh));
     width: 100%;
     background:
-        linear-gradient(
-            to top,
-            rgb(var(--color-background-1)),
-            rgba(var(--color-background-1), 0)
-        );
+      linear-gradient(
+        to top,
+        rgb(var(--color-background-1)),
+        rgba(var(--color-background-1), 0)
+      );
   }
 }
 

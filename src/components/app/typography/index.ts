@@ -12,6 +12,7 @@ export type TypographyState =
 export type TypographySize =
     'h1'
     | 'massive1'
+    | 'massive2'
     | 'title1'
     | 'title2'
     | 'title3'

@@ -1,5 +1,13 @@
 @import "functions";
 
+@mixin massive1 {
+    font-size: 56px;
+}
+
+@mixin massive2 {
+    font-size: 38px;
+}
+
 @mixin h1 {
     font-size: 24px;
     font-weight: 700;

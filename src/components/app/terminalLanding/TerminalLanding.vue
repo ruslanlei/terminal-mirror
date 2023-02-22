@@ -2,13 +2,14 @@
   <div>
     <TerminalLandingContainer :class="$style.terminalLandingLayout">
       <template #header>
-        <TerminalLandingHeader
+        <LandingHeader
           v-model:active-chapter="activeChapter"
           :chapters="chapters"
         />
       </template>
       <template #content>
-        <TerminalLandingWelcomeScreen />
+        <WelcomeScreen />
+        <LearnToEarnScreen />
       </template>
     </TerminalLandingContainer>
   </div>
@@ -17,11 +18,12 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import TerminalLandingWelcomeScreen
-  from '@/components/app/terminalLanding/composables/terminalLandingWelcomeScreen/TerminalLandingWelcomeScreen.vue';
+import WelcomeScreen
+  from '@/components/app/terminalLanding/composables/welcomeScreen/WelcomeScreen.vue';
 import TerminalLandingContainer from '@/containers/terminalLandingContainer/TerminalLandingContainer.vue';
-import TerminalLandingHeader
-  from '@/components/app/terminalLanding/composables/terminalLandingHeader/TerminalLandingHeader.vue';
+import LandingHeader
+  from '@/components/app/terminalLanding/composables/landingHeader/LandingHeader.vue';
+import LearnToEarnScreen from '@/components/app/terminalLanding/composables/learnToEarnScreen/LearnToEarnScreen.vue';
 import { TerminalLandingChapter } from './index';
 
 const { t } = useI18n();

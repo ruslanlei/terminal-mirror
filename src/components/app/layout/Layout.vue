@@ -27,7 +27,6 @@ import BlankLayout from '@/layouts/blankLayout/BlankLayout.vue';
 
 const AuthLayout = defineAsyncComponent(() => import('@/layouts/authLayout/AuthLayout.vue'));
 const MarketLayout = defineAsyncComponent(() => import('@/layouts/marketLayout/MarketLayout.vue'));
-const TerminalLandingLayout = defineAsyncComponent(() => import('@/layouts/terminalLandingLayout/TerminalLandingLayout.vue'));
 
 const route = useRoute();
 const commonStore = useCommonStore();
@@ -36,7 +35,6 @@ const layoutsMap: Record<string, any> = {
   market: MarketLayout,
   blank: BlankLayout,
   auth: AuthLayout,
-  terminalLanding: TerminalLandingLayout,
 };
 
 const Layout = computed(() => {

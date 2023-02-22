@@ -28,7 +28,7 @@ withDefaults(
 </script>
 
 <style lang="scss" module>
-@import "@/assets/styles/utils";
+@import "src/assets/styles/utils";
 
 .link {
   cursor: pointer;

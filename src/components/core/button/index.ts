@@ -6,7 +6,9 @@ export type ButtonState =
   | 'secondary2Color'
   | 'successColor'
   | 'dangerColor'
-  | 'interactive';
+  | 'interactive'
+  | 'textAccent1'
+  | 'textAccent2';
 
 export interface ButtonProps {
   state?: ButtonState | ButtonState[],

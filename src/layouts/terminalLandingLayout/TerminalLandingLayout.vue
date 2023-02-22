@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import TerminalLandingHeader from '@/components/app/terminalLandingHeader/TerminalLandingHeader.vue';
+import TerminalLandingHeader from '@/components/app/terminalLanding/composables/terminalLandingHeader/TerminalLandingHeader.vue';
 import TerminalLandingContainer from '@/containers/terminalLandingContainer/TerminalLandingContainer.vue';
 </script>
 

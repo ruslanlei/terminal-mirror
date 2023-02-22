@@ -3,7 +3,7 @@
     :style="computedStyles"
     :class="$style.header"
   >
-    <Logo size="sm" />
+    <Logo />
     <div :class="$style.leftColumn">
       <slot name="leftColumn" />
     </div>

@@ -243,5 +243,14 @@
   "changePlayerDateModal": {
     "label": "To change date in the player, you need to delete and/or close all existing orders. Delete and/or close orders right now?",
     "submitText": "Close/delete all orders"
+  },
+  "terminalLanding": {
+    "chapter": {
+      "about": "About project",
+      "forWhom": "For whom",
+      "advantages": "Advantages",
+      "tariffs": "Tariffs",
+      "faq": "FAQ"
+    }
   }
 }

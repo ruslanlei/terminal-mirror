@@ -1,16 +1,14 @@
 <template>
-  <div>
-    about terminal
-  </div>
+  <TerminalLanding />
 </template>
 
 <route lang="yaml">
 meta:
-  layout: terminalLanding
+  layout: blank
 </route>
 
 <script setup lang="ts">
-
+import TerminalLanding from '@/components/app/terminalLanding/TerminalLanding.vue';
 </script>
 
 <style lang="scss" module>

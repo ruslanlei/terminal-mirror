@@ -79,12 +79,23 @@ const computedLoaderSize = computed(
 }
 
 .interactive {
-  transition: background-color 200ms;
+  transition: background-color 200ms, color 200ms;
   &:focus, &:hover {
     //transform: scale(1.01);
   }
   &:active {
     transform: scale(0.99);
+  }
+}
+
+.textAccent1 {
+  color: rgba(var(--color-accent-1));
+}
+
+.textAccent2 {
+  color: rgba(var(--color-accent-2));
+  &:hover {
+    color: rgba(var(--color-accent-1));
   }
 }
 

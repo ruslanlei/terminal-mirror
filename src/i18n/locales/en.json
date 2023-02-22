@@ -252,6 +252,12 @@
       "advantages": "Advantages",
       "tariffs": "Tariffs",
       "faq": "FAQ"
+    },
+    "welcomeScreen": {
+      "label": {
+        "part1": "Погружение в трейдинг",
+        "part2": "без потери реальных денег"
+      }
     }
   }
 }

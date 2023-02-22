@@ -37,6 +37,10 @@ const computedState = useComputedState(props);
 
 .typography {}
 
+.massive1 {
+  font-size: 56px;
+}
+
 .h1 {
   @include h1;
 }
@@ -95,6 +99,12 @@ const computedState = useComputedState(props);
 
 .danger {
   color: rgb(var(--color-danger));
+}
+
+.gradientPrimary {
+  background: var(--color-main-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .bold {

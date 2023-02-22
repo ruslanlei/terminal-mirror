@@ -6,10 +6,12 @@ export type TypographyState =
     | 'alignCenter'
     | 'medium'
     | 'accent1'
+    | 'gradientPrimary'
     | 'accent2';
 
 export type TypographySize =
     'h1'
+    | 'massive1'
     | 'title1'
     | 'title2'
     | 'title3'

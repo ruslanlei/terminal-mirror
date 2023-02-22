@@ -23,9 +23,10 @@
       <TakeProfitList
         v-model="takeProfits"
         v-model:take-profits-amount="takeProfitsAmount"
-        :currency="baseCurrency"
         :order-price="model.price"
         :order-quantity="model.quantity"
+        :base-currency-decimals="baseCurrencyDecimals"
+        :base-currency-step="baseCurrencyStep"
       />
     </template>
     <template #ratio>
@@ -33,14 +34,14 @@
         :ratio="ratio"
         :profit="profitDisplayValue"
         :risk="riskDisplayValue"
-        :quote-currency="quoteCurrency"
       />
     </template>
     <template #submit="{ buttonClass }">
       <Button
         type="button"
         :class="buttonClass"
-        :state="['successColor', 'mdSize']"
+        state="successColor"
+        size="md"
         @click="onSubmit"
       >
         {{ t('common.save') }}
@@ -58,16 +59,22 @@ import TakeProfitList from '@/components/app/takeProfitList/TakeProfitList.vue';
 import NumberInput from '@/components/core/numberInput/NumberInput.vue';
 import OrderFormRatio from '@/components/app/orderFormRatio/OrderFormRatio.vue';
 import { useOrderFormInject } from '@/hooks/useOrderFormInject';
+import { useMarketStore } from '@/stores/market';
+import { storeToRefs } from 'pinia';
 import { OrderFormTakeProfitPartEmits } from './index';
 
 const emit = defineEmits<OrderFormTakeProfitPartEmits>();
 
 const { t } = useI18n();
 
+const marketStore = useMarketStore();
+const {
+  baseCurrencyDecimals,
+  baseCurrencyStep,
+} = storeToRefs(marketStore);
+
 const {
   model,
-  quoteCurrency,
-  baseCurrency,
   takeProfits,
   isTakeProfitsEnabled,
   maxTakeProfits,

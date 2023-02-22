@@ -3,7 +3,7 @@ import { computed } from 'vue';
 export const useLocalValue = <T>(
   props: Record<any, any>,
   emit: any,
-  field: string,
+  field: string = 'modelValue',
 ) => {
   const event = `update:${field}`;
 

@@ -22,7 +22,8 @@
       <template #submit>
         <Button
           type="submit"
-          :state="['gradientColor', 'lgSize']"
+          state="gradientColor"
+          size="lg"
           :is-loading="isLoading"
         >
           {{ t('auth.forgotPassword.submit') }}

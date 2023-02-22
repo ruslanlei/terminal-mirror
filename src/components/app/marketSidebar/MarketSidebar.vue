@@ -2,7 +2,7 @@
   <Tabs
     v-model="activeTab"
     :tabs="tabs"
-    :class="$style.orderForm"
+    :class="[$style.orderForm, isDisabled && $style.disabled]"
   >
     <template #tab(orders)>
       <OrderForm />
@@ -20,8 +20,21 @@ import Tabs from '@/components/core/tabs/Tabs.vue';
 import { TabsProps } from '@/components/core/tabs';
 import OrderForm from '@/components/app/orderForm/OrderForm.vue';
 import PairSelect from '@/components/app/pairSelect/PairSelect.vue';
+import { storeToRefs } from 'pinia';
+import { useChartDataStore } from '@/stores/chartData';
+import { useEmulatorStore } from '@/stores/emulator';
 
 const { t } = useI18n();
+
+const chartDataStore = useChartDataStore();
+const {
+  isFetchingCandles,
+} = storeToRefs(chartDataStore);
+
+const emulatorStore = useEmulatorStore();
+const {
+  isRewinding,
+} = storeToRefs(emulatorStore);
 
 const activeTab = ref('orders');
 
@@ -36,11 +49,18 @@ const tabs = computed<TabsProps['tabs']>(() => [
   },
 ]);
 
+const isDisabled = computed(() => [
+  isRewinding.value,
+  isFetchingCandles.value,
+].some(Boolean));
 </script>
 
 <style lang="scss" module>
+@import "src/assets/styles/utils";
+
 .orderForm {
   height: 100%;
   border-radius: 10px;
+  @include transparentOnDisabled;
 }
 </style>

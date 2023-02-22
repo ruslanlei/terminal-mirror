@@ -79,10 +79,10 @@ export const useTable = (
     }),
   ));
 
-  const onRowClick = (id: TableRecord['id']) => {
+  const onRowClick = (record: TableRecord) => {
     if (!props.isRowsClickable) return;
 
-    emit('record-click', id);
+    emit('record-click', record);
   };
 
   return {

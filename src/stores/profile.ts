@@ -12,8 +12,6 @@ export const useProfileStore = defineStore('profile', () => {
 
   const profile = useStorage<Profile | null>('profile', null);
 
-  const balance = ref(0);
-
   const isFetchingProfile = ref(false);
   const handleGetProfile = async () => {
     isFetchingProfile.value = true;
@@ -34,6 +32,5 @@ export const useProfileStore = defineStore('profile', () => {
     profile,
     isFetchingProfile,
     getProfile: handleGetProfile,
-    balance,
   };
 });

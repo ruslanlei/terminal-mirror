@@ -29,7 +29,8 @@
         v-model:quantity="takeProfit.quantity"
         :order-price="orderPrice"
         :order-quantity="orderQuantity"
-        :currency="currency"
+        :base-currency-step="baseCurrencyStep"
+        :base-currency-decimals="baseCurrencyDecimals"
         @quantity-input="onUpdateTakeProfitQuantity(takeProfitIndex)"
       />
     </div>
@@ -37,15 +38,14 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import TakeProfitInput from '@/components/core/takeProfitInput/TakeProfitInput.vue';
 import { useLocalValue } from '@/hooks/useLocalValue';
 import { TakeProfitListEmit, TakeProfitListProps } from '@/components/app/takeProfitList/index';
-import { TakeProfit } from '@/stores/market';
 import { subtract } from '@/helpers/number';
 import { reduceTakeProfitsToQuantitiesSum } from '@/helpers/math/formulas/takeProfit';
 import { awaitFrame } from '@/utils/window';
+import { TakeProfit } from '@/api/types/order';
 
 const props = defineProps<TakeProfitListProps>();
 
@@ -56,8 +56,6 @@ const { t } = useI18n();
 const localValue = useLocalValue<TakeProfit[]>(props, emit, 'modelValue');
 
 const takeProfitsAmount = useLocalValue<number>(props, emit, 'takeProfitsAmount');
-
-const maxAllowedDecimals = computed(() => props.currency.decimals * 6);
 
 const fixSumOfTakeProfits = async (borrowFromFirst: boolean) => {
   const sumOfTakeProfits = reduceTakeProfitsToQuantitiesSum(localValue.value);

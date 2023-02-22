@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import { compose, curry } from '@/utils/fp';
 import now from 'lodash/now';
-import { divideRight, multiply } from '@/helpers/number';
+import { divide, divideRight, multiply } from '@/helpers/number';
 
 export {
   now as dateNow,
@@ -18,6 +18,12 @@ export const humanizeDate = (
 ): string => dayjs(date).format('DD/MM/YYYY');
 
 export const secondsToMilliseconds = (seconds: number) => multiply(seconds, 1000);
+export const millisecondsToSeconds = (milliseconds: number) => divide(milliseconds, 1000);
+export const addMilliseconds = curry((
+  milliseconds: number,
+  date: DateValue,
+) => dayjs(date).add(milliseconds, 'millisecond'));
+
 export const addSeconds = curry((
   seconds: number,
   date: DateValue,
@@ -43,10 +49,15 @@ export const addHours = curry((
   date: DateValue,
 ) => dayjs(date).add(days, 'hours'));
 
-export const subtractDays = curry((
-  months: number,
+export const addDays = curry((
+  days: number,
   date: DateValue,
-) => dayjs(date).subtract(months, 'days'));
+) => dayjs(date).add(days, 'days'));
+
+export const subtractDays = curry((
+  days: number,
+  date: DateValue,
+) => dayjs(date).subtract(days, 'days'));
 
 export const subtractMonths = curry((
   months: number,

@@ -6,6 +6,7 @@
     :records="computedRecords"
     :state="state"
     :is-rows-clickable="true"
+    appearance-animation-type="bubbling"
     @record-click="onRecordClick"
   >
     <template
@@ -25,18 +26,30 @@
         </div>
       </div>
     </template>
-    <template #cell(pairs)="{ data: { base, quote } }">
+    <template #cell(common)="{ data: { isFavorite, pairId, base, quote } }">
       <button
         type="button"
         :class="$style.addToFavorites"
+        @click.stop="onToggleFavorite(pairId)"
       >
-        <Icon
-          :size="24"
-          icon="star"
-        />
+        <Typography
+          :state="isFavorite ? 'accent1' : 'accent2' "
+          is-inline
+        >
+          <transition
+            name="favoriteStarTransition"
+            mode="out-in"
+          >
+            <Icon
+              :key="isFavorite"
+              :size="24"
+              :icon="isFavorite ? 'starFilled' : 'star'"
+            />
+          </transition>
+        </Typography>
       </button>
-      <CurrencyLogo
-        :currency="base"
+      <CoinLogo
+        :coin="base"
         :class="$style.currencyLogo"
       />
       <div :class="$style.pairName">
@@ -66,11 +79,13 @@ import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Table from '@/components/core/table/Table.vue';
 import TrendingIcon from '@/components/core/trendingIcon/TrendingIcon.vue';
-import CurrencyLogo from '@/components/core/currencyLogo/CurrencyLogo.vue';
+import CoinLogo from '@/components/core/coinLogo/CoinLogo.vue';
 import Icon from '@/components/core/icon/Icon.vue';
 import { SortDirection } from '@/components/core/table';
 import { humanizeNumber } from '@/utils/number';
 import { PairData } from '@/api/types/pair';
+import { useMarketStore } from '@/stores/market';
+import Typography from '@/components/app/typography/Typography.vue';
 import {
   PairsTableColumn, PairsTableEmits,
   PairsTableProps,
@@ -83,10 +98,12 @@ const emit = defineEmits<PairsTableEmits>();
 
 const { t } = useI18n();
 
+const marketStore = useMarketStore();
+
 const columns = computed<PairsTableColumn[]>(() => [
   {
     label: t('pairs.table.pairs'),
-    slug: 'pairs',
+    slug: 'common',
     sortable: true,
     size: 1,
   },
@@ -106,7 +123,9 @@ const computedRecords = computed<PairsTableRecord[]>(
   () => props.pairs.map((pair: PairData) => ({
     id: pair.id,
     data: {
-      pairs: {
+      common: {
+        isFavorite: marketStore.favoritePairs.some((favoritePair) => favoritePair.pair === pair.id),
+        pairId: pair.id,
         base: pair.base,
         quote: pair.quote,
       },
@@ -117,8 +136,14 @@ const computedRecords = computed<PairsTableRecord[]>(
   })),
 );
 
-const onRecordClick = (id: PairData['id']) => {
-  emit('selectPair', id);
+const onRecordClick = (record: PairsTableRecord) => {
+  emit('selectPair', record.id as PairData['id']);
+};
+
+const onToggleFavorite = (
+  pairId: PairData['id'],
+) => {
+  emit('toggleFavorite', pairId);
 };
 </script>
 
@@ -170,5 +195,20 @@ const onRecordClick = (id: PairData['id']) => {
   @include title5;
   color: rgb(var(--color-accent-2));
   text-align: right;
+}
+</style>
+
+<style lang="scss">
+.favoriteStarTransition {
+  &-enter-active,
+  &-leave-active {
+    transition: transform 180ms, opacity 180ms;
+  }
+
+  &-enter-from,
+  &-leave-to {
+    opacity: 0;
+    transform: scale(0.6);
+  }
 }
 </style>

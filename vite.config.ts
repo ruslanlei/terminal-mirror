@@ -50,7 +50,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://tradejedizzz123.xyz',
+        target: 'https://macro-freedom.com',
         changeOrigin: true,
         secure: false,
         ws: true,

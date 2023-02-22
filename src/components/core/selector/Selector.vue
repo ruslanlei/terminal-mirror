@@ -8,52 +8,58 @@
     </div>
     <div
       ref="container"
-      :class="[
-        $style.options,
-        ...states.map((s) => $style[s])
-      ]"
     >
-      <button
-        v-for="option in options"
-        :ref="optionElement => { optionRefs[option.value] = optionElement }"
-        :key="option.value"
-        type="button"
+      <transition-group
+        name="selectorElementAppearance"
+        tag="div"
         :class="[
-          $style.item,
-          localValue === option.value && $style.active,
-          ...[localValue === option.value && option?.activeState
-            ? [$style[option.activeState]]
-            : []
-          ],
-          ...[option?.state
-            ? [$style[option.state]]
-            : []
-          ]
+          $style.options,
+          ...computedStates,
         ]"
-        :data-value="option.value"
-        @click="onOptionClick(option)"
+        @before-leave="onElementRemove"
       >
-        <slot
-          name="option"
-          :option="option"
-          :active-option="localValue"
-        >
-          {{ option.label }}
-        </slot>
-      </button>
-      <div
-        :style="computedGhostStyles"
-        :class="[
-          $style.ghost,
-          isGhostAppearAnimation && $style.animated,
-          ...[activeOption?.ghostState
-            ? [
-              $style[activeOption.ghostState]
+        <button
+          v-for="option in options"
+          :ref="optionElement => { optionRefs[option.value] = optionElement }"
+          :key="option.value"
+          type="button"
+          :class="[
+            $style.item,
+            localValue === option.value && $style.active,
+            ...[localValue === option.value && option?.activeState
+              ? [$style[option.activeState]]
+              : []
+            ],
+            ...[option?.state
+              ? [$style[option.state]]
+              : []
             ]
-            : []
-          ]
-        ]"
-      />
+          ]"
+          :data-value="option.value"
+          @click="onOptionClick(option)"
+        >
+          <slot
+            name="option"
+            :option="option"
+            :active-option="localValue"
+          >
+            {{ option.label }}
+          </slot>
+        </button>
+        <div
+          :style="computedGhostStyles"
+          :class="[
+            $style.ghost,
+            isGhostAppearAnimation && $style.animated,
+            ...[activeOption?.ghostState
+              ? [
+                $style[activeOption.ghostState]
+              ]
+              : []
+            ]
+          ]"
+        />
+      </transition-group>
     </div>
   </div>
 </template>
@@ -61,7 +67,6 @@
 <script setup lang="ts">
 import {
   ref,
-  computed,
   watch,
   onMounted,
   onBeforeUnmount,
@@ -69,7 +74,9 @@ import {
 } from 'vue';
 import { useLocalValue } from '@/hooks/useLocalValue';
 import { useEnvironmentObserver } from '@/hooks/useEnvironmentObserver';
-import { arrayFrom } from '@/utils/array';
+import { useComputedState } from '@/hooks/useComputedState';
+import { addCssProperty, getRect, toCssPxValue } from '@/helpers/style';
+import { compose } from '@/utils/fp';
 import { SelectorEmits, SelectorOption, SelectorProps } from './index';
 
 const props = withDefaults(
@@ -82,7 +89,7 @@ const props = withDefaults(
 );
 const emit = defineEmits<SelectorEmits>();
 
-const states = computed(() => arrayFrom(props.state));
+const computedStates = useComputedState(props);
 
 if (!props.modelValue) {
   throw new Error('[MultiSwitch Error]: modelValue is not passed (check v-model)');
@@ -143,10 +150,23 @@ const computedGhostStyles = ref({
 const findActiveTab = () => {
   if (!container.value || !localValue.value) return;
 
-  const activeTabElement = optionRefs.value[localValue.value];
+  const activeTabElement = optionRefs.value?.[localValue.value];
 
-  const { left: containerLeft } = container.value.getBoundingClientRect();
-  const { width, height, left } = activeTabElement.getBoundingClientRect();
+  if (!activeTabElement) {
+    Object.assign(computedGhostStyles.value, {
+      width: '0px',
+      height: 'auto',
+      left: '0px',
+      top: '0px',
+    });
+
+    return;
+  }
+
+  const { left: containerLeft, top: containerTop } = container.value.getBoundingClientRect();
+  const {
+    width, height, left, top,
+  } = activeTabElement.getBoundingClientRect();
 
   const { thickening } = props;
 
@@ -155,7 +175,21 @@ const findActiveTab = () => {
   computedGhostStyles.value.width = `${width + normalized}px`;
   computedGhostStyles.value.height = `${height + normalized}px`;
   computedGhostStyles.value.left = `${(left - containerLeft) - (normalized / 2)}px`;
-  computedGhostStyles.value.top = `${-(normalized / 2)}px`;
+  computedGhostStyles.value.top = `${(top - containerTop) - (normalized / 2)}px`;
+};
+
+const onElementRemove = (removingElement: HTMLElement) => {
+  // add exact height to make element
+  // animate it on remove animation.
+
+  const {
+    height,
+  } = getRect(removingElement);
+
+  compose(
+    addCssProperty(['zIndex', 1]),
+    addCssProperty(['height', toCssPxValue(height)]),
+  )(removingElement);
 };
 
 const {
@@ -199,6 +233,10 @@ onBeforeUnmount(removeListeners);
   display: flex;
 }
 
+.vertical {
+  flex-direction: column;
+}
+
 .item {
   position: relative;
   z-index: 2;
@@ -212,7 +250,7 @@ onBeforeUnmount(removeListeners);
 
 .ghost {
   position: absolute;
-  transition: 300ms left, 300ms width, 360ms background-color;
+  transition: 300ms left, 300ms top, 300ms width, 360ms background-color, 300ms opacity;
   border-radius: 5px;
   &.animated {
     animation: options-ghost .7s ease-in-out;
@@ -327,6 +365,32 @@ onBeforeUnmount(removeListeners);
   }
 }
 
+.blueGlassVerticalRight {
+  &.options {
+  }
+  .item {
+    color: rgb(var(--color-accent-2));
+    &.active {
+      color: rgb(var(--color-accent-1));
+    }
+  }
+  .ghost {
+    background-color: rgb(var(--color-background-1));
+    border-right: 2px solid rgb(var(--color-primary-1));
+  }
+}
+
+.specialFavoritesSize {
+  &.options {
+  }
+  .item {
+    flex-grow: 1;
+  }
+  .ghost {
+    border-radius: 0;
+  }
+}
+
 .simpleColor {
   &.options {
   }
@@ -377,5 +441,26 @@ onBeforeUnmount(removeListeners);
 
 .accent1TextColor {
   color: rgb(var(--color-accent-1)) !important;
+}
+</style>
+
+<style lang="scss">
+@import "src/assets/styles";
+
+.selectorElementAppearance {
+  &-enter-active,
+  &-leave-active {
+    transition: opacity 170ms, transform 200ms, height 200ms;
+  }
+  &-enter-from,
+  &-leave-to {
+    opacity: 0;
+    height: 0 !important;
+    transform: scale(0.9) translateY(10px);
+  }
+
+  &-enter-from {
+    transform: scale(0.9) translateY(-10px);
+  }
 }
 </style>

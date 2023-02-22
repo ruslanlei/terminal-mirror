@@ -20,6 +20,7 @@
     "nprogress": "^0.2.0",
     "numeral": "^2.0.6",
     "pinia": "^2.0.29",
+    "rambda": "^7.4.0",
     "uuid": "^9.0.0",
     "vue": "^3.2.45",
     "vue-flatpickr-component": "^11.0.1",

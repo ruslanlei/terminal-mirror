@@ -1,36 +1,37 @@
 import {
   compose,
-  curry, getLength,
+  curry,
   map,
-  reduce,
 } from '@/utils/fp';
-import { TakeProfit } from '@/stores/market';
 import {
   add,
-  divide, divideRight,
+  divide,
+  divideRight,
   multiply,
   roundToDecimalPoint,
   subtractRight,
 } from '@/helpers/number';
 import { calculateOnePercent } from '@/helpers/math/percents';
+import { TakeProfit } from '@/api/types/order';
+import { getLength, reduce } from '@/utils/array';
 
 export const reduceTakeProfitsToAmountOfProfit = (
   takeProfits: TakeProfit[],
 ): number => reduce(
-  takeProfits,
   (total: number, { price, quantity }: TakeProfit) => compose(
     add(total),
     multiply(quantity),
   )(price),
   0,
+  takeProfits,
 );
 
 export const reduceTakeProfitsToQuantitiesSum = (
   takeProfits: TakeProfit[],
 ): number => reduce(
-  takeProfits,
   (quantitiesSum: number, { quantity }: TakeProfit) => add(quantitiesSum, quantity),
   0,
+  takeProfits,
 );
 
 export const reduceTakeProfitsToAmountOfProfitAndRound = curry((

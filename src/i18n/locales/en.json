@@ -4,8 +4,11 @@
     "save": "Save",
     "currencyAmount": "{amount} {currency}",
     "percents": "{value}%",
+    "slash": "{value1}/{value2}",
     "no": "No",
-    "yes": "Yes"
+    "yes": "Yes",
+    "hide": "Hide",
+    "cancel": "Cancel"
   },
   "validationError": {
     "email": "Value is not valid email",
@@ -14,7 +17,8 @@
     "passwordsMismatch": "Passwords should be equal to each other",
     "tokenInvalidOrNotProvided": "Passed token is invalid or not provided",
     "min": "Value must be greater than or equal to {min}",
-    "onlyLatinCharactersAndNumbers": "Field must contain only latin characters and numbers"
+    "onlyLatinCharactersAndNumbers": "Field must contain only latin characters and numbers",
+    "positive": "Number should be positive"
   },
   "placeholder": {
     "email": "Enter your email",
@@ -89,6 +93,9 @@
     },
     "failedToGetPairs": "Failed to get pairs"
   },
+  "favorites": {
+    "label": "Favorites"
+  },
   "emulator": {
     "player": {
       "label": "Player",
@@ -96,7 +103,7 @@
       "orderInteractionsWarning": "Editing or adding orders will pause the player"
     }
   },
-  "currencyStats": {
+  "pairStats": {
     "price": "Price",
     "amount": "Amount",
     "change": "Change",
@@ -230,6 +237,11 @@
       "quantityPercent": "/ {percent} of position",
       "volume": "{volume} {currency}"
     },
+    "placeholder": "You don't have Orders. Create an order and it will appear here",
     "edit": "Edit"
+  },
+  "changePlayerDateModal": {
+    "label": "To change date in the player, you need to delete and/or close all existing orders. Delete and/or close orders right now?",
+    "submitText": "Close/delete all orders"
   }
 }

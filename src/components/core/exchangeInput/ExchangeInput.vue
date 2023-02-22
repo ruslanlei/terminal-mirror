@@ -35,8 +35,12 @@ import { ExchangeInputProps, ExchangeInputEmits } from './index';
 const props = defineProps<ExchangeInputProps>();
 
 const {
-  baseCurrency,
-  quoteCurrency,
+  quoteCurrencyDecimals,
+  baseCurrencyDecimals,
+  baseCurrencyStep,
+  price,
+  balance,
+  leverage,
 } = toRefs(props);
 
 const emit = defineEmits<ExchangeInputEmits>();
@@ -46,8 +50,11 @@ const {
   decrementDeposit,
   maxQuoteCurrencyDeposit,
 } = useExchange(
-  baseCurrency,
-  quoteCurrency,
+  quoteCurrencyDecimals,
+  baseCurrencyStep,
+  price,
+  balance,
+  leverage,
 );
 
 const normalizer: NumberInputNormalizer = (
@@ -63,13 +70,13 @@ const normalizer: NumberInputNormalizer = (
 
 const localValue = computed({
   get: () => compose(
-    roundToDecimalPoint(quoteCurrency.value.decimals),
-    multiply(baseCurrency.value.price),
+    roundToDecimalPoint(quoteCurrencyDecimals.value),
+    multiply(price.value),
   )(props.modelValue),
   set: (value: number) => {
     emit('update:modelValue', compose(
-      roundToDecimalPoint(baseCurrency.value.decimals),
-      divideRight(baseCurrency.value.price),
+      roundToDecimalPoint(baseCurrencyDecimals.value),
+      divideRight(price.value),
     )(value));
   },
 });

@@ -1,4 +1,4 @@
-import { reduce } from '@/utils/fp';
+import { reduce } from '@/utils/array';
 
 export const arrayOfElements = (
   selector: string,
@@ -7,10 +7,10 @@ export const arrayOfElements = (
 export const collectSrcSet = (
   src: string[],
 ) => reduce(
-  src,
   (
     srcset: string,
     link: string,
   ) => (srcset === '' ? `${link}` : `${srcset}, ${link}`),
   '',
+  src,
 );

@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.pairsSelectContainer">
+  <div :class="[$style.pairsSelectContainer, isBusy && $style.disabled]">
     <div :class="$style.search">
       <slot name="search" />
     </div>
@@ -13,6 +13,9 @@
 </template>
 
 <script setup lang="ts">
+import { PairsSelectContainerProps } from '@/containers/pairsSelectContainer/index';
+
+const props = defineProps<PairsSelectContainerProps>();
 </script>
 
 <style lang="scss" module>
@@ -24,6 +27,7 @@
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  @include transparentOnDisabled;
 }
 
 .tableWrapper {

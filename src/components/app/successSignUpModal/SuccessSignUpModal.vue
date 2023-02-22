@@ -16,7 +16,8 @@
     >
       <Button
         type="button"
-        :state="['gradientColor', 'lgSize']"
+        state="gradientColor"
+        size="lg"
         :class="$style.loginLink"
         @click="close"
       >

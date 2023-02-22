@@ -53,7 +53,8 @@
               <template #submit>
                 <Button
                   type="submit"
-                  :state="['gradientColor', 'mdSize', 'interactive']"
+                  :state="['gradientColor', 'interactive']"
+                  size="md"
                   :class="$style.submit"
                   :is-loading="isLoading"
                 >
@@ -118,8 +119,10 @@ const {
   takeProfits,
   takeProfitsIncomeSum,
   isTakeProfitsEnabled,
-  quoteCurrency,
-  baseCurrency,
+  activePairData,
+  baseCurrencyStep,
+  price,
+  leverage,
   autoCalculateTakeProfits,
   maxTakeProfits,
   takeProfitsAmount,
@@ -179,7 +182,7 @@ const profitDisplayValue = computed(() => t('order.takeProfit.profitValue', {
   profit:
     t('common.currencyAmount', {
       amount: takeProfitsIncomeSum.value,
-      currency: quoteCurrency.value.name,
+      currency: activePairData.value?.quote,
     }),
 }));
 
@@ -187,7 +190,7 @@ const riskDisplayValue = computed(() => t('order.takeProfit.riskValue', {
   risk:
     t('common.currencyAmount', {
       amount: stopLossRisk.value,
-      currency: quoteCurrency.value.name,
+      currency: activePairData.value?.quote,
     }),
 }));
 
@@ -196,8 +199,8 @@ provide(OrderFormInjectionKey, {
   takeProfits,
   takeProfitsIncomeSum,
   isTakeProfitsEnabled,
-  quoteCurrency,
-  baseCurrency,
+  leverage,
+  price,
   maxTakeProfits,
   takeProfitsAmount,
   isStopLossEnabled,

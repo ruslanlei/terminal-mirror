@@ -29,6 +29,11 @@ const props = withDefaults(
   background-color: rgb(var(--color-background-3));
 }
 
+.horizontal {
+  min-width: 100%;
+  height: 1px;
+}
+
 .vertical {
   min-height: 100%;
   width: 1px;

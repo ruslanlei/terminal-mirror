@@ -1,13 +1,22 @@
 <template>
   <Card
-    :class="$style.playerSettings"
+    :class="[
+      $style.playerSettings,
+      isDisabled && $style.disabled,
+    ]"
     state="background3"
   >
     <header :class="$style.header">
       <div :class="$style.label">
         {{ t('emulator.player.label') }}
       </div>
-      <Datepicker v-model="emulatorDate" />
+      <Datepicker
+        v-model="emulatorDate"
+        :max-date="activePairData?.to_date"
+        :min-date="activePairData?.from_date"
+        :block-calendar="isActiveOrdersForCurrentPairExists"
+        @trigger-click="onDatepickerClick"
+      />
     </header>
     <div :class="$style.controls">
       <PlayButton
@@ -17,6 +26,7 @@
       <RewindButton
         :is-disabled="isPlaying"
         :class="$style.rewindButton"
+        @click="emulatorStore.rewind"
       />
       <RangeSlider
         v-model="candlesPerSecond"
@@ -31,8 +41,11 @@
       />
     </div>
     <Button
-      :state="['mdSize', 'secondary1Color', 'interactive']"
+      :state="['secondary1Color', 'interactive']"
+      size="md"
       :class="$style.prematureResultButton"
+      :is-loading="isCalculatingResult"
+      @click="emulatorStore.calculateResult"
     >
       {{ t('emulator.player.prematureResult') }}
     </Button>
@@ -40,7 +53,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Card from '@/components/core/card/Card.vue';
 import Datepicker from '@/components/core/datepicker/Datepicker.vue';
@@ -50,15 +63,49 @@ import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
 
 import { useEmulatorStore } from '@/stores/emulator';
 import { storeToRefs } from 'pinia';
+import { useChartDataStore } from '@/stores/chartData';
+import { useMarketStore } from '@/stores/market';
+import { modalType, useModalStore } from '@/stores/modals';
 import PlayButton from './playButton/PlayButton.vue';
 import RewindButton from './rewindButton/RewindButton.vue';
 
 const { t } = useI18n();
 
+const modalStore = useModalStore();
+
+const marketStore = useMarketStore();
+const {
+  activePairData,
+  isActiveOrdersForCurrentPairExists,
+} = storeToRefs(marketStore);
+
+const chartDataStore = useChartDataStore();
+const { isFetchingCandles } = storeToRefs(chartDataStore);
+
 const emulatorStore = useEmulatorStore();
-const { emulatorDate, candlesPerSecond, isPlaying } = storeToRefs(emulatorStore);
+const {
+  emulatorDate,
+  candlesPerSecond,
+  isPlaying,
+  isRewinding,
+  isCalculatingResult,
+} = storeToRefs(emulatorStore);
 
 const displaySpeed = computed(() => `CPS: ${candlesPerSecond.value}`);
+
+const isDisabled = computed(() => [
+  isRewinding.value,
+  isFetchingCandles.value,
+  isCalculatingResult.value,
+].some(Boolean));
+
+const onDatepickerClick = () => {
+  if (!isActiveOrdersForCurrentPairExists.value) return;
+
+  modalStore.showModal({
+    type: modalType.CHANGE_PLAYER_DATE_ALERT,
+  });
+};
 </script>
 
 <style lang="scss" module>
@@ -70,6 +117,7 @@ const displaySpeed = computed(() => `CPS: ${candlesPerSecond.value}`);
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  @include transparentOnDisabled;
 }
 
 .header {

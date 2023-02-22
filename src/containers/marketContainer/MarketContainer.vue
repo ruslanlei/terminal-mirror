@@ -7,15 +7,35 @@
       <slot name="tools" />
     </div>
     <main :class="$style.main">
-      <div :class="$style.chartWrapper">
-        <slot
-          name="chart"
-          :chart-class="$style.chart"
-        />
+      <div :class="$style.chartView">
+        <div :class="[$style.favoritesContainer, !isFavoritesVisible && $style.hidden]">
+          <div :class="$style.favoritesWrapper">
+            <slot
+              name="favorites"
+              :favorites-class="$style.favorites"
+            />
+          </div>
+        </div>
+        <div :class="$style.chartColumn">
+          <header :class="$style.chartHeader">
+            <slot name="chartHeader" />
+          </header>
+          <div :class="$style.chartContainer">
+            <div :class="$style.chartWrapper">
+              <slot
+                name="chart"
+                :chart-class="$style.chart"
+              />
+            </div>
+          </div>
+        </div>
       </div>
       <div :class="$style.chartDivider" />
-      <div :class="$style.orders">
-        <slot name="orders" />
+      <div :class="$style.ordersWrapper">
+        <slot
+          name="orders"
+          :orders-class="$style.orders"
+        />
       </div>
     </main>
     <aside
@@ -38,6 +58,9 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { size } from '@/enums/sizing';
+import { MarketContainerProps } from './index';
+
+const props = defineProps<MarketContainerProps>();
 
 const stickyElementStyles = computed(() => ({
   position: 'sticky',
@@ -47,6 +70,8 @@ const stickyElementStyles = computed(() => ({
 </script>
 
 <style lang="scss" module>
+@import "src/assets/styles/utils";
+
 .marketContainer {
   display: grid;
   grid-template-columns: 50px 1fr 320px;
@@ -61,10 +86,61 @@ const stickyElementStyles = computed(() => ({
 .main {
   display: flex;
   flex-direction: column;
+  gap: 20px;
+}
+
+.chartView {
+  display: flex;
+}
+
+.favoritesContainer {
+  padding-right: 20px;
+  transition: padding-right 200ms;
+  overflow: hidden;
+  height: 100%;
+  &.hidden {
+    padding-right: 0;
+    .favoritesWrapper {
+      width: 0;
+    }
+  }
+}
+
+.favoritesWrapper {
+  position: relative;
+  transition: width 200ms;
+  width: 87px;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.favorites {
+  position: absolute;
+  left: 0;
+  width: 87px;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  @include scrollbarDefault(4px, 2px, false);
+}
+
+.chartHeader {}
+
+.chartColumn {
+  flex-grow: 1;
+}
+
+.chartContainer {
+  flex-grow: 1;
+  height: 500px;
+  position: relative;
+  margin-top: 20px;
 }
 
 .chartWrapper {
-  height: 500px;
+  position: absolute;
+  inset: 0;
 }
 
 .chart {
@@ -78,9 +154,14 @@ const stickyElementStyles = computed(() => ({
   background-color: rgb(var(--color-background-3));
 }
 
+.ordersWrapper {
+  flex-grow: 1;
+  display: flex;
+  padding-bottom: 20px;
+}
+
 .orders {
-  margin-top: 20px;
-  //overflow: hidden;
+  width: 100%;
   flex-grow: 1;
 }
 

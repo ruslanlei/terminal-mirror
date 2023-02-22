@@ -29,6 +29,7 @@ import { useModalStore, Modal, modalType } from '@/stores/modals';
 import ConfirmModal from '@/components/app/confirmModal/ConfirmModal.vue';
 import SuccessSignUpModal from '@/components/app/successSignUpModal/SuccessSignUpModal.vue';
 import DeleteOrderModal from '@/components/app/deleteOrderModal/DeleteOrderModal.vue';
+import ChangePlayerDateModal from '@/components/app/changePlayerDateModal/ChangePlayerDateModal.vue';
 
 const modalsStore = useModalStore();
 
@@ -36,6 +37,7 @@ const modalsMap = {
   [modalType.CONFIRM]: ConfirmModal,
   [modalType.SUCCESS_SIGN_UP]: SuccessSignUpModal,
   [modalType.DELETE_ORDER]: DeleteOrderModal,
+  [modalType.CHANGE_PLAYER_DATE_ALERT]: ChangePlayerDateModal,
 };
 
 const modals = computed(() => modalsStore.list.map((modal) => ({

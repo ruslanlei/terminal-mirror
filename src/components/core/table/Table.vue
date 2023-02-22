@@ -2,100 +2,113 @@
   <div
     :class="[
       $style.table,
-      $style[type],
       isRowsClickable && $style.rowsClickable,
       ...computedState,
     ]"
   >
-    <div
-      v-if="isHeadVisible"
-      :style="computedRowStyles"
-      :class="$style.head"
+    <transition
+      mode="out-in"
+      name="skeletonTransition"
     >
-      <button
-        v-for="column in columns"
-        :key="column.slug"
-        type="button"
-        :class="[
-          $style.column,
-          $style[column.align],
-          (column.sortable || column.isSelect) && $style.clickable,
-        ]"
-        @click="onColumnClick(column)"
-      >
-        <slot
-          :name="`column(${column.slug})`"
-          :column="column"
-          :data="column.data"
-          :label="column.label"
-          :slug="column.slug"
-          :is-all-records-selected="isAllRecordsSelected"
-          :is-sorted-by="sortBy === column.slug"
-          :sort-direction="sortDirection"
-          :is-sorted-asc="sortBy === column.slug && sortDirection === 'asc'"
-          :is-sorted-desc="sortBy === column.slug && sortDirection === 'desc'"
-        >
-          {{ column.label }}
-        </slot>
-      </button>
-    </div>
-    <transition-group
-      tag="div"
-      :class="$style.records"
-      name="tableElementAppearance"
-      @before-leave="onElementRemove"
-    >
-      <div
-        v-for="record in computedRecords"
-        :key="record.id"
-        :class="$style.tableRowContainer"
-        :data-table-element-id="tableId"
-      >
-        <TableRow
-          :grid-columns="computedListColumns"
-          :record="record"
-          :columns="columns"
-          :state="[
-            ...state,
-            ...(record?.state
-              ? record.state
-              : []),
-          ]"
-          :class="$style.tableRow"
-          @click="onRowClick(record.id)"
-          @cell-click="onCellClick(record.id, $event)"
-        >
-          <template #default>
+      <template v-if="computedRecords.length">
+        <div :class="$style.tableContent">
+          <div
+            v-if="isHeadVisible"
+            :style="computedRowStyles"
+            :class="$style.head"
+          >
             <button
               v-for="column in columns"
               :key="column.slug"
               type="button"
               :class="[
-                $style.recordColumn,
+                $style.column,
                 $style[column.align],
+                (column.sortable || column.isSelect) && $style.clickable,
               ]"
-              @click="onCellClick(record.id, column.isSelect)"
+              @click="onColumnClick(column)"
             >
               <slot
-                :name="`cell(${column.slug})`"
-                :record="record"
-                :data="record.data[column.slug]"
-                :is-selected="record.isSelected"
-              />
+                :name="`column(${column.slug})`"
+                :column="column"
+                :data="column.data"
+                :label="column.label"
+                :slug="column.slug"
+                :is-all-records-selected="isAllRecordsSelected"
+                :is-sorted-by="sortBy === column.slug"
+                :sort-direction="sortDirection"
+                :is-sorted-asc="sortBy === column.slug && sortDirection === 'asc'"
+                :is-sorted-desc="sortBy === column.slug && sortDirection === 'desc'"
+              >
+                {{ column.label }}
+              </slot>
             </button>
-          </template>
-          <template
-            v-if="record.children && 'recordChildren' in $slots"
-            #children="{ data }"
+          </div>
+          <transition-group
+            tag="div"
+            :class="$style.records"
+            name="tableElementAppearance"
+            @before-leave="onElementRemove"
           >
-            <slot
-              name="recordChildren"
-              :children="data"
-            />
-          </template>
-        </TableRow>
-      </div>
-    </transition-group>
+            <div
+              v-for="record in computedRecords"
+              :key="record.id"
+              :class="$style.tableRowContainer"
+              :data-table-element-id="tableId"
+            >
+              <TableRow
+                :grid-columns="computedListColumns"
+                :record="record"
+                :columns="columns"
+                :state="[
+                  ...state,
+                  ...(record?.state
+                    ? record.state
+                    : []),
+                ]"
+                :class="$style.tableRow"
+                @click="onRowClick(record)"
+                @cell-click="onCellClick(record.id, $event)"
+              >
+                <template #default>
+                  <button
+                    v-for="column in columns"
+                    :key="column.slug"
+                    type="button"
+                    :class="[
+                      $style.recordColumn,
+                      $style[column.align],
+                    ]"
+                    @click="onCellClick(record.id, column.isSelect)"
+                  >
+                    <slot
+                      :name="`cell(${column.slug})`"
+                      :record="record"
+                      :data="record.data[column.slug]"
+                      :is-selected="record.isSelected"
+                    />
+                  </button>
+                </template>
+                <template
+                  v-if="record.children && 'recordChildren' in $slots"
+                  #children="{ data }"
+                >
+                  <slot
+                    name="recordChildren"
+                    :children="data"
+                  />
+                </template>
+              </TableRow>
+            </div>
+          </transition-group>
+        </div>
+      </template>
+      <template v-else>
+        <div :class="$style.placeholder">
+          <slot name="placeholder" />
+        </div>
+      </template>
+    </transition>
   </div>
 </template>
 
@@ -120,7 +133,6 @@ import {
   toCssPxValue,
 } from '@/helpers/style';
 import {
-  tableType,
   TableRecord,
   TableProps,
   TableColumn,
@@ -130,8 +142,9 @@ import {
 const props = withDefaults(
   defineProps<TableProps>(),
   {
-    type: 'list' as tableType.LIST,
     isHeadVisible: true,
+    showHeadWhileEmpty: false,
+    appearanceAnimationType: 'elevating',
   },
 );
 const emit = defineEmits<{(e: 'update:selectedRecords', value: SelectedRecords): void,
@@ -199,7 +212,10 @@ const playAppearAnimation = () => {
       value: [0, 1],
       delay: 100,
     },
-    duration: 800,
+    ...(props.appearanceAnimationType === 'bubbling' ? {
+      scale: [0.2, 1],
+    } : {}),
+    duration: 700,
     easing: 'easeOutQuint',
     delay: anime.stagger(40, { from: 'first' }),
     loopComplete: onAnimationComplete,
@@ -218,42 +234,60 @@ onMounted(() => {
 .table {
   color: white;
   overflow: hidden;
-  &.list {
-    .head {
-      display: grid;
-      position: relative;
-      z-index: 3;
+  display: flex;
+  flex-direction: column;
+  .head {
+    display: grid;
+    position: relative;
+    z-index: 3;
+  }
+  .records {
+    width: 100%;
+    flex-grow: 1;
+  }
+  &.rowsClickable {
+    .records {
+      cursor: pointer;
     }
-    .records {}
-    &.rowsClickable {
-      .records {
-        cursor: pointer;
-      }
+  }
+  .record {
+    display: grid;
+    &.selected {}
+    .recordColumn {}
+  }
+  .column {
+    &.clickable {
+      cursor: pointer;
+      user-select: none;
     }
-    .record {
-      display: grid;
-      &.selected {}
-      .recordColumn {}
+  }
+  .column, .recordColumn {
+    display: flex;
+    align-items: center;
+    &.center {
+      justify-content: center;
     }
-    .column {
-      &.clickable {
-        cursor: pointer;
-        user-select: none;
-      }
+    &.left {
+      justify-content: flex-start;
     }
-    .column, .recordColumn {
-      display: flex;
-      align-items: center;
-      &.center {
-        justify-content: center;
-      }
-      &.left {
-        justify-content: flex-start;
-      }
-      &.right {
-        justify-content: flex-end;
-      }
+    &.right {
+      justify-content: flex-end;
     }
+  }
+}
+
+.tableContent {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.placeholder {
+  flex-grow: 1;
+  display: flex;
+  & > * {
+    width: 100%;
+    flex-grow: 1;
   }
 }
 
@@ -354,6 +388,8 @@ onMounted(() => {
 </style>
 
 <style lang="scss">
+@import "src/assets/styles";
+
 .tableElementAppearance {
   &-enter-active,
   &-leave-active {

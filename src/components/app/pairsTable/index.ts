@@ -1,12 +1,14 @@
 import { TableColumn, TableProps, TableRecord } from '@/components/core/table';
 import { PairData } from '@/api/types/pair';
 
-export type PairsTableColumnSlug = 'pairs' | 'priceAndVolume';
+export type PairsTableColumnSlug = 'common' | 'priceAndVolume';
 
 export type PairsTableColumn = TableColumn<PairsTableColumnSlug>;
 
 export type PairsTableRecord = TableRecord<PairsTableColumnSlug, {
-  pairs: {
+  common: {
+    isFavorite: boolean,
+    pairId: PairData['id'],
     base: PairData['base'],
     quote: PairData['quote'],
   },
@@ -22,4 +24,5 @@ export interface PairsTableProps {
 
 export interface PairsTableEmits {
   (e: 'selectPair', value: PairData['id']): void,
+  (e: 'toggleFavorite', value: PairData['id']): void,
 }

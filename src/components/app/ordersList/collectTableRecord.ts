@@ -3,7 +3,12 @@ import {
   curry,
 } from '@/utils/fp';
 import { PairData } from '@/api/types/pair';
-import { MasterOrder, Order, SubOrder } from '@/api/types/order';
+import {
+  MasterOrder,
+  TakeProfit,
+  StopLoss,
+  Order,
+} from '@/api/types/order';
 import { multiply, roundToDecimalPoint } from '@/helpers/number';
 import { calculatePercentOfDifference } from '@/helpers/math/percents';
 import { calculatePnl, calculatePnlPercent } from '@/helpers/math/formulas/pnl';
@@ -14,13 +19,14 @@ import { SubOrderTableItem } from '@/components/app/ordersList/subOrdersTable';
 import { collectTableRecord } from '@/components/core/table/helpers';
 import { getOrdersWithStatus, reduceSubOrderListToCommonPnl } from '@/helpers/orders';
 import { TableRowState } from '@/components/core/table/tableRow';
+import { toAbsolute } from '@/utils/number';
 
 interface CollectRecordPayload {
-    pairData: PairData,
-    pairPrice: number,
-    order: MasterOrder,
-    takeProfits: SubOrder[] | undefined,
-    stopLoss: SubOrder | undefined,
+  pairData: PairData,
+  pairPrice: number | null,
+  order: MasterOrder,
+  takeProfits: TakeProfit[] | undefined,
+  stopLoss: StopLoss | undefined,
 }
 
 const commonDataMixin = (
@@ -30,7 +36,7 @@ const commonDataMixin = (
     takeProfits,
   }: CollectRecordPayload,
 ) => ({
-  pair: pairData.base,
+  pair: pairData,
   type: order.side,
   coins: order.quantity,
   options: {
@@ -43,7 +49,7 @@ const orderVolumeMixin = (
   payload: CollectRecordPayload,
 ) => ({
   volume: compose(
-    roundToDecimalPoint(6), /* TODO: change to base currency decimals */
+    roundToDecimalPoint(6),
     multiply,
   )(payload.order.quantity, payload.order.price),
 });
@@ -62,7 +68,7 @@ const closedOrderPricesMixin = (
 ) => ({
   prices: {
     order: order.price,
-    close: 17000,
+    close: order.executed_price,
   },
 });
 
@@ -74,7 +80,7 @@ const closedOrderResultsMixin = (
   results: {
     pnl: {
       value: compose(
-        roundToDecimalPoint(2),
+        roundToDecimalPoint(6),
         reduceSubOrderListToCommonPnl(order),
         getOrdersWithStatus('executed'),
       )([
@@ -84,7 +90,7 @@ const closedOrderResultsMixin = (
       currency: pairData.quote,
     },
     pnlPercent: compose(
-      roundToDecimalPoint(2),
+      roundToDecimalPoint(6),
       calculatePnlPercent(order.price, order.quantity),
       reduceSubOrderListToCommonPnl(order),
       getOrdersWithStatus('executed'),
@@ -100,7 +106,8 @@ const stopLossDataMixin = (
 ) => ({
   ...(payload.stopLoss ? {
     sl: compose(
-      roundToDecimalPoint(2),
+      roundToDecimalPoint(6),
+      toAbsolute,
       calculatePercentOfDifference,
     )(payload.order.price, payload.stopLoss.price),
   } : {
@@ -109,20 +116,23 @@ const stopLossDataMixin = (
 });
 
 const pnlMixin = (
-  { order, pairData, pairPrice }: CollectRecordPayload,
+  {
+    order,
+    pairData,
+    pairPrice,
+  }: CollectRecordPayload,
 ) => ({
   pnl: {
     currency: pairData.quote,
-    ...(order.status !== 'new'
+    ...(order.status !== 'new' && pairPrice
       ? {
         value: compose(
-          roundToDecimalPoint(2),
-          calculatePnl,
-        )(
-          order.price,
-          order.quantity,
-          pairPrice,
-        ),
+          roundToDecimalPoint(6),
+          calculatePnl(
+            order.price,
+            order.position,
+          ),
+        )(pairPrice),
       }
       : {
         value: null,
@@ -135,7 +145,7 @@ const takeProfitDataMixin = (
 ) => ({
   ...(payload.takeProfits?.length ? {
     tp: compose(
-      roundToDecimalPoint(2),
+      roundToDecimalPoint(6),
       calculateCommonTakeProfitPercent,
     )(
       payload.order.price,
@@ -200,8 +210,8 @@ const notFilledOrderStateMixin = (
 export const collectActiveOrderRecord = curry(collectTableRecord<
   ActiveOrdersTableRecord,
   CollectRecordPayload
->)(
-  [
+>)({
+  data: [
     commentMixin,
     activeOrderDateMixin,
     takeProfitDataMixin,
@@ -211,23 +221,28 @@ export const collectActiveOrderRecord = curry(collectTableRecord<
     orderVolumeMixin,
     commonDataMixin,
   ],
-  [notFilledOrderStateMixin],
-  [
+  state: [
+    notFilledOrderStateMixin,
+  ],
+  children: [
     stopLossChildrenMixin,
     takeProfitChildrenMixin,
   ],
-);
+});
 
 export const collectClosedOrderRecord = curry(collectTableRecord<
   ClosedOrdersTableRecord,
   CollectRecordPayload
->)([
-  closedOrderDateMixin,
-  closedOrderPricesMixin,
-  closedOrderResultsMixin,
-  orderVolumeMixin,
-  commonDataMixin,
-], [], [
-  stopLossChildrenMixin,
-  takeProfitChildrenMixin,
-]);
+>)({
+  data: [
+    closedOrderDateMixin,
+    closedOrderPricesMixin,
+    closedOrderResultsMixin,
+    orderVolumeMixin,
+    commonDataMixin,
+  ],
+  children: [
+    stopLossChildrenMixin,
+    takeProfitChildrenMixin,
+  ],
+});

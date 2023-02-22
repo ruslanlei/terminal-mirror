@@ -24,10 +24,34 @@ export const usePairSelect = () => {
     marketStore.setPair(id);
   };
 
+  const isTogglingFavorite = ref(false);
+
+  const onToggleFavorite = async (
+    id: PairData['id'],
+  ) => {
+    if (isTogglingFavorite.value) return;
+
+    const favoritePair = marketStore.favoritePairs.find(
+      (favoritePair) => favoritePair.pair === id,
+    );
+
+    isTogglingFavorite.value = true;
+
+    if (favoritePair) {
+      await marketStore.removeFromFavorites(favoritePair.id);
+    } else {
+      await marketStore.addToFavorites(id);
+    }
+
+    isTogglingFavorite.value = false;
+  };
+
   return {
     query,
     pairs: computedPairs,
     getPairs: marketStore.getPairs,
     setPair,
+    isTogglingFavorite,
+    onToggleFavorite,
   };
 };

@@ -9,8 +9,8 @@
           checkIsValueEqualToPercent(option.percents)
             ? 'colored'
             : 'secondary2Color',
-          'smSize',
         ]"
+        size="sm"
         :class="$style.option"
         @click="setPercentOfBalance(option.percents)"
       >
@@ -27,7 +27,7 @@
           <AnimatedText
             animation-type="verticalAuto"
             :class="$style.realBalance"
-            :text="maxQuoteCurrencyDeposit"
+            :text="roundToDecimalPoint(2, maxQuoteCurrencyDeposit)"
           />
           <transition name="depositInputLeverageBalance">
             <div
@@ -37,7 +37,7 @@
               <AnimatedText
                 animation-type="verticalAuto"
                 :class="$style.leveragedBalance"
-                :text="maxQuoteCurrencyDepositLeveraged"
+                :text="roundToDecimalPoint(2, maxQuoteCurrencyDepositLeveraged)"
               />
             </div>
           </transition>
@@ -60,7 +60,7 @@
           :normalize-on-keydown="true"
         />
         <div :class="$style.percentSymbol">
-          %
+          {{ '%' }}
         </div>
       </div>
     </div>
@@ -76,11 +76,11 @@ import NumberInput from '@/components/core/numberInput/NumberInput.vue';
 import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
 import { useDepositInput } from '@/hooks/useDepositInput';
 import { DepositInputEmits, DepositInputProps } from './index';
+import {roundToDecimalPoint} from "@/helpers/number";
 
 const props = withDefaults(
   defineProps<DepositInputProps>(),
   {
-    decimals: 2,
     leverage: 1,
   },
 );

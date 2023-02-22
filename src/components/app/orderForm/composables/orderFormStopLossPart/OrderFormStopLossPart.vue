@@ -18,7 +18,7 @@
         :step="0.01"
       >
         <template #append>
-          {{ quoteCurrency?.name }}
+          {{ activePairData?.quote }}
         </template>
       </NumberInput>
     </template>
@@ -31,10 +31,10 @@
         size="sm"
         state="defaultColor"
         :step="0.01"
-        :is-disabled="isFieldsDependive"
+        :is-disabled="isDependentFieldsDisabled"
       >
         <template #append>
-          {{ quoteCurrency?.name }}
+          {{ activePairData?.quote }}
         </template>
       </NumberInput>
     </template>
@@ -62,7 +62,7 @@
         size="sm"
         state="defaultColor"
         :step="0.01"
-        :is-disabled="isFieldsDependive"
+        :is-disabled="isDependentFieldsDisabled"
       >
         <template #append>
           {{ '%' }}
@@ -74,14 +74,14 @@
         :ratio="ratio"
         :profit="profitDisplayValue"
         :risk="riskDisplayValue"
-        :quote-currency="quoteCurrency"
       />
     </template>
     <template #submit="{ buttonClass }">
       <Button
         type="button"
         :class="buttonClass"
-        :state="['primaryColor', 'mdSize']"
+        state="primaryColor"
+        size="md"
         @click="onSubmit"
       >
         {{ t('common.save') }}
@@ -110,6 +110,10 @@ import { roundToDecimalPoint } from '@/helpers/number';
 import { compose } from '@/utils/fp';
 import { calculatePercentOfDifference, decreaseByPercent } from '@/helpers/math/percents';
 import { calculatePriceByPercentOfDeposit, calculateVolumeDifferenceInPercentsOfDeposit } from '@/helpers/math/formulas/stopLoss';
+import { useMarketStore } from '@/stores/market';
+import { storeToRefs } from 'pinia';
+import { useEmulatorStore } from '@/stores/emulator';
+import { toAbsolute } from '@/utils/number';
 import { OrderFormStopLossPartEmits } from './index';
 
 const { t } = useI18n();
@@ -120,9 +124,21 @@ const onSubmit = () => {
   emit('submit');
 };
 
+const emulatorStore = useEmulatorStore();
+const {
+  balance,
+} = storeToRefs(emulatorStore);
+
+const marketStore = useMarketStore();
+const {
+  quoteCurrencyDecimals,
+  baseCurrencyDecimals,
+  baseCurrencyStep,
+  activePairData,
+} = storeToRefs(marketStore);
+
 const {
   model,
-  quoteCurrency,
   stopLossPrice,
   profitDisplayValue,
   riskDisplayValue,
@@ -130,17 +146,18 @@ const {
   ratio,
 } = useOrderFormInject();
 
-const isFieldsDependive = computed(() => !model.quantity);
+const isDependentFieldsDisabled = computed(() => !model.quantity);
 
 const percentOfOrderPrice = computed({
   get: () => compose(
     roundToDecimalPoint(2),
+    toAbsolute,
     calculatePercentOfDifference,
   )(model.price, stopLossPrice.value),
 
   set: (percent: number) => {
     stopLossPrice.value = compose(
-      roundToDecimalPoint(quoteCurrency.value.decimals),
+      roundToDecimalPoint(quoteCurrencyDecimals.value),
       decreaseByPercent,
     )(model.price, percent);
   },
@@ -148,7 +165,7 @@ const percentOfOrderPrice = computed({
 
 const amountOfRisk = computed({
   get: () => compose(
-    roundToDecimalPoint(quoteCurrency.value.decimals),
+    roundToDecimalPoint(quoteCurrencyDecimals.value),
     calculateVolumeDifference,
   )(
     model.quantity,
@@ -158,7 +175,7 @@ const amountOfRisk = computed({
 
   set: (amountOfRisk: number) => {
     stopLossPrice.value = compose(
-      roundToDecimalPoint(quoteCurrency.value.decimals),
+      roundToDecimalPoint(quoteCurrencyDecimals.value),
       calculateOriginalPriceByVolumeDifference,
     )(
       model.price,
@@ -176,16 +193,16 @@ const percentOfDeposit = computed({
     model.quantity,
     model.price,
     stopLossPrice.value,
-    quoteCurrency.value.balance,
+    balance.value,
   ),
 
   set: (percentOfDeposit: number) => {
     stopLossPrice.value = compose(
-      roundToDecimalPoint(quoteCurrency.value.decimals),
+      roundToDecimalPoint(quoteCurrencyDecimals.value),
       calculatePriceByPercentOfDeposit(
         model.quantity,
         model.price,
-        quoteCurrency.value.balance,
+        balance.value,
       ),
     )(percentOfDeposit);
   },

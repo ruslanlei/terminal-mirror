@@ -17,7 +17,7 @@ const clearIconName = (icon: string) => icon
   .join('_');
 
 const icons = (Object.entries(
-  import.meta.globEager<any>('./assets/**/*.svg'),
+  import.meta.glob<any>('./assets/**/*.svg', { eager: true }),
 ))
   .map(([key, value]) => ([
     clearIconName(key),

@@ -5,31 +5,28 @@ import { useStorage } from '@vueuse/core';
 import { getPairs } from '@/api/endpoints/marketdata/stats';
 import { useToastStore } from '@/stores/toasts';
 import { createOrder, CreateOrderDTO } from '@/api/endpoints/orders/create';
-import { Order, SubOrder } from '@/api/types/order';
+import {
+  Order,
+  StopLoss,
+  TakeProfit,
+} from '@/api/types/order';
 import { processServerErrors, requestMany } from '@/api/common';
 import { getOrdersList } from '@/api/endpoints/orders/getList';
 import { PairData } from '@/api/types/pair';
-import { flatten } from '@/utils/array';
-import { getCandles, GetCandlesDTO } from '@/api/endpoints/marketdata/candles';
+import { filter, flatten, map } from '@/utils/array';
 import { createEventBus } from '@/utils/eventBus';
 import { deleteOrder } from '@/api/endpoints/orders/delete';
 import { closeOrder } from '@/api/endpoints/orders/cancel';
-import { curry } from '@/utils/fp';
+import { compose, curry } from '@/utils/fp';
 import { OrderModel } from '@/hooks/useOrderCreate';
 import { modalType, useModalStore } from '@/stores/modals';
-import { useEmulatorStore } from '@/stores/emulator';
+import { FavoritePair, getFavorites } from '@/api/endpoints/profile/getFavorites';
+import { addToFavorites } from '@/api/endpoints/profile/addToFavorites';
+import { removeFromFavorites } from '@/api/endpoints/profile/removeFromFavorites';
+import { findAndDelete } from '@/helpers/array';
+import { getBalance } from '@/api/endpoints/profile/getBalance';
 
 export type MarketType = 'emulator' | 'real';
-
-export interface TakeProfit {
-  price: number,
-  quantity: number,
-}
-
-export interface StopLoss {
-  price: number,
-  quantity: number,
-}
 
 export enum marketEvent {
   ORDER_CREATED = 'orderCreated',
@@ -77,7 +74,49 @@ export const useMarketStore = defineStore('market', () => {
     () => pairsMap.value[activePair.value],
   );
 
-  const activePairPrice = ref(0);
+  const favoritePairs = useStorage<FavoritePair[]>('favoritePairs', []);
+
+  const fetchFavoritePairs = async () => {
+    const { result, data } = await getFavorites();
+
+    if (!result) {
+      processServerErrors(data);
+      return;
+    }
+
+    favoritePairs.value = data;
+  };
+
+  const handleAddToFavorites = async (
+    id: PairData['id'],
+  ) => {
+    const response = await addToFavorites(id);
+
+    if (!response.result) {
+      processServerErrors(response.data);
+    } else {
+      favoritePairs.value.push(response.data);
+    }
+
+    return response;
+  };
+
+  const handleRemoveFromFavorites = async (
+    id: FavoritePair['id'],
+  ) => {
+    const response = await removeFromFavorites(id);
+
+    if (!response.result) {
+      processServerErrors(response.data);
+    } else {
+      findAndDelete(
+        (favoritePair: FavoritePair) => favoritePair.id === id,
+        favoritePairs.value,
+      );
+    }
+
+    return response;
+  };
 
   const isFetchingPairs = ref(false);
   const handleGetPairs = async () => {
@@ -95,17 +134,10 @@ export const useMarketStore = defineStore('market', () => {
     pairs.value = data;
   };
 
-  const handleGetCandles = async (
-    payload: GetCandlesDTO,
-  ) => {
-    const response = await getCandles(payload);
+  const baseCurrencyDecimals = ref(Number(import.meta.env.VITE_APP_BASE_CURRENCY_DECIMALS));
+  const quoteCurrencyDecimals = ref(Number(import.meta.env.VITE_APP_QUOTE_CURRENCY_DECIMALS));
 
-    if (!response.result) {
-      processServerErrors(response.data);
-    }
-
-    return response;
-  };
+  const baseCurrencyStep = ref(0.001);
 
   const handleCreateOrder = async (dto: CreateOrderDTO) => {
     const response = await createOrder(dto);
@@ -123,10 +155,10 @@ export const useMarketStore = defineStore('market', () => {
   ) => {
     const response = await requestMany(
       takeProfits.map((takeProfit: TakeProfit) => createOrder({
+        ...takeProfit,
         pair: activePair.value,
         side,
         order_type: 'tp',
-        ...takeProfit,
       })),
     );
 
@@ -139,12 +171,12 @@ export const useMarketStore = defineStore('market', () => {
     return response;
   };
 
-  const createStopLoss = async (stopLoss: StopLoss, side: Order['side']) => {
+  const createStopLoss = async (stopLoss: Pick<StopLoss, 'price' | 'quantity'>, side: Order['side']) => {
     const response = await createOrder({
+      ...stopLoss,
       pair: activePair.value,
       side,
       order_type: 'sl',
-      ...stopLoss,
     });
 
     if (!response.result) {
@@ -190,32 +222,40 @@ export const useMarketStore = defineStore('market', () => {
     return response;
   };
 
-  const getOrderList = async (
-    orderType?: 'active' | 'closed',
-  ) => {
-    let response;
-    if (orderType === 'closed') {
-      response = await requestMany<Order[][]>([
-        getOrdersList('expired'),
-        getOrdersList('canceled'),
-        getOrdersList('executed'),
-        getOrdersList('closed'),
-      ]);
-    } else {
-      response = await requestMany<Order[][]>([
-        getOrdersList('new'),
-        getOrdersList('filled'),
-      ]);
-    }
+  const activeOrders = ref<Order[]>([]);
+
+  const closedOrders = ref<Order[]>([]);
+
+  const isActiveOrdersForCurrentPairExists = computed(
+    () => activeOrders.value.some((order: Order) => order.pair === activePair.value),
+  );
+
+  const getActiveOrdersList = async () => {
+    const response = await requestMany<Order[][]>([
+      getOrdersList('new'),
+      getOrdersList('filled'),
+    ]);
 
     if (!response.result) {
       processServerErrors(response.data, t('order.failedToGetList'));
     }
 
-    return {
-      result: response.result,
-      data: flatten(response.data),
-    };
+    activeOrders.value = flatten(response.data);
+  };
+
+  const getClosedOrdersList = async () => {
+    const response = await requestMany<Order[][]>([
+      getOrdersList('expired'),
+      getOrdersList('canceled'),
+      getOrdersList('executed'),
+      getOrdersList('closed'),
+    ]);
+
+    if (!response.result) {
+      processServerErrors(response.data, t('order.failedToGetList'));
+    }
+
+    closedOrders.value = flatten(response.data);
   };
 
   const handleDeleteOrder = async (
@@ -242,9 +282,37 @@ export const useMarketStore = defineStore('market', () => {
     return response;
   };
 
+  const deleteOrCloseAllExistingOrdersForCurrentPair = async () => {
+    const activePairActiveOrders = filter(
+      (order: Order) => order.pair === activePair.value,
+      activeOrders.value,
+    );
+
+    const response = await compose(
+      requestMany,
+      map((order: Order) => (
+        order.status === 'new'
+          ? deleteOrder(order.id)
+          : closeOrder(order.id)
+      )),
+      filter((order: Order) => order.order_type === 'limit'),
+    )(activePairActiveOrders);
+
+    if (response.result) {
+      activePairActiveOrders.forEach((order: Order) => {
+        emitOrderDeleteOrClose(order.id);
+      });
+      await getBalance();
+    } else {
+      processServerErrors(response.result);
+    }
+
+    return response;
+  };
+
   const removeOrder = async (
     order: Order,
-    takeProfits: SubOrder[] | undefined,
+    takeProfits: TakeProfit[] | undefined,
   ) => {
     modalStore.showModal({
       type: modalType.DELETE_ORDER,
@@ -268,18 +336,28 @@ export const useMarketStore = defineStore('market', () => {
     marketType,
     activePair,
     setPair,
+    quoteCurrencyDecimals,
+    baseCurrencyDecimals,
+    baseCurrencyStep,
     activePairData,
-    activePairPrice,
     isFetchingPairs,
+    favoritePairs,
+    fetchFavoritePairs,
     getPairs: handleGetPairs,
-    getCandles: handleGetCandles,
     createOrder: handleCreateOrder,
     createListOfTakeProfits,
     createStopLoss,
-    getOrderList,
+    activeOrders,
+    closedOrders,
+    isActiveOrdersForCurrentPairExists,
+    getActiveOrdersList,
+    getClosedOrdersList,
     deleteOrder: handleDeleteOrder,
     closeOrder: handleCloseOrder,
     createOrderGroup,
     removeOrder,
+    addToFavorites: handleAddToFavorites,
+    removeFromFavorites: handleRemoveFromFavorites,
+    deleteOrCloseAllExistingOrdersForCurrentPair,
   };
 });

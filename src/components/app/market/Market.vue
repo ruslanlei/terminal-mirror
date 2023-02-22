@@ -1,14 +1,22 @@
 <template>
-  <MarketContainer>
+  <MarketContainer :is-favorites-visible="isFavoritesExpanded">
     <template #tools>
       <MarketTools />
     </template>
+    <template #favorites="{ favoritesClass }">
+      <FavoritesList
+        :class="favoritesClass"
+        @hide="hideFavorites"
+      />
+    </template>
+    <template #chartHeader>
+      <MarketChartHeader v-model:is-favorites-active="isFavoritesExpanded" />
+    </template>
     <template #chart="{ chartClass }">
-      <!--      <NumberInput v-model="marketStore.activePairPrice" />-->
       <MarketChart :class="chartClass" />
     </template>
-    <template #orders>
-      <OrdersAndStatistics />
+    <template #orders="{ ordersClass }">
+      <OrdersAndStatistics :class="ordersClass" />
     </template>
     <template #sidebar>
       <MarketSidebar />
@@ -20,16 +28,24 @@
 </template>
 
 <script setup lang="ts">
+import { useMarketStore } from '@/stores/market';
 import MarketContainer from '@/containers/marketContainer/MarketContainer.vue';
 import PlayerControls from '@/components/app/playerControls/PlayerControls.vue';
 import MarketTools from '@/components/app/marketTools/MarketTools.vue';
 import MarketSidebar from '@/components/app/marketSidebar/MarketSidebar.vue';
 import OrdersAndStatistics from '@/components/app/ordersAndStatistics/OrdersAndStatistics.vue';
-import { useMarketStore } from '@/stores/market';
 import MarketChart from '@/components/app/marketChart/MarketChart.vue';
+import FavoritesList from '@/components/app/favoritesList/FavoritesList.vue';
+import MarketChartHeader from '@/components/app/marketChartHeader/MarketChartHeader.vue';
+import { useStorage } from '@vueuse/core';
 
 const marketStore = useMarketStore();
-marketStore.activePairPrice = 17000;
+
+const isFavoritesExpanded = useStorage('isFavoritesVisible', false);
+
+const hideFavorites = () => {
+  isFavoritesExpanded.value = false;
+};
 
 await marketStore.getPairs();
 </script>

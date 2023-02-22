@@ -21,8 +21,8 @@ const {
   chartDateTo,
   computedCandles,
   isFetchingCandles,
+  isFetchingEmulatorTimeframe,
   fetchCandles,
-  appendCandles,
 } = useMarketChart();
 
 const {
@@ -31,10 +31,14 @@ const {
   isEmulating,
   playEmulator,
   pauseEmulator,
-} = useEmulator(appendCandles);
+} = useEmulator();
 
 watch(emulatorDate, async () => {
-  if (isEmulating.value) return;
+  if ([
+    isEmulating.value,
+    isFetchingCandles.value,
+    isFetchingEmulatorTimeframe.value,
+  ].some(Boolean)) return;
 
   await fetchCandles();
 });

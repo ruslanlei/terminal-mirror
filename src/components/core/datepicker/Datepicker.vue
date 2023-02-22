@@ -4,6 +4,8 @@
     :placement="placement"
     :container-gap="20"
     :distance="16"
+    :is-disabled="blockCalendar"
+    @trigger-click="onTriggerClick"
   >
     <template #trigger>
       <button :class="[$style.trigger, $style[state]]">
@@ -67,6 +69,8 @@ const computedConfig = computed<Partial<FlatpickrConfig>>(() => ({
   inline: true,
   dateFormat: 'Z',
   locale: localesMap[locale.value],
+  maxDate: props.maxDate,
+  minDate: props.minDate,
 }));
 
 const computedIntl = computed(() => new Intl.DateTimeFormat(
@@ -88,6 +92,10 @@ watch([localValue, computedIntl], () => {
 }, { immediate: true });
 
 const isCalendarVisible = ref(false);
+
+const onTriggerClick = () => {
+  emit('triggerClick');
+};
 </script>
 
 <style lang="scss" module>

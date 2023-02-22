@@ -5,6 +5,7 @@ import {
   subtractRight,
 } from '@/helpers/number';
 import { calculatePercentOfDifference } from '@/helpers/math/percents';
+import { toAbsolute } from '@/utils/number';
 
 export const calculatePnl = curry((
   orderPrice: number,
@@ -25,6 +26,7 @@ export const calculatePnlPercent = curry((
   const orderVolume = multiply(orderPrice, quantity);
 
   return compose(
+    toAbsolute,
     calculatePercentOfDifference(orderVolume),
     add(orderVolume),
   )(pnl);

@@ -1,15 +1,8 @@
-import { Currency } from '@/types/currency';
-
-export interface TakeProfitInputValue {
-  price: number,
-  quantity: number,
-}
-
 export interface TakeProfitInputProps {
-  currency: Currency,
+  baseCurrencyStep: number,
+  baseCurrencyDecimals: number,
   orderPrice: number,
   orderQuantity: number,
-
   price: number,
   quantity: number,
 }

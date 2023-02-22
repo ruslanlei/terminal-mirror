@@ -22,8 +22,6 @@ export const calculateVolumeDifferenceInPercentsOfDeposit = curry((
   comparingPrice,
 ));
 
-// FORMULA:
-// (orderVolume - (balance * percentOfDeposit / 100)) / order quantity
 export const calculatePriceByPercentOfDeposit = curry((
   quantity: number,
   originalPrice: number,

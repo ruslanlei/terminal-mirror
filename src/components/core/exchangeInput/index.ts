@@ -1,12 +1,14 @@
-import { BaseCurrency, QuoteCurrency } from '@/hooks/useExchange';
 import { NumberInputProps } from '@/components/core/numberInput';
 
 export interface ExchangeInputProps {
   modelValue: number,
   isDisabled?: boolean,
-
-  baseCurrency: BaseCurrency,
-  quoteCurrency: QuoteCurrency,
+  quoteCurrencyDecimals: number,
+  baseCurrencyDecimals: number,
+  baseCurrencyStep: number,
+  price: number,
+  balance: number,
+  leverage: number,
   saveOn: NumberInputProps['saveOn'],
 }
 

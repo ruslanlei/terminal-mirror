@@ -2,20 +2,23 @@ import { computed, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { ActiveOrdersTableRecord, ClosedOrdersTableRecord, OrdersListProps } from '@/components/app/ordersList';
 import { useMarketStore } from '@/stores/market';
-import { MasterOrder, Order, SubOrder } from '@/api/types/order';
+import {
+  MasterOrder, Order, StopLoss, TakeProfit,
+} from '@/api/types/order';
 import { add, roundToDecimalPoint } from '@/helpers/number';
 import { compose } from '@/utils/fp';
 import { collectActiveOrderRecord, collectClosedOrderRecord } from '@/components/app/ordersList/collectTableRecord';
 import { createEmptyRecord } from '@/components/core/table/helpers';
-import { modalType, useModalStore } from '@/stores/modals';
 import { awaitTimeout } from '@/utils/promise';
 import { useEmulatorStore } from '@/stores/emulator';
 import { findAndDelete, findAndUpdateObject } from '@/helpers/array';
+import { useChartDataStore } from '@/stores/chartData';
+import { storeToRefs } from 'pinia';
 
 interface GroupedOrder {
   order: MasterOrder,
-  takeProfits: SubOrder[],
-  stopLoss: SubOrder | undefined,
+  takeProfits: TakeProfit[],
+  stopLoss: StopLoss | undefined,
 }
 
 export const useOrdersList = (
@@ -23,8 +26,13 @@ export const useOrdersList = (
 ) => {
   const { t } = useI18n();
   const marketStore = useMarketStore();
+  const {
+    activeOrders,
+    closedOrders,
+  } = storeToRefs(marketStore);
+
+  const chartDataStore = useChartDataStore();
   const emulatorStore = useEmulatorStore();
-  const modalStore = useModalStore();
 
   const columns = computed(() => [
     {
@@ -109,12 +117,12 @@ export const useOrdersList = (
       const relatedTakeProfits = (
         orders.filter(
           (targetOrder: Order) => targetOrder.order_type === 'tp' && targetOrder.master === order.id,
-        ) as SubOrder[]
-      ).sort((orderA: SubOrder, orderB: SubOrder) => orderB.price - orderA.price);
+        ) as TakeProfit[]
+      ).sort((orderA: TakeProfit, orderB: TakeProfit) => orderB.price - orderA.price);
 
       const relatedStopLoss = orders.filter(
         (targetOrder: Order) => targetOrder.order_type === 'sl' && targetOrder.master === order.id,
-      )[0] as SubOrder | undefined;
+      )[0] as StopLoss | undefined;
 
       return {
         order,
@@ -136,7 +144,7 @@ export const useOrdersList = (
       return compose(
         collectActiveOrderRecord({
           pairData,
-          pairPrice: marketStore.activePairPrice,
+          pairPrice: chartDataStore.getCurrentPriceByPairId(pairData.id),
           takeProfits,
           stopLoss,
           order,
@@ -167,13 +175,16 @@ export const useOrdersList = (
       )(order.id);
     });
 
-  const orders = ref<Order[]>([]);
+  const orders = computed<Order[]>(() => ({
+    active: activeOrders.value,
+    closed: closedOrders.value,
+  }[props.listType]));
 
   const activeOrderRecords = computed<ActiveOrdersTableRecord[]>(
     () => compose(
       mapOrdersToActiveOrderTableRecords,
       groupOrders,
-    )(orders.value),
+    )(activeOrders.value),
   );
 
   const commonPnl = computed(() => activeOrderRecords.value.reduce((
@@ -188,7 +199,7 @@ export const useOrdersList = (
     () => compose(
       mapOrdersToClosedOrderTableRecords,
       groupOrders,
-    )(orders.value),
+    )(closedOrders.value),
   );
 
   const records = computed(() => ({
@@ -203,67 +214,46 @@ export const useOrdersList = (
       isLoading.value = true;
     }
 
-    const { result, data } = await marketStore.getOrderList(props.listType);
+    if (props.listType === 'active') {
+      await marketStore.getActiveOrdersList();
+    }
+    if (props.listType === 'closed') {
+      await marketStore.getClosedOrdersList();
+    }
 
     isLoading.value = false;
-
-    if (!result) return;
-
-    orders.value = data;
   };
 
   watch(() => props.listType, () => getList(true));
 
-  // const deleteOrder = async (
-  //   order: Order,
-  //   takeProfits: SubOrder[] | undefined,
-  // ) => {
-  //   modalStore.showModal({
-  //     type: modalType.DELETE_ORDER,
-  //     payload: {
-  //       order,
-  //       takeProfits,
-  //     },
-  //   });
-  // };
-
-  const onOrderCreate = async () => {
+  const unsubscribeOrderCreate = marketStore.subscribeOrderCreated(async () => {
     if (props.listType !== 'active') return;
 
     await getList(false);
-  };
+  });
 
-  const onOrderDelete = async (
+  const unsubscribeOrderDelete = marketStore.subscribeOrderDelete(async (
     orderId: Order['id'],
   ) => {
     if (props.listType !== 'active') return;
 
-    await awaitTimeout(300);
-    orders.value = orders.value.filter(
+    await awaitTimeout(300); // FIXME: awaiting for modal close animation
+    activeOrders.value = activeOrders.value.filter(
       (order: Order) => order.id !== orderId && order.master !== orderId,
     );
-  };
-
-  const subscribeOrderCreate = () => {
-    marketStore.subscribeOrderCreated(onOrderCreate);
-    marketStore.subscribeOrderDelete(onOrderDelete);
-  };
-
-  const unsubscribeOrderCreate = () => {
-    marketStore.unsubscribeOrderCreated(onOrderCreate);
-    marketStore.unsubscribeOrderDelete(onOrderDelete);
-  };
+  });
 
   const unsubscribeSimulateEvent = emulatorStore.subscribeSimulateEvent(
     (updatedOrder: Order) => {
       if (
         updatedOrder.order_type === 'limit'
+          && updatedOrder.status !== 'new'
           && updatedOrder.status !== 'filled'
           && props.listType === 'active'
       ) {
         findAndDelete(
           (order: Order) => order.id !== updatedOrder.id,
-          orders.value,
+          activeOrders.value,
         );
 
         return;
@@ -271,21 +261,41 @@ export const useOrdersList = (
 
       findAndUpdateObject(
         (order: Order) => order.id === updatedOrder.id,
-        orders.value,
+        activeOrders.value,
         updatedOrder,
       );
     },
   );
 
+  // FIXME: need to fix backend events.
+  //  for now limit order returns with
+  //  "filled" status even if it executed
+  //  if at the same time was executed TP
+  //  or SL
+  const unsubscribeSimulationEndedEvent = emulatorStore.subscribeSimulationEndedEvent(getList);
+
   const deleteOrder = async (
     order: Order,
-    takeProfits: SubOrder[] | undefined,
+    takeProfits: TakeProfit[] | undefined,
   ) => {
     if (emulatorStore.isPlaying) {
       emulatorStore.turnOffPlayer();
     }
 
     await marketStore.removeOrder(order, takeProfits);
+  };
+
+  const clearSubscriptions = () => {
+    unsubscribeOrderCreate();
+    unsubscribeOrderDelete();
+    unsubscribeSimulateEvent();
+    unsubscribeSimulationEndedEvent();
+  };
+
+  const onRecordClick = (
+    record: ActiveOrdersTableRecord | ClosedOrdersTableRecord,
+  ) => {
+    marketStore.setPair(record.data.pair.id);
   };
 
   return {
@@ -295,9 +305,8 @@ export const useOrdersList = (
     commonPnl,
     isLoading,
     getList,
-    subscribeOrderCreate,
-    unsubscribeOrderCreate,
+    clearSubscriptions,
     deleteOrder,
-    unsubscribeSimulateEvent,
+    onRecordClick,
   };
 };

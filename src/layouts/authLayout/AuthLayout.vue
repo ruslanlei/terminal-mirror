@@ -62,7 +62,7 @@ const { t } = useI18n();
   flex-direction: column;
   justify-content: space-between;
   overflow-y: auto;
-  @include scrollbarSecondary(true);
+  @include scrollbarSecondary(12px, 6px, true);
 }
 
 .sidebarInner {}

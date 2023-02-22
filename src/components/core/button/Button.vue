@@ -4,11 +4,13 @@
     :class="[
       $style.button,
       isDisabled && $style.disabled,
+      $style[size],
+      isWide && $style.wide,
       ...computedState,
     ]"
   >
     <div :class="[$style.loaderCap, !isLoading && $style.hidden]">
-      <Loader />
+      <Loader :size="computedLoaderSize" />
     </div>
     <div :class="[$style.inner, isLoading && $style.hidden]">
       <slot />
@@ -19,6 +21,7 @@
 <script setup lang="ts">
 import Loader from '@/components/core/loader/Loader.vue';
 import { useComputedState } from '@/hooks/useComputedState';
+import { computed } from 'vue';
 import { ButtonProps } from './index';
 
 const props = withDefaults(
@@ -27,23 +30,33 @@ const props = withDefaults(
     state: 'gradientColor',
     isDisabled: false,
     isLoading: false,
+    isWide: true,
   },
 );
 
 const computedState = useComputedState(props);
+
+const computedLoaderSize = computed(
+  () => (props.size === 'lg'
+    ? 'md'
+    : 'sm'),
+);
 </script>
 
 <style lang="scss" module>
 @import "src/assets/styles/utils";
 
 .button {
-  width: 100%;
   display: block;
   position: relative;
   transition: 160ms background-color;
   &:not(.disabled) {
     cursor: pointer;
   }
+}
+
+.wide {
+  width: 100%;
 }
 
 .loaderCap {
@@ -113,21 +126,21 @@ const computedState = useComputedState(props);
   }
 }
 
-.lgSize {
+.lg {
   padding: 15px;
   border-radius: 5px;
   @include text;
   font-weight: 600;
 }
 
-.mdSize {
+.md {
   padding: 8px;
   border-radius: 5px;
   @include title4;
   font-weight: 600;
 }
 
-.smSize {
+.sm {
   padding: 3.5px;
   border-radius: 5px;
   @include title5;

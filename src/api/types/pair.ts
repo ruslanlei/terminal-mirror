@@ -1,10 +1,8 @@
-import { currency } from '@/api/types/currency';
-
 export interface PairData {
   id: number,
   alias: string,
-  base: currency,
-  quote: currency,
+  base: string,
+  quote: string,
   from_date: string,
   to_date: string,
   total_trades: number,

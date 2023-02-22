@@ -40,14 +40,16 @@
     <div :class="$style.controls">
       <Button
         :class="$style.control"
-        :state="['successColor', 'mdSize']"
+        state="successColor"
+        size="md"
         @click="close"
       >
         {{ t('common.no') }}
       </Button>
       <Button
         :class="$style.control"
-        :state="['dangerColor', 'mdSize']"
+        state="dangerColor"
+        size="md"
         :is-loading="isDeleting"
         @click="handleDelete"
       >
@@ -69,14 +71,16 @@ import Picture from '@/components/core/picture/Picture.vue';
 import { collectSrcSet } from '@/helpers/dom';
 import Typography from '@/components/app/typography/Typography.vue';
 import Button from '@/components/core/button/Button.vue';
-import { Order, SubOrder } from '@/api/types/order';
+import { Order, TakeProfit } from '@/api/types/order';
 import { reduceTakeProfitsToQuantitiesSum } from '@/helpers/math/formulas/takeProfit';
 import { calculatePnl } from '@/helpers/math/formulas/pnl';
 import { isPositive, subtractRight } from '@/helpers/number';
 import { useMarketStore } from '@/stores/market';
 import { useEmulatorStore } from '@/stores/emulator';
-import { compose, filter } from '@/utils/fp';
+import { compose } from '@/utils/fp';
 import { cloneDeep } from '@/utils/object';
+import { filter } from '@/utils/array';
+import { useChartDataStore } from '@/stores/chartData';
 import { DeleteOrderModalEmits, DeleteOrderModalProps } from './index';
 
 import IllustrationPng from './assets/illustration.png';
@@ -94,6 +98,7 @@ const illustrationSrcSet = computed(() => collectSrcSet([
 const { t } = useI18n();
 
 const marketStore = useMarketStore();
+const chartDataStore = useChartDataStore();
 const emulatorStore = useEmulatorStore();
 
 const close = () => {
@@ -106,19 +111,19 @@ const isOrderFilled = computed(() => order.value.status === 'filled');
 
 const orderCurrency = computed(() => marketStore.pairsMap[order.value.pair].quote);
 
-const takeProfits = ref<SubOrder[]>([]);
-const setTakeProfits = (tps: SubOrder[]) => {
+const takeProfits = ref<TakeProfit[]>([]);
+const setTakeProfits = (updatedTakeProfits: TakeProfit[]) => {
   takeProfits.value = compose(
     cloneDeep,
     filter(
-      tps,
-      (takeProfit: SubOrder) => takeProfit.status === 'executed',
+      (takeProfit: TakeProfit) => takeProfit.status === 'executed',
+      updatedTakeProfits,
     ),
   )();
 };
 
 const takeProfitsQuantitySum = computed(
-  () => reduceTakeProfitsToQuantitiesSum(takeProfits.value),
+  () => reduceTakeProfitsToQuantitiesSum(takeProfits.value || []),
 );
 
 const pnl = computed(() => {
@@ -130,7 +135,7 @@ const pnl = computed(() => {
   return calculatePnl(
     props.order.price,
     quantity,
-    marketStore.activePairPrice,
+    chartDataStore.currentPrice || 0,
   );
 });
 
@@ -145,7 +150,7 @@ const onEmulatorEvent = (updatedOrder: Order) => {
   );
 
   if (takeProfitIndex !== -1) {
-    takeProfits.value[takeProfitIndex] = updatedOrder as SubOrder;
+    takeProfits.value[takeProfitIndex] = updatedOrder as TakeProfit;
   }
 };
 

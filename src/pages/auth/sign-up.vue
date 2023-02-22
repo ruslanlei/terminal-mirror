@@ -45,7 +45,8 @@
       </template>
       <template #submit>
         <Button
-          :state="['gradientColor', 'lgSize', 'interactive']"
+          :state="['gradientColor', 'interactive']"
+          size="lg"
           type="submit"
           :is-loading="isLoading"
         >

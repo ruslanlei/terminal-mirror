@@ -4,7 +4,7 @@
   <ToastLayer :class="$style.toastLayer" />
   <LevitatingLayer :class="$style.levitatingLayer" />
   <IconsMap />
-  <DebugPanel :class="$style.debugPanel" />
+  <CoinLogoMap />
 </template>
 
 <script setup lang="ts">
@@ -13,8 +13,8 @@ import ToastLayer from '@/components/app/toastLayer/ToastLayer.vue';
 import ModalLayer from '@/components/app/modalLayer/ModalLayer.vue';
 import LevitatingLayer from '@/components/app/leviatingLayer/LevitatingLayer.vue';
 import IconsMap from '@/components/core/icon/IconsMap.vue';
+import CoinLogoMap from '@/components/core/coinLogo/CoinLogoMap.vue';
 import { useApp } from '@/hooks/useApp';
-import DebugPanel from '@/components/app/debugPanel/DebugPanel.vue';
 
 useApp();
 </script>

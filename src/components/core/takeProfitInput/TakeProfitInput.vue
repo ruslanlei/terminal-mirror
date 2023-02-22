@@ -27,10 +27,10 @@
         v-model="localQuantity"
         type="number"
         save-on="blur"
-        :min="currency.step"
+        :min="baseCurrencyStep"
         :max="orderQuantity"
-        :step="currency.step"
-        :decimals="currency.decimals"
+        :step="baseCurrencyStep"
+        :decimals="baseCurrencyDecimals"
         :round-to-decimal-point="false"
         :class="$style.input"
         :state="null"
@@ -66,6 +66,9 @@ import { computed } from 'vue';
 import NumberInput from '@/components/core/numberInput/NumberInput.vue';
 import { useLocalValue } from '@/hooks/useLocalValue';
 import {
+  divide,
+  divideRight,
+  multiply,
   roundToDecimalPoint,
 } from '@/helpers/number';
 import { compose } from '@/utils/fp';
@@ -101,15 +104,20 @@ const percentOfOrderQuantity = computed(() => props.orderQuantity / 100);
 const percentOfQuantity = computed({
   get: () => roundToDecimalPoint(2, localQuantity.value / percentOfOrderQuantity.value),
   set: (percentValue: number) => {
-    localQuantity.value = roundToDecimalPoint(
-      props.currency.decimals,
-      roundToDecimalPoint(percentValue, 2) * percentOfOrderQuantity.value,
-    );
+    localQuantity.value = compose(
+      roundToDecimalPoint(props.baseCurrencyStep),
+      multiply(percentOfOrderQuantity.value),
+      roundToDecimalPoint(2),
+    )(percentValue);
   },
 });
 
 const percentOfQuantityInputStep = computed(
-  () => roundToDecimalPoint(2, 100 / (props.orderQuantity / props.currency.step)),
+  () => compose(
+    roundToDecimalPoint(2),
+    divide(100),
+    divideRight,
+  )(props.baseCurrencyStep, props.orderQuantity),
 );
 </script>
 

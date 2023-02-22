@@ -4,30 +4,36 @@
       :class="$style.label"
       :text="computedLabel"
     />
-    <div :class="$style.value">
-      {{ balance }}
-    </div>
+    <AnimatedText
+      :class="$style.value"
+      :text="balance"
+      animation-type="verticalAuto"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useProfileStore } from '@/stores/profile';
 import { useMarketStore } from '@/stores/market';
 import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
+import { useEmulatorStore } from '@/stores/emulator';
+import { roundToDecimalPoint } from '@/helpers/number';
 
 const { t } = useI18n();
 
-const profileStore = useProfileStore();
 const marketStore = useMarketStore();
+const emulatorStore = useEmulatorStore();
 
 const computedLabel = computed(() => ({
   emulator: t('market.type.emulator'),
   real: t('market.type.real'),
 }[marketStore.marketType]));
 
-const balance = computed(() => `$ ${profileStore.balance}`);
+const balance = computed(() => t('common.currencyAmount', {
+  amount: roundToDecimalPoint(2, emulatorStore.balance),
+  currency: marketStore.activePairData?.quote,
+}));
 </script>
 
 <style lang="scss" module>

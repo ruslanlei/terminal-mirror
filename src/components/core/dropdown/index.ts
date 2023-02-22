@@ -10,6 +10,7 @@ export interface DropdownProps {
   containerGap?: number,
   automaticReplace?: boolean,
   isDisabled?: boolean,
+  dropAnimationInitialPositionShift?: number,
 }
 
 export interface DropdownEmits {

@@ -21,14 +21,29 @@
         {{ chapter.label }}
       </Button>
     </div>
+    <div :class="$style.rightColumn">
+      <Button
+        :state="['gradientColor']"
+        size="lg"
+        :is-wide="false"
+        :class="$style.signUpButton"
+      >
+        {{ t('auth.signUp.label') }}
+      </Button>
+      <LanguageSelect />
+    </div>
   </header>
 </template>
 
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n';
 import Logo from '@/components/core/logo/Logo.vue';
 import Button from '@/components/core/button/Button.vue';
 import { useLocalValue } from '@/hooks/useLocalValue';
+import LanguageSelect from '@/components/app/languageSelect/LanguageSelect.vue';
 import { TerminalLandingHeaderEmits, TerminalLandingHeaderProps } from './index';
+
+const { t } = useI18n();
 
 const props = defineProps<TerminalLandingHeaderProps>();
 
@@ -50,5 +65,16 @@ const localActiveChapter = useLocalValue(props, emit, 'activeChapter');
   justify-content: center;
   align-items: center;
   gap: 40px;
+}
+
+.rightColumn {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 40px;
+}
+
+.signUpButton {
+  padding: 16px 50px;
 }
 </style>

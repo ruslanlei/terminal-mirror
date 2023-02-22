@@ -50,6 +50,7 @@ const props = withDefaults(
     keepWithinWindowHorizontal: true,
     containerGap: 10,
     automaticReplace: true,
+    dropAnimationInitialPositionShift: 60,
   },
 );
 
@@ -224,16 +225,16 @@ watch(localIsVisible, () => {
     : props.placement;
 
   if (placement === 'bottom') {
-    translateY = [-60, 0];
+    translateY = [-props.dropAnimationInitialPositionShift, 0];
   }
   if (placement === 'top') {
-    translateY = [60, 0];
+    translateY = [props.dropAnimationInitialPositionShift, 0];
   }
   if (placement === 'left') {
-    translateX = [60, 0];
+    translateX = [props.dropAnimationInitialPositionShift, 0];
   }
   if (placement === 'right') {
-    translateX = [-60, 0];
+    translateX = [-props.dropAnimationInitialPositionShift, 0];
   }
 
   playAnimation({

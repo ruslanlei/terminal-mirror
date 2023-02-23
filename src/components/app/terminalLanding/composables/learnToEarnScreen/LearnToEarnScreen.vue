@@ -19,11 +19,11 @@ import { useI18n } from 'vue-i18n';
 import Typography from '@/components/app/typography/Typography.vue';
 import LearnToEarnFrames
   from '@/components/app/terminalLanding/composables/learnToEarnScreen/learnToEarnFrames/LearnToEarnFrames.vue';
-import { LearnToEarnFrame } from '@/components/app/terminalLanding/composables/learnToEarnScreen/learnToEarnFrame';
+import { ILearnToEarnFrame } from '@/components/app/terminalLanding/composables/learnToEarnScreen/learnToEarnFrame';
 
 const { t } = useI18n();
 
-const frames = computed<LearnToEarnFrame[]>(() => [
+const frames = computed<ILearnToEarnFrame[]>(() => [
   {
     label: t('terminalLanding.learnToEarn.frame.safeOperations.label'),
     description: t('terminalLanding.learnToEarn.frame.safeOperations.description'),

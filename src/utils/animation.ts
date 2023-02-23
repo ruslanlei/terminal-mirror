@@ -33,9 +33,19 @@ export const createAnimation = (
     animation.play();
   });
 
+  const pause = () => {
+    animation?.pause();
+  };
+
+  const restart = () => {
+    animation?.restart();
+  };
+
   return {
     animation,
     init,
     play,
+    pause,
+    restart,
   };
 };

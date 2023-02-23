@@ -102,6 +102,7 @@ onMounted(calculateDescriptionContainerStyles);
   border-radius: 15px;
   overflow: hidden;
   transition: border-radius 160ms;
+  cursor: pointer;
   .progressBarContainer {
     height: 0;
   }

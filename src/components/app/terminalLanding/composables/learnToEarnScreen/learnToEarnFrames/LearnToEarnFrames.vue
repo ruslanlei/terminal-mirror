@@ -6,6 +6,7 @@
       :frame="frame"
       :is-active="index === activeFrameIndex"
       :progress="index === activeFrameIndex ? progress : 0"
+      @click="onCardSelect(index)"
     />
   </div>
 </template>
@@ -30,6 +31,7 @@ const activeFrameIndex = ref(0);
 const {
   init,
   play,
+  restart,
 } = createAnimation(() => ({
   targets: progress,
   value: [0, 100],
@@ -42,6 +44,13 @@ const {
       : 0;
   },
 }));
+
+const onCardSelect = (
+  index: number,
+) => {
+  activeFrameIndex.value = index;
+  restart();
+};
 
 onMounted(() => {
   init();

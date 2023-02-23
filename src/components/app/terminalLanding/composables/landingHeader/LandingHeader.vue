@@ -58,6 +58,7 @@ const localActiveChapter = useLocalValue(props, emit, 'activeChapter');
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
   border-bottom: 2px solid rgba(var(--color-accent-2), 0.1);
+  backdrop-filter: blur(100px);
 }
 
 .chapters {

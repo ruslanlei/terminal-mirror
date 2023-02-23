@@ -7,8 +7,10 @@
           :chapters="chapters"
         />
       </template>
-      <template #content>
+      <template #welcomeScreen>
         <WelcomeScreen />
+      </template>
+      <template #learnToEarnScreen>
         <LearnToEarnScreen />
       </template>
     </TerminalLandingContainer>

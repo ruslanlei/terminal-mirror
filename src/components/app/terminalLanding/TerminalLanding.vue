@@ -16,6 +16,9 @@
       <template #totalBeginnerBadge>
         <TotalBeginnerBadge />
       </template>
+      <template #determinationScreen>
+        <DeterminationScreen />
+      </template>
     </TerminalLandingContainer>
   </div>
 </template>
@@ -30,6 +33,8 @@ import LandingHeader
   from '@/components/app/terminalLanding/composables/landingHeader/LandingHeader.vue';
 import LearnToEarnScreen from '@/components/app/terminalLanding/composables/learnToEarnScreen/LearnToEarnScreen.vue';
 import TotalBeginnerBadge from '@/components/app/terminalLanding/composables/totalBeginnerBadge/TotalBeginnerBadge.vue';
+import DeterminationScreen
+  from '@/components/app/terminalLanding/composables/determinationScreen/DeterminationScreen.vue';
 import { TerminalLandingChapter } from './index';
 
 const { t } = useI18n();

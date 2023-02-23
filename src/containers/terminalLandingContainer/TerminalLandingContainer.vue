@@ -34,6 +34,9 @@
         <slot name="totalBeginnerBadge" />
       </div>
     </div>
+    <div :class="$style.determinationScreen">
+      <slot name="determinationScreen" />
+    </div>
   </div>
 </template>
 
@@ -48,6 +51,7 @@ const learnToEarnScreenBlobLeft = ref();
 
 <style lang="scss" module>
 .terminalLandingContainer {
+  height: 5000px; // temporary
   background-color: rgb(var(--color-background-1));
   overflow: hidden;
 }

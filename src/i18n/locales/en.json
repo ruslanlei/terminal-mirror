@@ -289,6 +289,27 @@
       "label": "Do you know anything about cryptocurrency?",
       "description": "We have developed a complete theoretical course with practice on our\nterminal. Acquiring them together is not only effective, but also profitable.",
       "learnMore": "Learn more"
+    },
+    "determinationScreen": {
+      "label": "Who is our terminal for?",
+      "card": {
+        "beginners": {
+          "label": "Beginners",
+          "text": "Who do not know anything about cryptocurrency, but want to learn how to make transactions in the market without losing real money."
+        },
+        "propCompanyOwners": {
+          "label": "Prop company owners",
+          "text": "Those who want to be able to quickly test trading strategies, quickly check and train employees."
+        },
+        "traders": {
+          "label": "Traders",
+          "text": "Those who are familiar with the crypto market, but they feel they lack experience."
+        },
+        "courseCreators": {
+          "label": "Course creators",
+          "text": "Improve your learning with practice. Connect your students to the learning terminal and help them to acquire trading skills."
+        }
+      }
     }
   }
 }

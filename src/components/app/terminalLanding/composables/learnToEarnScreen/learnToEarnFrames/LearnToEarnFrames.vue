@@ -50,5 +50,9 @@ onMounted(() => {
 </script>
 
 <style lang="scss" module>
-.learnToEarnFrames {}
+.learnToEarnFrames {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
 </style>

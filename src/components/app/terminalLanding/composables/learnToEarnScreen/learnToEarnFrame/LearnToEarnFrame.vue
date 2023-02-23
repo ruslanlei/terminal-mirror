@@ -125,12 +125,12 @@ onMounted(calculateDescriptionContainerStyles);
 }
 
 .descriptionContainer {
-  margin-top: 15px;
   position: relative;
   transition: height 200ms;
 }
 
 .descriptionWrapper {
+  padding-top: 15px;
   position: absolute;
   top: 0;
   width: 100%;

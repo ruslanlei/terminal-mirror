@@ -37,6 +37,9 @@
         {{ t('terminalLanding.welcomeScreen.options.openTerminal') }}
       </Button>
     </div>
+    <div :class="$style.mockupContainer">
+      <TerminalScreenshotVector :class="$style.mockup" />
+    </div>
   </ImageBackgroundBlock>
 </template>
 
@@ -51,6 +54,7 @@ import BackgroundAvif from '@/assets/images/auth/background.avif';
 import BadgeSupportedByTradingView from '@/components/app/badgeSupportedByTradingView/BadgeSupportedByTradingView.vue';
 import Typography from '@/components/app/typography/Typography.vue';
 import Button from '@/components/core/button/Button.vue';
+import TerminalScreenshotVector from '../../assets/terminalScreenshotVector.svg';
 
 const { t } = useI18n();
 
@@ -63,7 +67,7 @@ const illustrationSrcset = computed(() => collectSrcSet([
 
 <style lang="scss" module>
 .terminalLandingWelcomeScreen {
-  height: calc(100 * var(--vh));
+  height: 1200px;
   position: relative;
 }
 
@@ -129,5 +133,14 @@ const illustrationSrcset = computed(() => collectSrcSet([
   & > * {
     flex-grow: 1;
   }
+}
+
+.mockupContainer {
+  width: 100%;
+  max-width: 1127px;
+}
+
+.mockup {
+  width: 100%;
 }
 </style>

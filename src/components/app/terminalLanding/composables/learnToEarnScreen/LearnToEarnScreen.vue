@@ -7,12 +7,17 @@
     >
       {{ t('terminalLanding.learnToEarn.label') }}
     </Typography>
+    <div :class="$style.content">
+      <LearnToEarnFrames />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import Typography from '@/components/app/typography/Typography.vue';
+import LearnToEarnFrames
+  from '@/components/app/terminalLanding/composables/learnToEarnScreen/learnToEarnFrames/LearnToEarnFrames.vue';
 
 const { t } = useI18n();
 </script>
@@ -27,5 +32,9 @@ const { t } = useI18n();
 
 .label {
   margin-top: 94px;
+}
+
+.content {
+  margin-top: 80px;
 }
 </style>

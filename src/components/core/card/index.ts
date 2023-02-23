@@ -1,3 +1,3 @@
 export interface CardProps {
-  state: 'background2' | 'background3'
+  state: 'background1' | 'background2' | 'background3'
 }

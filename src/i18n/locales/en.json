@@ -265,7 +265,25 @@
       }
     },
     "learnToEarn": {
-      "label": "Learn to earn with us"
+      "label": "Learn to earn with us",
+      "frame": {
+        "safeOperations": {
+          "label": "Safe Operations",
+          "description": "Our terminal system behaves like a real exchange, allowing you to safely learn how to trade\nwith cryptocurrency and gain trading experience."
+        },
+        "easeOfLearning": {
+          "label": "Ease of learning",
+          "description": "Our terminal system behaves like a real exchange, allowing you to safely learn how to trade\nwith cryptocurrency and gain trading experience."
+        },
+        "playerInTerminal": {
+          "label": "Player in Terminal",
+          "description": "Our terminal system behaves like a real exchange, allowing you to safely learn how to trade\nwith cryptocurrency and gain trading experience."
+        },
+        "cryptocurrencyMarket": {
+          "label": "Cryptocurrency market",
+          "description": "Our terminal system behaves like a real exchange, allowing you to safely learn how to trade\nwith cryptocurrency and gain trading experience."
+        }
+      }
     }
   }
 }

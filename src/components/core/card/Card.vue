@@ -32,6 +32,10 @@ withDefaults(
 }
 .head {}
 
+.background1 {
+  background-color: rgb(var(--color-background-1));
+}
+
 .background2 {
   background-color: rgb(var(--color-background-2));
 }

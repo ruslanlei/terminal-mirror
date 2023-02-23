@@ -284,6 +284,11 @@
           "description": "Our terminal system behaves like a real exchange, allowing you to safely learn how to trade\nwith cryptocurrency and gain trading experience."
         }
       }
+    },
+    "totalBeginner": {
+      "label": "Do you know anything about cryptocurrency?",
+      "description": "We have developed a complete theoretical course with practice on our\nterminal. Acquiring them together is not only effective, but also profitable.",
+      "learnMore": "Learn more"
     }
   }
 }

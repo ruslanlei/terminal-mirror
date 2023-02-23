@@ -47,7 +47,6 @@ const frames = computed<ILearnToEarnFrame[]>(() => [
 
 <style lang="scss" module>
 .learnToEarnScreen {
-  height: calc(100 * var(--vh));
   display: flex;
   flex-direction: column;
   align-items: center;

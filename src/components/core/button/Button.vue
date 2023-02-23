@@ -137,6 +137,14 @@ const computedLoaderSize = computed(
   }
 }
 
+.background1 {
+  color: rgba(var(--color-accent-1));
+  background-color: rgb(var(--color-background-1));
+  &:hover {
+    background-color: rgb(var(--color-background-2));
+  }
+}
+
 .borderedDefault {
   color: rgba(var(--color-accent-1));
   border: 2px solid rgba(var(--color-accent-2), 0.2);

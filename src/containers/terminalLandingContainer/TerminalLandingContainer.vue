@@ -29,6 +29,11 @@
         />
       </div>
     </div>
+    <div :class="$style.totalBeginnerBadgeContainer">
+      <div :class="$style.totalBeginnerBadgeWrapper">
+        <slot name="totalBeginnerBadge" />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -43,7 +48,6 @@ const learnToEarnScreenBlobLeft = ref();
 
 <style lang="scss" module>
 .terminalLandingContainer {
-  height: 3000px; // temporary
   background-color: rgb(var(--color-background-1));
   overflow: hidden;
 }
@@ -67,6 +71,7 @@ const learnToEarnScreenBlobLeft = ref();
 .learnToEarnScreenContent {
   position: relative;
   z-index: 2;
+  padding-bottom: 240px;
 }
 
 .learnToEarnScreenBlobLeft {
@@ -75,42 +80,55 @@ const learnToEarnScreenBlobLeft = ref();
   bottom: -400px;
   height: 1200px;
   width: 1000px;
-  @keyframes learnToEarnScreenBlobLeft {
-    from {
-      transform: translateY(0) scale(1);
-    }
-    50% {
-      transform: translateY(-300px) scale(1.5);
-    }
-    to {
-      transform: translateY(0) scale(1);
-    }
-  }
+  //@keyframes learnToEarnScreenBlobLeft {
+  //  from {
+  //    transform: translateY(0) scale(1);
+  //  }
+  //  50% {
+  //    transform: translateY(-300px) scale(1.5);
+  //  }
+  //  to {
+  //    transform: translateY(0) scale(1);
+  //  }
+  //}
   animation: 18s learnToEarnScreenBlobLeft  infinite ease-in-out;
-  .learnToEarnScreenBlobLeftImg {
-    width: 100%;
-  }
 }
+.learnToEarnScreenBlobLeftImg {
+  width: 100%;
+}
+
 .learnToEarnScreenBlobRight {
   position: absolute;
   right: -500px;
   top: -400px;
   height: 1200px;
   width: 1000px;
-  @keyframes learnToEarnScreenBlobRight {
-    from {
-      transform: translateY(0) scale(1);
-    }
-    50% {
-      transform: translateY(300px) scale(1.5);
-    }
-    to {
-      transform: translateY(0) scale(1);
-    }
-  }
+  //@keyframes learnToEarnScreenBlobRight {
+  //  from {
+  //    transform: translateY(0) scale(1);
+  //  }
+  //  50% {
+  //    transform: translateY(300px) scale(1.5);
+  //  }
+  //  to {
+  //    transform: translateY(0) scale(1);
+  //  }
+  //}
   animation: 18s learnToEarnScreenBlobRight infinite ease-in-out;
-  .learnToEarnScreenBlobRightImg {
-    width: 100%;
-  }
+}
+.learnToEarnScreenBlobRightImg {
+  width: 100%;
+}
+
+.totalBeginnerBadgeContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.totalBeginnerBadgeWrapper {
+  width: 100%;
+  max-width: 1450px;
+  position: relative;
+  z-index: 3;
 }
 </style>

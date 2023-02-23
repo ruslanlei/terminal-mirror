@@ -13,6 +13,7 @@ export type TypographySize =
     'h1'
     | 'massive1'
     | 'massive2'
+    | 'massive3'
     | 'title1'
     | 'title2'
     | 'title3'
@@ -27,6 +28,6 @@ export type TypographySize =
 export interface TypographyProps {
     text?: string,
     isInline?: boolean,
-    state?: TypographyState | TypographyState[],
-    size?: TypographySize | TypographySize[],
+    state?: null | TypographyState | TypographyState[],
+    size?: null | TypographySize | TypographySize[],
 }

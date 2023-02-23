@@ -9,7 +9,8 @@ export type ButtonState =
   | 'interactive'
   | 'textAccent1'
   | 'borderedDefault'
-  | 'textAccent2';
+  | 'textAccent2'
+  | 'background1';
 
 export interface ButtonProps {
   state?: ButtonState | ButtonState[],

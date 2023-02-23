@@ -47,6 +47,10 @@ const computedState = useComputedState(props);
   font-size: 38px;
 }
 
+.massive3 {
+  font-size: 30px;
+}
+
 .h1 {
   @include h1;
 }

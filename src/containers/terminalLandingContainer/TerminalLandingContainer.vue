@@ -33,33 +33,12 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 import LearnToEarnScreenBlob from '@/components/app/terminalLanding/assets/LearnToEarnScreenBlob.webp';
 import Picture from '@/components/core/picture/Picture.vue';
-import { playAnimation } from '@/utils/animation';
 
 const learnToEarnScreenBlobRight = ref();
 const learnToEarnScreenBlobLeft = ref();
-
-onMounted(() => {
-  playAnimation({
-    targets: learnToEarnScreenBlobLeft.value,
-    loop: true,
-    easing: 'easeInOutQuint',
-    scale: [1, 1.5, 1, 1.5, 0.8, 1.6, 1],
-    translateY: [0, -300, 0],
-    delay: 4000,
-    duration: 18000,
-  });
-  playAnimation({
-    targets: learnToEarnScreenBlobRight.value,
-    loop: true,
-    easing: 'easeInOutQuint',
-    scale: [1, 1.5, 1],
-    translateY: [0, 300, 0],
-    duration: 18000,
-  });
-});
 </script>
 
 <style lang="scss" module>
@@ -83,7 +62,6 @@ onMounted(() => {
 
 .learnToEarnScreen {
   position: relative;
-  //overflow: hidden;
 }
 
 .learnToEarnScreenContent {
@@ -97,6 +75,18 @@ onMounted(() => {
   bottom: -400px;
   height: 1200px;
   width: 1000px;
+  @keyframes learnToEarnScreenBlobLeft {
+    from {
+      transform: translateY(0) scale(1);
+    }
+    50% {
+      transform: translateY(-300px) scale(1.5);
+    }
+    to {
+      transform: translateY(0) scale(1);
+    }
+  }
+  animation: 18s learnToEarnScreenBlobLeft  infinite ease-in-out;
   .learnToEarnScreenBlobLeftImg {
     width: 100%;
   }
@@ -107,6 +97,18 @@ onMounted(() => {
   top: -400px;
   height: 1200px;
   width: 1000px;
+  @keyframes learnToEarnScreenBlobRight {
+    from {
+      transform: translateY(0) scale(1);
+    }
+    50% {
+      transform: translateY(300px) scale(1.5);
+    }
+    to {
+      transform: translateY(0) scale(1);
+    }
+  }
+  animation: 18s learnToEarnScreenBlobRight infinite ease-in-out;
   .learnToEarnScreenBlobRightImg {
     width: 100%;
   }

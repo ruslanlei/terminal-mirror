@@ -114,7 +114,7 @@ import { useExchange } from '@/hooks/useExchange';
 import { useMarketStore } from '@/stores/market';
 import { storeToRefs } from 'pinia';
 import { useEmulatorStore } from '@/stores/emulator';
-import OrderFormEstimates from '@/components/app/orderFormEstimates/OrderFormEstimates.vue';
+import OrderFormEstimates from '@/components/app/orderForm/composables/orderFormEstimates/OrderFormEstimates.vue';
 
 const { t } = useI18n();
 

@@ -57,7 +57,7 @@ import Switch from '@/components/core/switch/Switch.vue';
 import Button from '@/components/core/button/Button.vue';
 import TakeProfitList from '@/components/app/takeProfitList/TakeProfitList.vue';
 import NumberInput from '@/components/core/numberInput/NumberInput.vue';
-import OrderFormEstimates from '@/components/app/orderFormEstimates/OrderFormEstimates.vue';
+import OrderFormEstimates from '@/components/app/orderForm/composables/orderFormEstimates/OrderFormEstimates.vue';
 import { useOrderFormInject } from '@/hooks/useOrderFormInject';
 import { useMarketStore } from '@/stores/market';
 import { storeToRefs } from 'pinia';

@@ -99,7 +99,7 @@ import OrderFormStopLossPartContainer
   from '@/containers/orderFormStopLossPartContainer/OrderFormStopLossPartContainer.vue';
 import Switch from '@/components/core/switch/Switch.vue';
 import NumberInput from '@/components/core/numberInput/NumberInput.vue';
-import OrderFormEstimates from '@/components/app/orderFormEstimates/OrderFormEstimates.vue';
+import OrderFormEstimates from '@/components/app/orderForm/composables/orderFormEstimates/OrderFormEstimates.vue';
 import Button from '@/components/core/button/Button.vue';
 import { useOrderFormInject } from '@/hooks/useOrderFormInject';
 import {

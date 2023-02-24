@@ -83,7 +83,7 @@ const riskDisplayValue = computed(() => t('order.takeProfit.riskValue', {
 </script>
 
 <style lang="scss" module>
-@import "src/assets/styles/utils";
+@import "../../../../../assets/styles/utils";
 
 .orderFormRatio {
   width: 100%;

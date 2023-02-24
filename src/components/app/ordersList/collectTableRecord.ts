@@ -106,7 +106,7 @@ const stopLossDataMixin = (
 ) => ({
   ...(payload.stopLoss ? {
     sl: compose(
-      roundToDecimalPoint(6),
+      roundToDecimalPoint(2),
       toAbsolute,
       calculatePercentOfDifference,
     )(payload.order.price, payload.stopLoss.price),
@@ -145,7 +145,7 @@ const takeProfitDataMixin = (
 ) => ({
   ...(payload.takeProfits?.length ? {
     tp: compose(
-      roundToDecimalPoint(6),
+      roundToDecimalPoint(2),
       calculateCommonTakeProfitPercent,
     )(
       payload.order.price,

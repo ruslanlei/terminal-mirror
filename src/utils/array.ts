@@ -5,6 +5,7 @@ import {
   map as rambdaMap,
   reduce as rambdaReduce,
   filter as rambdaFilter,
+  forEach as rambdaForEach,
 } from 'rambda';
 import collect from 'collect.js';
 
@@ -13,6 +14,8 @@ import { curry, CurriedFunc } from '@/utils/fp';
 export { flatten, concat };
 
 export const arrayFrom = (value: any | any[]) => (Array.isArray(value) ? value : [value]);
+
+export const { from: toArray } = Array;
 
 export const arrayOf = curry((
   initializer: () => any,
@@ -56,6 +59,11 @@ export const reduceRight = curry(
 ) as CurriedFunc<typeof lodashReduceRight<any, any>>;
 
 export const filter = curry(rambdaFilter) as CurriedFunc<(
-  predicate: (...args: any[]) => boolean,
-  array: any[],
+  predicate?: (...args: any[]) => boolean,
+  array?: any[],
+) => any>;
+
+export const forEach = curry(rambdaForEach) as CurriedFunc<(
+  predicate?: (...args: any[]) => boolean,
+  array?: any[],
 ) => any>;

@@ -125,7 +125,7 @@ import { playAnimation } from '@/utils/animation';
 import anime from 'animejs';
 import { uuid } from '@/utils/uuid';
 import { arrayOfElements } from '@/helpers/dom';
-import { compose } from '@/utils/fp';
+import { compose, log } from '@/utils/fp';
 import {
   addCssProperty,
   getRect,
@@ -133,6 +133,7 @@ import {
   toCssPxValue,
 } from '@/helpers/style';
 import { awaitTimeout } from '@/utils/promise';
+import { filter, forEach, toArray } from '@/utils/array';
 import {
   TableRecord,
   TableProps,
@@ -202,21 +203,35 @@ const playAppearAnimation = async () => {
     anime.remove(computedTableRowSelector.value);
 
     compose(
-      removeCssProperty([/* 'opacity', */'transform']),
+      removeCssProperty(['opacity', 'transform']),
       arrayOfElements,
     )(computedTableRowSelector.value);
   };
 
-  // const targets = document.querySelector(computedTableRowSelector.value);
+  // @ts-ignore
+  const visibleTargets = compose(
+    filter((element: HTMLElement) => {
+      if (!element.offsetParent) return false;
 
-  // console.log(el.offsetParent === null);
+      const {
+        height: containerHeight,
+      } = getRect(element.offsetParent as HTMLElement);
+
+      return element.offsetTop < containerHeight;
+    }),
+    arrayOfElements,
+  )(computedTableRowSelector.value) as HTMLElement[];
+
+  forEach((element: HTMLElement) => {
+    element.style.opacity = '0';
+  }, visibleTargets);
 
   if (props.animationDelay) {
     await awaitTimeout(props.animationDelay);
   }
 
   await playAnimation({
-    targets: computedTableRowSelector.value,
+    targets: visibleTargets,
     translateY: [200, 0],
     opacity: {
       value: [0, 1],
@@ -311,7 +326,7 @@ onMounted(() => {
   display: flex;
   align-items: center;
   position: relative;
-  opacity: 0;
+  //opacity: 0;
 }
 
 .recordColumn {}

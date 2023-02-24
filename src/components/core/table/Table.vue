@@ -217,7 +217,11 @@ const playAppearAnimation = async () => {
         height: containerHeight,
       } = getRect(element.offsetParent as HTMLElement);
 
-      return element.offsetTop < containerHeight;
+      const {
+        top: elementTop,
+      } = getRect(element);
+
+      return (element.offsetTop < containerHeight) && (elementTop < window.innerHeight);
     }),
     arrayOfElements,
   )(computedTableRowSelector.value) as HTMLElement[];

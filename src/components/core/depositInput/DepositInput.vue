@@ -146,7 +146,7 @@ const options = computed(() => [
   margin-top: 10px;
   align-items: center;
   display: grid;
-  grid-template-columns: 1fr 1fr 70px;
+  grid-template-columns: 1fr 1fr 80px;
   gap: 10px;
 }
 

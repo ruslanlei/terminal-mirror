@@ -7,6 +7,7 @@
     :state="state"
     :is-rows-clickable="true"
     appearance-animation-type="bubbling"
+    :animation-delay="115"
     @record-click="onRecordClick"
   >
     <template

@@ -209,16 +209,16 @@ import Icon from '@/components/core/icon/Icon.vue';
   font-weight: 500;
 }
 
-.ratioValue, .profit, .loss {
+.profit, .loss {
   @include title5;
   font-weight: 600;
 }
 
 .ratioValue {
-  color: rgb(var(--color-accent-1));
-  background-color: rgb(var(--color-accent-3));
-  padding: 2px 10px;
-  border-radius: 12px;
+  //color: rgb(var(--color-accent-1));
+  //background-color: rgb(var(--color-accent-3));
+  //padding: 2px 10px;
+  //border-radius: 12px;
 }
 
 .profit {

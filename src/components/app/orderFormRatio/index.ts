@@ -1,5 +1,5 @@
 export interface OrderFormRatioProps {
-  ratio: string,
-  profit: string,
-  risk: string,
+  // ratio: string,
+  profit: number,
+  risk: number,
 }

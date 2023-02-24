@@ -11,9 +11,10 @@
           {{ t('order.takeProfit.ratio') }}
         </div>
       </div>
-      <div :class="$style.ratioValue">
-        {{ ratio }}
-      </div>
+      <OrderRatioBadge
+        :take-profits-sum="profit"
+        :stop-loss-risk="risk"
+      />
     </div>
     <div :class="$style.metrics">
       <div :class="$style.metric">
@@ -21,7 +22,7 @@
           {{ t('order.takeProfit.risk') }}
         </div>
         <div :class="$style.risk">
-          {{ risk }}
+          {{ riskDisplayValue }}
         </div>
       </div>
       <div :class="$style.metric">
@@ -29,7 +30,7 @@
           {{ t('order.takeProfit.profit') }}
         </div>
         <div :class="$style.profit">
-          {{ profit }}
+          {{ profitDisplayValue }}
         </div>
       </div>
     </div>
@@ -40,10 +41,35 @@
 import { useI18n } from 'vue-i18n';
 import Icon from '@/components/core/icon/Icon.vue';
 import { OrderFormRatioProps } from '@/components/app/orderFormRatio/index';
+import OrderRatioBadge from '@/components/app/orderRatioBadge/OrderRatioBadge.vue';
+import { computed } from 'vue';
+import { useMarketStore } from '@/stores/market';
+import { storeToRefs } from 'pinia';
 
 const { t } = useI18n();
 
 const props = defineProps<OrderFormRatioProps>();
+
+const marketStore = useMarketStore();
+const {
+  activePairData,
+} = storeToRefs(marketStore);
+
+const profitDisplayValue = computed(() => t('order.takeProfit.profitValue', {
+  profit:
+    t('common.currencyAmount', {
+      amount: props.profit,
+      currency: activePairData.value?.quote,
+    }),
+}));
+
+const riskDisplayValue = computed(() => t('order.takeProfit.riskValue', {
+  risk:
+    t('common.currencyAmount', {
+      amount: props.risk,
+      currency: activePairData.value?.quote,
+    }),
+}));
 </script>
 
 <style lang="scss" module>
@@ -78,15 +104,6 @@ const props = defineProps<OrderFormRatioProps>();
 
 .ratioLabelText {
   margin-left: 10px;
-}
-
-.ratioValue {
-  padding: 2px 10px;
-  background-color: rgb(var(--color-accent-3));
-  color: rgb(var(--color-accent-1));
-  border-radius: 12px;
-  @include title5;
-  font-weight: 600;
 }
 
 .metrics {

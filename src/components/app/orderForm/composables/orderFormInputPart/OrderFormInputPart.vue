@@ -99,7 +99,10 @@
       {{ t('order.ratioLabel') }}
     </template>
     <template #ratio>
-      {{ ratio }}
+      <OrderRatioBadge
+        :take-profits-sum="takeProfitsIncomeSum"
+        :stop-loss-risk="stopLossRisk"
+      />
     </template>
     <template #profit>
       {{ profitDisplayValue }}
@@ -119,6 +122,7 @@ import { useExchange } from '@/hooks/useExchange';
 import { useMarketStore } from '@/stores/market';
 import { storeToRefs } from 'pinia';
 import { useEmulatorStore } from '@/stores/emulator';
+import OrderRatioBadge from '@/components/app/orderRatioBadge/OrderRatioBadge.vue';
 
 const { t } = useI18n();
 
@@ -142,6 +146,8 @@ const {
   pledge,
   liquidationPrice,
   ratio,
+  takeProfitsIncomeSum,
+  stopLossRisk,
   profitDisplayValue,
   riskDisplayValue,
 } = useOrderFormInject();

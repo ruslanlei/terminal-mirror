@@ -71,9 +71,8 @@
     </template>
     <template #ratio>
       <OrderFormRatio
-        :ratio="ratio"
-        :profit="profitDisplayValue"
-        :risk="riskDisplayValue"
+        :profit="takeProfitsIncomeSum"
+        :risk="stopLossRisk"
       />
     </template>
     <template #submit="{ buttonClass }">
@@ -143,7 +142,9 @@ const {
   profitDisplayValue,
   riskDisplayValue,
   isStopLossEnabled,
-  ratio,
+  // ratio,
+  takeProfitsIncomeSum,
+  stopLossRisk,
 } = useOrderFormInject();
 
 const isDependentFieldsDisabled = computed(() => !model.quantity);

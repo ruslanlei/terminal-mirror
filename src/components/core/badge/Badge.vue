@@ -30,6 +30,10 @@ defineProps<BadgeProps>();
   background-color: rgb(var(--color-background-3));
 }
 
+.background4 {
+  background-color: rgb(var(--color-background-4));
+}
+
 .success {
   background-color: rgb(var(--color-success));
 }

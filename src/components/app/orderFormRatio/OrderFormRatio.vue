@@ -18,18 +18,18 @@
     <div :class="$style.metrics">
       <div :class="$style.metric">
         <div :class="$style.label">
-          {{ t('order.takeProfit.profit') }}
-        </div>
-        <div :class="$style.profit">
-          {{ profit }}
-        </div>
-      </div>
-      <div :class="$style.metric">
-        <div :class="$style.label">
           {{ t('order.takeProfit.risk') }}
         </div>
         <div :class="$style.risk">
           {{ risk }}
+        </div>
+      </div>
+      <div :class="$style.metric">
+        <div :class="$style.label">
+          {{ t('order.takeProfit.profit') }}
+        </div>
+        <div :class="$style.profit">
+          {{ profit }}
         </div>
       </div>
     </div>

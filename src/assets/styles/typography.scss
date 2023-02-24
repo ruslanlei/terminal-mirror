@@ -8,6 +8,10 @@
     font-size: 38px;
 }
 
+@mixin massive3 {
+    font-size: 30px;
+}
+
 @mixin h1 {
     font-size: 24px;
     font-weight: 700;

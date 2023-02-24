@@ -36,19 +36,18 @@ const computedState = useComputedState(props);
 @import "src/assets/styles/utils";
 
 .typography {
-  @include massive1;
 }
 
 .massive1 {
-  @include massive2;
+  @include massive1;
 }
 
 .massive2 {
-  font-size: 38px;
+  @include massive2;
 }
 
 .massive3 {
-  font-size: 30px;
+  @include massive3;
 }
 
 .h1 {

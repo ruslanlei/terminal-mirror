@@ -162,38 +162,6 @@ const settingsTabs = computed<Tab<OrderFormTab>[]>(() => [
   },
 ]);
 
-const ratio = computed(() => {
-  const isNumbersValid = takeProfitsIncomeSum.value
-      && stopLossRisk.value
-      && takeProfitsIncomeSum.value > stopLossRisk.value;
-
-  return isNumbersValid
-    ? t('order.ratio', {
-      loss: 1,
-      profit: compose(
-        roundToDecimalPoint(1),
-        divideRight,
-      )(stopLossRisk.value, takeProfitsIncomeSum.value),
-    })
-    : t('order.ratio', { loss: 0, profit: 0 });
-});
-
-const profitDisplayValue = computed(() => t('order.takeProfit.profitValue', {
-  profit:
-    t('common.currencyAmount', {
-      amount: takeProfitsIncomeSum.value,
-      currency: activePairData.value?.quote,
-    }),
-}));
-
-const riskDisplayValue = computed(() => t('order.takeProfit.riskValue', {
-  risk:
-    t('common.currencyAmount', {
-      amount: stopLossRisk.value,
-      currency: activePairData.value?.quote,
-    }),
-}));
-
 provide(OrderFormInjectionKey, {
   model,
   takeProfits,
@@ -208,9 +176,6 @@ provide(OrderFormInjectionKey, {
   stopLossRisk,
   pledge,
   liquidationPrice,
-  ratio,
-  profitDisplayValue,
-  riskDisplayValue,
 });
 </script>
 

@@ -29,7 +29,6 @@ export const useOrderFormInject = (): OrderFormProvide => inject<OrderFormProvid
     pledge: computed(() => 0),
     liquidationPrice: computed(() => 0),
     ratio: computed(() => ''),
-    profitDisplayValue: computed(() => ''),
     riskDisplayValue: computed(() => ''),
   },
 );

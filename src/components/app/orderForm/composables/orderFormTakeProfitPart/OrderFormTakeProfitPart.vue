@@ -33,6 +33,7 @@
       <OrderFormRatio
         :profit="takeProfitsIncomeSum"
         :risk="stopLossRisk"
+        state="default"
       />
     </template>
     <template #submit="{ buttonClass }">

@@ -1,8 +1,9 @@
 <template>
-  <div :class="$style.orderFormRatio">
+  <div :class="[$style.orderFormRatio, $style[state]]">
     <div :class="$style.ratio">
       <div :class="$style.ratioLabel">
         <Icon
+          v-if="isRadioLabelIconVisible"
           :size="20"
           icon="info"
           :class="$style.ratioTip"
@@ -18,7 +19,10 @@
     </div>
     <div :class="$style.metrics">
       <div :class="$style.metric">
-        <div :class="$style.label">
+        <div
+          v-if="isMetricsLabelVisible"
+          :class="$style.label"
+        >
           {{ t('order.takeProfit.risk') }}
         </div>
         <div :class="$style.risk">
@@ -26,7 +30,10 @@
         </div>
       </div>
       <div :class="$style.metric">
-        <div :class="$style.label">
+        <div
+          v-if="isMetricsLabelVisible"
+          :class="$style.label"
+        >
           {{ t('order.takeProfit.profit') }}
         </div>
         <div :class="$style.profit">
@@ -54,6 +61,9 @@ const marketStore = useMarketStore();
 const {
   activePairData,
 } = storeToRefs(marketStore);
+
+const isRadioLabelIconVisible = computed(() => props.state === 'default');
+const isMetricsLabelVisible = computed(() => props.state === 'default');
 
 const profitDisplayValue = computed(() => t('order.takeProfit.profitValue', {
   profit:
@@ -86,7 +96,6 @@ const riskDisplayValue = computed(() => t('order.takeProfit.riskValue', {
 }
 
 .ratio {
-  margin-top: 20px;
   display: flex;
   justify-content: space-between;
 }
@@ -102,12 +111,7 @@ const riskDisplayValue = computed(() => t('order.takeProfit.riskValue', {
   font-weight: 600;
 }
 
-.ratioLabelText {
-  margin-left: 10px;
-}
-
 .metrics {
-  margin-top: 10px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
@@ -120,22 +124,68 @@ const riskDisplayValue = computed(() => t('order.takeProfit.riskValue', {
 }
 
 .profit, .risk {
-  border-radius: 5px;
-  padding: 7px 0;
-  display: flex;
-  justify-content: center;
-  margin-top: 5px;
   @include title5;
   font-weight: 600;
 }
 
 .profit {
-  background-color: rgb(var(--color-background-4));
   color: rgb(var(--color-primary-2));
 }
 
 .risk {
-  background-color: rgb(var(--color-danger-4));
   color: rgb(var(--color-danger-3));
+}
+
+.default {
+  .profit, .risk {
+    border-radius: 5px;
+    padding: 7px 0;
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+  }
+
+  .ratioLabel {
+    @include title2;
+  }
+
+  .metrics {
+    margin-top: 10px;
+  }
+
+  .profit {
+    background-color: rgb(var(--color-background-4));
+  }
+
+  .risk {
+    background-color: rgb(var(--color-danger-4));
+  }
+
+  .ratioLabelText {
+    margin-left: 10px;
+  }
+}
+
+.tiny {
+  display: flex;
+  flex-direction: column-reverse;
+
+  .profit {
+    text-align: right;
+  }
+
+  .ratioLabel {
+    @include title4;
+  }
+
+  .risk {
+  }
+
+  .metrics {
+  }
+
+  .ratio {
+    margin-top: 6px;
+  }
 }
 </style>

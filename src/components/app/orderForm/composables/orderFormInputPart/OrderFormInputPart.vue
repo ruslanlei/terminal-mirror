@@ -95,20 +95,12 @@
     <template #submit>
       <slot name="submit" />
     </template>
-    <template #ratioLabel>
-      {{ t('order.ratioLabel') }}
-    </template>
-    <template #ratio>
-      <OrderRatioBadge
-        :take-profits-sum="takeProfitsIncomeSum"
-        :stop-loss-risk="stopLossRisk"
+    <template #estimates>
+      <OrderFormRatio
+        :profit="takeProfitsIncomeSum"
+        :risk="stopLossRisk"
+        state="tiny"
       />
-    </template>
-    <template #profit>
-      {{ profitDisplayValue }}
-    </template>
-    <template #loss>
-      {{ riskDisplayValue }}
     </template>
   </OrderFormInputPartContainer>
 </template>
@@ -122,7 +114,7 @@ import { useExchange } from '@/hooks/useExchange';
 import { useMarketStore } from '@/stores/market';
 import { storeToRefs } from 'pinia';
 import { useEmulatorStore } from '@/stores/emulator';
-import OrderRatioBadge from '@/components/app/orderRatioBadge/OrderRatioBadge.vue';
+import OrderFormRatio from '@/components/app/orderFormRatio/OrderFormRatio.vue';
 
 const { t } = useI18n();
 
@@ -145,11 +137,8 @@ const {
   leverage,
   pledge,
   liquidationPrice,
-  ratio,
   takeProfitsIncomeSum,
   stopLossRisk,
-  profitDisplayValue,
-  riskDisplayValue,
 } = useOrderFormInject();
 
 const {

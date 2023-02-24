@@ -73,6 +73,7 @@
       <OrderFormRatio
         :profit="takeProfitsIncomeSum"
         :risk="stopLossRisk"
+        state="default"
       />
     </template>
     <template #submit="{ buttonClass }">
@@ -139,10 +140,7 @@ const {
 const {
   model,
   stopLossPrice,
-  profitDisplayValue,
-  riskDisplayValue,
   isStopLossEnabled,
-  // ratio,
   takeProfitsIncomeSum,
   stopLossRisk,
 } = useOrderFormInject();

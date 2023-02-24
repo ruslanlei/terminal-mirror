@@ -43,10 +43,10 @@ import { toISOString } from '@/utils/date';
 import { compose } from '@/utils/fp';
 import { multiply } from '@/helpers/number';
 import Typography from '@/components/app/typography/Typography.vue';
-import { ChartEmits, ChartProps } from './index';
+import { CandleChartEmits, CandleChartProps } from './index';
 
-const props = defineProps<ChartProps>();
-const emits = defineEmits<ChartEmits>();
+const props = defineProps<CandleChartProps>();
+const emits = defineEmits<CandleChartEmits>();
 
 const chartContainer = ref();
 

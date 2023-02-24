@@ -1,5 +1,5 @@
 <template>
-  <Chart
+  <CandleChart
     v-model:date-from="chartDateFrom"
     v-model:date-to="chartDateTo"
     :data="computedCandles"
@@ -10,7 +10,7 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
-import Chart from '@/components/core/chart/Chart.vue';
+import CandleChart from '@/components/core/candleChart/CandleChart.vue';
 import { useMarketChart } from '@/hooks/useMarketChart';
 import { watch } from 'vue';
 import { useEmulator } from '@/hooks/useEmulator';

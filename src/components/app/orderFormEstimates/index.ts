@@ -1,5 +1,4 @@
-export interface OrderFormRatioProps {
-  // ratio: string,
+export interface OrderFormEstimatesProps {
   profit: number,
   risk: number,
   state: 'default' | 'tiny'

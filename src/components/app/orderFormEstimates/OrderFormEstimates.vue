@@ -47,15 +47,15 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import Icon from '@/components/core/icon/Icon.vue';
-import { OrderFormRatioProps } from '@/components/app/orderFormRatio/index';
 import OrderRatioBadge from '@/components/app/orderRatioBadge/OrderRatioBadge.vue';
 import { computed } from 'vue';
 import { useMarketStore } from '@/stores/market';
 import { storeToRefs } from 'pinia';
+import { OrderFormEstimatesProps } from './index';
 
 const { t } = useI18n();
 
-const props = defineProps<OrderFormRatioProps>();
+const props = defineProps<OrderFormEstimatesProps>();
 
 const marketStore = useMarketStore();
 const {

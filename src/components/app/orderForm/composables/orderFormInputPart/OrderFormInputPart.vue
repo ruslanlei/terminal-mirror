@@ -96,7 +96,7 @@
       <slot name="submit" />
     </template>
     <template #estimates>
-      <OrderFormRatio
+      <OrderFormEstimates
         :profit="takeProfitsIncomeSum"
         :risk="stopLossRisk"
         state="tiny"
@@ -114,7 +114,7 @@ import { useExchange } from '@/hooks/useExchange';
 import { useMarketStore } from '@/stores/market';
 import { storeToRefs } from 'pinia';
 import { useEmulatorStore } from '@/stores/emulator';
-import OrderFormRatio from '@/components/app/orderFormRatio/OrderFormRatio.vue';
+import OrderFormEstimates from '@/components/app/orderFormEstimates/OrderFormEstimates.vue';
 
 const { t } = useI18n();
 

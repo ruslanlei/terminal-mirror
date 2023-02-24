@@ -221,6 +221,7 @@ const playAppearAnimation = async () => {
         top: elementTop,
       } = getRect(element);
 
+      // elements that not hidden by parent or window
       return (element.offsetTop < containerHeight) && (elementTop < window.innerHeight);
     }),
     arrayOfElements,

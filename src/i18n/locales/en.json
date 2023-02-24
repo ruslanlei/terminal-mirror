@@ -92,7 +92,8 @@
       "emulator": "Emulator",
       "real": "Real"
     },
-    "failedToGetPairs": "Failed to get pairs"
+    "failedToGetPairs": "Failed to get pairs",
+    "noPairCandles": "No pair data provided"
   },
   "favorites": {
     "label": "Favorites"

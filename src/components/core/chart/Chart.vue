@@ -4,27 +4,45 @@
       ref="chartContainer"
       :class="$style.container"
     />
+    <div
+      v-if="!data?.length"
+      :class="$style.noDataBadgeContainer"
+    >
+      <slot name="noDataBadge">
+        <div :class="$style.noDataBadge">
+          <Typography
+            size="title4"
+            :state="['accent1']"
+          >
+            {{ noDataBadgeText }}
+          </Typography>
+        </div>
+      </slot>
+    </div>
   </div>
 </template>
+
+<!-- TODO: Rename file to CandleChart -->
 
 <script setup lang="ts">
 import {
   ref,
   onBeforeUnmount,
   onMounted,
-  watch, nextTick,
+  watch,
 } from 'vue';
 import {
   createChart,
   IChartApi,
   ISeriesApi,
-  ITimeScaleApi, Time,
+  ITimeScaleApi,
 } from 'lightweight-charts';
 import { getCssRgbColor } from '@/utils/dom';
 import { useLocalValue } from '@/hooks/useLocalValue';
-import { toISOString, toTimestamp } from '@/utils/date';
+import { toISOString } from '@/utils/date';
 import { compose } from '@/utils/fp';
-import { divide, divideRight, multiply } from '@/helpers/number';
+import { multiply } from '@/helpers/number';
+import Typography from '@/components/app/typography/Typography.vue';
 import { ChartEmits, ChartProps } from './index';
 
 const props = defineProps<ChartProps>();
@@ -151,6 +169,24 @@ onBeforeUnmount(() => {
   align-items: center;
   background-color: rgba(var(--color-background-1), 0.9);
   border-radius: 10px;
+}
+
+.noDataBadgeContainer {
+  position: absolute;
+  inset: 0;
+}
+
+.noDataBadge {
+  position: absolute;
+  inset: -5px;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(var(--color-background-2), 0.9);
+  border-radius: 10px;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
 

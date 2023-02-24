@@ -4,15 +4,19 @@
     v-model:date-to="chartDateTo"
     :data="computedCandles"
     :is-loading="isFetchingCandles"
+    :no-data-badge-text="t('market.noPairCandles')"
   />
 </template>
 
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n';
 import Chart from '@/components/core/chart/Chart.vue';
 import { useMarketChart } from '@/hooks/useMarketChart';
 import { watch } from 'vue';
 import { useEmulator } from '@/hooks/useEmulator';
 import { useMarketStore } from '@/stores/market';
+
+const { t } = useI18n();
 
 const marketStore = useMarketStore();
 

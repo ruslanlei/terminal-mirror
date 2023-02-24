@@ -9,7 +9,8 @@ export interface ChartProps {
   isLoading: boolean,
   dateFrom: string,
   dateTo: string,
-  data: any[],
+  data: ChartCandle[],
+  noDataBadgeText?: string,
 }
 
 export interface ChartEmits {

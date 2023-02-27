@@ -14,6 +14,7 @@ import { useEmulatorStore } from '@/stores/emulator';
 import { findAndDelete, findAndUpdateObject } from '@/helpers/array';
 import { useChartDataStore } from '@/stores/chartData';
 import { storeToRefs } from 'pinia';
+import { TableColumn } from '@/components/core/table';
 
 interface GroupedOrder {
   order: MasterOrder,
@@ -105,6 +106,7 @@ export const useOrdersList = (
       slug: 'options',
       size: 0.7,
       align: 'center',
+      isClickable: true,
     },
   ]);
 

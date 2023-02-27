@@ -44,6 +44,7 @@ import { DropdownProps, DropdownEmits, DropdownPlacement } from './index';
 const props = withDefaults(
   defineProps<DropdownProps>(),
   {
+    isVisible: undefined,
     placement: 'bottom',
     toggleByClick: true,
     keepWithinWindowVertical: false,
@@ -51,6 +52,7 @@ const props = withDefaults(
     containerGap: 10,
     automaticReplace: true,
     dropAnimationInitialPositionShift: 60,
+    transitionDuration: 780,
   },
 );
 
@@ -62,7 +64,20 @@ const dropdown = ref<HTMLElement>();
 
 const dropdownInner = ref<HTMLElement>();
 
-const localIsVisible = useLocalValue<boolean>(props, emit, 'isVisible');
+const localIsVisibleState = ref(false);
+
+const localIsVisible = computed({
+  get: () => (props.isVisible !== undefined
+    ? props.isVisible
+    : localIsVisibleState.value),
+  set: (value: boolean) => {
+    if (props.isVisible !== undefined) {
+      emit('update:isVisible', value);
+      return;
+    }
+    localIsVisibleState.value = value;
+  },
+});
 
 const onClickOutside = (event: MouseEvent) => {
   if (!trigger.value || !dropdown.value) return;
@@ -245,7 +260,7 @@ watch(localIsVisible, () => {
       { value: 0, easing: 'linear', duration: 0 },
       { value: 1, easing: 'linear', duration: 120 },
     ],
-    duration: 780,
+    duration: props.transitionDuration,
   });
 });
 

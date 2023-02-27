@@ -257,13 +257,27 @@
             <!--          >-->
             <!--            <Icon icon="swap" />-->
             <!--          </button>-->
-            <button
-              type="button"
-              :class="$style.deleteButton"
-              @click="deleteOrder(order, takeProfits)"
-            >
-              <Icon icon="cross" />
-            </button>
+            <!-- TODO: Remove -->
+            <!--            <button-->
+            <!--              type="button"-->
+            <!--              :class="$style.deleteButton"-->
+            <!--              @click="deleteOrder(order, takeProfits)"-->
+            <!--            >-->
+            <!--              <Icon icon="cross" />-->
+            <!--            </button>-->
+            <Dropdown placement="top">
+              <template #trigger>
+                <button
+                  type="button"
+                  :class="$style.deleteButton"
+                >
+                  <Icon icon="cross" />
+                </button>
+              </template>
+              <template #dropdown>
+                dropdown
+              </template>
+            </Dropdown>
           </div>
         </template>
 
@@ -297,6 +311,7 @@ import SubOrdersTable from '@/components/app/ordersList/subOrdersTable/SubOrders
 import { useOrdersList } from '@/hooks/useOrdersList';
 import Typography from '@/components/app/typography/Typography.vue';
 import OrdersListPlaceholder from '@/components/app/ordersList/OrdersListPlaceholder.vue';
+import Dropdown from '@/components/core/dropdown/Dropdown.vue';
 import { ActiveOrdersTableRecord, ClosedOrdersTableRecord, OrdersListProps } from './index';
 
 const props = withDefaults(
@@ -316,7 +331,6 @@ const {
   getList,
   commonPnl,
   clearSubscriptions,
-  deleteOrder,
   onRecordClick,
 } = useOrdersList(props);
 

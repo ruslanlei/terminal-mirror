@@ -68,9 +68,8 @@
                 ]"
                 :class="$style.tableRow"
                 @click="onRowClick(record)"
-                @cell-click="onCellClick(record.id, $event)"
               >
-                <template #default>
+                <template #default="{ toggleChildren }">
                   <button
                     v-for="column in columns"
                     :key="column.slug"
@@ -79,7 +78,7 @@
                       $style.recordColumn,
                       $style[column.align],
                     ]"
-                    @click="onCellClick(record.id, column.isSelect)"
+                    @click="onCellClick(column, record, toggleChildren)"
                   >
                     <slot
                       :name="`cell(${column.slug})`"

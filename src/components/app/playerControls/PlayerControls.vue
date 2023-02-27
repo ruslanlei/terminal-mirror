@@ -41,10 +41,11 @@
       />
     </div>
     <Button
-      :state="['secondary1Color', 'interactive']"
+      :state="['accent3Color', 'interactive']"
       size="md"
       :class="$style.prematureResultButton"
       :is-loading="isCalculatingResult"
+      :is-disabled="!isActiveOrdersForCurrentPairExists"
       @click="emulatorStore.calculateResult"
     >
       {{ t('emulator.player.prematureResult') }}

@@ -8,6 +8,7 @@
       isWide && $style.wide,
       ...computedState,
     ]"
+    :disabled="isDisabled"
   >
     <div :class="[$style.loaderCap, !isLoading && $style.hidden]">
       <Loader :size="computedLoaderSize" />
@@ -53,6 +54,9 @@ const computedLoaderSize = computed(
   &:not(.disabled) {
     cursor: pointer;
   }
+  &.disabled {
+    cursor: not-allowed;
+  }
 }
 
 .wide {
@@ -94,7 +98,7 @@ const computedLoaderSize = computed(
 
 .textAccent2 {
   color: rgba(var(--color-accent-2));
-  &:hover {
+  &:hover:not(.disabled) {
     color: rgba(var(--color-accent-1));
   }
 }
@@ -132,7 +136,7 @@ const computedLoaderSize = computed(
 .secondary2Color {
   color: rgba(var(--color-accent-1));
   background-color: rgb(var(--color-background-2));
-  &:hover {
+  &:hover:not(.disabled) {
     background-color: rgb(var(--color-background-4));
   }
 }
@@ -140,15 +144,23 @@ const computedLoaderSize = computed(
 .background1 {
   color: rgba(var(--color-accent-1));
   background-color: rgb(var(--color-background-1));
-  &:hover {
+  &:hover:not(.disabled) {
     background-color: rgb(var(--color-background-2));
+  }
+}
+
+.accent3Color {
+  color: rgba(var(--color-accent-1));
+  background-color: rgb(var(--color-accent-3));
+  &:hover:not(.disabled) {
+    background-color: rgb(var(--color-background-5));
   }
 }
 
 .borderedDefault {
   color: rgba(var(--color-accent-1));
   border: 2px solid rgba(var(--color-accent-2), 0.2);
-  &:hover {
+  &:hover:not(.disabled) {
     background-color: rgb(var(--color-background-4));
   }
 }

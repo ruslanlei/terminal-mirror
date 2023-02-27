@@ -10,6 +10,7 @@ export type ButtonState =
   | 'textAccent1'
   | 'borderedDefault'
   | 'textAccent2'
+  | 'accent3Color'
   | 'background1';
 
 export interface ButtonProps {

@@ -10,3 +10,7 @@ export const getCssRgbColor = (
 export const toCssPixelValue = (
   value: string | number,
 ) => `${value}px`;
+
+export const toPositiveNumberString = (
+  number: number,
+) => `+${number}`;

@@ -94,13 +94,25 @@
         <template #column(results)>
           {{ t('ordersList.column.results') }}
         </template>
-        <template #cell(results)="{ data: { pnlPercent, pnl: { value: pnl, currency } } }">
+        <template
+          #cell(results)="{
+            data: {
+              pnlPercent,
+              pnl: { value: pnl, currency },
+              isPositive
+            }
+          }"
+        >
           <div :class="$style.resultsWrapper">
             <div :class="$style.results">
               <Typography
-                :text="t('common.percents', { value: pnlPercent })"
+                :text="t('common.percents', {
+                  value: isPositive
+                    ? toPositiveNumberString(pnlPercent)
+                    : pnlPercent
+                })"
                 :state="[
-                  isPositive(pnlPercent)
+                  isPositive
                     ? 'success'
                     : 'danger',
                   'semiBold',
@@ -299,6 +311,7 @@ import { useOrdersList } from '@/hooks/useOrdersList';
 import Typography from '@/components/app/typography/Typography.vue';
 import OrdersListPlaceholder from '@/components/app/ordersList/OrdersListPlaceholder.vue';
 import CloseOrderButton from '@/components/app/closeOrderButton/CloseOrderButton.vue';
+import { toPositiveNumberString } from '@/utils/dom';
 import { OrdersListProps } from './index';
 
 const props = withDefaults(

@@ -9,7 +9,7 @@ import {
   StopLoss,
   Order,
 } from '@/api/types/order';
-import { multiply, roundToDecimalPoint } from '@/helpers/number';
+import { isPositive, multiply, roundToDecimalPoint } from '@/helpers/number';
 import { calculatePercentOfDifference } from '@/helpers/math/percents';
 import { calculatePnl, calculatePnlPercent } from '@/helpers/math/formulas/pnl';
 import { calculateCommonTakeProfitPercent } from '@/helpers/math/formulas/takeProfit';
@@ -76,30 +76,29 @@ const closedOrderResultsMixin = (
   {
     order, pairData, takeProfits, stopLoss,
   }: CollectRecordPayload,
-) => ({
-  results: {
-    pnl: {
-      value: compose(
-        roundToDecimalPoint(6),
-        reduceSubOrderListToCommonPnl(order),
-        getOrdersWithStatus('executed'),
-      )([
-        ...(takeProfits || []),
-        ...(stopLoss ? [stopLoss] : []),
-      ]),
-      currency: pairData.quote,
+) => {
+  const rawPnl = compose(
+    reduceSubOrderListToCommonPnl(order),
+    getOrdersWithStatus('executed'),
+  )([
+    ...(takeProfits || []),
+    ...(stopLoss ? [stopLoss] : []),
+  ]);
+
+  return {
+    results: {
+      pnl: {
+        value: roundToDecimalPoint(6, rawPnl),
+        currency: pairData.quote,
+      },
+      pnlPercent: compose(
+        roundToDecimalPoint(2),
+        calculatePnlPercent(order.price, order.quantity),
+      )(rawPnl),
+      isPositive: isPositive(rawPnl),
     },
-    pnlPercent: compose(
-      roundToDecimalPoint(2),
-      calculatePnlPercent(order.price, order.quantity),
-      reduceSubOrderListToCommonPnl(order),
-      getOrdersWithStatus('executed'),
-    )([
-      ...(takeProfits || []),
-      ...(stopLoss ? [stopLoss] : []),
-    ]),
-  },
-});
+  };
+};
 
 const stopLossDataMixin = (
   payload: CollectRecordPayload,

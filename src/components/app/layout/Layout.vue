@@ -1,5 +1,5 @@
 <template>
-  <Transition name="layoutTransition">
+  <Transition :name="computedLayoutTransition">
     <Layout
       v-if="Layout"
       :key="route.meta?.layout"
@@ -49,6 +49,13 @@ const Layout = computed(() => {
   return layoutsMap[layoutName];
 });
 
+const computedLayoutTransition = computed(() => ({
+  putOn: 'layoutTransitionPutOn',
+  takeOff: 'layoutTransitionTakeOff',
+  default: 'defaultLayoutTransition',
+  // @ts-ignore
+}[route.meta?.layoutTransition || 'default']));
+
 const handleBaseUnit = () => {
   const vh = window.innerHeight / 100;
   document.documentElement.style.setProperty('--vh', `${vh}px`);
@@ -77,15 +84,14 @@ onBeforeUnmount(() => {
 </style>
 
 <style lang="scss">
-.layoutTransition {
+.layoutTransitionTakeOff {
   &-enter-active,
   &-leave-active {
-    transition: opacity 150ms, transform 460ms;
+    transition: opacity 200ms, transform 460ms;
   }
 
   &-enter-from {
-    opacity: 0;
-    transform: scale(0.97);
+    transform: scale(0.96);
     position: fixed;
     top: 0;
     left: 0;
@@ -100,6 +106,31 @@ onBeforeUnmount(() => {
     left: 0;
     inset: 0;
     z-index: 10000;
+  }
+}
+
+.layoutTransitionPutOn {
+  &-enter-active,
+  &-leave-active {
+    transition: opacity 200ms, transform 460ms;
+  }
+
+  &-enter-from {
+    transform: translateY(-100%);
+    position: fixed;
+    top: 0;
+    left: 0;
+    inset: 0;
+    z-index: 10000;
+  }
+  &-leave-to {
+    opacity: 0;
+    transform: scale(0.96);
+    position: fixed;
+    top: 0;
+    left: 0;
+    inset: 0;
+    z-index: 5000;
   }
 }
 </style>

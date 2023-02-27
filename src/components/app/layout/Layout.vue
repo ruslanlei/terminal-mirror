@@ -1,5 +1,5 @@
 <template>
-  <Transition :name="computedLayoutTransition">
+  <Transition :name="layoutTransition">
     <Layout
       v-if="Layout"
       :key="route.meta?.layout"
@@ -22,15 +22,16 @@ import {
   computed,
   defineAsyncComponent,
   onBeforeUnmount,
-  onMounted,
+  onMounted, ref,
 } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { useCommonStore } from '@/stores/common';
 import BlankLayout from '@/layouts/blankLayout/BlankLayout.vue';
 
 const AuthLayout = defineAsyncComponent(() => import('@/layouts/authLayout/AuthLayout.vue'));
 const MarketLayout = defineAsyncComponent(() => import('@/layouts/marketLayout/MarketLayout.vue'));
 
+const router = useRouter();
 const route = useRoute();
 const commonStore = useCommonStore();
 
@@ -49,12 +50,28 @@ const Layout = computed(() => {
   return layoutsMap[layoutName];
 });
 
-const computedLayoutTransition = computed(() => ({
-  putOn: 'layoutTransitionPutOn',
-  takeOff: 'layoutTransitionTakeOff',
-  default: 'defaultLayoutTransition',
-  // @ts-ignore
-}[route.meta?.layoutTransition || 'default']));
+const layoutTransition = ref('defaultLayoutTransition');
+
+router.beforeEach((to, from, next) => {
+  if (!from.name) {
+    next();
+    return;
+  }
+
+  if (
+    to.meta?.layoutTransition
+      && typeof to.meta.layoutTransition === 'string'
+  ) {
+    layoutTransition.value = ({
+      putOn: 'layoutTransitionPutOn',
+      takeOff: 'layoutTransitionTakeOff',
+      default: 'defaultLayoutTransition',
+      // @ts-ignore
+    }[to.meta?.layoutTransition || 'default']) || 'defaultLayoutTransition';
+  }
+
+  next();
+});
 
 const handleBaseUnit = () => {
   const vh = window.innerHeight / 100;
@@ -87,10 +104,11 @@ onBeforeUnmount(() => {
 .layoutTransitionTakeOff {
   &-enter-active,
   &-leave-active {
-    transition: opacity 200ms, transform 460ms;
+    transition: opacity 200ms, transform 480ms;
   }
 
   &-enter-from {
+    opacity: 0;
     transform: scale(0.96);
     position: fixed;
     top: 0;
@@ -110,12 +128,12 @@ onBeforeUnmount(() => {
 }
 
 .layoutTransitionPutOn {
-  &-enter-active,
-  &-leave-active {
-    transition: opacity 200ms, transform 460ms;
+  &-leave-active, &-enter-active {
+    transition: opacity 200ms, transform 480ms;
   }
 
   &-enter-from {
+    opacity: 0;
     transform: translateY(-100%);
     position: fixed;
     top: 0;
@@ -131,6 +149,22 @@ onBeforeUnmount(() => {
     left: 0;
     inset: 0;
     z-index: 5000;
+  }
+}
+
+.defaultLayoutTransition {
+  &-enter-active,
+  &-leave-active {
+    transition: opacity 200ms, transform 460ms;
+  }
+
+  &-enter-from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  &-leave-to {
+    opacity: 0;
+    transform: scale(1.04);
   }
 }
 </style>

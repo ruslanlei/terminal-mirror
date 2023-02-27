@@ -34,9 +34,7 @@ export const useApp = () => {
     await marketStore.getPairs();
 
     if (sessionStore.token) {
-      await profileStore.getProfile();
-      await marketStore.fetchFavoritePairs();
-      await emulatorStore.fetchBalance();
+      await profileStore.fetchAllProfileData();
     }
 
     isPreparing.value = false;

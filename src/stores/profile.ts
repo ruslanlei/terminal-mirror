@@ -4,10 +4,14 @@ import { useI18n } from 'vue-i18n';
 import { useToastStore } from '@/stores/toasts';
 import { getProfile } from '@/api/endpoints/auth/getProfile';
 import { Profile } from '@/api/types/profile';
+import { useEmulatorStore } from '@/stores/emulator';
+import { useMarketStore } from '@/stores/market';
 
 export const useProfileStore = defineStore('profile', () => {
   const { t } = useI18n();
   const toastStore = useToastStore();
+  const emulatorStore = useEmulatorStore();
+  const marketStore = useMarketStore();
 
   const profile = ref<Profile | null>(null);
 
@@ -27,9 +31,16 @@ export const useProfileStore = defineStore('profile', () => {
     }
   };
 
+  const fetchAllProfileData = async () => {
+    await handleGetProfile();
+    await emulatorStore.fetchBalance();
+    await marketStore.fetchFavoritePairs();
+  };
+
   return {
     profile,
     isFetchingProfile,
     getProfile: handleGetProfile,
+    fetchAllProfileData,
   };
 });

@@ -4,16 +4,14 @@
     placement="top"
     :transition-duration="600"
     :block-inner-toggling="true"
+    @trigger-click="onTriggerClick"
     @click-outside="onClickOutside"
+    @trigger-dbclick="onTriggerDoubleClick"
   >
     <template #trigger>
-      <button
-        type="button"
-        :class="$style.deleteButton"
-        @click="onTriggerClick"
-      >
+      <div :class="$style.deleteButton">
         <Icon icon="cross" />
-      </button>
+      </div>
     </template>
     <template #dropdown>
       <Tooltip :text="'testText'" />
@@ -45,6 +43,12 @@ const onTriggerClick = () => {
   emit('delete');
 };
 
+const onTriggerDoubleClick = () => {
+  isTooltipVisible.value = false;
+  isClicked.value = false;
+  emit('delete');
+};
+
 const onClickOutside = () => {
   isTooltipVisible.value = false;
   isClicked.value = false;
@@ -53,6 +57,7 @@ const onClickOutside = () => {
 
 <style lang="scss" module>
 .deleteButton {
+  padding: 5px;
   color: rgb(var(--color-danger));
 }
 </style>

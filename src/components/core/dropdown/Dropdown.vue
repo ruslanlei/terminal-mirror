@@ -1,12 +1,12 @@
 <template>
-  <button
+  <div
     ref="trigger"
-    type="button"
     :class="$style.trigger"
     @click="onTriggerClick"
+    @dblclick="onTriggerDbClick"
   >
     <slot name="trigger" />
-  </button>
+  </div>
   <teleport :to="teleportTarget">
     <div
       ref="dropdown"
@@ -296,6 +296,10 @@ const onTriggerClick = () => {
   if (!props.toggleByClick || props.isDisabled) return;
 
   setIsVisible(!localIsVisible.value);
+};
+
+const onTriggerDbClick = () => {
+  emit('triggerDbclick');
 };
 
 const {

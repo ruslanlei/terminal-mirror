@@ -276,15 +276,17 @@ export const useOrdersList = (
   //  or SL
   const unsubscribeSimulationEndedEvent = emulatorStore.subscribeSimulationEndedEvent(getList);
 
+  const isDeletingOrder = ref(false);
   const deleteOrder = async (
     order: Order,
-    takeProfits: TakeProfit[] | undefined,
   ) => {
     if (emulatorStore.isPlaying) {
       emulatorStore.turnOffPlayer();
     }
 
-    await marketStore.removeOrder(order, takeProfits);
+    isDeletingOrder.value = true;
+    await marketStore.removeOrder(order);
+    isDeletingOrder.value = false;
   };
 
   const clearSubscriptions = () => {
@@ -309,6 +311,7 @@ export const useOrdersList = (
     getList,
     clearSubscriptions,
     deleteOrder,
+    isDeletingOrder,
     onRecordClick,
   };
 };

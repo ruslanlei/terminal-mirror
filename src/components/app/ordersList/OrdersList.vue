@@ -1,5 +1,10 @@
 <template>
-  <div :class="$style.ordersListWrapper">
+  <div
+    :class="[
+      $style.ordersListWrapper,
+      isDisabled && $style.disabled
+    ]"
+  >
     <transition
       name="skeletonTransition"
       mode="out-in"
@@ -239,7 +244,7 @@
             </template>
           </span>
         </template>
-        <template #cell(options)="{ data: { order, takeProfits } }">
+        <template #cell(options)="{ data: { order } }">
           <button
             v-if="listType === 'closed'"
             type="button"
@@ -257,7 +262,7 @@
             <!--          >-->
             <!--            <Icon icon="swap" />-->
             <!--          </button>-->
-            <CloseOrderButton @delete="deleteOrder(order, takeProfits)" />
+            <CloseOrderButton @delete="deleteOrder(order)" />
           </div>
         </template>
 
@@ -286,7 +291,9 @@ import Icon from '@/components/core/icon/Icon.vue';
 import { isPositive } from '@/helpers/number';
 import Badge from '@/components/core/badge/Badge.vue';
 import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
-import { onActivated, onBeforeUnmount, onDeactivated } from 'vue';
+import {
+  computed, onActivated, onBeforeUnmount, onDeactivated,
+} from 'vue';
 import SubOrdersTable from '@/components/app/ordersList/subOrdersTable/SubOrdersTable.vue';
 import { useOrdersList } from '@/hooks/useOrdersList';
 import Typography from '@/components/app/typography/Typography.vue';
@@ -313,7 +320,12 @@ const {
   clearSubscriptions,
   onRecordClick,
   deleteOrder,
+  isDeletingOrder,
 } = useOrdersList(props);
+
+const isDisabled = computed(() => [
+  isDeletingOrder.value,
+].some(Boolean));
 
 onActivated(() => {
   const showLoading = !orders.value?.length;
@@ -329,6 +341,7 @@ onBeforeUnmount(clearSubscriptions);
 
 .ordersListWrapper {
   display: flex;
+  @include transparentOnDisabled;
 }
 
 .ordersList, .skeleton {
@@ -418,6 +431,7 @@ onBeforeUnmount(clearSubscriptions);
 
 .orderOptions {
   display: flex;
+  align-items: center;
   gap: 10px;
 }
 

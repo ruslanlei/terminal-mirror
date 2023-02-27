@@ -166,11 +166,7 @@ const handleDelete = async () => {
 
   const {
     result,
-  } = await (
-    isOrderFilled.value
-      ? marketStore.closeOrder
-      : marketStore.deleteOrder
-  )(order.value.id);
+  } = await marketStore.removeOrder(order.value);
 
   isDeleting.value = false;
 

@@ -265,6 +265,8 @@ export const useMarketStore = defineStore('market', () => {
 
     if (response.result) {
       emitOrderDeleteOrClose(orderId);
+    } else {
+      processServerErrors(response);
     }
 
     return response;
@@ -277,6 +279,8 @@ export const useMarketStore = defineStore('market', () => {
 
     if (response.result) {
       emitOrderDeleteOrClose(orderId);
+    } else {
+      processServerErrors(response);
     }
 
     return response;
@@ -310,7 +314,19 @@ export const useMarketStore = defineStore('market', () => {
     return response;
   };
 
-  const removeOrder = async (
+  const removeOrder = (
+    order: Order,
+  ) => {
+    const isOrderFilled = order.status === 'filled';
+
+    return (
+      isOrderFilled
+        ? handleCloseOrder
+        : handleDeleteOrder
+    )(order.id);
+  };
+
+  const showRemoveOrderModal = (
     order: Order,
     takeProfits: TakeProfit[] | undefined,
   ) => {
@@ -359,5 +375,6 @@ export const useMarketStore = defineStore('market', () => {
     addToFavorites: handleAddToFavorites,
     removeFromFavorites: handleRemoveFromFavorites,
     deleteOrCloseAllExistingOrdersForCurrentPair,
+    showRemoveOrderModal,
   };
 });

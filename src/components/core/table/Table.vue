@@ -268,7 +268,6 @@ onMounted(() => {
   .head {
     display: grid;
     position: relative;
-    z-index: 3;
   }
   .records {
     width: 100%;
@@ -349,7 +348,7 @@ onMounted(() => {
   .head {
     position: sticky;
     top: 0;
-    z-index: 2;
+    z-index: 3;
   }
   .records {
     flex-grow: 1;
@@ -388,7 +387,7 @@ onMounted(() => {
 
 .tinySize {
   .head {
-    padding-bottom: 4px;
+    padding: 4px 0;
   }
   &.scrollable {
     @include scrollbarPrimary(4px, 2px);
@@ -399,7 +398,7 @@ onMounted(() => {
     font-weight: 600;
   }
   .records {
-    margin-top: 15px;
+    margin-top: 10px;
   }
 }
 

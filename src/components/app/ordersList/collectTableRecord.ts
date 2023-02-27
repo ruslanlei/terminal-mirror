@@ -90,7 +90,7 @@ const closedOrderResultsMixin = (
       currency: pairData.quote,
     },
     pnlPercent: compose(
-      roundToDecimalPoint(6),
+      roundToDecimalPoint(2),
       calculatePnlPercent(order.price, order.quantity),
       reduceSubOrderListToCommonPnl(order),
       getOrdersWithStatus('executed'),

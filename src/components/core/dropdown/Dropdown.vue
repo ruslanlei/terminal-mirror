@@ -43,6 +43,7 @@ import { getRect } from '@/helpers/style';
 import { compose } from '@/utils/fp';
 import { getValueByKey } from '@/utils/object';
 import { divideRight, roundToDecimalPoint } from '@/helpers/number';
+import { max } from '@/utils/number';
 import { DropdownProps, DropdownEmits, DropdownPlacement } from './index';
 
 const props = withDefaults(
@@ -256,7 +257,8 @@ watch(localIsVisible, () => {
 
   const positionShift = compose(
     roundToDecimalPoint(2),
-    divideRight(3),
+    max(26),
+    divideRight(2.8),
     getValueByKey(
       (placement === 'top' || placement === 'bottom')
         ? 'height'

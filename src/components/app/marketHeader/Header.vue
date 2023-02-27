@@ -2,12 +2,13 @@
   <Header>
     <template #leftColumn>
       <div :class="$style.leftColumn">
-        <MarketTypeSelector />
-        <Divider
-          type="vertical"
-          state="default"
-          :class="[$style.divider, $style.dividerLeft]"
-        />
+        <!-- TODO: return while realisation of real market -->
+        <!--        <MarketTypeSelector />-->
+        <!--        <Divider-->
+        <!--          type="vertical"-->
+        <!--          state="default"-->
+        <!--          :class="[$style.divider, $style.dividerLeft]"-->
+        <!--        />-->
         <ActivePairStats :class="$style.currencyStats" />
       </div>
     </template>
@@ -51,7 +52,8 @@ import ProfileDropdown from '@/components/app/profileDropdown/ProfileDropdown.vu
 }
 
 .currencyStats {
-  margin-left: 20px;
+  // TODO: return while realisation of real market
+  //margin-left: 20px;
 }
 
 .profileBlock {

@@ -1,6 +1,11 @@
 <template>
-  <Header v-if="!isFetchingProfile" />
-  <Skeleton v-else />
+  <Transition
+    mode="out-in"
+    name="skeletonTransition"
+  >
+    <Header v-if="!isFetchingProfile" />
+    <Skeleton v-else />
+  </Transition>
 </template>
 
 <script setup lang="ts">
@@ -15,3 +20,7 @@ const {
   isFetchingProfile,
 } = storeToRefs(profileStore);
 </script>
+
+<style lang="scss">
+@import "@/assets/styles/transitions.scss";
+</style>

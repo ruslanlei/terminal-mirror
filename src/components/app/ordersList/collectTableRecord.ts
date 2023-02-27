@@ -49,7 +49,7 @@ const orderVolumeMixin = (
   payload: CollectRecordPayload,
 ) => ({
   volume: compose(
-    roundToDecimalPoint(6),
+    roundToDecimalPoint(2),
     multiply,
   )(payload.order.quantity, payload.order.price),
 });
@@ -88,7 +88,7 @@ const closedOrderResultsMixin = (
   return {
     results: {
       pnl: {
-        value: roundToDecimalPoint(6, rawPnl),
+        value: roundToDecimalPoint(2, rawPnl),
         currency: pairData.quote,
       },
       pnlPercent: compose(
@@ -126,7 +126,7 @@ const pnlMixin = (
     ...(order.status !== 'new' && pairPrice
       ? {
         value: compose(
-          roundToDecimalPoint(6),
+          roundToDecimalPoint(2),
           calculatePnl(
             order.price,
             order.position,

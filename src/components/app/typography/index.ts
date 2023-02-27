@@ -7,7 +7,8 @@ export type TypographyState =
     | 'medium'
     | 'accent1'
     | 'gradientPrimary'
-    | 'accent2';
+    | 'accent2'
+    | 'nowrap';
 
 export type TypographySize =
     'h1'

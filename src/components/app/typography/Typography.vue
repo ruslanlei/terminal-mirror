@@ -131,4 +131,8 @@ const computedState = useComputedState(props);
 .alignCenter {
   text-align: center;
 }
+
+.nowrap {
+  white-space: nowrap;
+}
 </style>

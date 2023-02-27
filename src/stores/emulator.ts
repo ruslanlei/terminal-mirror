@@ -25,6 +25,8 @@ import { useChartDataStore } from '@/stores/chartData';
 import { getBalance } from '@/api/endpoints/profile/getBalance';
 import { isMoreThan } from '@/utils/boolean';
 import { isExactOrder } from '@/helpers/orders';
+import { useToastStore } from '@/stores/toasts';
+import { useI18n } from 'vue-i18n';
 
 export const getDefaultEmulatorDate = () => compose(
   toISOString,
@@ -40,6 +42,9 @@ export enum emulatorEvent {
 export type PlayerDatesMap = Record<PairData['id'], string>;
 
 export const useEmulatorStore = defineStore('emulator', () => {
+  const { t } = useI18n();
+  const toastStore = useToastStore();
+
   const marketStore = useMarketStore();
   const {
     activePair,
@@ -225,7 +230,7 @@ export const useEmulatorStore = defineStore('emulator', () => {
       if (!result) {
         isSimulated = true;
       } else {
-        if (isLimitOrderExecuted) {
+        if (data.events.length) {
           emulatorDate.value = dateFrom;
         } else {
           dateFrom = compose(
@@ -243,6 +248,15 @@ export const useEmulatorStore = defineStore('emulator', () => {
 
         if (isLimitOrderExecuted || isDateBiggerThanExistingData) {
           isSimulated = true;
+        }
+
+        if (isDateBiggerThanExistingData) {
+          toastStore.showDanger({
+            text: t('emulator.player.error.historyDataIsOver', {
+              pair: activePairData.value.alias,
+            }),
+            duration: 7000,
+          });
         }
       }
     }

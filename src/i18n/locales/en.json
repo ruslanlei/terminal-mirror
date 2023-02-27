@@ -100,6 +100,9 @@
   },
   "emulator": {
     "player": {
+      "error": {
+        "historyDataIsOver": "History data for pair {pair} is over. Try to correct order to make it execute"
+      },
       "label": "Player",
       "prematureResult": "Calculate result",
       "orderInteractionsWarning": "Editing or adding orders will pause the player"

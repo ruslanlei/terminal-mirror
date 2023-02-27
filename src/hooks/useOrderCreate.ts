@@ -88,8 +88,8 @@ export const useOrderCreate = () => {
       .required(() => t('validationError.required'))
       .oneOf(['buy', 'sell']),
     quantity: number().min(
-      baseCurrencyStep.value,
-      () => t('validationError.min', { min: baseCurrencyStep.value }),
+      0.000001,
+      () => t('validationError.min', { min: 0.000001 }),
     ),
     price: number().positive(() => t('validationError.positive')),
     leverage: number().min(1).max(20),

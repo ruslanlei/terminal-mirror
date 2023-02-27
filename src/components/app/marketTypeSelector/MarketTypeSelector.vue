@@ -3,6 +3,7 @@
     v-model="marketType"
     :options="marketVariants"
     :state="['primaryColor', 'defaultSize']"
+    :is-disabled="true"
   >
     <template #option="{ option: { icon, label } }">
       <Icon

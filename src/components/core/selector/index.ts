@@ -35,6 +35,7 @@ export interface SelectorProps {
   label?: string,
   thickening?: number,
   isGhostAppearAnimation?: boolean,
+  isDisabled?: boolean,
 }
 
 export interface SelectorEmits {

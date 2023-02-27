@@ -2,13 +2,12 @@
   <Header>
     <template #leftColumn>
       <div :class="$style.leftColumn">
-        <!-- TODO: return while realisation of real market -->
-        <!--        <MarketTypeSelector />-->
-        <!--        <Divider-->
-        <!--          type="vertical"-->
-        <!--          state="default"-->
-        <!--          :class="[$style.divider, $style.dividerLeft]"-->
-        <!--        />-->
+        <MarketTypeSelector />
+        <Divider
+          type="vertical"
+          state="default"
+          :class="[$style.divider, $style.dividerLeft]"
+        />
         <ActivePairStats :class="$style.currencyStats" />
       </div>
     </template>

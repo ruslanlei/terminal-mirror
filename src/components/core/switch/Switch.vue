@@ -3,7 +3,8 @@
     :class="[
       $style.switch,
       localValue && $style.active,
-      states.map((s) => $style[s]),
+      isDisabled && $style.disabled,
+      ...computedState,
     ]"
     @click="toggle"
   >
@@ -15,6 +16,7 @@
 import { useLocalValue } from '@/hooks/useLocalValue';
 import { computed } from 'vue';
 import { arrayFrom } from '@/utils/array';
+import { useComputedState } from '@/hooks/useComputedState';
 import { SwitchEmits, SwitchProps } from './index';
 
 const props = withDefaults(
@@ -26,9 +28,9 @@ const props = withDefaults(
 
 const emit = defineEmits<SwitchEmits>();
 
-const states = computed(() => arrayFrom(props.state));
-
 const localValue = useLocalValue<boolean>(props, emit, 'modelValue');
+
+const computedState = useComputedState(props);
 
 const toggle = () => {
   localValue.value = !localValue.value;
@@ -36,6 +38,8 @@ const toggle = () => {
 </script>
 
 <style lang="scss" module>
+@import "src/assets/styles/utils";
+
 .switch {
   width: 36px;
   height: 20px;
@@ -43,6 +47,7 @@ const toggle = () => {
   cursor: pointer;
   display: flex;
   align-items: center;
+  @include transparentOnDisabled;
   &.active {
     .circle {
       transform: translateX(16px);

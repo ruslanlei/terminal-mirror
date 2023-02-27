@@ -4,7 +4,10 @@
       {{ t('order.stopLoss.switchLabel') }}
     </template>
     <template #stopLossSwitch>
-      <Switch v-model="isStopLossEnabled" />
+      <Switch
+        v-model="isStopLossEnabled"
+        :is-disabled="true"
+      />
     </template>
     <template #exactPriceLabel>
       {{ t('order.stopLoss.exactPrice') }}

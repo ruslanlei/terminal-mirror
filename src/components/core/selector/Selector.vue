@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.wrapper">
+  <div :class="[$style.wrapper, isDisabled && $style.disabled]">
     <div
       v-if="label"
       :class="$style.label"
@@ -219,7 +219,9 @@ onBeforeUnmount(removeListeners);
   }
 }
 
-.wrapper {}
+.wrapper {
+  @include transparentOnDisabled;
+}
 
 .label {
   font-weight: 400;

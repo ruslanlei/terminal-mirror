@@ -3,6 +3,7 @@ export type SwitchState = 'primaryColor';
 export interface SwitchProps {
   modelValue: boolean,
   state: SwitchState | SwitchState[],
+  isDisabled?: boolean,
 }
 
 export interface SwitchEmits {

@@ -4,7 +4,10 @@
       {{ t('order.takeProfit.profit') }}
     </template>
     <template #profitSwitch>
-      <Switch v-model="isTakeProfitsEnabled" />
+      <Switch
+        v-model="isTakeProfitsEnabled"
+        :is-disabled="true"
+      />
     </template>
     <template #takeProfitsAmountLabel>
       {{ t('order.takeProfit.amountOfOrders') }}

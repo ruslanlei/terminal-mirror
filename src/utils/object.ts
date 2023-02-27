@@ -1,4 +1,5 @@
 import cloneDeep from 'lodash/cloneDeep';
+import { curry } from '@/utils/fp';
 
 export const isObject = (item: any) => (typeof item === 'object' && !Array.isArray(item) && item !== null);
 
@@ -17,3 +18,8 @@ export const createObjectWithValues = (
 export {
   cloneDeep,
 };
+
+export const getValueByKey = curry((
+  key: string,
+  object: Record<any, any>,
+) => object?.[key] || null);

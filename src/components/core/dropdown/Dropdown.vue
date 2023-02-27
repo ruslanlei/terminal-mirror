@@ -39,6 +39,10 @@ import { teleportTargets } from '@/enums/teleport';
 import { useLocalValue } from '@/hooks/useLocalValue';
 import { useEnvironmentObserver } from '@/hooks/useEnvironmentObserver';
 import { playAnimation } from '@/utils/animation';
+import { getRect } from '@/helpers/style';
+import { compose } from '@/utils/fp';
+import { getValueByKey } from '@/utils/object';
+import { divideRight, roundToDecimalPoint } from '@/helpers/number';
 import { DropdownProps, DropdownEmits, DropdownPlacement } from './index';
 
 const props = withDefaults(
@@ -52,7 +56,7 @@ const props = withDefaults(
     containerGap: 10,
     automaticReplace: true,
     dropAnimationInitialPositionShift: 60,
-    transitionDuration: 780,
+    transitionDuration: 720,
   },
 );
 
@@ -230,7 +234,7 @@ const calculateDropdownPosition = () => {
 watch(localIsVisible, calculateDropdownPosition);
 
 watch(localIsVisible, () => {
-  if (!localIsVisible.value) return;
+  if (!localIsVisible.value || !dropdown.value) return;
 
   let translateY: number | number[] = 0;
   let translateX: number | number[] = 0;
@@ -239,17 +243,28 @@ watch(localIsVisible, () => {
     ? props.placement[0]
     : props.placement;
 
+  const positionShift = compose(
+    roundToDecimalPoint(2),
+    divideRight(3),
+    getValueByKey(
+      (placement === 'top' || placement === 'bottom')
+        ? 'height'
+        : 'width',
+    ),
+    getRect,
+  )(dropdown.value);
+
   if (placement === 'bottom') {
-    translateY = [-props.dropAnimationInitialPositionShift, 0];
+    translateY = [-positionShift, 0];
   }
   if (placement === 'top') {
-    translateY = [props.dropAnimationInitialPositionShift, 0];
+    translateY = [positionShift, 0];
   }
   if (placement === 'left') {
-    translateX = [props.dropAnimationInitialPositionShift, 0];
+    translateX = [positionShift, 0];
   }
   if (placement === 'right') {
-    translateX = [-props.dropAnimationInitialPositionShift, 0];
+    translateX = [-positionShift, 0];
   }
 
   playAnimation({

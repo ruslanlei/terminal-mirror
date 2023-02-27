@@ -265,7 +265,10 @@
             <!--            >-->
             <!--              <Icon icon="cross" />-->
             <!--            </button>-->
-            <Dropdown placement="top">
+            <Dropdown
+              placement="top"
+              :transition-duration="600"
+            >
               <template #trigger>
                 <button
                   type="button"
@@ -275,7 +278,7 @@
                 </button>
               </template>
               <template #dropdown>
-                dropdown
+                <Tooltip :text="'testText'" />
               </template>
             </Dropdown>
           </div>
@@ -312,6 +315,7 @@ import { useOrdersList } from '@/hooks/useOrdersList';
 import Typography from '@/components/app/typography/Typography.vue';
 import OrdersListPlaceholder from '@/components/app/ordersList/OrdersListPlaceholder.vue';
 import Dropdown from '@/components/core/dropdown/Dropdown.vue';
+import Tooltip from '@/components/core/tooltip/Tooltip.vue';
 import { ActiveOrdersTableRecord, ClosedOrdersTableRecord, OrdersListProps } from './index';
 
 const props = withDefaults(

@@ -43,4 +43,9 @@ withDefaults(
 .background3 {
   background-color: rgb(var(--color-background-3));
 }
+
+.accent3Transparent {
+  background-color: rgba(var(--color-accent-3), 0.91);
+  backdrop-filter: blur(7px);
+}
 </style>

@@ -11,7 +11,7 @@ export interface DropdownProps {
   automaticReplace?: boolean,
   isDisabled?: boolean,
   dropAnimationInitialPositionShift?: number,
-  transitionDuration?: 780 | 500,
+  transitionDuration?: 720 | 600,
 }
 
 export interface DropdownEmits {

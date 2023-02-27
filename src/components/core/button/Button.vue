@@ -54,6 +54,7 @@ const computedLoaderSize = computed(
   &:not(.disabled) {
     cursor: pointer;
   }
+  @include transparentOnDisabled;
   &.disabled {
     cursor: not-allowed;
   }
@@ -83,7 +84,7 @@ const computedLoaderSize = computed(
 }
 
 .interactive {
-  transition: background-color 200ms, color 200ms;
+  transition: background-color 200ms, color 200ms, opacity 200ms;
   &:focus, &:hover {
     //transform: scale(1.01);
   }

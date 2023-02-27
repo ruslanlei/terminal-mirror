@@ -25,12 +25,12 @@ withDefaults(
 </script>
 
 <style lang="scss" module>
+@import "src/assets/styles/utils";
+
 .rewindButton {
   color: rgb(var(--color-accent-1));
-  transition: color 150ms;
-  &.disabled {
-    color: rgb(var(--color-accent-2));
-  }
+  transition: color 150ms, opacity 200ms;
+  @include transparentOnDisabled;
   &:not(.disabled) {
     cursor: pointer;
   }

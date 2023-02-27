@@ -22,9 +22,10 @@
       <PlayButton
         v-model="isPlaying"
         :class="$style.playButton"
+        :is-disabled="!isActiveOrdersForCurrentPairExists"
       />
       <RewindButton
-        :is-disabled="isPlaying"
+        :is-disabled="isPlaying || !isActiveOrdersForCurrentPairExists"
         :class="$style.rewindButton"
         @click="emulatorStore.rewind"
       />

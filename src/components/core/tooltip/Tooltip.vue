@@ -4,7 +4,10 @@
     state="accent3Transparent"
   >
     <slot>
-      <Typography>
+      <Typography
+        size="title4"
+        :state="['semiBold', 'accent1']"
+      >
         {{ text }}
       </Typography>
     </slot>

@@ -14,7 +14,7 @@
       </div>
     </template>
     <template #dropdown>
-      <Tooltip :text="'testText'" />
+      <Tooltip :text="t('ordersList.closeTip')" />
     </template>
   </Dropdown>
 </template>
@@ -25,9 +25,12 @@ import { ref } from 'vue';
 import Dropdown from '@/components/core/dropdown/Dropdown.vue';
 import Icon from '@/components/core/icon/Icon.vue';
 import Tooltip from '@/components/core/tooltip/Tooltip.vue';
+import { useI18n } from 'vue-i18n';
 import { CloseOrderButtonEmits } from './index';
 
 const emit = defineEmits<CloseOrderButtonEmits>();
+
+const { t } = useI18n();
 
 const isTooltipVisible = ref(false);
 

@@ -243,7 +243,8 @@
       "volume": "{volume} {currency}"
     },
     "placeholder": "You don't have Orders. Create an order and it will appear here",
-    "edit": "Edit"
+    "edit": "Edit",
+    "closeTip": "Click again to close quickly"
   },
   "changePlayerDateModal": {
     "label": "To change date in the player, you need to delete and/or close all existing orders. Delete and/or close orders right now?",

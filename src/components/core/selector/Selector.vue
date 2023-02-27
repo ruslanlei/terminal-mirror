@@ -199,8 +199,10 @@ const {
 
 watch(localValue, findActiveTab);
 onMounted(() => {
-  findActiveTab();
-  setListeners();
+  requestAnimationFrame(() => {
+    findActiveTab();
+    setListeners();
+  });
 });
 onBeforeUnmount(removeListeners);
 </script>

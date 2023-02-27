@@ -19,8 +19,9 @@ import {
 import { compose } from '@/utils/fp';
 import { decreaseByPercent } from '@/helpers/math/percents';
 import {
-  calculateAndRoundLiquidationPrice,
-  calculateAndRoundPledge, calculateVolumeDifference,
+  calculateLiquidationPrice,
+  calculatePledge,
+  calculateVolumeDifference,
 } from '@/helpers/math/formulas/order';
 import { roundToDecimalPoint } from '@/helpers/number';
 import { useChartDataStore } from '@/stores/chartData';
@@ -186,19 +187,26 @@ export const useOrderCreate = () => {
     ),
   );
 
-  const pledge = computed(() => calculateAndRoundPledge(
+  const pledge = computed(() => compose(
+    roundToDecimalPoint(2),
+    calculatePledge,
+  )(
     model.price,
     model.quantity,
     model.leverage,
-    quoteCurrencyDecimals.value,
   ));
 
-  const liquidationPrice = computed(() => (model.quantity ? calculateAndRoundLiquidationPrice(
-    model.price,
-    model.quantity,
-    model.leverage,
-    quoteCurrencyDecimals.value,
-  ) : 0));
+  const liquidationPrice = computed(() => (
+    model.quantity
+      ? compose(
+        roundToDecimalPoint(2),
+        calculateLiquidationPrice,
+      )(
+        model.price,
+        model.quantity,
+        model.leverage,
+      )
+      : 0));
 
   // <-- submit
   const isLoading = ref(false);

@@ -51,19 +51,6 @@ export const calculatePledge = curry((
   divideRight(leverage),
   multiply(orderPrice),
 )(orderQuantity));
-export const calculateAndRoundPledge = curry((
-  orderPrice: number,
-  orderQuantity: number,
-  leverage: number,
-  decimals: number,
-) => compose(
-  roundToDecimalPoint(decimals),
-  calculatePledge,
-)(
-  orderPrice,
-  orderQuantity,
-  leverage,
-));
 
 export const calculateLiquidationPrice = curry((
   orderPrice: number,
@@ -72,14 +59,4 @@ export const calculateLiquidationPrice = curry((
 ) => compose(
   divideRight(orderQuantity),
   calculatePledge,
-)(orderPrice, orderQuantity, leverage));
-
-export const calculateAndRoundLiquidationPrice = curry((
-  orderPrice: number,
-  orderQuantity: number,
-  leverage: number,
-  decimals: number,
-) => compose(
-  roundToDecimalPoint(decimals),
-  calculateLiquidationPrice,
 )(orderPrice, orderQuantity, leverage));

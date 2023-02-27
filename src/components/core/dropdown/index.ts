@@ -12,9 +12,11 @@ export interface DropdownProps {
   isDisabled?: boolean,
   dropAnimationInitialPositionShift?: number,
   transitionDuration?: 720 | 600,
+  blockInnerToggling?: boolean,
 }
 
 export interface DropdownEmits {
   (e: 'update:isVisible', value: boolean): void,
   (e: 'triggerClick'): void,
+  (e: 'clickOutside'): void,
 }

@@ -57,6 +57,7 @@ const props = withDefaults(
     automaticReplace: true,
     dropAnimationInitialPositionShift: 60,
     transitionDuration: 720,
+    blockInnerToggling: false,
   },
 );
 
@@ -83,6 +84,14 @@ const localIsVisible = computed({
   },
 });
 
+const setIsVisible = (
+  isVisible: boolean,
+) => {
+  if (props.blockInnerToggling) return;
+
+  localIsVisible.value = isVisible;
+};
+
 const onClickOutside = (event: MouseEvent) => {
   if (!trigger.value || !dropdown.value) return;
 
@@ -95,7 +104,9 @@ const onClickOutside = (event: MouseEvent) => {
       || dropdown.value.contains(target)
   ) return;
 
-  localIsVisible.value = false;
+  emit('clickOutside');
+
+  setIsVisible(false);
 };
 
 const teleportTarget = computed(() => `#${teleportTargets.LEVITATING}`);
@@ -284,7 +295,7 @@ const onTriggerClick = () => {
 
   if (!props.toggleByClick || props.isDisabled) return;
 
-  localIsVisible.value = !localIsVisible.value;
+  setIsVisible(!localIsVisible.value);
 };
 
 const {

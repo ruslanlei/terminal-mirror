@@ -257,30 +257,7 @@
             <!--          >-->
             <!--            <Icon icon="swap" />-->
             <!--          </button>-->
-            <!-- TODO: Remove -->
-            <!--            <button-->
-            <!--              type="button"-->
-            <!--              :class="$style.deleteButton"-->
-            <!--              @click="deleteOrder(order, takeProfits)"-->
-            <!--            >-->
-            <!--              <Icon icon="cross" />-->
-            <!--            </button>-->
-            <Dropdown
-              placement="top"
-              :transition-duration="600"
-            >
-              <template #trigger>
-                <button
-                  type="button"
-                  :class="$style.deleteButton"
-                >
-                  <Icon icon="cross" />
-                </button>
-              </template>
-              <template #dropdown>
-                <Tooltip :text="'testText'" />
-              </template>
-            </Dropdown>
+            <CloseOrderButton @delete="deleteOrder(order, takeProfits)" />
           </div>
         </template>
 
@@ -314,9 +291,8 @@ import SubOrdersTable from '@/components/app/ordersList/subOrdersTable/SubOrders
 import { useOrdersList } from '@/hooks/useOrdersList';
 import Typography from '@/components/app/typography/Typography.vue';
 import OrdersListPlaceholder from '@/components/app/ordersList/OrdersListPlaceholder.vue';
-import Dropdown from '@/components/core/dropdown/Dropdown.vue';
-import Tooltip from '@/components/core/tooltip/Tooltip.vue';
-import { ActiveOrdersTableRecord, ClosedOrdersTableRecord, OrdersListProps } from './index';
+import CloseOrderButton from '@/components/app/closeOrderButton/CloseOrderButton.vue';
+import { OrdersListProps } from './index';
 
 const props = withDefaults(
   defineProps<OrdersListProps>(),
@@ -336,6 +312,7 @@ const {
   commonPnl,
   clearSubscriptions,
   onRecordClick,
+  deleteOrder,
 } = useOrdersList(props);
 
 onActivated(() => {

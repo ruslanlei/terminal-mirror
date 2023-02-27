@@ -1,17 +1,20 @@
 <template>
-  <Layout
-    v-if="Layout"
-    :class="$style.layout"
-  >
-    <RouterView v-slot="{ Component }">
-      <transition
-        name="layout-transition"
-        mode="out-in"
-      >
-        <component :is="Component" />
-      </transition>
-    </RouterView>
-  </Layout>
+  <Transition name="layoutTransition">
+    <Layout
+      v-if="Layout"
+      :key="route.meta?.layout"
+      :class="$style.layout"
+    >
+      <RouterView v-slot="{ Component }">
+        <transition
+          name="layoutTransition"
+          mode="out-in"
+        >
+          <component :is="Component" />
+        </transition>
+      </RouterView>
+    </Layout>
+  </Transition>
 </template>
 
 <script setup lang="ts">
@@ -74,20 +77,29 @@ onBeforeUnmount(() => {
 </style>
 
 <style lang="scss">
-.layout-transition {
+.layoutTransition {
   &-enter-active,
   &-leave-active {
-    transition: opacity 0.15s ease, .15s transform;
+    transition: opacity 150ms, transform 460ms;
   }
 
   &-enter-from {
     opacity: 0;
-    transform: translateX(6px);
+    transform: scale(0.97);
+    position: fixed;
+    top: 0;
+    left: 0;
+    inset: 0;
+    z-index: 5000;
   }
   &-leave-to {
     opacity: 0;
-    transform: translateX(-6px);
+    transform: translateY(-100%);
+    position: fixed;
+    top: 0;
+    left: 0;
+    inset: 0;
+    z-index: 10000;
   }
 }
-
 </style>

@@ -41,7 +41,7 @@ import { useStorage } from '@vueuse/core';
 
 const marketStore = useMarketStore();
 
-const isFavoritesExpanded = useStorage('isFavoritesVisible', false);
+const isFavoritesExpanded = useStorage('isFavoritesVisible', true);
 
 const hideFavorites = () => {
   isFavoritesExpanded.value = false;

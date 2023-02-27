@@ -1,4 +1,4 @@
-import { onMounted, watch } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { useSessionStore } from '@/stores/session';
 import { useProfileStore } from '@/stores/profile';
@@ -26,11 +26,25 @@ export const useApp = () => {
     });
   });
 
-  onMounted(async () => {
+  const isPreparing = ref(false);
+
+  const fetchAppResources = async () => {
+    isPreparing.value = true;
+
+    await marketStore.getPairs();
+
     if (sessionStore.token) {
       await profileStore.getProfile();
       await marketStore.fetchFavoritePairs();
       await emulatorStore.fetchBalance();
     }
-  });
+
+    isPreparing.value = false;
+  };
+
+  onMounted(fetchAppResources);
+
+  return {
+    isPreparing,
+  };
 };

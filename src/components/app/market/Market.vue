@@ -46,6 +46,4 @@ const isFavoritesExpanded = useStorage('isFavoritesVisible', false);
 const hideFavorites = () => {
   isFavoritesExpanded.value = false;
 };
-
-await marketStore.getPairs();
 </script>

@@ -1,7 +1,6 @@
-import { ref } from 'vue';
+import { nextTick, ref } from 'vue';
 import { defineStore } from 'pinia';
 import { useI18n } from 'vue-i18n';
-import { useStorage } from '@vueuse/core';
 import { useToastStore } from '@/stores/toasts';
 import { getProfile } from '@/api/endpoints/auth/getProfile';
 import { Profile } from '@/api/types/profile';
@@ -10,7 +9,7 @@ export const useProfileStore = defineStore('profile', () => {
   const { t } = useI18n();
   const toastStore = useToastStore();
 
-  const profile = useStorage<Profile | null>('profile', null);
+  const profile = ref<Profile | null>(null);
 
   const isFetchingProfile = ref(false);
   const handleGetProfile = async () => {

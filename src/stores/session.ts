@@ -13,6 +13,7 @@ import { useProfileStore } from '@/stores/profile';
 import { verifyEmail, VerifyEmailDTO } from '@/api/endpoints/auth/verifyEmail';
 import { passwordResetConfirm } from '@/api/endpoints/auth/passwordResetConfirm';
 import { processServerErrors } from '@/api/common';
+import { useEmulatorStore } from '@/stores/emulator';
 
 export const checkAuth = (
   isAuthorized: boolean,
@@ -45,6 +46,7 @@ export const useSessionStore = defineStore('session', () => {
   const isAuthorized = ref(false);
   const toastStore = useToastStore();
   const profileStore = useProfileStore();
+  const emulatorStore = useEmulatorStore();
 
   const { token, setToken, removeToken } = useAuthToken();
 
@@ -74,6 +76,7 @@ export const useSessionStore = defineStore('session', () => {
     if (result) {
       setToken(data.key, !remember);
       await profileStore.getProfile();
+      await emulatorStore.fetchBalance();
     } else {
       processServerErrors(data, t('auth.signIn.failed'));
     }

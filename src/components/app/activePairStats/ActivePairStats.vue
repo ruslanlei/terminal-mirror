@@ -73,6 +73,7 @@ const computedPairStats = computed<IPairStats>(() => [
     {
       label: t('pairStats.price'),
       value: currentPrice.value,
+      appendText: '$',
       valueState:
         isMoreThan(
           firstPriceWithinLast24Hours.value || 0,
@@ -92,6 +93,7 @@ const computedPairStats = computed<IPairStats>(() => [
       label: t('pairStats.change'),
       value: change.value,
       valueState: 'auto',
+      appendText: '$',
     },
     {
       label: t('pairStats.in24hours'),

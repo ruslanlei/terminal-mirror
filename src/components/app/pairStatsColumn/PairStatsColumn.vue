@@ -21,7 +21,14 @@
           v-if="pairStat.value"
           :text="pairStat.value"
           animation-type="verticalAuto"
-        />
+        >
+          <template #default="{ value }">
+            {{ value }}
+            <template v-if="pairStat.appendText">
+              {{ pairStat.appendText }}
+            </template>
+          </template>
+        </AnimatedText>
         <Typography v-else>
           {{ '-' }}
         </Typography>

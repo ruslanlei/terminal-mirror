@@ -27,7 +27,7 @@ const props = withDefaults(
   },
 );
 
-const ComputedComponent = computed(() => (props.isInline ? 'span' : 'div'));
+const ComputedComponent = computed(() => (props.isInline ? 'span' : 'p'));
 
 const computedState = useComputedState(props);
 </script>

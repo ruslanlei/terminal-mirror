@@ -6,6 +6,7 @@
       isDisabled && $style.disabled,
       $style[size],
       isWide && $style.wide,
+      hideLoaderOnHover && $style.hideLoaderOnHover,
       ...computedState,
     ]"
     :disabled="isDisabled"
@@ -64,6 +65,18 @@ const computedLoaderSize = computed(
   width: 100%;
 }
 
+.hideLoaderOnHover {
+  &:hover {
+    .loaderCap {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .inner {
+      opacity: 1;
+    }
+  }
+}
+
 .loaderCap {
   opacity: 1;
   position: absolute;
@@ -72,15 +85,18 @@ const computedLoaderSize = computed(
   justify-content: center;
   align-items: center;
   transition: .15s opacity;
+  &.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
 }
 
 .inner {
   transition: .15s opacity;
-}
-
-.hidden {
-  opacity: 0;
-  pointer-events: none;
+  &.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
 }
 
 .interactive {

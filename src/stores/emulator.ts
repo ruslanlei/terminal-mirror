@@ -190,8 +190,15 @@ export const useEmulatorStore = defineStore('emulator', () => {
   marketStore.subscribeOrderDelete(fetchBalance);
 
   const isCalculatingResult = ref(false);
+  const isCalculateResultAbortionQueued = ref(false);
+
+  const abortCalculateResult = () => {
+    isCalculateResultAbortionQueued.value = true;
+  };
 
   const calculateResult = async () => {
+    if (isCalculatingResult.value) return;
+
     if (!activePairData.value?.to_date) return;
 
     const {
@@ -214,6 +221,11 @@ export const useEmulatorStore = defineStore('emulator', () => {
 
     let isSimulated = false;
     while (!isSimulated) {
+      if (isCalculateResultAbortionQueued.value) {
+        isCalculateResultAbortionQueued.value = false;
+        break;
+      }
+
       // eslint-disable-next-line no-await-in-loop
       const { result, data } = await simulate({
         pair: marketStore.activePair,
@@ -223,7 +235,7 @@ export const useEmulatorStore = defineStore('emulator', () => {
         tiks: 1,
       });
 
-      const isLimitOrderExecuted = data.events.some(
+      const isLimitOrderExecuted = data.events?.some(
         isExactOrder('limit', 'executed'),
       );
 
@@ -282,6 +294,8 @@ export const useEmulatorStore = defineStore('emulator', () => {
     isRewinding,
     rewind,
     isCalculatingResult,
+    isCalculateResultAbortionQueued,
     calculateResult,
+    abortCalculateResult,
   };
 });

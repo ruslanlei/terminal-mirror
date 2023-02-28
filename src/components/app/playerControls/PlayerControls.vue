@@ -2,7 +2,7 @@
   <Card
     :class="[
       $style.playerSettings,
-      isDisabled && $style.disabled,
+      isDisabledAll && $style.disabled,
     ]"
     state="background3"
   >
@@ -14,7 +14,7 @@
         v-model="emulatorDate"
         :max-date="activePairData?.to_date"
         :min-date="activePairData?.from_date"
-        :block-calendar="isActiveOrdersForCurrentPairExists"
+        :block-calendar="isDisabledCalendar"
         @trigger-click="onDatepickerClick"
       />
     </header>
@@ -22,10 +22,10 @@
       <PlayButton
         v-model="isPlaying"
         :class="$style.playButton"
-        :is-disabled="!isActiveOrdersForCurrentPairExists"
+        :is-disabled="isDisabledControls"
       />
       <RewindButton
-        :is-disabled="isPlaying || !isActiveOrdersForCurrentPairExists"
+        :is-disabled="isPlaying || isDisabledControls"
         :class="$style.rewindButton"
         @click="emulatorStore.rewind"
       />
@@ -46,10 +46,14 @@
       size="md"
       :class="$style.prematureResultButton"
       :is-loading="isCalculatingResult"
-      :is-disabled="!isActiveOrdersForCurrentPairExists"
-      @click="emulatorStore.calculateResult"
+      :is-disabled="isCalculateResultButtonDisabled"
+      :hide-loader-on-hover="true"
+      @click="onCalculateResult"
     >
-      {{ t('emulator.player.prematureResult') }}
+      <AnimatedText
+        animation-type="verticalForward"
+        :text="calculateResultButtonText"
+      />
     </Button>
   </Card>
 </template>
@@ -91,18 +95,48 @@ const {
   isPlaying,
   isRewinding,
   isCalculatingResult,
+  isCalculateResultAbortionQueued,
 } = storeToRefs(emulatorStore);
 
 const displaySpeed = computed(() => `CPS: ${candlesPerSecond.value}`);
 
-const isDisabled = computed(() => [
+const isDisabledAll = computed(() => [
   isRewinding.value,
   isFetchingCandles.value,
+].some(Boolean));
+
+const isDisabledControls = computed(() => [
+  isDisabledAll.value,
+  !isActiveOrdersForCurrentPairExists.value,
   isCalculatingResult.value,
 ].some(Boolean));
 
+const isDisabledCalendar = computed(() => [
+  isDisabledAll.value,
+  isActiveOrdersForCurrentPairExists.value,
+  isCalculatingResult.value,
+].some(Boolean));
+
+const isCalculateResultButtonDisabled = computed(() => [
+  isDisabledAll.value,
+  !isActiveOrdersForCurrentPairExists.value,
+  isCalculateResultAbortionQueued.value,
+].some(Boolean));
+
+const calculateResultButtonText = computed(() => (isCalculatingResult.value
+  ? t('common.cancel')
+  : t('emulator.player.calculateResult')));
+
+const onCalculateResult = () => {
+  if (isCalculatingResult.value) {
+    emulatorStore.abortCalculateResult();
+  } else {
+    emulatorStore.calculateResult();
+  }
+};
+
 const onDatepickerClick = () => {
-  if (!isActiveOrdersForCurrentPairExists.value) return;
+  if (isDisabledControls.value) return;
 
   modalStore.showModal({
     type: modalType.CHANGE_PLAYER_DATE_ALERT,

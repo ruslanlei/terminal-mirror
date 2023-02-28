@@ -19,4 +19,5 @@ export interface ButtonProps {
   isWide?: boolean,
   isDisabled?: boolean,
   isLoading?: boolean,
+  hideLoaderOnHover?: boolean,
 }

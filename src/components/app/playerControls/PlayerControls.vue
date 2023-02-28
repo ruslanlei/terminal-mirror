@@ -46,7 +46,7 @@
       size="md"
       :class="$style.prematureResultButton"
       :is-loading="isCalculatingResult"
-      :is-disabled="isCalculateResultButtonDisabled"
+      :is-disabled="isDisabledCalculateResultButton"
       :hide-loader-on-hover="true"
       @click="onCalculateResult"
     >
@@ -117,7 +117,7 @@ const isDisabledCalendar = computed(() => [
   isCalculatingResult.value,
 ].some(Boolean));
 
-const isCalculateResultButtonDisabled = computed(() => [
+const isDisabledCalculateResultButton = computed(() => [
   isDisabledAll.value,
   !isActiveOrdersForCurrentPairExists.value,
   isCalculateResultAbortionQueued.value,

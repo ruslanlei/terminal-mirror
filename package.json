@@ -17,7 +17,6 @@
     "lightweight-charts": "^4.0.0",
     "lodash": "^4.17.21",
     "maska": "^2.1.5",
-    "nprogress": "^0.2.0",
     "numeral": "^2.0.6",
     "pinia": "^2.0.29",
     "rambda": "^7.4.0",

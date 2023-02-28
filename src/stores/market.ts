@@ -25,6 +25,7 @@ import { addToFavorites } from '@/api/endpoints/profile/addToFavorites';
 import { removeFromFavorites } from '@/api/endpoints/profile/removeFromFavorites';
 import { findAndDelete } from '@/helpers/array';
 import { getBalance } from '@/api/endpoints/profile/getBalance';
+import { isEmpty } from '@/utils/object';
 
 export type MarketType = 'emulator' | 'real';
 
@@ -56,6 +57,8 @@ export const useMarketStore = defineStore('market', () => {
   const marketType = useStorage<MarketType>('marketType', 'emulator');
 
   const pairs = useStorage<PairData[]>('pairs', []);
+
+  const isPairsPreFetched = computed(() => !isEmpty(pairs.value));
 
   const pairsMap = computed<Record<PairData['id'], PairData>>(
     () => pairs.value.reduce((acc, pair: PairData) => ({
@@ -119,7 +122,7 @@ export const useMarketStore = defineStore('market', () => {
   };
 
   const isFetchingPairs = ref(false);
-  const handleGetPairs = async () => {
+  const handleFetchPairs = async () => {
     isFetchingPairs.value = true;
     const { result, data } = await getPairs();
     isFetchingPairs.value = false;
@@ -132,6 +135,15 @@ export const useMarketStore = defineStore('market', () => {
     }
 
     pairs.value = data;
+  };
+
+  const fetchPairs = async () => {
+    if (!isPairsPreFetched.value) {
+      await handleFetchPairs();
+      return;
+    }
+
+    handleFetchPairs();
   };
 
   const baseCurrencyDecimals = ref(Number(import.meta.env.VITE_APP_BASE_CURRENCY_DECIMALS));
@@ -348,6 +360,7 @@ export const useMarketStore = defineStore('market', () => {
     subscribeOrderCreated,
     unsubscribeOrderCreated,
     pairs,
+    isPairsPreFetched,
     pairsMap,
     marketType,
     activePair,
@@ -359,7 +372,7 @@ export const useMarketStore = defineStore('market', () => {
     isFetchingPairs,
     favoritePairs,
     fetchFavoritePairs,
-    getPairs: handleGetPairs,
+    fetchPairs,
     createOrder: handleCreateOrder,
     createListOfTakeProfits,
     createStopLoss,

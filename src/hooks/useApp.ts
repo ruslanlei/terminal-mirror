@@ -1,11 +1,14 @@
-import { onMounted, ref, watch } from 'vue';
+import {
+  ref,
+  watch,
+  onMounted,
+} from 'vue';
 import { useRoute } from 'vue-router';
 import { useSessionStore } from '@/stores/session';
 import { useProfileStore } from '@/stores/profile';
 import { useTitleStore } from '@/stores/title';
 import { useI18nStore } from '@/stores/i18n';
 import { useCommonStore } from '@/stores/common';
-import { useEmulatorStore } from '@/stores/emulator';
 import { useMarketStore } from '@/stores/market';
 
 export const useApp = () => {
@@ -17,7 +20,6 @@ export const useApp = () => {
   const sessionStore = useSessionStore();
   const profileStore = useProfileStore();
   const marketStore = useMarketStore();
-  const emulatorStore = useEmulatorStore();
 
   watch(route, () => {
     window.scrollTo({
@@ -29,9 +31,14 @@ export const useApp = () => {
   const isPreparing = ref(false);
 
   const fetchAppResources = async () => {
-    isPreparing.value = true;
+    if ([
+      !marketStore.isPairsPreFetched,
+      !profileStore.isProfilePreFetched,
+    ].some(Boolean)) {
+      isPreparing.value = true;
+    }
 
-    await marketStore.getPairs();
+    await marketStore.fetchPairs();
 
     if (sessionStore.token) {
       await profileStore.fetchAllProfileData();

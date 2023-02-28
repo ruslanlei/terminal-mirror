@@ -1,4 +1,4 @@
-import { nextTick, ref } from 'vue';
+import { computed, ref } from 'vue';
 import { defineStore } from 'pinia';
 import { useI18n } from 'vue-i18n';
 import { useToastStore } from '@/stores/toasts';
@@ -6,6 +6,8 @@ import { getProfile } from '@/api/endpoints/auth/getProfile';
 import { Profile } from '@/api/types/profile';
 import { useEmulatorStore } from '@/stores/emulator';
 import { useMarketStore } from '@/stores/market';
+import { useStorage } from '@vueuse/core';
+import { isEmpty } from '@/utils/object';
 
 export const useProfileStore = defineStore('profile', () => {
   const { t } = useI18n();
@@ -13,7 +15,8 @@ export const useProfileStore = defineStore('profile', () => {
   const emulatorStore = useEmulatorStore();
   const marketStore = useMarketStore();
 
-  const profile = ref<Profile | null>(null);
+  const profile = useStorage<Profile | {}>('profileData', {});
+  const isProfilePreFetched = computed(() => !isEmpty(profile.value));
 
   const isFetchingProfile = ref(false);
   const handleGetProfile = async () => {
@@ -31,14 +34,24 @@ export const useProfileStore = defineStore('profile', () => {
     }
   };
 
-  const fetchAllProfileData = async () => {
+  const handleFetchAllProfileData = async () => {
     await handleGetProfile();
     await emulatorStore.fetchBalance();
     await marketStore.fetchFavoritePairs();
   };
 
+  const fetchAllProfileData = async () => {
+    if (!isProfilePreFetched.value) {
+      await handleFetchAllProfileData();
+      return;
+    }
+
+    handleFetchAllProfileData();
+  };
+
   return {
     profile,
+    isProfilePreFetched,
     isFetchingProfile,
     getProfile: handleGetProfile,
     fetchAllProfileData,

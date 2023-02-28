@@ -7,7 +7,7 @@
     >
       <RouterView v-slot="{ Component }">
         <transition
-          name="layoutTransition"
+          name="pageTransition"
           mode="out-in"
         >
           <component :is="Component" />
@@ -165,6 +165,22 @@ onBeforeUnmount(() => {
   &-leave-to {
     opacity: 0;
     transform: scale(1.04);
+  }
+}
+
+.pageTransition {
+  &-enter-active,
+  &-leave-active {
+    transition: opacity 150ms, transform 250ms;
+  }
+
+  &-enter-from {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+  &-leave-to {
+    opacity: 0;
+    transform: translateY(16px);
   }
 }
 </style>

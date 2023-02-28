@@ -70,7 +70,7 @@ meta:
 </route>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { Form, FormInput } from '@/form';
 import Checkbox from '@/components/core/checkbox/Checkbox.vue';
@@ -91,10 +91,6 @@ const {
   handleSubmit,
   isLoading,
 } = useSignIn();
-
-onMounted(() => {
-  emailInput.value.focus();
-});
 </script>
 
 <style lang="scss" module>

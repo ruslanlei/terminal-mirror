@@ -67,7 +67,7 @@ meta:
 </route>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { Form, FormInput } from '@/form';
 import SignUpContainer from '@/containers/signUpContainer/SignUpContainer.vue';
@@ -88,10 +88,6 @@ const {
   isLoading,
   serverErrors,
 } = useSignUp();
-
-onMounted(() => {
-  userNameField.value.focus();
-});
 </script>
 
 <style lang="scss" module>

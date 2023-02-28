@@ -4,6 +4,7 @@
     v-model:external-errors="serverErrors"
     :validation-schema="validationSchema"
     touch-by="blur"
+    :autocomplete="true"
     @submit="handleSubmit"
   >
     <SignUpContainer>
@@ -17,12 +18,14 @@
         <FormInput
           ref="userNameField"
           name="username"
+          autocomplete="username"
           :placeholder="t('placeholder.username')"
         />
       </template>
       <template #emailField>
         <FormInput
           name="email"
+          autocomplete="email"
           :placeholder="t('placeholder.email')"
         />
       </template>

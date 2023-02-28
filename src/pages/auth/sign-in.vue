@@ -3,6 +3,7 @@
     v-model="model"
     :validation-schema="validationSchema"
     touch-by="blur"
+    :autocomplete="true"
     @submit="handleSubmit"
   >
     <SignInContainer>
@@ -16,12 +17,14 @@
         <FormInput
           ref="emailInput"
           name="email"
+          autocomplete="email"
           :placeholder="t('placeholder.email')"
         />
       </template>
       <template #passwordField>
         <FormInput
           name="password"
+          autocomplete="current-password"
           :placeholder="t('placeholder.password')"
           type="password"
         />

@@ -79,7 +79,7 @@ const isMetricsLabelVisible = computed(() => props.state === 'default');
 
 const takeProfitsSum = computed(() => compose(
   roundToDecimalPoint(quoteCurrencyDecimals.value),
-  reduceTakeProfitsToAmountOfProfit,
+  reduceTakeProfitsToAmountOfProfit(model.price),
 )(takeProfits.value));
 
 const profitDisplayValue = computed(() => t('order.takeProfit.profitValue', {

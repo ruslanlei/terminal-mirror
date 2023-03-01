@@ -8,23 +8,25 @@ import {
   divide,
   divideRight,
   multiply,
-  roundToDecimalPoint, subtract,
+  subtract,
   subtractRight,
 } from '@/helpers/number';
 import { calculateOnePercent } from '@/helpers/math/percents';
 import { TakeProfit } from '@/api/types/order';
 import { getLength, reduce } from '@/utils/array';
+import { calculateVolumeDifference } from '@/helpers/math/formulas/order';
 
-export const reduceTakeProfitsToAmountOfProfit = (
+export const reduceTakeProfitsToAmountOfProfit = curry((
+  orderPrice: number,
   takeProfits: TakeProfit[],
 ): number => reduce(
   (total: number, { price, quantity }: TakeProfit) => compose(
     add(total),
-    multiply(quantity),
+    calculateVolumeDifference(quantity, orderPrice),
   )(price),
   0,
   takeProfits,
-);
+));
 
 export const reduceTakeProfitsToQuantitiesSum = (
   takeProfits: TakeProfit[],
@@ -90,6 +92,6 @@ export const calculateCommonTakeProfitPercent = curry((
     multiply(100),
     divideRight(orderVolume),
     subtractRight(orderVolume),
-    reduceTakeProfitsToAmountOfProfit,
+    reduceTakeProfitsToAmountOfProfit(orderPrice),
   )(takeProfits);
 });

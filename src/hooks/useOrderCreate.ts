@@ -15,7 +15,6 @@ import {
   spreadOrderQuantityBetweenTakeProfits,
   mapTakeProfitPricesByIncreasePercent,
   mapTakeProfitPricesByDecreasePercent,
-  reduceTakeProfitsToAmountOfProfit,
 } from '@/helpers/math/formulas/takeProfit';
 import { compose } from '@/utils/fp';
 import { addPercents, subtractPercents } from '@/helpers/math/percents';

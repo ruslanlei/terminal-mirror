@@ -62,15 +62,52 @@
         </div>
       </div>
     </template>
-    <template #cell(priceAndVolume)="{ data: { totalTrades } }">
+    <template #cell(priceAndVolume)="{ data: { currentPrice, totalTrades } }">
       <div>
         <div :class="$style.price">
-          {{ totalTrades }}
+          <template v-if="currentPrice">
+            {{ currentPrice }}
+          </template>
+          <template v-else>
+            -
+          </template>
         </div>
         <div :class="$style.volume">
           {{ totalTrades }}
         </div>
       </div>
+    </template>
+
+    <template #column(last24HoursPercentChange)>
+      <i18n-t
+        tag="span"
+        keypath="pairs.table.last24HoursPercentChange.history"
+      >
+        <template #period>
+          <Typography
+            is-inline
+            state="accent2"
+          >
+            {{ t('dateTime.shortHours', { hours: 24 }) }}
+          </Typography>
+        </template>
+      </i18n-t>
+    </template>
+    <template #cell(last24HoursPercentChange)="{ data: value }">
+      <Badge
+        :state="[
+          value === null
+            ? 'background4'
+            : (
+              isPositive(value)
+                ? 'success'
+                : 'danger'
+            ),
+        ]"
+        size="sm"
+      >
+        {{ humanizePercents(value) }}
+      </Badge>
     </template>
   </Table>
 </template>
@@ -87,6 +124,10 @@ import { humanizeNumber } from '@/utils/number';
 import { PairData } from '@/api/types/pair';
 import { useMarketStore } from '@/stores/market';
 import Typography from '@/components/app/typography/Typography.vue';
+import { useChartDataStore } from '@/stores/chartData';
+import Badge from '@/components/core/badge/Badge.vue';
+import { isPositive } from '@/helpers/number';
+import { humanizePercents } from '@/helpers/math/percents';
 import {
   PairsTableColumn, PairsTableEmits,
   PairsTableProps,
@@ -100,6 +141,7 @@ const emit = defineEmits<PairsTableEmits>();
 const { t } = useI18n();
 
 const marketStore = useMarketStore();
+const chartDataStore = useChartDataStore();
 
 const columns = computed<PairsTableColumn[]>(() => [
   {
@@ -111,6 +153,12 @@ const columns = computed<PairsTableColumn[]>(() => [
   {
     label: t('pairs.table.priceAndVolume'),
     slug: 'priceAndVolume',
+    size: 1,
+    align: 'right',
+  },
+  {
+    label: '',
+    slug: 'last24HoursPercentChange',
     size: 1,
     align: 'right',
   },
@@ -131,8 +179,10 @@ const computedRecords = computed<PairsTableRecord[]>(
         quote: pair.quote,
       },
       priceAndVolume: {
+        currentPrice: chartDataStore.getCurrentPriceByPairId(pair.id),
         totalTrades: humanizeNumber(pair.total_trades),
       },
+      last24HoursPercentChange: chartDataStore.get24HoursPercentChangeByPairId(pair.id),
     },
   })),
 );

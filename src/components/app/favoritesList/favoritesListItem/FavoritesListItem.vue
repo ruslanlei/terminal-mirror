@@ -42,18 +42,18 @@ import { humanizeNumber, percentFormat } from '@/utils/number';
 import Badge from '@/components/core/badge/Badge.vue';
 import { computed } from 'vue';
 import { compose } from '@/utils/fp';
+import { humanizePercents } from '@/helpers/math/percents';
 import { FavoritesListItemProps } from './index';
 import { isPositive, roundToDecimalPoint } from '../../../../helpers/number';
 
 const props = defineProps<FavoritesListItemProps>();
 
-const displayPercentChange = computed(() => compose(
-  percentFormat,
-  roundToDecimalPoint(2),
-)(props.last24HoursPercentChange || 0));
+const displayPercentChange = computed(
+  () => humanizePercents(props.last24HoursPercentChange || 0),
+);
 
 const computedBadgeState = computed(() => [
-  props.last24HoursPercentChange == null
+  props.last24HoursPercentChange === null
     ? 'default'
     : (
       isPositive(props.last24HoursPercentChange)

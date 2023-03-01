@@ -11,6 +11,9 @@
     "cancel": "Cancel",
     "supportedBy": "Supported by - {supporter}"
   },
+  "dateTime": {
+    "shortHours": "{hours}h"
+  },
   "validationError": {
     "email": "Value is not valid email",
     "required": "This is required",
@@ -133,7 +136,10 @@
     },
     "table": {
       "pairs": "Pairs",
-      "priceAndVolume": "Price/Volume"
+      "priceAndVolume": "Price/Volume",
+      "last24HoursPercentChange": {
+        "history": "History {period}"
+      }
     }
   },
   "ordersAndStatistics": {

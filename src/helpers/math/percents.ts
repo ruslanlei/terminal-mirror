@@ -10,6 +10,7 @@ import {
   subtractRight,
 } from '@/helpers/number';
 import { isEqual } from '@/utils/boolean';
+import { percentFormat } from '@/utils/number';
 
 export const calculateOnePercent = (
   total: number,
@@ -100,3 +101,10 @@ export const checkIsRoundedValueEqualToPercentOfTotal = curry((
   roundToDecimalPoint(decimals),
   percentsToValue(total),
 )(percents));
+
+export const humanizePercents = (
+  percents: number,
+) => compose(
+  percentFormat,
+  roundToDecimalPoint(2),
+)(percents);

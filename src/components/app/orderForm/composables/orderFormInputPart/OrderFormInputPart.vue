@@ -96,11 +96,7 @@
       <slot name="submit" />
     </template>
     <template #estimates>
-      <OrderFormEstimates
-        :profit="takeProfitsIncomeSum"
-        :risk="stopLossRisk"
-        state="tiny"
-      />
+      <OrderFormEstimates state="tiny" />
     </template>
   </OrderFormInputPartContainer>
 </template>
@@ -137,8 +133,6 @@ const {
   leverage,
   pledge,
   liquidationPrice,
-  takeProfitsIncomeSum,
-  stopLossRisk,
 } = injectOrderFormState();
 
 const {

@@ -13,8 +13,8 @@
         </div>
       </div>
       <OrderRatioBadge
-        :take-profits-sum="profit"
-        :stop-loss-risk="risk"
+        :take-profits-sum="takeProfitsSum"
+        :stop-loss-risk="stopLossRisk"
       />
     </div>
     <div :class="$style.metrics">
@@ -51,39 +51,67 @@ import OrderRatioBadge from '@/components/app/orderRatioBadge/OrderRatioBadge.vu
 import { computed } from 'vue';
 import { useMarketStore } from '@/stores/market';
 import { storeToRefs } from 'pinia';
+import { compose } from '@/utils/fp';
+import { roundToDecimalPoint } from '@/helpers/number';
+import { reduceTakeProfitsToAmountOfProfit } from '@/helpers/math/formulas/takeProfit';
+import { injectOrderFormState } from '@/components/app/orderForm';
+import { calculateVolumeDifference } from '@/helpers/math/formulas/order';
 import { OrderFormEstimatesProps } from './index';
 
 const { t } = useI18n();
 
 const props = defineProps<OrderFormEstimatesProps>();
 
+const {
+  model,
+  stopLossPrice,
+  takeProfits,
+} = injectOrderFormState();
+
 const marketStore = useMarketStore();
 const {
   activePairData,
+  quoteCurrencyDecimals,
 } = storeToRefs(marketStore);
 
 const isRadioLabelIconVisible = computed(() => props.state === 'default');
 const isMetricsLabelVisible = computed(() => props.state === 'default');
 
+const takeProfitsSum = computed(() => compose(
+  roundToDecimalPoint(quoteCurrencyDecimals.value),
+  reduceTakeProfitsToAmountOfProfit,
+)(takeProfits.value));
+
 const profitDisplayValue = computed(() => t('order.takeProfit.profitValue', {
   profit:
     t('common.currencyAmount', {
-      amount: props.profit,
+      amount: takeProfitsSum.value,
       currency: activePairData.value?.quote,
     }),
 }));
 
+const stopLossRisk = computed(
+  () => compose(
+    roundToDecimalPoint(quoteCurrencyDecimals.value),
+    calculateVolumeDifference,
+  )(
+    model.quantity,
+    model.price,
+    stopLossPrice.value,
+  ),
+);
+
 const riskDisplayValue = computed(() => t('order.takeProfit.riskValue', {
   risk:
     t('common.currencyAmount', {
-      amount: props.risk,
+      amount: stopLossRisk.value,
       currency: activePairData.value?.quote,
     }),
 }));
 </script>
 
 <style lang="scss" module>
-@import "../../../../../assets/styles/utils";
+@import "src/assets/styles/utils";
 
 .orderFormRatio {
   width: 100%;

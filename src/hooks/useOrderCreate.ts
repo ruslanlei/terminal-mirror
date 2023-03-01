@@ -77,7 +77,6 @@ export const useOrderCreate = () => {
   const { resetModel } = useModelReset(model);
 
   const orderSide = computed(() => model.side);
-  const orderPrice = computed(() => model.price);
 
   const setPairPriceToModel = () => {
     model.price = currentPrice.value || 0;
@@ -108,13 +107,6 @@ export const useOrderCreate = () => {
   const takeProfitsAmount = ref(1);
 
   const takeProfits = ref<TakeProfit[]>([]);
-
-  const takeProfitsIncomeSum = computed(() => compose(
-    roundToDecimalPoint(quoteCurrencyDecimals.value),
-    reduceTakeProfitsToAmountOfProfit,
-  )(
-    takeProfits.value,
-  ));
 
   const EACH_TAKE_PROFIT_PERCENT_INCREASE = 0.5;
 
@@ -274,7 +266,6 @@ export const useOrderCreate = () => {
     validationSchema,
     isTakeProfitsEnabled,
     takeProfits,
-    takeProfitsIncomeSum,
     orderDirectionOptions,
     activePairData,
     quoteCurrencyDecimals,
@@ -288,7 +279,6 @@ export const useOrderCreate = () => {
     autoCalculateTakeProfits,
     isStopLossEnabled,
     stopLossPrice,
-    stopLossRisk,
     pledge,
     liquidationPrice,
     isLoading,

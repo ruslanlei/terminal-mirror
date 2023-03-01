@@ -34,11 +34,7 @@
       />
     </template>
     <template #ratio>
-      <OrderFormEstimates
-        :profit="takeProfitsIncomeSum"
-        :risk="stopLossRisk"
-        state="default"
-      />
+      <OrderFormEstimates state="default" />
     </template>
     <template #submit="{ buttonClass }">
       <Button
@@ -84,8 +80,6 @@ const {
   isTakeProfitsEnabled,
   maxTakeProfits,
   takeProfitsAmount,
-  takeProfitsIncomeSum,
-  stopLossRisk,
 } = injectOrderFormState();
 
 const onTakeProfitsAmountInput = () => {

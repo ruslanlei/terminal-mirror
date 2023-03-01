@@ -27,6 +27,7 @@ import { roundToDecimalPoint } from '@/helpers/number';
 import { useChartDataStore } from '@/stores/chartData';
 import { TakeProfit } from '@/api/types/order';
 import { arrayOf } from '@/utils/array';
+import { useEmulatorStore } from '@/stores/emulator';
 
 export interface OrderModel extends CreateOrderDTO {
   leverage: number,
@@ -47,6 +48,8 @@ export const useOrderCreate = () => {
     currentPrice,
     isFetchingCandles,
   } = storeToRefs(chartDataStore);
+
+  const emulatorStore = useEmulatorStore();
 
   const { t } = useI18n();
 
@@ -189,17 +192,6 @@ export const useOrderCreate = () => {
   };
   watch([orderSide], autoCalculateStopLoss, { immediate: true });
 
-  const stopLossRisk = computed(
-    () => compose(
-      roundToDecimalPoint(quoteCurrencyDecimals.value),
-      calculateVolumeDifference,
-    )(
-      model.quantity,
-      model.price,
-      stopLossPrice.value,
-    ),
-  );
-
   const pledge = computed(() => compose(
     roundToDecimalPoint(2),
     calculatePledge,
@@ -218,6 +210,7 @@ export const useOrderCreate = () => {
         model.price,
         model.quantity,
         model.leverage,
+        emulatorStore.balance,
       )
       : 0));
 

@@ -14,7 +14,8 @@ import { useModelReset } from '@/hooks/useModelReset';
 import {
   spreadOrderQuantityBetweenTakeProfits,
   mapTakeProfitPricesByIncreasePercent,
-  reduceTakeProfitsToAmountOfProfitAndRound, mapTakeProfitPricesByDecreasePercent,
+  mapTakeProfitPricesByDecreasePercent,
+  reduceTakeProfitsToAmountOfProfit,
 } from '@/helpers/math/formulas/takeProfit';
 import { compose } from '@/utils/fp';
 import { addPercents, subtractPercents } from '@/helpers/math/percents';
@@ -108,8 +109,10 @@ export const useOrderCreate = () => {
 
   const takeProfits = ref<TakeProfit[]>([]);
 
-  const takeProfitsIncomeSum = computed(() => reduceTakeProfitsToAmountOfProfitAndRound(
-    quoteCurrencyDecimals.value,
+  const takeProfitsIncomeSum = computed(() => compose(
+    roundToDecimalPoint(quoteCurrencyDecimals.value),
+    reduceTakeProfitsToAmountOfProfit,
+  )(
     takeProfits.value,
   ));
 
@@ -176,7 +179,7 @@ export const useOrderCreate = () => {
   };
   autoCalculateTakeProfits();
 
-  // <-- stop loss
+  // stop loss
   const isStopLossEnabled = ref(true);
 
   const stopLossPrice = ref(0);

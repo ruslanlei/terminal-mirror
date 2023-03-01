@@ -34,14 +34,6 @@ export const reduceTakeProfitsToQuantitiesSum = (
   takeProfits,
 );
 
-export const reduceTakeProfitsToAmountOfProfitAndRound = curry((
-  decimals: number,
-  takeProfits: TakeProfit[],
-) => compose(
-  roundToDecimalPoint(decimals),
-  reduceTakeProfitsToAmountOfProfit,
-)(takeProfits));
-
 export const mapTakeProfitPricesByIncreasePercent = curry((
   percentOfIncrease: number,
   orderPrice: number,

@@ -75,6 +75,8 @@ export const useOrderCreate = () => {
   });
   const { resetModel } = useModelReset(model);
 
+  const orderSide = computed(() => model.side);
+
   const setPairPriceToModel = () => {
     model.price = currentPrice.value || 0;
   };
@@ -255,6 +257,7 @@ export const useOrderCreate = () => {
 
   return {
     model,
+    orderSide,
     validationSchema,
     isTakeProfitsEnabled,
     takeProfits,

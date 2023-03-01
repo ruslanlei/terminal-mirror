@@ -30,6 +30,7 @@
         :order-quantity="model.quantity"
         :base-currency-decimals="baseCurrencyDecimals"
         :base-currency-step="baseCurrencyStep"
+        :order-side="orderSide"
       />
     </template>
     <template #ratio>
@@ -78,6 +79,7 @@ const {
 
 const {
   model,
+  orderSide,
   takeProfits,
   isTakeProfitsEnabled,
   maxTakeProfits,

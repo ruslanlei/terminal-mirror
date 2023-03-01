@@ -94,28 +94,23 @@ const onQuantityInput = () => {
 const percentOfProfitValue = computed({
   get: () => compose(
     roundToDecimalPoint(2),
-    calculateIncreasePercent(props.orderPrice),
+    // FIXME
+    (props.orderSide === 'buy'
+      ? calculateIncreasePercent
+      : calculateDecreasePercent
+    )(props.orderPrice),
   )(localPrice.value),
   set: (percentValue: number) => {
     localPrice.value = compose(
       roundToDecimalPoint(2),
-      addPercents(props.orderPrice),
+      // FIXME
+      (props.orderSide === 'buy'
+        ? addPercents
+        : subtractPercents
+      )(props.orderPrice),
     )(percentValue);
   },
 });
-
-// const percentOfProfitValue = computed({
-//   get: () => compose(
-//     roundToDecimalPoint(2),
-//     calculateDecreasePercent(props.orderPrice),
-//   )(localPrice.value),
-//   set: (percentValue: number) => {
-//     localPrice.value = compose(
-//       roundToDecimalPoint(2),
-//       subtractPercents(props.orderPrice),
-//     )(percentValue);
-//   },
-// });
 
 const percentOfOrderQuantity = computed(() => props.orderQuantity / 100);
 

@@ -11,6 +11,7 @@
         :step="0.001"
         save-on="blur"
         :append-min-width="35"
+        tab-index="0"
       >
         <template #append>
           {{ activePairData?.quote }}
@@ -32,6 +33,7 @@
         save-on="blur"
         :show-error-icon="false"
         :append-min-width="35"
+        tab-index="0"
       >
         <template #append>
           {{ activePairData?.base }}
@@ -53,6 +55,7 @@
         :price="price"
         save-on="blur"
         :append-min-width="35"
+        tab-index="0"
       >
         <template #quoteCurrency>
           {{ activePairData?.quote }}
@@ -84,6 +87,7 @@
         type="number"
         :min="1"
         :max="20"
+        save-on="blur"
       />
     </template>
     <template #leverageLiquidationPrice>

@@ -326,16 +326,27 @@ export const useMarketStore = defineStore('market', () => {
     return response;
   };
 
-  const removeOrder = (
+  const removeOrder = async (
     order: Order,
   ) => {
     const isOrderFilled = order.status === 'filled';
 
-    return (
+    const { result, data } = await (
       isOrderFilled
         ? handleCloseOrder
         : handleDeleteOrder
     )(order.id);
+
+    if (result) {
+      toastStore.showSuccess({
+        text: t('order.successfullyClosed', {
+          pair: pairsMap.value?.[order.pair]?.alias,
+        }),
+        duration: 7000,
+      });
+    } else {
+      processServerErrors(data);
+    }
   };
 
   const showRemoveOrderModal = (

@@ -280,10 +280,6 @@ export const useOrdersList = (
   const deleteOrder = async (
     order: Order,
   ) => {
-    if (emulatorStore.isPlaying) {
-      emulatorStore.turnOffPlayer();
-    }
-
     isDeletingOrder.value = true;
     await marketStore.removeOrder(order);
     isDeletingOrder.value = false;
@@ -299,6 +295,9 @@ export const useOrdersList = (
   const onRecordClick = (
     record: ActiveOrdersTableRecord | ClosedOrdersTableRecord,
   ) => {
+    if (emulatorStore.isPlaying) {
+      emulatorStore.turnOffPlayer();
+    }
     marketStore.setPair(record.data.pair.id);
   };
 

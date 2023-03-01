@@ -201,7 +201,8 @@
     "failedToCreateTakeProfits": "Failed to create one or more TPs",
     "failedToCreateStopLoss": "Failed to create SL",
     "successfullyCreated": "Order(s) has been successfully created",
-    "failedToGetList": "Failed to get list of orders"
+    "failedToGetList": "Failed to get list of orders",
+    "successfullyClosed": "Order for pair {pair} successfully closed"
   },
   "deleteOrder": {
     "label": "Are you sure you want close position?",

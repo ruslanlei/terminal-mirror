@@ -1,4 +1,4 @@
-import { computed, ref } from 'vue';
+import { computed, nextTick, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { defineStore } from 'pinia';
 import { useStorage } from '@vueuse/core';
@@ -69,8 +69,12 @@ export const useMarketStore = defineStore('market', () => {
 
   const activePair = useStorage<PairData['id']>('activePair', 1);
 
-  const setPair = (pairId: PairData['id']) => {
+  const isSettingPair = ref(false);
+  const setPair = async (pairId: PairData['id']) => {
+    isSettingPair.value = true;
     activePair.value = pairId;
+    await nextTick();
+    isSettingPair.value = false;
   };
 
   const activePairData = computed<PairData | undefined>(
@@ -375,6 +379,7 @@ export const useMarketStore = defineStore('market', () => {
     pairsMap,
     marketType,
     activePair,
+    isSettingPair,
     setPair,
     quoteCurrencyDecimals,
     baseCurrencyDecimals,

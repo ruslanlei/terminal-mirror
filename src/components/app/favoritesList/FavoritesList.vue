@@ -9,7 +9,7 @@
       </Typography>
     </header>
     <Selector
-      v-model="marketStore.activePair"
+      v-model="localActivePair"
       :thickening="0"
       :state="['vertical', 'blueGlassVerticalRight', 'specialFavoritesSize']"
       :options="options"
@@ -62,6 +62,15 @@ const close = () => {
 const { t } = useI18n();
 
 const marketStore = useMarketStore();
+
+const localActivePair = computed({
+  get: () => marketStore.activePair,
+  set: (
+    pairId: PairData['id'],
+  ) => {
+    marketStore.setPair(pairId);
+  },
+});
 
 const chartDataStore = useChartDataStore();
 

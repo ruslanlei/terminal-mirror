@@ -68,7 +68,11 @@ export const useMarketChart = () => {
       dateTo.value,
     );
   };
-  watch([activePair, marketType], fetchCandles, { immediate: true });
+  watch([activePair, marketType], async () => {
+    if (chartDataStore.checkIsDataExistByPairId(activePair.value)) return;
+
+    await fetchCandles();
+  }, { immediate: true });
 
   const computedCandles = computed(() => transformCandlesForChart(candles.value));
 

@@ -66,6 +66,10 @@ export const useChartDataStore = defineStore('chartData', () => {
     getLastElement,
   )(candlesMap.value?.[pairId]);
 
+  const checkIsDataExistByPairId = (
+    pairId: PairData['id'],
+  ) => !!candlesMap.value?.[pairId];
+
   const get24HoursPercentChangeByPairId = (
     pairId: PairData['id'],
   ) => {
@@ -147,6 +151,7 @@ export const useChartDataStore = defineStore('chartData', () => {
     candles,
     appendCandles,
     getCurrentPriceByPairId,
+    checkIsDataExistByPairId,
     get24HoursPercentChangeByPairId,
     isFetchingCandles,
     getCandles: handleGetCandles,

@@ -116,6 +116,7 @@ import {
   calculateVolumeDifference,
 } from '@/helpers/math/formulas/order';
 import {
+  addPercents,
   calculatePercentOfDifference,
   subtractPercents,
 } from '@/helpers/math/percents';
@@ -148,6 +149,7 @@ const {
 
 const {
   model,
+  orderSide,
   stopLossPrice,
   isStopLossEnabled,
   takeProfitsIncomeSum,
@@ -155,21 +157,6 @@ const {
 } = injectOrderFormState();
 
 const isDependentFieldsDisabled = computed(() => !model.quantity);
-
-const percentOfOrderPrice = computed({
-  get: () => compose(
-    roundToDecimalPoint(2),
-    toAbsolute,
-    calculatePercentOfDifference,
-  )(model.price, stopLossPrice.value),
-
-  set: (percent: number) => {
-    stopLossPrice.value = compose(
-      roundToDecimalPoint(quoteCurrencyDecimals.value),
-      subtractPercents,
-    )(model.price, percent);
-  },
-});
 
 const amountOfRisk = computed({
   get: () => compose(
@@ -190,6 +177,23 @@ const amountOfRisk = computed({
       model.quantity,
       amountOfRisk,
     );
+  },
+});
+
+const percentOfOrderPrice = computed({
+  get: () => compose(
+    roundToDecimalPoint(2),
+    toAbsolute,
+    calculatePercentOfDifference,
+  )(model.price, stopLossPrice.value),
+
+  set: (percent: number) => {
+    stopLossPrice.value = compose(
+      roundToDecimalPoint(quoteCurrencyDecimals.value),
+      (orderSide.value === 'buy'
+        ? subtractPercents
+        : addPercents),
+    )(model.price, percent);
   },
 });
 

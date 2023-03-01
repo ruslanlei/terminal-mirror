@@ -147,13 +147,17 @@ export const useOrderCreate = () => {
   );
 
   const initTakeProfits = (
+    orderSide: 'buy' | 'sell',
     percentOfIncrease: number,
     orderPrice: number,
     orderQuantity: number,
     amount: number,
   ) => compose(
     spreadOrderQuantityBetweenTakeProfits(orderQuantity),
-    mapTakeProfitPricesByIncreasePercent(percentOfIncrease, orderPrice),
+    (orderSide === 'buy'
+      ? mapTakeProfitPricesByIncreasePercent
+      : mapTakeProfitPricesByDecreasePercent
+    )(percentOfIncrease, orderPrice),
     arrayOf(() => ({
       price: 0,
       quantity: 0,
@@ -162,6 +166,7 @@ export const useOrderCreate = () => {
 
   const autoCalculateTakeProfits = () => {
     takeProfits.value = initTakeProfits(
+      orderSide.value,
       EACH_TAKE_PROFIT_PERCENT_INCREASE,
       model.price,
       model.quantity,

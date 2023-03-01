@@ -24,13 +24,20 @@
     </div>
     <div :class="$style.mainContent">
       <CoinLogo :coin="pairData.base" />
-      <Badge
-        :state="computedBadgeState"
-        size="xs"
-        :class="$style.pnlBadge"
-      >
-        {{ displayPercentChange }}
-      </Badge>
+      <transition name="favoritesListChangeTransition">
+        <Badge
+          v-if="props.last24HoursPercentChange !== null"
+          :state="[
+            isPositive(props.last24HoursPercentChange)
+              ? 'success'
+              : 'danger'
+          ]"
+          size="xs"
+          :class="$style.pnlBadge"
+        >
+          {{ displayPercentChange }}
+        </Badge>
+      </transition>
     </div>
   </div>
 </template>
@@ -51,16 +58,6 @@ const props = defineProps<FavoritesListItemProps>();
 const displayPercentChange = computed(
   () => humanizePercents(props.last24HoursPercentChange || 0),
 );
-
-const computedBadgeState = computed(() => [
-  props.last24HoursPercentChange === null
-    ? 'default'
-    : (
-      isPositive(props.last24HoursPercentChange)
-        ? 'success'
-        : 'danger'
-    ),
-]);
 </script>
 
 <style lang="scss" module>
@@ -87,7 +84,6 @@ const computedBadgeState = computed(() => [
 .mainContent {
   padding: 10px 5px;
   display: flex;
-  justify-content: center;
   gap: 10px;
   transition: 200ms opacity;
 }
@@ -115,5 +111,20 @@ const computedBadgeState = computed(() => [
 
 .pnlBadge {
   color: rgb(var(--color-accent-1));
+}
+</style>
+
+<style lang="scss">
+.favoritesListChangeTransition {
+  &-enter-active,
+  &-leave-active {
+    transition: opacity 200ms, transform 200ms;
+  }
+
+  &-enter-from,
+  &-leave-to {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
 }
 </style>

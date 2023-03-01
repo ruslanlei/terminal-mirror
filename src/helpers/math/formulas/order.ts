@@ -58,15 +58,19 @@ export const calculateLiquidationPrice = curry((
   quantity: number,
   leverage: number,
   balance: number,
-) => {
-  const volume = multiply(price, quantity);
-
-  return compose(
+) => compose(
+  divideRight(quantity),
+  subtractRight(
     subtractRight(
-      divideRight(quantity, balance),
+      calculatePledge(
+        price,
+        quantity,
+        leverage,
+      ),
+      balance,
     ),
-    subtractRight(
-      divideRight(leverage, volume),
-    ),
-  )(volume);
-});
+  ),
+  subtractRight(
+    divideRight(leverage, price),
+  ),
+)(price));

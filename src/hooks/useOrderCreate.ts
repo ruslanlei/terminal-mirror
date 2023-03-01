@@ -76,7 +76,12 @@ export const useOrderCreate = () => {
     price: 0,
     leverage: 1,
   });
-  const { resetModel } = useModelReset(model);
+  const { resetModel: resetModelToInitialValue } = useModelReset(model);
+
+  const resetModel = () => {
+    resetModelToInitialValue();
+    model.price = chartDataStore.currentPrice || 0;
+  };
 
   const orderSide = computed(() => model.side);
 

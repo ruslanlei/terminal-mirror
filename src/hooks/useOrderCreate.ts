@@ -197,6 +197,16 @@ export const useOrderCreate = () => {
   };
   watch([orderSide], autoCalculateStopLoss, { immediate: true });
 
+  watch(() => model.price, () => {
+    const needRecalculate = model.side === 'buy'
+      ? (model.price < stopLossPrice.value)
+      : (model.price > stopLossPrice.value);
+
+    if (!needRecalculate) return;
+
+    autoCalculateStopLoss();
+  });
+
   const pledge = computed(() => compose(
     roundToDecimalPoint(2),
     calculatePledge,

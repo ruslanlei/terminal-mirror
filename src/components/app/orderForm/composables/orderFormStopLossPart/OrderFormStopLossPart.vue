@@ -98,25 +98,31 @@ import {
   computed,
 } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { storeToRefs } from 'pinia';
 import OrderFormStopLossPartContainer
   from '@/containers/orderFormStopLossPartContainer/OrderFormStopLossPartContainer.vue';
 import Switch from '@/components/core/switch/Switch.vue';
 import NumberInput from '@/components/core/numberInput/NumberInput.vue';
 import OrderFormEstimates from '@/components/app/orderForm/composables/orderFormEstimates/OrderFormEstimates.vue';
 import Button from '@/components/core/button/Button.vue';
+import { useMarketStore } from '@/stores/market';
+import { compose } from '@/utils/fp';
+import { toAbsolute } from '@/utils/number';
+import { useEmulatorStore } from '@/stores/emulator';
+import { injectOrderFormState } from '@/components/app/orderForm';
+import { roundToDecimalPoint } from '@/helpers/number';
 import {
   calculateOriginalPriceByVolumeDifference,
   calculateVolumeDifference,
 } from '@/helpers/math/formulas/order';
-import { roundToDecimalPoint } from '@/helpers/number';
-import { compose } from '@/utils/fp';
-import { calculatePercentOfDifference, decreaseByPercent } from '@/helpers/math/percents';
-import { calculatePriceByPercentOfDeposit, calculateVolumeDifferenceInPercentsOfDeposit } from '@/helpers/math/formulas/stopLoss';
-import { useMarketStore } from '@/stores/market';
-import { storeToRefs } from 'pinia';
-import { useEmulatorStore } from '@/stores/emulator';
-import { toAbsolute } from '@/utils/number';
-import { injectOrderFormState } from '@/components/app/orderForm';
+import {
+  calculatePercentOfDifference,
+  subtractPercents,
+} from '@/helpers/math/percents';
+import {
+  calculatePriceByPercentOfDeposit,
+  calculateVolumeDifferenceInPercentsOfDeposit,
+} from '@/helpers/math/formulas/stopLoss';
 import { OrderFormStopLossPartEmits } from './index';
 
 const { t } = useI18n();
@@ -160,7 +166,7 @@ const percentOfOrderPrice = computed({
   set: (percent: number) => {
     stopLossPrice.value = compose(
       roundToDecimalPoint(quoteCurrencyDecimals.value),
-      decreaseByPercent,
+      subtractPercents,
     )(model.price, percent);
   },
 });

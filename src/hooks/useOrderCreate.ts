@@ -17,7 +17,7 @@ import {
   reduceTakeProfitsToAmountOfProfitAndRound, mapTakeProfitPricesByDecreasePercent,
 } from '@/helpers/math/formulas/takeProfit';
 import { compose } from '@/utils/fp';
-import { decreaseByPercent } from '@/helpers/math/percents';
+import { addPercents, subtractPercents } from '@/helpers/math/percents';
 import {
   calculateLiquidationPrice,
   calculatePledge,
@@ -76,6 +76,7 @@ export const useOrderCreate = () => {
   const { resetModel } = useModelReset(model);
 
   const orderSide = computed(() => model.side);
+  const orderPrice = computed(() => model.price);
 
   const setPairPriceToModel = () => {
     model.price = currentPrice.value || 0;
@@ -183,12 +184,16 @@ export const useOrderCreate = () => {
   const STOP_LOSS_DEFAULT_PERCENT = 10;
 
   const autoCalculateStopLoss = () => {
-    stopLossPrice.value = decreaseByPercent(
+    stopLossPrice.value = (
+      orderSide.value === 'buy'
+        ? subtractPercents
+        : addPercents
+    )(
       model.price,
       STOP_LOSS_DEFAULT_PERCENT,
     );
   };
-  autoCalculateStopLoss();
+  watch([orderSide], autoCalculateStopLoss, { immediate: true });
 
   const stopLossRisk = computed(
     () => compose(

@@ -104,7 +104,6 @@ import Switch from '@/components/core/switch/Switch.vue';
 import NumberInput from '@/components/core/numberInput/NumberInput.vue';
 import OrderFormEstimates from '@/components/app/orderForm/composables/orderFormEstimates/OrderFormEstimates.vue';
 import Button from '@/components/core/button/Button.vue';
-import { useOrderFormInject } from '@/hooks/useOrderFormInject';
 import {
   calculateOriginalPriceByVolumeDifference,
   calculateVolumeDifference,
@@ -117,6 +116,7 @@ import { useMarketStore } from '@/stores/market';
 import { storeToRefs } from 'pinia';
 import { useEmulatorStore } from '@/stores/emulator';
 import { toAbsolute } from '@/utils/number';
+import { injectOrderFormState } from '@/components/app/orderForm';
 import { OrderFormStopLossPartEmits } from './index';
 
 const { t } = useI18n();
@@ -146,7 +146,7 @@ const {
   isStopLossEnabled,
   takeProfitsIncomeSum,
   stopLossRisk,
-} = useOrderFormInject();
+} = injectOrderFormState();
 
 const isDependentFieldsDisabled = computed(() => !model.quantity);
 

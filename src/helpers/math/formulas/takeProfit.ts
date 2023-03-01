@@ -8,7 +8,7 @@ import {
   divide,
   divideRight,
   multiply,
-  roundToDecimalPoint,
+  roundToDecimalPoint, subtract,
   subtractRight,
 } from '@/helpers/number';
 import { calculateOnePercent } from '@/helpers/math/percents';
@@ -52,6 +52,23 @@ export const mapTakeProfitPricesByIncreasePercent = curry((
     ...takeProfit,
     price: compose(
       add(orderPrice),
+      multiply(calculateOnePercent(orderPrice)),
+      multiply(percentOfIncrease),
+      add(1),
+    )(index),
+  }),
+));
+
+export const mapTakeProfitPricesByDecreasePercent = curry((
+  percentOfIncrease: number,
+  orderPrice: number,
+  takeProfits: TakeProfit[],
+) => map(
+  takeProfits,
+  (takeProfit: TakeProfit, index: number) => ({
+    ...takeProfit,
+    price: compose(
+      subtract(orderPrice),
       multiply(calculateOnePercent(orderPrice)),
       multiply(percentOfIncrease),
       add(1),

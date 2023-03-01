@@ -61,9 +61,9 @@ import Button from '@/components/core/button/Button.vue';
 import TakeProfitList from '@/components/app/takeProfitList/TakeProfitList.vue';
 import NumberInput from '@/components/core/numberInput/NumberInput.vue';
 import OrderFormEstimates from '@/components/app/orderForm/composables/orderFormEstimates/OrderFormEstimates.vue';
-import { useOrderFormInject } from '@/hooks/useOrderFormInject';
 import { useMarketStore } from '@/stores/market';
 import { storeToRefs } from 'pinia';
+import { injectOrderFormState } from '@/components/app/orderForm';
 import { OrderFormTakeProfitPartEmits } from './index';
 
 const emit = defineEmits<OrderFormTakeProfitPartEmits>();
@@ -84,7 +84,7 @@ const {
   takeProfitsAmount,
   takeProfitsIncomeSum,
   stopLossRisk,
-} = useOrderFormInject();
+} = injectOrderFormState();
 
 const onTakeProfitsAmountInput = () => {
   emit('takeProfitsAmountInput');

@@ -66,6 +66,14 @@ export const calculateIncreasePercent = curry((
   subtractRight(total),
 )(value));
 
+export const calculateDecreasePercent = curry((
+  total: number,
+  value: number,
+) => compose(
+  divideRight(calculateOnePercent(total)),
+  subtract(total),
+)(value));
+
 export const decreaseByPercent = curry((
   total: number,
   percent: number,
@@ -79,6 +87,14 @@ export const addPercents = curry((
   percentValue: number,
 ) => compose(
   add(total),
+  multiply(calculateOnePercent(total)),
+)(percentValue));
+
+export const subtractPercents = curry((
+  total: number,
+  percentValue: number,
+) => compose(
+  subtract(total),
   multiply(calculateOnePercent(total)),
 )(percentValue));
 

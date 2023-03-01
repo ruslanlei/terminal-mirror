@@ -14,7 +14,7 @@ import { useModelReset } from '@/hooks/useModelReset';
 import {
   spreadOrderQuantityBetweenTakeProfits,
   mapTakeProfitPricesByIncreasePercent,
-  reduceTakeProfitsToAmountOfProfitAndRound,
+  reduceTakeProfitsToAmountOfProfitAndRound, mapTakeProfitPricesByDecreasePercent,
 } from '@/helpers/math/formulas/takeProfit';
 import { compose } from '@/utils/fp';
 import { decreaseByPercent } from '@/helpers/math/percents';
@@ -96,7 +96,7 @@ export const useOrderCreate = () => {
     leverage: number().min(1).max(20),
   });
 
-  // <-- take profits
+  // take profits
   const isTakeProfitsEnabled = ref<boolean>(true);
 
   const maxTakeProfits = 20;
@@ -113,14 +113,21 @@ export const useOrderCreate = () => {
   const EACH_TAKE_PROFIT_PERCENT_INCREASE = 0.5;
 
   const autoCalculateTakeProfitPrices = () => {
-    takeProfits.value = mapTakeProfitPricesByIncreasePercent(
+    takeProfits.value = (
+      model.side === 'buy'
+        ? mapTakeProfitPricesByIncreasePercent
+        : mapTakeProfitPricesByDecreasePercent
+    )(
       EACH_TAKE_PROFIT_PERCENT_INCREASE,
       model.price,
       takeProfits.value,
     );
   };
   watch(
-    () => model.price,
+    [
+      () => model.price,
+      () => model.side,
+    ],
     autoCalculateTakeProfitPrices,
     { deep: true },
   );
@@ -208,7 +215,7 @@ export const useOrderCreate = () => {
       )
       : 0));
 
-  // <-- submit
+  // submit
   const isLoading = ref(false);
 
   const handleSubmit = async () => {
@@ -228,7 +235,6 @@ export const useOrderCreate = () => {
       resetModel();
     }
   };
-  // submit -->
 
   watch(activePair, () => {
     if (isFetchingCandles.value) {

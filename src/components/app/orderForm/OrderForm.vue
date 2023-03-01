@@ -112,28 +112,22 @@ const openTab = (tab: OrderFormTab) => {
   settingsActiveTab.value = tab;
 };
 
+const orderCreateState = useOrderCreate();
 const {
   model,
   validationSchema,
   orderDirectionOptions,
-  takeProfits,
-  takeProfitsIncomeSum,
   isTakeProfitsEnabled,
   activePairData,
   baseCurrencyStep,
   price,
   leverage,
   autoCalculateTakeProfits,
-  maxTakeProfits,
-  takeProfitsAmount,
   isStopLossEnabled,
-  stopLossPrice,
-  stopLossRisk,
-  pledge,
-  liquidationPrice,
   isLoading,
   handleSubmit,
-} = useOrderCreate();
+} = orderCreateState;
+provide(OrderFormInjectionKey, orderCreateState);
 
 const settingsTabs = computed<Tab<OrderFormTab>[]>(() => [
   {
@@ -161,22 +155,6 @@ const settingsTabs = computed<Tab<OrderFormTab>[]>(() => [
     value: 'slx',
   },
 ]);
-
-provide(OrderFormInjectionKey, {
-  model,
-  takeProfits,
-  takeProfitsIncomeSum,
-  isTakeProfitsEnabled,
-  leverage,
-  price,
-  maxTakeProfits,
-  takeProfitsAmount,
-  isStopLossEnabled,
-  stopLossPrice,
-  stopLossRisk,
-  pledge,
-  liquidationPrice,
-});
 </script>
 
 <style lang="scss" module>

@@ -77,6 +77,8 @@ export const useMarketStore = defineStore('market', () => {
     isSettingPair.value = false;
   };
 
+  const getPairData = (pairId: PairData['id']) => pairsMap.value?.[pairId] || null;
+
   const activePairData = computed<PairData | undefined>(
     () => pairsMap.value[activePair.value],
   );
@@ -381,6 +383,7 @@ export const useMarketStore = defineStore('market', () => {
     activePair,
     isSettingPair,
     setPair,
+    getPairData,
     quoteCurrencyDecimals,
     baseCurrencyDecimals,
     baseCurrencyStep,

@@ -9,6 +9,7 @@
         <ModalLayer :class="$style.modalLayer" />
         <ToastLayer :class="$style.toastLayer" />
         <LevitatingLayer :class="$style.levitatingLayer" />
+        <OrderEventsToastLayer :class="$style.orderEventsToastLayer" />
         <IconsMap />
         <CoinLogoMap />
       </div>
@@ -24,6 +25,7 @@ import LevitatingLayer from '@/components/app/leviatingLayer/LevitatingLayer.vue
 import IconsMap from '@/components/core/icon/IconsMap.vue';
 import CoinLogoMap from '@/components/core/coinLogo/CoinLogoMap.vue';
 import AppPreloader from '@/components/app/appPreloader/AppPreloader.vue';
+import OrderEventsToastLayer from '@/components/app/orderEventsToastLayer/OrderEventsToastLayer.vue';
 
 import { useApp } from '@/hooks/useApp';
 
@@ -57,6 +59,12 @@ const { isPreparing } = useApp();
   position: fixed;
   inset: 0;
   z-index: 5000;
+}
+
+.orderEventsToastLayer {
+  position: fixed;
+  inset: 0;
+  z-index: 6000;
 }
 
 .debugPanel {

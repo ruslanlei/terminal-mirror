@@ -210,6 +210,14 @@
     "failedToGetList": "Failed to get list of orders",
     "successfullyClosed": "Order for pair {pair} successfully closed"
   },
+  "orderExecuted": {
+    "label": "Order",
+    "coin": "Coin: {name}",
+    "volume": "Volume: {value}",
+    "status": {
+      "executed": "Executed"
+    }
+  },
   "deleteOrder": {
     "label": "Are you sure you want close position?",
     "pnl": "by PNL of position {pnl}"

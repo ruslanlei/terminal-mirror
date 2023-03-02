@@ -7,7 +7,7 @@ import {
 import { defineStore, storeToRefs } from 'pinia';
 import { useStorage } from '@vueuse/core';
 import { useMarketStore } from '@/stores/market';
-import { simulate, SimulateDTO } from '@/api/endpoints/emulator/simulate';
+import { simulate } from '@/api/endpoints/emulator/simulate';
 import { compose, curry } from '@/utils/fp';
 import {
   addDays,

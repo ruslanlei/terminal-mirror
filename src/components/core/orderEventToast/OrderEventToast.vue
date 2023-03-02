@@ -81,9 +81,17 @@ import { computed } from 'vue';
 import { useMarketStore } from '@/stores/market';
 import CoinLogo from '@/components/core/coinLogo/CoinLogo.vue';
 import { multiply } from '@/helpers/number';
-import { OrderEventToastProps } from './index';
+import { OrderEventToastEmits, OrderEventToastProps } from './index';
 
 const props = defineProps<OrderEventToastProps>();
+
+const emit = defineEmits<OrderEventToastEmits>();
+
+const close = () => {
+  emit('close');
+};
+
+setTimeout(close, 7000);
 
 const { t } = useI18n();
 

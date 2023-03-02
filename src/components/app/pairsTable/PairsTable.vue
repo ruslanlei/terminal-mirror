@@ -159,7 +159,7 @@ const columns = computed<PairsTableColumn[]>(() => [
   {
     label: '',
     slug: 'last24HoursPercentChange',
-    size: 1,
+    size: '80px',
     align: 'right',
   },
 ]);

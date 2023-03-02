@@ -2,10 +2,12 @@
   <div :class="$style.orderEventsToastLayer">
     <div
       v-for="order in orders"
+      :id="collectOrderToastWrapperId(order.id)"
       :key="order.id"
       :class="$style.toastWrapper"
     >
       <OrderEventToast
+        :id="collectOrderToastId(order.id)"
         :order="order"
         @close="removeOrder(order.id)"
       />
@@ -14,27 +16,95 @@
 </template>
 
 <script setup lang="ts">
+import { nextTick, onBeforeUnmount, ref } from 'vue';
 import OrderEventToast from '@/components/core/orderEventToast/OrderEventToast.vue';
 import { useEmulatorStore } from '@/stores/emulator';
-import { onBeforeUnmount, ref } from 'vue';
 import { Order } from '@/api/types/order';
 import { findAndDelete } from '@/helpers/array';
+import { collectOrderToastId, collectOrderToastWrapperId } from '@/components/app/orderEventsToastLayer/index';
+import { playAnimation } from '@/utils/animation';
+import { toCssPixelValue, toIdSelector } from '@/utils/dom';
+import { compose } from '@/utils/fp';
+import { addCssProperty, getRect } from '@/helpers/style';
+import { roundToDecimalPoint } from '@/helpers/number';
 
 const emulatorStore = useEmulatorStore();
 
 const orders = ref<Order[]>([]);
 
-const removeOrder = (
+const HIDE_ANIMATION_DURATION = 420;
+
+const hideOrder = async (orderId: Order['id']) => {
+  const toastWrapper = document.getElementById(collectOrderToastWrapperId(orderId));
+
+  if (!toastWrapper || !toastWrapper?.firstChild) return;
+
+  const toast = toastWrapper.firstChild as HTMLElement;
+
+  const toastRect = getRect(toast);
+
+  compose(
+    addCssProperty(['zIndex', 2]),
+    addCssProperty([
+      'width',
+      compose(
+        toCssPixelValue,
+        roundToDecimalPoint(2),
+      )(toastRect.width),
+    ]),
+    addCssProperty([
+      'height',
+      compose(
+        toCssPixelValue,
+        roundToDecimalPoint(2),
+      )(toastRect.height),
+    ]),
+  )(toastWrapper);
+
+  addCssProperty(['position', 'absolute'], toast);
+
+  playAnimation({
+    targets: toast,
+    scale: [1, 0.5],
+    translateY: [0, 50],
+    easing: 'easeInOutQuart',
+    duration: HIDE_ANIMATION_DURATION,
+  });
+
+  await playAnimation({
+    targets: toastWrapper,
+    opacity: 0,
+    height: 0,
+    marginTop: 0,
+    easing: 'easeInOutQuart',
+    duration: HIDE_ANIMATION_DURATION,
+  });
+};
+
+const removeOrder = async (
   orderId: Order['id'],
 ) => {
+  await hideOrder(orderId);
   findAndDelete(
     (iterableOrder: Order) => iterableOrder.id === orderId,
     orders.value,
   );
 };
 
-const unsubscribeSimulateEvent = emulatorStore.subscribeSimulateEvent((order: Order) => {
+const unsubscribeSimulateEvent = emulatorStore.subscribeSimulateEvent(async (order: Order) => {
   orders.value.push(order);
+  await nextTick();
+
+  const selector = compose(
+    toIdSelector,
+    collectOrderToastId,
+  )(order.id);
+
+  await playAnimation({
+    targets: selector,
+    translateY: [-90, 0],
+    duration: 700,
+  });
 });
 
 onBeforeUnmount(unsubscribeSimulateEvent);
@@ -43,12 +113,11 @@ onBeforeUnmount(unsubscribeSimulateEvent);
 <style lang="scss" module>
 .orderEventsToastLayer {
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   align-items: flex-start;
-  justify-content: flex-end;
-  padding: 12px 20px;
+  justify-content: flex-start;
+  padding: 20px;
   pointer-events: none;
-  gap: 20px;
   * {
     pointer-events: all;
   }
@@ -57,5 +126,13 @@ onBeforeUnmount(unsubscribeSimulateEvent);
 .toastWrapper {
   width: 100%;
   max-width: 344px;
+  position: relative;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  & > * {
+    width: 100%;
+  }
 }
 </style>

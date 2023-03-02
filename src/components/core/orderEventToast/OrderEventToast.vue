@@ -11,6 +11,7 @@
         :state="null"
         :size="null"
         :is-wide="false"
+        @click="close"
       >
         <Typography state="accent2">
           <Icon icon="cross" />
@@ -80,7 +81,8 @@ import Button from '@/components/core/button/Button.vue';
 import { computed } from 'vue';
 import { useMarketStore } from '@/stores/market';
 import CoinLogo from '@/components/core/coinLogo/CoinLogo.vue';
-import { multiply } from '@/helpers/number';
+import { multiply, roundToDecimalPoint } from '@/helpers/number';
+import { compose } from '@/utils/fp';
 import { OrderEventToastEmits, OrderEventToastProps } from './index';
 
 const props = defineProps<OrderEventToastProps>();
@@ -99,7 +101,10 @@ const marketStore = useMarketStore();
 
 const pairData = computed(() => marketStore.getPairData(props.order.pair));
 
-const quoteCurrencyAmount = computed(() => multiply(props.order.quantity, props.order.price));
+const quoteCurrencyAmount = computed(() => compose(
+  roundToDecimalPoint(2),
+  multiply,
+)(props.order.quantity, props.order.price));
 </script>
 
 <style lang="scss" module>

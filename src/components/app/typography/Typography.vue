@@ -23,11 +23,11 @@ const props = withDefaults(
   {
     isInline: false,
     state: () => [],
-    size: () => [],
+    size: () => null,
   },
 );
 
-const ComputedComponent = computed(() => (props.isInline ? 'span' : 'div'));
+const ComputedComponent = computed(() => (props.isInline ? 'span' : 'p'));
 
 const computedState = useComputedState(props);
 </script>
@@ -35,7 +35,20 @@ const computedState = useComputedState(props);
 <style lang="scss" module>
 @import "src/assets/styles/utils";
 
-.typography {}
+.typography {
+}
+
+.massive1 {
+  @include massive1;
+}
+
+.massive2 {
+  @include massive2;
+}
+
+.massive3 {
+  @include massive3;
+}
 
 .h1 {
   @include h1;
@@ -97,6 +110,12 @@ const computedState = useComputedState(props);
   color: rgb(var(--color-danger));
 }
 
+.gradientPrimary {
+  background: var(--color-main-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 .bold {
   font-weight: 700;
 }
@@ -111,5 +130,9 @@ const computedState = useComputedState(props);
 
 .alignCenter {
   text-align: center;
+}
+
+.nowrap {
+  white-space: nowrap;
 }
 </style>

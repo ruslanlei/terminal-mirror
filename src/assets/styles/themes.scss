@@ -4,6 +4,7 @@
 
 .purpleCat {
   --color-main-gradient: #{$mainGradient};
+  --color-blue-gradient: #{$blueGradient};
   --color-orange-gradient: #{$orangeGradient};
 
   --color-accent-1: #{extractRgb($mono-white)};

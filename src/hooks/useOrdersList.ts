@@ -14,6 +14,7 @@ import { useEmulatorStore } from '@/stores/emulator';
 import { findAndDelete, findAndUpdateObject } from '@/helpers/array';
 import { useChartDataStore } from '@/stores/chartData';
 import { storeToRefs } from 'pinia';
+import { TableColumn } from '@/components/core/table';
 
 interface GroupedOrder {
   order: MasterOrder,
@@ -105,6 +106,7 @@ export const useOrdersList = (
       slug: 'options',
       size: 0.7,
       align: 'center',
+      isClickable: true,
     },
   ]);
 
@@ -274,15 +276,13 @@ export const useOrdersList = (
   //  or SL
   const unsubscribeSimulationEndedEvent = emulatorStore.subscribeSimulationEndedEvent(getList);
 
+  const isDeletingOrder = ref(false);
   const deleteOrder = async (
     order: Order,
-    takeProfits: TakeProfit[] | undefined,
   ) => {
-    if (emulatorStore.isPlaying) {
-      emulatorStore.turnOffPlayer();
-    }
-
-    await marketStore.removeOrder(order, takeProfits);
+    isDeletingOrder.value = true;
+    await marketStore.removeOrder(order);
+    isDeletingOrder.value = false;
   };
 
   const clearSubscriptions = () => {
@@ -295,6 +295,9 @@ export const useOrdersList = (
   const onRecordClick = (
     record: ActiveOrdersTableRecord | ClosedOrdersTableRecord,
   ) => {
+    if (emulatorStore.isPlaying) {
+      emulatorStore.turnOffPlayer();
+    }
     marketStore.setPair(record.data.pair.id);
   };
 
@@ -307,6 +310,7 @@ export const useOrdersList = (
     getList,
     clearSubscriptions,
     deleteOrder,
+    isDeletingOrder,
     onRecordClick,
   };
 };

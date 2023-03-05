@@ -112,28 +112,22 @@ const openTab = (tab: OrderFormTab) => {
   settingsActiveTab.value = tab;
 };
 
+const orderCreateState = useOrderCreate();
 const {
   model,
   validationSchema,
   orderDirectionOptions,
-  takeProfits,
-  takeProfitsIncomeSum,
   isTakeProfitsEnabled,
   activePairData,
   baseCurrencyStep,
   price,
   leverage,
   autoCalculateTakeProfits,
-  maxTakeProfits,
-  takeProfitsAmount,
   isStopLossEnabled,
-  stopLossPrice,
-  stopLossRisk,
-  pledge,
-  liquidationPrice,
   isLoading,
   handleSubmit,
-} = useOrderCreate();
+} = orderCreateState;
+provide(OrderFormInjectionKey, orderCreateState);
 
 const settingsTabs = computed<Tab<OrderFormTab>[]>(() => [
   {
@@ -161,57 +155,6 @@ const settingsTabs = computed<Tab<OrderFormTab>[]>(() => [
     value: 'slx',
   },
 ]);
-
-const ratio = computed(() => {
-  const isNumbersValid = takeProfitsIncomeSum.value
-      && stopLossRisk.value
-      && takeProfitsIncomeSum.value > stopLossRisk.value;
-
-  return isNumbersValid
-    ? t('order.ratio', {
-      loss: 1,
-      profit: compose(
-        roundToDecimalPoint(1),
-        divideRight,
-      )(stopLossRisk.value, takeProfitsIncomeSum.value),
-    })
-    : t('order.ratio', { loss: 0, profit: 0 });
-});
-
-const profitDisplayValue = computed(() => t('order.takeProfit.profitValue', {
-  profit:
-    t('common.currencyAmount', {
-      amount: takeProfitsIncomeSum.value,
-      currency: activePairData.value?.quote,
-    }),
-}));
-
-const riskDisplayValue = computed(() => t('order.takeProfit.riskValue', {
-  risk:
-    t('common.currencyAmount', {
-      amount: stopLossRisk.value,
-      currency: activePairData.value?.quote,
-    }),
-}));
-
-provide(OrderFormInjectionKey, {
-  model,
-  takeProfits,
-  takeProfitsIncomeSum,
-  isTakeProfitsEnabled,
-  leverage,
-  price,
-  maxTakeProfits,
-  takeProfitsAmount,
-  isStopLossEnabled,
-  stopLossPrice,
-  stopLossRisk,
-  pledge,
-  liquidationPrice,
-  ratio,
-  profitDisplayValue,
-  riskDisplayValue,
-});
 </script>
 
 <style lang="scss" module>

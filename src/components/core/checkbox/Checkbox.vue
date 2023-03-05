@@ -86,7 +86,11 @@ const onBlur = () => {
   }
 }
 
-.box {}
+.box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 .label {
   user-select: none;

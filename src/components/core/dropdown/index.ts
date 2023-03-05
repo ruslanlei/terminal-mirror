@@ -1,7 +1,7 @@
 export type DropdownPlacement = 'top' | 'bottom' | 'left' | 'right';
 
 export interface DropdownProps {
-  isVisible: boolean,
+  isVisible?: boolean | undefined,
   distance?: number,
   placement?: DropdownPlacement | [DropdownPlacement, DropdownPlacement],
   toggleByClick?: boolean,
@@ -10,9 +10,14 @@ export interface DropdownProps {
   containerGap?: number,
   automaticReplace?: boolean,
   isDisabled?: boolean,
+  dropAnimationInitialPositionShift?: number,
+  transitionDuration?: 720 | 600,
+  blockInnerToggling?: boolean,
 }
 
 export interface DropdownEmits {
   (e: 'update:isVisible', value: boolean): void,
   (e: 'triggerClick'): void,
+  (e: 'triggerDbclick'): void,
+  (e: 'clickOutside'): void,
 }

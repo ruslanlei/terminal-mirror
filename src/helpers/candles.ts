@@ -1,5 +1,5 @@
 import { Candle } from '@/api/types/marketData';
-import { ChartCandle } from '@/components/core/chart';
+import { ChartCandle } from '@/components/core/candleChart';
 import {
   subtractDays,
   toISOString,

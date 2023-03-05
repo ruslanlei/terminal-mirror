@@ -84,6 +84,10 @@
   margin-top: 20px;
 }
 
+.ratio {
+  margin-top: 20px;
+}
+
 .submitButtonWrapper {
   margin-top: 20px;
 }

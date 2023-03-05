@@ -40,11 +40,11 @@ const { t } = useI18n();
 const {
   query,
   pairs,
-  getPairs,
+  fetchPairs,
   setPair,
   isTogglingFavorite,
   onToggleFavorite,
 } = usePairSelect();
 
-getPairs();
+fetchPairs();
 </script>

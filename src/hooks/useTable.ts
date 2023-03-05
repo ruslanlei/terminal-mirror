@@ -62,11 +62,15 @@ export const useTable = (
     }
   };
   const onCellClick = (
-    id: InnerTableRecord['id'],
-    isSelectColumn: TableColumn['isSelect'],
+    tableColumn: TableColumn,
+    tableRecord: InnerTableRecord,
+    toggleChildren?: () => void,
   ) => {
-    if (isSelectColumn) {
-      toggleRecordSelect(id);
+    if (tableColumn.isSelect) {
+      toggleRecordSelect(tableRecord.id);
+    }
+    if (!tableColumn.isClickable) {
+      toggleChildren?.();
     }
   };
 

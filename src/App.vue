@@ -1,10 +1,20 @@
 <template>
-  <Layout :class="$style.layout" />
-  <ModalLayer :class="$style.modalLayer" />
-  <ToastLayer :class="$style.toastLayer" />
-  <LevitatingLayer :class="$style.levitatingLayer" />
-  <IconsMap />
-  <CoinLogoMap />
+  <Transition name="appPreloaderTransition">
+    <template v-if="isPreparing">
+      <AppPreloader :class="$style.preloader" />
+    </template>
+    <template v-else>
+      <div :class="$style.appContainer">
+        <Layout :class="$style.layout" />
+        <ModalLayer :class="$style.modalLayer" />
+        <ToastLayer :class="$style.toastLayer" />
+        <LevitatingLayer :class="$style.levitatingLayer" />
+        <OrderEventsToastLayer :class="$style.orderEventsToastLayer" />
+        <IconsMap />
+        <CoinLogoMap />
+      </div>
+    </template>
+  </Transition>
 </template>
 
 <script setup lang="ts">
@@ -14,13 +24,24 @@ import ModalLayer from '@/components/app/modalLayer/ModalLayer.vue';
 import LevitatingLayer from '@/components/app/leviatingLayer/LevitatingLayer.vue';
 import IconsMap from '@/components/core/icon/IconsMap.vue';
 import CoinLogoMap from '@/components/core/coinLogo/CoinLogoMap.vue';
+import AppPreloader from '@/components/app/appPreloader/AppPreloader.vue';
+import OrderEventsToastLayer from '@/components/app/orderEventsToastLayer/OrderEventsToastLayer.vue';
+
 import { useApp } from '@/hooks/useApp';
 
-useApp();
+const { isPreparing } = useApp();
 </script>
 
 <style lang="scss" module>
+.appContainer {}
+
 .layout {}
+
+.preloader {
+  position: fixed;
+  z-index: 2000;
+  inset: 0;
+}
 
 .modalLayer {
   position: fixed;
@@ -38,6 +59,12 @@ useApp();
   position: fixed;
   inset: 0;
   z-index: 5000;
+}
+
+.orderEventsToastLayer {
+  position: fixed;
+  inset: 0;
+  z-index: 6000;
 }
 
 .debugPanel {
@@ -59,5 +86,17 @@ useApp();
   .spinner {
     display: none;
   }
+}
+
+.appPreloaderTransition-enter-active,
+.appPreloaderTransition-leave-active {
+  transition: transform 460ms;
+}
+
+.appPreloaderTransition-enter-from {
+
+}
+.appPreloaderTransition-leave-to {
+  transform: translateY(-100%);
 }
 </style>

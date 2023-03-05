@@ -1,6 +1,11 @@
 <template>
-  <Header v-if="!isFetchingProfile" />
-  <Skeleton v-else />
+  <Transition
+    mode="out-in"
+    name="skeletonTransition"
+  >
+    <Header v-if="!isFetchingProfile && profile" />
+    <Skeleton v-else />
+  </Transition>
 </template>
 
 <script setup lang="ts">
@@ -12,6 +17,11 @@ import Skeleton from './Skeleton.vue';
 
 const profileStore = useProfileStore();
 const {
+  profile,
   isFetchingProfile,
 } = storeToRefs(profileStore);
 </script>
+
+<style lang="scss">
+@import "@/assets/styles/transitions.scss";
+</style>

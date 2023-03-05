@@ -4,7 +4,10 @@
       {{ t('order.takeProfit.profit') }}
     </template>
     <template #profitSwitch>
-      <Switch v-model="isTakeProfitsEnabled" />
+      <Switch
+        v-model="isTakeProfitsEnabled"
+        :is-disabled="true"
+      />
     </template>
     <template #takeProfitsAmountLabel>
       {{ t('order.takeProfit.amountOfOrders') }}
@@ -27,14 +30,11 @@
         :order-quantity="model.quantity"
         :base-currency-decimals="baseCurrencyDecimals"
         :base-currency-step="baseCurrencyStep"
+        :order-side="orderSide"
       />
     </template>
     <template #ratio>
-      <OrderFormRatio
-        :ratio="ratio"
-        :profit="profitDisplayValue"
-        :risk="riskDisplayValue"
-      />
+      <OrderFormEstimates state="default" />
     </template>
     <template #submit="{ buttonClass }">
       <Button
@@ -57,10 +57,10 @@ import Switch from '@/components/core/switch/Switch.vue';
 import Button from '@/components/core/button/Button.vue';
 import TakeProfitList from '@/components/app/takeProfitList/TakeProfitList.vue';
 import NumberInput from '@/components/core/numberInput/NumberInput.vue';
-import OrderFormRatio from '@/components/app/orderFormRatio/OrderFormRatio.vue';
-import { useOrderFormInject } from '@/hooks/useOrderFormInject';
+import OrderFormEstimates from '@/components/app/orderForm/composables/orderFormEstimates/OrderFormEstimates.vue';
 import { useMarketStore } from '@/stores/market';
 import { storeToRefs } from 'pinia';
+import { injectOrderFormState } from '@/components/app/orderForm';
 import { OrderFormTakeProfitPartEmits } from './index';
 
 const emit = defineEmits<OrderFormTakeProfitPartEmits>();
@@ -75,14 +75,12 @@ const {
 
 const {
   model,
+  orderSide,
   takeProfits,
   isTakeProfitsEnabled,
   maxTakeProfits,
   takeProfitsAmount,
-  ratio,
-  profitDisplayValue,
-  riskDisplayValue,
-} = useOrderFormInject();
+} = injectOrderFormState();
 
 const onTakeProfitsAmountInput = () => {
   emit('takeProfitsAmountInput');

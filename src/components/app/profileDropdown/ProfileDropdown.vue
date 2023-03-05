@@ -1,6 +1,5 @@
 <template>
   <Dropdown
-    v-model:is-visible="isVisible"
     :distance="20"
     :placement="['bottom', 'right']"
   >
@@ -23,18 +22,11 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
 import Dropdown from '@/components/core/dropdown/Dropdown.vue';
 import Icon from '@/components/core/icon/Icon.vue';
 import Avatar from '@/components/core/avatar/Avatar.vue';
 import ProfileSettings from '@/components/app/profileSettings/ProfileSettings.vue';
-import { useProfileStore } from '@/stores/profile';
 import DefaultAvatar from '@/assets/images/defaultAvatar.svg?url';
-
-const profileStore = useProfileStore();
-const avatar = computed(() => profileStore.profile?.avatar);
-
-const isVisible = ref(false);
 </script>
 
 <style lang="scss" module>

@@ -9,7 +9,7 @@ import {
   StopLoss,
   Order,
 } from '@/api/types/order';
-import { multiply, roundToDecimalPoint } from '@/helpers/number';
+import { isPositive, multiply, roundToDecimalPoint } from '@/helpers/number';
 import { calculatePercentOfDifference } from '@/helpers/math/percents';
 import { calculatePnl, calculatePnlPercent } from '@/helpers/math/formulas/pnl';
 import { calculateCommonTakeProfitPercent } from '@/helpers/math/formulas/takeProfit';
@@ -49,7 +49,7 @@ const orderVolumeMixin = (
   payload: CollectRecordPayload,
 ) => ({
   volume: compose(
-    roundToDecimalPoint(6),
+    roundToDecimalPoint(2),
     multiply,
   )(payload.order.quantity, payload.order.price),
 });
@@ -76,37 +76,36 @@ const closedOrderResultsMixin = (
   {
     order, pairData, takeProfits, stopLoss,
   }: CollectRecordPayload,
-) => ({
-  results: {
-    pnl: {
-      value: compose(
-        roundToDecimalPoint(6),
-        reduceSubOrderListToCommonPnl(order),
-        getOrdersWithStatus('executed'),
-      )([
-        ...(takeProfits || []),
-        ...(stopLoss ? [stopLoss] : []),
-      ]),
-      currency: pairData.quote,
+) => {
+  const rawPnl = compose(
+    reduceSubOrderListToCommonPnl(order),
+    getOrdersWithStatus('executed'),
+  )([
+    ...(takeProfits || []),
+    ...(stopLoss ? [stopLoss] : []),
+  ]);
+
+  return {
+    results: {
+      pnl: {
+        value: roundToDecimalPoint(2, rawPnl),
+        currency: pairData.quote,
+      },
+      pnlPercent: compose(
+        roundToDecimalPoint(2),
+        calculatePnlPercent(order.price, order.quantity),
+      )(rawPnl),
+      isPositive: isPositive(rawPnl),
     },
-    pnlPercent: compose(
-      roundToDecimalPoint(6),
-      calculatePnlPercent(order.price, order.quantity),
-      reduceSubOrderListToCommonPnl(order),
-      getOrdersWithStatus('executed'),
-    )([
-      ...(takeProfits || []),
-      ...(stopLoss ? [stopLoss] : []),
-    ]),
-  },
-});
+  };
+};
 
 const stopLossDataMixin = (
   payload: CollectRecordPayload,
 ) => ({
   ...(payload.stopLoss ? {
     sl: compose(
-      roundToDecimalPoint(6),
+      roundToDecimalPoint(2),
       toAbsolute,
       calculatePercentOfDifference,
     )(payload.order.price, payload.stopLoss.price),
@@ -127,7 +126,7 @@ const pnlMixin = (
     ...(order.status !== 'new' && pairPrice
       ? {
         value: compose(
-          roundToDecimalPoint(6),
+          roundToDecimalPoint(2),
           calculatePnl(
             order.price,
             order.position,
@@ -145,7 +144,7 @@ const takeProfitDataMixin = (
 ) => ({
   ...(payload.takeProfits?.length ? {
     tp: compose(
-      roundToDecimalPoint(6),
+      roundToDecimalPoint(2),
       calculateCommonTakeProfitPercent,
     )(
       payload.order.price,

@@ -68,9 +68,8 @@
                 ]"
                 :class="$style.tableRow"
                 @click="onRowClick(record)"
-                @cell-click="onCellClick(record.id, $event)"
               >
-                <template #default>
+                <template #default="{ toggleChildren }">
                   <button
                     v-for="column in columns"
                     :key="column.slug"
@@ -79,7 +78,7 @@
                       $style.recordColumn,
                       $style[column.align],
                     ]"
-                    @click="onCellClick(record.id, column.isSelect)"
+                    @click="onCellClick(column, record, toggleChildren)"
                   >
                     <slot
                       :name="`cell(${column.slug})`"
@@ -125,13 +124,15 @@ import { playAnimation } from '@/utils/animation';
 import anime from 'animejs';
 import { uuid } from '@/utils/uuid';
 import { arrayOfElements } from '@/helpers/dom';
-import { compose } from '@/utils/fp';
+import { compose, log } from '@/utils/fp';
 import {
   addCssProperty,
   getRect,
   removeCssProperty,
   toCssPxValue,
 } from '@/helpers/style';
+import { awaitTimeout } from '@/utils/promise';
+import { filter, forEach, toArray } from '@/utils/array';
 import {
   TableRecord,
   TableProps,
@@ -145,6 +146,7 @@ const props = withDefaults(
     isHeadVisible: true,
     showHeadWhileEmpty: false,
     appearanceAnimationType: 'elevating',
+    animationDelay: 0,
   },
 );
 const emit = defineEmits<{(e: 'update:selectedRecords', value: SelectedRecords): void,
@@ -177,7 +179,7 @@ const {
 
 const tableId = ref(uuid());
 
-const computedElementSelector = computed(
+const computedTableRowSelector = computed(
   () => `[data-table-element-id="${tableId.value}"]`,
 );
 
@@ -195,18 +197,45 @@ const onElementRemove = (removingElement: HTMLElement) => {
   )(removingElement);
 };
 
-const playAppearAnimation = () => {
+const playAppearAnimation = async () => {
   const onAnimationComplete = () => {
-    anime.remove(computedElementSelector.value);
+    anime.remove(computedTableRowSelector.value);
 
     compose(
       removeCssProperty(['opacity', 'transform']),
       arrayOfElements,
-    )(computedElementSelector.value);
+    )(computedTableRowSelector.value);
   };
 
-  playAnimation({
-    targets: computedElementSelector.value,
+  // @ts-ignore
+  const visibleTargets = compose(
+    filter((element: HTMLElement) => {
+      if (!element.offsetParent) return false;
+
+      const {
+        height: containerHeight,
+      } = getRect(element.offsetParent as HTMLElement);
+
+      const {
+        top: elementTop,
+      } = getRect(element);
+
+      // elements that not hidden by parent or window
+      return (element.offsetTop < containerHeight) && (elementTop < window.innerHeight);
+    }),
+    arrayOfElements,
+  )(computedTableRowSelector.value) as HTMLElement[];
+
+  forEach((element: HTMLElement) => {
+    element.style.opacity = '0';
+  }, visibleTargets);
+
+  if (props.animationDelay) {
+    await awaitTimeout(props.animationDelay);
+  }
+
+  await playAnimation({
+    targets: visibleTargets,
     translateY: [200, 0],
     opacity: {
       value: [0, 1],
@@ -239,7 +268,6 @@ onMounted(() => {
   .head {
     display: grid;
     position: relative;
-    z-index: 3;
   }
   .records {
     width: 100%;
@@ -301,6 +329,7 @@ onMounted(() => {
   display: flex;
   align-items: center;
   position: relative;
+  //opacity: 0;
 }
 
 .recordColumn {}
@@ -319,7 +348,7 @@ onMounted(() => {
   .head {
     position: sticky;
     top: 0;
-    z-index: 2;
+    z-index: 3;
   }
   .records {
     flex-grow: 1;
@@ -358,7 +387,7 @@ onMounted(() => {
 
 .tinySize {
   .head {
-    padding-bottom: 4px;
+    padding: 4px 0;
   }
   &.scrollable {
     @include scrollbarPrimary(4px, 2px);
@@ -369,7 +398,7 @@ onMounted(() => {
     font-weight: 600;
   }
   .records {
-    margin-top: 15px;
+    margin-top: 10px;
   }
 }
 

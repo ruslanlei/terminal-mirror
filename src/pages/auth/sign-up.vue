@@ -4,6 +4,7 @@
     v-model:external-errors="serverErrors"
     :validation-schema="validationSchema"
     touch-by="blur"
+    :autocomplete="true"
     @submit="handleSubmit"
   >
     <SignUpContainer>
@@ -17,12 +18,14 @@
         <FormInput
           ref="userNameField"
           name="username"
+          autocomplete="username"
           :placeholder="t('placeholder.username')"
         />
       </template>
       <template #emailField>
         <FormInput
           name="email"
+          autocomplete="email"
           :placeholder="t('placeholder.email')"
         />
       </template>
@@ -67,7 +70,7 @@ meta:
 </route>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { Form, FormInput } from '@/form';
 import SignUpContainer from '@/containers/signUpContainer/SignUpContainer.vue';
@@ -88,10 +91,6 @@ const {
   isLoading,
   serverErrors,
 } = useSignUp();
-
-onMounted(() => {
-  userNameField.value.focus();
-});
 </script>
 
 <style lang="scss" module>

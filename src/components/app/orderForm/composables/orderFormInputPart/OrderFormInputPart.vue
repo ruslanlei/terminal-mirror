@@ -11,6 +11,7 @@
         :step="0.001"
         save-on="blur"
         :append-min-width="35"
+        tab-index="0"
       >
         <template #append>
           {{ activePairData?.quote }}
@@ -32,6 +33,7 @@
         save-on="blur"
         :show-error-icon="false"
         :append-min-width="35"
+        tab-index="0"
       >
         <template #append>
           {{ activePairData?.base }}
@@ -53,6 +55,7 @@
         :price="price"
         save-on="blur"
         :append-min-width="35"
+        tab-index="0"
       >
         <template #quoteCurrency>
           {{ activePairData?.quote }}
@@ -84,6 +87,7 @@
         type="number"
         :min="1"
         :max="20"
+        save-on="blur"
       />
     </template>
     <template #leverageLiquidationPrice>
@@ -95,17 +99,8 @@
     <template #submit>
       <slot name="submit" />
     </template>
-    <template #ratioLabel>
-      {{ t('order.ratioLabel') }}
-    </template>
-    <template #ratio>
-      {{ ratio }}
-    </template>
-    <template #profit>
-      {{ profitDisplayValue }}
-    </template>
-    <template #loss>
-      {{ riskDisplayValue }}
+    <template #estimates>
+      <OrderFormEstimates state="tiny" />
     </template>
   </OrderFormInputPartContainer>
 </template>
@@ -114,11 +109,12 @@
 import { useI18n } from 'vue-i18n';
 import OrderFormInputPartContainer from '@/containers/orderFormInputPartContainer/OrderFormInputPartContainer.vue';
 import { FormDepositInput, FormExchangeInput, FormNumberInput } from '@/form';
-import { useOrderFormInject } from '@/hooks/useOrderFormInject';
 import { useExchange } from '@/hooks/useExchange';
 import { useMarketStore } from '@/stores/market';
 import { storeToRefs } from 'pinia';
 import { useEmulatorStore } from '@/stores/emulator';
+import OrderFormEstimates from '@/components/app/orderForm/composables/orderFormEstimates/OrderFormEstimates.vue';
+import { injectOrderFormState } from '@/components/app/orderForm';
 
 const { t } = useI18n();
 
@@ -141,10 +137,7 @@ const {
   leverage,
   pledge,
   liquidationPrice,
-  ratio,
-  profitDisplayValue,
-  riskDisplayValue,
-} = useOrderFormInject();
+} = injectOrderFormState();
 
 const {
   maxBaseCurrencyDepositLeveraged,

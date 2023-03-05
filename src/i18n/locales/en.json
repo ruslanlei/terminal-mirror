@@ -8,7 +8,11 @@
     "no": "No",
     "yes": "Yes",
     "hide": "Hide",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "supportedBy": "Supported by - {supporter}"
+  },
+  "dateTime": {
+    "shortHours": "{hours}h"
   },
   "validationError": {
     "email": "Value is not valid email",
@@ -91,15 +95,19 @@
       "emulator": "Emulator",
       "real": "Real"
     },
-    "failedToGetPairs": "Failed to get pairs"
+    "failedToGetPairs": "Failed to get pairs",
+    "noPairCandles": "No pair data provided"
   },
   "favorites": {
     "label": "Favorites"
   },
   "emulator": {
     "player": {
+      "error": {
+        "historyDataIsOver": "History data for pair {pair} is over. Try to correct order to make it execute"
+      },
       "label": "Player",
-      "prematureResult": "Calculate result",
+      "calculateResult": "Calculate result",
       "orderInteractionsWarning": "Editing or adding orders will pause the player"
     }
   },
@@ -128,7 +136,10 @@
     },
     "table": {
       "pairs": "Pairs",
-      "priceAndVolume": "Price/Volume"
+      "priceAndVolume": "Price/Volume",
+      "last24HoursPercentChange": {
+        "history": "History {period}"
+      }
     }
   },
   "ordersAndStatistics": {
@@ -196,7 +207,16 @@
     "failedToCreateTakeProfits": "Failed to create one or more TPs",
     "failedToCreateStopLoss": "Failed to create SL",
     "successfullyCreated": "Order(s) has been successfully created",
-    "failedToGetList": "Failed to get list of orders"
+    "failedToGetList": "Failed to get list of orders",
+    "successfullyClosed": "Order for pair {pair} successfully closed"
+  },
+  "orderExecuted": {
+    "label": "Order",
+    "coin": "Coin: {name}",
+    "volume": "Volume: {value}",
+    "status": {
+      "executed": "Executed"
+    }
   },
   "deleteOrder": {
     "label": "Are you sure you want close position?",
@@ -238,10 +258,78 @@
       "volume": "{volume} {currency}"
     },
     "placeholder": "You don't have Orders. Create an order and it will appear here",
-    "edit": "Edit"
+    "edit": "Edit",
+    "closeTip": "Click again to close quickly"
   },
   "changePlayerDateModal": {
     "label": "To change date in the player, you need to delete and/or close all existing orders. Delete and/or close orders right now?",
     "submitText": "Close/delete all orders"
+  },
+  "terminalLanding": {
+    "chapter": {
+      "about": "About project",
+      "forWhom": "For whom",
+      "advantages": "Advantages",
+      "tariffs": "Tariffs",
+      "faq": "FAQ"
+    },
+    "welcomeScreen": {
+      "label": {
+        "part1": "Dive into trading",
+        "part2": "without losing real money"
+      },
+      "description": "Our training terminal helps to safely understand the principles of the crypto market even for a beginner, and helps to safely move on to real trading and earnings on cryptocurrency.",
+      "options": {
+        "tryForFree": "Try for 2 days",
+        "openTerminal": "Go to \"Terminal\""
+      }
+    },
+    "learnToEarn": {
+      "label": "Learn to earn with us",
+      "frame": {
+        "safeOperations": {
+          "label": "Safe Operations",
+          "description": "Our terminal system behaves like a real exchange, allowing you to safely learn how to trade\nwith cryptocurrency and gain trading experience."
+        },
+        "easeOfLearning": {
+          "label": "Ease of learning",
+          "description": "Our terminal system behaves like a real exchange, allowing you to safely learn how to trade\nwith cryptocurrency and gain trading experience."
+        },
+        "playerInTerminal": {
+          "label": "Player in Terminal",
+          "description": "Our terminal system behaves like a real exchange, allowing you to safely learn how to trade\nwith cryptocurrency and gain trading experience."
+        },
+        "cryptocurrencyMarket": {
+          "label": "Cryptocurrency market",
+          "description": "Our terminal system behaves like a real exchange, allowing you to safely learn how to trade\nwith cryptocurrency and gain trading experience."
+        }
+      }
+    },
+    "totalBeginner": {
+      "label": "Do you know anything about cryptocurrency?",
+      "description": "We have developed a complete theoretical course with practice on our\nterminal. Acquiring them together is not only effective, but also profitable.",
+      "learnMore": "Learn more"
+    },
+    "determinationScreen": {
+      "label": "Who is our terminal for?",
+      "card": {
+        "beginners": {
+          "label": "Beginners",
+          "text": "Who do not know anything about cryptocurrency, but want to learn how to make transactions in the market without losing real money."
+        },
+        "propCompanyOwners": {
+          "label": "Prop company owners",
+          "text": "Those who want to be able to quickly test trading strategies, quickly check and train employees."
+        },
+        "traders": {
+          "label": "Traders",
+          "text": "Those who are familiar with the crypto market, but they feel they lack experience."
+        },
+        "courseCreators": {
+          "label": "Course creators",
+          "text": "Improve your learning with practice. Connect your students to the learning terminal and help them to acquire trading skills."
+        }
+      }
+    }
   }
 }

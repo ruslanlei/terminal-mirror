@@ -1,5 +1,10 @@
 <template>
-  <div :class="$style.ordersListWrapper">
+  <div
+    :class="[
+      $style.ordersListWrapper,
+      isDisabled && $style.disabled
+    ]"
+  >
     <transition
       name="skeletonTransition"
       mode="out-in"
@@ -89,13 +94,25 @@
         <template #column(results)>
           {{ t('ordersList.column.results') }}
         </template>
-        <template #cell(results)="{ data: { pnlPercent, pnl: { value: pnl, currency } } }">
+        <template
+          #cell(results)="{
+            data: {
+              pnlPercent,
+              pnl: { value: pnl, currency },
+              isPositive
+            }
+          }"
+        >
           <div :class="$style.resultsWrapper">
             <div :class="$style.results">
               <Typography
-                :text="t('common.percents', { value: pnlPercent })"
+                :text="t('common.percents', {
+                  value: isPositive
+                    ? toPositiveNumberString(pnlPercent)
+                    : pnlPercent
+                })"
                 :state="[
-                  isPositive(pnlPercent)
+                  isPositive
                     ? 'success'
                     : 'danger',
                   'semiBold',
@@ -239,7 +256,7 @@
             </template>
           </span>
         </template>
-        <template #cell(options)="{ data: { order, takeProfits } }">
+        <template #cell(options)="{ data: { order } }">
           <button
             v-if="listType === 'closed'"
             type="button"
@@ -257,13 +274,7 @@
             <!--          >-->
             <!--            <Icon icon="swap" />-->
             <!--          </button>-->
-            <button
-              type="button"
-              :class="$style.deleteButton"
-              @click="deleteOrder(order, takeProfits)"
-            >
-              <Icon icon="cross" />
-            </button>
+            <CloseOrderButton @delete="deleteOrder(order)" />
           </div>
         </template>
 
@@ -292,12 +303,16 @@ import Icon from '@/components/core/icon/Icon.vue';
 import { isPositive } from '@/helpers/number';
 import Badge from '@/components/core/badge/Badge.vue';
 import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
-import { onActivated, onBeforeUnmount, onDeactivated } from 'vue';
+import {
+  computed, onActivated, onBeforeUnmount, onDeactivated,
+} from 'vue';
 import SubOrdersTable from '@/components/app/ordersList/subOrdersTable/SubOrdersTable.vue';
 import { useOrdersList } from '@/hooks/useOrdersList';
 import Typography from '@/components/app/typography/Typography.vue';
 import OrdersListPlaceholder from '@/components/app/ordersList/OrdersListPlaceholder.vue';
-import { ActiveOrdersTableRecord, ClosedOrdersTableRecord, OrdersListProps } from './index';
+import CloseOrderButton from '@/components/app/closeOrderButton/CloseOrderButton.vue';
+import { toPositiveNumberString } from '@/utils/dom';
+import { OrdersListProps } from './index';
 
 const props = withDefaults(
   defineProps<OrdersListProps>(),
@@ -316,9 +331,14 @@ const {
   getList,
   commonPnl,
   clearSubscriptions,
-  deleteOrder,
   onRecordClick,
+  deleteOrder,
+  isDeletingOrder,
 } = useOrdersList(props);
+
+const isDisabled = computed(() => [
+  isDeletingOrder.value,
+].some(Boolean));
 
 onActivated(() => {
   const showLoading = !orders.value?.length;
@@ -334,6 +354,7 @@ onBeforeUnmount(clearSubscriptions);
 
 .ordersListWrapper {
   display: flex;
+  @include transparentOnDisabled;
 }
 
 .ordersList, .skeleton {
@@ -423,6 +444,7 @@ onBeforeUnmount(clearSubscriptions);
 
 .orderOptions {
   display: flex;
+  align-items: center;
   gap: 10px;
 }
 

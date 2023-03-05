@@ -1,6 +1,8 @@
 <template>
   <button
-    :class="$style.playButton"
+    type="button"
+    :class="[$style.playButton, isDisabled && $style.disabled]"
+    :disabled="isDisabled"
     @click="toggle"
   >
     <transition
@@ -36,12 +38,15 @@ const toggle = () => {
 </script>
 
 <style lang="scss" module>
+@import "src/assets/styles/utils";
+
 .playButton {
   display: flex;
   align-items: center;
   position: relative;
-  transition: transform 250ms;
+  transition: transform 250ms, opacity 200ms;
   cursor: pointer;
+  @include transparentOnDisabled;
   &:active {
     transform: scale(0.9);
   }

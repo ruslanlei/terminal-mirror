@@ -3,7 +3,7 @@ import { computed } from 'vue';
 import { arrayFrom } from '@/utils/array';
 
 export const useComputedState = (
-  props: { state: string | string[] } & Record<any, any>,
+  props: { state: null | string | string[] } & Record<any, any>,
 ) => {
   const {
     $style,

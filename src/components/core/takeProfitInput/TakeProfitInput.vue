@@ -72,7 +72,12 @@ import {
   roundToDecimalPoint,
 } from '@/helpers/number';
 import { compose } from '@/utils/fp';
-import { addPercents, calculateIncreasePercent } from '@/helpers/math/percents';
+import {
+  addPercents,
+  calculateDecreasePercent,
+  calculateIncreasePercent,
+  subtractPercents,
+} from '@/helpers/math/percents';
 
 const props = defineProps<TakeProfitInputProps>();
 
@@ -89,12 +94,20 @@ const onQuantityInput = () => {
 const percentOfProfitValue = computed({
   get: () => compose(
     roundToDecimalPoint(2),
-    calculateIncreasePercent(props.orderPrice),
+    // FIXME
+    (props.orderSide === 'buy'
+      ? calculateIncreasePercent
+      : calculateDecreasePercent
+    )(props.orderPrice),
   )(localPrice.value),
   set: (percentValue: number) => {
     localPrice.value = compose(
       roundToDecimalPoint(2),
-      addPercents(props.orderPrice),
+      // FIXME
+      (props.orderSide === 'buy'
+        ? addPercents
+        : subtractPercents
+      )(props.orderPrice),
     )(percentValue);
   },
 });

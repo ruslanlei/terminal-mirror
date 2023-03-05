@@ -1,20 +1,28 @@
 <template>
-  <Chart
+  <CandleChart
     v-model:date-from="chartDateFrom"
     v-model:date-to="chartDateTo"
     :data="computedCandles"
     :is-loading="isFetchingCandles"
+    :no-data-badge-text="t('market.noPairCandles')"
   />
 </template>
 
 <script setup lang="ts">
-import Chart from '@/components/core/chart/Chart.vue';
+import { useI18n } from 'vue-i18n';
+import CandleChart from '@/components/core/candleChart/CandleChart.vue';
 import { useMarketChart } from '@/hooks/useMarketChart';
 import { watch } from 'vue';
 import { useEmulator } from '@/hooks/useEmulator';
 import { useMarketStore } from '@/stores/market';
+import { storeToRefs } from 'pinia';
+
+const { t } = useI18n();
 
 const marketStore = useMarketStore();
+const {
+  isSettingPair,
+} = storeToRefs(marketStore);
 
 const {
   chartDateFrom,
@@ -38,6 +46,7 @@ watch(emulatorDate, async () => {
     isEmulating.value,
     isFetchingCandles.value,
     isFetchingEmulatorTimeframe.value,
+    isSettingPair.value,
   ].some(Boolean)) return;
 
   await fetchCandles();

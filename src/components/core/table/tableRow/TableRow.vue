@@ -13,9 +13,8 @@
         record.isSelected && $style.selected,
       ]"
       :style="computedRowStyles"
-      @click="toggleChildren"
     >
-      <slot />
+      <slot :toggle-children="toggleChildren" />
     </div>
     <div
       v-if="'children' in $slots"

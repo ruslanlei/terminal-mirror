@@ -14,18 +14,20 @@ import { useModelReset } from '@/hooks/useModelReset';
 import {
   spreadOrderQuantityBetweenTakeProfits,
   mapTakeProfitPricesByIncreasePercent,
-  reduceTakeProfitsToAmountOfProfitAndRound,
+  mapTakeProfitPricesByDecreasePercent,
 } from '@/helpers/math/formulas/takeProfit';
 import { compose } from '@/utils/fp';
-import { decreaseByPercent } from '@/helpers/math/percents';
+import { addPercents, subtractPercents } from '@/helpers/math/percents';
 import {
-  calculateAndRoundLiquidationPrice,
-  calculateAndRoundPledge, calculateVolumeDifference,
+  calculateLiquidationPrice,
+  calculatePledge,
+  calculateVolumeDifference,
 } from '@/helpers/math/formulas/order';
 import { roundToDecimalPoint } from '@/helpers/number';
 import { useChartDataStore } from '@/stores/chartData';
 import { TakeProfit } from '@/api/types/order';
 import { arrayOf } from '@/utils/array';
+import { useEmulatorStore } from '@/stores/emulator';
 
 export interface OrderModel extends CreateOrderDTO {
   leverage: number,
@@ -46,6 +48,8 @@ export const useOrderCreate = () => {
     currentPrice,
     isFetchingCandles,
   } = storeToRefs(chartDataStore);
+
+  const emulatorStore = useEmulatorStore();
 
   const { t } = useI18n();
 
@@ -72,7 +76,14 @@ export const useOrderCreate = () => {
     price: 0,
     leverage: 1,
   });
-  const { resetModel } = useModelReset(model);
+  const { resetModel: resetModelToInitialValue } = useModelReset(model);
+
+  const resetModel = () => {
+    resetModelToInitialValue();
+    model.price = chartDataStore.currentPrice || 0;
+  };
+
+  const orderSide = computed(() => model.side);
 
   const setPairPriceToModel = () => {
     model.price = currentPrice.value || 0;
@@ -88,14 +99,14 @@ export const useOrderCreate = () => {
       .required(() => t('validationError.required'))
       .oneOf(['buy', 'sell']),
     quantity: number().min(
-      baseCurrencyStep.value,
-      () => t('validationError.min', { min: baseCurrencyStep.value }),
+      0.000001,
+      () => t('validationError.min', { min: 0.000001 }),
     ),
     price: number().positive(() => t('validationError.positive')),
     leverage: number().min(1).max(20),
   });
 
-  // <-- take profits
+  // take profits
   const isTakeProfitsEnabled = ref<boolean>(true);
 
   const maxTakeProfits = 20;
@@ -104,22 +115,24 @@ export const useOrderCreate = () => {
 
   const takeProfits = ref<TakeProfit[]>([]);
 
-  const takeProfitsIncomeSum = computed(() => reduceTakeProfitsToAmountOfProfitAndRound(
-    quoteCurrencyDecimals.value,
-    takeProfits.value,
-  ));
-
   const EACH_TAKE_PROFIT_PERCENT_INCREASE = 0.5;
 
   const autoCalculateTakeProfitPrices = () => {
-    takeProfits.value = mapTakeProfitPricesByIncreasePercent(
+    takeProfits.value = (
+      model.side === 'buy'
+        ? mapTakeProfitPricesByIncreasePercent
+        : mapTakeProfitPricesByDecreasePercent
+    )(
       EACH_TAKE_PROFIT_PERCENT_INCREASE,
       model.price,
       takeProfits.value,
     );
   };
   watch(
-    () => model.price,
+    [
+      () => model.price,
+      () => model.side,
+    ],
     autoCalculateTakeProfitPrices,
     { deep: true },
   );
@@ -137,13 +150,17 @@ export const useOrderCreate = () => {
   );
 
   const initTakeProfits = (
+    orderSide: 'buy' | 'sell',
     percentOfIncrease: number,
     orderPrice: number,
     orderQuantity: number,
     amount: number,
   ) => compose(
     spreadOrderQuantityBetweenTakeProfits(orderQuantity),
-    mapTakeProfitPricesByIncreasePercent(percentOfIncrease, orderPrice),
+    (orderSide === 'buy'
+      ? mapTakeProfitPricesByIncreasePercent
+      : mapTakeProfitPricesByDecreasePercent
+    )(percentOfIncrease, orderPrice),
     arrayOf(() => ({
       price: 0,
       quantity: 0,
@@ -152,6 +169,7 @@ export const useOrderCreate = () => {
 
   const autoCalculateTakeProfits = () => {
     takeProfits.value = initTakeProfits(
+      orderSide.value,
       EACH_TAKE_PROFIT_PERCENT_INCREASE,
       model.price,
       model.quantity,
@@ -160,7 +178,7 @@ export const useOrderCreate = () => {
   };
   autoCalculateTakeProfits();
 
-  // <-- stop loss
+  // stop loss
   const isStopLossEnabled = ref(true);
 
   const stopLossPrice = ref(0);
@@ -168,39 +186,50 @@ export const useOrderCreate = () => {
   const STOP_LOSS_DEFAULT_PERCENT = 10;
 
   const autoCalculateStopLoss = () => {
-    stopLossPrice.value = decreaseByPercent(
+    stopLossPrice.value = (
+      orderSide.value === 'buy'
+        ? subtractPercents
+        : addPercents
+    )(
       model.price,
       STOP_LOSS_DEFAULT_PERCENT,
     );
   };
-  autoCalculateStopLoss();
+  watch([orderSide], autoCalculateStopLoss, { immediate: true });
 
-  const stopLossRisk = computed(
-    () => compose(
-      roundToDecimalPoint(quoteCurrencyDecimals.value),
-      calculateVolumeDifference,
-    )(
-      model.quantity,
-      model.price,
-      stopLossPrice.value,
-    ),
-  );
+  watch(() => model.price, () => {
+    const needRecalculate = model.side === 'buy'
+      ? (model.price < stopLossPrice.value)
+      : (model.price > stopLossPrice.value);
 
-  const pledge = computed(() => calculateAndRoundPledge(
+    if (!needRecalculate) return;
+
+    autoCalculateStopLoss();
+  });
+
+  const pledge = computed(() => compose(
+    roundToDecimalPoint(2),
+    calculatePledge,
+  )(
     model.price,
     model.quantity,
     model.leverage,
-    quoteCurrencyDecimals.value,
   ));
 
-  const liquidationPrice = computed(() => (model.quantity ? calculateAndRoundLiquidationPrice(
-    model.price,
-    model.quantity,
-    model.leverage,
-    quoteCurrencyDecimals.value,
-  ) : 0));
+  const liquidationPrice = computed(() => (
+    model.quantity
+      ? compose(
+        roundToDecimalPoint(2),
+        calculateLiquidationPrice,
+      )(
+        model.price,
+        model.quantity,
+        model.leverage,
+        emulatorStore.balance,
+      )
+      : 0));
 
-  // <-- submit
+  // submit
   const isLoading = ref(false);
 
   const handleSubmit = async () => {
@@ -220,7 +249,6 @@ export const useOrderCreate = () => {
       resetModel();
     }
   };
-  // submit -->
 
   watch(activePair, () => {
     if (isFetchingCandles.value) {
@@ -241,10 +269,10 @@ export const useOrderCreate = () => {
 
   return {
     model,
+    orderSide,
     validationSchema,
     isTakeProfitsEnabled,
     takeProfits,
-    takeProfitsIncomeSum,
     orderDirectionOptions,
     activePairData,
     quoteCurrencyDecimals,
@@ -258,7 +286,6 @@ export const useOrderCreate = () => {
     autoCalculateTakeProfits,
     isStopLossEnabled,
     stopLossPrice,
-    stopLossRisk,
     pledge,
     liquidationPrice,
     isLoading,

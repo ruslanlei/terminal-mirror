@@ -10,6 +10,7 @@ export type TableColumn<S = string> = {
   // example: { size: '10px' } or { size: 1 }
   size?: string | number,
   sortable?: boolean,
+  isClickable?: boolean,
   align?: 'left' | 'center' | 'right',
   data?: any,
 }
@@ -55,5 +56,6 @@ export interface TableProps {
   isRowsClickable?: boolean,
   isHeadVisible?: boolean,
   showHeadWhileEmpty?: boolean,
+  animationDelay?: number,
   appearanceAnimationType: 'bubbling' | 'elevating'
 }

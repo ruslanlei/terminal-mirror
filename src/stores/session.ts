@@ -73,7 +73,7 @@ export const useSessionStore = defineStore('session', () => {
 
     if (result) {
       setToken(data.key, !remember);
-      await profileStore.getProfile();
+      await profileStore.fetchAllProfileData();
     } else {
       processServerErrors(data, t('auth.signIn.failed'));
     }

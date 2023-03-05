@@ -11,13 +11,13 @@ export const playAnimation = (
 });
 
 export const createAnimation = (
-  params: Omit<AnimeParams, 'complete' | 'autoplay'>,
+  params: () => Omit<AnimeParams, 'complete' | 'autoplay'>,
 ) => {
   let animation: AnimeInstance | null = null;
 
   const init = () => {
     animation = anime({
-      ...params,
+      ...params(),
       autoplay: false,
     });
     return animation;
@@ -33,9 +33,19 @@ export const createAnimation = (
     animation.play();
   });
 
+  const pause = () => {
+    animation?.pause();
+  };
+
+  const restart = () => {
+    animation?.restart();
+  };
+
   return {
     animation,
     init,
     play,
+    pause,
+    restart,
   };
 };

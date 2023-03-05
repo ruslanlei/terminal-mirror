@@ -2,7 +2,9 @@
   <div
     :class="[
       $style.wrapper,
-      state.map((s) => $style[s])
+      $style[shape],
+      $style[size],
+      ...computedState,
     ]"
   >
     <div :class="$style.logoIconWrapper">
@@ -21,19 +23,24 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useComputedState } from '@/hooks/useComputedState';
 import { LogoProps } from './index';
 import LogoIcon from './assets/logoIcon.svg';
 import LogoText from './assets/logoText.svg';
 
-withDefaults(
+const props = withDefaults(
   defineProps<LogoProps>(),
   {
     type: 'full',
-    state: () => ['mdSize', 'defaultState2'],
+    size: 'md',
+    state: 'defaultState2',
+    shape: 'circle',
   },
 );
 
 const logoIcon = ref();
+
+const computedState = useComputedState(props);
 </script>
 
 <style lang="scss" module>
@@ -42,7 +49,18 @@ const logoIcon = ref();
   align-items: center;
 }
 
-.mdSize {
+.lg {
+  .logoIconWrapper {
+    padding: 12px;
+  }
+
+  .logoIcon {
+    width: 26px;
+    height: 26px;
+  }
+}
+
+.md {
   .logoIconWrapper {
     padding: 10px;
   }
@@ -52,7 +70,8 @@ const logoIcon = ref();
     height: 22px;
   }
 }
-.smSize {
+
+.sm {
   .logoIconWrapper {
     padding: 10px;
   }
@@ -79,8 +98,16 @@ const logoIcon = ref();
   }
 }
 
-.logoIconWrapper {
-  border-radius: 50%;
+.circle {
+  .logoIconWrapper {
+    border-radius: 50%;
+  }
+}
+
+.square {
+  .logoIconWrapper {
+    border-radius: 10px;
+  }
 }
 
 .logoIcon {

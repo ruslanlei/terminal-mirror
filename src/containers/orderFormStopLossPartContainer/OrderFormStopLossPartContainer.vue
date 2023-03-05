@@ -101,6 +101,10 @@
   margin-top: 10px;
 }
 
+.ratio {
+  margin-top: 20px;
+}
+
 .submitWrapper {
   margin-top: 20px;
 }

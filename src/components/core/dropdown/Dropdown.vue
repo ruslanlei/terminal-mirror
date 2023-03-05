@@ -1,12 +1,12 @@
 <template>
-  <button
+  <div
     ref="trigger"
-    type="button"
     :class="$style.trigger"
     @click="onTriggerClick"
+    @dblclick="onTriggerDbClick"
   >
     <slot name="trigger" />
-  </button>
+  </div>
   <teleport :to="teleportTarget">
     <div
       ref="dropdown"
@@ -39,17 +39,26 @@ import { teleportTargets } from '@/enums/teleport';
 import { useLocalValue } from '@/hooks/useLocalValue';
 import { useEnvironmentObserver } from '@/hooks/useEnvironmentObserver';
 import { playAnimation } from '@/utils/animation';
+import { getRect } from '@/helpers/style';
+import { compose } from '@/utils/fp';
+import { getValueByKey } from '@/utils/object';
+import { divideRight, roundToDecimalPoint } from '@/helpers/number';
+import { max } from '@/utils/number';
 import { DropdownProps, DropdownEmits, DropdownPlacement } from './index';
 
 const props = withDefaults(
   defineProps<DropdownProps>(),
   {
+    isVisible: undefined,
     placement: 'bottom',
     toggleByClick: true,
     keepWithinWindowVertical: false,
     keepWithinWindowHorizontal: true,
     containerGap: 10,
     automaticReplace: true,
+    dropAnimationInitialPositionShift: 60,
+    transitionDuration: 720,
+    blockInnerToggling: false,
   },
 );
 
@@ -61,7 +70,28 @@ const dropdown = ref<HTMLElement>();
 
 const dropdownInner = ref<HTMLElement>();
 
-const localIsVisible = useLocalValue<boolean>(props, emit, 'isVisible');
+const localIsVisibleState = ref(false);
+
+const localIsVisible = computed({
+  get: () => (props.isVisible !== undefined
+    ? props.isVisible
+    : localIsVisibleState.value),
+  set: (value: boolean) => {
+    if (props.isVisible !== undefined) {
+      emit('update:isVisible', value);
+      return;
+    }
+    localIsVisibleState.value = value;
+  },
+});
+
+const setIsVisible = (
+  isVisible: boolean,
+) => {
+  if (props.blockInnerToggling) return;
+
+  localIsVisible.value = isVisible;
+};
 
 const onClickOutside = (event: MouseEvent) => {
   if (!trigger.value || !dropdown.value) return;
@@ -75,7 +105,9 @@ const onClickOutside = (event: MouseEvent) => {
       || dropdown.value.contains(target)
   ) return;
 
-  localIsVisible.value = false;
+  emit('clickOutside');
+
+  setIsVisible(false);
 };
 
 const teleportTarget = computed(() => `#${teleportTargets.LEVITATING}`);
@@ -214,7 +246,7 @@ const calculateDropdownPosition = () => {
 watch(localIsVisible, calculateDropdownPosition);
 
 watch(localIsVisible, () => {
-  if (!localIsVisible.value) return;
+  if (!localIsVisible.value || !dropdown.value) return;
 
   let translateY: number | number[] = 0;
   let translateX: number | number[] = 0;
@@ -223,17 +255,29 @@ watch(localIsVisible, () => {
     ? props.placement[0]
     : props.placement;
 
+  const positionShift = compose(
+    roundToDecimalPoint(2),
+    max(26),
+    divideRight(2.8),
+    getValueByKey(
+      (placement === 'top' || placement === 'bottom')
+        ? 'height'
+        : 'width',
+    ),
+    getRect,
+  )(dropdown.value);
+
   if (placement === 'bottom') {
-    translateY = [-60, 0];
+    translateY = [-positionShift, 0];
   }
   if (placement === 'top') {
-    translateY = [60, 0];
+    translateY = [positionShift, 0];
   }
   if (placement === 'left') {
-    translateX = [60, 0];
+    translateX = [positionShift, 0];
   }
   if (placement === 'right') {
-    translateX = [-60, 0];
+    translateX = [-positionShift, 0];
   }
 
   playAnimation({
@@ -244,7 +288,7 @@ watch(localIsVisible, () => {
       { value: 0, easing: 'linear', duration: 0 },
       { value: 1, easing: 'linear', duration: 120 },
     ],
-    duration: 780,
+    duration: props.transitionDuration,
   });
 });
 
@@ -253,7 +297,11 @@ const onTriggerClick = () => {
 
   if (!props.toggleByClick || props.isDisabled) return;
 
-  localIsVisible.value = !localIsVisible.value;
+  setIsVisible(!localIsVisible.value);
+};
+
+const onTriggerDbClick = () => {
+  emit('triggerDbclick');
 };
 
 const {

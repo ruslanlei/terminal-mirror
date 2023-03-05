@@ -3,6 +3,7 @@
     :class="[
       $style[size],
       ...states,
+      isFocused && $style.focus,
       !!error && $style.withError,
     ]"
   >
@@ -32,6 +33,7 @@
         :class="$style.arrows"
       >
         <button
+          tabindex="-1"
           type="button"
           :class="[
             $style.arrowButton,
@@ -45,6 +47,7 @@
           />
         </button>
         <button
+          tabindex="-1"
           type="button"
           :class="[
             $style.arrowButton,
@@ -194,17 +197,21 @@ const onInput = (event: InputEvent) => {
   emit('input', event);
 };
 
+const isFocused = ref(false);
+const onFocus = (event: InputEvent) => {
+  isFocused.value = true;
+  emit('focus', event);
+};
+
 const onBlur = () => {
+  isFocused.value = false;
+
   if (props.saveOn === 'blur' && field.value) {
     saveValue(Number(field.value.value), props.normalizer);
   }
 
   // FIXME: find reason why after this event input stop working
   // emit('blur', event);
-};
-
-const onFocus = (event: InputEvent) => {
-  emit('focus', event);
 };
 
 const onKeydown = (event: KeyboardEvent) => {
@@ -279,6 +286,11 @@ const states = useComputedState(props);
 .defaultColor {
   .label {
     color: rgb(var(--color-accent-1));
+  }
+  &.focus {
+    .field {
+      border: 1px solid rgb(var(--color-accent-1));
+    }
   }
   .field {
     color: rgb(var(--color-accent-1));

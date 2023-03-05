@@ -6,8 +6,10 @@
       isDisabled && $style.disabled,
       $style[size],
       isWide && $style.wide,
+      hideLoaderOnHover && $style.hideLoaderOnHover,
       ...computedState,
     ]"
+    :disabled="isDisabled"
   >
     <div :class="[$style.loaderCap, !isLoading && $style.hidden]">
       <Loader :size="computedLoaderSize" />
@@ -53,10 +55,26 @@ const computedLoaderSize = computed(
   &:not(.disabled) {
     cursor: pointer;
   }
+  @include transparentOnDisabled;
+  &.disabled {
+    cursor: not-allowed;
+  }
 }
 
 .wide {
   width: 100%;
+}
+
+.hideLoaderOnHover {
+  &:hover {
+    .loaderCap {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .inner {
+      opacity: 1;
+    }
+  }
 }
 
 .loaderCap {
@@ -67,24 +85,38 @@ const computedLoaderSize = computed(
   justify-content: center;
   align-items: center;
   transition: .15s opacity;
+  &.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
 }
 
 .inner {
   transition: .15s opacity;
-}
-
-.hidden {
-  opacity: 0;
-  pointer-events: none;
+  &.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
 }
 
 .interactive {
-  transition: background-color 200ms;
+  transition: background-color 200ms, color 200ms, opacity 200ms;
   &:focus, &:hover {
     //transform: scale(1.01);
   }
   &:active {
     transform: scale(0.99);
+  }
+}
+
+.textAccent1 {
+  color: rgba(var(--color-accent-1));
+}
+
+.textAccent2 {
+  color: rgba(var(--color-accent-2));
+  &:hover:not(.disabled) {
+    color: rgba(var(--color-accent-1));
   }
 }
 
@@ -121,15 +153,48 @@ const computedLoaderSize = computed(
 .secondary2Color {
   color: rgba(var(--color-accent-1));
   background-color: rgb(var(--color-background-2));
-  &:hover {
+  &:hover:not(.disabled) {
     background-color: rgb(var(--color-background-4));
   }
+}
+
+.background1 {
+  color: rgba(var(--color-accent-1));
+  background-color: rgb(var(--color-background-1));
+  &:hover:not(.disabled) {
+    background-color: rgb(var(--color-background-2));
+  }
+}
+
+.accent3Color {
+  color: rgba(var(--color-accent-1));
+  background-color: rgb(var(--color-accent-3));
+  &:hover:not(.disabled) {
+    background-color: rgb(var(--color-background-5));
+  }
+}
+
+.borderedDefault {
+  color: rgba(var(--color-accent-1));
+  border: 2px solid rgba(var(--color-accent-2), 0.2);
+  &:hover:not(.disabled) {
+    background-color: rgb(var(--color-background-4));
+  }
+}
+
+.xl {
+  border-radius: 10px;
+  @include text;
+  line-height: 24px;
+  font-weight: 600;
+  padding: 16px;
 }
 
 .lg {
   padding: 15px;
   border-radius: 5px;
   @include text;
+  line-height: 24px;
   font-weight: 600;
 }
 

@@ -4,7 +4,10 @@
       {{ t('order.stopLoss.switchLabel') }}
     </template>
     <template #stopLossSwitch>
-      <Switch v-model="isStopLossEnabled" />
+      <Switch
+        v-model="isStopLossEnabled"
+        :is-disabled="true"
+      />
     </template>
     <template #exactPriceLabel>
       {{ t('order.stopLoss.exactPrice') }}
@@ -70,11 +73,7 @@
       </NumberInput>
     </template>
     <template #ratio>
-      <OrderFormRatio
-        :ratio="ratio"
-        :profit="profitDisplayValue"
-        :risk="riskDisplayValue"
-      />
+      <OrderFormEstimates state="default" />
     </template>
     <template #submit="{ buttonClass }">
       <Button
@@ -95,25 +94,32 @@ import {
   computed,
 } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { storeToRefs } from 'pinia';
 import OrderFormStopLossPartContainer
   from '@/containers/orderFormStopLossPartContainer/OrderFormStopLossPartContainer.vue';
 import Switch from '@/components/core/switch/Switch.vue';
 import NumberInput from '@/components/core/numberInput/NumberInput.vue';
-import OrderFormRatio from '@/components/app/orderFormRatio/OrderFormRatio.vue';
+import OrderFormEstimates from '@/components/app/orderForm/composables/orderFormEstimates/OrderFormEstimates.vue';
 import Button from '@/components/core/button/Button.vue';
-import { useOrderFormInject } from '@/hooks/useOrderFormInject';
+import { useMarketStore } from '@/stores/market';
+import { compose } from '@/utils/fp';
+import { toAbsolute } from '@/utils/number';
+import { useEmulatorStore } from '@/stores/emulator';
+import { injectOrderFormState } from '@/components/app/orderForm';
+import { roundToDecimalPoint } from '@/helpers/number';
 import {
   calculateOriginalPriceByVolumeDifference,
   calculateVolumeDifference,
 } from '@/helpers/math/formulas/order';
-import { roundToDecimalPoint } from '@/helpers/number';
-import { compose } from '@/utils/fp';
-import { calculatePercentOfDifference, decreaseByPercent } from '@/helpers/math/percents';
-import { calculatePriceByPercentOfDeposit, calculateVolumeDifferenceInPercentsOfDeposit } from '@/helpers/math/formulas/stopLoss';
-import { useMarketStore } from '@/stores/market';
-import { storeToRefs } from 'pinia';
-import { useEmulatorStore } from '@/stores/emulator';
-import { toAbsolute } from '@/utils/number';
+import {
+  addPercents,
+  calculatePercentOfDifference,
+  subtractPercents,
+} from '@/helpers/math/percents';
+import {
+  calculatePriceByPercentOfDeposit,
+  calculateVolumeDifferenceInPercentsOfDeposit,
+} from '@/helpers/math/formulas/stopLoss';
 import { OrderFormStopLossPartEmits } from './index';
 
 const { t } = useI18n();
@@ -139,29 +145,12 @@ const {
 
 const {
   model,
+  orderSide,
   stopLossPrice,
-  profitDisplayValue,
-  riskDisplayValue,
   isStopLossEnabled,
-  ratio,
-} = useOrderFormInject();
+} = injectOrderFormState();
 
 const isDependentFieldsDisabled = computed(() => !model.quantity);
-
-const percentOfOrderPrice = computed({
-  get: () => compose(
-    roundToDecimalPoint(2),
-    toAbsolute,
-    calculatePercentOfDifference,
-  )(model.price, stopLossPrice.value),
-
-  set: (percent: number) => {
-    stopLossPrice.value = compose(
-      roundToDecimalPoint(quoteCurrencyDecimals.value),
-      decreaseByPercent,
-    )(model.price, percent);
-  },
-});
 
 const amountOfRisk = computed({
   get: () => compose(
@@ -182,6 +171,23 @@ const amountOfRisk = computed({
       model.quantity,
       amountOfRisk,
     );
+  },
+});
+
+const percentOfOrderPrice = computed({
+  get: () => compose(
+    roundToDecimalPoint(2),
+    toAbsolute,
+    calculatePercentOfDifference,
+  )(model.price, stopLossPrice.value),
+
+  set: (percent: number) => {
+    stopLossPrice.value = compose(
+      roundToDecimalPoint(quoteCurrencyDecimals.value),
+      (orderSide.value === 'buy'
+        ? subtractPercents
+        : addPercents),
+    )(model.price, percent);
   },
 });
 

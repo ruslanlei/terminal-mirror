@@ -3,6 +3,7 @@ import {
   curry,
 } from '@/utils/fp';
 import {
+  divide,
   divideRight,
   multiply,
   roundToDecimalPoint,
@@ -51,35 +52,25 @@ export const calculatePledge = curry((
   divideRight(leverage),
   multiply(orderPrice),
 )(orderQuantity));
-export const calculateAndRoundPledge = curry((
-  orderPrice: number,
-  orderQuantity: number,
-  leverage: number,
-  decimals: number,
-) => compose(
-  roundToDecimalPoint(decimals),
-  calculatePledge,
-)(
-  orderPrice,
-  orderQuantity,
-  leverage,
-));
 
 export const calculateLiquidationPrice = curry((
-  orderPrice: number,
-  orderQuantity: number,
+  price: number,
+  quantity: number,
   leverage: number,
+  balance: number,
 ) => compose(
-  divideRight(orderQuantity),
-  calculatePledge,
-)(orderPrice, orderQuantity, leverage));
-
-export const calculateAndRoundLiquidationPrice = curry((
-  orderPrice: number,
-  orderQuantity: number,
-  leverage: number,
-  decimals: number,
-) => compose(
-  roundToDecimalPoint(decimals),
-  calculateLiquidationPrice,
-)(orderPrice, orderQuantity, leverage));
+  divideRight(quantity),
+  subtractRight(
+    subtractRight(
+      calculatePledge(
+        price,
+        quantity,
+        leverage,
+      ),
+      balance,
+    ),
+  ),
+  subtractRight(
+    divideRight(leverage, price),
+  ),
+)(price));

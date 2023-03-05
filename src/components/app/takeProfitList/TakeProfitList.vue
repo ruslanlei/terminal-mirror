@@ -31,6 +31,7 @@
         :order-quantity="orderQuantity"
         :base-currency-step="baseCurrencyStep"
         :base-currency-decimals="baseCurrencyDecimals"
+        :order-side="orderSide"
         @quantity-input="onUpdateTakeProfitQuantity(takeProfitIndex)"
       />
     </div>

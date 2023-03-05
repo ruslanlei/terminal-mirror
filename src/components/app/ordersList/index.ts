@@ -72,6 +72,7 @@ export type ClosedOrdersTableRecord = TableRecord<ClosedOrdersTableColumnSlug, {
       currency: string,
     },
     pnlPercent: number,
+    isPositive: boolean,
   },
   date: {
     open: string,

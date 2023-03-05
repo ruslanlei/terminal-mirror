@@ -1,35 +1,37 @@
 <template>
   <template v-if="state === 'select'">
-    <div
-      v-click-outside="closeDropdown"
+    <Dropdown
+      v-model:is-visible="isDropdownVisible"
       :class="$style.languageSelect"
+      :placement="['bottom', 'left']"
+      :drop-animation-initial-position-shift="26"
     >
-      <button
-        :class="$style.selectedLanguage"
-        type="button"
-        @click="toggleDropdown"
-      >
-        {{ activeLocale.label }}
-        <Icon
-          :class="$style.icon"
-          :size="24"
-          icon="arrowDown"
-        />
-      </button>
-      <div
-        v-if="isDropdownVisible"
-        :class="$style.dropdown"
-      >
+      <template #trigger>
         <button
-          v-for="localeOption in filteredLocales"
-          :key="localeOption.value"
-          :class="$style.dropdownOption"
-          @click="setLocale(localeOption.value)"
+          :class="$style.selectedLanguage"
+          type="button"
         >
-          {{ localeOption.label }}
+          {{ activeLocale.label }}
+          <Icon
+            :class="$style.icon"
+            :size="24"
+            icon="arrowDown"
+          />
         </button>
-      </div>
-    </div>
+      </template>
+      <template #dropdown>
+        <div :class="$style.dropdown">
+          <button
+            v-for="localeOption in filteredLocales"
+            :key="localeOption.value"
+            :class="$style.dropdownOption"
+            @click="setLocale(localeOption.value)"
+          >
+            {{ localeOption.label }}
+          </button>
+        </div>
+      </template>
+    </Dropdown>
   </template>
   <template v-else-if="state === 'default'">
     <div :class="$style.languageList">
@@ -54,6 +56,7 @@ import { LanguageSelectProps } from '@/components/app/languageSelect/index';
 import { LocaleOptions, useI18nStore } from '@/stores/i18n';
 import { AppLocale } from '@/i18n';
 import Icon from '@/components/core/icon/Icon.vue';
+import Dropdown from '@/components/core/dropdown/Dropdown.vue';
 
 withDefaults(
   defineProps<LanguageSelectProps>(),
@@ -76,12 +79,6 @@ const filteredLocales = computed(() => locales.value.filter(
 ));
 
 const isDropdownVisible = ref(false);
-const toggleDropdown = () => {
-  isDropdownVisible.value = !isDropdownVisible.value;
-};
-const closeDropdown = () => {
-  isDropdownVisible.value = false;
-};
 
 const setLocale = (newLocale: AppLocale) => {
   locale.value = newLocale;
@@ -102,18 +99,19 @@ const setLocale = (newLocale: AppLocale) => {
   color: rgba(var(--color-accent-2));
   font-weight: 600;
   @include text;
+  cursor: pointer;
   .icon {
     margin-left: 5px;
   }
 }
 
 .dropdown {
-  position: absolute;
 }
 
 .dropdownOption {
   color: rgba(var(--color-accent-2));
   font-weight: 600;
+  cursor: pointer;
   @include text;
 }
 

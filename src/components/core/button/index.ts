@@ -6,12 +6,18 @@ export type ButtonState =
   | 'secondary2Color'
   | 'successColor'
   | 'dangerColor'
-  | 'interactive';
+  | 'interactive'
+  | 'textAccent1'
+  | 'borderedDefault'
+  | 'textAccent2'
+  | 'accent3Color'
+  | 'background1';
 
 export interface ButtonProps {
   state?: ButtonState | ButtonState[],
-  size?: 'sm' | 'md' | 'lg',
+  size?: 'sm' | 'md' | 'lg' | 'xl',
   isWide?: boolean,
   isDisabled?: boolean,
   isLoading?: boolean,
+  hideLoaderOnHover?: boolean,
 }

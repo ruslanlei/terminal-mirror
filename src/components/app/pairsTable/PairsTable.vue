@@ -63,13 +63,19 @@
       </div>
     </template>
     <template #cell(priceAndVolume)="{ data: { currentPrice, totalTrades } }">
-      <div>
+      <div :class="$style.statsContainer">
         <div :class="$style.price">
           <template v-if="currentPrice">
             {{ currentPrice }}
           </template>
           <template v-else>
-            -
+            <Badge
+              :state="['skeleton', 'background4']"
+              :size="null"
+              :class="$style.currentPriceSkeleton"
+            >
+              .
+            </badge>
           </template>
         </div>
         <div :class="$style.volume">
@@ -96,14 +102,16 @@
     <template #cell(last24HoursPercentChange)="{ data: value }">
       <Badge
         :state="[
-          value === null
-            ? 'background4'
-            : (
-              isPositive(value)
-                ? 'success'
-                : 'danger'
-            ),
+          ...(value === null ? [
+            'skeleton',
+            'background4'
+          ] : [
+            isPositive(value)
+              ? 'success'
+              : 'danger'
+          ])
         ]"
+        :class="value === null && $style.skeletonBadge"
         size="sm"
       >
         {{ humanizePercents(value) }}
@@ -236,6 +244,13 @@ const onToggleFavorite = (
   color: rgb(var(--color-accent-2));
 }
 
+.statsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 2px;
+}
+
 .price {
   @include title5;
   color: rgb(var(--color-accent-1));
@@ -246,6 +261,18 @@ const onToggleFavorite = (
   @include title5;
   color: rgb(var(--color-accent-2));
   text-align: right;
+  line-height: 100%;
+}
+
+.currentPriceSkeleton {
+  height: 10px;
+  opacity: 0.15;
+  margin: 2px;
+  border-radius: 3px;
+}
+
+.skeletonBadge {
+  opacity: 0.15;
 }
 </style>
 

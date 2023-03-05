@@ -391,7 +391,7 @@ onMounted(() => {
   }
   &.scrollable {
     @include scrollbarPrimary(4px, 2px);
-    padding-right: 10px;
+    padding-right: 18px;
   }
   .column {
     @include title4;

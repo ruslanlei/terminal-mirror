@@ -6,6 +6,7 @@
 import { onBeforeUnmount, onMounted, ref } from 'vue';
 import lottie, { AnimationItem } from 'lottie-web';
 import { useEnvironmentObserver } from '@/hooks/useEnvironmentObserver';
+import { useIntersectionObserver } from '@vueuse/core';
 import { LottieProps } from './index';
 
 const props = defineProps<LottieProps>();
@@ -22,6 +23,7 @@ const initAnimation = () => {
     autoplay: true,
     path: props.path,
   });
+  animationInstance.value?.pause();
 };
 
 onMounted(initAnimation);
@@ -46,4 +48,17 @@ const {
 
 onMounted(setListeners);
 onBeforeUnmount(removeListeners);
+
+const { stop } = useIntersectionObserver(
+  lottieContainer,
+  ([{ isIntersecting }]) => {
+    if (isIntersecting) {
+      animationInstance.value?.play();
+    } else {
+      animationInstance.value?.pause();
+    }
+  },
+);
+
+onBeforeUnmount(stop);
 </script>

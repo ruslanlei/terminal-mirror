@@ -5,4 +5,4 @@ dist-ssr
 *.local
 
 .idea
-stats.html
+bundleVisualizer.html

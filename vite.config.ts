@@ -39,6 +39,7 @@ export default defineConfig({
     visualizer({
       gzipSize: true,
       template: 'network',
+      filename: 'bundleVisualizer.html',
     }),
   ],
   resolve: {

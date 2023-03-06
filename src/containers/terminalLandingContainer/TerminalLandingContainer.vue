@@ -34,8 +34,8 @@
         <slot name="totalBeginnerBadge" />
       </div>
     </div>
-    <div :class="$style.determinationScreen">
-      <slot name="determinationScreen" />
+    <div :class="$style.assignmentScreen">
+      <slot name="assignmentScreen" />
     </div>
   </div>
 </template>

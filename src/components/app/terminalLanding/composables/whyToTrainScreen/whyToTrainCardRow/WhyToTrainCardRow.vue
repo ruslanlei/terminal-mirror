@@ -108,9 +108,9 @@ watch(() => props.progress, () => {
 
 <style lang="scss" module>
 .whyToTrainCardRow {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 25px 1fr;
   gap: 67px;
   position: relative;
   transform-style: preserve-3d;
@@ -118,6 +118,7 @@ watch(() => props.progress, () => {
 }
 
 .dot {
+  align-self: center;
   width: 25px;
   min-width: 25px;
   height: 25px;

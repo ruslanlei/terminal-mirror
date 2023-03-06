@@ -332,9 +332,16 @@
       }
     },
     "whyToTrain": {
+      "label": "Why training?",
       "cards": [
         "For a month of training at the terminal you will not lose real money and you will receive experience that could be gained over the years",
-        "Acquire analytical skills and learn how to make informed decisions"
+        "Acquire analytical skills and learn how to make informed decisions",
+        "Built-in risk management will help to form the right skill",
+        "Hints and a user-friendly interface will allow even a beginner to master trading",
+        "You can quickly test trading strategies",
+        "Opportunity to check the effectiveness of a new employee for a prop company",
+        "Rewind trading functionality in time allows faster acquire relevant skills and learn to understand the market",
+        "Having mastered the skills of trading on the terminal, you can move on to real trading without fear and start earning income"
       ]
     }
   }

@@ -140,5 +140,6 @@ const learnToEarnScreenBlobLeft = ref();
 }
 
 .whyToTrainScreen {
+  margin-top: 240px;
 }
 </style>

@@ -3,8 +3,11 @@
     ref="root"
     :class="$style.whyToTrainScreen"
   >
-    <Typography>
-      {{ t('') }}
+    <Typography
+      :state="['accent1', 'bold']"
+      size="massive2"
+    >
+      {{ t('terminalLanding.whyToTrain.label') }}
     </Typography>
     <div :class="$style.cardsContainer">
       <div
@@ -12,23 +15,12 @@
         :style="computedProgressBarStyles"
       />
       <WhyToTrainCardRow
-        :progress="firstRowProgress"
-        :cards="cards"
-        :class="$style.cardRow"
-      />
-      <WhyToTrainCardRow
-        :progress="secondRowProgress"
-        :cards="cards"
-        :class="$style.cardRow"
-      />
-      <WhyToTrainCardRow
-        :progress="thirdRowProgress"
-        :cards="cards"
-        :class="$style.cardRow"
-      />
-      <WhyToTrainCardRow
-        :progress="fourthRowProgress"
-        :cards="cards"
+        v-for="(cardsRow, cardsRowIndex) in cardRows"
+        :key="cardsRowIndex"
+        :progress="calculateRowProgress(
+          multiply(cardsRowIndex, 15),
+        )"
+        :cards="cardsRow"
         :class="$style.cardRow"
       />
     </div>
@@ -52,15 +44,47 @@ import Typography from '@/components/app/typography/Typography.vue';
 
 const { t } = useI18n();
 
-const cards = computed<IWhyToTrainCard[]>(() => [
-  {
-    index: 1,
-    text: t('terminalLanding.whyToTrain.cards.0'),
-  },
-  {
-    index: 2,
-    text: t('terminalLanding.whyToTrain.cards.1'),
-  },
+const cardRows = computed<[IWhyToTrainCard, IWhyToTrainCard][]>(() => [
+  [
+    {
+      index: 1,
+      text: t('terminalLanding.whyToTrain.cards.0'),
+    },
+    {
+      index: 2,
+      text: t('terminalLanding.whyToTrain.cards.1'),
+    },
+  ],
+  [
+    {
+      index: 3,
+      text: t('terminalLanding.whyToTrain.cards.2'),
+    },
+    {
+      index: 4,
+      text: t('terminalLanding.whyToTrain.cards.3'),
+    },
+  ],
+  [
+    {
+      index: 5,
+      text: t('terminalLanding.whyToTrain.cards.4'),
+    },
+    {
+      index: 6,
+      text: t('terminalLanding.whyToTrain.cards.5'),
+    },
+  ],
+  [
+    {
+      index: 7,
+      text: t('terminalLanding.whyToTrain.cards.6'),
+    },
+    {
+      index: 8,
+      text: t('terminalLanding.whyToTrain.cards.7'),
+    },
+  ],
 ]);
 
 const {
@@ -89,36 +113,8 @@ const commonAnimationProgress = computed(() => calculatePercentOfScroll(
 ));
 
 const calculateRowProgress = (
-  progressReducer: number,
   startPercent: number,
-  progressPercent: number,
-) => multiply(subtract(progressPercent, startPercent), progressReducer);
-
-const REDUCE_BY = 4;
-
-const firstRowProgress = computed(() => calculateRowProgress(
-  REDUCE_BY,
-  0,
-  commonAnimationProgress.value,
-));
-
-const secondRowProgress = computed(() => calculateRowProgress(
-  REDUCE_BY,
-  15,
-  commonAnimationProgress.value,
-));
-
-const thirdRowProgress = computed(() => calculateRowProgress(
-  REDUCE_BY,
-  30,
-  commonAnimationProgress.value,
-));
-
-const fourthRowProgress = computed(() => calculateRowProgress(
-  REDUCE_BY,
-  45,
-  commonAnimationProgress.value,
-));
+) => multiply(subtract(commonAnimationProgress.value, startPercent), cardRows.value.length);
 
 const scrollProgress = computed(() => calculatePercentOfScroll(
   multiply(onePercentOfWindowSize.value, 50),
@@ -134,7 +130,6 @@ const computedProgressBarStyles = computed(() => ({
 
 <style lang="scss" module>
 .whyToTrainScreen {
-  padding-top: 240px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -153,6 +148,7 @@ const computedProgressBarStyles = computed(() => ({
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  margin-top: 80px;
 }
 
 .progress {

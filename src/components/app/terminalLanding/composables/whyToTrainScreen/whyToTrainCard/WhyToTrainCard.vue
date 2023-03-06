@@ -11,7 +11,10 @@
         {{ card.index }}
       </Typography>
     </div>
-    <Typography state="accent1">
+    <Typography
+      :class="$style.text"
+      :state="['alignCenter', 'accent1']"
+    >
       {{ card.text }}
     </Typography>
   </Card>
@@ -32,6 +35,7 @@ const props = defineProps<WhyToTrainCardProps>();
   position: relative;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .index {
@@ -46,5 +50,9 @@ const props = defineProps<WhyToTrainCardProps>();
   border-radius: 50%;
   border: 5px solid rgb(var(--color-background-1));
   transform: translateY(-50%);
+}
+
+.text {
+  line-height: 160%;
 }
 </style>

@@ -1,12 +1,11 @@
 <template>
-  <div
-    ref="lottieContainer"
-  />
+  <div ref="lottieContainer" />
 </template>
 
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref } from 'vue';
 import lottie, { AnimationItem } from 'lottie-web';
+import { useEnvironmentObserver } from '@/hooks/useEnvironmentObserver';
 import { LottieProps } from './index';
 
 const props = defineProps<LottieProps>();
@@ -31,4 +30,20 @@ const destroyAnimation = () => {
   animationInstance.value?.destroy();
 };
 onBeforeUnmount(destroyAnimation);
+
+const timer = ref();
+
+const {
+  setListeners,
+  removeListeners,
+} = useEnvironmentObserver(lottieContainer, () => {
+  clearTimeout(timer.value);
+  animationInstance.value?.pause();
+  timer.value = setTimeout(() => {
+    animationInstance.value?.play();
+  }, 300);
+}, true);
+
+onMounted(setListeners);
+onBeforeUnmount(removeListeners);
 </script>

@@ -68,6 +68,7 @@ watch([src, srcset], () => {
 .picture {
   display: block;
   opacity: 0;
+  background-size: cover;
   &.loaded {
     opacity: 1;
   }

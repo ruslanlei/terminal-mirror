@@ -18,6 +18,10 @@
     line-height: 32px;
 }
 
+@mixin h2 {
+    font-size: 22px;
+}
+
 @mixin title1 {
     font-size: 18px;
     line-height: 115%;

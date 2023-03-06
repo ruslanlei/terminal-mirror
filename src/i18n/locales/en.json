@@ -330,6 +330,12 @@
           "text": "Improve your learning with practice. Connect your students to the learning terminal and help them to acquire trading skills."
         }
       }
+    },
+    "whyToTrain": {
+      "cards": [
+        "For a month of training at the terminal you will not lose real money and you will receive experience that could be gained over the years",
+        "Acquire analytical skills and learn how to make informed decisions"
+      ]
     }
   }
 }

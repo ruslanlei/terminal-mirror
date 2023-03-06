@@ -19,6 +19,9 @@
       <template #assignmentScreen>
         <AssignmentScreen />
       </template>
+      <template #whyToTrainScreen>
+        <WhyToTrainScreen />
+      </template>
     </TerminalLandingContainer>
   </div>
 </template>
@@ -35,6 +38,7 @@ import LearnToEarnScreen from '@/components/app/terminalLanding/composables/lear
 import TotalBeginnerBadge from '@/components/app/terminalLanding/composables/totalBeginnerBadge/TotalBeginnerBadge.vue';
 import AssignmentScreen
   from '@/components/app/terminalLanding/composables/assignmentScreen/AssignmentScreen.vue';
+import WhyToTrainScreen from '@/components/app/terminalLanding/composables/whyToTrainScreen/WhyToTrainScreen.vue';
 import { TerminalLandingChapter } from './index';
 
 const { t } = useI18n();

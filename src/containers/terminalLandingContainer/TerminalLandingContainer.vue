@@ -37,6 +37,9 @@
     <div :class="$style.assignmentScreen">
       <slot name="assignmentScreen" />
     </div>
+    <div :class="$style.whyToTrainScreen">
+      <slot name="whyToTrainScreen" />
+    </div>
   </div>
 </template>
 
@@ -134,5 +137,9 @@ const learnToEarnScreenBlobLeft = ref();
   max-width: 1450px;
   position: relative;
   z-index: 3;
+}
+
+.whyToTrainScreen {
+  margin-top: 240px;
 }
 </style>

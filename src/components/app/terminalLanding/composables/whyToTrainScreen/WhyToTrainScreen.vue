@@ -1,10 +1,6 @@
 <template>
   <div :class="$style.whyToTrainScreen">
-    <WhyToTrainCard
-      v-for="card in cards"
-      :key="card.index"
-      :card="card"
-    />
+    <WhyToTrainCardRow :cards="cards" />
   </div>
 </template>
 
@@ -14,6 +10,8 @@ import { useI18n } from 'vue-i18n';
 import WhyToTrainCard
   from '@/components/app/terminalLanding/composables/whyToTrainScreen/whyToTrainCard/WhyToTrainCard.vue';
 import { IWhyToTrainCard } from '@/components/app/terminalLanding/composables/whyToTrainScreen/whyToTrainCard';
+import WhyToTrainCardRow
+  from '@/components/app/terminalLanding/composables/whyToTrainScreen/whyToTrainCardRow/WhyToTrainCardRow.vue';
 
 const { t } = useI18n();
 

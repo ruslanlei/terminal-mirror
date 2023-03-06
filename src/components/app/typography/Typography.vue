@@ -50,6 +50,10 @@ const computedState = useComputedState(props);
   @include massive3;
 }
 
+.massive4 {
+  @include massive4;
+}
+
 .h1 {
   @include h1;
 }

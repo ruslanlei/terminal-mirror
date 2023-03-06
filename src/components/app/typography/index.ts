@@ -16,6 +16,7 @@ export type TypographySize =
     | 'massive1'
     | 'massive2'
     | 'massive3'
+    | 'massive4'
     | 'title1'
     | 'title2'
     | 'title3'

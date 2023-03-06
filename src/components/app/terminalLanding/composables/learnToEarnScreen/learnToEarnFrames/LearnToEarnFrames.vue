@@ -15,8 +15,8 @@
 import { computed, onMounted, ref } from 'vue';
 import LearnToEarnFrame
   from '@/components/app/terminalLanding/composables/learnToEarnScreen/learnToEarnFrame/LearnToEarnFrame.vue';
-import { createAnimation } from '@/utils/animation';
 import { ILearnToEarnFrame } from '@/components/app/terminalLanding/composables/learnToEarnScreen/learnToEarnFrame';
+import { useAnimation } from '@/hooks/useAnimation';
 import {
   LearnToEarnFramesProps,
 } from './index';
@@ -40,7 +40,7 @@ const {
   init,
   play,
   restart,
-} = createAnimation(() => ({
+} = useAnimation(() => ({
   targets: progress,
   value: [0, 100],
   loop: true,

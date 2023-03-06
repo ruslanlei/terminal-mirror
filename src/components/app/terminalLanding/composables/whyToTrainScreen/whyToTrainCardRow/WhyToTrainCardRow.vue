@@ -45,8 +45,6 @@ const props = defineProps<WhyToTrainCardRowProps>();
 
 const { t } = useI18n();
 
-const animationProgress = ref(0);
-
 const cardLeft = computed(() => props.cards[0]);
 const cardRight = computed(() => props.cards[1]);
 
@@ -69,7 +67,8 @@ const {
   setProgress: setProgressOfLeftCardAnimation,
 } = useAnimation(() => ({
   targets: cardLeftContainer.value,
-  translateX: [-400, 0],
+  translateX: [-200, 0],
+  rotateY: [50, 0],
   opacity: [0, 1],
   easing: 'easeOutCirc',
 }));
@@ -79,7 +78,8 @@ const {
   setProgress: setProgressOfRightCardAnimation,
 } = useAnimation(() => ({
   targets: cardRightContainer.value,
-  translateX: [400, 0],
+  translateX: [200, 0],
+  rotateY: [-50, 0],
   opacity: [0, 1],
   easing: 'easeOutCirc',
 }));
@@ -89,29 +89,32 @@ onMounted(() => {
   initRightCardAnimation();
 });
 
-watch(animationProgress, () => {
+watch(() => props.progress, () => {
   if (!leftCardAnimation.value || !rightCardAnimation.value || !dotAnimation.value) return;
 
   setProgressOfLeftCardAnimation(
-    multiply(leftCardAnimation.value.duration, divide(animationProgress.value, 100)),
+    multiply(leftCardAnimation.value.duration, divide(props.progress, 100)),
   );
 
   setProgressOfDotAnimation(
-    multiply(dotAnimation.value.duration, divide(animationProgress.value, 100)),
+    multiply(dotAnimation.value.duration, divide(props.progress, 100)),
   );
 
   setProgressOfRightCardAnimation(
-    multiply(rightCardAnimation.value.duration, divide(animationProgress.value, 100)),
+    multiply(rightCardAnimation.value.duration, divide(props.progress, 100)),
   );
-});
+}, { immediate: true });
 </script>
 
 <style lang="scss" module>
 .whyToTrainCardRow {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 67px;
   position: relative;
+  transform-style: preserve-3d;
+  perspective: 1600px;
 }
 
 .dot {
@@ -124,6 +127,7 @@ watch(animationProgress, () => {
 }
 
 .cardWrapper {
+  max-width: 540px;
   width: 100%;
   height: 100%;
 }

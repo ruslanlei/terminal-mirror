@@ -54,7 +54,7 @@ const learnToEarnScreenBlobLeft = ref();
 
 <style lang="scss" module>
 .terminalLandingContainer {
-  height: 5000px; // temporary
+  height: 7000px; // temporary
   background-color: rgb(var(--color-background-1));
   overflow: hidden;
 }
@@ -140,6 +140,5 @@ const learnToEarnScreenBlobLeft = ref();
 }
 
 .whyToTrainScreen {
-  margin-top: 240px;
 }
 </style>

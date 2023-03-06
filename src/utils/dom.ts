@@ -18,3 +18,7 @@ export const toPositiveNumberString = (
 export const toIdSelector = (
   id: string | number,
 ) => `#${id}`;
+
+export const toCssPercentValue = (
+  percents: number,
+) => `${percents}%`;

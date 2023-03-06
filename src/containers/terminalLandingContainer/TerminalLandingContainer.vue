@@ -42,7 +42,7 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import LearnToEarnScreenBlob from '@/components/app/terminalLanding/assets/LearnToEarnScreenBlob.webp';
+import LearnToEarnScreenBlob from '@/components/app/terminalLanding/assets/learnToEarnScreenBlob.webp';
 import Picture from '@/components/core/picture/Picture.vue';
 
 const learnToEarnScreenBlobRight = ref();

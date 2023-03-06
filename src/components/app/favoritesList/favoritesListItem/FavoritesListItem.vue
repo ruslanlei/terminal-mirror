@@ -24,7 +24,10 @@
     </div>
     <div :class="$style.mainContent">
       <CoinLogo :coin="pairData.base" />
-      <transition name="favoritesListChangeTransition">
+      <transition
+        name="favoritesListChangeTransition"
+        mode="out-in"
+      >
         <Badge
           v-if="props.last24HoursPercentChange !== null"
           :state="[
@@ -37,6 +40,10 @@
         >
           {{ displayPercentChange }}
         </Badge>
+        <div
+          v-else
+          :class="$style.percentChangeSkeleton"
+        />
       </transition>
     </div>
   </div>
@@ -50,6 +57,8 @@ import Badge from '@/components/core/badge/Badge.vue';
 import { computed } from 'vue';
 import { compose } from '@/utils/fp';
 import { humanizePercents } from '@/helpers/math/percents';
+import SkeletonContainer from '@/components/core/skeletonContainer/SkeletonContainer.vue';
+import Skeleton from '@/components/core/skeleton/Skeleton.vue';
 import { FavoritesListItemProps } from './index';
 import { isPositive, roundToDecimalPoint } from '../../../../helpers/number';
 
@@ -84,6 +93,7 @@ const displayPercentChange = computed(
 .mainContent {
   padding: 10px 5px;
   display: flex;
+  align-items: center;
   gap: 10px;
   transition: 200ms opacity;
 }
@@ -111,6 +121,14 @@ const displayPercentChange = computed(
 
 .pnlBadge {
   color: rgb(var(--color-accent-1));
+  height: 24px;
+}
+
+.percentChangeSkeleton {
+  width: 42px;
+  height: 24px;
+  background-color: rgb(var(--color-background-3));
+  border-radius: 5px;
 }
 </style>
 
@@ -121,9 +139,12 @@ const displayPercentChange = computed(
     transition: opacity 200ms, transform 200ms;
   }
 
-  &-enter-from,
-  &-leave-to {
+  &-enter-from {
     transform: translateY(-10px);
+    opacity: 0;
+  }
+  &-leave-to {
+    transform: translateY(10px);
     opacity: 0;
   }
 }

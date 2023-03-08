@@ -1,7 +1,7 @@
 <template>
   <div
     :class="[
-      $style.wrapper,
+      $style.courseLogo,
       $style[shape],
       $style[size],
       ...computedState,
@@ -24,16 +24,16 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useComputedState } from '@/hooks/useComputedState';
-import { LogoProps } from './index';
-import LogoIcon from './assets/logoIcon.svg';
-import LogoText from './assets/logoText.svg';
+import { CourseLogoProps } from './index';
+import LogoIcon from './assets/courseLogoIcon.svg';
+import LogoText from './assets/courseLogoText.svg';
 
 const props = withDefaults(
-  defineProps<LogoProps>(),
+  defineProps<CourseLogoProps>(),
   {
     type: 'full',
     size: 'md',
-    state: 'defaultState2',
+    state: null,
     shape: 'circle',
   },
 );
@@ -44,13 +44,13 @@ const computedState = useComputedState(props);
 </script>
 
 <style lang="scss" module>
-.wrapper {
+.courseLogo {
   display: flex;
   align-items: center;
 }
 
 .xlThickBorder {
-  background: var(--color-main-gradient);
+  background: var(--color-blue-gradient);
   position: relative;
 
   border-radius: 50%;
@@ -73,71 +73,18 @@ const computedState = useComputedState(props);
   }
 
   .logoIcon {
-    width: 42px;
-    height: 42px;
+    width: 50px;
+    height: 50px;
   }
 }
 
-.lg {
-  .logoIconWrapper {
-    padding: 12px;
-  }
-
-  .logoIcon {
-    width: 26px;
-    height: 26px;
-  }
-}
-
-.md {
-  .logoIconWrapper {
-    padding: 10px;
-  }
-
-  .logoIcon {
-    width: 22px;
-    height: 22px;
-  }
-}
-
-.sm {
-  .logoIconWrapper {
-    padding: 10px;
-  }
-
-  .logoIcon {
-    width: 20px;
-    height: 28px;
-  }
-
-  .logoText {
-    margin-left: 5px;
-  }
-}
-
-.defaultState {
+.background2Color {
   .logoIconWrapper {
     background-color: rgb(var(--color-background-2));
   }
 }
 
-.defaultState2 {
-  .logoIconWrapper {
-    background-color: rgb(var(--color-background-3));
-  }
-}
-
-.circle {
-  .logoIconWrapper {
-    border-radius: 50%;
-  }
-}
-
-.square {
-  .logoIconWrapper {
-    border-radius: 10px;
-  }
-}
+.logoIconWrapper {}
 
 .logoIcon {
   display: block;
@@ -147,5 +94,11 @@ const computedState = useComputedState(props);
 
 .logoText {
   margin-left: 15px;
+}
+
+.md {
+  .logoIcon {
+    width: 56px;
+  }
 }
 </style>

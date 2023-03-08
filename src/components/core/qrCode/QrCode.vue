@@ -31,7 +31,3 @@ const initQrCode = () => {
 };
 onMounted(initQrCode);
 </script>
-
-<style scoped>
-
-</style>

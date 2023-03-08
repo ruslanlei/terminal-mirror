@@ -31,7 +31,11 @@
       <div :class="$style.cardWrapper">
         <EcosystemCard :card="courseCard">
           <template #logo>
-            <CourseLogo />
+            <CourseLogo
+              type="slim"
+              state="xlThickBorder"
+              :size="null"
+            />
           </template>
         </EcosystemCard>
       </div>
@@ -47,6 +51,7 @@ import EcosystemCard from '@/components/app/ecosystemCap/ecosystemCard/Ecosystem
 import Logo from '@/components/core/logo/Logo.vue';
 import { computed } from 'vue';
 import { IEcosystemCard } from '@/components/app/ecosystemCap/ecosystemCard';
+import CourseLogo from '@/components/core/courseLogo/CourseLogo.vue';
 import BackgroundPng from './assets/spaceBackground.png';
 
 const { t } = useI18n();

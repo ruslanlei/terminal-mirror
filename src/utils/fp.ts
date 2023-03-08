@@ -20,3 +20,10 @@ export {
 export type CurriedFunc<F extends (...args: any) => any> = (
   ...args: DeepPartial<Parameters<F>>
 ) => ReturnType<F>;
+
+export const ERR = curry((
+  prefix: string,
+  text: string | Error,
+) => {
+  throw new Error(`[prefix]: ${text}`);
+});

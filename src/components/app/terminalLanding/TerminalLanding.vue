@@ -22,6 +22,9 @@
       <template #whyToTrainScreen>
         <WhyToTrainScreen />
       </template>
+      <template #ecosystemScreen>
+        <EcosystemCap />
+      </template>
     </TerminalLandingContainer>
   </div>
 </template>
@@ -40,6 +43,7 @@ import AssignmentScreen
   from '@/components/app/terminalLanding/composables/assignmentScreen/AssignmentScreen.vue';
 import WhyToTrainScreen from '@/components/app/terminalLanding/composables/whyToTrainScreen/WhyToTrainScreen.vue';
 import { TerminalLandingChapter } from './index';
+import EcosystemCap from "@/components/app/ecosystemCap/EcosystemCap.vue";
 
 const { t } = useI18n();
 

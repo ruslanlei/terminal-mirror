@@ -46,6 +46,10 @@ const computedState = useComputedState(props);
   @include massive2;
 }
 
+.massive2sm {
+  @include massive2sm;
+}
+
 .massive3 {
   @include massive3;
 }
@@ -110,6 +114,10 @@ const computedState = useComputedState(props);
   color: rgb(var(--color-accent-2));
 }
 
+.background1 {
+  color: rgb(var(--color-background-1));
+}
+
 .success {
   color: rgb(var(--color-success));
 }
@@ -142,5 +150,9 @@ const computedState = useComputedState(props);
 
 .nowrap {
   white-space: nowrap;
+}
+
+.uppercase {
+  text-transform: uppercase;
 }
 </style>

@@ -40,6 +40,9 @@
     <div :class="$style.whyToTrainScreen">
       <slot name="whyToTrainScreen" />
     </div>
+    <div :class="$style.ecosystemScreen">
+      <slot name="ecosystemScreen" />
+    </div>
   </div>
 </template>
 
@@ -141,5 +144,9 @@ const learnToEarnScreenBlobLeft = ref();
 
 .whyToTrainScreen {
   margin-top: 240px;
+}
+
+.ecosystemScreen {
+  margin-top: 103px;
 }
 </style>

@@ -8,6 +8,8 @@ export type TypographyState =
     | 'accent1'
     | 'gradientPrimary'
     | 'accent2'
+    | 'background1'
+    | 'uppercase'
     | 'nowrap';
 
 export type TypographySize =
@@ -15,6 +17,7 @@ export type TypographySize =
     | 'h2'
     | 'massive1'
     | 'massive2'
+    | 'massive2sm'
     | 'massive3'
     | 'massive4'
     | 'title1'

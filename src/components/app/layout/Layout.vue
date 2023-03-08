@@ -67,7 +67,7 @@ router.beforeEach((to, from, next) => {
       takeOff: 'layoutTransitionTakeOff',
       default: 'defaultLayoutTransition',
       // @ts-ignore
-    }[to.meta?.layoutTransition || 'default']) || 'defaultLayoutTransition';
+    }[to.meta?.layoutTransition as ('putOn' | 'takeOff' | 'default') || 'default']);
   }
 
   next();

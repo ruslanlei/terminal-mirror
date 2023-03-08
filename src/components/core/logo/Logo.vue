@@ -49,6 +49,31 @@ const computedState = useComputedState(props);
   align-items: center;
 }
 
+.xlThickBorder {
+  background: var(--color-main-gradient);
+  position: relative;
+
+  border-radius: 50%;
+
+  &::before {
+    border-radius: 50%;
+    content: '';
+    display: block;
+    position: absolute;
+    inset: 5px;
+    background-color: rgb(var(--color-background-2));
+  }
+
+  .logoIconWrapper {
+    padding: 33px;
+  }
+
+  .logoIcon {
+    width: 42px;
+    height: 42px;
+  }
+}
+
 .lg {
   .logoIconWrapper {
     padding: 12px;
@@ -112,6 +137,8 @@ const computedState = useComputedState(props);
 
 .logoIcon {
   display: block;
+  position: relative;
+  z-index: 3;
 }
 
 .logoText {

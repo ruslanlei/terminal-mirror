@@ -9,7 +9,8 @@
     "yes": "Yes",
     "hide": "Hide",
     "cancel": "Cancel",
-    "supportedBy": "Supported by - {supporter}"
+    "supportedBy": "Supported by - {supporter}",
+    "followLink": "Follow"
   },
   "dateTime": {
     "shortHours": "{hours}h"
@@ -343,6 +344,18 @@
         "Rewind trading functionality in time allows faster acquire relevant skills and learn to understand the market",
         "Having mastered the skills of trading on the terminal, you can move on to real trading without fear and start earning income"
       ]
+    }
+  },
+  "ecosystem": {
+    "label": "Macro - freedom",
+    "description": "Our Cryptocurrency Ecosystem",
+    "terminal": {
+      "label": "Terminal",
+      "description": "Trading terminal and emulator on history"
+    },
+    "course": {
+      "label": "Course RU",
+      "description": "Instructional video + manual in Russian"
     }
   }
 }

@@ -26,6 +26,7 @@ import LearnToEarnFrame
 import { ILearnToEarnFrame } from '@/components/app/terminalLanding/composables/learnToEarnScreen/learnToEarnFrame';
 import { useAnimation } from '@/hooks/useAnimation';
 import { useIntersectionObserver } from '@vueuse/core';
+import { useEnvironmentObserver } from '@/hooks/useEnvironmentObserver';
 import {
   LearnToEarnFramesProps,
 } from './index';
@@ -89,6 +90,22 @@ const { stop } = useIntersectionObserver(
 );
 
 onBeforeUnmount(stop);
+
+const timer = ref();
+
+const {
+  setListeners,
+  removeListeners,
+} = useEnvironmentObserver(root, () => {
+  clearTimeout(timer.value);
+  animation.value?.pause();
+  timer.value = setTimeout(() => {
+    animation.value?.play();
+  }, 100);
+}, true);
+
+onMounted(setListeners);
+onBeforeUnmount(removeListeners);
 </script>
 
 <style lang="scss" module>

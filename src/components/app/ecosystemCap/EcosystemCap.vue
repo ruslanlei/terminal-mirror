@@ -75,6 +75,36 @@ const courseCard = computed<IEcosystemCard>(() => ({
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  &::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    pointer-events: none;
+    height: calc(40 * var(--vh));
+    width: 100%;
+    background:
+      linear-gradient(
+        to bottom,
+        rgb(var(--color-background-1)),
+        rgba(var(--color-background-1), 0)
+      );
+  }
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: 0;
+    pointer-events: none;
+    height: calc(40 * var(--vh));
+    width: 100%;
+    background:
+      linear-gradient(
+        to top,
+        rgb(var(--color-background-1)),
+        rgba(var(--color-background-1), 0)
+      );
+  }
 }
 
 .cardsWrapper {

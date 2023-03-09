@@ -309,7 +309,7 @@ const {
   removeListeners,
 } = useEnvironmentObserver(trigger, calculateDropdownPosition, true);
 
-onMounted(async () => {
+onMounted(() => {
   calculateDropdownPosition();
   setListeners();
 });

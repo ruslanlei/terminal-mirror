@@ -57,3 +57,8 @@ export const toCssPxValue = (
 export const getRect = (
   element: HTMLElement,
 ) => element.getBoundingClientRect();
+
+export const getRectField = curry((
+  field: keyof DOMRect,
+  element: HTMLElement,
+) => getRect(element)[field]);

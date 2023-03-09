@@ -1,4 +1,5 @@
 import { MaybeComputedElementRef, useResizeObserver } from '@vueuse/core';
+import { onBeforeUnmount, onMounted } from 'vue';
 
 export const useEnvironmentObserver = (
   target: MaybeComputedElementRef,
@@ -24,6 +25,10 @@ export const useEnvironmentObserver = (
     }
     disconnect();
   };
+
+  onMounted(setListeners);
+
+  onBeforeUnmount(removeListeners);
 
   return {
     setListeners,

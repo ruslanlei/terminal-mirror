@@ -46,6 +46,9 @@
     <div :class="$style.plans">
       <slot name="plans" />
     </div>
+    <div :class="$style.faq">
+      <slot name="faq" />
+    </div>
   </div>
 </template>
 
@@ -152,4 +155,6 @@ const learnToEarnScreenBlobLeft = ref();
 .ecosystemScreen {
   margin-top: 103px;
 }
+
+.faq {}
 </style>

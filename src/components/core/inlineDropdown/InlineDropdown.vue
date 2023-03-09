@@ -3,10 +3,14 @@
     <button
       type="button"
       :class="$style.trigger"
+      @click="toggle"
     >
       <slot name="trigger" />
     </button>
-    <div :class="$style.contentContainer">
+    <div
+      :style="computedContainerStyles"
+      :class="$style.contentContainer"
+    >
       <div
         ref="content"
         :class="$style.content"
@@ -22,6 +26,14 @@ import { ref, watch } from 'vue';
 import { useEnvironmentObserver } from '@/hooks/useEnvironmentObserver';
 import { getRectField, toCssPxValue } from '@/helpers/style';
 import { compose } from '@/utils/fp';
+import { InlineDropdownProps } from './index';
+
+const props = withDefaults(
+  defineProps<InlineDropdownProps>(),
+  {
+    gap: 0,
+  },
+);
 
 const content = ref();
 
@@ -43,12 +55,15 @@ const setContainerHeightToZero = () => setContainerHeight(0);
 
 const isExpanded = ref(false);
 
-const calculateContainerHeight = () => {
-  (isExpanded.value
+const toggle = () => {
+  isExpanded.value = !isExpanded.value;
+};
+
+const calculateContainerHeight = () => (
+  isExpanded.value
     ? setContentHeightToContainerHeight
     : setContainerHeightToZero
-  )(content.value);
-};
+)(content.value);
 
 watch(isExpanded, calculateContainerHeight);
 useEnvironmentObserver(content, calculateContainerHeight);

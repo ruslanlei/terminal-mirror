@@ -32,6 +32,18 @@
     "username": "What is your name",
     "passwordConfirmation": "Repeat password"
   },
+  "ecosystem": {
+    "label": "Macro - freedom",
+    "description": "Our Cryptocurrency Ecosystem",
+    "terminal": {
+      "label": "Terminal",
+      "description": "Trading terminal and emulator on history"
+    },
+    "course": {
+      "label": "Course RU",
+      "description": "Instructional video + manual in Russian"
+    }
+  },
   "auth": {
     "description": "Crypto terminal blah blah blah la la lala framework and place of staff training require us to analyze.",
     "greetings": "Welcome to Terminal",
@@ -344,18 +356,27 @@
         "Rewind trading functionality in time allows faster acquire relevant skills and learn to understand the market",
         "Having mastered the skills of trading on the terminal, you can move on to real trading without fear and start earning income"
       ]
-    }
-  },
-  "ecosystem": {
-    "label": "Macro - freedom",
-    "description": "Our Cryptocurrency Ecosystem",
-    "terminal": {
-      "label": "Terminal",
-      "description": "Trading terminal and emulator on history"
     },
-    "course": {
-      "label": "Course RU",
-      "description": "Instructional video + manual in Russian"
+    "plans": {
+      "label": "Our plans",
+      "card": {
+        "headerText": "Get 1,000,000 virtual currency to the emulator",
+        "includedLabel": "Included in the package:",
+        "benefits": {
+          "accessToEmulator": "Access to emulator",
+          "accessToRealMarket": "Access to real market",
+          "propGroups": "Prop groups",
+          "trainingGroupsForTenPeople": "Training groups for 10 people."
+        },
+        "subscribe": "Subscribe",
+        "tryTrial": "Try a 2 day trial",
+        "activatePromoCode": "Activate promo code"
+      },
+      "list": {
+        "singlePackage": "Single package",
+        "propGroups": "Prop groups",
+        "trainingPackage": "Training package"
+      }
     }
   }
 }

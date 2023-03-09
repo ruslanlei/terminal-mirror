@@ -25,6 +25,9 @@
       <template #ecosystemScreen>
         <EcosystemCap />
       </template>
+      <template #plans>
+        <Plans />
+      </template>
     </TerminalLandingContainer>
   </div>
 </template>
@@ -42,8 +45,9 @@ import TotalBeginnerBadge from '@/components/app/terminalLanding/composables/tot
 import AssignmentScreen
   from '@/components/app/terminalLanding/composables/assignmentScreen/AssignmentScreen.vue';
 import WhyToTrainScreen from '@/components/app/terminalLanding/composables/whyToTrainScreen/WhyToTrainScreen.vue';
+import EcosystemCap from '@/components/app/ecosystemCap/EcosystemCap.vue';
+import Plans from '@/components/app/terminalLanding/composables/plans/Plans.vue';
 import { TerminalLandingChapter } from './index';
-import EcosystemCap from "@/components/app/ecosystemCap/EcosystemCap.vue";
 
 const { t } = useI18n();
 

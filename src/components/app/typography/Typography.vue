@@ -66,6 +66,10 @@ const computedState = useComputedState(props);
   @include h2;
 }
 
+.h3 {
+  @include h3;
+}
+
 .title1 {
   @include title1;
 }

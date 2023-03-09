@@ -43,6 +43,9 @@
     <div :class="$style.ecosystemScreen">
       <slot name="ecosystemScreen" />
     </div>
+    <div :class="$style.plans">
+      <slot name="plans" />
+    </div>
   </div>
 </template>
 

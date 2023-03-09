@@ -29,6 +29,10 @@ const props = withDefaults(
   background-color: rgb(var(--color-background-3));
 }
 
+.accent3 {
+  background-color: rgb(var(--color-accent-3));
+}
+
 .horizontal {
   min-width: 100%;
   height: 1px;

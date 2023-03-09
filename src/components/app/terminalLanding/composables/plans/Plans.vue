@@ -59,6 +59,10 @@ const cards = computed<{
           active: false,
         },
       ],
+      price: {
+        value: 890,
+        withoutSale: 1430,
+      },
     },
   },
   {
@@ -87,6 +91,10 @@ const cards = computed<{
           active: false,
         },
       ],
+      price: {
+        value: 2980,
+        withoutSale: 3440,
+      },
     },
   },
   {
@@ -115,6 +123,10 @@ const cards = computed<{
           active: true,
         },
       ],
+      price: {
+        value: 2165,
+        withoutSale: 2990,
+      },
     },
   },
 ]));

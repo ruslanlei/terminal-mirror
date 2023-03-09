@@ -1,6 +1,7 @@
 export type TypographyState =
     'success'
     | 'danger'
+    | 'danger3'
     | 'bold'
     | 'semiBold'
     | 'alignCenter'

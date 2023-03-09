@@ -9,6 +9,10 @@ export interface TerminalPlan {
     label: string,
     active: boolean,
   }[],
+  price: {
+    value: number,
+    withoutSale: number,
+  }
 }
 
 export interface PlanCardProps {

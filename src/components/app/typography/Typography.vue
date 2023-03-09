@@ -130,6 +130,10 @@ const computedState = useComputedState(props);
   color: rgb(var(--color-danger));
 }
 
+.danger3 {
+  color: rgb(var(--color-danger-3));
+}
+
 .gradientPrimary {
   background: var(--color-main-gradient);
   -webkit-background-clip: text;

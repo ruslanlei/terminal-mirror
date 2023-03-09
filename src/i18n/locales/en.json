@@ -5,6 +5,7 @@
     "currencyAmount": "{amount} {currency}",
     "percents": "{value}%",
     "slash": "{value1}/{value2}",
+    "slashWithSpaces": "{value1} / {value2}",
     "no": "No",
     "yes": "Yes",
     "hide": "Hide",

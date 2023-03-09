@@ -37,6 +37,7 @@ const isExternal = computed(() => typeof props.to === 'string');
 
 .link {
   cursor: pointer;
+  display: block;
 }
 
 .default, .accent1 {

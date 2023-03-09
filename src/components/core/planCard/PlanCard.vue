@@ -60,6 +60,55 @@
           type="horizontal"
           state="accent3"
         />
+        <Typography
+          :state="['accent2']"
+          size="massive4"
+          :class="$style.price"
+        >
+          <i18n-t
+            tag="span"
+            keypath="common.slashWithSpaces"
+          >
+            <template #value1>
+              <Typography
+                is-inline
+                :state="['danger3', 'bold']"
+              >
+                {{ t('common.currencyAmount', { amount: card.price.value, currency: '₽' }) }}
+              </Typography>
+            </template>
+            <template #value2>
+              {{ t('common.currencyAmount', { amount: card.price.withoutSale, currency: '₽' }) }}
+            </template>
+          </i18n-t>
+        </Typography>
+        <Button
+          size="xl"
+          :state="['accent3Color', 'interactive']"
+          :class="$style.subscribeButton"
+        >
+          {{ t('terminalLanding.plans.card.subscribe') }}
+        </Button>
+        <Button
+          size="xl"
+          :state="['gradientColor', 'interactive']"
+          :class="$style.trialButton"
+        >
+          {{ t('terminalLanding.plans.card.tryTrial') }}
+        </Button>
+        <Link
+          :state="null"
+          :size="null"
+          :to="{ name: 'index' }"
+          :class="$style.activePromocode"
+        >
+          <Typography
+            size="textLg"
+            :state="['accent2', 'alignCenter', 'semiBold']"
+          >
+            {{ t('terminalLanding.plans.card.activatePromoCode') }}
+          </Typography>
+        </Link>
       </div>
     </main>
   </div>
@@ -70,6 +119,8 @@ import { useI18n } from 'vue-i18n';
 import Icon from '@/components/core/icon/Icon.vue';
 import Typography from '@/components/app/typography/Typography.vue';
 import Divider from '@/components/core/divider/Divider.vue';
+import Button from '@/components/core/button/Button.vue';
+import Link from '@/components/core/link/Link.vue';
 import { PlanCardProps } from './index';
 
 const props = defineProps<PlanCardProps>();
@@ -134,5 +185,25 @@ const { t } = useI18n();
   margin-top: 40px;
   margin-left: -40px;
   margin-right: -40px;
+}
+
+.price {
+  margin-top: 40px;
+}
+
+.subscribeButton, .trialButton {
+  padding: 22px;
+}
+
+.subscribeButton {
+  margin-top: 40px;
+}
+
+.trialButton {
+  margin-top: 20px;
+}
+
+.activePromocode {
+  margin-top: 15px;
 }
 </style>

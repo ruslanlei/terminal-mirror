@@ -11,7 +11,8 @@ export type ButtonState =
   | 'borderedDefault'
   | 'textAccent2'
   | 'accent3Color'
-  | 'background1';
+  | 'background1'
+  | 'background3';
 
 export interface ButtonProps {
   state?: ButtonState | ButtonState[],

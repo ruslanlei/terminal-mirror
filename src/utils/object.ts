@@ -1,4 +1,5 @@
 import cloneDeep from 'lodash/cloneDeep';
+import lodashSet from 'lodash/set';
 import isEmpty from 'lodash/isEmpty';
 import { curry } from '@/utils/fp';
 
@@ -19,6 +20,8 @@ export const createObjectWithValues = (
 export {
   cloneDeep,
 };
+
+export const set = curry(lodashSet);
 
 export const getValueByKey = curry((
   key: string,

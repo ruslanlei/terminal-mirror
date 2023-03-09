@@ -28,24 +28,26 @@ const content = ref();
 const computedContainerStyles = ref({
   height: toCssPxValue(0),
 });
-
-const setContentHeightToContainerHeight = () => {
-  computedContainerStyles.value.height = compose(
-    toCssPxValue,
-    getRectField('height'),
-  )(content.value);
+const setContainerHeight = (height: number) => {
+  computedContainerStyles.value.height = toCssPxValue(height);
 };
 
-const setContainerHeightToZero = () => {
-  computedContainerStyles.value.height = toCssPxValue(0);
-};
+const setContentHeightToContainerHeight = (
+  content: HTMLElement,
+) => compose(
+  setContainerHeight,
+  getRectField('height'),
+)(content);
+
+const setContainerHeightToZero = () => setContainerHeight(0);
 
 const isExpanded = ref(false);
 
 const calculateContainerHeight = () => {
   (isExpanded.value
     ? setContentHeightToContainerHeight
-    : setContainerHeightToZero)();
+    : setContainerHeightToZero
+  )(content.value);
 };
 
 watch(isExpanded, calculateContainerHeight);

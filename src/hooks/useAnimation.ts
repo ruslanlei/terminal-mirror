@@ -1,4 +1,4 @@
-import { ref } from 'vue';
+import { onBeforeUnmount, ref } from 'vue';
 import anime, { AnimeInstance, AnimeParams } from 'animejs';
 
 export const useAnimation = (
@@ -13,6 +13,12 @@ export const useAnimation = (
     });
     return animation;
   };
+
+  onBeforeUnmount(() => {
+    anime.remove(
+      params()?.targets,
+    );
+  });
 
   const play = () => new Promise((resolve) => {
     if (!animation.value) {

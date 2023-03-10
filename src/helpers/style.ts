@@ -18,7 +18,7 @@ const removeCssPropertyFromSingleElement = curry((
 });
 
 export const removeCssProperty = curry((
-  property: string | string[],
+  property: keyof CSSStyleDeclaration | (keyof CSSStyleDeclaration)[],
   element: HTMLElement | HTMLElement[],
 ) => {
   const isManyElements = Array.isArray(element);

@@ -63,7 +63,6 @@ const learnToEarnScreenBlobLeft = ref();
 
 <style lang="scss" module>
 .terminalLandingContainer {
-  height: 7000px; // temporary
   background-color: rgb(var(--color-background-1));
   overflow: hidden;
 }
@@ -156,5 +155,13 @@ const learnToEarnScreenBlobLeft = ref();
   margin-top: 103px;
 }
 
-.faq {}
+.faq {
+  display: flex;
+  justify-content: center;
+  padding: 240px 0 140px 0;
+  & > * {
+    width: 100%;
+    max-width: 1240px;
+  }
+}
 </style>

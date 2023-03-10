@@ -22,3 +22,7 @@ export const toIdSelector = (
 export const toCssPercentValue = (
   percents: number,
 ) => `${percents}%`;
+
+export const querySelectorAll = (
+  selector: string,
+) => document.querySelectorAll(selector);

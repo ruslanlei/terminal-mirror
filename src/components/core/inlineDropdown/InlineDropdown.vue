@@ -1,11 +1,21 @@
 <template>
-  <div :class="$style.inlineDropdown">
+  <div
+    ref="root"
+    :class="[
+      $style.inlineDropdown,
+      $style[size],
+      isExpanded && $style.active,
+      ...computedState,
+    ]"
+  >
     <button
       type="button"
       :class="$style.trigger"
       @click="toggle"
     >
-      <slot name="trigger" />
+      <div :class="$style.triggerContent">
+        <slot name="trigger" />
+      </div>
     </button>
     <div
       :style="computedContainerStyles"
@@ -26,6 +36,8 @@ import { ref, watch } from 'vue';
 import { useEnvironmentObserver } from '@/hooks/useEnvironmentObserver';
 import { getRectField, toCssPxValue } from '@/helpers/style';
 import { compose } from '@/utils/fp';
+import { useComputedState } from '@/hooks/useComputedState';
+import { add } from '@/helpers/number';
 import { InlineDropdownProps } from './index';
 
 const props = withDefaults(
@@ -35,7 +47,10 @@ const props = withDefaults(
   },
 );
 
+const root = ref();
 const content = ref();
+
+const computedState = useComputedState(props);
 
 const computedContainerStyles = ref({
   height: toCssPxValue(0),
@@ -44,12 +59,11 @@ const setContainerHeight = (height: number) => {
   computedContainerStyles.value.height = toCssPxValue(height);
 };
 
-const setContentHeightToContainerHeight = (
-  content: HTMLElement,
-) => compose(
+const setContentHeightToContainerHeight = () => compose(
   setContainerHeight,
+  add(props.gap),
   getRectField('height'),
-)(content);
+)(content.value);
 
 const setContainerHeightToZero = () => setContainerHeight(0);
 
@@ -63,26 +77,86 @@ const calculateContainerHeight = () => (
   isExpanded.value
     ? setContentHeightToContainerHeight
     : setContainerHeightToZero
-)(content.value);
+)();
 
 watch(isExpanded, calculateContainerHeight);
-useEnvironmentObserver(content, calculateContainerHeight);
+useEnvironmentObserver(root, calculateContainerHeight);
 </script>
 
 <style lang="scss" module>
 .inlineDropdown {}
 
-.trigger {}
+.trigger {
+  width: 100%;
+  display: block;
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+}
+
+.triggerContent {
+  position: relative;
+  z-index: 2;
+}
 
 .contentContainer {
   position: relative;
   overflow: hidden;
-  transition: height 200ms;
+  transition: height 300ms;
 }
 
 .content {
   position: absolute;
   bottom: 0;
   width: 100%;
+}
+
+.lg {
+  .trigger {
+    padding: 25px 40px;
+    border-radius: 10px;
+    &:before {
+      border-radius: 10px;
+    }
+  }
+  .content {
+    border-radius: 10px;
+    padding: 25px 40px;
+  }
+}
+
+.gradientTriggerOnActive {
+  .trigger {
+    &:before {
+      content: '';
+      display: block;
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transform: scale(0.1, 0.8);
+      transition: transform 200ms, opacity 100ms;
+      background: var(--color-main-gradient);
+    }
+  }
+  &.active {
+    .trigger {
+      &:before {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+  }
+}
+
+.background3TriggerColor {
+  .trigger {
+    background-color: rgb(var(--color-background-3));
+  }
+}
+
+.background2BodyColor {
+  .content {
+    background-color: rgb(var(--color-background-2));
+  }
 }
 </style>

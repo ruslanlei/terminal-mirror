@@ -50,8 +50,8 @@ import AssignmentScreen
 import WhyToTrainScreen from '@/components/app/terminalLanding/composables/whyToTrainScreen/WhyToTrainScreen.vue';
 import EcosystemCap from '@/components/app/ecosystemCap/EcosystemCap.vue';
 import Plans from '@/components/app/terminalLanding/composables/plans/Plans.vue';
+import Faq from '@/components/app/terminalLanding/composables/faq/Faq.vue';
 import { TerminalLandingChapter } from './index';
-import Faq from "@/components/app/terminalLanding/composables/faq/Faq.vue";
 
 const { t } = useI18n();
 

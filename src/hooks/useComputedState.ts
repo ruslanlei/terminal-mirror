@@ -1,5 +1,5 @@
-import { useCssModules } from '@/hooks/useCssModules';
 import { computed } from 'vue';
+import { useCssModules } from '@/hooks/useCssModules';
 import { arrayFrom } from '@/utils/array';
 
 export const useComputedState = (

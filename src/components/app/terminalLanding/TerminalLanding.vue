@@ -31,6 +31,9 @@
       <template #faq>
         <Faq />
       </template>
+      <template #footer>
+        <LandingFooter />
+      </template>
     </TerminalLandingContainer>
   </div>
 </template>
@@ -52,6 +55,7 @@ import EcosystemCap from '@/components/app/ecosystemCap/EcosystemCap.vue';
 import Plans from '@/components/app/terminalLanding/composables/plans/Plans.vue';
 import Faq from '@/components/app/terminalLanding/composables/faq/Faq.vue';
 import { TerminalLandingChapter } from './index';
+import LandingFooter from "@/components/app/terminalLanding/composables/landingFooter/LandingFooter.vue";
 
 const { t } = useI18n();
 

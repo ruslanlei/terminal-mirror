@@ -174,6 +174,13 @@ const computedLoaderSize = computed(
   }
 }
 
+.backgroundAccent1 {
+  color: rgba(var(--color-background-1));
+  background-color: rgb(var(--color-accent-1));
+  &:hover:not(.disabled) {
+  }
+}
+
 .accent3Color {
   color: rgba(var(--color-accent-1));
   background-color: rgb(var(--color-accent-3));

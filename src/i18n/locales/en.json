@@ -401,6 +401,10 @@
         "label": "What should I do if I run out of virtual currency?",
         "text": "The terminal works with the 50 most popular coins on the Binance platform. Binance is the world's largest crypto exchange and its top 50 coins include Bitcoin (BTC), Ethereum (ETH), Ripple (XRP), Litecoin (LTC) and other popular cryptocurrencies. Practicing on our top 50 Binance terminal will help you acquire the most relevant skills and move on to real trading."
       }
+    },
+    "footer": {
+      "label": "Go to the terminal and dive into the crypto market without losing money.",
+      "followButton": "Go to platform"
     }
   }
 }

@@ -119,6 +119,9 @@ useEnvironmentObserver(root, calculateContainerHeight);
       border-radius: 10px;
     }
   }
+  .contentContainer {
+    border-radius: 10px;
+  }
   .content {
     border-radius: 10px;
     padding: 25px 40px;

@@ -49,6 +49,9 @@
     <div :class="$style.faq">
       <slot name="faq" />
     </div>
+    <div :class="$style.footer">
+      <slot name="footer" />
+    </div>
   </div>
 </template>
 
@@ -164,4 +167,6 @@ const learnToEarnScreenBlobLeft = ref();
     max-width: 1240px;
   }
 }
+
+.footer {}
 </style>

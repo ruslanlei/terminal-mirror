@@ -7,8 +7,11 @@
       >
         {{ t('terminalLanding.footer.label') }}
       </Typography>
-      <div>
-        <Picture />
+      <div :class="$style.imageContainer">
+        <Picture
+          :class="$style.image"
+          :srcset="walletSrcset"
+        />
       </div>
       <Button
         size="xl"
@@ -22,11 +25,20 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
+import { collectSrcSet } from '@/helpers/dom';
 import Typography from '@/components/app/typography/Typography.vue';
 import Picture from '@/components/core/picture/Picture.vue';
 import Button from '@/components/core/button/Button.vue';
 
+import WalletPng from '@/assets/images/auth/wallet.png';
+import WalletWebp from '@/assets/images/auth/wallet.webp';
+
 const { t } = useI18n();
+
+const walletSrcset = collectSrcSet([
+  WalletWebp,
+  WalletPng,
+]);
 </script>
 
 <style lang="scss" module>
@@ -42,5 +54,18 @@ const { t } = useI18n();
   max-width: 1240px;
   display: grid;
   grid-template-columns: 2fr 380px 1fr;
+}
+
+.imageContainer {
+  position: relative;
+  margin-top: -82px;
+  margin-bottom: -82px;
+}
+
+.image {
+  position: absolute;
+  bottom: 0;
+  width: 380px;
+  height: 380px;
 }
 </style>

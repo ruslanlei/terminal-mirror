@@ -128,6 +128,18 @@ useEnvironmentObserver(root, calculateContainerHeight);
   }
 }
 
+@keyframes gradientTriggerOnActiveKeyframes {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
 .gradientTriggerOnActive {
   .trigger {
     &:before {
@@ -138,12 +150,22 @@ useEnvironmentObserver(root, calculateContainerHeight);
       opacity: 0;
       transform: scale(0.1, 0.8);
       transition: transform 200ms, opacity 100ms;
-      background: var(--color-main-gradient);
+      background: linear-gradient(
+        90deg,
+        transparent,
+        transparent,
+        #CC42EE,
+        #6271EB,
+        transparent,
+        transparent
+      );
+      background-size: 600% 100%;
     }
   }
   &.active {
     .trigger {
       &:before {
+        animation: gradientTriggerOnActiveKeyframes 26s ease infinite;
         opacity: 1;
         transform: scale(1);
       }

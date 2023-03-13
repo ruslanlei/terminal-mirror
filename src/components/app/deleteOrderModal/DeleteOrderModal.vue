@@ -90,10 +90,10 @@ const props = defineProps<DeleteOrderModalProps>();
 
 const emit = defineEmits<DeleteOrderModalEmits>();
 
-const illustrationSrcSet = computed(() => collectSrcSet([
+const illustrationSrcSet = collectSrcSet([
   IllustrationWebp,
   IllustrationPng,
-]));
+]);
 
 const { t } = useI18n();
 

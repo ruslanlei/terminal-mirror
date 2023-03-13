@@ -8,14 +8,30 @@
     font-size: 38px;
 }
 
+@mixin massive2sm {
+    font-size: 32px;
+}
+
 @mixin massive3 {
     font-size: 30px;
+}
+
+@mixin massive4 {
+    font-size: 28px;
 }
 
 @mixin h1 {
     font-size: 24px;
     font-weight: 700;
     line-height: 32px;
+}
+
+@mixin h2 {
+    font-size: 22px;
+}
+
+@mixin h3 {
+    font-size: 20px;
 }
 
 @mixin title1 {

@@ -19,11 +19,11 @@ import {
 } from '@/helpers/candles';
 import { useChartDataStore } from '@/stores/chartData';
 
-export const getDefaultChartDateFrom = () => compose(
+export const getDefaultChartDateFrom = compose(
   toISOString,
   subtractMonths(4),
   dateNow,
-)();
+);
 
 export const useMarketChart = () => {
   const emulatorStore = useEmulatorStore();
@@ -51,7 +51,8 @@ export const useMarketChart = () => {
   const dateTo = computed(
     () => (marketType.value === 'emulator'
       ? emulatorDate.value
-      : emulatorDate.value), // FIXME: While realising real market
+      // FIXME: While realising real market
+      : emulatorDate.value),
   );
 
   const dateFrom = computed(

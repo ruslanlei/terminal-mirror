@@ -18,7 +18,7 @@ const removeCssPropertyFromSingleElement = curry((
 });
 
 export const removeCssProperty = curry((
-  property: string | string[],
+  property: keyof CSSStyleDeclaration | (keyof CSSStyleDeclaration)[],
   element: HTMLElement | HTMLElement[],
 ) => {
   const isManyElements = Array.isArray(element);
@@ -57,3 +57,8 @@ export const toCssPxValue = (
 export const getRect = (
   element: HTMLElement,
 ) => element.getBoundingClientRect();
+
+export const getRectField = curry((
+  field: keyof DOMRect,
+  element: HTMLElement,
+) => getRect(element)[field]);

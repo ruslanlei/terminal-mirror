@@ -1,5 +1,6 @@
 export interface ImageBackgroundBlockProps {
-  srcset: string,
+  srcset?: string,
   src?: string,
   contentClass?: string,
+  interactive?: boolean,
 }

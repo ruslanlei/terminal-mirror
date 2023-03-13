@@ -15,3 +15,8 @@ export const max = curry((
   firstNumber: number,
   secondNumber: number,
 ) => Math.max(firstNumber, secondNumber));
+
+export const min = curry((
+  firstNumber: number,
+  secondNumber: number,
+) => Math.min(firstNumber, secondNumber));

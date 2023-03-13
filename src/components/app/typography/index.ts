@@ -1,6 +1,7 @@
 export type TypographyState =
     'success'
     | 'danger'
+    | 'danger3'
     | 'bold'
     | 'semiBold'
     | 'alignCenter'
@@ -8,13 +9,18 @@ export type TypographyState =
     | 'accent1'
     | 'gradientPrimary'
     | 'accent2'
+    | 'background1'
+    | 'uppercase'
     | 'nowrap';
 
 export type TypographySize =
     'h1'
+    | 'h2'
     | 'massive1'
     | 'massive2'
+    | 'massive2sm'
     | 'massive3'
+    | 'massive4'
     | 'title1'
     | 'title2'
     | 'title3'

@@ -1,6 +1,8 @@
 <template>
-  <router-link
+  <Component
+    :is="isExternal ? 'a' : 'RouterLink'"
     :to="to"
+    :href="to"
     :class="[
       $style.link,
       $style[state],
@@ -11,13 +13,14 @@
     <slot>
       {{ label }}
     </slot>
-  </router-link>
+  </Component>
 </template>
 
 <script setup lang="ts">
 import { LinkProps } from '@/components/core/link/index';
+import { computed } from 'vue';
 
-withDefaults(
+const props = withDefaults(
   defineProps<LinkProps>(),
   {
     state: 'default',
@@ -25,6 +28,8 @@ withDefaults(
     tabIndex: 0,
   },
 );
+
+const isExternal = computed(() => typeof props.to === 'string');
 </script>
 
 <style lang="scss" module>
@@ -32,10 +37,15 @@ withDefaults(
 
 .link {
   cursor: pointer;
+  display: block;
 }
 
-.default {
+.default, .accent1 {
   color: rgba(var(--color-accent-1));
+}
+
+.accent2 {
+  color: rgba(var(--color-accent-2));
 }
 
 .primary {

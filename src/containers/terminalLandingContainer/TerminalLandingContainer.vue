@@ -34,8 +34,23 @@
         <slot name="totalBeginnerBadge" />
       </div>
     </div>
-    <div :class="$style.determinationScreen">
-      <slot name="determinationScreen" />
+    <div :class="$style.assignmentScreen">
+      <slot name="assignmentScreen" />
+    </div>
+    <div :class="$style.whyToTrainScreen">
+      <slot name="whyToTrainScreen" />
+    </div>
+    <div :class="$style.ecosystemScreen">
+      <slot name="ecosystemScreen" />
+    </div>
+    <div :class="$style.plans">
+      <slot name="plans" />
+    </div>
+    <div :class="$style.faq">
+      <slot name="faq" />
+    </div>
+    <div :class="$style.footer">
+      <slot name="footer" />
     </div>
   </div>
 </template>
@@ -51,7 +66,6 @@ const learnToEarnScreenBlobLeft = ref();
 
 <style lang="scss" module>
 .terminalLandingContainer {
-  height: 5000px; // temporary
   background-color: rgb(var(--color-background-1));
   overflow: hidden;
 }
@@ -135,4 +149,24 @@ const learnToEarnScreenBlobLeft = ref();
   position: relative;
   z-index: 3;
 }
+
+.whyToTrainScreen {
+  margin-top: 240px;
+}
+
+.ecosystemScreen {
+  margin-top: 103px;
+}
+
+.faq {
+  display: flex;
+  justify-content: center;
+  padding: 240px 0 140px 0;
+  & > * {
+    width: 100%;
+    max-width: 1240px;
+  }
+}
+
+.footer {}
 </style>

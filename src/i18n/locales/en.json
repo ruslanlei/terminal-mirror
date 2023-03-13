@@ -5,11 +5,13 @@
     "currencyAmount": "{amount} {currency}",
     "percents": "{value}%",
     "slash": "{value1}/{value2}",
+    "slashWithSpaces": "{value1} / {value2}",
     "no": "No",
     "yes": "Yes",
     "hide": "Hide",
     "cancel": "Cancel",
-    "supportedBy": "Supported by - {supporter}"
+    "supportedBy": "Supported by - {supporter}",
+    "followLink": "Follow"
   },
   "dateTime": {
     "shortHours": "{hours}h"
@@ -30,6 +32,18 @@
     "newPassword": "Pick a password",
     "username": "What is your name",
     "passwordConfirmation": "Repeat password"
+  },
+  "ecosystem": {
+    "label": "Macro - freedom",
+    "description": "Our Cryptocurrency Ecosystem",
+    "terminal": {
+      "label": "Terminal",
+      "description": "Trading terminal and emulator on history"
+    },
+    "course": {
+      "label": "Course RU",
+      "description": "Instructional video + manual in Russian"
+    }
   },
   "auth": {
     "description": "Crypto terminal blah blah blah la la lala framework and place of staff training require us to analyze.",
@@ -330,6 +344,67 @@
           "text": "Improve your learning with practice. Connect your students to the learning terminal and help them to acquire trading skills."
         }
       }
+    },
+    "whyToTrain": {
+      "label": "Why training?",
+      "cards": [
+        "For a month of training at the terminal you will not lose real money and you will receive experience that could be gained over the years",
+        "Acquire analytical skills and learn how to make informed decisions",
+        "Built-in risk management will help to form the right skill",
+        "Hints and a user-friendly interface will allow even a beginner to master trading",
+        "You can quickly test trading strategies",
+        "Opportunity to check the effectiveness of a new employee for a prop company",
+        "Rewind trading functionality in time allows faster acquire relevant skills and learn to understand the market",
+        "Having mastered the skills of trading on the terminal, you can move on to real trading without fear and start earning income"
+      ]
+    },
+    "plans": {
+      "label": "Our plans",
+      "card": {
+        "headerText": "Get 1,000,000 virtual currency to the emulator",
+        "includedLabel": "Included in the package:",
+        "benefits": {
+          "accessToEmulator": "Access to emulator",
+          "accessToRealMarket": "Access to real market",
+          "propGroups": "Prop groups",
+          "trainingGroupsForTenPeople": "Training groups for 10 people."
+        },
+        "subscribe": "Subscribe",
+        "tryTrial": "Try a 2 day trial",
+        "activatePromoCode": "Activate promo code"
+      },
+      "list": {
+        "singlePackage": "Single package",
+        "propGroups": "Prop groups",
+        "trainingPackage": "Training package"
+      }
+    },
+    "faq": {
+      "label": "FAQ",
+      "beginner": {
+        "label": "I am new to the topic of cryptocurrency. Can I figure it out?",
+        "text": "The terminal works with the 50 most popular coins on the Binance platform. Binance is the world's largest crypto exchange and its top 50 coins include Bitcoin (BTC), Ethereum (ETH), Ripple (XRP), Litecoin (LTC) and other popular cryptocurrencies. Practicing on our top 50 Binance terminal will help you acquire the most relevant skills and move on to real trading."
+      },
+      "coins": {
+        "label": "What assets does the terminal operate on?",
+        "text": "The terminal works with the 50 most popular coins on the Binance platform. Binance is the world's largest crypto exchange and its top 50 coins include Bitcoin (BTC), Ethereum (ETH), Ripple (XRP), Litecoin (LTC) and other popular cryptocurrencies. Practicing on our top 50 Binance terminal will help you acquire the most relevant skills and move on to real trading."
+      },
+      "emulator": {
+        "label": "What is history trading?",
+        "text": "The terminal works with the 50 most popular coins on the Binance platform. Binance is the world's largest crypto exchange and its top 50 coins include Bitcoin (BTC), Ethereum (ETH), Ripple (XRP), Litecoin (LTC) and other popular cryptocurrencies. Practicing on our top 50 Binance terminal will help you acquire the most relevant skills and move on to real trading."
+      },
+      "realMarket": {
+        "label": "Does the terminal work with real money and quotes?",
+        "text": "The terminal works with the 50 most popular coins on the Binance platform. Binance is the world's largest crypto exchange and its top 50 coins include Bitcoin (BTC), Ethereum (ETH), Ripple (XRP), Litecoin (LTC) and other popular cryptocurrencies. Practicing on our top 50 Binance terminal will help you acquire the most relevant skills and move on to real trading."
+      },
+      "outOfVirtualCurrency": {
+        "label": "What should I do if I run out of virtual currency?",
+        "text": "The terminal works with the 50 most popular coins on the Binance platform. Binance is the world's largest crypto exchange and its top 50 coins include Bitcoin (BTC), Ethereum (ETH), Ripple (XRP), Litecoin (LTC) and other popular cryptocurrencies. Practicing on our top 50 Binance terminal will help you acquire the most relevant skills and move on to real trading."
+      }
+    },
+    "footer": {
+      "label": "Go to the terminal and dive into the crypto market without losing money.",
+      "followButton": "Go to platform"
     }
   }
 }

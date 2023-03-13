@@ -16,8 +16,23 @@
       <template #totalBeginnerBadge>
         <TotalBeginnerBadge />
       </template>
-      <template #determinationScreen>
-        <DeterminationScreen />
+      <template #assignmentScreen>
+        <AssignmentScreen />
+      </template>
+      <template #whyToTrainScreen>
+        <WhyToTrainScreen />
+      </template>
+      <template #ecosystemScreen>
+        <EcosystemCap />
+      </template>
+      <template #plans>
+        <Plans />
+      </template>
+      <template #faq>
+        <Faq />
+      </template>
+      <template #footer>
+        <LandingFooter />
       </template>
     </TerminalLandingContainer>
   </div>
@@ -33,9 +48,14 @@ import LandingHeader
   from '@/components/app/terminalLanding/composables/landingHeader/LandingHeader.vue';
 import LearnToEarnScreen from '@/components/app/terminalLanding/composables/learnToEarnScreen/LearnToEarnScreen.vue';
 import TotalBeginnerBadge from '@/components/app/terminalLanding/composables/totalBeginnerBadge/TotalBeginnerBadge.vue';
-import DeterminationScreen
-  from '@/components/app/terminalLanding/composables/determinationScreen/DeterminationScreen.vue';
+import AssignmentScreen
+  from '@/components/app/terminalLanding/composables/assignmentScreen/AssignmentScreen.vue';
+import WhyToTrainScreen from '@/components/app/terminalLanding/composables/whyToTrainScreen/WhyToTrainScreen.vue';
+import EcosystemCap from '@/components/app/ecosystemCap/EcosystemCap.vue';
+import Plans from '@/components/app/terminalLanding/composables/plans/Plans.vue';
+import Faq from '@/components/app/terminalLanding/composables/faq/Faq.vue';
 import { TerminalLandingChapter } from './index';
+import LandingFooter from "@/components/app/terminalLanding/composables/landingFooter/LandingFooter.vue";
 
 const { t } = useI18n();
 

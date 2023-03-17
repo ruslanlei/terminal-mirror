@@ -71,6 +71,7 @@ const computedLoaderSize = computed(
       opacity: 0;
       pointer-events: none;
     }
+
     .inner {
       opacity: 1;
     }
@@ -130,6 +131,16 @@ const computedLoaderSize = computed(
   background: var(--color-main-gradient);
 }
 
+.blueGradientColor {
+  color: rgba(var(--color-accent-1));
+  background: var(--color-blue-gradient);
+}
+
+.orangeGradientColor {
+  color: rgba(var(--color-accent-1));
+  background: var(--color-orange-gradient);
+}
+
 .successColor {
   color: rgba(var(--color-accent-1));
   background: rgb(var(--color-success));
@@ -166,6 +177,19 @@ const computedLoaderSize = computed(
   }
 }
 
+.background2 {
+  color: rgba(var(--color-accent-1));
+  background-color: rgb(var(--color-background-2));
+  &:hover {
+    background-color: rgb(var(--color-background-1));
+  }
+}
+
+.greyBordered {
+  color: rgba(var(--color-accent-2));
+  border: 1px solid rgb(var(--color-accent-2));
+}
+
 .background3 {
   color: rgba(var(--color-accent-1));
   background-color: rgb(var(--color-background-3));
@@ -195,6 +219,10 @@ const computedLoaderSize = computed(
   &:hover:not(.disabled) {
     background-color: rgb(var(--color-background-4));
   }
+}
+
+.nowrap {
+  white-space: nowrap;
 }
 
 .xl {

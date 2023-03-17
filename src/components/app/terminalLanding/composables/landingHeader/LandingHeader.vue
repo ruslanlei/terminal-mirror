@@ -17,19 +17,26 @@
         ]"
         :size="null"
         :is-wide="false"
+        @click="setActiveChapter(chapter.slug)"
       >
         {{ chapter.label }}
       </Button>
     </div>
     <div :class="$style.rightColumn">
-      <Button
-        :state="['gradientColor']"
-        size="xl"
-        :is-wide="false"
-        :class="$style.signUpButton"
+      <Link
+        :size="null"
+        :state="null"
+        :to="{ name: 'auth-sign-in' }"
       >
-        {{ t('auth.signUp.label') }}
-      </Button>
+        <Button
+          :state="['gradientColor']"
+          size="xl"
+          :is-wide="false"
+          :class="$style.signUpButton"
+        >
+          {{ t('auth.signUp.label') }}
+        </Button>
+      </Link>
       <LanguageSelect />
     </div>
   </header>
@@ -39,8 +46,10 @@
 import { useI18n } from 'vue-i18n';
 import Logo from '@/components/core/logo/Logo.vue';
 import Button from '@/components/core/button/Button.vue';
+import Link from '@/components/core/link/Link.vue';
 import { useLocalValue } from '@/hooks/useLocalValue';
 import LanguageSelect from '@/components/app/languageSelect/LanguageSelect.vue';
+import { TerminalLandingChapter } from '@/components/app/terminalLanding';
 import { TerminalLandingHeaderEmits, TerminalLandingHeaderProps } from './index';
 
 const { t } = useI18n();
@@ -50,6 +59,12 @@ const props = defineProps<TerminalLandingHeaderProps>();
 const emit = defineEmits<TerminalLandingHeaderEmits>();
 
 const localActiveChapter = useLocalValue(props, emit, 'activeChapter');
+
+const setActiveChapter = (
+  activeChapter: TerminalLandingChapter['slug'],
+) => {
+  localActiveChapter.value = activeChapter;
+};
 </script>
 
 <style lang="scss" module>

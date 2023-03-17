@@ -1,43 +1,45 @@
 <template>
   <ImageBackgroundBlock
-    :src="BackgroundPng"
+    :src="computedBackground"
     :content-class="$style.ecoSystemCard"
   >
-    <Typography
-      :state="['accent1', 'bold', 'uppercase']"
-      size="massive1"
-    >
-      {{ t('ecosystem.label') }}
-    </Typography>
-    <Typography
-      :state="['accent1', 'medium']"
-      size="massive5"
-      :class="$style.subheading"
-    >
-      {{ t('ecosystem.description') }}
-    </Typography>
-    <div :class="$style.cardsWrapper">
-      <div :class="$style.cardWrapper">
-        <EcosystemCard :card="terminalCard">
-          <template #logo>
-            <Logo
-              type="slim"
-              :size="null"
-              state="xlThickBorder"
-            />
-          </template>
-        </EcosystemCard>
-      </div>
-      <div :class="$style.cardWrapper">
-        <EcosystemCard :card="courseCard">
-          <template #logo>
-            <CourseLogo
-              type="slim"
-              state="xlThickBorder"
-              :size="null"
-            />
-          </template>
-        </EcosystemCard>
+    <div :class="$style.ecoSystemCardContent">
+      <Typography
+        :state="['accent1', 'bold', 'uppercase']"
+        size="massive1"
+      >
+        {{ t('ecosystem.label') }}
+      </Typography>
+      <Typography
+        :state="['accent1', 'medium']"
+        size="h1"
+        :class="$style.subheading"
+      >
+        {{ t('ecosystem.description') }}
+      </Typography>
+      <div :class="$style.cardsWrapper">
+        <div :class="$style.cardWrapper">
+          <EcosystemCard :card="terminalCard">
+            <template #logo>
+              <Logo
+                type="slim"
+                :size="null"
+                state="xlThickBorder"
+              />
+            </template>
+          </EcosystemCard>
+        </div>
+        <div :class="$style.cardWrapper">
+          <EcosystemCard :card="courseCard">
+            <template #logo>
+              <CourseLogo
+                type="slim"
+                state="xlThickBorder"
+                :size="null"
+              />
+            </template>
+          </EcosystemCard>
+        </div>
       </div>
     </div>
   </ImageBackgroundBlock>
@@ -52,9 +54,23 @@ import Logo from '@/components/core/logo/Logo.vue';
 import { computed } from 'vue';
 import { IEcosystemCard } from '@/components/app/ecosystemCap/ecosystemCard';
 import CourseLogo from '@/components/core/courseLogo/CourseLogo.vue';
-import BackgroundPng from './assets/spaceBackground.png';
+import BackgroundPurplePng from './assets/spaceBackgroundPurple.png';
+import BackgroundBluePng from './assets/spaceBackgroundBlue.png';
+import { EcosystemCapProps } from './index';
 
 const { t } = useI18n();
+
+const props = withDefaults(
+  defineProps<EcosystemCapProps>(),
+  {
+    state: 'purple',
+  },
+);
+
+const computedBackground = computed(() => ({
+  purple: BackgroundPurplePng,
+  blue: BackgroundBluePng,
+}[props.state]));
 
 const terminalCard = computed<IEcosystemCard>(() => ({
   label: t('ecosystem.terminal.label'),
@@ -71,10 +87,6 @@ const courseCard = computed<IEcosystemCard>(() => ({
 
 <style lang="scss" module>
 .ecoSystemCard {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   &::before {
     content: '';
     display: block;
@@ -105,6 +117,16 @@ const courseCard = computed<IEcosystemCard>(() => ({
         rgba(var(--color-background-1), 0)
       );
   }
+}
+
+.ecoSystemCardContent {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 300px 0;
 }
 
 .cardsWrapper {

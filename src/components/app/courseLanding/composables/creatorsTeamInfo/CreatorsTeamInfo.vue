@@ -1,0 +1,146 @@
+<template>
+  <div
+    :class="$style.creatorsTeamInfo"
+  >
+    <Typography
+      :state="['accent1', 'bold', 'alignCenter']"
+      size="massive2"
+      :class="$style.heading"
+    >
+      {{ t('courseLanding.creatorsTeamInfo.heading') }}
+    </Typography>
+    <div :class="$style.mainContent">
+      <Card
+        :class="$style.card"
+        state="background1"
+      >
+        <Typography
+          :state="['accent1', 'alignCenter']"
+          size="h2"
+        >
+          <template
+            v-for="(text, textIndex) in 3"
+            :key="textIndex"
+          >
+            <template v-if="textIndex">
+              <br
+                v-for="br in 2"
+                :key="br"
+              >
+            </template>
+            <Typography
+              is-inline
+            >
+              {{ t(`courseLanding.creatorsTeamInfo.text.${textIndex}`) }}
+            </Typography>
+          </template>
+        </Typography>
+      </Card>
+      <div :class="$style.bubblesContainer">
+        <ImageBubbles />
+        <DiscordLink :class="$style.discordLink" />
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import Typography from '@/components/app/typography/Typography.vue';
+import { useI18n } from 'vue-i18n';
+import Card from '@/components/core/card/Card.vue';
+import ImageBubbles from '@/components/app/courseLanding/composables/creatorsTeamInfo/imageBubbles/ImageBubbles.vue';
+import DiscordLink from '@/components/app/courseLanding/composables/creatorsTeamInfo/discordLink/DiscordLink.vue';
+
+const { t } = useI18n();
+</script>
+
+<style lang="scss" module>
+@import "src/assets/styles/utils";
+
+.creatorsTeamInfo {
+  height: 1067px;
+  background: rgb(var(--color-background-3));
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.heading {
+  max-width: 1000px;
+}
+
+.mainContent {
+  height: 711px;
+  margin-top: 80px;
+  gap: 70px;
+  display: flex;
+  align-items: center;
+}
+
+.card {
+  padding: 40px;
+  max-width: 610px;
+  height: fit-content;
+}
+
+.bubblesContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.discordLink {
+  position: absolute;
+  bottom: 0;
+}
+
+.imagesWrapper {
+  position: relative;
+  width: 500px;
+  height: 711px;
+}
+
+.hamsterNft {
+  position: absolute;
+  left: 100px;
+  top: 15px;
+}
+
+.etheriumNft {
+  position: absolute;
+  left: 225px;
+}
+
+.pixelArtNft {
+  position: absolute;
+  right: 0;
+  top: 50px;
+}
+
+.monkeyNft {
+  position: absolute;
+  left: 0;
+  top: 116px;
+}
+
+.pepeFrogImg {
+  position: absolute;
+  right: 25px;
+  top: 195px;
+}
+
+.girlImg {
+  position: absolute;
+  left: 5px;
+  bottom: 140px;
+}
+
+.yodaImg {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+</style>

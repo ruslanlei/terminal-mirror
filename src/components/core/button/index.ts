@@ -12,8 +12,13 @@ export type ButtonState =
   | 'backgroundAccent1'
   | 'textAccent2'
   | 'accent3Color'
+  | 'background3'
+  | 'greyBordered'
+  | 'blueGradientColor'
+  | 'orangeGradientColor'
+  | 'background2'
   | 'background1'
-  | 'background3';
+  | 'nowrap'
 
 export interface ButtonProps {
   state?: ButtonState | ButtonState[],

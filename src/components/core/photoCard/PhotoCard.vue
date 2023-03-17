@@ -13,7 +13,7 @@
         {{ cardData.label }}
       </Typography>
       <Typography
-        :state="['accent2', 'medium']"
+        :state="['accent1', 'medium']"
         size="textLg"
         :class="$style.description"
       >
@@ -29,9 +29,8 @@ import { useI18n } from 'vue-i18n';
 import Typography from '@/components/app/typography/Typography.vue';
 import { PhotoCardProps } from './index';
 
-defineProps<PhotoCardProps>();
-
 const { t } = useI18n();
+defineProps<PhotoCardProps>();
 </script>
 
 <style lang="scss" module>

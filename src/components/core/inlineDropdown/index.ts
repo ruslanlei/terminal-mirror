@@ -1,4 +1,8 @@
-export type InlineDropdownState = 'gradientTriggerOnActive' | 'background3TriggerColor' | 'background2BodyColor';
+export type InlineDropdownState =
+  'gradientPurpleTriggerOnActive'
+  | 'gradientBlueTriggerOnActive'
+  | 'background3TriggerColor'
+  | 'background2BodyColor';
 
 export interface InlineDropdownProps {
   gap: number,

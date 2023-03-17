@@ -52,15 +52,12 @@
 <script setup lang="ts">
 import CoinLogo from '@/components/core/coinLogo/CoinLogo.vue';
 import Typography from '@/components/app/typography/Typography.vue';
-import { humanizeNumber, percentFormat } from '@/utils/number';
+import { humanizeNumber } from '@/utils/number';
 import Badge from '@/components/core/badge/Badge.vue';
 import { computed } from 'vue';
-import { compose } from '@/utils/fp';
 import { humanizePercents } from '@/helpers/math/percents';
-import SkeletonContainer from '@/components/core/skeletonContainer/SkeletonContainer.vue';
-import Skeleton from '@/components/core/skeleton/Skeleton.vue';
+import { isPositive } from '@/helpers/number';
 import { FavoritesListItemProps } from './index';
-import { isPositive, roundToDecimalPoint } from '../../../../helpers/number';
 
 const props = defineProps<FavoritesListItemProps>();
 

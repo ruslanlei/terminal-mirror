@@ -242,7 +242,7 @@ const playAppearAnimation = async () => {
       delay: 100,
     },
     ...(props.appearanceAnimationType === 'bubbling' ? {
-      scale: [0.2, 1],
+      scale: [0, 1],
     } : {}),
     duration: 700,
     easing: 'easeOutQuint',

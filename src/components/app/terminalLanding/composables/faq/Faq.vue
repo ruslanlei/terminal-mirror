@@ -12,7 +12,7 @@
         :key="id"
         size="lg"
         :state="[
-          'gradientTriggerOnActive',
+          'gradientPurpleTriggerOnActive',
           'background3TriggerColor',
           'background2BodyColor'
         ]"

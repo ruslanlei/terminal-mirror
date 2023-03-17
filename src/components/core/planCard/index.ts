@@ -1,3 +1,5 @@
+import { RouteLocationRaw } from 'vue-router';
+
 export interface LandingPlan {
   headerText: {
     h1?: string,
@@ -15,7 +17,9 @@ export interface LandingPlan {
   price: {
     value: number,
     withoutSale: number,
-  }
+  },
+  trialLink: RouteLocationRaw,
+  subscribeLink: RouteLocationRaw,
 }
 
 export interface PlanCardProps {

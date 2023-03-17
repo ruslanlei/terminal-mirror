@@ -63,8 +63,8 @@ const cards = computed<{
         value: 890,
         withoutSale: 1430,
       },
-      purchaseButton: t('terminalLanding.plans.tryTrial'),
-
+      subscribeLink: { name: 'auth-sign-up' },
+      trialLink: { name: 'auth-sign-up' },
     },
   },
   {
@@ -97,8 +97,8 @@ const cards = computed<{
         value: 2980,
         withoutSale: 3440,
       },
-      purchaseButton: t('terminalLanding.plans.tryTrial'),
-
+      subscribeLink: { name: 'auth-sign-up' },
+      trialLink: { name: 'auth-sign-up' },
     },
   },
   {
@@ -131,7 +131,8 @@ const cards = computed<{
         value: 2165,
         withoutSale: 2990,
       },
-      purchaseButton: t('terminalLanding.plans.tryTrial'),
+      subscribeLink: { name: 'auth-sign-up' },
+      trialLink: { name: 'auth-sign-up' },
     },
   },
 ]));

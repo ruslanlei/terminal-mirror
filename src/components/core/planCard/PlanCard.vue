@@ -126,27 +126,39 @@
           </template>
         </i18n-t>
       </Typography>
-      <Button
-        size="xl"
-        :state="['accent3Color', 'interactive']"
-        :class="$style.subscribeButton"
+      <Link
+        :state="null"
+        :size="null"
+        :to="card.subscribeLink"
       >
-        {{ t('planCard.subscribe') }}
-      </Button>
-      <Button
-        size="xl"
-        :state="[
-          (({
-            purple: 'gradientColor',
-            orange: 'orangeGradientColor',
-            blue: 'blueGradientColor'
-          })[state]),
-          'interactive',
-        ]"
-        :class="$style.trialButton"
+        <Button
+          size="xl"
+          :state="['accent3Color', 'interactive']"
+          :class="$style.subscribeButton"
+        >
+          {{ t('planCard.subscribe') }}
+        </Button>
+      </Link>
+      <Link
+        :state="null"
+        :size="null"
+        :to="card.trialLink"
       >
-        {{ t('planCard.tryTrial') }}
-      </Button>
+        <Button
+          size="xl"
+          :state="[
+            (({
+              purple: 'gradientColor',
+              orange: 'orangeGradientColor',
+              blue: 'blueGradientColor'
+            })[state]),
+            'interactive',
+          ]"
+          :class="$style.trialButton"
+        >
+          {{ t('planCard.tryTrial') }}
+        </Button>
+      </Link>
       <Link
         :state="null"
         :size="null"

@@ -13,12 +13,18 @@
           :srcset="walletSrcset"
         />
       </div>
-      <Button
-        size="xl"
-        state="backgroundAccent1"
+      <Link
+        :state="null"
+        :size="null"
+        :to="{ name: 'index' }"
       >
-        {{ t('terminalLanding.footer.followButton') }}
-      </Button>
+        <Button
+          size="xl"
+          state="backgroundAccent1"
+        >
+          {{ t('terminalLanding.footer.followButton') }}
+        </Button>
+      </Link>
     </div>
   </div>
 </template>
@@ -29,6 +35,7 @@ import { collectSrcSet } from '@/helpers/dom';
 import Typography from '@/components/app/typography/Typography.vue';
 import Picture from '@/components/core/picture/Picture.vue';
 import Button from '@/components/core/button/Button.vue';
+import Link from '@/components/core/link/Link.vue';
 
 import WalletAvif from '@/assets/images/auth/wallet.avif';
 import WalletWebp from '@/assets/images/auth/wallet.webp';

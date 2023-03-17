@@ -23,14 +23,20 @@
       </Button>
     </div>
     <div :class="$style.rightColumn">
-      <Button
-        :state="['gradientColor']"
-        size="xl"
-        :is-wide="false"
-        :class="$style.signUpButton"
+      <Link
+        :size="null"
+        :state="null"
+        :to="{ name: 'auth-sign-in' }"
       >
-        {{ t('auth.signUp.label') }}
-      </Button>
+        <Button
+          :state="['gradientColor']"
+          size="xl"
+          :is-wide="false"
+          :class="$style.signUpButton"
+        >
+          {{ t('auth.signUp.label') }}
+        </Button>
+      </Link>
       <LanguageSelect />
     </div>
   </header>
@@ -40,6 +46,7 @@
 import { useI18n } from 'vue-i18n';
 import Logo from '@/components/core/logo/Logo.vue';
 import Button from '@/components/core/button/Button.vue';
+import Link from '@/components/core/link/Link.vue';
 import { useLocalValue } from '@/hooks/useLocalValue';
 import LanguageSelect from '@/components/app/languageSelect/LanguageSelect.vue';
 import { TerminalLandingChapter } from '@/components/app/terminalLanding';

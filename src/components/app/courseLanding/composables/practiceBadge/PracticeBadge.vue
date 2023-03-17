@@ -22,14 +22,20 @@
       />
     </div>
     <div :class="$style.buttonContainer">
-      <Button
-        size="xl"
-        :state="['background2']"
-        :is-wide="false"
-        :class="$style.button"
+      <Link
+        :size="null"
+        :state="null"
+        :to="{ name: 'index' }"
       >
-        {{ t('courseLanding.practiceBadge.goToTerminal') }}
-      </Button>
+        <Button
+          size="xl"
+          :state="['background2']"
+          :is-wide="false"
+          :class="$style.button"
+        >
+          {{ t('courseLanding.practiceBadge.goToTerminal') }}
+        </Button>
+      </Link>
     </div>
   </div>
 </template>
@@ -40,6 +46,7 @@ import { collectSrcSet } from '@/helpers/dom';
 import Typography from '@/components/app/typography/Typography.vue';
 import Picture from '@/components/core/picture/Picture.vue';
 import Button from '@/components/core/button/Button.vue';
+import Link from '@/components/core/link/Link.vue';
 import LaptopPng from './assets/laptop.png';
 import LaptopWebp from './assets/laptop.webp';
 import LaptopAvif from './assets/laptop.avif';

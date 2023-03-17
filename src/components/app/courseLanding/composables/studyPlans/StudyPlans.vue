@@ -81,6 +81,8 @@ const cards = computed<{
       },
       purchaseButton: t('courseLanding.studyPlans.card.buyCourse'),
       placesAmount: 25,
+      subscribeLink: { name: 'auth-sign-up' },
+      trialLink: { name: 'auth-sign-up' },
     },
   },
   {
@@ -134,6 +136,8 @@ const cards = computed<{
       },
       purchaseButton: t('courseLanding.studyPlans.card.buyCourse'),
       placesAmount: 25,
+      subscribeLink: { name: 'auth-sign-up' },
+      trialLink: { name: 'auth-sign-up' },
     },
   },
   {
@@ -183,6 +187,8 @@ const cards = computed<{
       },
       purchaseButton: t('courseLanding.studyPlans.card.buyCourse'),
       placesAmount: 25,
+      subscribeLink: { name: 'auth-sign-up' },
+      trialLink: { name: 'auth-sign-up' },
     },
   },
 ]));

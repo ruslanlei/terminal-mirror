@@ -22,14 +22,20 @@
       </Button>
     </div>
     <div :class="$style.rightColumn">
-      <Button
-        :state="['gradientColor']"
-        size="xl"
-        :is-wide="false"
-        :class="$style.signUpButton"
+      <Link
+        :size="null"
+        :state="null"
+        :to="{ name: 'index' }"
       >
-        {{ t('courseLanding.chapter.goToTerminal') }}
-      </Button>
+        <Button
+          :state="['gradientColor']"
+          size="xl"
+          :is-wide="false"
+          :class="$style.signUpButton"
+        >
+          {{ t('courseLanding.chapter.goToTerminal') }}
+        </Button>
+      </Link>
       <LanguageSelect />
     </div>
   </header>
@@ -42,6 +48,7 @@ import { useLocalValue } from '@/hooks/useLocalValue';
 import LanguageSelect from '@/components/app/languageSelect/LanguageSelect.vue';
 import CourseLogo from '@/components/core/courseLogo/CourseLogo.vue';
 import { CourseLandingChapter } from '@/components/app/courseLanding';
+import Link from '@/components/core/link/Link.vue';
 import { TerminalLandingHeaderEmits, TerminalLandingHeaderProps } from './index';
 
 const { t } = useI18n();

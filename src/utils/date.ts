@@ -17,6 +17,11 @@ export const humanizeDate = (
   date: DateValue,
 ): string => dayjs(date).format('DD/MM/YYYY');
 
+export const customFormatDate = curry((
+  format: string,
+  date: DateValue,
+) => dayjs(date).format(format));
+
 export const secondsToMilliseconds = (seconds: number) => multiply(seconds, 1000);
 export const millisecondsToSeconds = (milliseconds: number) => divide(milliseconds, 1000);
 export const addMilliseconds = curry((

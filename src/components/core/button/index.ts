@@ -9,9 +9,16 @@ export type ButtonState =
   | 'interactive'
   | 'textAccent1'
   | 'borderedDefault'
+  | 'backgroundAccent1'
   | 'textAccent2'
   | 'accent3Color'
-  | 'background1';
+  | 'background3'
+  | 'greyBordered'
+  | 'blueGradientColor'
+  | 'orangeGradientColor'
+  | 'background2'
+  | 'background1'
+  | 'nowrap'
 
 export interface ButtonProps {
   state?: ButtonState | ButtonState[],
@@ -19,4 +26,5 @@ export interface ButtonProps {
   isWide?: boolean,
   isDisabled?: boolean,
   isLoading?: boolean,
+  hideLoaderOnHover?: boolean,
 }

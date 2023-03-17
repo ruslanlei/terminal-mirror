@@ -2,8 +2,8 @@
   <div
     :class="[
       $style.badge,
-      $style[state],
-      $style[size]
+      $style[size],
+      ...computedState,
     ]"
   >
     <slot />
@@ -11,9 +11,12 @@
 </template>
 
 <script setup lang="ts">
+import { useComputedState } from '@/hooks/useComputedState';
 import { BadgeProps } from './index';
 
-defineProps<BadgeProps>();
+const props = defineProps<BadgeProps>();
+
+const computedState = useComputedState(props);
 </script>
 
 <style lang="scss" module>
@@ -34,12 +37,39 @@ defineProps<BadgeProps>();
   background-color: rgb(var(--color-background-4));
 }
 
+.background5 {
+  background-color: rgb(var(--color-background-5));
+}
+
+.accent1Background {
+  background-color: rgb(var(--color-accent-1));
+}
+
 .success {
   background-color: rgb(var(--color-success));
 }
 
 .danger {
   background-color: rgb(var(--color-danger));
+}
+
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  &::before {
+    content: '';
+    display: block;
+    position: absolute;
+    z-index: 10;
+    inset: 0;
+    background-color: inherit;
+  }
+}
+
+.md {
+  padding: 7px 10px;
+  border-radius: 10px;
+  @include h3;
 }
 
 .sm {

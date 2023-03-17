@@ -28,6 +28,7 @@ export interface FormProps {
   permanent?: boolean;
   touchBy?: touchTrigger;
   externalErrors?: FormErrorsList;
+  autocomplete?: boolean,
 }
 
 export interface FormEmits {

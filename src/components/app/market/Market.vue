@@ -38,6 +38,7 @@ import MarketChart from '@/components/app/marketChart/MarketChart.vue';
 import FavoritesList from '@/components/app/favoritesList/FavoritesList.vue';
 import MarketChartHeader from '@/components/app/marketChartHeader/MarketChartHeader.vue';
 import { useStorage } from '@vueuse/core';
+import { awaitTimeout } from '@/utils/promise';
 
 const marketStore = useMarketStore();
 
@@ -46,4 +47,7 @@ const isFavoritesExpanded = useStorage('isFavoritesVisible', true);
 const hideFavorites = () => {
   isFavoritesExpanded.value = false;
 };
+
+// delay before end of animation between routes
+await awaitTimeout(300);
 </script>

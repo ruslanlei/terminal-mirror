@@ -29,7 +29,7 @@ import {
   ref,
   onBeforeUnmount,
   onMounted,
-  watch,
+  watch, nextTick,
 } from 'vue';
 import {
   createChart,
@@ -107,7 +107,8 @@ const addCandles = (
   wickDownColor: getCssRgbColor('--color-danger'),
   borderVisible: true,
 });
-watch(() => props.data, () => {
+watch(() => props.data, async () => {
+  await nextTick();
   candles.value?.setData(props.data);
 }, { immediate: true });
 

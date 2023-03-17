@@ -109,25 +109,23 @@ export const useEmulatorStore = defineStore('emulator', () => {
 
   const compressionFactor = ref<number>(5);
 
-  const handleSimulate = async (tiks: number) => {
-    const compression = compose(
-      multiply(candlesPerSecond.value),
-      multiply(candleSize.value),
-    )(compressionFactor.value);
-
+  const handleSimulate = async (
+    pair: PairData['id'],
+    dateFrom: string,
+    candleSize: number,
+    compression: number,
+    tiks: number,
+  ) => {
     const response = await simulate({
-      pair: marketStore.activePair,
-      date_from: emulatorDate.value,
-      candle_size: candleSize.value,
+      pair,
+      date_from: dateFrom,
+      candle_size: candleSize,
       compression,
       tiks,
     });
 
-    if (response.result) {
-      response.data.events.forEach(emitSimulateEvent);
-    } else {
+    if (!response.result) {
       processServerErrors(response.data);
-      emitSimulationEndedEvent(null);
     }
 
     return response;
@@ -147,13 +145,33 @@ export const useEmulatorStore = defineStore('emulator', () => {
   };
 
   const isFetchingEmulatorTimeframe = ref(false);
-  const playTimeframe = async (tiksAmount = 1) => {
+
+  const playTunedTimeframe = async (
+    candleSize: number,
+    candlesPerSecond: number,
+    compressionFactor: number,
+    tiks: number,
+  ) => {
     isFetchingEmulatorTimeframe.value = true;
-    const { result, data } = await handleSimulate(tiksAmount);
+    const compression = compose(
+      multiply(candlesPerSecond),
+      multiply(candleSize),
+    )(compressionFactor);
+
+    const { result, data } = await handleSimulate(
+      activePair.value,
+      emulatorDate.value,
+      candleSize,
+      compression,
+      tiks,
+    );
 
     if (result) {
       chartDataStore.appendCandles(data.candles);
-      increaseEmulatorDate(tiksAmount);
+      data.events.forEach(emitSimulateEvent);
+      increaseEmulatorDate(tiks);
+    } else {
+      emitSimulationEndedEvent(null);
     }
 
     nextTick(() => {
@@ -163,10 +181,24 @@ export const useEmulatorStore = defineStore('emulator', () => {
     return { result };
   };
 
+  const playTimeframe = (
+    tiks: number,
+  ) => playTunedTimeframe(
+    candleSize.value,
+    candlesPerSecond.value,
+    compressionFactor.value,
+    tiks,
+  );
+
   const isRewinding = ref(false);
   const rewind = async () => {
     isRewinding.value = true;
-    await playTimeframe(1);
+    await playTunedTimeframe(
+      candleSize.value,
+      1,
+      1,
+      1,
+    );
     isRewinding.value = false;
   };
 
@@ -190,8 +222,15 @@ export const useEmulatorStore = defineStore('emulator', () => {
   marketStore.subscribeOrderDelete(fetchBalance);
 
   const isCalculatingResult = ref(false);
+  const isCalculateResultAbortionQueued = ref(false);
+
+  const abortCalculateResult = () => {
+    isCalculateResultAbortionQueued.value = true;
+  };
 
   const calculateResult = async () => {
+    if (isCalculatingResult.value) return;
+
     if (!activePairData.value?.to_date) return;
 
     const {
@@ -214,6 +253,11 @@ export const useEmulatorStore = defineStore('emulator', () => {
 
     let isSimulated = false;
     while (!isSimulated) {
+      if (isCalculateResultAbortionQueued.value) {
+        isCalculateResultAbortionQueued.value = false;
+        break;
+      }
+
       // eslint-disable-next-line no-await-in-loop
       const { result, data } = await simulate({
         pair: marketStore.activePair,
@@ -223,7 +267,7 @@ export const useEmulatorStore = defineStore('emulator', () => {
         tiks: 1,
       });
 
-      const isLimitOrderExecuted = data.events.some(
+      const isLimitOrderExecuted = data.events?.some(
         isExactOrder('limit', 'executed'),
       );
 
@@ -276,12 +320,13 @@ export const useEmulatorStore = defineStore('emulator', () => {
     setSpeed,
     candleSize,
     compressionFactor,
-    simulate: handleSimulate,
     isFetchingEmulatorTimeframe,
     playTimeframe,
     isRewinding,
     rewind,
     isCalculatingResult,
+    isCalculateResultAbortionQueued,
     calculateResult,
+    abortCalculateResult,
   };
 });

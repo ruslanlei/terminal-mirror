@@ -10,6 +10,7 @@ import {
   subtractRight,
 } from '@/helpers/number';
 import { isEqual } from '@/utils/boolean';
+import { percentFormat } from '@/utils/number';
 
 export const calculateOnePercent = (
   total: number,
@@ -66,19 +67,27 @@ export const calculateIncreasePercent = curry((
   subtractRight(total),
 )(value));
 
-export const decreaseByPercent = curry((
+export const calculateDecreasePercent = curry((
   total: number,
-  percent: number,
+  value: number,
 ) => compose(
+  divideRight(calculateOnePercent(total)),
   subtract(total),
-  multiply(calculateOnePercent(total)),
-)(percent));
+)(value));
 
 export const addPercents = curry((
   total: number,
   percentValue: number,
 ) => compose(
   add(total),
+  multiply(calculateOnePercent(total)),
+)(percentValue));
+
+export const subtractPercents = curry((
+  total: number,
+  percentValue: number,
+) => compose(
+  subtract(total),
   multiply(calculateOnePercent(total)),
 )(percentValue));
 
@@ -92,3 +101,10 @@ export const checkIsRoundedValueEqualToPercentOfTotal = curry((
   roundToDecimalPoint(decimals),
   percentsToValue(total),
 )(percents));
+
+export const humanizePercents = (
+  percents: number,
+) => compose(
+  percentFormat(2),
+  roundToDecimalPoint(2),
+)(percents);

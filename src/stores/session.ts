@@ -13,8 +13,6 @@ import { useProfileStore } from '@/stores/profile';
 import { verifyEmail, VerifyEmailDTO } from '@/api/endpoints/auth/verifyEmail';
 import { passwordResetConfirm } from '@/api/endpoints/auth/passwordResetConfirm';
 import { processServerErrors } from '@/api/common';
-import { useEmulatorStore } from '@/stores/emulator';
-import { useMarketStore } from '@/stores/market';
 
 export const checkAuth = (
   isAuthorized: boolean,
@@ -47,8 +45,6 @@ export const useSessionStore = defineStore('session', () => {
   const isAuthorized = ref(false);
   const toastStore = useToastStore();
   const profileStore = useProfileStore();
-  // const emulatorStore = useEmulatorStore();
-  // const marketStore = useMarketStore();
 
   const { token, setToken, removeToken } = useAuthToken();
 

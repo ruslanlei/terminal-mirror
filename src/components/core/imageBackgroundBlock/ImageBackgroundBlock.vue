@@ -1,14 +1,16 @@
 <template>
   <div
-    :class="$style.wrapper"
+    :class="[$style.wrapper, interactive && $style.interactive]"
   >
-    <Picture
-      :class="$style.backgroundImage"
-      :src="src"
-      :srcset="srcset"
-      alt=""
-      :transition-duration="1400"
-    />
+    <div :class="$style.backgroundImageContainer">
+      <Picture
+        :class="$style.backgroundImage"
+        :src="src"
+        :srcset="srcset"
+        alt=""
+        :transition-duration="1400"
+      />
+    </div>
     <div :class="[contentClass, $style.content]">
       <slot />
     </div>
@@ -28,6 +30,23 @@ defineProps<ImageBackgroundBlockProps>();
   position: relative;
   overflow: hidden;
   display: block;
+  &.interactive {
+    .backgroundImageContainer {
+      transition: transform 200ms;
+    }
+    &:hover {
+      .backgroundImageContainer {
+        transform: scale(1.2);
+      }
+    }
+  }
+}
+
+.backgroundImageContainer {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  inset: 0;
 }
 
 .backgroundImage {
@@ -37,7 +56,9 @@ defineProps<ImageBackgroundBlockProps>();
 }
 
 .content {
-  position: absolute;
-  inset: 0;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 2;
 }
 </style>

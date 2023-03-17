@@ -3,6 +3,8 @@
     ref="trigger"
     :class="$style.trigger"
     @click="onTriggerClick"
+    @mouseenter="onMouseEnter"
+    @mouseleave="onMouseLeave"
     @dblclick="onTriggerDbClick"
   >
     <slot name="trigger" />
@@ -59,6 +61,7 @@ const props = withDefaults(
     dropAnimationInitialPositionShift: 60,
     transitionDuration: 720,
     blockInnerToggling: false,
+    showBy: 'click',
   },
 );
 
@@ -295,9 +298,25 @@ watch(localIsVisible, () => {
 const onTriggerClick = () => {
   emit('triggerClick');
 
-  if (!props.toggleByClick || props.isDisabled) return;
+  if ([
+    !props.toggleByClick,
+    props.isDisabled,
+    props.showBy !== 'click',
+  ].some(Boolean)) return;
 
   setIsVisible(!localIsVisible.value);
+};
+
+const onMouseEnter = () => {
+  if (props.showBy === 'hover') {
+    setIsVisible(true);
+  }
+};
+
+const onMouseLeave = () => {
+  if (props.showBy === 'hover') {
+    setIsVisible(false);
+  }
 };
 
 const onTriggerDbClick = () => {
@@ -309,7 +328,7 @@ const {
   removeListeners,
 } = useEnvironmentObserver(trigger, calculateDropdownPosition, true);
 
-onMounted(async () => {
+onMounted(() => {
   calculateDropdownPosition();
   setListeners();
 });

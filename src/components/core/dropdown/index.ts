@@ -13,6 +13,7 @@ export interface DropdownProps {
   dropAnimationInitialPositionShift?: number,
   transitionDuration?: 720 | 600,
   blockInnerToggling?: boolean,
+  showBy: 'click' | 'hover'
 }
 
 export interface DropdownEmits {

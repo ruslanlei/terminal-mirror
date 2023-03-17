@@ -8,7 +8,9 @@
       {{ t('terminalLanding.learnToEarn.label') }}
     </Typography>
     <div :class="$style.content">
-      <PlayerControlAnimation />
+      <Lottie
+        :path="PlayerControlsLottie"
+      />
       <LearnToEarnFrames :frames="frames" />
     </div>
   </div>
@@ -21,7 +23,9 @@ import Typography from '@/components/app/typography/Typography.vue';
 import LearnToEarnFrames
   from '@/components/app/terminalLanding/composables/learnToEarnScreen/learnToEarnFrames/LearnToEarnFrames.vue';
 import { ILearnToEarnFrame } from '@/components/app/terminalLanding/composables/learnToEarnScreen/learnToEarnFrame';
-import PlayerControlAnimation from '@/components/app/terminalLanding/assets/playerControlAnimation.svg';
+
+import Lottie from '@/components/core/lottie/Lottie.vue';
+import PlayerControlsLottie from './assets/playerControlsLottie.json?url';
 
 const { t } = useI18n();
 
@@ -58,7 +62,8 @@ const frames = computed<ILearnToEarnFrame[]>(() => [
 
 .content {
   margin-top: 80px;
-  display: flex;
   gap: 80px;
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
 }
 </style>

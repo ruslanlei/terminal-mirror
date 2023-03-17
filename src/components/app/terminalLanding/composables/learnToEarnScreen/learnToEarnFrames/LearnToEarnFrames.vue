@@ -1,5 +1,8 @@
 <template>
-  <div :class="$style.learnToEarnFrames">
+  <div
+    ref="root"
+    :class="$style.learnToEarnFrames"
+  >
     <LearnToEarnFrame
       v-for="(frame, index) in computedFrames"
       :key="index"
@@ -12,16 +15,25 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue';
+import {
+  ref,
+  computed,
+  onBeforeUnmount,
+  onMounted,
+} from 'vue';
 import LearnToEarnFrame
   from '@/components/app/terminalLanding/composables/learnToEarnScreen/learnToEarnFrame/LearnToEarnFrame.vue';
-import { createAnimation } from '@/utils/animation';
 import { ILearnToEarnFrame } from '@/components/app/terminalLanding/composables/learnToEarnScreen/learnToEarnFrame';
+import { useAnimation } from '@/hooks/useAnimation';
+import { useIntersectionObserver } from '@vueuse/core';
+import { useEnvironmentObserver } from '@/hooks/useEnvironmentObserver';
 import {
   LearnToEarnFramesProps,
 } from './index';
 
 const props = defineProps<LearnToEarnFramesProps>();
+
+const root = ref<HTMLElement>();
 
 const progress = ref(0);
 
@@ -37,10 +49,11 @@ const computedFrames = computed<IFrame[]>(() => props.frames.map((frame, index) 
 })));
 
 const {
+  animation,
   init,
   play,
   restart,
-} = createAnimation(() => ({
+} = useAnimation(() => ({
   targets: progress,
   value: [0, 100],
   loop: true,
@@ -64,6 +77,35 @@ onMounted(() => {
   init();
   play();
 });
+
+const { stop } = useIntersectionObserver(
+  root,
+  ([{ isIntersecting }]) => {
+    if (isIntersecting) {
+      animation.value?.play();
+    } else {
+      animation.value?.pause();
+    }
+  },
+);
+
+onBeforeUnmount(stop);
+
+const timer = ref();
+
+const {
+  setListeners,
+  removeListeners,
+} = useEnvironmentObserver(root, () => {
+  clearTimeout(timer.value);
+  animation.value?.pause();
+  timer.value = setTimeout(() => {
+    animation.value?.play();
+  }, 100);
+}, true);
+
+onMounted(setListeners);
+onBeforeUnmount(removeListeners);
 </script>
 
 <style lang="scss" module>

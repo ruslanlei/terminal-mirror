@@ -24,13 +24,27 @@
     </div>
     <div :class="$style.mainContent">
       <CoinLogo :coin="pairData.base" />
-      <Badge
-        :state="computedBadgeState"
-        size="xs"
-        :class="$style.pnlBadge"
+      <transition
+        name="favoritesListChangeTransition"
+        mode="out-in"
       >
-        {{ displayPercentChange }}
-      </Badge>
+        <Badge
+          v-if="props.last24HoursPercentChange !== null"
+          :state="[
+            isPositive(props.last24HoursPercentChange)
+              ? 'success'
+              : 'danger'
+          ]"
+          size="xs"
+          :class="$style.pnlBadge"
+        >
+          {{ displayPercentChange }}
+        </Badge>
+        <div
+          v-else
+          :class="$style.percentChangeSkeleton"
+        />
+      </transition>
     </div>
   </div>
 </template>
@@ -38,29 +52,18 @@
 <script setup lang="ts">
 import CoinLogo from '@/components/core/coinLogo/CoinLogo.vue';
 import Typography from '@/components/app/typography/Typography.vue';
-import { humanizeNumber, percentFormat } from '@/utils/number';
+import { humanizeNumber } from '@/utils/number';
 import Badge from '@/components/core/badge/Badge.vue';
 import { computed } from 'vue';
-import { compose } from '@/utils/fp';
+import { humanizePercents } from '@/helpers/math/percents';
+import { isPositive } from '@/helpers/number';
 import { FavoritesListItemProps } from './index';
-import { isPositive, roundToDecimalPoint } from '../../../../helpers/number';
 
 const props = defineProps<FavoritesListItemProps>();
 
-const displayPercentChange = computed(() => compose(
-  percentFormat,
-  roundToDecimalPoint(2),
-)(props.last24HoursPercentChange || 0));
-
-const computedBadgeState = computed(() => [
-  props.last24HoursPercentChange == null
-    ? 'default'
-    : (
-      isPositive(props.last24HoursPercentChange)
-        ? 'success'
-        : 'danger'
-    ),
-]);
+const displayPercentChange = computed(
+  () => humanizePercents(props.last24HoursPercentChange || 0),
+);
 </script>
 
 <style lang="scss" module>
@@ -87,7 +90,7 @@ const computedBadgeState = computed(() => [
 .mainContent {
   padding: 10px 5px;
   display: flex;
-  justify-content: center;
+  align-items: center;
   gap: 10px;
   transition: 200ms opacity;
 }
@@ -115,5 +118,31 @@ const computedBadgeState = computed(() => [
 
 .pnlBadge {
   color: rgb(var(--color-accent-1));
+  height: 24px;
+}
+
+.percentChangeSkeleton {
+  width: 42px;
+  height: 24px;
+  background-color: rgb(var(--color-background-3));
+  border-radius: 5px;
+}
+</style>
+
+<style lang="scss">
+.favoritesListChangeTransition {
+  &-enter-active,
+  &-leave-active {
+    transition: opacity 200ms, transform 200ms;
+  }
+
+  &-enter-from {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  &-leave-to {
+    transform: translateY(10px);
+    opacity: 0;
+  }
 }
 </style>

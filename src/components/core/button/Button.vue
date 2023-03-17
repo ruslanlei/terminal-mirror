@@ -6,6 +6,7 @@
       isDisabled && $style.disabled,
       $style[size],
       isWide && $style.wide,
+      hideLoaderOnHover && $style.hideLoaderOnHover,
       ...computedState,
     ]"
     :disabled="isDisabled"
@@ -64,6 +65,19 @@ const computedLoaderSize = computed(
   width: 100%;
 }
 
+.hideLoaderOnHover {
+  &:hover {
+    .loaderCap {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .inner {
+      opacity: 1;
+    }
+  }
+}
+
 .loaderCap {
   opacity: 1;
   position: absolute;
@@ -72,15 +86,18 @@ const computedLoaderSize = computed(
   justify-content: center;
   align-items: center;
   transition: .15s opacity;
+  &.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
 }
 
 .inner {
   transition: .15s opacity;
-}
-
-.hidden {
-  opacity: 0;
-  pointer-events: none;
+  &.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
 }
 
 .interactive {
@@ -112,6 +129,16 @@ const computedLoaderSize = computed(
 .gradientColor {
   color: rgba(var(--color-accent-1));
   background: var(--color-main-gradient);
+}
+
+.blueGradientColor {
+  color: rgba(var(--color-accent-1));
+  background: var(--color-blue-gradient);
+}
+
+.orangeGradientColor {
+  color: rgba(var(--color-accent-1));
+  background: var(--color-orange-gradient);
 }
 
 .successColor {
@@ -150,6 +177,34 @@ const computedLoaderSize = computed(
   }
 }
 
+.background2 {
+  color: rgba(var(--color-accent-1));
+  background-color: rgb(var(--color-background-2));
+  &:hover {
+    background-color: rgb(var(--color-background-1));
+  }
+}
+
+.greyBordered {
+  color: rgba(var(--color-accent-2));
+  border: 1px solid rgb(var(--color-accent-2));
+}
+
+.background3 {
+  color: rgba(var(--color-accent-1));
+  background-color: rgb(var(--color-background-3));
+  &:hover:not(.disabled) {
+    background-color: rgb(var(--color-background-3));
+  }
+}
+
+.backgroundAccent1 {
+  color: rgba(var(--color-background-1));
+  background-color: rgb(var(--color-accent-1));
+  &:hover:not(.disabled) {
+  }
+}
+
 .accent3Color {
   color: rgba(var(--color-accent-1));
   background-color: rgb(var(--color-accent-3));
@@ -164,6 +219,10 @@ const computedLoaderSize = computed(
   &:hover:not(.disabled) {
     background-color: rgb(var(--color-background-4));
   }
+}
+
+.nowrap {
+  white-space: nowrap;
 }
 
 .xl {

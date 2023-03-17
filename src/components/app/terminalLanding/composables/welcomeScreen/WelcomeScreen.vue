@@ -27,15 +27,27 @@
       {{ t('terminalLanding.welcomeScreen.description') }}
     </Typography>
     <div :class="$style.options">
-      <Button size="xl">
-        {{ t('terminalLanding.welcomeScreen.options.tryForFree') }}
-      </Button>
-      <Button
-        size="xl"
-        state="borderedDefault"
+      <Link
+        :state="null"
+        :size="null"
+        :to="{ name: 'auth-sign-up' }"
       >
-        {{ t('terminalLanding.welcomeScreen.options.openTerminal') }}
-      </Button>
+        <Button size="xl">
+          {{ t('terminalLanding.welcomeScreen.options.tryForFree') }}
+        </Button>
+      </Link>
+      <Link
+        :state="null"
+        :size="null"
+        :to="{ name: 'index' }"
+      >
+        <Button
+          size="xl"
+          state="borderedDefault"
+        >
+          {{ t('terminalLanding.welcomeScreen.options.openTerminal') }}
+        </Button>
+      </Link>
     </div>
     <div :class="$style.mockupContainer">
       <TerminalScreenshotVector :class="$style.mockup" />
@@ -54,7 +66,8 @@ import BackgroundAvif from '@/assets/images/auth/background.avif';
 import BadgeSupportedByTradingView from '@/components/app/badgeSupportedByTradingView/BadgeSupportedByTradingView.vue';
 import Typography from '@/components/app/typography/Typography.vue';
 import Button from '@/components/core/button/Button.vue';
-import TerminalScreenshotVector from '../../assets/terminalScreenshotVector.svg';
+import Link from '@/components/core/link/Link.vue';
+import TerminalScreenshotVector from './assets/terminalScreenshotVector.svg';
 
 const { t } = useI18n();
 

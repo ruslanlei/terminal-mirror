@@ -14,3 +14,17 @@ export const toCssPixelValue = (
 export const toPositiveNumberString = (
   number: number,
 ) => `+${number}`;
+
+export const toIdSelector = (
+  id: string | number,
+) => `#${id}`;
+
+export const toCssPercentValue = (
+  percents: number,
+) => `${percents}%`;
+
+export const querySelectorAll = (
+  selector: string,
+) => document.querySelectorAll(selector);
+
+export const getElementById = (id: string) => document.getElementById(id);

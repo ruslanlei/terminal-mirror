@@ -1,4 +1,6 @@
 import cloneDeep from 'lodash/cloneDeep';
+import lodashSet from 'lodash/set';
+import isEmpty from 'lodash/isEmpty';
 import { curry } from '@/utils/fp';
 
 export const isObject = (item: any) => (typeof item === 'object' && !Array.isArray(item) && item !== null);
@@ -19,7 +21,11 @@ export {
   cloneDeep,
 };
 
+export const set = curry(lodashSet);
+
 export const getValueByKey = curry((
   key: string,
   object: Record<any, any>,
 ) => object?.[key] || null);
+
+export { isEmpty };

@@ -3,6 +3,7 @@
     ref="form"
     :class="$style.form"
     novalidate
+    :autocomplete="autocomplete"
     @submit.prevent="handleSubmit"
   >
     <slot />

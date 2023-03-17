@@ -5,6 +5,7 @@ export interface TakeProfitInputProps {
   orderQuantity: number,
   price: number,
   quantity: number,
+  orderSide: 'buy' | 'sell',
 }
 
 export interface TakeProfitInputEmits {

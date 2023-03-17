@@ -242,7 +242,7 @@ const playAppearAnimation = async () => {
       delay: 100,
     },
     ...(props.appearanceAnimationType === 'bubbling' ? {
-      scale: [0.2, 1],
+      scale: [0, 1],
     } : {}),
     duration: 700,
     easing: 'easeOutQuint',
@@ -391,7 +391,7 @@ onMounted(() => {
   }
   &.scrollable {
     @include scrollbarPrimary(4px, 2px);
-    padding-right: 10px;
+    padding-right: 18px;
   }
   .column {
     @include title4;

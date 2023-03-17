@@ -7,6 +7,8 @@ import {
   checkIfLanguageIsAvailable,
 } from '@/i18n';
 import { getUserLanguage } from '@/utils/navigator';
+import dayjs from 'dayjs';
+import 'dayjs/locale/ru';
 
 export interface LocaleOptions {
   value: AppLocale,
@@ -26,6 +28,7 @@ export const useI18nStore = defineStore('i18n', () => {
   const locale = useStorage<AppLocale>('locale', getAppLanguage());
   watch(locale, () => {
     i18n.global.locale.value = locale.value;
+    dayjs.locale(locale.value);
   }, { immediate: true });
 
   const locales = computed<LocaleOptions[]>(() => [

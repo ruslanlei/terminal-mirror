@@ -51,8 +51,7 @@ import ProfileDropdown from '@/components/app/profileDropdown/ProfileDropdown.vu
 }
 
 .currencyStats {
-  // TODO: return while realisation of real market
-  //margin-left: 20px;
+  margin-left: 20px;
 }
 
 .profileBlock {

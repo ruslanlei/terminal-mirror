@@ -3,6 +3,7 @@
     v-model="model"
     :validation-schema="validationSchema"
     touch-by="blur"
+    :autocomplete="true"
     @submit="handleSubmit"
   >
     <SignInContainer>
@@ -16,12 +17,14 @@
         <FormInput
           ref="emailInput"
           name="email"
+          autocomplete="email"
           :placeholder="t('placeholder.email')"
         />
       </template>
       <template #passwordField>
         <FormInput
           name="password"
+          autocomplete="current-password"
           :placeholder="t('placeholder.password')"
           type="password"
         />
@@ -70,7 +73,7 @@ meta:
 </route>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { Form, FormInput } from '@/form';
 import Checkbox from '@/components/core/checkbox/Checkbox.vue';
@@ -91,10 +94,6 @@ const {
   handleSubmit,
   isLoading,
 } = useSignIn();
-
-onMounted(() => {
-  emailInput.value.focus();
-});
 </script>
 
 <style lang="scss" module>

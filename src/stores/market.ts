@@ -1,4 +1,4 @@
-import { computed, ref } from 'vue';
+import { computed, nextTick, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { defineStore } from 'pinia';
 import { useStorage } from '@vueuse/core';
@@ -25,6 +25,7 @@ import { addToFavorites } from '@/api/endpoints/profile/addToFavorites';
 import { removeFromFavorites } from '@/api/endpoints/profile/removeFromFavorites';
 import { findAndDelete } from '@/helpers/array';
 import { getBalance } from '@/api/endpoints/profile/getBalance';
+import { isEmpty } from '@/utils/object';
 
 export type MarketType = 'emulator' | 'real';
 
@@ -57,6 +58,8 @@ export const useMarketStore = defineStore('market', () => {
 
   const pairs = useStorage<PairData[]>('pairs', []);
 
+  const isPairsPreFetched = computed(() => !isEmpty(pairs.value));
+
   const pairsMap = computed<Record<PairData['id'], PairData>>(
     () => pairs.value.reduce((acc, pair: PairData) => ({
       ...acc,
@@ -66,9 +69,15 @@ export const useMarketStore = defineStore('market', () => {
 
   const activePair = useStorage<PairData['id']>('activePair', 1);
 
-  const setPair = (pairId: PairData['id']) => {
+  const isSettingPair = ref(false);
+  const setPair = async (pairId: PairData['id']) => {
+    isSettingPair.value = true;
     activePair.value = pairId;
+    await nextTick();
+    isSettingPair.value = false;
   };
+
+  const getPairData = (pairId: PairData['id']) => pairsMap.value?.[pairId] || null;
 
   const activePairData = computed<PairData | undefined>(
     () => pairsMap.value[activePair.value],
@@ -119,7 +128,7 @@ export const useMarketStore = defineStore('market', () => {
   };
 
   const isFetchingPairs = ref(false);
-  const handleGetPairs = async () => {
+  const handleFetchPairs = async () => {
     isFetchingPairs.value = true;
     const { result, data } = await getPairs();
     isFetchingPairs.value = false;
@@ -132,6 +141,15 @@ export const useMarketStore = defineStore('market', () => {
     }
 
     pairs.value = data;
+  };
+
+  const fetchPairs = async () => {
+    if (!isPairsPreFetched.value) {
+      await handleFetchPairs();
+      return;
+    }
+
+    handleFetchPairs();
   };
 
   const baseCurrencyDecimals = ref(Number(import.meta.env.VITE_APP_BASE_CURRENCY_DECIMALS));
@@ -314,16 +332,27 @@ export const useMarketStore = defineStore('market', () => {
     return response;
   };
 
-  const removeOrder = (
+  const removeOrder = async (
     order: Order,
   ) => {
     const isOrderFilled = order.status === 'filled';
 
-    return (
+    const { result, data } = await (
       isOrderFilled
         ? handleCloseOrder
         : handleDeleteOrder
     )(order.id);
+
+    if (result) {
+      toastStore.showSuccess({
+        text: t('order.successfullyClosed', {
+          pair: pairsMap.value?.[order.pair]?.alias,
+        }),
+        duration: 7000,
+      });
+    } else {
+      processServerErrors(data);
+    }
   };
 
   const showRemoveOrderModal = (
@@ -348,10 +377,13 @@ export const useMarketStore = defineStore('market', () => {
     subscribeOrderCreated,
     unsubscribeOrderCreated,
     pairs,
+    isPairsPreFetched,
     pairsMap,
     marketType,
     activePair,
+    isSettingPair,
     setPair,
+    getPairData,
     quoteCurrencyDecimals,
     baseCurrencyDecimals,
     baseCurrencyStep,
@@ -359,7 +391,7 @@ export const useMarketStore = defineStore('market', () => {
     isFetchingPairs,
     favoritePairs,
     fetchFavoritePairs,
-    getPairs: handleGetPairs,
+    fetchPairs,
     createOrder: handleCreateOrder,
     createListOfTakeProfits,
     createStopLoss,

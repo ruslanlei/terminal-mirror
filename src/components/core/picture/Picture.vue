@@ -2,7 +2,8 @@
   <img
     :class="[
       $style.picture,
-      loaded && $style.loaded
+      isFill && $style.fill,
+      loaded && $style.loaded,
     ]"
     :style="computedStyles"
     :src="src"
@@ -68,8 +69,14 @@ watch([src, srcset], () => {
 .picture {
   display: block;
   opacity: 0;
+  background-size: cover;
   &.loaded {
     opacity: 1;
   }
+}
+
+.fill {
+  width: 100%;
+  height: 100%;
 }
 </style>

@@ -3,12 +3,12 @@
     <TerminalLandingContainer :class="$style.terminalLandingLayout">
       <template #header>
         <LandingHeader
-          v-model:active-chapter="activeChapter"
+          v-model:active-chapter="activeSection"
           :chapters="chapters"
         />
       </template>
       <template #welcomeScreen>
-        <WelcomeScreen />
+        <WelcomeScreen id="about" />
       </template>
       <template #learnToEarnScreen>
         <LearnToEarnScreen />
@@ -16,8 +16,23 @@
       <template #totalBeginnerBadge>
         <TotalBeginnerBadge />
       </template>
-      <template #determinationScreen>
-        <DeterminationScreen />
+      <template #assignmentScreen>
+        <AssignmentScreen id="forWhom" />
+      </template>
+      <template #whyToTrainScreen>
+        <WhyToTrainScreen id="advantages" />
+      </template>
+      <template #ecosystemScreen>
+        <EcosystemCap />
+      </template>
+      <template #plans>
+        <Plans id="tariffs" />
+      </template>
+      <template #faq>
+        <Faq id="faq" />
+      </template>
+      <template #footer>
+        <LandingFooter />
       </template>
     </TerminalLandingContainer>
   </div>
@@ -33,13 +48,18 @@ import LandingHeader
   from '@/components/app/terminalLanding/composables/landingHeader/LandingHeader.vue';
 import LearnToEarnScreen from '@/components/app/terminalLanding/composables/learnToEarnScreen/LearnToEarnScreen.vue';
 import TotalBeginnerBadge from '@/components/app/terminalLanding/composables/totalBeginnerBadge/TotalBeginnerBadge.vue';
-import DeterminationScreen
-  from '@/components/app/terminalLanding/composables/determinationScreen/DeterminationScreen.vue';
+import AssignmentScreen
+  from '@/components/app/terminalLanding/composables/assignmentScreen/AssignmentScreen.vue';
+import WhyToTrainScreen from '@/components/app/terminalLanding/composables/whyToTrainScreen/WhyToTrainScreen.vue';
+import EcosystemCap from '@/components/app/ecosystemCap/EcosystemCap.vue';
+import Plans from '@/components/app/terminalLanding/composables/plans/Plans.vue';
+import Faq from '@/components/app/terminalLanding/composables/faq/Faq.vue';
+import LandingFooter from '@/components/app/terminalLanding/composables/landingFooter/LandingFooter.vue';
+import { useLandingAnchor } from '@/hooks/useLandingAnchor';
+import { CourseLandingChapter } from '@/components/app/courseLanding';
 import { TerminalLandingChapter } from './index';
 
 const { t } = useI18n();
-
-const activeChapter = ref<TerminalLandingChapter['slug']>('about');
 
 const chapters = computed<TerminalLandingChapter[]>(() => [
   {
@@ -63,6 +83,14 @@ const chapters = computed<TerminalLandingChapter[]>(() => [
     slug: 'faq',
   },
 ]);
+
+const {
+  activeSection,
+} = useLandingAnchor(
+  chapters.value.map((
+    { slug }: TerminalLandingChapter,
+  ) => slug),
+);
 </script>
 
 <style lang="scss" module>

@@ -15,10 +15,14 @@ import { useMarketChart } from '@/hooks/useMarketChart';
 import { watch } from 'vue';
 import { useEmulator } from '@/hooks/useEmulator';
 import { useMarketStore } from '@/stores/market';
+import { storeToRefs } from 'pinia';
 
 const { t } = useI18n();
 
 const marketStore = useMarketStore();
+const {
+  isSettingPair,
+} = storeToRefs(marketStore);
 
 const {
   chartDateFrom,
@@ -42,6 +46,7 @@ watch(emulatorDate, async () => {
     isEmulating.value,
     isFetchingCandles.value,
     isFetchingEmulatorTimeframe.value,
+    isSettingPair.value,
   ].some(Boolean)) return;
 
   await fetchCandles();

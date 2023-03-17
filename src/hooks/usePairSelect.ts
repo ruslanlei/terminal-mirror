@@ -49,7 +49,7 @@ export const usePairSelect = () => {
   return {
     query,
     pairs: computedPairs,
-    getPairs: marketStore.getPairs,
+    fetchPairs: marketStore.fetchPairs,
     setPair,
     isTogglingFavorite,
     onToggleFavorite,

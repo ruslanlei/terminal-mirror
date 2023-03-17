@@ -7,6 +7,7 @@ export interface TakeProfitListProps {
   orderQuantity: number,
   baseCurrencyStep: number,
   baseCurrencyDecimals: number,
+  orderSide: 'buy' | 'sell',
 }
 
 export interface TakeProfitListEmit {

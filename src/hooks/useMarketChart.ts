@@ -19,11 +19,11 @@ import {
 } from '@/helpers/candles';
 import { useChartDataStore } from '@/stores/chartData';
 
-export const getDefaultChartDateFrom = () => compose(
+export const getDefaultChartDateFrom = compose(
   toISOString,
   subtractMonths(4),
   dateNow,
-)();
+);
 
 export const useMarketChart = () => {
   const emulatorStore = useEmulatorStore();
@@ -51,7 +51,8 @@ export const useMarketChart = () => {
   const dateTo = computed(
     () => (marketType.value === 'emulator'
       ? emulatorDate.value
-      : emulatorDate.value), // FIXME: While realising real market
+      // FIXME: While realising real market
+      : emulatorDate.value),
   );
 
   const dateFrom = computed(
@@ -68,7 +69,11 @@ export const useMarketChart = () => {
       dateTo.value,
     );
   };
-  watch([activePair, marketType], fetchCandles, { immediate: true });
+  watch([activePair, marketType], async () => {
+    if (chartDataStore.checkIsDataExistByPairId(activePair.value)) return;
+
+    await fetchCandles();
+  }, { immediate: true });
 
   const computedCandles = computed(() => transformCandlesForChart(candles.value));
 

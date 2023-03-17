@@ -7,7 +7,7 @@
     >
       <RouterView v-slot="{ Component }">
         <transition
-          name="layoutTransition"
+          name="pageTransition"
           mode="out-in"
         >
           <component :is="Component" />
@@ -67,7 +67,7 @@ router.beforeEach((to, from, next) => {
       takeOff: 'layoutTransitionTakeOff',
       default: 'defaultLayoutTransition',
       // @ts-ignore
-    }[to.meta?.layoutTransition || 'default']) || 'defaultLayoutTransition';
+    }[to.meta?.layoutTransition as ('putOn' | 'takeOff' | 'default') || 'default']);
   }
 
   next();
@@ -165,6 +165,22 @@ onBeforeUnmount(() => {
   &-leave-to {
     opacity: 0;
     transform: scale(1.04);
+  }
+}
+
+.pageTransition {
+  &-enter-active,
+  &-leave-active {
+    transition: opacity 150ms, transform 250ms;
+  }
+
+  &-enter-from {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+  &-leave-to {
+    opacity: 0;
+    transform: translateY(16px);
   }
 }
 </style>

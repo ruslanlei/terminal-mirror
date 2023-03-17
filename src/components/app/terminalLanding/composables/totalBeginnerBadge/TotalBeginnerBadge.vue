@@ -22,14 +22,20 @@
       />
     </div>
     <div :class="$style.buttonContainer">
-      <Button
-        size="xl"
-        :state="['background1']"
-        :is-wide="false"
-        :class="$style.button"
+      <Link
+        :size="null"
+        :state="null"
+        :to="{ name: 'about-course' }"
       >
-        {{ t('terminalLanding.totalBeginner.learnMore') }}
-      </Button>
+        <Button
+          size="xl"
+          :state="['background1']"
+          :is-wide="false"
+          :class="$style.button"
+        >
+          {{ t('terminalLanding.totalBeginner.learnMore') }}
+        </Button>
+      </Link>
     </div>
   </div>
 </template>
@@ -40,10 +46,13 @@ import { collectSrcSet } from '@/helpers/dom';
 import Typography from '@/components/app/typography/Typography.vue';
 import Picture from '@/components/core/picture/Picture.vue';
 import Button from '@/components/core/button/Button.vue';
+import Link from '@/components/core/link/Link.vue';
+import IllustrationAvif from './assets/illustration.avif';
 import IllustrationWebp from './assets/illustration.webp';
 import IllustrationPng from './assets/illustration.png';
 
 const illustrationSrcSet = collectSrcSet([
+  IllustrationAvif,
   IllustrationWebp,
   IllustrationPng,
 ]);

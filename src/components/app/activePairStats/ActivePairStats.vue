@@ -14,7 +14,7 @@ import { useMarketStore } from '@/stores/market';
 import { useChartDataStore } from '@/stores/chartData';
 import { IPairStats } from '@/components/core/pairStats';
 import { compose } from '@/utils/fp';
-import { divideRight, roundToDecimalPoint, subtractRight } from '@/helpers/number';
+import { roundToDecimalPoint, subtractRight } from '@/helpers/number';
 import { humanizeNumber, percentFormat } from '@/utils/number';
 import { calculatePercentOfDifference } from '@/helpers/math/percents';
 import { findMaxByKey, findMinByKey } from '@/utils/array';
@@ -48,8 +48,7 @@ const change = computed(() => ((currentPrice.value && firstPriceWithinLast24Hour
 
 const changePercents = computed(() => ((firstPriceWithinLast24Hours.value && currentPrice.value)
   ? compose(
-    percentFormat,
-    divideRight(100),
+    percentFormat(2),
     calculatePercentOfDifference,
   )(firstPriceWithinLast24Hours.value, currentPrice.value)
   : null));

@@ -17,6 +17,7 @@
         ]"
         :size="null"
         :is-wide="false"
+        @click="setActiveChapter(chapter.slug)"
       >
         {{ chapter.label }}
       </Button>
@@ -41,6 +42,7 @@ import Logo from '@/components/core/logo/Logo.vue';
 import Button from '@/components/core/button/Button.vue';
 import { useLocalValue } from '@/hooks/useLocalValue';
 import LanguageSelect from '@/components/app/languageSelect/LanguageSelect.vue';
+import { TerminalLandingChapter } from '@/components/app/terminalLanding';
 import { TerminalLandingHeaderEmits, TerminalLandingHeaderProps } from './index';
 
 const { t } = useI18n();
@@ -50,6 +52,12 @@ const props = defineProps<TerminalLandingHeaderProps>();
 const emit = defineEmits<TerminalLandingHeaderEmits>();
 
 const localActiveChapter = useLocalValue(props, emit, 'activeChapter');
+
+const setActiveChapter = (
+  activeChapter: TerminalLandingChapter['slug'],
+) => {
+  localActiveChapter.value = activeChapter;
+};
 </script>
 
 <style lang="scss" module>

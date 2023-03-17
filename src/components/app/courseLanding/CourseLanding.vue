@@ -8,10 +8,14 @@
         />
       </template>
       <template #welcomeScreen>
-        <WelcomeScreen id="about" />
+        <WelcomeScreen
+          id="about"
+          @click-buy="scrollToTarifs"
+          @click-course-program="onClickCourseProgram"
+        />
       </template>
       <template #courseExplanationCard>
-        <CourseExplanation />
+        <CourseExplanation @click-sign-up="scrollToTarifs" />
       </template>
       <template #creatorsTeamInfo>
         <CreatorsTeamInfo id="whoWeAre" />
@@ -23,7 +27,10 @@
         <PracticeBadge />
       </template>
       <template #courseAdvantagesCard>
-        <CourseAdvantages id="benefits" />
+        <CourseAdvantages
+          id="benefits"
+          @click-sign-up="scrollToTarifs"
+        />
       </template>
       <template #studentsReviews>
         <StudentsReviews id="reviews" />
@@ -44,7 +51,7 @@
         <Faq id="questions" />
       </template>
       <template #landingFooter>
-        <LandingFooter />
+        <LandingFooter @click-buy="scrollToTarifs" />
       </template>
     </CourseLandingContainer>
   </div>
@@ -118,6 +125,14 @@ const {
     { slug }: CourseLandingChapter,
   ) => slug),
 );
+
+const onClickCourseProgram = () => {
+  activeSection.value = 'courseProgram';
+};
+
+const scrollToTarifs = () => {
+  activeSection.value = 'tariffs';
+};
 </script>
 
 <style lang="scss" module>

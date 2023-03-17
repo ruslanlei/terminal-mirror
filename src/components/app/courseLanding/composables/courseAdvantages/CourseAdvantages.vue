@@ -79,6 +79,7 @@
       state="gradientColor"
       :class="$style.button"
       size="xl"
+      @click="onClickSignUp"
     >
       {{ t('courseLanding.advantagesCard.button') }}
     </Button>
@@ -94,9 +95,16 @@ import Card from '@/components/core/card/Card.vue';
 import Button from '@/components/core/button/Button.vue';
 
 import { useCssModules } from '@/hooks/useCssModules';
+import { CourseAdvantagesEmits } from '@/components/app/courseLanding/composables/courseAdvantages/index';
 import DogeCoin from './assets/doge.svg';
 
 const { t } = useI18n();
+
+const emit = defineEmits<CourseAdvantagesEmits>();
+
+const onClickSignUp = () => {
+  emit('clickSignUp');
+};
 
 const { $style } = useCssModules();
 

@@ -51,6 +51,7 @@
       size="xl"
       :is-wide="false"
       :class="$style.button"
+      @click="onClickSignUp"
     >
       {{ t('courseLanding.courseExplanationCard.signUpForCourse') }}
     </Button>
@@ -67,14 +68,20 @@ import Card from '@/components/core/card/Card.vue';
 
 import ImageBackgroundBlock from '@/components/core/imageBackgroundBlock/ImageBackgroundBlock.vue';
 import ImagesStack from '@/components/app/courseLanding/composables/courseExplanation/imagesStack/ImagesStack.vue';
+import { CourseExplanationEmits } from '@/components/app/courseLanding/composables/courseExplanation/index';
 import BackgroundPng from './imagesStack/assets/courseExplanationBackground.png';
 
 const { t } = useI18n();
+
+const emit = defineEmits<CourseExplanationEmits>();
 
 const backgroundSrcset = computed(() => collectSrcSet([
   BackgroundPng,
 ]));
 
+const onClickSignUp = () => {
+  emit('clickSignUp');
+};
 </script>
 
 <style lang="scss" module>

@@ -24,16 +24,14 @@ const id = uuid();
 provide(SkeletonContainerIdInjectionKey, id);
 
 onMounted(() => {
-  nextTick(() => {
-    playAnimation({
-      targets: skeletonSelector(id),
-      opacity: [1, 0.55, 1],
-      scale: [1, 0.99, 1],
-      loop: true,
-      delay: anime.stagger(160, { from: 'first' }),
-      easing: 'easeInOutSine',
-      duration: 850,
-    });
+  playAnimation({
+    targets: skeletonSelector(id),
+    opacity: [1, 0.55, 1],
+    scale: [1, 0.99, 1],
+    loop: true,
+    delay: anime.stagger(160, { from: 'first' }),
+    easing: 'easeInOutSine',
+    duration: 850,
   });
 });
 

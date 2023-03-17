@@ -22,6 +22,16 @@
       >
         {{ card.headerText?.text }}
       </Typography>
+      <Badge
+        v-if="card?.salePercents"
+        state="accent1Background"
+        :class="$style.saleBadge"
+        size="md"
+      >
+        <Typography :state="['background1', 'bold']">
+          {{ saleBadgeText }}
+        </Typography>
+      </Badge>
     </header>
     <main :class="$style.main">
       <Typography
@@ -32,10 +42,18 @@
       </Typography>
       <div :class="$style.benefits">
         <Typography
+          v-for="(additionalBenefit, index) in card.additionalBenefits"
+          :key="index"
+          size="textLg"
+          state="accent1"
+        >
+          {{ additionalBenefit }}
+        </Typography>
+        <Typography
           size="h3"
           state="accent2"
         >
-          {{ t('terminalLanding.plans.card.includedLabel') }}
+          {{ t('planCard.includedLabel') }}
         </Typography>
         <div :class="$style.benefitsList">
           <div
@@ -43,9 +61,9 @@
             :key="index"
             :class="$style.benefit"
           >
-            <Icon
-              :size="32"
-              :icon="benefit.active ? 'checkSpecial' : 'crossSpecial'"
+            <GradientCheckIcon
+              :state="state"
+              :value="benefit.active"
             />
             <Typography
               :class="$style.benefitLabel"
@@ -55,77 +73,118 @@
             </Typography>
           </div>
         </div>
-        <Divider
-          :class="$style.divider"
-          type="horizontal"
-          state="accent3"
-        />
-        <Typography
-          :state="['accent2']"
-          size="massive4"
-          :class="$style.price"
-        >
-          <i18n-t
-            tag="span"
-            keypath="common.slashWithSpaces"
-          >
-            <template #value1>
-              <Typography
-                is-inline
-                :state="['danger3', 'bold']"
-              >
-                {{ t('common.currencyAmount', { amount: card.price.value, currency: '₽' }) }}
-              </Typography>
-            </template>
-            <template #value2>
-              {{ t('common.currencyAmount', { amount: card.price.withoutSale, currency: '₽' }) }}
-            </template>
-          </i18n-t>
-        </Typography>
-        <Button
-          size="xl"
-          :state="['accent3Color', 'interactive']"
-          :class="$style.subscribeButton"
-        >
-          {{ t('terminalLanding.plans.card.subscribe') }}
-        </Button>
-        <Button
-          size="xl"
-          :state="['gradientColor', 'interactive']"
-          :class="$style.trialButton"
-        >
-          {{ t('terminalLanding.plans.card.tryTrial') }}
-        </Button>
-        <Link
-          :state="null"
-          :size="null"
-          :to="{ name: 'index' }"
-          :class="$style.activePromocode"
-        >
-          <Typography
-            size="textLg"
-            :state="['accent2', 'alignCenter', 'semiBold']"
-          >
-            {{ t('terminalLanding.plans.card.activatePromoCode') }}
-          </Typography>
-        </Link>
       </div>
     </main>
+    <Divider
+      :class="$style.divider"
+      type="horizontal"
+      state="accent3"
+    />
+    <footer :class="$style.footer">
+      <Typography
+        v-if="card?.placesAmount"
+        :class="$style.amountOfPlaces"
+        state="accent1"
+      >
+        <i18n-t
+          tag="span"
+          keypath="common.colon"
+        >
+          <template #key>
+            {{ t('planCard.amountOfPlaces') }}
+          </template>
+          <template #value>
+            <Typography
+              is-inline
+              size="h3"
+              state="bold"
+            >
+              {{ card.placesAmount }}
+            </Typography>
+          </template>
+        </i18n-t>
+      </Typography>
+      <Typography
+        :state="['accent2']"
+        size="massive4"
+        :class="$style.price"
+      >
+        <i18n-t
+          tag="span"
+          keypath="common.slashWithSpaces"
+        >
+          <template #value1>
+            <Typography
+              is-inline
+              :state="['danger3', 'bold']"
+            >
+              {{ t('common.currencyAmount', { amount: card.price.value, currency: '₽' }) }}
+            </Typography>
+          </template>
+          <template #value2>
+            {{ t('common.currencyAmount', { amount: card.price.withoutSale, currency: '₽' }) }}
+          </template>
+        </i18n-t>
+      </Typography>
+      <Button
+        size="xl"
+        :state="['accent3Color', 'interactive']"
+        :class="$style.subscribeButton"
+      >
+        {{ t('planCard.subscribe') }}
+      </Button>
+      <Button
+        size="xl"
+        :state="[
+          (({
+            purple: 'gradientColor',
+            orange: 'orangeGradientColor',
+            blue: 'blueGradientColor'
+          })[state]),
+          'interactive',
+        ]"
+        :class="$style.trialButton"
+      >
+        {{ t('planCard.tryTrial') }}
+      </Button>
+      <Link
+        :state="null"
+        :size="null"
+        :to="{ name: 'index' }"
+        :class="$style.activePromocode"
+      >
+        <Typography
+          size="textLg"
+          :state="['accent2', 'alignCenter', 'semiBold']"
+        >
+          {{ t('planCard.activatePromoCode') }}
+        </Typography>
+      </Link>
+    </footer>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
-import Icon from '@/components/core/icon/Icon.vue';
 import Typography from '@/components/app/typography/Typography.vue';
 import Divider from '@/components/core/divider/Divider.vue';
 import Button from '@/components/core/button/Button.vue';
 import Link from '@/components/core/link/Link.vue';
+import GradientCheckIcon from '@/components/core/gradientCheckIcon/GradientCheckIcon.vue';
+import Badge from '@/components/core/badge/Badge.vue';
+import { computed } from 'vue';
+import { compose } from '@/utils/fp';
+import { percentFormat, toNegative } from '@/utils/number';
 import { PlanCardProps } from './index';
 
 const props = defineProps<PlanCardProps>();
 
 const { t } = useI18n();
+
+const saleBadgeText = computed(() => (props.card?.salePercents ? compose(
+  percentFormat(0),
+  toNegative,
+)(props.card.salePercents) : ''));
 </script>
 
 <style lang="scss" module>
@@ -133,14 +192,23 @@ const { t } = useI18n();
   border-radius: 10px;
   overflow: hidden;
   background-color: rgb(var(--color-background-3));
+  display: flex;
+  flex-direction: column;
 }
 
 .header {
   padding: 20px 40px;
+  position: relative;
+}
+
+.saleBadge {
+  position: absolute;
+  right: 40px;
 }
 
 .main {
   padding: 40px;
+  flex-grow: 1;
 }
 
 .purple {
@@ -181,15 +249,19 @@ const { t } = useI18n();
   margin-left: 11px;
 }
 
-.divider {
-  margin-top: 40px;
-  margin-left: -40px;
-  margin-right: -40px;
+.divider {}
+
+.footer {
+  padding: 40px;
 }
 
-.price {
-  margin-top: 40px;
+.amountOfPlaces {
+  & + .price {
+    margin-top: 15px;
+  }
 }
+
+.price {}
 
 .subscribeButton, .trialButton {
   padding: 22px;

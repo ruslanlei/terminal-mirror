@@ -47,4 +47,8 @@ withDefaults(
 .accent3Transparent {
   background-color: rgba(var(--color-accent-3), 0.8);
 }
+
+.blueGradient {
+  background: var(--color-blue-gradient);
+}
 </style>

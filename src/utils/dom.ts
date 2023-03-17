@@ -26,3 +26,5 @@ export const toCssPercentValue = (
 export const querySelectorAll = (
   selector: string,
 ) => document.querySelectorAll(selector);
+
+export const getElementById = (id: string) => document.getElementById(id);

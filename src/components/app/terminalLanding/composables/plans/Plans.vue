@@ -24,38 +24,38 @@ import { uuid } from '@/utils/uuid';
 import { useI18n } from 'vue-i18n';
 import Typography from '@/components/app/typography/Typography.vue';
 import PlansCard from '@/components/core/planCard/PlanCard.vue';
-import { TerminalPlan, PlanCardProps } from '@/components/core/planCard';
+import { LandingPlan, PlanCardProps } from '@/components/core/planCard';
 
 const { t } = useI18n();
 
 const cards = computed<{
   id: string,
   state: PlanCardProps['state'],
-  card: TerminalPlan,
+  card: LandingPlan,
 }[]>(() => ([
   {
     id: uuid(),
     state: 'purple',
     card: {
       headerText: {
-        textLg: t('terminalLanding.plans.card.headerText'),
+        textLg: t('terminalLanding.plans.headerText'),
       },
       name: t('terminalLanding.plans.list.singlePackage'),
       benefits: [
         {
-          label: t('terminalLanding.plans.card.benefits.accessToEmulator'),
+          label: t('terminalLanding.plans.benefits.accessToEmulator'),
           active: true,
         },
         {
-          label: t('terminalLanding.plans.card.benefits.accessToRealMarket'),
+          label: t('terminalLanding.plans.benefits.accessToRealMarket'),
           active: true,
         },
         {
-          label: t('terminalLanding.plans.card.benefits.propGroups'),
+          label: t('terminalLanding.plans.benefits.propGroups'),
           active: false,
         },
         {
-          label: t('terminalLanding.plans.card.benefits.trainingGroupsForTenPeople'),
+          label: t('terminalLanding.plans.benefits.trainingGroupsForTenPeople'),
           active: false,
         },
       ],
@@ -63,6 +63,8 @@ const cards = computed<{
         value: 890,
         withoutSale: 1430,
       },
+      purchaseButton: t('terminalLanding.plans.tryTrial'),
+
     },
   },
   {
@@ -70,24 +72,24 @@ const cards = computed<{
     state: 'orange',
     card: {
       headerText: {
-        textLg: t('terminalLanding.plans.card.headerText'),
+        textLg: t('terminalLanding.plans.headerText'),
       },
       name: t('terminalLanding.plans.list.propGroups'),
       benefits: [
         {
-          label: t('terminalLanding.plans.card.benefits.accessToEmulator'),
+          label: t('terminalLanding.plans.benefits.accessToEmulator'),
           active: true,
         },
         {
-          label: t('terminalLanding.plans.card.benefits.accessToRealMarket'),
+          label: t('terminalLanding.plans.benefits.accessToRealMarket'),
           active: true,
         },
         {
-          label: t('terminalLanding.plans.card.benefits.propGroups'),
+          label: t('terminalLanding.plans.benefits.propGroups'),
           active: true,
         },
         {
-          label: t('terminalLanding.plans.card.benefits.trainingGroupsForTenPeople'),
+          label: t('terminalLanding.plans.benefits.trainingGroupsForTenPeople'),
           active: false,
         },
       ],
@@ -95,6 +97,8 @@ const cards = computed<{
         value: 2980,
         withoutSale: 3440,
       },
+      purchaseButton: t('terminalLanding.plans.tryTrial'),
+
     },
   },
   {
@@ -102,24 +106,24 @@ const cards = computed<{
     state: 'blue',
     card: {
       headerText: {
-        textLg: t('terminalLanding.plans.card.headerText'),
+        textLg: t('terminalLanding.plans.headerText'),
       },
       name: t('terminalLanding.plans.list.trainingPackage'),
       benefits: [
         {
-          label: t('terminalLanding.plans.card.benefits.accessToEmulator'),
+          label: t('terminalLanding.plans.benefits.accessToEmulator'),
           active: true,
         },
         {
-          label: t('terminalLanding.plans.card.benefits.accessToRealMarket'),
+          label: t('terminalLanding.plans.benefits.accessToRealMarket'),
           active: true,
         },
         {
-          label: t('terminalLanding.plans.card.benefits.propGroups'),
+          label: t('terminalLanding.plans.benefits.propGroups'),
           active: false,
         },
         {
-          label: t('terminalLanding.plans.card.benefits.trainingGroupsForTenPeople'),
+          label: t('terminalLanding.plans.benefits.trainingGroupsForTenPeople'),
           active: true,
         },
       ],
@@ -127,6 +131,7 @@ const cards = computed<{
         value: 2165,
         withoutSale: 2990,
       },
+      purchaseButton: t('terminalLanding.plans.tryTrial'),
     },
   },
 ]));

@@ -45,6 +45,8 @@ defineProps<ImageBackgroundBlockProps>();
 .backgroundImageContainer {
   height: 100%;
   width: 100%;
+  position: absolute;
+  inset: 0;
 }
 
 .backgroundImage {
@@ -54,7 +56,9 @@ defineProps<ImageBackgroundBlockProps>();
 }
 
 .content {
-  position: absolute;
-  inset: 0;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 2;
 }
 </style>

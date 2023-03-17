@@ -1,5 +1,6 @@
 import flatten from 'lodash/flatten';
 import concat from 'lodash/concat';
+import repeat from 'lodash/repeat';
 import lodashReduceRight from 'lodash/reduceRight';
 import {
   map as rambdaMap,
@@ -11,7 +12,7 @@ import collect from 'collect.js';
 
 import { curry, CurriedFunc } from '@/utils/fp';
 
-export { flatten, concat };
+export { flatten, concat, repeat };
 
 export const arrayFrom = (value: any | any[]) => (Array.isArray(value) ? value : [value]);
 

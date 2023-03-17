@@ -75,8 +75,8 @@ import RangeSlider from '@/components/core/rangeSlider/RangeSlider.vue';
 import NumberInput from '@/components/core/numberInput/NumberInput.vue';
 import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
 import { useDepositInput } from '@/hooks/useDepositInput';
+import { roundToDecimalPoint } from '@/helpers/number';
 import { DepositInputEmits, DepositInputProps } from './index';
-import {roundToDecimalPoint} from "@/helpers/number";
 
 const props = withDefaults(
   defineProps<DepositInputProps>(),

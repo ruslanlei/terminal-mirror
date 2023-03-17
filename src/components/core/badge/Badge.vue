@@ -41,6 +41,10 @@ const computedState = useComputedState(props);
   background-color: rgb(var(--color-background-5));
 }
 
+.accent1Background {
+  background-color: rgb(var(--color-accent-1));
+}
+
 .success {
   background-color: rgb(var(--color-success));
 }
@@ -60,6 +64,12 @@ const computedState = useComputedState(props);
     inset: 0;
     background-color: inherit;
   }
+}
+
+.md {
+  padding: 7px 10px;
+  border-radius: 10px;
+  @include h3;
 }
 
 .sm {

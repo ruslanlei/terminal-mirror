@@ -3,4 +3,5 @@ export interface PictureProps {
   srcset?: string,
   alt?: string,
   transitionDuration?: number,
+  isFill?: boolean,
 }

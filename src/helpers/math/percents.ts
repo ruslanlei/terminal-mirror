@@ -105,6 +105,6 @@ export const checkIsRoundedValueEqualToPercentOfTotal = curry((
 export const humanizePercents = (
   percents: number,
 ) => compose(
-  percentFormat,
+  percentFormat(2),
   roundToDecimalPoint(2),
 )(percents);

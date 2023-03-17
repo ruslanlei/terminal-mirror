@@ -6,6 +6,9 @@ export const playAnimation = (
   anime({
     ...params,
     autoplay: true,
-    complete: resolve,
+    complete: () => {
+      anime.remove(params.targets);
+      resolve(true);
+    },
   });
 });

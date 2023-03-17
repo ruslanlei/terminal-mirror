@@ -128,7 +128,7 @@ useEnvironmentObserver(root, calculateContainerHeight);
   }
 }
 
-@keyframes gradientTriggerOnActiveKeyframes {
+@keyframes gradientPurpleTriggerOnActiveKeyframes {
   0% {
     background-position: 0% 50%;
   }
@@ -140,7 +140,7 @@ useEnvironmentObserver(root, calculateContainerHeight);
   }
 }
 
-.gradientTriggerOnActive {
+.gradientPurpleTriggerOnActive {
   .trigger {
     &:before {
       content: '';
@@ -165,7 +165,52 @@ useEnvironmentObserver(root, calculateContainerHeight);
   &.active {
     .trigger {
       &:before {
-        animation: gradientTriggerOnActiveKeyframes 26s ease infinite;
+        animation: gradientPurpleTriggerOnActiveKeyframes 26s ease infinite;
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+  }
+}
+
+@keyframes gradientBlueTriggerOnActiveKeyframes {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.gradientBlueTriggerOnActive {
+  .trigger {
+    &:before {
+      content: '';
+      display: block;
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transform: scale(0.1, 0.8);
+      transition: transform 200ms, opacity 100ms;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        transparent,
+        #42E4EE,
+        #6271EB,
+        transparent,
+        transparent
+      );
+      background-size: 600% 100%;
+    }
+  }
+  &.active {
+    .trigger {
+      &:before {
+        animation: gradientPurpleTriggerOnActiveKeyframes 26s ease infinite;
         opacity: 1;
         transform: scale(1);
       }

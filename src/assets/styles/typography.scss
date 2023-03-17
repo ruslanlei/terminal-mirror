@@ -20,6 +20,10 @@
     font-size: 28px;
 }
 
+@mixin massive2sm {
+    font-size: 32px;
+}
+
 @mixin h1 {
     font-size: 24px;
     font-weight: 700;

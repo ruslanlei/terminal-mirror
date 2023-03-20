@@ -46,7 +46,7 @@
               icon="lock"
             />
             <div :class="$style.label">
-              <slot name="leverageLiquidationPrice" />
+              <slot name="amountOfRealMoney" />
             </div>
           </div>
           <div :class="$style.leveragePositionMargin">
@@ -56,7 +56,7 @@
               icon="fire"
             />
             <div :class="$style.label">
-              <slot name="leveragePositionMargin" />
+              <slot name="leverageLiquidationPrice" />
             </div>
           </div>
         </div>

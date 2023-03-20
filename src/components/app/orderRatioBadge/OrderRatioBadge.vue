@@ -46,7 +46,6 @@ const computedRatio = computed(() => t('order.ratio', {
 <style lang="scss" module>
 .orderRatioBadge {
   padding: 2px 10px;
-  //background-color: rgb(var(--color-accent-3));
   color: rgb(var(--color-accent-1));
   border-radius: 12px;
   font-weight: 600;

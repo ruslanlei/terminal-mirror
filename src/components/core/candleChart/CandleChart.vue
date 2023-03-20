@@ -22,8 +22,6 @@
   </div>
 </template>
 
-<!-- TODO: Rename file to CandleChart -->
-
 <script setup lang="ts">
 import {
   ref,

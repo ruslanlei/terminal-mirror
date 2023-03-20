@@ -23,10 +23,15 @@ const props = defineProps<OrderRatioBadgeProps>();
 
 const { t } = useI18n();
 
-const takeProfitToStopLossRelation = computed(() => compose(
-  roundToDecimalPoint(1),
-  divideRight,
-)(props.stopLossRisk, props.takeProfitsSum));
+const takeProfitToStopLossRelation = computed(() => {
+  if (props.stopLossRisk <= 0) {
+    return 0;
+  }
+  return compose(
+    roundToDecimalPoint(1),
+    divideRight,
+  )(props.stopLossRisk, props.takeProfitsSum);
+});
 
 const isDanger = computed(
   () => isMoreThan(takeProfitToStopLossRelation.value, 3) && (props.stopLossRisk > 0),

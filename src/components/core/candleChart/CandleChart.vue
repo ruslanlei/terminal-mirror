@@ -105,10 +105,6 @@ const addCandles = (
   wickDownColor: getCssRgbColor('--color-danger'),
   borderVisible: true,
 });
-watch(() => props.data, async () => {
-  await nextTick();
-  candles.value?.setData(props.data);
-}, { immediate: true });
 
 const unwatchFirstData = watch(() => props.data, () => {
   chart.value?.timeScale().fitContent();
@@ -135,6 +131,11 @@ onMounted(() => {
       )(newVisibleTimeRange.to as number);
     }
   });
+
+  watch(() => props.data, async () => {
+    await nextTick();
+    candles.value?.setData(props.data);
+  }, { immediate: true });
 });
 
 onBeforeUnmount(() => {

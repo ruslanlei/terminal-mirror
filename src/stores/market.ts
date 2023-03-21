@@ -347,14 +347,7 @@ export const useMarketStore = defineStore('market', () => {
         : handleDeleteOrder
     )(order);
 
-    if (result) {
-      toastStore.showSuccess({
-        text: t('order.successfullyClosed', {
-          pair: pairsMap.value?.[order.pair]?.alias,
-        }),
-        duration: 7000,
-      });
-    } else {
+    if (!result) {
       processServerErrors(data);
     }
   };

@@ -28,6 +28,7 @@ import { compose } from '@/utils/fp';
 import { addCssProperty, getRect } from '@/helpers/style';
 import { roundToDecimalPoint } from '@/helpers/number';
 import { useMarketStore } from '@/stores/market';
+import { awaitTimeout } from '@/utils/promise';
 
 const marketStore = useMarketStore();
 const emulatorStore = useEmulatorStore();
@@ -99,6 +100,7 @@ const onOrderEvent = async (order: Order) => {
     orders.value.some((iterableOrder) => iterableOrder.id === order.id)
   ) {
     await removeOrder(order.id);
+    await awaitTimeout(100);
   }
 
   orders.value.push(order);

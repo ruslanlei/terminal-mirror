@@ -27,12 +27,14 @@ import { toCssPixelValue, toIdSelector } from '@/utils/dom';
 import { compose } from '@/utils/fp';
 import { addCssProperty, getRect } from '@/helpers/style';
 import { roundToDecimalPoint } from '@/helpers/number';
+import { useMarketStore } from '@/stores/market';
 
+const marketStore = useMarketStore();
 const emulatorStore = useEmulatorStore();
 
 const orders = ref<Order[]>([]);
 
-const HIDE_ANIMATION_DURATION = 420;
+const HIDE_ANIMATION_DURATION = 300;
 
 const hideOrder = async (orderId: Order['id']) => {
   const toastWrapper = document.getElementById(collectOrderToastWrapperId(orderId));
@@ -85,6 +87,7 @@ const removeOrder = async (
   orderId: Order['id'],
 ) => {
   await hideOrder(orderId);
+
   findAndDelete(
     (iterableOrder: Order) => iterableOrder.id === orderId,
     orders.value,
@@ -93,6 +96,7 @@ const removeOrder = async (
 
 const onOrderEvent = async (order: Order) => {
   orders.value.push(order);
+
   await nextTick();
 
   const selector = compose(
@@ -110,8 +114,12 @@ const onOrderEvent = async (order: Order) => {
 const {
   unsubscribe: unsubscribeSimulateEvent,
 } = emulatorStore.subscribeSimulateEvent(onOrderEvent);
-
 onBeforeUnmount(unsubscribeSimulateEvent);
+
+const {
+  unsubscribe: unsubscribeOrderCreatedEvent,
+} = marketStore.subscribeOrderCreated(onOrderEvent);
+onBeforeUnmount(unsubscribeOrderCreatedEvent);
 </script>
 
 <style lang="scss" module>

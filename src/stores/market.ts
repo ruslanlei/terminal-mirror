@@ -230,10 +230,6 @@ export const useMarketStore = defineStore('market', () => {
       if (!response.result) return response;
     }
 
-    toastStore.showSuccess({
-      text: t('order.successfullyCreated'),
-    });
-
     if (response.result) {
       // @ts-ignore
       emitOrderCreated(response.data);

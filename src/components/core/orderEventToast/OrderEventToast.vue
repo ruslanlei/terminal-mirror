@@ -150,7 +150,7 @@ const marketStore = useMarketStore();
 const pairData = computed(() => marketStore.getPairData(props.order.pair));
 
 const quoteCurrencyAmount = computed(() => compose(
-  roundToDecimalPoint(2),
+  roundToDecimalPoint(6),
   multiply,
 )(props.order.quantity, props.order.price));
 

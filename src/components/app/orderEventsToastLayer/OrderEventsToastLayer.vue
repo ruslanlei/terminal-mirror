@@ -95,6 +95,12 @@ const removeOrder = async (
 };
 
 const onOrderEvent = async (order: Order) => {
+  if (
+    orders.value.some((iterableOrder) => iterableOrder.id === order.id)
+  ) {
+    await removeOrder(order.id);
+  }
+
   orders.value.push(order);
 
   await nextTick();
@@ -120,6 +126,11 @@ const {
   unsubscribe: unsubscribeOrderCreatedEvent,
 } = marketStore.subscribeOrderCreated(onOrderEvent);
 onBeforeUnmount(unsubscribeOrderCreatedEvent);
+
+const {
+  unsubscribe: unsubscribeOrderDeletedEvent,
+} = marketStore.subscribeOrderDelete(onOrderEvent);
+onBeforeUnmount(unsubscribeOrderDeletedEvent);
 </script>
 
 <style lang="scss" module>

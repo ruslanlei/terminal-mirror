@@ -35,14 +35,14 @@ export const useMarketStore = defineStore('market', () => {
   const toastStore = useToastStore();
   const modalStore = useModalStore();
 
-  const orderDeleteSubject = new Subject<Order['id']>();
+  const orderDeleteSubject = new Subject<Order>();
 
   const subscribeOrderDelete = (
-    callback: (orderId: Order['id']) => any,
+    callback: (order: Order) => any,
   ) => orderDeleteSubject.subscribe(callback);
 
-  const emitOrderDeleteOrClose = (orderId: Order['id']) => {
-    orderDeleteSubject.next(orderId);
+  const emitOrderDeleteOrClose = (order: Order) => {
+    orderDeleteSubject.next(order);
   };
 
   const orderCreatedEventSubject = new Subject<Order>();
@@ -275,12 +275,15 @@ export const useMarketStore = defineStore('market', () => {
   };
 
   const handleDeleteOrder = async (
-    orderId: Order['id'],
+    order: Order,
   ) => {
-    const response = await deleteOrder(orderId);
+    const response = await deleteOrder(order.id);
 
     if (response.result) {
-      emitOrderDeleteOrClose(orderId);
+      emitOrderDeleteOrClose({
+        ...order,
+        status: 'canceled',
+      });
     } else {
       processServerErrors(response);
     }
@@ -289,12 +292,15 @@ export const useMarketStore = defineStore('market', () => {
   };
 
   const handleCloseOrder = async (
-    orderId: Order['id'],
+    order: Order,
   ) => {
-    const response = await closeOrder(orderId);
+    const response = await closeOrder(order.id);
 
     if (response.result) {
-      emitOrderDeleteOrClose(orderId);
+      emitOrderDeleteOrClose({
+        ...order,
+        status: 'closed',
+      });
     } else {
       processServerErrors(response);
     }
@@ -320,7 +326,7 @@ export const useMarketStore = defineStore('market', () => {
 
     if (response.result) {
       activePairActiveOrders.forEach((order: Order) => {
-        emitOrderDeleteOrClose(order.id);
+        emitOrderDeleteOrClose(order);
       });
       await getBalance();
     } else {
@@ -339,7 +345,7 @@ export const useMarketStore = defineStore('market', () => {
       isOrderFilled
         ? handleCloseOrder
         : handleDeleteOrder
-    )(order.id);
+    )(order);
 
     if (result) {
       toastStore.showSuccess({

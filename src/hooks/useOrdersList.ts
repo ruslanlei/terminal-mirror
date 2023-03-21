@@ -239,13 +239,14 @@ export const useOrdersList = (
   const {
     unsubscribe: unsubscribeOrderDelete,
   } = marketStore.subscribeOrderDelete(async (
-    orderId: Order['id'],
+    deletedOrder: Order,
   ) => {
     if (props.listType !== 'active') return;
 
     await awaitTimeout(300); // FIXME: awaiting for modal close animation
+
     activeOrders.value = activeOrders.value.filter(
-      (order: Order) => order.id !== orderId && order.master !== orderId,
+      (order: Order) => order.id !== deletedOrder.id && order.master !== deletedOrder.id,
     );
   });
 

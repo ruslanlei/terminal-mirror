@@ -158,7 +158,9 @@ if (props.takeProfits) {
   setTakeProfits(props.takeProfits);
 }
 
-const unsubscribeSimulateEvent = emulatorStore.subscribeSimulateEvent(onEmulatorEvent);
+const {
+  unsubscribe: unsubscribeSimulateEvent,
+} = emulatorStore.subscribeSimulateEvent(onEmulatorEvent);
 
 const isDeleting = ref(false);
 const handleDelete = async () => {

@@ -245,7 +245,9 @@ export const useOrdersList = (
     );
   });
 
-  const unsubscribeSimulateEvent = emulatorStore.subscribeSimulateEvent(
+  const {
+    unsubscribe: unsubscribeSimulateEvent,
+  } = emulatorStore.subscribeSimulateEvent(
     (updatedOrder: Order) => {
       if (
         updatedOrder.order_type === 'limit'
@@ -274,7 +276,9 @@ export const useOrdersList = (
   //  "filled" status even if it executed
   //  if at the same time was executed TP
   //  or SL
-  const unsubscribeSimulationEndedEvent = emulatorStore.subscribeSimulationEndedEvent(getList);
+  const {
+    unsubscribe: unsubscribeSimulationEndedEvent,
+  } = emulatorStore.subscribeSimulationEndedEvent(getList);
 
   const isDeletingOrder = ref(false);
   const deleteOrder = async (

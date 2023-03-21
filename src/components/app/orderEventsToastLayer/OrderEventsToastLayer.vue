@@ -91,7 +91,9 @@ const removeOrder = async (
   );
 };
 
-const unsubscribeSimulateEvent = emulatorStore.subscribeSimulateEvent(async (order: Order) => {
+const {
+  unsubscribe: unsubscribeSimulateEvent,
+} = emulatorStore.subscribeSimulateEvent(async (order: Order) => {
   orders.value.push(order);
   await nextTick();
 

@@ -70,6 +70,9 @@
         </i18n-t>
       </Typography>
     </div>
+    <div :class="$style.status">
+      {{ computedStatus }}
+    </div>
   </div>
 </template>
 
@@ -93,7 +96,7 @@ const close = () => {
   emit('close');
 };
 
-setTimeout(close, 7000);
+// setTimeout(close, 7000);
 
 const { t } = useI18n();
 
@@ -105,6 +108,15 @@ const quoteCurrencyAmount = computed(() => compose(
   roundToDecimalPoint(2),
   multiply,
 )(props.order.quantity, props.order.price));
+
+const computedStatus = computed(() => ({
+  new: t('order.status.new'),
+  filled: t('order.status.filled'),
+  expired: t('order.status.expired'),
+  canceled: t('order.status.canceled'),
+  executed: t('order.status.executed'),
+  closed: t('order.status.closed'),
+}[props.order.status]));
 </script>
 
 <style lang="scss" module>
@@ -140,5 +152,10 @@ const quoteCurrencyAmount = computed(() => compose(
 
 .volume {
   margin-top: 10px;
+}
+
+.status {
+  margin-top: 15px;
+  padding: 4px 10px;
 }
 </style>

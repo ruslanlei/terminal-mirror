@@ -170,6 +170,14 @@
     }
   },
   "order": {
+    "status": {
+      "new": "New",
+      "filled": "Filled",
+      "expired": "Expired",
+      "canceled": "Canceled",
+      "executed": "Executed",
+      "closed": "Closed"
+    },
     "tab": {
       "orders": "Orders",
       "pairs": "Pairs"

@@ -91,7 +91,6 @@ export const calculateCommonTakeProfitPercent = curry((
   return compose(
     multiply(100),
     divideRight(orderVolume),
-    subtractRight(orderVolume),
     reduceTakeProfitsToAmountOfProfit(orderPrice),
   )(takeProfits);
 });

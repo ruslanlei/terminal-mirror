@@ -228,13 +228,17 @@ export const useOrdersList = (
 
   watch(() => props.listType, () => getList(true));
 
-  const unsubscribeOrderCreate = marketStore.subscribeOrderCreated(async () => {
+  const {
+    unsubscribe: unsubscribeOrderCreate,
+  } = marketStore.subscribeOrderCreated(async () => {
     if (props.listType !== 'active') return;
 
     await getList(false);
   });
 
-  const unsubscribeOrderDelete = marketStore.subscribeOrderDelete(async (
+  const {
+    unsubscribe: unsubscribeOrderDelete,
+  } = marketStore.subscribeOrderDelete(async (
     orderId: Order['id'],
   ) => {
     if (props.listType !== 'active') return;

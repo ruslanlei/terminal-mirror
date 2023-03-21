@@ -29,6 +29,7 @@ import { getBalance } from '@/api/endpoints/profile/getBalance';
 import { isMoreThan } from '@/utils/boolean';
 import { isExactOrder } from '@/helpers/orders';
 import { useToastStore } from '@/stores/toasts';
+import { AnyFunction } from '@/utils/typescript';
 
 export const getDefaultEmulatorDate = () => compose(
   toISOString,
@@ -55,7 +56,7 @@ export const useEmulatorStore = defineStore('emulator', () => {
 
   const simulateEventSubject = new Subject<Order>();
   const subscribeSimulateEvent = (
-    callback: (...args: any[]) => any,
+    callback: AnyFunction,
   ) => simulateEventSubject.subscribe(callback);
   const emitSimulateEvent = (order: Order) => {
     simulateEventSubject.next(order);
@@ -64,7 +65,7 @@ export const useEmulatorStore = defineStore('emulator', () => {
   const simulationEndedSubject = new Subject<true>();
 
   const subscribeSimulationEndedEvent = (
-    callback: (...args: any[]) => any,
+    callback: AnyFunction,
   ) => simulationEndedSubject.subscribe(callback);
   const emitSimulationEndedEvent = () => {
     simulationEndedSubject.next(true);

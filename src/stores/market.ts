@@ -2,6 +2,7 @@ import { computed, nextTick, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { defineStore } from 'pinia';
 import { useStorage } from '@vueuse/core';
+import { Subject } from 'rxjs';
 import { getPairs } from '@/api/endpoints/marketdata/stats';
 import { useToastStore } from '@/stores/toasts';
 import { createOrder, CreateOrderDTO } from '@/api/endpoints/orders/create';
@@ -13,11 +14,10 @@ import {
 import { processServerErrors, requestMany } from '@/api/common';
 import { getOrdersList } from '@/api/endpoints/orders/getList';
 import { PairData } from '@/api/types/pair';
+import { compose } from '@/utils/fp';
 import { filter, flatten, map } from '@/utils/array';
-import { createEventBus } from '@/utils/eventBus';
 import { deleteOrder } from '@/api/endpoints/orders/delete';
 import { closeOrder } from '@/api/endpoints/orders/cancel';
-import { compose, curry } from '@/utils/fp';
 import { OrderModel } from '@/hooks/useOrderCreate';
 import { modalType, useModalStore } from '@/stores/modals';
 import { FavoritePair, getFavorites } from '@/api/endpoints/profile/getFavorites';
@@ -29,30 +29,29 @@ import { isEmpty } from '@/utils/object';
 
 export type MarketType = 'emulator' | 'real';
 
-export enum marketEvent {
-  ORDER_CREATED = 'orderCreated',
-  ORDER_DELETED_OR_CLOSED = 'orderDeletedOrClosed',
-}
-
 export const useMarketStore = defineStore('market', () => {
   const { t } = useI18n();
 
   const toastStore = useToastStore();
   const modalStore = useModalStore();
 
-  const {
-    subscribeEvent,
-    unsubscribeEvent,
-    emitEvent,
-  } = createEventBus<marketEvent>();
+  const orderDeleteSubject = new Subject<Order['id']>();
 
-  const subscribeOrderDelete = curry(subscribeEvent<Order['id']>)(marketEvent.ORDER_DELETED_OR_CLOSED);
-  const unsubscribeOrderDelete = curry(unsubscribeEvent)(marketEvent.ORDER_DELETED_OR_CLOSED);
-  const emitOrderDeleteOrClose = curry(emitEvent<Order['id']>)(marketEvent.ORDER_DELETED_OR_CLOSED);
+  const subscribeOrderDelete = (
+    callback: (orderId: Order['id']) => any,
+  ) => orderDeleteSubject.subscribe(callback);
 
-  const subscribeOrderCreated = curry(subscribeEvent<Order['id']>)(marketEvent.ORDER_CREATED);
-  const unsubscribeOrderCreated = curry(unsubscribeEvent)(marketEvent.ORDER_CREATED);
-  const emitOrderCreated = curry(emitEvent<Order['id'] | null>)(marketEvent.ORDER_CREATED);
+  const emitOrderDeleteOrClose = (orderId: Order['id']) => {
+    orderDeleteSubject.next(orderId);
+  };
+
+  const orderCreatedEventSubject = new Subject<Order>();
+  const subscribeOrderCreated = (
+    callback: (order: Order) => void,
+  ) => orderCreatedEventSubject.subscribe(callback);
+  const emitOrderCreated = (order: Order) => {
+    orderCreatedEventSubject.next(order);
+  };
 
   const marketType = useStorage<MarketType>('marketType', 'emulator');
 
@@ -235,7 +234,10 @@ export const useMarketStore = defineStore('market', () => {
       text: t('order.successfullyCreated'),
     });
 
-    emitOrderCreated(null);
+    if (response.result) {
+      // @ts-ignore
+      emitOrderCreated(response.data);
+    }
 
     return response;
   };
@@ -369,13 +371,8 @@ export const useMarketStore = defineStore('market', () => {
   };
 
   return {
-    subscribeEvent,
-    unsubscribeEvent,
-    emitEvent,
     subscribeOrderDelete,
-    unsubscribeOrderDelete,
     subscribeOrderCreated,
-    unsubscribeOrderCreated,
     pairs,
     isPairsPreFetched,
     pairsMap,

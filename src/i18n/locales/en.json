@@ -170,6 +170,10 @@
     }
   },
   "order": {
+    "shortType": {
+      "tp": "TP",
+      "sl": "SL"
+    },
     "status": {
       "new": "New",
       "filled": "Filled",

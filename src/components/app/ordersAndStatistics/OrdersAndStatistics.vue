@@ -34,6 +34,9 @@
           :class="$style.ordersList"
         />
       </KeepAlive>
+      <div v-if="activeTab === 'statistics'">
+        statistics
+      </div>
     </div>
   </div>
 </template>

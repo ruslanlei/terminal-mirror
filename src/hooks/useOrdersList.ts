@@ -228,17 +228,13 @@ export const useOrdersList = (
 
   watch(() => props.listType, () => getList(true));
 
-  const {
-    unsubscribe: unsubscribeOrderCreate,
-  } = marketStore.subscribeOrderCreated(async () => {
+  const orderCreatedEventSubscription = marketStore.subscribeOrderCreated(async () => {
     if (props.listType !== 'active') return;
 
     await getList(false);
   });
 
-  const {
-    unsubscribe: unsubscribeOrderDelete,
-  } = marketStore.subscribeOrderDelete(async (
+  const orderDeleteSubscription = marketStore.subscribeOrderDelete(async (
     deletedOrder: Order,
   ) => {
     if (props.listType !== 'active') return;
@@ -250,9 +246,7 @@ export const useOrdersList = (
     );
   });
 
-  const {
-    unsubscribe: unsubscribeSimulateEvent,
-  } = emulatorStore.subscribeSimulateEvent(
+  const simulateEventSubscription = emulatorStore.subscribeSimulateEvent(
     (updatedOrder: Order) => {
       if (
         updatedOrder.order_type === 'limit'
@@ -281,9 +275,7 @@ export const useOrdersList = (
   //  "filled" status even if it executed
   //  if at the same time was executed TP
   //  or SL
-  const {
-    unsubscribe: unsubscribeSimulationEndedEvent,
-  } = emulatorStore.subscribeSimulationEndedEvent(getList);
+  const simulationEndedEventSubscription = emulatorStore.subscribeSimulationEndedEvent(getList);
 
   const isDeletingOrder = ref(false);
   const deleteOrder = async (
@@ -295,10 +287,10 @@ export const useOrdersList = (
   };
 
   const clearSubscriptions = () => {
-    unsubscribeOrderCreate();
-    unsubscribeOrderDelete();
-    unsubscribeSimulateEvent();
-    unsubscribeSimulationEndedEvent();
+    orderCreatedEventSubscription.unsubscribe();
+    orderDeleteSubscription.unsubscribe();
+    simulateEventSubscription.unsubscribe();
+    simulationEndedEventSubscription.unsubscribe();
   };
 
   const onRecordClick = (

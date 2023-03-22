@@ -3,6 +3,7 @@ import {
   curry,
 } from '@/utils/fp';
 import {
+  add,
   divide,
   divideRight,
   multiply,
@@ -34,13 +35,23 @@ export const calculateVolumeDifference = curry((
   comparingPrice,
 ));
 
-export const calculateOriginalPriceByVolumeDifference = curry((
+export const calculateOriginalPriceByVolumeDecrease = curry((
   originalPrice: number,
   quantity: number,
   volumeDifference: number,
 ) => compose(
   divideRight(quantity),
   subtractRight(volumeDifference),
+  multiply,
+)(originalPrice, quantity));
+
+export const calculateOriginalPriceByVolumeIncrease = curry((
+  originalPrice: number,
+  quantity: number,
+  volumeDifference: number,
+) => compose(
+  divideRight(quantity),
+  add(volumeDifference),
   multiply,
 )(originalPrice, quantity));
 

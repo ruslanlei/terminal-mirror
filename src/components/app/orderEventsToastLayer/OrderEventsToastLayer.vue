@@ -120,13 +120,19 @@ const onOrderEvent = async (order: Order) => {
 };
 
 const simulateEventSubscription = emulatorStore.subscribeSimulateEvent(onOrderEvent);
-onBeforeUnmount(simulateEventSubscription.unsubscribe);
+onBeforeUnmount(() => {
+  simulateEventSubscription.unsubscribe();
+});
 
 const orderCreatedSubscription = marketStore.subscribeOrderCreated(onOrderEvent);
-onBeforeUnmount(orderCreatedSubscription.unsubscribe);
+onBeforeUnmount(() => {
+  orderCreatedSubscription.unsubscribe();
+});
 
 const orderDeleteSubscription = marketStore.subscribeOrderDelete(onOrderEvent);
-onBeforeUnmount(orderDeleteSubscription.unsubscribe);
+onBeforeUnmount(() => {
+  orderDeleteSubscription.unsubscribe();
+});
 </script>
 
 <style lang="scss" module>

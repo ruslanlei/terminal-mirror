@@ -48,13 +48,7 @@ export const useMarketStore = defineStore('market', () => {
   const orderCreatedEventSubject = new Subject<Order>();
   const subscribeOrderCreated = (
     callback: (order: Order) => void,
-  ) => {
-    const subscription = orderCreatedEventSubject.subscribe(callback);
-
-    return {
-      unsubscribe: () => subscription.unsubscribe(),
-    };
-  };
+  ) => orderCreatedEventSubject.subscribe(callback);
   const emitOrderCreated = (order: Order) => {
     orderCreatedEventSubject.next(order);
   };

@@ -158,9 +158,7 @@ if (props.takeProfits) {
   setTakeProfits(props.takeProfits);
 }
 
-const {
-  unsubscribe: unsubscribeSimulateEvent,
-} = emulatorStore.subscribeSimulateEvent(onEmulatorEvent);
+const simulateEventSubscription = emulatorStore.subscribeSimulateEvent(onEmulatorEvent);
 
 const isDeleting = ref(false);
 const handleDelete = async () => {
@@ -177,7 +175,7 @@ const handleDelete = async () => {
   }
 };
 
-onBeforeUnmount(unsubscribeSimulateEvent);
+onBeforeUnmount(simulateEventSubscription.unsubscribe);
 </script>
 
 <style lang="scss" module>

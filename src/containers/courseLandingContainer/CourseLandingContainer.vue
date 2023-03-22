@@ -67,10 +67,12 @@
 
 .welcomeScreen {
 }
+
 .practiceBadge {
   display: flex;
   justify-content: center;
 }
+
 .practiceBadgeWrapper {
   width: 100%;
   max-width: 1450px;
@@ -80,6 +82,10 @@
 
 .startDateTape {
   transform: rotate(-0.71deg) translateY(-50%);
+}
+
+.ecoSystemBlock {
+  height: calc(100 * var(--vh));
 }
 
 .faq {

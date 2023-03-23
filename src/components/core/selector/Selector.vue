@@ -70,7 +70,7 @@ import {
   watch,
   onMounted,
   onBeforeUnmount,
-  onBeforeUpdate,
+  onBeforeUpdate, computed,
 } from 'vue';
 import { useLocalValue } from '@/hooks/useLocalValue';
 import { useEnvironmentObserver } from '@/hooks/useEnvironmentObserver';
@@ -124,20 +124,13 @@ const detectDirection = (nextOption: string, previousOption: string) => {
 };
 watch(localValue, detectDirection);
 
-const activeOption = ref<SelectorOption>();
-onMounted(() => {
-  const option = props.options.find(
-    (option: SelectorOption) => option.value === localValue.value,
-  );
-  if (option) {
-    activeOption.value = option;
-  }
-});
+const activeOption = computed<SelectorOption>(() => props.options.find(
+  (option: SelectorOption) => option.value === localValue.value,
+) || { value: '', label: '' });
 
 const onOptionClick = (selectingOption: SelectorOption) => {
   detectDirection(selectingOption.value, localValue.value);
   localValue.value = selectingOption.value;
-  activeOption.value = selectingOption;
 };
 
 const computedGhostStyles = ref({

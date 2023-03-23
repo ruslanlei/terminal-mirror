@@ -157,6 +157,7 @@ export const useEmulatorStore = defineStore('emulator', () => {
     tiks: number,
   ) => {
     isFetchingEmulatorTimeframe.value = true;
+
     const compression = compose(
       multiply(candlesPerSecond),
       multiply(candleSize),
@@ -175,6 +176,12 @@ export const useEmulatorStore = defineStore('emulator', () => {
       data.events.forEach(emitSimulateEvent);
       increaseEmulatorDate(tiks);
     } else {
+      toastStore.showDanger({
+        text: t('emulator.player.error.historyDataIsOver', {
+          pair: activePairData.value?.alias,
+        }),
+        duration: 7000,
+      });
       emitSimulationEndedEvent();
     }
 

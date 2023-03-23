@@ -318,16 +318,13 @@ export const useMarketStore = defineStore('market', () => {
       requestMany,
       map((order: Order) => (
         order.status === 'new'
-          ? deleteOrder(order.id)
-          : closeOrder(order.id)
+          ? handleDeleteOrder(order)
+          : handleCloseOrder(order)
       )),
       filter((order: Order) => order.order_type === 'limit'),
     )(activePairActiveOrders);
 
     if (response.result) {
-      activePairActiveOrders.forEach((order: Order) => {
-        emitOrderDeleteOrClose(order);
-      });
       await getBalance();
     } else {
       processServerErrors(response.result);

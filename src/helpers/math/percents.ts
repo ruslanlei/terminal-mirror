@@ -1,6 +1,6 @@
 import {
   compose,
-  curry,
+  curry, log,
 } from '@/utils/fp';
 import {
   add,
@@ -96,11 +96,13 @@ export const checkIsRoundedValueEqualToPercentOfTotal = curry((
   total: number,
   percents: number,
   comparisonValue: number,
-) => compose(
-  isEqual(comparisonValue),
-  roundToDecimalPoint(decimals),
-  percentsToValue(total),
-)(percents));
+) => {
+  const percentsInValue = percentsToValue(total, percents);
+
+  if (percentsInValue === 0) return false;
+
+  return isEqual(comparisonValue, roundToDecimalPoint(decimals, percentsInValue));
+});
 
 export const humanizePercents = (
   percents: number,

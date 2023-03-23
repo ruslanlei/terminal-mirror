@@ -69,13 +69,11 @@ export const useDepositInput = (
 
   const checkIsPercentEqualToModelValue = (
     percents: number,
-  ) => (!!baseCurrencyBalance.value
-    && checkIsRoundedValueEqualToPercentOfTotal(
-      baseCurrencyDecimals.value,
-      baseCurrencyBalance.value,
-      percents,
-      localValue.value,
-    )
+  ) => checkIsRoundedValueEqualToPercentOfTotal(
+    baseCurrencyDecimals.value,
+    baseCurrencyBalance.value,
+    percents,
+    localValue.value,
   );
 
   return {

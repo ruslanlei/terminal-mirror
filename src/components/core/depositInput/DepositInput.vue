@@ -91,6 +91,7 @@ const {
   localValue,
   showLeveragedBalance,
   localValueInPercents,
+  baseCurrencyBalance,
   setPercentOfBalance,
   checkIsPercentEqualToModelValue,
   maxQuoteCurrencyDeposit,

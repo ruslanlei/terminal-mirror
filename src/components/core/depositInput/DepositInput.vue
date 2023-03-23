@@ -6,7 +6,7 @@
         :key="option.percents"
         type="button"
         :state="[
-          checkIsValueEqualToPercent(option.percents)
+          option.isActive
             ? 'colored'
             : 'secondary2Color',
         ]"
@@ -122,7 +122,10 @@ const options = computed(() => [
     label: '100%',
     percents: 100,
   },
-]);
+].map((option) => ({
+  ...option,
+  isActive: checkIsValueEqualToPercent(option.percents),
+})));
 </script>
 
 <style lang="scss" module>

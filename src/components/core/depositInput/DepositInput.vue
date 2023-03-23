@@ -92,7 +92,7 @@ const {
   showLeveragedBalance,
   localValueInPercents,
   setPercentOfBalance,
-  checkIsValueEqualToPercent,
+  checkIsPercentEqualToModelValue,
   maxQuoteCurrencyDeposit,
   maxQuoteCurrencyDepositLeveraged,
 } = useDepositInput(props, emit);
@@ -124,7 +124,7 @@ const options = computed(() => [
   },
 ].map((option) => ({
   ...option,
-  isActive: checkIsValueEqualToPercent(option.percents),
+  isActive: checkIsPercentEqualToModelValue(option.percents),
 })));
 </script>
 

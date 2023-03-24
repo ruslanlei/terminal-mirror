@@ -61,9 +61,10 @@ export const calculatePledge = curry((
   leverage: number,
 ) => compose(
   divideRight(leverage),
-  multiply(orderPrice),
-)(orderQuantity));
+  multiply(orderQuantity),
+)(orderPrice));
 
+// (order volume - pledge - balance) / quantity
 export const calculateLiquidationPrice = curry(
   (
     price: number,
@@ -71,13 +72,23 @@ export const calculateLiquidationPrice = curry(
     leverage: number,
     balance: number,
   ): number => Maybe.of<number>(price)
-    .map((priceValue) => subtract(priceValue, divide(priceValue, leverage)))
     .map(
-      (currentPriceValue) => subtract(
-        currentPriceValue,
-        subtract(balance, calculatePledge(price, quantity, leverage)),
+      (priceValue) => compose(
+        multiply(leverage),
+        multiply(quantity),
+      )(priceValue),
+    )
+    .map(
+      (priceValue) => subtract(
+        priceValue,
+        calculatePledge(price, quantity, leverage),
       ),
     )
-    .map((priceValue) => divide(priceValue, quantity))
-    .join(),
+    .map(
+      (priceValue) => subtract(
+        priceValue,
+        balance,
+      ),
+    )
+    .chain((priceValue) => divide(priceValue, quantity)),
 );

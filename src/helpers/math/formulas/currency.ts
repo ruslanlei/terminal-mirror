@@ -2,7 +2,6 @@ import {
   add, divideRight, multiply, subtractRight,
 } from '@/helpers/number';
 import { compose, curry } from '@/utils/fp';
-import { calculateOnePercent } from '@/helpers/math/percents';
 import { Maybe } from '@/utils/functors';
 
 export const convertQuoteBalanceToBase = curry((
@@ -21,8 +20,7 @@ export const incrementQuoteDepositByBaseStep = curry((
   .of(quoteCurrencyVolume)
   .map(divideRight(baseCurrencyPrice))
   .map(add(baseCurrencyStep))
-  .map(multiply(baseCurrencyPrice))
-  .join());
+  .chain(multiply(baseCurrencyPrice)));
 
 export const decrementQuoteDepositByBaseStep = curry((
   baseCurrencyStep: number,

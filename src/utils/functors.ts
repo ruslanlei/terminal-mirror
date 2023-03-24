@@ -33,10 +33,6 @@ export class Maybe<T> implements Monad<T>/* , Traversable<T> */ {
     this.$value = x;
   }
 
-  // [util.inspect.custom]() {
-  //   return this.isNothing ? 'Nothing' : `Just(${util.inspect(this.$value)})`;
-  // }
-
   // ----- Pointed Maybe
   static of<U>(x: U | null | undefined) {
     return new Maybe<U>(x);
@@ -53,12 +49,16 @@ export class Maybe<T> implements Monad<T>/* , Traversable<T> */ {
   }
 
   // ----- Monad Maybe
-  chain<U>(fn: (x: T) => Maybe<U>): Maybe<U> {
+  chain<U>(fn: (x: T) => U): U {
     return this.map(fn).join();
   }
 
   join(): T {
     return this.isNothing ? (this as unknown as Maybe<T>).$value as T : this.$value as T;
+  }
+
+  getOrElse(defaultValue: T): T {
+    return this.isNothing ? defaultValue : this.$value as T;
   }
 
   // // ----- Traversable Maybe

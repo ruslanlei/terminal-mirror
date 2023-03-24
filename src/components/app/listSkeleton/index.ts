@@ -1,3 +1,3 @@
 export interface ListSkeletonProps {
-  itemsAmount: number,
+  itemsAmount?: number,
 }

@@ -47,6 +47,7 @@
           </slot>
         </button>
         <div
+          key="$ghost"
           :style="computedGhostStyles"
           :class="[
             $style.ghost,

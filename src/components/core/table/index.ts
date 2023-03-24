@@ -57,5 +57,5 @@ export interface TableProps {
   isHeadVisible?: boolean,
   showHeadWhileEmpty?: boolean,
   animationDelay?: number,
-  appearanceAnimationType: 'bubbling' | 'elevating'
+  appearanceAnimationType?: 'bubbling' | 'elevating'
 }

@@ -1,5 +1,3 @@
-// import util from 'util';
-
 interface Functor<T> {
   map<U>(fn: (x: T) => U): Functor<U>;
 }

@@ -55,6 +55,7 @@ export const calculateOriginalPriceByVolumeIncrease = curry((
   multiply,
 )(originalPrice, quantity));
 
+// (price * quantity) / leverage
 export const calculatePledge = curry((
   orderPrice: number,
   orderQuantity: number,

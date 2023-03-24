@@ -28,6 +28,7 @@ import { useChartDataStore } from '@/stores/chartData';
 import { TakeProfit } from '@/api/types/order';
 import { arrayOf } from '@/utils/array';
 import { useEmulatorStore } from '@/stores/emulator';
+import { Maybe } from '@/utils/functors';
 
 export interface OrderModel extends CreateOrderDTO {
   leverage: number,
@@ -216,18 +217,29 @@ export const useOrderCreate = () => {
     model.leverage,
   ));
 
-  const liquidationPrice = computed(() => (
-    model.quantity
-      ? compose(
+  const calculateLiquidationPriceLocal = (
+    price: number,
+    quantity: number,
+    leverage: number,
+    balance: number,
+  ) => Maybe
+    .of((!!quantity && (leverage > 1)) || null)
+    .map(() => (
+      compose(
         roundToDecimalPoint(2),
         calculateLiquidationPrice,
-      )(
-        model.price,
-        model.quantity,
-        model.leverage,
-        emulatorStore.balance,
-      )
-      : 0));
+      )(price, quantity, leverage, balance)
+    ))
+    .getOrElse(0);
+
+  const liquidationPrice = computed(
+    () => calculateLiquidationPriceLocal(
+      model.price,
+      model.quantity,
+      model.leverage,
+      emulatorStore.balance,
+    ),
+  );
 
   // submit
   const isLoading = ref(false);

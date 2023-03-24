@@ -33,6 +33,15 @@ export class Maybe<T> implements Monad<T>/* , Traversable<T> */ {
     this.$value = x;
   }
 
+  // ----- Utils
+
+  log<U>(
+    ...args: any[]
+  ): Maybe<U> {
+    console.log(...args);
+    return this as Maybe<any>;
+  }
+
   // ----- Pointed Maybe
   static of<U>(x: U | null | undefined) {
     return new Maybe<U>(x);

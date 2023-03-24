@@ -7,11 +7,11 @@ import {
   divide,
   divideRight,
   multiply,
-  roundToDecimalPoint,
   subtract,
   subtractRight,
 } from '@/helpers/number';
 import { toAbsolute } from '@/utils/number';
+import { Maybe } from '@/utils/functors';
 
 export const calculateRisk = curry((
   originalPrice: number,
@@ -64,24 +64,20 @@ export const calculatePledge = curry((
   multiply(orderPrice),
 )(orderQuantity));
 
-export const calculateLiquidationPrice = curry((
-  price: number,
-  quantity: number,
-  leverage: number,
-  balance: number,
-) => compose(
-  divideRight(quantity),
-  subtractRight(
-    subtractRight(
-      calculatePledge(
-        price,
-        quantity,
-        leverage,
+export const calculateLiquidationPrice = curry(
+  (
+    price: number,
+    quantity: number,
+    leverage: number,
+    balance: number,
+  ): number => Maybe.of<number>(price)
+    .map((priceValue) => subtract(priceValue, divide(priceValue, leverage)))
+    .map(
+      (currentPriceValue) => subtract(
+        currentPriceValue,
+        subtract(balance, calculatePledge(price, quantity, leverage)),
       ),
-      balance,
-    ),
-  ),
-  subtractRight(
-    divideRight(leverage, price),
-  ),
-)(price));
+    )
+    .map((priceValue) => divide(priceValue, quantity))
+    .join(),
+);

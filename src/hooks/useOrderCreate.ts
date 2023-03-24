@@ -208,13 +208,24 @@ export const useOrderCreate = () => {
     autoCalculateStopLoss();
   });
 
-  const pledge = computed(() => compose(
-    roundToDecimalPoint(2),
-    calculatePledge,
-  )(
-    model.price,
-    model.quantity,
-    model.leverage,
+  const calculatePledgeLocal = (
+    price: number,
+    quantity: number,
+    leverage: number,
+  ) => Maybe
+    .of((leverage > 1) || null)
+    .map(() => compose(
+      roundToDecimalPoint(2),
+      calculatePledge,
+    )(price, quantity, leverage))
+    .getOrElse(0);
+
+  const pledge = computed(() => (
+    calculatePledgeLocal(
+      model.price,
+      model.quantity,
+      model.leverage,
+    )
   ));
 
   const calculateLiquidationPriceLocal = (
@@ -232,14 +243,14 @@ export const useOrderCreate = () => {
     ))
     .getOrElse(0);
 
-  const liquidationPrice = computed(
-    () => calculateLiquidationPriceLocal(
+  const liquidationPrice = computed(() => (
+    calculateLiquidationPriceLocal(
       model.price,
       model.quantity,
       model.leverage,
       emulatorStore.balance,
-    ),
-  );
+    )
+  ));
 
   // submit
   const isLoading = ref(false);

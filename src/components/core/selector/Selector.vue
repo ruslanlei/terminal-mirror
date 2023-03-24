@@ -78,6 +78,7 @@ import { useEnvironmentObserver } from '@/hooks/useEnvironmentObserver';
 import { useComputedState } from '@/hooks/useComputedState';
 import { addCssProperty, getRect, toCssPxValue } from '@/helpers/style';
 import { compose } from '@/utils/fp';
+import { add, multiply, roundToDecimalPoint } from '@/helpers/number';
 import { SelectorEmits, SelectorOption, SelectorProps } from './index';
 
 const props = withDefaults(
@@ -137,8 +138,7 @@ const onOptionClick = (selectingOption: SelectorOption) => {
 const computedGhostStyles = ref({
   width: '0px',
   height: 'auto',
-  left: '0px',
-  top: '0px',
+  transform: 'translateY(0) translateX(0)',
 });
 
 const findActiveTab = () => {
@@ -146,30 +146,33 @@ const findActiveTab = () => {
 
   const activeTabElement = optionRefs.value?.[localValue.value];
 
-  if (!activeTabElement) {
-    Object.assign(computedGhostStyles.value, {
-      width: '0px',
-      height: 'auto',
-      left: '0px',
-      top: '0px',
-    });
-
-    return;
-  }
+  if (!activeTabElement) return;
 
   const { left: containerLeft, top: containerTop } = container.value.getBoundingClientRect();
   const {
     width, height, left, top,
-  } = activeTabElement.getBoundingClientRect();
+  } = getRect(activeTabElement);
 
   const { thickening } = props;
 
-  const normalized = thickening * 2;
+  const normalized = multiply(thickening, 2);
 
-  computedGhostStyles.value.width = `${width + normalized}px`;
-  computedGhostStyles.value.height = `${height + normalized}px`;
-  computedGhostStyles.value.left = `${(left - containerLeft) - (normalized / 2)}px`;
-  computedGhostStyles.value.top = `${(top - containerTop) - (normalized / 2)}px`;
+  computedGhostStyles.value.width = toCssPxValue(
+    add(width, normalized),
+  );
+  computedGhostStyles.value.height = toCssPxValue(
+    add(height, normalized),
+  );
+
+  computedGhostStyles.value.transform = `translateX(${
+    toCssPxValue(
+      roundToDecimalPoint(2, (left - containerLeft) - (normalized / 2)),
+    )
+  }) translateY(${
+    toCssPxValue(
+      roundToDecimalPoint(2, (top - containerTop) - (normalized / 2)),
+    )
+  })`;
 };
 
 const onElementRemove = (removingElement: HTMLElement) => {
@@ -193,10 +196,8 @@ const {
 
 watch(localValue, findActiveTab);
 onMounted(() => {
-  requestAnimationFrame(() => {
-    findActiveTab();
-    setListeners();
-  });
+  findActiveTab();
+  setListeners();
 });
 onBeforeUnmount(removeListeners);
 </script>
@@ -207,11 +208,9 @@ onBeforeUnmount(removeListeners);
 @keyframes options-ghost {
   from {
     opacity: 0;
-    transform: scale(0.7);
   }
   to {
     opacity: 1;
-    transform: scale(1);
   }
 }
 
@@ -239,7 +238,7 @@ onBeforeUnmount(removeListeners);
   position: relative;
   z-index: 2;
   cursor: pointer;
-  transition: color 300ms, transform 200s;
+  transition: color 300ms, transform 200ms;
   user-select: none;
   display: flex;
   justify-content: center;
@@ -248,7 +247,7 @@ onBeforeUnmount(removeListeners);
 
 .ghost {
   position: absolute;
-  transition: 300ms left, 300ms top, 300ms width, 360ms background-color, 300ms opacity;
+  transition: 270ms transform, 270ms width, 360ms background-color, 300ms opacity;
   border-radius: 5px;
   &.animated {
     animation: options-ghost .7s ease-in-out;

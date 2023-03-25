@@ -9,9 +9,10 @@
     <div
       ref="container"
     >
-      <transition-group
+      <TransitionGroup
         name="selectorElementAppearance"
         tag="div"
+        mode="out-in"
         :class="[
           $style.options,
           ...computedStates,
@@ -60,7 +61,7 @@
             ]
           ]"
         />
-      </transition-group>
+      </TransitionGroup>
     </div>
   </div>
 </template>

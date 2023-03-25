@@ -12,18 +12,20 @@
       ]"
       @click="onBlockingCapClick"
     >
-      <Typography
-        v-if="isEmulatorPlaying"
-        :text="t('emulator.player.orderInteractionsWarning')"
-        :state="['accent1', 'alignCenter', 'bold']"
-        size="title1"
-      />
-      <Typography
-        v-if="isActiveOrdersForCurrentPairExists"
-        :text="t('emulator.player.orderExistsFormCap')"
-        :state="['accent1', 'alignCenter', 'bold']"
-        size="title1"
-      />
+      <transition name="orderFormCapTextTransition">
+        <Typography
+          v-if="isEmulatorPlaying"
+          :text="t('emulator.player.orderInteractionsWarning')"
+          :state="['accent1', 'alignCenter', 'bold']"
+          size="title1"
+        />
+        <Typography
+          v-else-if="isActiveOrdersForCurrentPairExists"
+          :text="t('emulator.player.orderExistsFormCap')"
+          :state="['accent1', 'alignCenter', 'bold']"
+          size="title1"
+        />
+      </transition>
     </div>
     <OrderFromContainer>
       <template
@@ -102,8 +104,6 @@ import { useOrderCreate } from '@/hooks/useOrderCreate';
 import { OrderFormInjectionKey, OrderFormTab } from '@/components/app/orderForm/index';
 import { Tab } from '@/components/core/tabs';
 
-import { divideRight, roundToDecimalPoint } from '@/helpers/number';
-import { compose } from '@/utils/fp';
 import Typography from '@/components/app/typography/Typography.vue';
 import { useEmulatorStore } from '@/stores/emulator';
 import { useMarketStore } from '@/stores/market';
@@ -230,5 +230,19 @@ const showBlockingCap = computed(
 
 .tab {
   height: 100%;
+}
+</style>
+
+<style lang="scss">
+.orderFormCapTextTransition {
+  &-enter-active,
+  &-leave-active {
+    transition: opacity 200ms;
+  }
+
+  &-enter-from,
+  &-leave-to {
+    opacity: 0;
+  }
 }
 </style>

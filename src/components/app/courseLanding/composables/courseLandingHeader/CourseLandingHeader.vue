@@ -77,7 +77,7 @@ const setActiveChapter = (
   padding: 38px 100px;
   display: grid;
   grid-template-columns: 1fr 3fr 1.5fr;
-  transition: background-color 300ms, border-color 300ms;
+  transition: background-color 200ms, border-color 200ms;
   border-bottom: 2px solid transparent;
 }
 

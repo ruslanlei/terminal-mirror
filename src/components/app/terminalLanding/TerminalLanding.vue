@@ -5,6 +5,7 @@
         <LandingHeader
           v-model:active-chapter="activeSection"
           :chapters="chapters"
+          :state="computedHeaderState"
         />
       </template>
       <template #welcomeScreen>
@@ -57,6 +58,7 @@ import Faq from '@/components/app/terminalLanding/composables/faq/Faq.vue';
 import LandingFooter from '@/components/app/terminalLanding/composables/landingFooter/LandingFooter.vue';
 import { useLandingAnchor } from '@/hooks/useLandingAnchor';
 import { CourseLandingChapter } from '@/components/app/courseLanding';
+import { useScroll } from '@vueuse/core';
 import { TerminalLandingChapter } from './index';
 
 const { t } = useI18n();
@@ -91,6 +93,12 @@ const {
     { slug }: TerminalLandingChapter,
   ) => slug),
 );
+
+const {
+  y,
+} = useScroll(window);
+
+const computedHeaderState = computed(() => (y.value > 100 ? 'filled' : 'transparent'));
 </script>
 
 <style lang="scss" module>

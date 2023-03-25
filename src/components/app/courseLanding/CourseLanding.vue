@@ -5,6 +5,7 @@
         <CourseLandingHeader
           v-model:active-chapter="activeSection"
           :chapters="chapters"
+          :state="computedHeaderState"
         />
       </template>
       <template #welcomeScreen>
@@ -79,6 +80,7 @@ import Faq from '@/components/app/courseLanding/composables/faq/Faq.vue';
 import LandingFooter from '@/components/app/courseLanding/composables/landingFooter/LandingFooter.vue';
 import StartDateTape from '@/components/app/courseLanding/composables/startDateTape/StartDateTape.vue';
 import { useLandingAnchor } from '@/hooks/useLandingAnchor';
+import { useScroll } from '@vueuse/core';
 import { CourseLandingChapter } from './index';
 
 const { t } = useI18n();
@@ -117,6 +119,12 @@ const chapters = computed<CourseLandingChapter[]>(() => [
     slug: 'questions',
   },
 ]);
+
+const {
+  y,
+} = useScroll(window);
+
+const computedHeaderState = computed(() => (y.value > 100 ? 'filled' : 'transparent'));
 
 const {
   activeSection,

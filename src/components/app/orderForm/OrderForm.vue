@@ -12,7 +12,10 @@
       ]"
       @click="onBlockingCapClick"
     >
-      <transition name="orderFormCapTextTransition">
+      <transition
+        mode="out-in"
+        name="orderFormCapTextTransition"
+      >
         <Typography
           v-if="isEmulatorPlaying"
           :text="t('emulator.player.orderInteractionsWarning')"

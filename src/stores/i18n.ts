@@ -36,10 +36,10 @@ export const useI18nStore = defineStore('i18n', () => {
       value: 'en',
       label: 'ENG',
     },
-    {
-      value: 'ru',
-      label: 'РУС',
-    },
+    // {
+    //   value: 'ru',
+    //   label: 'РУС',
+    // },
   ]);
 
   return {

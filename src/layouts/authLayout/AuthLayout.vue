@@ -20,6 +20,9 @@
         <div :class="$style.content">
           <slot />
         </div>
+        <div :class="$style.demiGroupLogoContainer">
+          <DemiGroupLogo :class="$style.demiGroupLogo" />
+        </div>
       </div>
       <footer :class="$style.footer">
         <div :class="$style.privacy">
@@ -44,6 +47,7 @@ import Logo from '@/components/core/logo/Logo.vue';
 import Link from '@/components/core/link/Link.vue';
 import LanguageSelect from '@/components/app/languageSelect/LanguageSelect.vue';
 import AuthIllustration from '@/components/app/authIllustration/AuthIllustration.vue';
+import DemiGroupLogo from './assets/demiGroup.svg';
 
 const { t } = useI18n();
 </script>
@@ -87,6 +91,16 @@ const { t } = useI18n();
   & > * {
     height: 100%;
   }
+}
+
+.demiGroupLogoContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.demiGroupLogo {
+  max-width: 140px;
 }
 
 .footer {

@@ -13,7 +13,7 @@ import {
 } from '@/api/types/order';
 import { processServerErrors, requestMany } from '@/api/common';
 import { getOrdersList } from '@/api/endpoints/orders/getList';
-import { PairData } from '@/api/types/pair';
+import { Pair } from '@/api/types/pair';
 import { compose } from '@/utils/fp';
 import { filter, flatten, map } from '@/utils/array';
 import { deleteOrder } from '@/api/endpoints/orders/delete';
@@ -55,30 +55,30 @@ export const useMarketStore = defineStore('market', () => {
 
   const marketType = useStorage<MarketType>('marketType', 'emulator');
 
-  const pairs = useStorage<PairData[]>('pairs', []);
+  const pairs = useStorage<Pair[]>('pairs', []);
 
   const isPairsPreFetched = computed(() => !isEmpty(pairs.value));
 
-  const pairsMap = computed<Record<PairData['id'], PairData>>(
-    () => pairs.value.reduce((acc, pair: PairData) => ({
+  const pairsMap = computed<Record<Pair['id'], Pair>>(
+    () => pairs.value.reduce((acc, pair: Pair) => ({
       ...acc,
       [pair.id]: pair,
     }), {}),
   );
 
-  const activePair = useStorage<PairData['id']>('activePair', 1);
+  const activePair = useStorage<Pair['id']>('activePair', 1);
 
   const isSettingPair = ref(false);
-  const setPair = async (pairId: PairData['id']) => {
+  const setPair = async (pairId: Pair['id']) => {
     isSettingPair.value = true;
     activePair.value = pairId;
     await nextTick();
     isSettingPair.value = false;
   };
 
-  const getPairData = (pairId: PairData['id']) => pairsMap.value?.[pairId] || null;
+  const getPairData = (pairId: Pair['id']) => pairsMap.value?.[pairId] || null;
 
-  const activePairData = computed<PairData | undefined>(
+  const activePairData = computed<Pair | undefined>(
     () => pairsMap.value[activePair.value],
   );
 
@@ -96,7 +96,7 @@ export const useMarketStore = defineStore('market', () => {
   };
 
   const handleAddToFavorites = async (
-    id: PairData['id'],
+    id: Pair['id'],
   ) => {
     const response = await addToFavorites(id);
 

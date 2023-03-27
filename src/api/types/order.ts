@@ -1,11 +1,11 @@
-import { PairData } from '@/api/types/pair';
+import { Pair } from '@/api/types/pair';
 
 export type OrderStatus = 'new' | 'filled' | 'expired' | 'canceled' | 'executed' | 'closed';
 
 export interface Order {
   id: number,
   user: 0,
-  pair: PairData['id'],
+  pair: Pair['id'],
   side: 'buy' | 'sell',
   order_type: 'limit' | 'tp' | 'sl',
   created: string,

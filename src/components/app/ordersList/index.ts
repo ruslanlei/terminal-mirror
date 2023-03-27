@@ -1,7 +1,7 @@
 import { TableColumn, TableRecord } from '@/components/core/table';
 import { Order, TakeProfit } from '@/api/types/order';
 import { SubOrderTableItem } from '@/components/app/ordersList/subOrdersTable';
-import { PairData } from '@/api/types/pair';
+import { Pair } from '@/api/types/pair';
 
 export interface OrdersListProps {
   listType: 'active' | 'closed',
@@ -23,7 +23,7 @@ export type ActiveOrdersTableColumnSlug =
 export type ActiveOrdersTableColumn = TableColumn<ActiveOrdersTableColumnSlug>;
 
 export type ActiveOrdersTableRecord = TableRecord<ActiveOrdersTableColumnSlug, {
-  pair: PairData,
+  pair: Pair,
   type: Order['side'],
   volume: number,
   coins: number,
@@ -58,7 +58,7 @@ export type ClosedOrdersTableColumnSlug =
 export type ClosedOrdersTableColumn = TableColumn<ClosedOrdersTableColumnSlug>;
 
 export type ClosedOrdersTableRecord = TableRecord<ClosedOrdersTableColumnSlug, {
-  pair: PairData,
+  pair: Pair,
   type: Order['side'],
   volume: number,
   coins: number,

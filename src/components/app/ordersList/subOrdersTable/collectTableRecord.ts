@@ -8,14 +8,14 @@ import { roundToDecimalPoint } from '@/helpers/number';
 import { valueToPercents } from '@/helpers/math/percents';
 import { humanizeDate } from '@/utils/date';
 import { MasterOrder } from '@/api/types/order';
-import { PairData } from '@/api/types/pair';
+import { Pair } from '@/api/types/pair';
 import { collectTableRecord } from '@/components/core/table/helpers';
 import { TableRowState } from '@/components/core/table/tableRow';
 
 interface CollectRecordPayload {
   order: SubOrderTableItem,
   masterOrder: MasterOrder,
-  pairData: PairData,
+  pairData: Pair,
 }
 
 const orderTypeMixin = (

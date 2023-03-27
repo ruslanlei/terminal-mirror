@@ -1,9 +1,9 @@
 import { get } from '@/api';
-import { PairData } from '@/api/types/pair';
+import { Pair } from '@/api/types/pair';
 
 export interface FavoritePair {
     id: number,
-    pair: PairData['id'],
+    pair: Pair['id'],
     user: number,
 }
 

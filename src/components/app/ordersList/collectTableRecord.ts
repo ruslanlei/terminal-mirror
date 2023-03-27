@@ -2,7 +2,7 @@ import {
   compose,
   curry,
 } from '@/utils/fp';
-import { PairData } from '@/api/types/pair';
+import { Pair } from '@/api/types/pair';
 import {
   MasterOrder,
   TakeProfit,
@@ -22,7 +22,7 @@ import { TableRowState } from '@/components/core/table/tableRow';
 import { toAbsolute } from '@/utils/number';
 
 interface CollectRecordPayload {
-  pairData: PairData,
+  pairData: Pair,
   pairPrice: number | null,
   order: MasterOrder,
   takeProfits: TakeProfit[] | undefined,

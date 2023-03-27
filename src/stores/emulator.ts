@@ -23,7 +23,7 @@ import {
 import { multiply } from '@/helpers/number';
 import { Order } from '@/api/types/order';
 import { processServerErrors } from '@/api/common';
-import { PairData } from '@/api/types/pair';
+import { Pair } from '@/api/types/pair';
 import { useChartDataStore } from '@/stores/chartData';
 import { getBalance } from '@/api/endpoints/profile/getBalance';
 import { isMoreThan } from '@/utils/boolean';
@@ -37,7 +37,7 @@ export const getDefaultEmulatorDate = () => compose(
   dateNow,
 )();
 
-export type PlayerDatesMap = Record<PairData['id'], string>;
+export type PlayerDatesMap = Record<Pair['id'], string>;
 
 export const useEmulatorStore = defineStore('emulator', () => {
   const { t } = useI18n();
@@ -114,7 +114,7 @@ export const useEmulatorStore = defineStore('emulator', () => {
   const compressionFactor = ref<number>(5);
 
   const handleSimulate = async (
-    pair: PairData['id'],
+    pair: Pair['id'],
     dateFrom: string,
     candleSize: number,
     compression: number,

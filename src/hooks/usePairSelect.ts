@@ -2,7 +2,7 @@ import { ref, watch } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useMarketStore } from '@/stores/market';
 import debounce from 'lodash/debounce';
-import { PairData } from '@/api/types/pair';
+import { Pair } from '@/api/types/pair';
 
 export const usePairSelect = () => {
   const marketStore = useMarketStore();
@@ -12,7 +12,7 @@ export const usePairSelect = () => {
 
   const query = ref<string>('');
 
-  const computedPairs = ref<PairData[]>(pairs.value);
+  const computedPairs = ref<Pair[]>(pairs.value);
 
   watch(query, debounce(async () => {
     computedPairs.value = pairs.value.filter(
@@ -20,14 +20,14 @@ export const usePairSelect = () => {
     );
   }, 300));
 
-  const setPair = (id: PairData['id']) => {
+  const setPair = (id: Pair['id']) => {
     marketStore.setPair(id);
   };
 
   const isTogglingFavorite = ref(false);
 
   const onToggleFavorite = async (
-    id: PairData['id'],
+    id: Pair['id'],
   ) => {
     if (isTogglingFavorite.value) return;
 

@@ -1,5 +1,5 @@
 import { computed, ref, Ref } from 'vue';
-import { PairData } from '@/api/types/pair';
+import { Pair } from '@/api/types/pair';
 import { useStorage } from '@vueuse/core';
 import { Candle } from '@/api/types/marketData';
 import {
@@ -13,10 +13,10 @@ import { compose } from '@/utils/fp';
 import { divideRight } from '@/helpers/number';
 import { calculatePercentOfDifference } from '@/helpers/math/percents';
 
-export type CandlesMap = Record<PairData['id'], Candle[]>;
+export type CandlesMap = Record<Pair['id'], Candle[]>;
 
 export const useCandleStorage = (
-  activePair: Ref<PairData['id']> = ref(1),
+  activePair: Ref<Pair['id']> = ref(1),
   storageKey: string = 'candlesMap',
 ) => {
   const candlesMap = useStorage<CandlesMap>(storageKey, {});
@@ -47,18 +47,18 @@ export const useCandleStorage = (
   };
 
   const getCurrentPriceByPairId = (
-    pairId: PairData['id'],
+    pairId: Pair['id'],
   ) => compose(
     getCandleField('closePrice'),
     getLastElement,
   )(candlesMap.value?.[pairId]);
 
   const checkIsDataExistByPairId = (
-    pairId: PairData['id'],
+    pairId: Pair['id'],
   ) => !!candlesMap.value?.[pairId];
 
   const get24HoursPercentChangeByPairId = (
-    pairId: PairData['id'],
+    pairId: Pair['id'],
   ) => {
     const last24HoursCandles = getCandlesWithin24HoursFromLastCandleDate(
       candlesMap.value?.[pairId],

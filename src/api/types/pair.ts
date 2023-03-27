@@ -1,4 +1,4 @@
-export interface PairData {
+export interface Pair {
   id: number,
   alias: string,
   base: string,

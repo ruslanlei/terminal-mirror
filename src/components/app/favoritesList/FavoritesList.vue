@@ -45,7 +45,7 @@ import { useI18n } from 'vue-i18n';
 import Card from '@/components/core/card/Card.vue';
 import Selector from '@/components/core/selector/Selector.vue';
 import { useMarketStore } from '@/stores/market';
-import { PairData } from '@/api/types/pair';
+import { Pair } from '@/api/types/pair';
 import Typography from '@/components/app/typography/Typography.vue';
 import { FavoritesListEmits } from '@/components/app/favoritesList/index';
 import Button from '@/components/core/button/Button.vue';
@@ -66,7 +66,7 @@ const marketStore = useMarketStore();
 const localActivePair = computed({
   get: () => marketStore.activePair,
   set: (
-    pairId: PairData['id'],
+    pairId: Pair['id'],
   ) => {
     marketStore.setPair(pairId);
   },

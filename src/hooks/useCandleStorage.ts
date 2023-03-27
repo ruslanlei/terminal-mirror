@@ -12,7 +12,8 @@ import { getCandleField, getCandlesWithin24HoursFromLastCandleDate, mixCandles }
 import { compose } from '@/utils/fp';
 import { divideRight } from '@/helpers/number';
 import { calculatePercentOfDifference } from '@/helpers/math/percents';
-import { CandlesMap } from '@/stores/chartData';
+
+export type CandlesMap = Record<PairData['id'], Candle[]>;
 
 export const useCandleStorage = (
   activePair: Ref<PairData['id']> = ref(1),

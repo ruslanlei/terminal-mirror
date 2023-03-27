@@ -1,28 +1,9 @@
-import { computed, Ref, ref } from 'vue';
+import { ref } from 'vue';
 import { defineStore, storeToRefs } from 'pinia';
 import { useMarketStore } from '@/stores/market';
-import { Candle } from '@/api/types/marketData';
-import {
-  getCandleField,
-  getCandlesWithin24HoursFromLastCandleDate,
-  mixCandles,
-} from '@/helpers/candles';
-import { getCandles, GetCandlesDTO } from '@/api/endpoints/marketdata/candles';
+import { getCandles } from '@/api/endpoints/marketdata/candles';
 import { processServerErrors } from '@/api/common';
-import { compose } from '@/utils/fp';
-import { useStorage } from '@vueuse/core';
-import { PairData } from '@/api/types/pair';
-import {
-  arraySum,
-  getFirstElement,
-  getLastElement,
-  map,
-} from '@/utils/array';
-import { divideRight } from '@/helpers/number';
-import { calculatePercentOfDifference } from '@/helpers/math/percents';
 import { useCandleStorage } from '@/hooks/useCandleStorage';
-
-export type CandlesMap = Record<PairData['id'], Candle[]>;
 
 export const useChartDataStore = defineStore('chartData', () => {
   const candleSize = ref<number>(900);
@@ -53,18 +34,6 @@ export const useChartDataStore = defineStore('chartData', () => {
 
   const isFetchingCandles = ref(false);
 
-  const handleGetCandles = async (
-    payload: GetCandlesDTO,
-  ) => {
-    const response = await getCandles(payload);
-
-    if (!response.result) {
-      processServerErrors(response.data);
-    }
-
-    return response;
-  };
-
   const fetchCandles = async (
     dateFrom: string,
     dateTo: string,
@@ -75,17 +44,20 @@ export const useChartDataStore = defineStore('chartData', () => {
     const {
       result,
       data,
-    } = await handleGetCandles({
+    } = await getCandles({
       pair: activePairData.value.alias,
       date_from: dateFrom,
       date_to: dateTo,
       size: candleSize.value,
     });
+
     isFetchingCandles.value = false;
 
     if (result) {
       clearCandles();
       appendCandles(data.data);
+    } else {
+      processServerErrors(data);
     }
   };
 
@@ -99,7 +71,6 @@ export const useChartDataStore = defineStore('chartData', () => {
     checkIsDataExistByPairId,
     get24HoursPercentChangeByPairId,
     isFetchingCandles,
-    getCandles: handleGetCandles,
     fetchCandles,
     currentPrice,
     amountOfTransactionsInLast24Hours,

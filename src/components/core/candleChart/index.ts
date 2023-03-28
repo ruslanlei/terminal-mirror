@@ -5,7 +5,7 @@ export interface ChartCandle {
   open: number,
   close: number,
   low: number,
-  time: Time,
+  time: number,
 }
 export interface CandleChartProps {
   isLoading: boolean,

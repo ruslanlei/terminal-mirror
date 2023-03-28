@@ -21,7 +21,10 @@
           <slot />
         </div>
         <div :class="$style.demiGroupLogoContainer">
-          <DemiGroupLogo :class="$style.demiGroupLogo" />
+          <Picture
+            :class="$style.demiGroupLogo"
+            :src="DemiGroupLogo"
+          />
         </div>
       </div>
       <footer :class="$style.footer">
@@ -47,7 +50,8 @@ import Logo from '@/components/core/logo/Logo.vue';
 import Link from '@/components/core/link/Link.vue';
 import LanguageSelect from '@/components/app/languageSelect/LanguageSelect.vue';
 import AuthIllustration from '@/components/app/authIllustration/AuthIllustration.vue';
-import DemiGroupLogo from './assets/demiGroup.svg';
+import Picture from '@/components/core/picture/Picture.vue';
+import DemiGroupLogo from './assets/demiGroup.png';
 
 const { t } = useI18n();
 </script>

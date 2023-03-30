@@ -35,7 +35,7 @@
         />
       </KeepAlive>
       <div v-if="activeTab === 'statistics'">
-        statistics
+        <MarketStatistics />
       </div>
     </div>
   </div>
@@ -46,6 +46,7 @@ import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Selector from '@/components/core/selector/Selector.vue';
 import OrdersList from '@/components/app/ordersList/OrdersList.vue';
+import MarketStatistics from '@/components/app/marketStatistics/MarketStatistics.vue';
 import {
   MainSelectorOptions,
   MainSelectorOptionValue,

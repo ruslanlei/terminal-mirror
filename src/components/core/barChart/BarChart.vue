@@ -72,6 +72,42 @@ const createBarChart = ({
     .attr('width', width)
     .attr('height', height);
 
+  // Add value labels to the bars
+  const barValueLabels = svg.selectAll<SVGTextElement, number>('text')
+    .data(data)
+    .enter()
+    .append('text')
+    .text(([, value]) => value)
+    .attr('x', (d, i) => xScale(i) as number + xScale.bandwidth() / 2)
+    .attr('y', ([, value]) => yScale(toAbsolute(value)) - labelGap)
+    .style('font-size', '12px')
+    .style('text-anchor', 'middle')
+    .style('fill', 'white');
+
+  // Labels appearance animation
+  barValueLabels
+    .attr('y', ([, value]) => yScale(toAbsolute(value)) - labelGap - 300)
+    .attr('opacity', 0)
+    .transition()
+    .duration(300)
+    .delay((d, i) => multiply(data.length - i, 40))
+    .attr('y', ([, value]) => yScale(toAbsolute(value)) - labelGap)
+    .attr('opacity', 1)
+    .ease();
+
+  // Create the bars
+  const bars = svg.selectAll<SVGRectElement, number>('rect')
+    .data(data)
+    .enter()
+    .append('rect')
+    .attr('x', (d, i) => xScale(i) as number)
+    .attr('y', ([, value]) => yScale(toAbsolute(value)))
+    .attr('width', xScale.bandwidth())
+    .attr('height', ([, value]) => yScale(0) - yScale(toAbsolute(value)))
+    .attr('fill', ([, value]) => (value >= 0 ? 'steelblue' : 'red'))
+    .attr('rx', barBorderRadius)
+    .attr('ry', barBorderRadius);
+
   // Append xAxis to svg container
   const xAxisElement = svg.append('g')
     .attr('transform', `translate(0, ${height - topMargin})`)
@@ -92,42 +128,6 @@ const createBarChart = ({
   xAxisElement
     .selectAll('text')
     .style('font-size', '12px');
-
-  // Create the bars
-  const bars = svg.selectAll<SVGRectElement, number>('rect')
-    .data(data)
-    .enter()
-    .append('rect')
-    .attr('x', (d, i) => xScale(i) as number)
-    .attr('y', ([, value]) => yScale(toAbsolute(value)))
-    .attr('width', xScale.bandwidth())
-    .attr('height', ([, value]) => yScale(0) - yScale(toAbsolute(value)))
-    .attr('fill', ([, value]) => (value >= 0 ? 'steelblue' : 'red'))
-    .attr('rx', barBorderRadius)
-    .attr('ry', barBorderRadius);
-
-  // Add value labels to the bars
-  const barValueLabels = svg.selectAll<SVGTextElement, number>('text')
-    .data(data)
-    .enter()
-    .append('text')
-    .text(([, value]) => value)
-    .attr('x', (d, i) => xScale(i) as number + xScale.bandwidth() / 2)
-    .attr('y', ([, value]) => yScale(toAbsolute(value)) - labelGap)
-    .attr('font-size', '12px')
-    .attr('text-anchor', 'middle')
-    .attr('fill', 'white');
-
-  // Labels appearance animation
-  // barValueLabels
-  //   .attr('y', ([, value]) => yScale(toAbsolute(value)) - labelGap - 300)
-  //   .attr('opacity', 0)
-  //   .transition()
-  //   .duration(300)
-  //   .delay((d, i) => multiply(data.length - i, 40))
-  //   .attr('y', ([, value]) => yScale(toAbsolute(value)) - labelGap)
-  //   .attr('opacity', 1)
-  //   .ease();
 
   // Bars appearance animation
   bars

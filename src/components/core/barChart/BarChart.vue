@@ -6,7 +6,10 @@
   >
     <div ref="container" />
   </div>
-  <Button @click="rerender">
+  <Button
+    style="color: white"
+    @click="rerender"
+  >
     Rerender
   </Button>
 </template>

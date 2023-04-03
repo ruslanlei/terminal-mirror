@@ -24,7 +24,8 @@ export interface CreateBarChartProps {
   minWidthPerBar?: number;
   barBorderRadius?: number;
   topMargin?: number;
-  valueLabelFormatter?: ValueLabelFormatter,
+  barLabelFormatter?: ValueLabelFormatter,
+  barNameColor?: string,
   positiveBarColor?: string,
   negativeBarColor?: string,
 }
@@ -70,6 +71,7 @@ const createXAxis = ({
       (g) => g
         .selectAll('.tick text')
         .style('font-size', toCssPixelValue(tickFontSize))
+        .style('font-weight', '500')
         .style('color', tickColor),
     );
 
@@ -90,6 +92,7 @@ const createBars = (
     labelGap,
     labelFormatter,
     barAnimationDuration = 300,
+    nameColor,
   }: {
     svgContainer: SVGContainer,
     data: BarChartData,
@@ -100,6 +103,7 @@ const createBars = (
     negativeColor: string,
     labelGap: number,
     labelFormatter: ValueLabelFormatter,
+    nameColor: string,
     barAnimationDuration?: number,
   },
 ) => {
@@ -134,8 +138,9 @@ const createBars = (
     .attr('x', (d, i) => xScale(i) as number + xScale.bandwidth() / 2)
     .attr('y', ([, value]) => yScale(toAbsolute(value)) - labelGap)
     .style('font-size', '12px')
+    .style('font-weight', '500')
     .style('text-anchor', 'middle')
-    .style('fill', 'white');
+    .style('fill', nameColor);
 
   // animate labels
   labels
@@ -160,7 +165,8 @@ export const createBarChart = ({
   minWidthPerBar = 50,
   barBorderRadius = 5,
   topMargin = 30,
-  valueLabelFormatter = ((value) => value) as ValueLabelFormatter,
+  barLabelFormatter = ((value) => value) as ValueLabelFormatter,
+  barNameColor = 'gray',
   positiveBarColor = 'steelblue',
   negativeBarColor = 'red',
 }: CreateBarChartProps) => {
@@ -199,7 +205,8 @@ export const createBarChart = ({
     positiveColor: positiveBarColor,
     negativeColor: negativeBarColor,
     labelGap,
-    labelFormatter: valueLabelFormatter,
+    labelFormatter: barLabelFormatter,
+    nameColor: barNameColor,
     data,
   });
 };

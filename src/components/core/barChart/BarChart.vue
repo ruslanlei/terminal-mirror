@@ -26,18 +26,18 @@ const renderChart = () => {
   if (!container.value || !wrapper.value) return;
 
   const demoData = [
-    ['Jan', -4000],
-    ['Feb', -231],
-    ['Mar', -779],
-    ['Apr', 1479],
-    ['May', 2512],
-    ['Jun', 1267],
-    ['Jul', 800],
-    ['Aug', 495],
-    ['Sep', 23],
-    ['Oct', 597],
-    ['Nov', 100],
-    ['Dec', 4788],
+    ['jan', -4000],
+    ['feb', -231],
+    ['mar', -779],
+    ['apr', 1479],
+    ['may', 2512],
+    ['jun', 1267],
+    ['jul', 800],
+    ['aug', 495],
+    ['sep', 23],
+    ['oct', 597],
+    ['nov', 100],
+    ['dec', 4788],
   ];
 
   const demoData2 = [
@@ -58,9 +58,10 @@ const renderChart = () => {
   createBarChart({
     container: container.value,
     data: demoData,
-    valueLabelFormatter: (value) => `${isPositive(value) ? toPositiveNumberString(value) : value}$`,
+    barLabelFormatter: (value) => `${isPositive(value) ? toPositiveNumberString(value) : value}$`,
     positiveBarColor: getCssRgbColor('--color-success'),
     negativeBarColor: getCssRgbColor('--color-danger'),
+    barNameColor: getCssRgbColor('--color-accent-2'),
   });
 
   setMaximalScrollLeft(wrapper.value);

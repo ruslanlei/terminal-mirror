@@ -74,8 +74,6 @@ const createXAxis = (
   };
 };
 
-const BAR_CLASS = 'bar';
-
 const createBars = (
   {
     svgContainer,
@@ -85,6 +83,8 @@ const createBars = (
     barBorderRadius,
     positiveBarColor = 'steelblue',
     negativeBarColor = 'red',
+    labelGap = 10,
+    labelFormatter,
   }: {
     svgContainer: SVGContainer,
     data: BarChartData,
@@ -93,6 +93,8 @@ const createBars = (
     barBorderRadius: number,
     positiveBarColor?: string,
     negativeBarColor?: string,
+    labelGap?: number,
+    labelFormatter: ValueLabelFormatter,
   },
 ) => {
   const bars = svgContainer.selectAll<SVGRectElement, number>('rect')
@@ -104,77 +106,33 @@ const createBars = (
     .attr('width', xScale.bandwidth())
     .attr('height', ([, value]) => yScale(0) - yScale(toAbsolute(value)))
     .attr('fill', ([, value]) => (value >= 0 ? positiveBarColor : negativeBarColor))
-    .attr('class', BAR_CLASS)
     .attr('rx', barBorderRadius)
     .attr('ry', barBorderRadius);
 
-  // const barValueLabels = svgContainer.selectAll<SVGTextElement, number>('text')
-  //   .data(data)
-  //   .enter()
-  //   .append('text')
-  //   .text(([, value]) => formatter(value))
-  //   .attr('x', (d, i) => xScale(i) as number + xScale.bandwidth() / 2)
-  //   .attr('y', ([, value]) => yScale(toAbsolute(value)) - labelGap)
-  //   .attr('class', BAR_LABEL_CLASS)
-  //   .style('font-size', '12px')
-  //   .style('text-anchor', 'middle')
-  //   .style('fill', 'white');
+  // animate bars
+  bars
+    .attr('y', ([, value]) => yScale(toAbsolute(value)) - 60)
+    .attr('opacity', 0)
+    .transition()
+    .duration(300)
+    .attr('y', ([, value]) => yScale(toAbsolute(value)))
+    .attr('opacity', 1)
+    .delay((d, i) => multiply(data.length - i, 40))
+    .ease();
 
-  const getBars = () => svgContainer.selectAll(
-    toCssClassSelector(BAR_CLASS),
-  );
-
-  const animate = () => {
-    bars
-      .attr('y', ([, value]) => yScale(toAbsolute(value)) - 60)
-      .attr('opacity', 0)
-      .transition()
-      .duration(300)
-      .attr('y', ([, value]) => yScale(toAbsolute(value)))
-      .attr('opacity', 1)
-      .delay((d, i) => multiply(data.length - i, 40))
-      .ease();
-  };
-
-  return {
-    bars,
-    getBars,
-    animate,
-  };
-};
-
-const BAR_LABEL_CLASS = 'barLabel';
-
-const createBarValueLabels = (
-  svg: SVGContainer,
-  data: BarChartData,
-  xScale: any,
-  yScale: any,
-  labelGap: number,
-  formatter: ValueLabelFormatter,
-) => {
-  const barValueLabels = svg.selectAll<SVGTextElement, number>('text')
+  const labels = svgContainer.selectAll<SVGTextElement, number>('text')
     .data(data)
     .enter()
     .append('text')
-    .text(([, value]) => formatter(value))
+    .text(([, value]) => labelFormatter(value))
     .attr('x', (d, i) => xScale(i) as number + xScale.bandwidth() / 2)
     .attr('y', ([, value]) => yScale(toAbsolute(value)) - labelGap)
-    .attr('class', BAR_LABEL_CLASS)
     .style('font-size', '12px')
     .style('text-anchor', 'middle')
     .style('fill', 'white');
 
-  return barValueLabels;
-};
-
-const animateBarValueLabels = (
-  barValueLabels: Selection<SVGTextElement, BarChartDataElement, SVGSVGElement, unknown>,
-  data: BarChartData,
-  yScale: any,
-  labelGap: number,
-) => {
-  barValueLabels
+  // animate labels
+  labels
     .attr('y', ([, value]) => yScale(toAbsolute(value)) - labelGap - 300)
     .attr('opacity', 0)
     .transition()
@@ -183,6 +141,10 @@ const animateBarValueLabels = (
     .attr('y', ([, value]) => yScale(toAbsolute(value)) - labelGap)
     .attr('opacity', 1)
     .ease();
+
+  return {
+    bars,
+  };
 };
 
 export const createBarChart = ({
@@ -215,9 +177,7 @@ export const createBarChart = ({
     .attr('width', width)
     .attr('height', height);
 
-  const {
-    animate: animateBars,
-  } = createBars({
+  createBars({
     svgContainer,
     data,
     xScale,
@@ -225,22 +185,9 @@ export const createBarChart = ({
     barBorderRadius,
     positiveBarColor,
     negativeBarColor,
+    labelGap,
+    labelFormatter: valueLabelFormatter,
   });
 
-  animateBars();
-
-  const barValueLabels = createBarValueLabels(
-    svgContainer,
-    data,
-    xScale,
-    yScale,
-    labelGap,
-    valueLabelFormatter,
-  );
-
-  const {
-    xAxis,
-  } = createXAxis(svgContainer, data, xScale, height, topMargin);
-
-  animateBarValueLabels(barValueLabels, data, yScale, labelGap);
+  createXAxis(svgContainer, data, xScale, height, topMargin);
 };

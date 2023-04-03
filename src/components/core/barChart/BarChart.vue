@@ -25,13 +25,14 @@ import {
 import { onMounted, ref } from 'vue';
 import { toAbsolute } from '@/utils/number';
 import { multiply } from '@/helpers/number';
+import { findMaxByKey } from '@/utils/array';
 
 const wrapper = ref<HTMLElement>();
 const container = ref<HTMLElement>();
 
 interface CreateBarProps {
   container: HTMLElement;
-  data: number[];
+  data: Array<[string, number]>;
   labelGap?: number;
 }
 
@@ -57,7 +58,7 @@ const createBarChart = ({
 
   // Create the y scale
   const yScale = scaleLinear<number>()
-    .domain([0, max(data) as number])
+    .domain([0, findMaxByKey(1, data) as number])
     .range([height - topMargin, topMargin]);
 
   // Create the SVG element
@@ -72,100 +73,51 @@ const createBarChart = ({
     .enter()
     .append('rect')
     .attr('x', (d, i) => xScale(i) as number)
-    .attr('y', (d) => yScale(toAbsolute(d)))
+    .attr('y', ([, value]) => {
+      console.log(
+        toAbsolute(value),
+      );
+      return yScale(toAbsolute(value));
+    })
     .attr('width', xScale.bandwidth())
-    .attr('height', (d) => yScale(0) - yScale(toAbsolute(d)))
-    .attr('fill', (d) => (d >= 0 ? 'steelblue' : 'red'))
+    .attr('height', ([, value]) => yScale(0) - yScale(toAbsolute(value)))
+    .attr('fill', ([, value]) => (value >= 0 ? 'steelblue' : 'red'))
     .attr('rx', barBorderRadius)
     .attr('ry', barBorderRadius);
 
-  // Add labels to the bars
-  const labels = svg.selectAll<SVGTextElement, number>('text')
+  // Add value labels to the bars
+  const barValueLabels = svg.selectAll<SVGTextElement, number>('text')
     .data(data)
     .enter()
     .append('text')
-    .text((d) => d)
+    .text(([, value]) => value)
     .attr('x', (d, i) => xScale(i) as number + xScale.bandwidth() / 2)
-    .attr('y', (d) => yScale(toAbsolute(d)) - labelGap)
+    .attr('y', ([, value]) => yScale(toAbsolute(value)) - labelGap)
     .attr('font-size', '12px')
     .attr('text-anchor', 'middle')
     .attr('fill', 'white');
 
   // Labels appearance animation
-  labels
-    .attr('y', (d) => yScale(toAbsolute(d)) - labelGap - 300)
+  barValueLabels
+    .attr('y', ([, value]) => yScale(toAbsolute(value)) - labelGap - 300)
     .attr('opacity', 0)
     .transition()
     .duration(300)
-    .attr('y', (d) => yScale(toAbsolute(d)) - labelGap)
+    .attr('y', ([, value]) => yScale(toAbsolute(value)) - labelGap)
     .attr('opacity', 1)
     .delay((d, i) => multiply(data.length - i, 40))
     .ease();
 
   // Bars appearance animation
   bars
-    .attr('y', (d) => yScale(toAbsolute(d)) - 60)
+    .attr('y', ([, value]) => yScale(toAbsolute(value)) - 60)
     .attr('opacity', 0)
     .transition()
     .duration(300)
-    .attr('y', (d) => yScale(toAbsolute(d)))
+    .attr('y', ([, value]) => yScale(toAbsolute(value)))
     .attr('opacity', 1)
     .delay((d, i) => multiply(data.length - i, 40))
     .ease();
-
-  // Define the update function
-  const update = (newData: number[]) => {
-    // Update the x scale domain
-    xScale.domain(range(newData.length));
-
-    // Update the y scale domain
-    yScale.domain([0, max(newData) as number]);
-
-    // Update the bars
-    const updatedBars = bars.data(newData);
-    updatedBars.enter()
-      .append('rect')
-    // Add the initial attributes here
-    // ...
-      .merge(updatedBars) // Merge the enter and update selections
-      .transition()
-      .duration(300)
-    // Add the updated attributes here
-    // ...
-      .delay((d, i) => i * 100);
-
-    // Remove bars with no corresponding data
-    updatedBars.exit()
-      .transition()
-      .duration(800)
-      .attr('height', 0)
-      .attr('y', height)
-      .remove();
-
-    // Update the labels
-    const updatedLabels = labels.data(newData);
-    updatedLabels.enter()
-      .append('text')
-    // Add the initial attributes here
-    // ...
-      .merge(updatedLabels) // Merge the enter and update selections
-      .transition()
-      .duration(800)
-    // Add the updated attributes here
-    // ...
-      .delay((d, i) => i * 100);
-
-    // Remove labels with no corresponding data
-    updatedLabels.exit()
-      .transition()
-      .duration(800)
-      .attr('y', height)
-      .remove();
-  };
-
-  return {
-    update,
-  };
 };
 
 const scrollToRight = (
@@ -182,7 +134,20 @@ const scrollToRight = (
 };
 
 const renderChart = () => {
-  const demoData = [0, 0, -231, -779, 1479, 2512, 1267, 800, 495, 0];
+  const demoData = [
+    ['Jan', 0],
+    ['Feb', -231],
+    ['Mar', -779],
+    ['Apr', 1479],
+    ['May', 2512],
+    ['Jun', 1267],
+    ['Jul', 800],
+    ['Aug', 495],
+    ['Sep', 0],
+    ['Oct', 0],
+    ['Nov', 0],
+    ['Dec', 0],
+  ];
 
   createBarChart({
     container: container.value,

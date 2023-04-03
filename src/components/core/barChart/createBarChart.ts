@@ -10,7 +10,8 @@ import {
 import { toAbsolute } from '@/utils/number';
 import { multiply } from '@/helpers/number';
 
-export type BarChartData = Array<[string, number]>;
+export type BarChartDataElement = [string, number];
+export type BarChartData = BarChartDataElement[];
 
 export interface CreateBarChartProps {
   container: HTMLElement;
@@ -21,7 +22,7 @@ export interface CreateBarChartProps {
   topMargin?: number;
 }
 
-type SVGContainer = Selection<SVGElement, null, null, null>;
+type SVGContainer = Selection<SVGSVGElement, unknown, null, undefined>;
 
 const createXAxis = (
   svg: SVGContainer,
@@ -93,7 +94,7 @@ const createBarValueLabels = (
 };
 
 const animateBarValueLabels = (
-  barValueLabels: any,
+  barValueLabels: Selection<SVGTextElement, BarChartDataElement, SVGSVGElement, unknown>,
   data: BarChartData,
   yScale: any,
   labelGap: number,
@@ -109,7 +110,11 @@ const animateBarValueLabels = (
     .ease();
 };
 
-const animateBars = (bars: any, data: BarChartData, yScale: any) => {
+const animateBars = (
+  bars: Selection<SVGTextElement, BarChartDataElement, SVGSVGElement, unknown>,
+  data: BarChartData,
+  yScale: any,
+) => {
   bars
     .attr('y', ([, value]) => yScale(toAbsolute(value)) - 60)
     .attr('opacity', 0)

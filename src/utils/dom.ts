@@ -11,6 +11,10 @@ export const toCssPixelValue = (
   value: string | number,
 ) => `${value}px`;
 
+export const toCssClassSelector = (
+  value: string | number,
+) => `.${value}`;
+
 export const toPositiveNumberString = (
   number: number | string,
 ) => `+${number}`;

@@ -40,12 +40,24 @@ const renderChart = () => {
     ['Dec', 4788],
   ];
 
+  const demoData2 = [
+    ['Jan', -100],
+    ['Feb', -331],
+    ['Mar', -7479],
+    ['Apr', 179],
+    ['May', 1512],
+    ['Jun', 567],
+    ['Jul', 800],
+    ['Aug', 495],
+    ['Sep', 433],
+    ['Oct', 57],
+    ['Nov', 1400],
+    ['Dec', 4288],
+  ];
+
   createBarChart({
     container: container.value,
-    data: [
-      ...demoData,
-      ...demoData,
-    ],
+    data: demoData,
     valueLabelFormatter: (value) => `${isPositive(value) ? toPositiveNumberString(value) : value}$`,
   });
 

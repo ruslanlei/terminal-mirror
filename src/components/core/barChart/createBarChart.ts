@@ -9,8 +9,7 @@ import {
 } from 'd3';
 import { toAbsolute } from '@/utils/number';
 import { multiply } from '@/helpers/number';
-import { toCssClassSelector, toCssPixelValue } from '@/utils/dom';
-import { toCssPxValue } from '@/helpers/style';
+import { toCssPixelValue } from '@/utils/dom';
 
 export type BarChartDataElement = [string, number];
 export type BarChartData = BarChartDataElement[];
@@ -28,6 +27,7 @@ export interface CreateBarChartProps {
   barNameColor?: string,
   positiveBarColor?: string,
   negativeBarColor?: string,
+  height?: number,
 }
 
 type SVGContainer = Selection<SVGSVGElement, unknown, null, undefined>;
@@ -169,10 +169,10 @@ export const createBarChart = ({
   barNameColor = 'gray',
   positiveBarColor = 'steelblue',
   negativeBarColor = 'red',
+  height = 300,
 }: CreateBarChartProps) => {
   const numBars = data.length;
-  const width = Math.max(700, numBars * minWidthPerBar);
-  const height = 300;
+  const width = Math.max(700, multiply(numBars, minWidthPerBar));
 
   const svgContainer = select(container)
     .append('svg')

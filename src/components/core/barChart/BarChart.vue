@@ -1,10 +1,8 @@
 <template>
   <div
-    ref="wrapper"
+    ref="container"
     :class="$style.barChart"
-  >
-    <div ref="container" />
-  </div>
+  />
   <Button
     style="color: white"
     @click="rerender"
@@ -18,12 +16,12 @@ import { onMounted, ref } from 'vue';
 import { setMaximalScrollLeft } from '@/utils/element';
 import { isPositive } from '@/helpers/number';
 import { getCssRgbColor, toPositiveNumberString } from '@/utils/dom';
+import { getRectField } from '@/helpers/style';
 import { createBarChart } from './createBarChart';
 
-const wrapper = ref<HTMLElement>();
 const container = ref<HTMLElement>();
 const renderChart = () => {
-  if (!container.value || !wrapper.value) return;
+  if (!container.value) return;
 
   const demoData = [
     ['jan', -4000],
@@ -57,14 +55,19 @@ const renderChart = () => {
 
   createBarChart({
     container: container.value,
-    data: demoData,
+    data: [
+      ...demoData,
+      ...demoData,
+      ...demoData,
+    ],
     barLabelFormatter: (value) => `${isPositive(value) ? toPositiveNumberString(value) : value}$`,
     positiveBarColor: getCssRgbColor('--color-success'),
     negativeBarColor: getCssRgbColor('--color-danger'),
     barNameColor: getCssRgbColor('--color-accent-2'),
+    height: getRectField('height', container.value),
   });
 
-  setMaximalScrollLeft(wrapper.value);
+  setMaximalScrollLeft(container.value);
 };
 
 onMounted(renderChart);
@@ -82,9 +85,11 @@ const rerender = () => {
 @import "src/assets/styles/utils";
 
 .barChart {
-  display: flex;
-  justify-content: flex-end;
+  height: 150px;
+  //display: flex;
+  //justify-content: flex-end;
   overflow-x: auto;
+  //overflow-y: hidden;
   scrollbar-width: none;
   &::-webkit-scrollbar {
     display: none;

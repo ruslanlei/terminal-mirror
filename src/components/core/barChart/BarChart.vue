@@ -17,7 +17,7 @@
 import { onMounted, ref } from 'vue';
 import { setMaximalScrollLeft } from '@/utils/element';
 import { isPositive } from '@/helpers/number';
-import { getCssRgbColor, getCssVariable, toPositiveNumberString } from '@/utils/dom';
+import { getCssRgbColor, toPositiveNumberString } from '@/utils/dom';
 import { createBarChart } from './createBarChart';
 
 const wrapper = ref<HTMLElement>();
@@ -81,7 +81,8 @@ const rerender = () => {
 @import "src/assets/styles/utils";
 
 .barChart {
-  width: 700px;
+  display: flex;
+  justify-content: flex-end;
   overflow-x: auto;
   scrollbar-width: none;
   &::-webkit-scrollbar {

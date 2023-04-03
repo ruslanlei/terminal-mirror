@@ -115,7 +115,7 @@ const animateBarValueLabels = (
 };
 
 const animateBars = (
-  bars: Selection<SVGTextElement, BarChartDataElement, SVGSVGElement, unknown>,
+  bars: Selection<SVGRectElement, BarChartDataElement, SVGSVGElement, unknown>,
   data: BarChartData,
   yScale: any,
 ) => {

@@ -23,7 +23,7 @@ import { createBarChart } from './createBarChart';
 const wrapper = ref<HTMLElement>();
 const container = ref<HTMLElement>();
 const renderChart = () => {
-  if (!container.value) return;
+  if (!container.value || !wrapper.value) return;
 
   const demoData = [
     ['Jan', -4000],

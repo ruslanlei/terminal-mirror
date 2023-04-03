@@ -85,9 +85,9 @@ const createBars = (
     xScale,
     yScale,
     borderRadius,
-    positiveColor = 'steelblue',
-    negativeColor = 'red',
-    labelGap = 10,
+    positiveColor,
+    negativeColor,
+    labelGap,
     labelFormatter,
     barAnimationDuration = 300,
   }: {
@@ -96,9 +96,9 @@ const createBars = (
     xScale: any,
     yScale: any,
     borderRadius: number,
-    positiveColor?: string,
-    negativeColor?: string,
-    labelGap?: number,
+    positiveColor: string,
+    negativeColor: string,
+    labelGap: number,
     labelFormatter: ValueLabelFormatter,
     barAnimationDuration?: number,
   },
@@ -161,8 +161,8 @@ export const createBarChart = ({
   barBorderRadius = 5,
   topMargin = 30,
   valueLabelFormatter = ((value) => value) as ValueLabelFormatter,
-  positiveBarColor,
-  negativeBarColor,
+  positiveBarColor = 'steelblue',
+  negativeBarColor = 'red',
 }: CreateBarChartProps) => {
   const numBars = data.length;
   const width = Math.max(700, numBars * minWidthPerBar);

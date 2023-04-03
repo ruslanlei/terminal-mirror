@@ -1,12 +1,19 @@
 import {
-  axisBottom, max, range, scaleBand, scaleLinear, select,
+  axisBottom,
+  max,
+  range,
+  scaleBand,
+  scaleLinear,
+  select,
 } from 'd3';
 import { toAbsolute } from '@/utils/number';
 import { multiply } from '@/helpers/number';
 
-export interface CreateBarProps {
+export type BarChartData = Array<[string, number]>;
+
+export interface CreateBarChartProps {
   container: HTMLElement;
-  data: Array<[string, number]>;
+  data: BarChartData;
   labelGap?: number;
   minWidthPerBar?: number;
   barBorderRadius?: number;
@@ -20,7 +27,7 @@ export const createBarChart = ({
   minWidthPerBar = 50,
   barBorderRadius = 5,
   topMargin = 30,
-}: CreateBarProps) => {
+}: CreateBarChartProps) => {
   // Define the dimensions of the chart
   const numBars = data.length;
   const width = Math.max(700, numBars * minWidthPerBar);

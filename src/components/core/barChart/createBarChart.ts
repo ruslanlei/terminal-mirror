@@ -97,7 +97,7 @@ const createBars = (
     labelFormatter: ValueLabelFormatter,
   },
 ) => {
-  const bars = svgContainer.selectAll<SVGRectElement, number>('rect')
+  const bars = svgContainer.selectChildren<SVGRectElement, number>('rect')
     .data(data)
     .enter()
     .append('rect')
@@ -120,7 +120,7 @@ const createBars = (
     .delay((d, i) => multiply(data.length - i, 40))
     .ease();
 
-  const labels = svgContainer.selectAll<SVGTextElement, number>('text')
+  const labels = svgContainer.selectChildren<SVGTextElement, number>('text')
     .data(data)
     .enter()
     .append('text')
@@ -177,6 +177,8 @@ export const createBarChart = ({
     .attr('width', width)
     .attr('height', height);
 
+  createXAxis(svgContainer, data, xScale, height, topMargin);
+
   createBars({
     svgContainer,
     data,
@@ -188,6 +190,4 @@ export const createBarChart = ({
     labelGap,
     labelFormatter: valueLabelFormatter,
   });
-
-  createXAxis(svgContainer, data, xScale, height, topMargin);
 };

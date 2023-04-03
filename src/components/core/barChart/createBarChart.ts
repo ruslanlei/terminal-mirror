@@ -31,26 +31,30 @@ export interface CreateBarChartProps {
 
 type SVGContainer = Selection<SVGSVGElement, unknown, null, undefined>;
 
-const X_AXIS_CLASS = 'xAxis';
-
-const createXAxis = (
-  svg: SVGContainer,
+const createXAxis = ({
+  svgContainer,
+  data,
+  xScale,
+  height,
+  topMargin,
+  tickFontSize = 12,
+  tickColor = 'white',
+}: {
+  svgContainer: SVGContainer,
   data: BarChartData,
   xScale: any,
   height: number,
   topMargin: number,
-) => {
+  tickFontSize?: number,
+  tickColor?: string,
+}) => {
   const xAxisLabels = data.map(([label]) => label);
   const xAxis = axisBottom(xScale).tickFormat((d, i) => xAxisLabels[i]).tickPadding(10);
 
-  const xAxisElement = svg
+  const xAxisElement = svgContainer
     .append('g')
     .attr('transform', `translate(0, ${height - topMargin})`)
-    .attr('class', X_AXIS_CLASS) // FIXME: find better solution for color
     .call(xAxis);
-
-  xAxisElement
-    .call((g) => g.style('margin-top', toCssPixelValue(10)));
 
   // remove line on xAxis
   xAxisElement
@@ -58,15 +62,15 @@ const createXAxis = (
 
   // remove vertical dashes on xAxis
   xAxisElement
-    .call((g) => g.selectAll('line').remove());
+    .call((g) => g.selectAll('g line').remove());
 
   // set styles to xAxis labels
   xAxisElement
     .call(
       (g) => g
         .selectAll('.tick text')
-        .style('font-size', '12px')
-        .style('color', 'white'),
+        .style('font-size', toCssPixelValue(tickFontSize))
+        .style('color', tickColor),
     );
 
   return {
@@ -179,7 +183,13 @@ export const createBarChart = ({
     .domain([0, max(data.map(([, value]) => toAbsolute(value))) as number])
     .range([height - topMargin, topMargin]);
 
-  createXAxis(svgContainer, data, xScale, height, topMargin);
+  createXAxis({
+    svgContainer,
+    data,
+    xScale,
+    height,
+    topMargin,
+  });
 
   createBars({
     svgContainer,

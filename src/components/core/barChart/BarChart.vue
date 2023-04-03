@@ -19,8 +19,8 @@ import {
   scaleBand,
   range,
   scaleLinear,
-  max,
   select,
+  axisBottom,
 } from 'd3';
 import { onMounted, ref } from 'vue';
 import { toAbsolute } from '@/utils/number';
@@ -56,6 +56,11 @@ const createBarChart = ({
     .padding(0.1)
     .paddingInner(0.2);
 
+  const xAxisLabels = data.map(([label]) => label);
+
+  const xAxis = axisBottom(xScale)
+    .tickFormat((d, i) => xAxisLabels[i]);
+
   // Create the y scale
   const yScale = scaleLinear<number>()
     .domain([0, findMaxByKey(1, data) as number])
@@ -67,18 +72,34 @@ const createBarChart = ({
     .attr('width', width)
     .attr('height', height);
 
+  // Append xAxis to svg container
+  const xAxisElement = svg.append('g')
+    .attr('transform', `translate(0, ${height - topMargin})`)
+    .attr('style', 'color: white')
+    .call(xAxis);
+
+  // remove line on xAxis
+  xAxisElement
+    .select('.domain')
+    .attr('stroke', 'none');
+
+  // remove vertical dashes on xAxis
+  xAxisElement
+    .selectAll('line')
+    .attr('stroke-width', 0);
+
+  // set styles to xAxis labels
+  xAxisElement
+    .selectAll('text')
+    .style('font-size', '12px');
+
   // Create the bars
   const bars = svg.selectAll<SVGRectElement, number>('rect')
     .data(data)
     .enter()
     .append('rect')
     .attr('x', (d, i) => xScale(i) as number)
-    .attr('y', ([, value]) => {
-      console.log(
-        toAbsolute(value),
-      );
-      return yScale(toAbsolute(value));
-    })
+    .attr('y', ([, value]) => yScale(toAbsolute(value)))
     .attr('width', xScale.bandwidth())
     .attr('height', ([, value]) => yScale(0) - yScale(toAbsolute(value)))
     .attr('fill', ([, value]) => (value >= 0 ? 'steelblue' : 'red'))
@@ -98,15 +119,15 @@ const createBarChart = ({
     .attr('fill', 'white');
 
   // Labels appearance animation
-  barValueLabels
-    .attr('y', ([, value]) => yScale(toAbsolute(value)) - labelGap - 300)
-    .attr('opacity', 0)
-    .transition()
-    .duration(300)
-    .attr('y', ([, value]) => yScale(toAbsolute(value)) - labelGap)
-    .attr('opacity', 1)
-    .delay((d, i) => multiply(data.length - i, 40))
-    .ease();
+  // barValueLabels
+  //   .attr('y', ([, value]) => yScale(toAbsolute(value)) - labelGap - 300)
+  //   .attr('opacity', 0)
+  //   .transition()
+  //   .duration(300)
+  //   .delay((d, i) => multiply(data.length - i, 40))
+  //   .attr('y', ([, value]) => yScale(toAbsolute(value)) - labelGap)
+  //   .attr('opacity', 1)
+  //   .ease();
 
   // Bars appearance animation
   bars

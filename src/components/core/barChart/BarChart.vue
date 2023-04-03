@@ -20,12 +20,11 @@ import {
   range,
   scaleLinear,
   select,
-  axisBottom,
+  axisBottom, max,
 } from 'd3';
 import { onMounted, ref } from 'vue';
 import { toAbsolute } from '@/utils/number';
 import { multiply } from '@/helpers/number';
-import { findMaxByKey } from '@/utils/array';
 
 const wrapper = ref<HTMLElement>();
 const container = ref<HTMLElement>();
@@ -63,7 +62,7 @@ const createBarChart = ({
 
   // Create the y scale
   const yScale = scaleLinear<number>()
-    .domain([0, findMaxByKey(1, data) as number])
+    .domain([0, max(data.map(([, value]) => toAbsolute(value))) as number])
     .range([height - topMargin, topMargin]);
 
   // Create the SVG element
@@ -156,7 +155,7 @@ const scrollToRight = (
 
 const renderChart = () => {
   const demoData = [
-    ['Jan', 0],
+    ['Jan', -4000],
     ['Feb', -231],
     ['Mar', -779],
     ['Apr', 1479],
@@ -164,10 +163,10 @@ const renderChart = () => {
     ['Jun', 1267],
     ['Jul', 800],
     ['Aug', 495],
-    ['Sep', 0],
-    ['Oct', 0],
-    ['Nov', 0],
-    ['Dec', 0],
+    ['Sep', 23],
+    ['Oct', 597],
+    ['Nov', 100],
+    ['Dec', 4788],
   ];
 
   createBarChart({

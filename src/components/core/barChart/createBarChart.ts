@@ -85,6 +85,7 @@ const createBars = (
     negativeBarColor = 'red',
     labelGap = 10,
     labelFormatter,
+    barAnimationDuration = 300,
   }: {
     svgContainer: SVGContainer,
     data: BarChartData,
@@ -95,6 +96,7 @@ const createBars = (
     negativeBarColor?: string,
     labelGap?: number,
     labelFormatter: ValueLabelFormatter,
+    barAnimationDuration?: number,
   },
 ) => {
   const bars = svgContainer.selectChildren<SVGRectElement, number>('rect')
@@ -111,13 +113,13 @@ const createBars = (
 
   // animate bars
   bars
-    .attr('y', ([, value]) => yScale(toAbsolute(value)) - 60)
     .attr('opacity', 0)
+    .style('transform', 'translateY(-120px)')
     .transition()
-    .duration(300)
-    .attr('y', ([, value]) => yScale(toAbsolute(value)))
+    .duration(barAnimationDuration)
+    .style('transform', 'translateY(0)')
     .attr('opacity', 1)
-    .delay((d, i) => multiply(data.length - i, 40))
+    .delay((d, i) => multiply(data.length - i, 20))
     .ease();
 
   const labels = svgContainer.selectChildren<SVGTextElement, number>('text')
@@ -133,12 +135,12 @@ const createBars = (
 
   // animate labels
   labels
-    .attr('y', ([, value]) => yScale(toAbsolute(value)) - labelGap - 300)
     .attr('opacity', 0)
+    .style('transform', 'translateY(-300px) scale(0.8)')
     .transition()
-    .duration(300)
-    .delay((d, i) => multiply(data.length - i, 40))
-    .attr('y', ([, value]) => yScale(toAbsolute(value)) - labelGap)
+    .duration(barAnimationDuration)
+    .style('transform', 'translateY(0) scale(1)')
+    .delay((d, i) => multiply(data.length - i, 30))
     .attr('opacity', 1)
     .ease();
 
@@ -162,6 +164,11 @@ export const createBarChart = ({
   const width = Math.max(700, numBars * minWidthPerBar);
   const height = 300;
 
+  const svgContainer = select(container)
+    .append('svg')
+    .attr('width', width)
+    .attr('height', height);
+
   const xScale = scaleBand<number>()
     .domain(range(data.length))
     .range([0, width])
@@ -171,11 +178,6 @@ export const createBarChart = ({
   const yScale = scaleLinear<number>()
     .domain([0, max(data.map(([, value]) => toAbsolute(value))) as number])
     .range([height - topMargin, topMargin]);
-
-  const svgContainer = select(container)
-    .append('svg')
-    .attr('width', width)
-    .attr('height', height);
 
   createXAxis(svgContainer, data, xScale, height, topMargin);
 

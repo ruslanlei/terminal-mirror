@@ -17,7 +17,7 @@
 import { onMounted, ref } from 'vue';
 import { setMaximalScrollLeft } from '@/utils/element';
 import { isPositive } from '@/helpers/number';
-import { toPositiveNumberString } from '@/utils/dom';
+import { getCssRgbColor, getCssVariable, toPositiveNumberString } from '@/utils/dom';
 import { createBarChart } from './createBarChart';
 
 const wrapper = ref<HTMLElement>();
@@ -59,6 +59,8 @@ const renderChart = () => {
     container: container.value,
     data: demoData,
     valueLabelFormatter: (value) => `${isPositive(value) ? toPositiveNumberString(value) : value}$`,
+    positiveBarColor: getCssRgbColor('--color-success'),
+    negativeBarColor: getCssRgbColor('--color-danger'),
   });
 
   setMaximalScrollLeft(wrapper.value);

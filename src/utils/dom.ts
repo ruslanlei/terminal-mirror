@@ -1,5 +1,5 @@
 export const getCssVariable = (
-  variable: string,
+  variable: string, // argument format: --variable-name
 ) => getComputedStyle(document.body)
   .getPropertyValue(variable);
 

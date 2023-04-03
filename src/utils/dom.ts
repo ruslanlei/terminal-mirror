@@ -12,7 +12,7 @@ export const toCssPixelValue = (
 ) => `${value}px`;
 
 export const toPositiveNumberString = (
-  number: number,
+  number: number | string,
 ) => `+${number}`;
 
 export const toIdSelector = (

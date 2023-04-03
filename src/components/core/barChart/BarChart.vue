@@ -15,7 +15,9 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { setToMaximumScrollLeft } from '@/utils/element';
+import { setMaximalScrollLeft } from '@/utils/element';
+import { isPositive } from '@/helpers/number';
+import { toPositiveNumberString } from '@/utils/dom';
 import { createBarChart } from './createBarChart';
 
 const wrapper = ref<HTMLElement>();
@@ -44,9 +46,10 @@ const renderChart = () => {
       ...demoData,
       ...demoData,
     ],
+    valueLabelFormatter: (value) => `${isPositive(value) ? toPositiveNumberString(value) : value}$`,
   });
 
-  setToMaximumScrollLeft(wrapper.value);
+  setMaximalScrollLeft(wrapper.value);
 };
 
 onMounted(renderChart);

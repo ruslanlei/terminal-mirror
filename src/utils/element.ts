@@ -1,4 +1,4 @@
-export const setToMaximumScrollLeft = (
+export const setMaximalScrollLeft = (
   element: HTMLElement,
 ) => {
   const scrollPosition = element.scrollLeft;

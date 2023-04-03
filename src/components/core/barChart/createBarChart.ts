@@ -13,6 +13,8 @@ import { multiply } from '@/helpers/number';
 export type BarChartDataElement = [string, number];
 export type BarChartData = BarChartDataElement[];
 
+type ValueLabelFormatter = (value: number) => number | string;
+
 export interface CreateBarChartProps {
   container: HTMLElement;
   data: BarChartData;
@@ -20,6 +22,7 @@ export interface CreateBarChartProps {
   minWidthPerBar?: number;
   barBorderRadius?: number;
   topMargin?: number;
+  valueLabelFormatter?: ValueLabelFormatter,
 }
 
 type SVGContainer = Selection<SVGSVGElement, unknown, null, undefined>;
@@ -78,12 +81,13 @@ const createBarValueLabels = (
   xScale: any,
   yScale: any,
   labelGap: number,
+  formatter: ValueLabelFormatter,
 ) => {
   const barValueLabels = svg.selectAll<SVGTextElement, number>('text')
     .data(data)
     .enter()
     .append('text')
-    .text(([, value]) => value)
+    .text(([, value]) => formatter(value))
     .attr('x', (d, i) => xScale(i) as number + xScale.bandwidth() / 2)
     .attr('y', ([, value]) => yScale(toAbsolute(value)) - labelGap)
     .style('font-size', '12px')
@@ -133,6 +137,7 @@ export const createBarChart = ({
   minWidthPerBar = 50,
   barBorderRadius = 5,
   topMargin = 30,
+  valueLabelFormatter = ((value) => value) as ValueLabelFormatter,
 }: CreateBarChartProps) => {
   const numBars = data.length;
   const width = Math.max(700, numBars * minWidthPerBar);
@@ -157,7 +162,14 @@ export const createBarChart = ({
 
   animateBars(bars, data, yScale);
 
-  const barValueLabels = createBarValueLabels(svg, data, xScale, yScale, labelGap);
+  const barValueLabels = createBarValueLabels(
+    svg,
+    data,
+    xScale,
+    yScale,
+    labelGap,
+    valueLabelFormatter,
+  );
 
   createXAxis(svg, data, xScale, height, topMargin);
 

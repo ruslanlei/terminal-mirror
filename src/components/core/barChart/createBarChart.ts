@@ -84,9 +84,9 @@ const createBars = (
     data,
     xScale,
     yScale,
-    barBorderRadius,
-    positiveBarColor = 'steelblue',
-    negativeBarColor = 'red',
+    borderRadius,
+    positiveColor = 'steelblue',
+    negativeColor = 'red',
     labelGap = 10,
     labelFormatter,
     barAnimationDuration = 300,
@@ -95,9 +95,9 @@ const createBars = (
     data: BarChartData,
     xScale: any,
     yScale: any,
-    barBorderRadius: number,
-    positiveBarColor?: string,
-    negativeBarColor?: string,
+    borderRadius: number,
+    positiveColor?: string,
+    negativeColor?: string,
     labelGap?: number,
     labelFormatter: ValueLabelFormatter,
     barAnimationDuration?: number,
@@ -111,9 +111,9 @@ const createBars = (
     .attr('y', ([, value]) => yScale(toAbsolute(value)))
     .attr('width', xScale.bandwidth())
     .attr('height', ([, value]) => yScale(0) - yScale(toAbsolute(value)))
-    .attr('fill', ([, value]) => (value >= 0 ? positiveBarColor : negativeBarColor))
-    .attr('rx', barBorderRadius)
-    .attr('ry', barBorderRadius);
+    .attr('fill', ([, value]) => (value >= 0 ? positiveColor : negativeColor))
+    .attr('rx', borderRadius)
+    .attr('ry', borderRadius);
 
   // animate bars
   bars
@@ -185,21 +185,21 @@ export const createBarChart = ({
 
   createXAxis({
     svgContainer,
-    data,
     xScale,
     height,
     topMargin,
+    data,
   });
 
   createBars({
     svgContainer,
-    data,
     xScale,
     yScale,
-    barBorderRadius,
-    positiveBarColor,
-    negativeBarColor,
+    borderRadius: barBorderRadius,
+    positiveColor: positiveBarColor,
+    negativeColor: negativeBarColor,
     labelGap,
     labelFormatter: valueLabelFormatter,
+    data,
   });
 };

@@ -89,7 +89,7 @@ const rerender = () => {
   //display: flex;
   //justify-content: flex-end;
   overflow-x: auto;
-  //overflow-y: hidden;
+  overflow-y: hidden;
   scrollbar-width: none;
   &::-webkit-scrollbar {
     display: none;

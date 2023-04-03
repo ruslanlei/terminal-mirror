@@ -25,6 +25,8 @@ export interface CreateBarChartProps {
   barBorderRadius?: number;
   topMargin?: number;
   valueLabelFormatter?: ValueLabelFormatter,
+  positiveBarColor?: string,
+  negativeBarColor?: string,
 }
 
 type SVGContainer = Selection<SVGSVGElement, unknown, null, undefined>;
@@ -39,23 +41,33 @@ const createXAxis = (
   topMargin: number,
 ) => {
   const xAxisLabels = data.map(([label]) => label);
-  const xAxis = axisBottom(xScale).tickFormat((d, i) => xAxisLabels[i]);
+  const xAxis = axisBottom(xScale).tickFormat((d, i) => xAxisLabels[i]).tickPadding(10);
 
   const xAxisElement = svg
     .append('g')
     .attr('transform', `translate(0, ${height - topMargin})`)
-    .attr('style', 'color: white') // FIXME: find better solution for color
     .attr('class', X_AXIS_CLASS) // FIXME: find better solution for color
     .call(xAxis);
 
+  xAxisElement
+    .call((g) => g.style('margin-top', toCssPixelValue(10)));
+
   // remove line on xAxis
-  xAxisElement.select('.domain').attr('stroke', 'none');
+  xAxisElement
+    .call((g) => g.select('.domain').remove());
 
   // remove vertical dashes on xAxis
-  xAxisElement.selectAll('line').attr('stroke-width', 0);
+  xAxisElement
+    .call((g) => g.selectAll('line').remove());
 
   // set styles to xAxis labels
-  xAxisElement.selectAll('text').style('font-size', '12px');
+  xAxisElement
+    .call(
+      (g) => g
+        .selectAll('.tick text')
+        .style('font-size', '12px')
+        .style('color', 'white'),
+    );
 
   return {
     xAxis,
@@ -143,61 +155,61 @@ const animateBars = (
 };
 
 // TODO: Complete. Not working now
-export const updateBarChart = (
-  svg: any,
-  data: BarChartData,
-  xScale: any,
-  xAxis: any,
-  yScale: any,
-  labelGap: number,
-  barBorderRadius: number,
-  valueLabelFormatter: ValueLabelFormatter,
-  height: number,
-  topMargin: number,
-) => {
-  // Update bars
-  const bars = svg.selectAll('rect').data(data);
-  bars.exit().remove();
-  const newBars = createBars(svg, data, xScale, yScale, barBorderRadius);
-  // animateBars(newBars, data, yScale); // TODO
-
-  // Update bar value labels
-  const barValueLabels = svg.selectAll(
-    toCssClassSelector(BAR_LABEL_CLASS),
-  ).data(data);
-  barValueLabels.remove();
-  const newBarValueLabels = createBarValueLabels(svg, data, xScale, yScale, labelGap, valueLabelFormatter);
-  // animateBarValueLabels(newBarValueLabels, data, yScale, labelGap); // TODO
-
-  console.log('xAxis', xAxis);
-
-  const xAxisElement = svg.select(
-    toCssClassSelector(X_AXIS_CLASS),
-  );
-
-  console.log('xAxisElement', xAxisElement);
-
-  xAxisElement
-    .selectAll('text')
-    .data(data)
-    .exit()
-    .remove();
-
-  xAxisElement.call(xAxis);
-
-  // Update the xScale and yScale domains
-  const width = Math.max(700, data.length * 50);
-  console.log('width', width);
-  xScale.domain(range(data.length)).range([0, width]);
-  yScale.domain([0, max(data.map(([, value]) => toAbsolute(value))) as number]);
-
-  svg
-    .attr('width', width)
-    .attr('height', height);
-
-  // Update xAxis
-  // createXAxis(svg, data, xScale, height, topMargin);
-};
+// export const updateBarChart = (
+//   svg: any,
+//   data: BarChartData,
+//   xScale: any,
+//   xAxis: any,
+//   yScale: any,
+//   labelGap: number,
+//   barBorderRadius: number,
+//   valueLabelFormatter: ValueLabelFormatter,
+//   height: number,
+//   topMargin: number,
+// ) => {
+//   // Update bars
+//   const bars = svg.selectAll('rect').data(data);
+//   bars.exit().remove();
+//   const newBars = createBars(svg, data, xScale, yScale, barBorderRadius);
+//   // animateBars(newBars, data, yScale); // TODO
+//
+//   // Update bar value labels
+//   const barValueLabels = svg.selectAll(
+//     toCssClassSelector(BAR_LABEL_CLASS),
+//   ).data(data);
+//   barValueLabels.remove();
+//   const newBarValueLabels = createBarValueLabels(svg, data, xScale, yScale, labelGap, valueLabelFormatter);
+//   // animateBarValueLabels(newBarValueLabels, data, yScale, labelGap); // TODO
+//
+//   console.log('xAxis', xAxis);
+//
+//   const xAxisElement = svg.select(
+//     toCssClassSelector(X_AXIS_CLASS),
+//   );
+//
+//   console.log('xAxisElement', xAxisElement);
+//
+//   xAxisElement
+//     .selectAll('text')
+//     .data(data)
+//     .exit()
+//     .remove();
+//
+//   xAxisElement.call(xAxis);
+//
+//   // Update the xScale and yScale domains
+//   const width = Math.max(700, data.length * 50);
+//   console.log('width', width);
+//   xScale.domain(range(data.length)).range([0, width]);
+//   yScale.domain([0, max(data.map(([, value]) => toAbsolute(value))) as number]);
+//
+//   svg
+//     .attr('width', width)
+//     .attr('height', height);
+//
+//   // Update xAxis
+//   // createXAxis(svg, data, xScale, height, topMargin);
+// };
 
 export const createBarChart = ({
   container,
@@ -246,22 +258,22 @@ export const createBarChart = ({
 
   animateBarValueLabels(barValueLabels, data, yScale, labelGap);
 
-  const update = (data: BarChartData) => {
-    updateBarChart(
-      svg,
-      data,
-      xScale,
-      xAxis,
-      yScale,
-      labelGap,
-      barBorderRadius,
-      valueLabelFormatter,
-      height,
-      topMargin,
-    );
-  };
-
-  return {
-    update,
-  };
+  // const update = (data: BarChartData) => {
+  //   updateBarChart(
+  //     svg,
+  //     data,
+  //     xScale,
+  //     xAxis,
+  //     yScale,
+  //     labelGap,
+  //     barBorderRadius,
+  //     valueLabelFormatter,
+  //     height,
+  //     topMargin,
+  //   );
+  // };
+  //
+  // return {
+  //   update,
+  // };
 };

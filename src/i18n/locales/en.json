@@ -647,6 +647,9 @@
       "label": "Common result",
       "commonDepositTopUp": "Common top up: {value}",
       "currentDeposit": "Current deposit: {value}"
+    },
+    "todayResults": {
+      "periodLabel": "Today"
     }
   }
 }

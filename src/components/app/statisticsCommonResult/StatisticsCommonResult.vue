@@ -4,7 +4,6 @@
       <Avatar
         size="sm"
         state="success"
-        :label="t('dateTime.unit.month')"
       >
         <Icon
           :size="20"

@@ -4,7 +4,7 @@
       <Avatar
         size="sm"
         state="danger"
-        :label="t('dateTime.unit.month')"
+        :label="t('dateTime.unit.day')"
       />
     </template>
     <template #primaryInfoTop>
@@ -41,7 +41,7 @@
               is-inline
               state="accent1"
             >
-              {{ customFormatDate('MMMM', dateNow()) }}
+              {{ t('statistics.todayResults.periodLabel') }}
             </Typography>
           </template>
         </i18n-t>
@@ -52,7 +52,7 @@
         size="title3"
         :state="['accent1', 'medium']"
       >
-        {{ t('common.percents', { value: toPositiveNumberString(10) }) }}
+        {{ t('common.percents', { value: toPositiveNumberString(1) }) }}
       </Typography>
     </template>
     <template #secondaryInfoBottom>
@@ -74,11 +74,11 @@ import Typography from '@/components/app/typography/Typography.vue';
 import { customFormatDate, dateNow } from '@/utils/date';
 import { computed } from 'vue';
 import { isPositive } from '@/helpers/number';
-import { toPositiveNumberString } from '@/utils/dom';
+import { toPositiveNumberString } from '../../../utils/dom';
 
 const { t } = useI18n();
 
-const testValue = -12.2223;
+const testValue = -135;
 const displayValue = computed(() => (
   isPositive(testValue)
     ? toPositiveNumberString(testValue)

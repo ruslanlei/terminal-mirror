@@ -14,7 +14,7 @@
       <Typography
         v-else-if="label"
         size="title1"
-        :state="['accent1', 'bold', 'uppercase']"
+        :state="['accent1', 'semiBold', 'uppercase']"
       >
         {{ firstLetter(label) }}
       </Typography>

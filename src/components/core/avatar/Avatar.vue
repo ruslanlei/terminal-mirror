@@ -71,4 +71,8 @@ withDefaults(
 .danger {
   background-color: rgb(var(--color-danger));
 }
+
+.success {
+  background-color: rgb(var(--color-success));
+}
 </style>

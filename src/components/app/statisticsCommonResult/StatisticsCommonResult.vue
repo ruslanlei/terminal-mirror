@@ -3,9 +3,14 @@
     <template #prepend>
       <Avatar
         size="sm"
-        state="danger"
+        state="success"
         :label="t('dateTime.unit.month')"
-      />
+      >
+        <Icon
+          :size="20"
+          icon="chartBar"
+        />
+      </Avatar>
     </template>
     <template #primaryInfoTop>
       <Typography
@@ -35,32 +40,43 @@
         size="title6"
         :state="['accent2', 'medium']"
       >
-        <i18n-t keypath="statistics.resultPeriodLabel">
-          <template #period>
+        {{ t('statistics.commonResult.label') }}
+      </Typography>
+    </template>
+    <template #secondaryInfoTop>
+      <Typography
+        size="title7"
+        :state="['accent2', 'medium']"
+      >
+        <i18n-t keypath="statistics.commonResult.commonDepositTopUp">
+          <template #value>
             <Typography
               is-inline
-              state="accent1"
+              size="title4"
+              :state="['semiBold', 'success']"
             >
-              {{ customFormatDate('MMMM', dateNow()) }}
+              {{ commonTopUp }}
             </Typography>
           </template>
         </i18n-t>
       </Typography>
     </template>
-    <template #secondaryInfoTop>
-      <Typography
-        size="title3"
-        :state="['accent1', 'medium']"
-      >
-        {{ t('common.percents', { value: toPositiveNumberString(10) }) }}
-      </Typography>
-    </template>
     <template #secondaryInfoBottom>
       <Typography
-        size="title6"
+        size="title7"
         :state="['accent2', 'medium']"
       >
-        {{ t('statistics.toDeposit') }}
+        <i18n-t keypath="statistics.commonResult.currentDeposit">
+          <template #value>
+            <Typography
+              is-inline
+              size="title4"
+              :state="['semiBold', 'accent1']"
+            >
+              {{ displayBalance }}
+            </Typography>
+          </template>
+        </i18n-t>
       </Typography>
     </template>
   </StatisticsResultRow>
@@ -71,19 +87,26 @@ import StatisticsResultRow from '@/containers/statisticsResultRow/StatisticsResu
 import Avatar from '@/components/core/avatar/Avatar.vue';
 import { useI18n } from 'vue-i18n';
 import Typography from '@/components/app/typography/Typography.vue';
-import { customFormatDate, dateNow } from '@/utils/date';
+import Icon from '@/components/core/icon/Icon.vue';
 import { computed } from 'vue';
-import { isPositive } from '@/helpers/number';
-import { toPositiveNumberString } from '../../../utils/dom';
+import { isPositive, roundToDecimalPoint } from '@/helpers/number';
+import { toPositiveNumberString } from '@/utils/dom';
+import { useEmulatorStore } from '@/stores/emulator';
 
 const { t } = useI18n();
 
-const testValue = -12.2223;
+const emulatorStore = useEmulatorStore();
+
+const displayBalance = computed(() => roundToDecimalPoint(2, emulatorStore.balance));
+
+const testValue = 16826.3;
 const displayValue = computed(() => (
   isPositive(testValue)
     ? toPositiveNumberString(testValue)
     : String(testValue)
 ));
+
+const commonTopUp = computed(() => 10826.3);
 </script>
 
 <style lang="scss" module>

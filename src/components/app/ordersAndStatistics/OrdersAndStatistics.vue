@@ -1,44 +1,43 @@
 <template>
-  <div :class="$style.ordersAndStatistics">
-    <div :class="$style.header">
+  <OrdersAndStatisticsContainer>
+    <template #mainTabSelect>
       <Selector
         v-model="activeTab"
         :options="mainSelectorOptions"
         :state="['simpleColor', 'lgSize']"
       />
-      <div :class="$style.additionalTab">
-        <transition
-          name="orderAndStatisticsTabs"
-          mode="out-in"
-        >
-          <Selector
-            v-if="activeTab === 'orders'"
-            v-model="ordersListType"
-            :options="orderListOptions"
-            :state="['secondaryColor2', 'mdSize']"
-          />
-          <Selector
-            v-else-if="activeTab === 'statistics'"
-            v-model="statisticsActiveTab"
-            :options="statisticsTabs"
-            :state="['secondaryColor2', 'mdSize']"
-          />
-        </transition>
-      </div>
-    </div>
-    <div :class="$style.content">
+    </template>
+    <template #additionalTabSelect>
+      <transition
+        name="orderAndStatisticsTabs"
+        mode="out-in"
+      >
+        <Selector
+          v-if="activeTab === 'orders'"
+          v-model="ordersListType"
+          :options="orderListOptions"
+          :state="['secondaryColor2', 'mdSize']"
+        />
+        <Selector
+          v-else-if="activeTab === 'statistics'"
+          v-model="statisticsActiveTab"
+          :options="statisticsTabs"
+          :state="['secondaryColor2', 'mdSize']"
+        />
+      </transition>
+    </template>
+    <template #content>
       <KeepAlive>
         <OrdersList
           v-if="activeTab === 'orders'"
           :list-type="ordersListType"
-          :class="$style.ordersList"
         />
-        <template v-else-if="activeTab === 'statistics'">
-          <MarketStatistics />
-        </template>
+        <MarketStatistics
+          v-else-if="activeTab === 'statistics'"
+        />
       </KeepAlive>
-    </div>
-  </div>
+    </template>
+  </OrdersAndStatisticsContainer>
 </template>
 
 <script setup lang="ts">
@@ -46,6 +45,7 @@ import { computed, defineAsyncComponent, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Selector from '@/components/core/selector/Selector.vue';
 import OrdersList from '@/components/app/ordersList/OrdersList.vue';
+import OrdersAndStatisticsContainer from '@/containers/ordersAndStatisticsContainer/OrdersAndStatisticsContainer.vue';
 import {
   MainSelectorOptions,
   MainSelectorOptionValue,
@@ -112,18 +112,14 @@ const statisticsTabs = computed<StatisticsSelectorOptions>(() => [
 .content {
   flex-grow: 1;
   display: flex;
+  padding-top: 20px;
   & > * {
     width: 100%;
+    flex-grow: 1;
   }
 }
 
 .additionalTab {}
-
-.ordersList {
-  width: 100%;
-  margin-top: 20px;
-  flex-grow: 1;
-}
 </style>
 
 <style lang="scss">

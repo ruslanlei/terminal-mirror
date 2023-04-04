@@ -1,5 +1,5 @@
 <template>
-  <MarketCommonStatisticsContainer>
+  <MarketStatisticsContainer>
     <template #monthResult>
       <StatisticsMonthResult />
     </template>
@@ -15,11 +15,11 @@
     <template #weekResult>
       <StatisticsWeekResult />
     </template>
-  </MarketCommonStatisticsContainer>
+  </MarketStatisticsContainer>
 </template>
 
 <script setup lang="ts">
-import MarketCommonStatisticsContainer from '@/containers/marketCommonStatisticsContainer/MarketCommonStatisticsContainer.vue';
+import MarketStatisticsContainer from '@/containers/marketCommonStatisticsContainer/MarketCommonStatisticsContainer.vue';
 import TradingCommonResultChart from '@/components/app/tradingCommonResultChart/TradingCommonResultChart.vue';
 import StatisticsMonthResult from '@/components/app/statisticsMonthResult/StatisticsMonthResult.vue';
 import StatisticsCommonResult from '@/components/app/statisticsCommonResult/StatisticsCommonResult.vue';

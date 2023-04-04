@@ -70,7 +70,7 @@ const MarketCommonStatistics = defineAsyncComponent(
 
 const { t } = useI18n();
 
-const activeTab = ref<MainSelectorOptionValue>('statistics');
+const activeTab = ref<MainSelectorOptionValue>('orders');
 
 const mainSelectorOptions = computed<MainSelectorOptions>(() => [
   {
@@ -95,7 +95,7 @@ const orderListOptions = computed<OrdersSelectorOptions>(() => [
   },
 ]);
 
-const statisticsActiveTab = ref<StatisticsSelectorOptionValue>('orders');
+const statisticsActiveTab = ref<StatisticsSelectorOptionValue>('common');
 const statisticsTabs = computed<StatisticsSelectorOptions>(() => [
   {
     label: t('ordersAndStatistics.statisticsTab.common'),

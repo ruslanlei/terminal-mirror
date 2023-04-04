@@ -33,20 +33,19 @@
           :list-type="ordersListType"
           :class="$style.ordersList"
         />
+        <template v-else-if="activeTab === 'statistics'">
+          <MarketStatistics />
+        </template>
       </KeepAlive>
-      <div v-if="activeTab === 'statistics'">
-        <MarketStatistics />
-      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, defineAsyncComponent, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Selector from '@/components/core/selector/Selector.vue';
 import OrdersList from '@/components/app/ordersList/OrdersList.vue';
-import MarketStatistics from '@/components/app/marketStatistics/MarketStatistics.vue';
 import {
   MainSelectorOptions,
   MainSelectorOptionValue,
@@ -56,9 +55,11 @@ import {
   OrdersSelectorOptionValue,
 } from './index';
 
+const MarketStatistics = defineAsyncComponent(() => import('@/components/app/marketStatistics/MarketStatistics.vue'));
+
 const { t } = useI18n();
 
-const activeTab = ref<MainSelectorOptionValue>('orders');
+const activeTab = ref<MainSelectorOptionValue>('statistics');
 
 const mainSelectorOptions = computed<MainSelectorOptions>(() => [
   {
@@ -111,6 +112,9 @@ const statisticsTabs = computed<StatisticsSelectorOptions>(() => [
 .content {
   flex-grow: 1;
   display: flex;
+  & > * {
+    width: 100%;
+  }
 }
 
 .additionalTab {}

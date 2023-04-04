@@ -1,13 +1,18 @@
 <template>
   <div :class="$style.marketStatistics">
-    <BarChart />
+    <Card>1</Card>
+    <Card>2</Card>
   </div>
 </template>
 
 <script setup lang="ts">
-import BarChart from '@/components/core/barChart/BarChart.vue';
+import Card from '@/components/core/card/Card.vue';
 </script>
 
 <style lang="scss" module>
-.marketStatistics {}
+.marketStatistics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
 </style>

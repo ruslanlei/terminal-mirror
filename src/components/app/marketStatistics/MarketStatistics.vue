@@ -1,18 +1,24 @@
 <template>
-  <div :class="$style.marketStatistics">
-    <Card>1</Card>
-    <Card>2</Card>
-  </div>
+  <MarketStatisticsContainer>
+    <template #monthResult>
+      monthResult
+    </template>
+    <template #chart>
+      <TradingCommonResultChart />
+    </template>
+    <template #commonResult>
+      commonResult
+    </template>
+    <template #dayResult>
+      dayResult
+    </template>
+    <template #weekResult>
+      weekResult
+    </template>
+  </MarketStatisticsContainer>
 </template>
 
 <script setup lang="ts">
-import Card from '@/components/core/card/Card.vue';
+import MarketStatisticsContainer from '@/containers/marketStatisticsContainer/MarketStatisticsContainer.vue';
+import TradingCommonResultChart from '@/components/app/tradingCommonResultChart/TradingCommonResultChart.vue';
 </script>
-
-<style lang="scss" module>
-.marketStatistics {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-}
-</style>

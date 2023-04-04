@@ -3,12 +3,12 @@
     ref="container"
     :class="$style.barChart"
   />
-  <Button
-    style="color: white"
-    @click="rerender"
-  >
-    Rerender
-  </Button>
+<!--  <Button-->
+<!--    style="color: white"-->
+<!--    @click="rerender"-->
+<!--  >-->
+<!--    Rerender-->
+<!--  </Button>-->
 </template>
 
 <script setup lang="ts">
@@ -85,12 +85,10 @@ const rerender = () => {
 @import "src/assets/styles/utils";
 
 .barChart {
-  height: 150px;
-  //display: flex;
-  //justify-content: flex-end;
   overflow-x: auto;
   overflow-y: hidden;
   scrollbar-width: none;
+  padding: 0 20px;
   &::-webkit-scrollbar {
     display: none;
   }

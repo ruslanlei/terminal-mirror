@@ -16,10 +16,10 @@
       <StatisticsSuccessOrders />
     </template>
     <template #unsuccessfulOrders>
-      unsuccessfulOrders
+      <StatisticsUnsuccessfulOrders />
     </template>
     <template #ordersTurnover>
-      ordersTurnover
+      <StatisticsTurnover />
     </template>
   </MarketOrderStatisticsContainer>
 </template>
@@ -29,6 +29,9 @@ import { useI18n } from 'vue-i18n';
 import MarketOrderStatisticsContainer
   from '@/containers/marketOrderStatisticsContainer/MarketOrderStatisticsContainer.vue';
 import StatisticsSuccessOrders from '@/components/app/statisticsSuccessOrders/StatisticsSuccessOrders.vue';
+import StatisticsUnsuccessfulOrders
+  from '@/components/app/statisticsUnsuccessfulOrders/StatisticsUnsuccessfulOrders.vue';
+import StatisticsTurnover from '@/components/app/statisticsTurnover/StatisticsTurnover.vue';
 
 const { t } = useI18n();
 </script>

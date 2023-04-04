@@ -661,7 +661,15 @@
         "label": "Successful transactions",
         "averageIncome": "Average income {value}",
         "popularCoin": "Popular coin in orders"
+      },
+      "unsuccessful": {
+        "label": "Unsuccessful transactions",
+        "averageIncome": "Average loss {value}",
+        "popularCoin": "Popular coin in orders"
       }
+    },
+    "turnover": {
+      "label": "Orders turnover"
     }
   }
 }

@@ -3,17 +3,17 @@
     <template #prepend>
       <Typography
         size="h3"
-        :state="['success', 'bold']"
+        :state="['danger', 'bold']"
       >
         42
       </Typography>
     </template>
     <template #primaryInfoTop>
       <Typography
-        :state="['success', 'bold']"
+        :state="['danger', 'bold']"
         size="title5"
       >
-        {{ t('statistics.orders.success.label') }}
+        {{ t('statistics.orders.unsuccessful.label') }}
       </Typography>
     </template>
     <template #primaryInfoBottom>
@@ -21,13 +21,13 @@
         size="title6"
         :state="['accent2', 'medium']"
       >
-        <i18n-t keypath="statistics.orders.success.averageIncome">
+        <i18n-t keypath="statistics.orders.unsuccessful.averageIncome">
           <template #value>
             <Typography
               is-inline
               state="accent1"
             >
-              91%
+              9%
             </Typography>
           </template>
         </i18n-t>
@@ -39,11 +39,11 @@
         :state="['accent2', 'medium', 'alignRight']"
         :class="$style.popularCoinLabel"
       >
-        {{ t('statistics.orders.success.popularCoin') }}
+        {{ t('statistics.orders.unsuccessful.popularCoin') }}
       </Typography>
     </template>
     <template #append>
-      <CoinLogo coin="BTC" />
+      <CoinLogo coin="ETH" />
     </template>
   </StatisticsResultRow>
 </template>

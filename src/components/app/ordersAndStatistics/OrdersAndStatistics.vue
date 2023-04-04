@@ -36,7 +36,7 @@
             v-if="activeTab === 'orders'"
             :list-type="ordersListType"
           />
-          <MarketStatistics
+          <MarketCommonStatistics
             v-else-if="activeTab === 'statistics'"
           />
         </Transition>
@@ -60,7 +60,9 @@ import {
   OrdersSelectorOptionValue,
 } from './index';
 
-const MarketStatistics = defineAsyncComponent(() => import('@/components/app/marketStatistics/MarketStatistics.vue'));
+const MarketCommonStatistics = defineAsyncComponent(
+  () => import('@/components/app/marketCommonStatistics/MarketCommonStatistics.vue'),
+);
 
 const { t } = useI18n();
 

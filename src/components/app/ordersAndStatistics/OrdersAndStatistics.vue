@@ -8,7 +8,7 @@
       />
     </template>
     <template #additionalTabSelect>
-      <transition
+      <Transition
         name="orderAndStatisticsTabs"
         mode="out-in"
       >
@@ -24,17 +24,22 @@
           :options="statisticsTabs"
           :state="['secondaryColor2', 'mdSize']"
         />
-      </transition>
+      </Transition>
     </template>
     <template #content>
       <KeepAlive>
-        <OrdersList
-          v-if="activeTab === 'orders'"
-          :list-type="ordersListType"
-        />
-        <MarketStatistics
-          v-else-if="activeTab === 'statistics'"
-        />
+        <Transition
+          name="orderAndStatisticsTabContent"
+          mode="out-in"
+        >
+          <OrdersList
+            v-if="activeTab === 'orders'"
+            :list-type="ordersListType"
+          />
+          <MarketStatistics
+            v-else-if="activeTab === 'statistics'"
+          />
+        </Transition>
       </KeepAlive>
     </template>
   </OrdersAndStatisticsContainer>
@@ -138,17 +143,21 @@ const statisticsTabs = computed<StatisticsSelectorOptions>(() => [
     transform: translateY(-10px);
   }
 }
+
 .orderAndStatisticsTabContent {
   &-enter-active,
   &-leave-active {
-    transition: opacity 160ms, transform 160ms;
+    transition: opacity 200ms, transform 200ms;
   }
 
   &-enter-from {
     opacity: 0;
+    transform: scale(1.05);
+
   }
   &-leave-to {
     opacity: 0;
+    transform: scale(0.95);
   }
 }
 </style>

@@ -1,28 +1,24 @@
 <template>
-  <MarketStatisticsContainer>
-    <template #monthResult>
-      <StatisticsMonthResult />
+  <MarketOrderStatisticsContainer>
+    <template #commonAmountOfOrders>
+      50
     </template>
-    <template #chart>
-      <!--      <TradingCommonResultChart />-->
+    <template #commonAmountOfOrdersLabel>
+      {{ t('statistics.orders.commonAmountLabel') }}
     </template>
-    <template #commonResult>
-      <StatisticsCommonResult />
+    <template #successRate>
+      {{ '60%' }}
     </template>
-    <template #dayResult>
-      <StatisticsDayResult />
+    <template #successRateLabel>
+      {{ t('statistics.orders.successRateLabel') }}
     </template>
-    <template #weekResult>
-      <StatisticsWeekResult />
-    </template>
-  </MarketStatisticsContainer>
+  </MarketOrderStatisticsContainer>
 </template>
 
 <script setup lang="ts">
-import MarketStatisticsContainer from '@/containers/marketCommonStatisticsContainer/MarketCommonStatisticsContainer.vue';
-import TradingCommonResultChart from '@/components/app/tradingCommonResultChart/TradingCommonResultChart.vue';
-import StatisticsMonthResult from '@/components/app/statisticsMonthResult/StatisticsMonthResult.vue';
-import StatisticsCommonResult from '@/components/app/statisticsCommonResult/StatisticsCommonResult.vue';
-import StatisticsDayResult from '@/components/app/statisticsDayResult/StatisticsDayResult.vue';
-import StatisticsWeekResult from '@/components/app/statisticsWeekResult/StatisticsWeekResult.vue';
+import { useI18n } from 'vue-i18n';
+import MarketOrderStatisticsContainer
+  from '@/containers/marketOrderStatisticsContainer/MarketOrderStatisticsContainer.vue';
+
+const { t } = useI18n();
 </script>

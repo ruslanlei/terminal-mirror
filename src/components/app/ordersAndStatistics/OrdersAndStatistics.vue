@@ -33,11 +33,14 @@
           mode="out-in"
         >
           <OrdersList
-            v-if="activeTab === 'orders'"
+            v-if="isOrdersVisible"
             :list-type="ordersListType"
           />
           <MarketCommonStatistics
-            v-else-if="activeTab === 'statistics'"
+            v-else-if="isCommonStatisticsVisible"
+          />
+          <MarketOrderStatistics
+            v-else-if="isOrderStatisticsVisible"
           />
         </Transition>
       </KeepAlive>
@@ -51,6 +54,7 @@ import { useI18n } from 'vue-i18n';
 import Selector from '@/components/core/selector/Selector.vue';
 import OrdersList from '@/components/app/ordersList/OrdersList.vue';
 import OrdersAndStatisticsContainer from '@/containers/ordersAndStatisticsContainer/OrdersAndStatisticsContainer.vue';
+import MarketOrderStatistics from '@/components/app/marketOrdersStatistics/MarketOrderStatistics.vue';
 import {
   MainSelectorOptions,
   MainSelectorOptionValue,
@@ -91,7 +95,7 @@ const orderListOptions = computed<OrdersSelectorOptions>(() => [
   },
 ]);
 
-const statisticsActiveTab = ref<StatisticsSelectorOptionValue>('common');
+const statisticsActiveTab = ref<StatisticsSelectorOptionValue>('orders');
 const statisticsTabs = computed<StatisticsSelectorOptions>(() => [
   {
     label: t('ordersAndStatistics.statisticsTab.common'),
@@ -102,6 +106,14 @@ const statisticsTabs = computed<StatisticsSelectorOptions>(() => [
     value: 'orders',
   },
 ]);
+
+const isOrdersVisible = computed(() => activeTab.value === 'orders');
+const isCommonStatisticsVisible = computed(() => (
+  activeTab.value === 'statistics' && statisticsActiveTab.value === 'common'
+));
+const isOrderStatisticsVisible = computed(() => (
+  activeTab.value === 'statistics' && statisticsActiveTab.value === 'orders'
+));
 </script>
 
 <style lang="scss" module>

@@ -653,6 +653,10 @@
     },
     "weekResults": {
       "periodLabel": "Week"
+    },
+    "orders": {
+      "commonAmountLabel": "Total number of transactions",
+      "successRateLabel": "Success rate"
     }
   }
 }

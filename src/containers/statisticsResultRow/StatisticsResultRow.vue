@@ -1,5 +1,8 @@
 <template>
-  <div :class="$style.statisticsResultRow">
+  <Card
+    state="background3"
+    :class="$style.statisticsResultRow"
+  >
     <div>
       <slot name="prepend" />
     </div>
@@ -22,18 +25,19 @@
     <div>
       <slot name="append" />
     </div>
-  </div>
+  </Card>
 </template>
 
 <script setup lang="ts">
+import Card from '@/components/core/card/Card.vue';
 </script>
 
 <style lang="scss" module>
 .statisticsResultRow {
-  display: grid;
-
-  $appendAndPrependColumnSize: minmax(28px, 1fr);
-  grid-template-columns: $appendAndPrependColumnSize 1fr 1fr $appendAndPrependColumnSize;
+  border-radius: 5px;
+  padding: 14px;
+  display: flex;
+  justify-content: space-between;
 
   gap: 15px;
 
@@ -42,5 +46,13 @@
 
 .primaryInfo {}
 
-.secondaryInfo {}
+.secondaryInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.primaryInfo, .secondaryInfo {
+  flex-grow: 1;
+}
 </style>

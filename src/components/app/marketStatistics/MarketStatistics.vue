@@ -4,7 +4,7 @@
       <StatisticsMonthResult />
     </template>
     <template #chart>
-      <TradingCommonResultChart />
+<!--      <TradingCommonResultChart />-->
     </template>
     <template #commonResult>
       commonResult

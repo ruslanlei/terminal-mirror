@@ -13,7 +13,7 @@
       <StatisticsDayResult />
     </template>
     <template #weekResult>
-      weekResult
+      <StatisticsWeekResult />
     </template>
   </MarketStatisticsContainer>
 </template>
@@ -24,4 +24,5 @@ import TradingCommonResultChart from '@/components/app/tradingCommonResultChart/
 import StatisticsMonthResult from '@/components/app/statisticsMonthResult/StatisticsMonthResult.vue';
 import StatisticsCommonResult from '@/components/app/statisticsCommonResult/StatisticsCommonResult.vue';
 import StatisticsDayResult from '@/components/app/statisticsDayResult/StatisticsDayResult.vue';
+import StatisticsWeekResult from '@/components/app/statisticsWeekResult/StatisticsWeekResult.vue';
 </script>

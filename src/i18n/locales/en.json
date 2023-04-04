@@ -650,6 +650,9 @@
     },
     "todayResults": {
       "periodLabel": "Today"
+    },
+    "weekResults": {
+      "periodLabel": "Week"
     }
   }
 }

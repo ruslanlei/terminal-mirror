@@ -656,7 +656,12 @@
     },
     "orders": {
       "commonAmountLabel": "Total number of transactions",
-      "successRateLabel": "Success rate"
+      "successRateLabel": "Success rate",
+      "success": {
+        "label": "Successful transactions",
+        "averageIncome": "Average income {value}",
+        "popularCoin": "Popular coin in orders"
+      }
     }
   }
 }

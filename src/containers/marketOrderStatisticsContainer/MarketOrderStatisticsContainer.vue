@@ -38,13 +38,13 @@
     </Card>
     <Card :class="$style.card">
       <div>
-        <slot name="commonResult" />
+        <slot name="successOrders" />
       </div>
       <div>
-        <slot name="dayResult" />
+        <slot name="unsuccessfulOrders" />
       </div>
       <div>
-        <slot name="weekResult" />
+        <slot name="ordersTurnover" />
       </div>
     </Card>
   </div>

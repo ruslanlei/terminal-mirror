@@ -84,3 +84,9 @@ export const toSecondsTimestamp = (
   divideRight(1000),
   toTimestamp,
 )(date);
+
+export const isDateWithinCurrentMonth = (
+  date: DateValue,
+) => (
+  dayjs(date).isSame(new Date(), 'month')
+);

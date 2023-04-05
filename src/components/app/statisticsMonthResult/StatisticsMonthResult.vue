@@ -67,23 +67,33 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { storeToRefs } from 'pinia';
 import StatisticsResultRow from '@/containers/statisticsResultRow/StatisticsResultRow.vue';
 import Avatar from '@/components/core/avatar/Avatar.vue';
-import { useI18n } from 'vue-i18n';
 import Typography from '@/components/app/typography/Typography.vue';
-import { customFormatDate, dateNow } from '@/utils/date';
-import { computed } from 'vue';
+import { customFormatDate, dateNow, isDateWithinCurrentMonth } from '@/utils/date';
 import { isPositive } from '@/helpers/number';
 import { toPositiveNumberString } from '@/utils/dom';
 import { useMarketStore } from '@/stores/market';
-import { storeToRefs } from 'pinia';
 
 const { t } = useI18n();
 
 const marketStore = useMarketStore();
 const {
-
+  closedOrders,
 } = storeToRefs(marketStore);
+
+await marketStore.getClosedOrdersList();
+
+const ordersWithinCurrentMonth = computed(() => closedOrders.value.filter((order) => {
+  console.log(
+    'check',
+    order.executed_at,
+  );
+  return isDateWithinCurrentMonth(order.executed_at);
+}));
 
 const testValue = -12.2223;
 const displayValue = computed(() => (

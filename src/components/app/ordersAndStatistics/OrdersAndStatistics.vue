@@ -34,13 +34,13 @@
         >
           <OrdersList
             v-if="isOrdersVisible"
+            :key="activeTab"
             :list-type="ordersListType"
           />
-          <MarketCommonStatistics
-            v-else-if="isCommonStatisticsVisible"
-          />
-          <MarketOrderStatistics
-            v-else-if="isOrderStatisticsVisible"
+          <MarketStatistics
+            v-else-if="isStatisticsVisible"
+            :key="activeTab"
+            v-model:active-chapter="statisticsActiveTab"
           />
         </Transition>
       </KeepAlive>
@@ -55,6 +55,7 @@ import Selector from '@/components/core/selector/Selector.vue';
 import OrdersList from '@/components/app/ordersList/OrdersList.vue';
 import OrdersAndStatisticsContainer from '@/containers/ordersAndStatisticsContainer/OrdersAndStatisticsContainer.vue';
 import MarketOrderStatistics from '@/components/app/marketOrdersStatistics/MarketOrderStatistics.vue';
+import MarketStatistics from '@/components/app/marketStatistics/MarketStatistics.vue';
 import {
   MainSelectorOptions,
   MainSelectorOptionValue,
@@ -64,56 +65,53 @@ import {
   OrdersSelectorOptionValue,
 } from './index';
 
-const MarketCommonStatistics = defineAsyncComponent(
-  () => import('@/components/app/marketCommonStatistics/MarketCommonStatistics.vue'),
-);
-
 const { t } = useI18n();
 
-const activeTab = ref<MainSelectorOptionValue>('statistics');
+const activeTab = ref<MainSelectorOptionValue>('orders');
 
-const mainSelectorOptions = computed<MainSelectorOptions>(() => [
-  {
-    label: t('ordersAndStatistics.ordersLabel'),
-    value: 'orders',
-  },
-  {
-    label: t('ordersAndStatistics.statisticsLabel'),
-    value: 'statistics',
-  },
-]);
+const mainSelectorOptions = computed<MainSelectorOptions>(
+  () => [
+    {
+      label: t('ordersAndStatistics.ordersLabel'),
+      value: 'orders',
+    },
+    {
+      label: t('ordersAndStatistics.statisticsLabel'),
+      value: 'statistics',
+    },
+  ],
+);
 
 const ordersListType = ref<OrdersSelectorOptionValue>('active');
-const orderListOptions = computed<OrdersSelectorOptions>(() => [
-  {
-    label: t('ordersAndStatistics.ordersTab.current'),
-    value: 'active',
-  },
-  {
-    label: t('ordersAndStatistics.ordersTab.closed'),
-    value: 'closed',
-  },
-]);
+const orderListOptions = computed<OrdersSelectorOptions>(
+  () => [
+    {
+      label: t('ordersAndStatistics.ordersTab.current'),
+      value: 'active',
+    },
+    {
+      label: t('ordersAndStatistics.ordersTab.closed'),
+      value: 'closed',
+    },
+  ],
+);
 
 const statisticsActiveTab = ref<StatisticsSelectorOptionValue>('common');
-const statisticsTabs = computed<StatisticsSelectorOptions>(() => [
-  {
-    label: t('ordersAndStatistics.statisticsTab.common'),
-    value: 'common',
-  },
-  {
-    label: t('ordersAndStatistics.statisticsTab.orders'),
-    value: 'orders',
-  },
-]);
+const statisticsTabs = computed<StatisticsSelectorOptions>(
+  () => [
+    {
+      label: t('ordersAndStatistics.statisticsTab.common'),
+      value: 'common',
+    },
+    {
+      label: t('ordersAndStatistics.statisticsTab.orders'),
+      value: 'orders',
+    },
+  ],
+);
 
 const isOrdersVisible = computed(() => activeTab.value === 'orders');
-const isCommonStatisticsVisible = computed(() => (
-  activeTab.value === 'statistics' && statisticsActiveTab.value === 'common'
-));
-const isOrderStatisticsVisible = computed(() => (
-  activeTab.value === 'statistics' && statisticsActiveTab.value === 'orders'
-));
+const isStatisticsVisible = computed(() => activeTab.value === 'statistics');
 </script>
 
 <style lang="scss" module>

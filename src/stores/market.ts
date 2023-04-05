@@ -1,4 +1,6 @@
-import { computed, nextTick, ref } from 'vue';
+import {
+  computed, nextTick, Ref, ref,
+} from 'vue';
 import { useI18n } from 'vue-i18n';
 import { defineStore } from 'pinia';
 import { useStorage } from '@vueuse/core';
@@ -26,6 +28,7 @@ import { removeFromFavorites } from '@/api/endpoints/profile/removeFromFavorites
 import { findAndDelete } from '@/helpers/array';
 import { getBalance } from '@/api/endpoints/profile/getBalance';
 import { isEmpty } from '@/utils/object';
+import { useOrders } from '@/hooks/useOrders';
 
 export type MarketType = 'emulator' | 'real';
 
@@ -33,25 +36,6 @@ export const useMarketStore = defineStore('market', () => {
   const { t } = useI18n();
 
   const toastStore = useToastStore();
-  const modalStore = useModalStore();
-
-  const orderDeleteSubject = new Subject<Order>();
-
-  const subscribeOrderDelete = (
-    callback: (order: Order) => any,
-  ) => orderDeleteSubject.subscribe(callback);
-
-  const emitOrderDeleteOrClose = (order: Order) => {
-    orderDeleteSubject.next(order);
-  };
-
-  const orderCreatedEventSubject = new Subject<Order>();
-  const subscribeOrderCreated = (
-    callback: (order: Order) => void,
-  ) => orderCreatedEventSubject.subscribe(callback);
-  const emitOrderCreated = (order: Order) => {
-    orderCreatedEventSubject.next(order);
-  };
 
   const marketType = useStorage<MarketType>('marketType', 'emulator');
 
@@ -156,211 +140,27 @@ export const useMarketStore = defineStore('market', () => {
 
   const baseCurrencyStep = ref(0.001);
 
-  const handleCreateOrder = async (dto: CreateOrderDTO) => {
-    const response = await createOrder(dto);
+  const {
+    activeOrders,
+    isActiveOrdersForCurrentPairExists,
+    getActiveOrdersList,
 
-    if (!response.result) {
-      processServerErrors(response.data, t('order.failedToCreate'));
-    }
+    closedOrders,
+    getClosedOrdersList,
 
-    return response;
-  };
+    handleCreateOrder,
+    createListOfTakeProfits,
+    createStopLoss,
+    subscribeOrderCreated,
+    createOrderGroup,
 
-  const createListOfTakeProfits = async (
-    takeProfits: TakeProfit[],
-    side: Order['side'],
-  ) => {
-    const response = await requestMany(
-      takeProfits.map((takeProfit: TakeProfit) => createOrder({
-        ...takeProfit,
-        pair: activePair.value,
-        side,
-        order_type: 'tp',
-      })),
-    );
-
-    if (!response.result) {
-      toastStore.showDanger({
-        text: t('order.failedToCreateTakeProfits'),
-      });
-    }
-
-    return response;
-  };
-
-  const createStopLoss = async (stopLoss: Pick<StopLoss, 'price' | 'quantity'>, side: Order['side']) => {
-    const response = await createOrder({
-      ...stopLoss,
-      pair: activePair.value,
-      side,
-      order_type: 'sl',
-    });
-
-    if (!response.result) {
-      processServerErrors(response.data, t('order.failedToCreateStopLoss'));
-    }
-
-    return response;
-  };
-
-  const createOrderGroup = async (
-    orderModel: OrderModel,
-    takeProfits?: TakeProfit[],
-    stopLossPrice?: number,
-  ) => {
-    const response = await createOrder(orderModel);
-
-    const subOrderSide = orderModel.side === 'buy' ? 'sell' : 'buy';
-
-    if (takeProfits) {
-      const response = await createListOfTakeProfits(
-        takeProfits,
-        subOrderSide,
-      );
-
-      if (!response.result) return response;
-    }
-
-    if (stopLossPrice) {
-      const response = await createStopLoss({
-        price: stopLossPrice,
-        quantity: orderModel.quantity,
-      }, subOrderSide);
-
-      if (!response.result) return response;
-    }
-
-    if (response.result) {
-      // @ts-ignore
-      emitOrderCreated(response.data);
-    }
-
-    return response;
-  };
-
-  const activeOrders = ref<Order[]>([]);
-
-  const closedOrders = ref<Order[]>([]);
-
-  const isActiveOrdersForCurrentPairExists = computed(
-    () => activeOrders.value.some((order: Order) => order.pair === activePair.value),
-  );
-
-  const getActiveOrdersList = async () => {
-    const response = await requestMany<Order[][]>([
-      getOrdersList('new'),
-      getOrdersList('filled'),
-    ]);
-
-    if (!response.result) {
-      processServerErrors(response.data, t('order.failedToGetList'));
-    }
-
-    activeOrders.value = flatten(response.data);
-  };
-
-  const getClosedOrdersList = async () => {
-    const response = await requestMany<Order[][]>([
-      getOrdersList('expired'),
-      getOrdersList('canceled'),
-      getOrdersList('executed'),
-      getOrdersList('closed'),
-    ]);
-
-    if (!response.result) {
-      processServerErrors(response.data, t('order.failedToGetList'));
-    }
-
-    closedOrders.value = flatten(response.data);
-  };
-
-  const handleDeleteOrder = async (
-    order: Order,
-  ) => {
-    const response = await deleteOrder(order.id);
-
-    if (response.result) {
-      emitOrderDeleteOrClose({
-        ...order,
-        status: 'canceled',
-      });
-    } else {
-      processServerErrors(response);
-    }
-
-    return response;
-  };
-
-  const handleCloseOrder = async (
-    order: Order,
-  ) => {
-    const response = await closeOrder(order.id);
-
-    if (response.result) {
-      emitOrderDeleteOrClose({
-        ...order,
-        status: 'closed',
-      });
-    } else {
-      processServerErrors(response);
-    }
-
-    return response;
-  };
-
-  const deleteOrCloseAllExistingOrdersForCurrentPair = async () => {
-    const activePairActiveOrders = filter(
-      (order: Order) => order.pair === activePair.value,
-      activeOrders.value,
-    );
-
-    const response = await compose(
-      requestMany,
-      map((order: Order) => (
-        order.status === 'new'
-          ? handleDeleteOrder(order)
-          : handleCloseOrder(order)
-      )),
-      filter((order: Order) => order.order_type === 'limit'),
-    )(activePairActiveOrders);
-
-    if (response.result) {
-      await getBalance();
-    } else {
-      processServerErrors(response.result);
-    }
-
-    return response;
-  };
-
-  const removeOrder = async (
-    order: Order,
-  ) => {
-    const isOrderFilled = order.status === 'filled';
-
-    const { result, data } = await (
-      isOrderFilled
-        ? handleCloseOrder
-        : handleDeleteOrder
-    )(order);
-
-    if (!result) {
-      processServerErrors(data);
-    }
-  };
-
-  const showRemoveOrderModal = (
-    order: Order,
-    takeProfits: TakeProfit[] | undefined,
-  ) => {
-    modalStore.showModal({
-      type: modalType.DELETE_ORDER,
-      payload: {
-        order,
-        takeProfits,
-      },
-    });
-  };
+    subscribeOrderDelete,
+    handleDeleteOrder,
+    handleCloseOrder,
+    deleteOrCloseAllExistingOrdersForCurrentPair,
+    removeOrder,
+    showRemoveOrderModal,
+  } = useOrders(activePair);
 
   return {
     subscribeOrderDelete,

@@ -75,8 +75,15 @@ import { customFormatDate, dateNow } from '@/utils/date';
 import { computed } from 'vue';
 import { isPositive } from '@/helpers/number';
 import { toPositiveNumberString } from '@/utils/dom';
+import { useMarketStore } from '@/stores/market';
+import { storeToRefs } from 'pinia';
 
 const { t } = useI18n();
+
+const marketStore = useMarketStore();
+const {
+
+} = storeToRefs(marketStore);
 
 const testValue = -12.2223;
 const displayValue = computed(() => (

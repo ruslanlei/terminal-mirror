@@ -29,116 +29,36 @@ import { findAndDelete } from '@/helpers/array';
 import { getBalance } from '@/api/endpoints/profile/getBalance';
 import { isEmpty } from '@/utils/object';
 import { useOrders } from '@/hooks/useOrders';
+import { usePairs } from '@/hooks/usePairs';
 
 export type MarketType = 'emulator' | 'real';
 
 export const useMarketStore = defineStore('market', () => {
-  const { t } = useI18n();
-
-  const toastStore = useToastStore();
-
   const marketType = useStorage<MarketType>('marketType', 'emulator');
-
-  const pairs = useStorage<Pair[]>('pairs', []);
-
-  const isPairsPreFetched = computed(() => !isEmpty(pairs.value));
-
-  const pairsMap = computed<Record<Pair['id'], Pair>>(
-    () => pairs.value.reduce((acc, pair: Pair) => ({
-      ...acc,
-      [pair.id]: pair,
-    }), {}),
-  );
-
-  const activePair = useStorage<Pair['id']>('activePair', 1);
-
-  const isSettingPair = ref(false);
-  const setPair = async (pairId: Pair['id']) => {
-    isSettingPair.value = true;
-    activePair.value = pairId;
-    await nextTick();
-    isSettingPair.value = false;
-  };
-
-  const getPairData = (pairId: Pair['id']) => pairsMap.value?.[pairId] || null;
-
-  const activePairData = computed<Pair | undefined>(
-    () => pairsMap.value[activePair.value],
-  );
-
-  const favoritePairs = useStorage<FavoritePair[]>('favoritePairs', []);
-
-  const fetchFavoritePairs = async () => {
-    const { result, data } = await getFavorites();
-
-    if (!result) {
-      processServerErrors(data);
-      return;
-    }
-
-    favoritePairs.value = data;
-  };
-
-  const handleAddToFavorites = async (
-    id: Pair['id'],
-  ) => {
-    const response = await addToFavorites(id);
-
-    if (!response.result) {
-      processServerErrors(response.data);
-    } else {
-      favoritePairs.value.push(response.data);
-    }
-
-    return response;
-  };
-
-  const handleRemoveFromFavorites = async (
-    id: FavoritePair['id'],
-  ) => {
-    const response = await removeFromFavorites(id);
-
-    if (!response.result) {
-      processServerErrors(response.data);
-    } else {
-      findAndDelete(
-        (favoritePair: FavoritePair) => favoritePair.id === id,
-        favoritePairs.value,
-      );
-    }
-
-    return response;
-  };
-
-  const isFetchingPairs = ref(false);
-  const handleFetchPairs = async () => {
-    isFetchingPairs.value = true;
-    const { result, data } = await getPairs();
-    isFetchingPairs.value = false;
-
-    if (!result) {
-      toastStore.showDanger({
-        text: t('market.failedToGetPairs'),
-      });
-      return;
-    }
-
-    pairs.value = data;
-  };
-
-  const fetchPairs = async () => {
-    if (!isPairsPreFetched.value) {
-      await handleFetchPairs();
-      return;
-    }
-
-    handleFetchPairs();
-  };
 
   const baseCurrencyDecimals = ref(Number(import.meta.env.VITE_APP_BASE_CURRENCY_DECIMALS));
   const quoteCurrencyDecimals = ref(Number(import.meta.env.VITE_APP_QUOTE_CURRENCY_DECIMALS));
 
   const baseCurrencyStep = ref(0.001);
+
+  const {
+    pairs,
+    pairsMap,
+    isFetchingPairs,
+    isPairsPreFetched,
+    fetchPairs,
+
+    activePair,
+    activePairData,
+    isSettingPair,
+    setPair,
+    getPairData,
+
+    favoritePairs,
+    fetchFavoritePairs,
+    handleAddToFavorites,
+    handleRemoveFromFavorites,
+  } = usePairs();
 
   const {
     activeOrders,

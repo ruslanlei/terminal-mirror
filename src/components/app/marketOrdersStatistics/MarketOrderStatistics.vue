@@ -36,7 +36,7 @@ import StatisticsUnsuccessfulOrders
   from '@/components/app/statisticsUnsuccessfulOrders/StatisticsUnsuccessfulOrders.vue';
 import StatisticsTurnover from '@/components/app/statisticsTurnover/StatisticsTurnover.vue';
 import { Order } from '@/api/types/order';
-import { compose } from '@/utils/fp';
+import { compose, log } from '@/utils/fp';
 import { Maybe } from '@/utils/functors';
 import { getSuccessOrdersAmount } from '@/helpers/math/formulas/pnl';
 import { getLength } from '@/utils/array';

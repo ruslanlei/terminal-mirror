@@ -1,4 +1,4 @@
-import { compose, curry } from '@/utils/fp';
+import { compose, curry, log } from '@/utils/fp';
 import {
   add,
   multiply, roundToDecimalPoint,

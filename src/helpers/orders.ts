@@ -44,3 +44,17 @@ export const isOrderOfType = curry((
     ? orderType.includes(order.order_type)
     : order.order_type === orderType
 ));
+
+export const filterOrdersByType = curry(
+  (
+    type: Order['order_type'],
+    orders: Order[],
+  ) => (
+    filter(
+      (order: Order) => (
+        isOrderOfType(type, order)
+      ),
+      orders,
+    )
+  ),
+);

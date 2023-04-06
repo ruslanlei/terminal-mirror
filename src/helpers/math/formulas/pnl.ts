@@ -9,7 +9,9 @@ import { toAbsolute } from '@/utils/number';
 import { Order } from '@/api/types/order';
 import { isDateWithinCurrentDay, isDateWithinCurrentMonth, isDateWithinCurrentWeek } from '@/utils/date';
 import { Maybe } from '@/utils/functors';
-import { filter, map, reduce } from '@/utils/array';
+import {
+  filter, getLength, map, reduce,
+} from '@/utils/array';
 import { isOrderOfType } from '@/helpers/orders';
 
 export const calculatePnl = curry((
@@ -74,3 +76,47 @@ export const calculateCommonPnlForPeriod = (
     ))
     .chain((commonPnl: number) => roundToDecimalPoint(2, commonPnl));
 };
+
+export const getSuccessOrdersAmount = (
+  orders: Order[],
+) => (
+  Maybe.of(orders)
+    .map((orders: Order[]) => (
+      map(
+        (order: Order) => (
+          calculatePnl(order.price, order.quantity, order.executed_price)
+        ),
+        orders,
+      )
+    ))
+    .chain((pnlList: number[]) => (
+      compose(
+        getLength,
+        filter(
+          (pnl: number) => pnl >= 0,
+        ),
+      )(pnlList)
+    ))
+);
+
+export const getFailedOrdersLength = (
+  orders: Order[],
+) => (
+  Maybe.of(orders)
+    .map((orders: Order[]) => (
+      map(
+        (order: Order) => (
+          calculatePnl(order.price, order.quantity, order.executed_price)
+        ),
+        orders,
+      )
+    ))
+    .chain((pnlList: number[]) => (
+      compose(
+        getLength,
+        filter(
+          (pnl: number) => pnl < 0,
+        ),
+      )(pnlList)
+    ))
+);

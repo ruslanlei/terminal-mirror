@@ -71,15 +71,10 @@ import StatisticsResultRow from '@/containers/statisticsResultRow/StatisticsResu
 import Avatar from '@/components/core/avatar/Avatar.vue';
 import { useI18n } from 'vue-i18n';
 import Typography from '@/components/app/typography/Typography.vue';
-import {
-  isDateWithinCurrentDay,
-} from '@/utils/date';
 import { computed } from 'vue';
-import { add } from '@/helpers/number';
 import { useMarketStore } from '@/stores/market';
 import { storeToRefs } from 'pinia';
-import { isOrderOfType } from '@/helpers/orders';
-import { calculatePnl } from '@/helpers/math/formulas/pnl';
+import { calculateCommonPnlForPeriod } from '@/helpers/math/formulas/pnl';
 import { toPositiveNumberString } from '@/utils/dom';
 
 const { t } = useI18n();
@@ -90,13 +85,6 @@ const {
 } = storeToRefs(marketStore);
 
 const commonPnl = computed(() => (
-  closedOrders.value
-    .filter((order) => (
-      isDateWithinCurrentDay(order.modified) && isOrderOfType('limit', order)
-    ))
-    .map((order) => (
-      calculatePnl(order.price, order.quantity, order.executed_price)
-    ))
-    .reduce((commonPnl, pnl) => add(commonPnl, pnl))
+  calculateCommonPnlForPeriod('day', closedOrders.value)
 ));
 </script>

@@ -93,7 +93,7 @@ import { toPositiveNumberString } from '@/utils/dom';
 import { useEmulatorStore } from '@/stores/emulator';
 import { isDateWithinCurrentMonth } from '@/utils/date';
 import { isOrderOfType } from '@/helpers/orders';
-import { calculatePnl } from '@/helpers/math/formulas/pnl';
+import { calculateCommonPnlForPeriod, calculatePnl } from '@/helpers/math/formulas/pnl';
 import { useMarketStore } from '@/stores/market';
 import { storeToRefs } from 'pinia';
 
@@ -109,23 +109,8 @@ const {
 const displayBalance = computed(() => roundToDecimalPoint(2, emulatorStore.balance));
 
 const commonPnl = computed(() => (
-  closedOrders.value
-    .filter((order) => (
-      isOrderOfType('limit', order)
-    ))
-    .map((order) => (
-      calculatePnl(
-        order.price,
-        order.quantity,
-        order.executed_price,
-      )
-    ))
-    .reduce((commonPnl, pnl) => add(commonPnl, pnl))
+  calculateCommonPnlForPeriod('allTime', closedOrders.value)
 ));
 
 const commonTopUp = computed(() => 10826.3);
 </script>
-
-<style lang="scss" module>
-
-</style>

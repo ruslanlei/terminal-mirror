@@ -56,7 +56,10 @@ export const arraySum = (
   array: number[],
 ) => collect(array).sum();
 
-export const map = curry(rambdaMap<any, any>);
+export const map = curry(rambdaMap) as CurriedFunc<(
+  predicate?: (...args: any[]) => boolean,
+  array?: any[],
+) => any>;
 export const reduce = curry(rambdaReduce<any, any>) as typeof rambdaReduce;
 
 export const reduceRight = curry(

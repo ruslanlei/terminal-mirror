@@ -62,10 +62,12 @@ export const useMarketStore = defineStore('market', () => {
 
   const {
     activeOrders,
+    isActiveOrdersFetched,
     isActiveOrdersForCurrentPairExists,
     getActiveOrdersList,
 
     closedOrders,
+    isClosedOrdersFetched,
     getClosedOrdersList,
 
     handleCreateOrder,
@@ -83,39 +85,54 @@ export const useMarketStore = defineStore('market', () => {
   } = useOrders(activePair);
 
   return {
-    subscribeOrderDelete,
-    subscribeOrderCreated,
-    pairs,
-    isPairsPreFetched,
-    pairsMap,
     marketType,
-    activePair,
-    isSettingPair,
-    setPair,
-    getPairData,
     quoteCurrencyDecimals,
     baseCurrencyDecimals,
     baseCurrencyStep,
-    activePairData,
+
+    pairs,
+    pairsMap,
     isFetchingPairs,
+    isPairsPreFetched,
+    fetchPairs,
+
+    activePair,
+    activePairData,
+    isSettingPair,
+    setPair,
+    getPairData,
+
     favoritePairs,
     fetchFavoritePairs,
-    fetchPairs,
-    createOrder: handleCreateOrder,
-    createListOfTakeProfits,
-    createStopLoss,
+    handleAddToFavorites,
+    handleRemoveFromFavorites,
+
     activeOrders,
-    closedOrders,
+    isActiveOrdersFetched,
     isActiveOrdersForCurrentPairExists,
     getActiveOrdersList,
+
+    closedOrders,
+    isClosedOrdersFetched,
     getClosedOrdersList,
+
+    handleCreateOrder,
+    createListOfTakeProfits,
+    createStopLoss,
+    subscribeOrderCreated,
+    createOrderGroup,
+
+    subscribeOrderDelete,
+    handleDeleteOrder,
+    handleCloseOrder,
+    deleteOrCloseAllExistingOrdersForCurrentPair,
+    removeOrder,
+    showRemoveOrderModal,
+
+    createOrder: handleCreateOrder,
     deleteOrder: handleDeleteOrder,
     closeOrder: handleCloseOrder,
-    createOrderGroup,
-    removeOrder,
     addToFavorites: handleAddToFavorites,
     removeFromFavorites: handleRemoveFromFavorites,
-    deleteOrCloseAllExistingOrdersForCurrentPair,
-    showRemoveOrderModal,
   };
 });

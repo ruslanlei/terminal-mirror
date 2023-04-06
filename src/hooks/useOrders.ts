@@ -25,6 +25,10 @@ export const useOrders = (
   // active orders
   const activeOrders = ref<Order[]>([]);
 
+  const isActiveOrdersFetched = computed(() => (
+    activeOrders.value.length
+  ));
+
   const isActiveOrdersForCurrentPairExists = computed(
     () => activeOrders.value.some((order: Order) => order.pair === activePair.value),
   );
@@ -44,6 +48,10 @@ export const useOrders = (
 
   // closed orders
   const closedOrders = ref<Order[]>([]);
+
+  const isClosedOrdersFetched = computed(() => (
+    activeOrders.value.length
+  ));
 
   const getClosedOrdersList = async () => {
     const response = await requestMany<Order[][]>([
@@ -254,10 +262,12 @@ export const useOrders = (
 
   return {
     activeOrders,
+    isActiveOrdersFetched,
     isActiveOrdersForCurrentPairExists,
     getActiveOrdersList,
 
     closedOrders,
+    isClosedOrdersFetched,
     getClosedOrdersList,
 
     handleCreateOrder,

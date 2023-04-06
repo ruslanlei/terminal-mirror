@@ -19,6 +19,7 @@ import { computed } from 'vue';
 import { useLocalValue } from '@/hooks/useLocalValue';
 import MarketCommonStatistics from '@/components/app/marketCommonStatistics/MarketCommonStatistics.vue';
 import MarketOrderStatistics from '@/components/app/marketOrdersStatistics/MarketOrderStatistics.vue';
+import { useMarketStore } from '@/stores/market';
 import { MarketStatisticsEmits, MarketStatisticsProps } from './index';
 
 const props = withDefaults(
@@ -38,6 +39,14 @@ const isCommonStatisticsVisible = computed(() => (
 const isOrderStatisticsVisible = computed(() => (
   localActiveChapter.value === 'orders'
 ));
+
+const marketStore = useMarketStore();
+if (marketStore.isClosedOrdersFetched) {
+  // fetch on the background
+  marketStore.getClosedOrdersList();
+} else {
+  await marketStore.getClosedOrdersList();
+}
 </script>
 
 <style lang="scss">

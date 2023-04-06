@@ -5,7 +5,7 @@
         size="h3"
         :state="['success', 'bold']"
       >
-        42
+        {{ successOrdersAmount }}
       </Typography>
     </template>
     <template #primaryInfoTop>
@@ -27,7 +27,7 @@
               is-inline
               state="accent1"
             >
-              91%
+              {{ averageIncome }}
             </Typography>
           </template>
         </i18n-t>
@@ -53,8 +53,39 @@ import StatisticsResultRow from '@/containers/statisticsResultRow/StatisticsResu
 import { useI18n } from 'vue-i18n';
 import Typography from '@/components/app/typography/Typography.vue';
 import CoinLogo from '@/components/core/coinLogo/CoinLogo.vue';
+import { useMarketStore } from '@/stores/market';
+import { storeToRefs } from 'pinia';
+import { computed } from 'vue';
+import { compose } from '@/utils/fp';
+import { filterOrdersByType } from '@/helpers/orders';
+import { calculateCommonPnlPercent, calculatePnlPercent, getSuccessOrdersAmount } from '@/helpers/math/formulas/pnl';
+import { map } from '@/utils/array';
+import { toCssPercentValue } from '@/utils/dom';
+import { divideRight, roundToDecimalPoint } from '@/helpers/number';
 
 const { t } = useI18n();
+
+const marketStore = useMarketStore();
+const {
+  closedOrders,
+} = storeToRefs(marketStore);
+
+const successOrdersAmount = computed(() => (
+  compose(
+    getSuccessOrdersAmount,
+    filterOrdersByType('limit'),
+  )(closedOrders.value)
+));
+
+const averageIncome = computed(() => (
+  compose(
+    toCssPercentValue,
+    roundToDecimalPoint(2),
+    divideRight(closedOrders.value.length),
+    calculateCommonPnlPercent,
+    filterOrdersByType('limit'),
+  )(closedOrders.value)
+));
 </script>
 
 <style lang="scss" module>

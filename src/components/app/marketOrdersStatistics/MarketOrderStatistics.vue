@@ -63,9 +63,8 @@ const calculateSuccessRate = (
   .chain((successOrdersAmount: number) => (
     compose(
       multiply(100),
-      divideRight(successOrdersAmount),
-      getLength,
-    )(orders)
+      divideRight(getLength(orders)),
+    )(successOrdersAmount)
   ));
 
 const successRate = computed(() => (

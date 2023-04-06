@@ -82,20 +82,18 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { storeToRefs } from 'pinia';
 import StatisticsResultRow from '@/containers/statisticsResultRow/StatisticsResultRow.vue';
 import Avatar from '@/components/core/avatar/Avatar.vue';
-import { useI18n } from 'vue-i18n';
 import Typography from '@/components/app/typography/Typography.vue';
 import Icon from '@/components/core/icon/Icon.vue';
-import { computed } from 'vue';
-import { add, isPositive, roundToDecimalPoint } from '@/helpers/number';
-import { toPositiveNumberString } from '@/utils/dom';
+import { roundToDecimalPoint } from '@/helpers/number';
 import { useEmulatorStore } from '@/stores/emulator';
-import { isDateWithinCurrentMonth } from '@/utils/date';
-import { isOrderOfType } from '@/helpers/orders';
-import { calculateCommonPnlForPeriod, calculatePnl } from '@/helpers/math/formulas/pnl';
+import { calculateCommonPnlForPeriod } from '@/helpers/math/formulas/pnl';
 import { useMarketStore } from '@/stores/market';
-import { storeToRefs } from 'pinia';
+import { compose } from '@/utils/fp';
 
 const { t } = useI18n();
 
@@ -109,7 +107,10 @@ const {
 const displayBalance = computed(() => roundToDecimalPoint(2, emulatorStore.balance));
 
 const commonPnl = computed(() => (
-  calculateCommonPnlForPeriod('allTime', closedOrders.value)
+  compose(
+    roundToDecimalPoint(2),
+    calculateCommonPnlForPeriod('allTime'),
+  )(closedOrders.value)
 ));
 
 const commonTopUp = computed(() => 10826.3);

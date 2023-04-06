@@ -39,43 +39,56 @@ export const calculatePnlPercent = curry((
   )(pnl);
 });
 
-export const calculateCommonPnlForPeriod = (
-  period: 'day' | 'week' | 'month' | 'allTime',
+export const calculateCommonPnl = (
   orders: Order[],
-) => {
-  const dateFilter = ({
-    day: isDateWithinCurrentDay,
-    week: isDateWithinCurrentWeek,
-    month: isDateWithinCurrentMonth,
-    allTime: () => true,
-  }[period]);
+) => (
+  reduce(
+    (commonPnl: number, order: Order) => add(
+      commonPnl,
+      calculatePnl(order.price, order.quantity, order.executed_price),
+    ),
+    0,
+    orders,
+  )
+);
 
-  return Maybe.of(orders)
-    .map((orders: Order[]) => (
-      filter(
-        (order: Order) => (
-          dateFilter(order.modified) && isOrderOfType('limit', order)
-        ),
-        orders,
-      )
-    ))
-    .map((orders: Order[]) => (
-      map(
-        (order: Order) => (
-          calculatePnl(order.price, order.quantity, order.executed_price)
-        ),
-        orders,
-      )
-    ))
-    .map((pnlList: number[]) => (
-      reduce(
-        (commonPnl: number, pnl: number) => add(commonPnl, pnl),
-        0,
-        pnlList,
-      )
-    ))
-    .chain((commonPnl: number) => roundToDecimalPoint(2, commonPnl));
-};
+export const calculateCommonPnlPercent = (
+  orders: Order[],
+) => (
+  reduce(
+    (commonPnl: number, order: Order) => add(
+      commonPnl,
+      calculatePnlPercent(order.price, order.quantity, order.executed_price),
+    ),
+    0,
+    orders,
+  )
+);
+
+export const calculateCommonPnlForPeriod = curry(
+  (
+    period: 'day' | 'week' | 'month' | 'allTime',
+    orders: Order[],
+  ) => {
+    const dateFilter = ({
+      day: isDateWithinCurrentDay,
+      week: isDateWithinCurrentWeek,
+      month: isDateWithinCurrentMonth,
+      allTime: () => true,
+    }[period]);
+
+    return Maybe.of(orders)
+      .map((orders: Order[]) => (
+        filter(
+          (order: Order) => (
+            dateFilter(order.modified) && isOrderOfType('limit', order)
+          ),
+          orders,
+        )
+      ))
+      .chain(calculateCommonPnl);
+  },
+);
 
 export const getSuccessOrdersAmount = (
   orders: Order[],

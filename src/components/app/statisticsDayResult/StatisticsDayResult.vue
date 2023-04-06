@@ -76,6 +76,8 @@ import { useMarketStore } from '@/stores/market';
 import { storeToRefs } from 'pinia';
 import { calculateCommonPnlForPeriod } from '@/helpers/math/formulas/pnl';
 import { toPositiveNumberString } from '@/utils/dom';
+import { compose } from '@/utils/fp';
+import { roundToDecimalPoint } from '@/helpers/number';
 
 const { t } = useI18n();
 
@@ -85,6 +87,9 @@ const {
 } = storeToRefs(marketStore);
 
 const commonPnl = computed(() => (
-  calculateCommonPnlForPeriod('day', closedOrders.value)
+  compose(
+    roundToDecimalPoint(2),
+    calculateCommonPnlForPeriod('day'),
+  )(closedOrders.value)
 ));
 </script>

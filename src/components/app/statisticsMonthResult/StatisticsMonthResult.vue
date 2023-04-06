@@ -77,6 +77,8 @@ import { customFormatDate, dateNow } from '@/utils/date';
 import { toPositiveNumberString } from '@/utils/dom';
 import { useMarketStore } from '@/stores/market';
 import { calculateCommonPnlForPeriod } from '@/helpers/math/formulas/pnl';
+import { compose } from '@/utils/fp';
+import { roundToDecimalPoint } from '@/helpers/number';
 
 const { t } = useI18n();
 
@@ -86,6 +88,9 @@ const {
 } = storeToRefs(marketStore);
 
 const commonPnl = computed(() => (
-  calculateCommonPnlForPeriod('month', closedOrders.value)
+  compose(
+    roundToDecimalPoint(2),
+    calculateCommonPnlForPeriod('month'),
+  )(closedOrders.value)
 ));
 </script>

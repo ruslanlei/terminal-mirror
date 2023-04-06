@@ -16,6 +16,10 @@ export { flatten, concat, repeat };
 
 export const arrayFrom = (value: any | any[]) => (Array.isArray(value) ? value : [value]);
 
+export const isArray = (
+  maybeArray: any,
+) => Array.isArray(maybeArray);
+
 export const { from: toArray } = Array;
 
 export const arrayOf = curry((

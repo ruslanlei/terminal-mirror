@@ -17,7 +17,7 @@
           keypath="common.currencyAmount"
         >
           <template #amount>
-            {{ displayValue }}
+            {{ commonPnl }}
           </template>
           <template #currency>
             <Typography
@@ -74,9 +74,11 @@ import StatisticsResultRow from '@/containers/statisticsResultRow/StatisticsResu
 import Avatar from '@/components/core/avatar/Avatar.vue';
 import Typography from '@/components/app/typography/Typography.vue';
 import { customFormatDate, dateNow, isDateWithinCurrentMonth } from '@/utils/date';
-import { isPositive } from '@/helpers/number';
+import { add, isPositive } from '@/helpers/number';
 import { toPositiveNumberString } from '@/utils/dom';
 import { useMarketStore } from '@/stores/market';
+import { calculatePnl } from '@/helpers/math/formulas/pnl';
+import { isOrderOfType } from '@/helpers/orders';
 
 const { t } = useI18n();
 
@@ -85,15 +87,21 @@ const {
   closedOrders,
 } = storeToRefs(marketStore);
 
-await marketStore.getClosedOrdersList();
+const commonPnl = computed(() => (
+  closedOrders.value
+  // FIXME: filter is not working. and fix orders
+    .filter((order) => (
+      isDateWithinCurrentMonth(order.modified) && isOrderOfType('limit', order)
+    ))
+    .map((order) => {
+      console.log(
+        order,
+      );
 
-const ordersWithinCurrentMonth = computed(() => closedOrders.value.filter((order) => {
-  console.log(
-    'check',
-    order.executed_at,
-  );
-  return isDateWithinCurrentMonth(order.executed_at);
-}));
+      return calculatePnl(order.price, order.quantity, order.executed_price);
+    })
+    .reduce((commonPnl, pnl) => add(commonPnl, pnl))
+));
 
 const testValue = -12.2223;
 const displayValue = computed(() => (

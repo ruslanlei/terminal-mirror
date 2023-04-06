@@ -5,7 +5,7 @@ import {
 import { Order, OrderStatus, SubOrder } from '@/api/types/order';
 import { calculateVolumeDifference } from '@/helpers/math/formulas/order';
 import { add } from '@/helpers/number';
-import { filter, reduce } from '@/utils/array';
+import { filter, isArray, reduce } from '@/utils/array';
 
 export const reduceSubOrderListToCommonPnl = curry((
   order: Order,
@@ -35,3 +35,12 @@ export const isExactOrder = curry((
   orderStatus: Order['status'],
   order: Order,
 ) => order.order_type === orderType && order.status === orderStatus);
+
+export const isOrderOfType = curry((
+  orderType: Order['order_type'] | Array<Order['order_type']>,
+  order: Order,
+) => (
+  isArray(orderType)
+    ? orderType.includes(order.order_type)
+    : order.order_type === orderType
+));

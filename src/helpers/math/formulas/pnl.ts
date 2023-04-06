@@ -10,13 +10,13 @@ import { toAbsolute } from '@/utils/number';
 export const calculatePnl = curry((
   orderPrice: number,
   quantity: number,
-  currentPrice: number,
+  closePrice: number,
 ) => compose(
   subtractRight(
     multiply(orderPrice, quantity),
   ),
   multiply,
-)(quantity, currentPrice));
+)(quantity, closePrice));
 
 export const calculatePnlPercent = curry((
   orderPrice: number,

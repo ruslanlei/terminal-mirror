@@ -27,11 +27,11 @@
       </Transition>
     </template>
     <template #content>
-      <KeepAlive>
-        <Transition
-          name="orderAndStatisticsTabContent"
-          mode="out-in"
-        >
+      <Transition
+        name="orderAndStatisticsTabContent"
+        mode="out-in"
+      >
+        <KeepAlive>
           <OrdersList
             v-if="isOrdersVisible"
             :key="activeTab"
@@ -42,8 +42,8 @@
             :key="activeTab"
             v-model:active-chapter="statisticsActiveTab"
           />
-        </Transition>
-      </KeepAlive>
+        </KeepAlive>
+      </Transition>
     </template>
   </OrdersAndStatisticsContainer>
 </template>

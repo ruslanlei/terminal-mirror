@@ -304,7 +304,10 @@ import { isPositive } from '@/helpers/number';
 import Badge from '@/components/core/badge/Badge.vue';
 import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
 import {
-  computed, onActivated, onBeforeUnmount, onDeactivated,
+  computed,
+  onActivated,
+  onBeforeUnmount,
+  onDeactivated,
 } from 'vue';
 import SubOrdersTable from '@/components/app/ordersList/subOrdersTable/SubOrdersTable.vue';
 import { useOrdersList } from '@/hooks/useOrdersList';

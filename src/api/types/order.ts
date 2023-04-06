@@ -22,6 +22,7 @@ export interface Order {
   cancelled_trade_id: number,
   canceled_at: string,
   canceled_price: number,
+  modified: string,
 }
 
 export interface SubOrder extends Order {

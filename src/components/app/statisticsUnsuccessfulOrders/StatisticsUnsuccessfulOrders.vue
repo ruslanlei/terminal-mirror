@@ -5,7 +5,7 @@
         size="h3"
         :state="['danger', 'bold']"
       >
-        42
+        {{ unsuccessfulOrdersAmount }}
       </Typography>
     </template>
     <template #primaryInfoTop>
@@ -18,7 +18,7 @@
     </template>
     <template #primaryInfoBottom>
       <Typography
-        size="title6"
+        size="title7"
         :state="['accent2', 'medium']"
       >
         <i18n-t keypath="statistics.orders.unsuccessful.averageIncome">
@@ -27,7 +27,7 @@
               is-inline
               state="accent1"
             >
-              9%
+              {{ averageLoss }}
             </Typography>
           </template>
         </i18n-t>
@@ -53,8 +53,36 @@ import StatisticsResultRow from '@/containers/statisticsResultRow/StatisticsResu
 import { useI18n } from 'vue-i18n';
 import Typography from '@/components/app/typography/Typography.vue';
 import CoinLogo from '@/components/core/coinLogo/CoinLogo.vue';
+import { computed } from 'vue';
+import { compose } from '@/utils/fp';
+import { toCssPercentValue } from '@/utils/dom';
+import { roundToDecimalPoint } from '@/helpers/number';
+import { calculateAverageIncome, calculateAverageLoss, filterOrdersByType } from '@/helpers/orders';
+import { useMarketStore } from '@/stores/market';
+import { storeToRefs } from 'pinia';
+import { getFailedOrdersLength, getSuccessOrdersAmount } from '@/helpers/math/formulas/pnl';
 
 const { t } = useI18n();
+
+const marketStore = useMarketStore();
+const {
+  closedOrders,
+} = storeToRefs(marketStore);
+
+const unsuccessfulOrdersAmount = computed(() => (
+  compose(
+    getFailedOrdersLength,
+    filterOrdersByType('limit'),
+  )(closedOrders.value)
+));
+
+const averageLoss = computed(() => (
+  compose(
+    toCssPercentValue,
+    roundToDecimalPoint(2),
+    calculateAverageLoss,
+  )(closedOrders.value)
+));
 </script>
 
 <style lang="scss" module>

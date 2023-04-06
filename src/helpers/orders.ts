@@ -1,11 +1,14 @@
 import {
   compose,
-  curry,
+  curry, log,
 } from '@/utils/fp';
 import { Order, OrderStatus, SubOrder } from '@/api/types/order';
 import { calculateVolumeDifference } from '@/helpers/math/formulas/order';
-import { add } from '@/helpers/number';
-import { filter, isArray, reduce } from '@/utils/array';
+import { add, divideRight } from '@/helpers/number';
+import {
+  filter, getLength, isArray, reduce,
+} from '@/utils/array';
+import { calculateCommonPnlPercent, calculatePnl } from '@/helpers/math/formulas/pnl';
 
 export const reduceSubOrderListToCommonPnl = curry((
   order: Order,
@@ -57,4 +60,40 @@ export const filterOrdersByType = curry(
       orders,
     )
   ),
+);
+
+export const calculateAverageIncome = (
+  orders: Order[],
+) => (
+  compose(
+    divideRight(
+      getLength(orders),
+    ),
+    calculateCommonPnlPercent,
+    filter(
+      (order: Order) => (
+        isOrderOfType('limit', order) && (
+          calculatePnl(order.price, order.quantity, order.executed_price) >= 0
+        )
+      ),
+    ),
+  )(orders)
+);
+
+export const calculateAverageLoss = (
+  orders: Order[],
+) => (
+  compose(
+    divideRight(
+      getLength(orders),
+    ),
+    calculateCommonPnlPercent,
+    filter(
+      (order: Order) => (
+        isOrderOfType('limit', order) && (
+          calculatePnl(order.price, order.quantity, order.executed_price) < 0
+        )
+      ),
+    ),
+  )(orders)
 );

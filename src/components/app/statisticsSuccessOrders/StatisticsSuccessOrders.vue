@@ -18,7 +18,7 @@
     </template>
     <template #primaryInfoBottom>
       <Typography
-        size="title6"
+        size="title7"
         :state="['accent2', 'medium']"
       >
         <i18n-t keypath="statistics.orders.success.averageIncome">
@@ -57,11 +57,10 @@ import { useMarketStore } from '@/stores/market';
 import { storeToRefs } from 'pinia';
 import { computed } from 'vue';
 import { compose } from '@/utils/fp';
-import { filterOrdersByType } from '@/helpers/orders';
-import { calculateCommonPnlPercent, calculatePnlPercent, getSuccessOrdersAmount } from '@/helpers/math/formulas/pnl';
-import { map } from '@/utils/array';
+import { calculateAverageIncome, filterOrdersByType } from '@/helpers/orders';
+import { getSuccessOrdersAmount } from '@/helpers/math/formulas/pnl';
 import { toCssPercentValue } from '@/utils/dom';
-import { divideRight, roundToDecimalPoint } from '@/helpers/number';
+import { roundToDecimalPoint } from '@/helpers/number';
 
 const { t } = useI18n();
 
@@ -81,9 +80,7 @@ const averageIncome = computed(() => (
   compose(
     toCssPercentValue,
     roundToDecimalPoint(2),
-    divideRight(closedOrders.value.length),
-    calculateCommonPnlPercent,
-    filterOrdersByType('limit'),
+    calculateAverageIncome,
   )(closedOrders.value)
 ));
 </script>

@@ -79,7 +79,7 @@ const unsuccessfulOrdersAmount = computed(() => (
 const averageLoss = computed(() => (
   compose(
     toCssPercentValue,
-    roundToDecimalPoint(2),
+    roundToDecimalPoint(0),
     calculateAverageLoss,
   )(closedOrders.value)
 ));

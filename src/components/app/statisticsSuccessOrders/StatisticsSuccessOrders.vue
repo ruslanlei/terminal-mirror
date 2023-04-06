@@ -79,7 +79,7 @@ const successOrdersAmount = computed(() => (
 const averageIncome = computed(() => (
   compose(
     toCssPercentValue,
-    roundToDecimalPoint(2),
+    roundToDecimalPoint(0),
     calculateAverageIncome,
   )(closedOrders.value)
 ));

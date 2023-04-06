@@ -27,7 +27,7 @@
               is-inline
               state="accent1"
             >
-              91%
+              {{ averageIncome }}
             </Typography>
           </template>
         </i18n-t>
@@ -40,8 +40,28 @@
 import StatisticsResultRow from '@/containers/statisticsResultRow/StatisticsResultRow.vue';
 import Typography from '@/components/app/typography/Typography.vue';
 import { useI18n } from 'vue-i18n';
+import { computed } from 'vue';
+import { compose } from '@/utils/fp';
+import { toCssPercentValue } from '@/utils/dom';
+import { roundToDecimalPoint } from '@/helpers/number';
+import { calculateAverageIncome } from '@/helpers/orders';
+import { useMarketStore } from '@/stores/market';
+import { storeToRefs } from 'pinia';
 
 const { t } = useI18n();
+
+const marketStore = useMarketStore();
+const {
+  closedOrders,
+} = storeToRefs(marketStore);
+
+const averageIncome = computed(() => (
+  compose(
+    toCssPercentValue,
+    roundToDecimalPoint(0),
+    calculateAverageIncome,
+  )(closedOrders.value)
+));
 </script>
 
 <style lang="scss" module>

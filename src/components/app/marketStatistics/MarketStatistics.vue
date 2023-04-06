@@ -17,9 +17,10 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useLocalValue } from '@/hooks/useLocalValue';
+import { useMarketStore } from '@/stores/market';
 import MarketCommonStatistics from '@/components/app/marketCommonStatistics/MarketCommonStatistics.vue';
 import MarketOrderStatistics from '@/components/app/marketOrdersStatistics/MarketOrderStatistics.vue';
-import { useMarketStore } from '@/stores/market';
+import { isEqual } from '@/utils/boolean';
 import { MarketStatisticsEmits, MarketStatisticsProps } from './index';
 
 const props = withDefaults(
@@ -34,10 +35,11 @@ const emit = defineEmits<MarketStatisticsEmits>();
 const localActiveChapter = useLocalValue(props, emit, 'activeChapter');
 
 const isCommonStatisticsVisible = computed(() => (
-  localActiveChapter.value === 'common'
+  isEqual(localActiveChapter.value, 'common')
 ));
+
 const isOrderStatisticsVisible = computed(() => (
-  localActiveChapter.value === 'orders'
+  isEqual(localActiveChapter.value, 'orders')
 ));
 
 const marketStore = useMarketStore();

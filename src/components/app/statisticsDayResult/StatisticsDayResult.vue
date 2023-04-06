@@ -17,7 +17,7 @@
           keypath="common.currencyAmount"
         >
           <template #amount>
-            {{ displayValue }}
+            {{ commonPnl }}
           </template>
           <template #currency>
             <Typography
@@ -71,17 +71,32 @@ import StatisticsResultRow from '@/containers/statisticsResultRow/StatisticsResu
 import Avatar from '@/components/core/avatar/Avatar.vue';
 import { useI18n } from 'vue-i18n';
 import Typography from '@/components/app/typography/Typography.vue';
-import { customFormatDate, dateNow } from '@/utils/date';
+import {
+  isDateWithinCurrentDay,
+} from '@/utils/date';
 import { computed } from 'vue';
-import { isPositive } from '@/helpers/number';
-import { toPositiveNumberString } from '../../../utils/dom';
+import { add } from '@/helpers/number';
+import { useMarketStore } from '@/stores/market';
+import { storeToRefs } from 'pinia';
+import { isOrderOfType } from '@/helpers/orders';
+import { calculatePnl } from '@/helpers/math/formulas/pnl';
+import { toPositiveNumberString } from '@/utils/dom';
 
 const { t } = useI18n();
 
-const testValue = -135;
-const displayValue = computed(() => (
-  isPositive(testValue)
-    ? toPositiveNumberString(testValue)
-    : String(testValue)
+const marketStore = useMarketStore();
+const {
+  closedOrders,
+} = storeToRefs(marketStore);
+
+const commonPnl = computed(() => (
+  closedOrders.value
+    .filter((order) => (
+      isDateWithinCurrentDay(order.modified) && isOrderOfType('limit', order)
+    ))
+    .map((order) => (
+      calculatePnl(order.price, order.quantity, order.executed_price)
+    ))
+    .reduce((commonPnl, pnl) => add(commonPnl, pnl))
 ));
 </script>

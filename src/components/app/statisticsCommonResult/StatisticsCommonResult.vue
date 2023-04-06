@@ -21,7 +21,7 @@
           keypath="common.currencyAmount"
         >
           <template #amount>
-            {{ displayValue }}
+            {{ commonPnl }}
           </template>
           <template #currency>
             <Typography
@@ -88,21 +88,39 @@ import { useI18n } from 'vue-i18n';
 import Typography from '@/components/app/typography/Typography.vue';
 import Icon from '@/components/core/icon/Icon.vue';
 import { computed } from 'vue';
-import { isPositive, roundToDecimalPoint } from '@/helpers/number';
+import { add, isPositive, roundToDecimalPoint } from '@/helpers/number';
 import { toPositiveNumberString } from '@/utils/dom';
 import { useEmulatorStore } from '@/stores/emulator';
+import { isDateWithinCurrentMonth } from '@/utils/date';
+import { isOrderOfType } from '@/helpers/orders';
+import { calculatePnl } from '@/helpers/math/formulas/pnl';
+import { useMarketStore } from '@/stores/market';
+import { storeToRefs } from 'pinia';
 
 const { t } = useI18n();
 
 const emulatorStore = useEmulatorStore();
 
+const marketStore = useMarketStore();
+const {
+  closedOrders,
+} = storeToRefs(marketStore);
+
 const displayBalance = computed(() => roundToDecimalPoint(2, emulatorStore.balance));
 
-const testValue = 16826.3;
-const displayValue = computed(() => (
-  isPositive(testValue)
-    ? toPositiveNumberString(testValue)
-    : String(testValue)
+const commonPnl = computed(() => (
+  closedOrders.value
+    .filter((order) => (
+      isOrderOfType('limit', order)
+    ))
+    .map((order) => (
+      calculatePnl(
+        order.price,
+        order.quantity,
+        order.executed_price,
+      )
+    ))
+    .reduce((commonPnl, pnl) => add(commonPnl, pnl))
 ));
 
 const commonTopUp = computed(() => 10826.3);

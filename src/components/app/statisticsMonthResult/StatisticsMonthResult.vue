@@ -74,7 +74,7 @@ import StatisticsResultRow from '@/containers/statisticsResultRow/StatisticsResu
 import Avatar from '@/components/core/avatar/Avatar.vue';
 import Typography from '@/components/app/typography/Typography.vue';
 import { customFormatDate, dateNow, isDateWithinCurrentMonth } from '@/utils/date';
-import { add, isPositive } from '@/helpers/number';
+import { add } from '@/helpers/number';
 import { toPositiveNumberString } from '@/utils/dom';
 import { useMarketStore } from '@/stores/market';
 import { calculatePnl } from '@/helpers/math/formulas/pnl';
@@ -89,24 +89,12 @@ const {
 
 const commonPnl = computed(() => (
   closedOrders.value
-  // FIXME: filter is not working. and fix orders
     .filter((order) => (
       isDateWithinCurrentMonth(order.modified) && isOrderOfType('limit', order)
     ))
-    .map((order) => {
-      console.log(
-        order,
-      );
-
-      return calculatePnl(order.price, order.quantity, order.executed_price);
-    })
+    .map((order) => (
+      calculatePnl(order.price, order.quantity, order.executed_price)
+    ))
     .reduce((commonPnl, pnl) => add(commonPnl, pnl))
-));
-
-const testValue = -12.2223;
-const displayValue = computed(() => (
-  isPositive(testValue)
-    ? toPositiveNumberString(testValue)
-    : String(testValue)
 ));
 </script>

@@ -90,3 +90,15 @@ export const isDateWithinCurrentMonth = (
 ) => (
   dayjs(date).isSame(new Date(), 'month')
 );
+
+export const isDateWithinCurrentDay = (
+  date: DateValue,
+) => (
+  dayjs(date).isSame(new Date(), 'day')
+);
+
+export const isDateWithinCurrentWeek = (
+  date: DateValue,
+) => (
+  dayjs(date).isSame(new Date(), 'week')
+);

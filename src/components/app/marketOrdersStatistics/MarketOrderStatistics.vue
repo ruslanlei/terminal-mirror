@@ -35,13 +35,8 @@ import StatisticsSuccessOrders from '@/components/app/statisticsSuccessOrders/St
 import StatisticsFailedOrders
   from '@/components/app/statisticsFailedOrders/StatisticsFailedOrders.vue';
 import StatisticsTurnover from '@/components/app/statisticsTurnover/StatisticsTurnover.vue';
-import { Order } from '@/api/types/order';
 import { compose } from '@/utils/fp';
-import { Maybe } from '@/utils/functors';
-import { getSuccessOrders } from '@/helpers/math/formulas/pnl';
-import { getLength } from '@/utils/array';
-import { filterOrdersByType } from '@/helpers/orders';
-import { divideRight, multiply, roundToDecimalPoint } from '@/helpers/number';
+import { calculateSuccessRate } from '@/helpers/orders';
 import { toCssPercentValue } from '@/utils/dom';
 
 const { t } = useI18n();
@@ -54,25 +49,6 @@ const {
 const commonAmountOfTransactions = computed(() => (
   closedOrders.value.length
 ));
-
-const calculateSuccessRate = (
-  orders: Order[],
-) => Maybe.of(orders)
-  .map(compose(
-    getLength,
-    getSuccessOrders,
-    filterOrdersByType('limit'),
-  ))
-  .chain(compose(
-    roundToDecimalPoint(2),
-    multiply(100),
-    divideRight(
-      compose(
-        getLength,
-        filterOrdersByType('limit'),
-      )(orders),
-    ),
-  ));
 
 const successRate = computed(() => (
   compose(

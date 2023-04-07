@@ -4,14 +4,17 @@ import {
 } from '@/utils/fp';
 import { Order, OrderStatus, SubOrder } from '@/api/types/order';
 import { calculateVolumeDifference } from '@/helpers/math/formulas/order';
-import { add, divideRight } from '@/helpers/number';
+import {
+  add, divideRight, multiply, roundToDecimalPoint,
+} from '@/helpers/number';
 import {
   countBy,
   filter, getLength, isArray, map, reduce,
 } from '@/utils/array';
-import { calculateCommonPnlPercent, calculatePnl } from '@/helpers/math/formulas/pnl';
+import { calculateCommonPnlPercent, calculatePnl, getSuccessOrders } from '@/helpers/math/formulas/pnl';
 import { PairsMap } from '@/hooks/usePairs';
 import { getKeyWithBiggestValue } from '@/utils/object';
+import { Maybe } from '@/utils/functors';
 
 export const reduceSubOrderListToCommonPnl = curry((
   order: Order,
@@ -117,3 +120,22 @@ export const findMostFrequentCoin = curry(
     )(orders)
   ),
 );
+
+export const calculateSuccessRate = (
+  orders: Order[],
+) => Maybe.of(orders)
+  .map(compose(
+    getLength,
+    getSuccessOrders,
+    filterOrdersByType('limit'),
+  ))
+  .chain(compose(
+    roundToDecimalPoint(2),
+    multiply(100),
+    divideRight(
+      compose(
+        getLength,
+        filterOrdersByType('limit'),
+      )(orders),
+    ),
+  ));

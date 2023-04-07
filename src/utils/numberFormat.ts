@@ -13,8 +13,3 @@ export const percentFormat = curry((
 ) => numeral(
   divide(number, 100),
 ).format(decimals ? `0.${repeat('0', decimals)}%` : '0%').toUpperCase());
-
-export const {
-  abs: toAbsolute,
-  round: roundNumber,
-} = Math;

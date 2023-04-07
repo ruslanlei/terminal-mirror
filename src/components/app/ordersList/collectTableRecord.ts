@@ -9,7 +9,7 @@ import {
   StopLoss,
   Order,
 } from '@/api/types/order';
-import { isPositive, multiply, roundToDecimalPoint } from '@/utils/number';
+import {isPositive, multiply, roundToDecimalPoint, toAbsolute} from '@/utils/number';
 import { calculatePercentOfDifference } from '@/helpers/math/percents';
 import { calculatePnl, calculatePnlPercent } from '@/helpers/math/formulas/pnl';
 import { calculateCommonTakeProfitPercent } from '@/helpers/math/formulas/takeProfit';
@@ -19,7 +19,6 @@ import { SubOrderTableItem } from '@/components/app/ordersList/subOrdersTable';
 import { collectTableRecord } from '@/components/core/table/helpers';
 import { getOrdersWithStatus, reduceSubOrderListToCommonPnl } from '@/helpers/orders';
 import { TableRowState } from '@/components/core/table/tableRow';
-import { toAbsolute } from '@/utils/numberFormat';
 
 interface CollectRecordPayload {
   pairData: Pair,

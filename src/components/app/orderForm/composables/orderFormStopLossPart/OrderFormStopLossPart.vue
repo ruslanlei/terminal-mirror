@@ -103,10 +103,9 @@ import OrderFormEstimates from '@/components/app/orderForm/composables/orderForm
 import Button from '@/components/core/button/Button.vue';
 import { useMarketStore } from '@/stores/market';
 import { compose } from '@/utils/fp';
-import { toAbsolute } from '@/utils/numberFormat';
 import { useEmulatorStore } from '@/stores/emulator';
 import { injectOrderFormState } from '@/components/app/orderForm';
-import { roundToDecimalPoint } from '@/utils/number';
+import {roundToDecimalPoint, toAbsolute} from '@/utils/number';
 import {
   calculateOriginalPriceByVolumeDecrease, calculateOriginalPriceByVolumeIncrease,
   calculateVolumeDifference,

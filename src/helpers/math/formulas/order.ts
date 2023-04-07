@@ -8,9 +8,8 @@ import {
   divideRight,
   multiply,
   subtract,
-  subtractRight,
+  subtractRight, toAbsolute,
 } from '@/utils/number';
-import { toAbsolute } from '@/utils/numberFormat';
 import { Maybe } from '@/utils/functors';
 
 export const calculateRisk = curry((

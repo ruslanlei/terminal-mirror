@@ -2,10 +2,9 @@ import { compose, curry, log } from '@/utils/fp';
 import {
   add,
   multiply, roundToDecimalPoint,
-  subtractRight,
+  subtractRight, toAbsolute,
 } from '@/utils/number';
 import { calculatePercentOfDifference } from '@/helpers/math/percents';
-import { toAbsolute } from '@/utils/numberFormat';
 import { Order } from '@/api/types/order';
 import { isDateWithinCurrentDay, isDateWithinCurrentMonth, isDateWithinCurrentWeek } from '@/utils/date';
 import { Maybe } from '@/utils/functors';

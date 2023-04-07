@@ -28,10 +28,9 @@ import { useLocalValue } from '@/hooks/useLocalValue';
 import { awaitFrame } from '@/utils/window';
 import {
   add,
-  divide, divideRight, multiply, subtract, subtractRight,
+  divide, divideRight, multiply, roundNumber, subtract, subtractRight,
 } from '@/utils/number';
 import { compose } from '@/utils/fp';
-import { roundNumber } from '@/utils/numberFormat';
 import { getRect } from '@/helpers/style';
 import { RangeSliderEmits, RangeSliderProps } from './index';
 

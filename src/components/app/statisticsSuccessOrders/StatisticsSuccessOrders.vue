@@ -59,7 +59,6 @@ import { useMarketStore } from '@/stores/market';
 import { compose } from '@/utils/fp';
 import { calculateAverageIncome, filterOrdersByType, findMostFrequentCoin } from '@/helpers/orders';
 import { getSuccessOrders } from '@/helpers/math/formulas/pnl';
-import { toCssPercentValue } from '@/utils/dom';
 import { roundToDecimalPoint } from '@/helpers/number';
 import { getLength } from '@/utils/array';
 
@@ -80,7 +79,6 @@ const successOrdersAmount = computed(() => (
 
 const averageIncome = computed(() => (
   compose(
-    toCssPercentValue,
     roundToDecimalPoint(0),
     calculateAverageIncome,
   )(closedOrders.value)

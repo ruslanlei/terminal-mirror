@@ -5,7 +5,7 @@
         size="h3"
         :state="['accent1', 'bold']"
       >
-        {{ t('common.currencyAmount', { amount: 120000, currency: '$' }) }}
+        {{ t('common.currencyAmount', { amount: turnover, currency: '$' }) }}
       </Typography>
     </template>
     <template #primaryInfoTop>
@@ -42,11 +42,12 @@ import Typography from '@/components/app/typography/Typography.vue';
 import { useI18n } from 'vue-i18n';
 import { computed } from 'vue';
 import { compose } from '@/utils/fp';
-import { toCssPercentValue } from '@/utils/dom';
-import { roundToDecimalPoint } from '@/helpers/number';
+import { add, multiply, roundToDecimalPoint } from '@/helpers/number';
 import { calculateAverageIncome } from '@/helpers/orders';
 import { useMarketStore } from '@/stores/market';
 import { storeToRefs } from 'pinia';
+import { reduce } from '@/utils/array';
+import { Order } from '@/api/types/order';
 
 const { t } = useI18n();
 
@@ -55,15 +56,25 @@ const {
   closedOrders,
 } = storeToRefs(marketStore);
 
+const turnover = computed(() => (
+  compose(
+    roundToDecimalPoint(2),
+    reduce(
+      (commonVolume: number, order: Order) => (
+        compose(
+          add(commonVolume),
+          multiply(order.quantity),
+        )(order.price)
+      ),
+      0,
+    ),
+  )(closedOrders.value)
+));
+
 const averageIncome = computed(() => (
   compose(
-    toCssPercentValue,
     roundToDecimalPoint(0),
     calculateAverageIncome,
   )(closedOrders.value)
 ));
 </script>
-
-<style lang="scss" module>
-
-</style>

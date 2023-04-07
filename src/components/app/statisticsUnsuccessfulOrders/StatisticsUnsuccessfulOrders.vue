@@ -55,7 +55,6 @@ import Typography from '@/components/app/typography/Typography.vue';
 import CoinLogo from '@/components/core/coinLogo/CoinLogo.vue';
 import { computed } from 'vue';
 import { compose } from '@/utils/fp';
-import { toCssPercentValue } from '@/utils/dom';
 import { roundToDecimalPoint } from '@/helpers/number';
 import { calculateAverageLoss, filterOrdersByType, findMostFrequentCoin } from '@/helpers/orders';
 import { useMarketStore } from '@/stores/market';
@@ -80,7 +79,6 @@ const unsuccessfulOrdersAmount = computed(() => (
 
 const averageLoss = computed(() => (
   compose(
-    toCssPercentValue,
     roundToDecimalPoint(0),
     calculateAverageLoss,
   )(closedOrders.value)

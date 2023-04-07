@@ -76,6 +76,4 @@ const successRate = computed(() => (
     calculateSuccessRate,
   )(closedOrders.value)
 ));
-
-console.log(closedOrders.value);
 </script>

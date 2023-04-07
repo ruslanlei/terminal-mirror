@@ -1,6 +1,6 @@
 <template>
   <BarChart
-    :data="demoData"
+    :data="computedData"
     :bar-label-formatter="labelFormatter"
   />
 </template>
@@ -20,6 +20,7 @@ import { groupBy, objectEntries } from '@/utils/object';
 import { roundToDecimalPoint } from '@/utils/number';
 import { calculateCommonPnl } from '@/helpers/math/formulas/pnl';
 import { Maybe } from '@/utils/functors';
+import { computed, watch } from 'vue';
 
 const { t } = useI18n();
 
@@ -28,22 +29,7 @@ const {
   closedOrders,
 } = storeToRefs(marketStore);
 
-const demoData = [
-  ['jan', -4000],
-  ['feb', -231],
-  ['mar', -779],
-  ['apr', 1479],
-  ['may', 2512],
-  ['jun', 1267],
-  ['jul', 800],
-  ['aug', 495],
-  ['sep', 23],
-  ['oct', 597],
-  ['nov', 100],
-  ['dec', 4788],
-];
-
-const calculatePnlByMonths = (orders: Order[]) => (
+const groupPnlByMonths = (orders: Order[]) => (
   compose(
     map(
       ([
@@ -66,7 +52,7 @@ const calculatePnlByMonths = (orders: Order[]) => (
   )(orders)
 );
 
-console.log(
+const computedData = computed(() => (
   Maybe.of(closedOrders.value)
     .map<Order[]>((orders: Order[]) => (
       compose(
@@ -74,8 +60,12 @@ console.log(
         filterOrdersByType('limit'),
       )(orders) as Order[]
     ))
-    .chain(calculatePnlByMonths),
-);
+    .chain(groupPnlByMonths)
+));
+
+watch(computedData, () => {
+  console.log(computedData);
+}, { immediate: true });
 
 // customFormatDate('MMM' /* TODO: 'MMM YYYY' if jan */, order.executed_at)
 

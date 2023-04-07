@@ -5,7 +5,7 @@
         size="h3"
         :state="['danger', 'bold']"
       >
-        {{ unsuccessfulOrdersAmount }}
+        {{ failedOrdersAmount }}
       </Typography>
     </template>
     <template #primaryInfoTop>
@@ -13,7 +13,7 @@
         :state="['danger', 'bold']"
         size="title5"
       >
-        {{ t('statistics.orders.unsuccessful.label') }}
+        {{ t('statistics.orders.failed.label') }}
       </Typography>
     </template>
     <template #primaryInfoBottom>
@@ -21,7 +21,7 @@
         size="title7"
         :state="['accent2', 'medium']"
       >
-        <i18n-t keypath="statistics.orders.unsuccessful.averageIncome">
+        <i18n-t keypath="statistics.orders.failed.averageIncome">
           <template #value>
             <Typography
               is-inline
@@ -40,7 +40,7 @@
           :state="['accent2', 'medium', 'alignRight']"
           :class="$style.popularCoinLabel"
         >
-          {{ t('statistics.orders.unsuccessful.popularCoin') }}
+          {{ t('statistics.orders.failed.popularCoin') }}
         </Typography>
         <CoinLogo :coin="mostFrequentCoin" />
       </div>
@@ -69,7 +69,7 @@ const {
   closedOrders,
 } = storeToRefs(marketStore);
 
-const unsuccessfulOrdersAmount = computed(() => (
+const failedOrdersAmount = computed(() => (
   compose(
     getLength,
     getFailedOrders,

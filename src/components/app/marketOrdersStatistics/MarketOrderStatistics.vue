@@ -16,7 +16,7 @@
       <StatisticsSuccessOrders />
     </template>
     <template #unsuccessfulOrders>
-      <StatisticsUnsuccessfulOrders />
+      <StatisticsFailedOrders />
     </template>
     <template #ordersTurnover>
       <StatisticsTurnover />
@@ -32,11 +32,11 @@ import { useMarketStore } from '@/stores/market';
 import MarketOrderStatisticsContainer
   from '@/containers/marketOrderStatisticsContainer/MarketOrderStatisticsContainer.vue';
 import StatisticsSuccessOrders from '@/components/app/statisticsSuccessOrders/StatisticsSuccessOrders.vue';
-import StatisticsUnsuccessfulOrders
-  from '@/components/app/statisticsUnsuccessfulOrders/StatisticsUnsuccessfulOrders.vue';
+import StatisticsFailedOrders
+  from '@/components/app/statisticsFailedOrders/StatisticsFailedOrders.vue';
 import StatisticsTurnover from '@/components/app/statisticsTurnover/StatisticsTurnover.vue';
 import { Order } from '@/api/types/order';
-import { compose, log } from '@/utils/fp';
+import { compose } from '@/utils/fp';
 import { Maybe } from '@/utils/functors';
 import { getSuccessOrders } from '@/helpers/math/formulas/pnl';
 import { getLength } from '@/utils/array';
@@ -63,11 +63,9 @@ const calculateSuccessRate = (
     getLength,
     getSuccessOrders,
   ))
-  .chain((successOrdersAmount: number) => (
-    compose(
-      multiply(100),
-      divideRight(getLength(orders)),
-    )(successOrdersAmount)
+  .chain(compose(
+    multiply(100),
+    divideRight(getLength(orders)),
   ));
 
 const successRate = computed(() => (

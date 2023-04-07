@@ -63,8 +63,8 @@ const turnover = computed(() => (
       (commonVolume: number, order: Order) => (
         compose(
           add(commonVolume),
-          multiply(order.quantity),
-        )(order.price)
+          multiply,
+        )(order.price, order.quantity)
       ),
       0,
     ),

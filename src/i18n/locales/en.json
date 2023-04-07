@@ -662,7 +662,7 @@
         "averageIncome": "Average income {value}",
         "popularCoin": "Popular coin in orders"
       },
-      "unsuccessful": {
+      "failed": {
         "label": "Unsuccessful transactions",
         "averageIncome": "Average loss {value}",
         "popularCoin": "Popular coin in orders"

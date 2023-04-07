@@ -21,6 +21,7 @@ import { roundToDecimalPoint } from '@/utils/number';
 import { calculateCommonPnl } from '@/helpers/math/formulas/pnl';
 import { Maybe } from '@/utils/functors';
 import { computed, watch } from 'vue';
+import { BarChartData } from '@/components/core/barChart/createBarChart';
 
 const { t } = useI18n();
 
@@ -49,8 +50,17 @@ const groupPnlByMonths = (orders: Order[]) => (
     groupBy((order: Order) => (
       getMonthIndex(order.modified)
     )),
-  )(orders)
+  )(orders) as BarChartData
 );
+
+const fillMissedMonths = (
+  data: BarChartData,
+) => {
+  // implement this
+  console.log(data);
+
+  return data;
+};
 
 const computedData = computed(() => (
   Maybe.of(closedOrders.value)
@@ -60,11 +70,12 @@ const computedData = computed(() => (
         filterOrdersByType('limit'),
       )(orders) as Order[]
     ))
-    .chain(groupPnlByMonths)
+    .map<BarChartData>(groupPnlByMonths)
+    .chain(fillMissedMonths)
 ));
 
 watch(computedData, () => {
-  console.log(computedData);
+  console.log(computedData.value);
 }, { immediate: true });
 
 // customFormatDate('MMM' /* TODO: 'MMM YYYY' if jan */, order.executed_at)

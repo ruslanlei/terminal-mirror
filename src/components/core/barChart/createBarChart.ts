@@ -8,7 +8,7 @@ import {
   Selection,
 } from 'd3';
 import { multiply, toAbsolute } from '@/utils/number';
-import { toCssPixelValue } from '@/utils/style';
+import { toCssPxValue } from '@/utils/style';
 
 export type BarChartDataElement = [string, number];
 export type BarChartData = BarChartDataElement[];
@@ -69,7 +69,7 @@ const createXAxis = ({
     .call(
       (g) => g
         .selectAll('.tick text')
-        .style('font-size', toCssPixelValue(tickFontSize))
+        .style('font-size', toCssPxValue(tickFontSize))
         .style('font-weight', '500')
         .style('color', tickColor),
     );

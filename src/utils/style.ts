@@ -8,10 +8,6 @@ export const getCssRgbColor = (
   variable: string,
 ) => `rgb(${getCssVariable(variable)})`;
 
-export const toCssPixelValue = (
-  value: string | number,
-) => `${value}px`;
-
 export const toCssClassSelector = (
   value: string | number,
 ) => `.${value}`;

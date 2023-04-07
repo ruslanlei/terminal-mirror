@@ -28,7 +28,7 @@ import { compose } from '@/utils/fp';
 import { roundToDecimalPoint } from '@/utils/number';
 import { useMarketStore } from '@/stores/market';
 import { awaitTimeout } from '@/utils/promise';
-import { toCssPixelValue, toIdSelector } from '@/utils/style';
+import { toCssPxValue, toIdSelector } from '@/utils/style';
 
 const marketStore = useMarketStore();
 const emulatorStore = useEmulatorStore();
@@ -51,14 +51,14 @@ const hideOrder = async (orderId: Order['id']) => {
     addCssProperty([
       'width',
       compose(
-        toCssPixelValue,
+        toCssPxValue,
         roundToDecimalPoint(2),
       )(toastRect.width),
     ]),
     addCssProperty([
       'height',
       compose(
-        toCssPixelValue,
+        toCssPxValue,
         roundToDecimalPoint(2),
       )(toastRect.height),
     ]),

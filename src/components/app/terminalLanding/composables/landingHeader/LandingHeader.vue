@@ -1,5 +1,5 @@
 <template>
-  <header :class="$style.header">
+  <header :class="[$style.header, $style[state]]">
     <Logo
       shape="square"
       size="lg"
@@ -54,7 +54,12 @@ import { TerminalLandingHeaderEmits, TerminalLandingHeaderProps } from './index'
 
 const { t } = useI18n();
 
-const props = defineProps<TerminalLandingHeaderProps>();
+const props = withDefaults(
+  defineProps<TerminalLandingHeaderProps>(),
+  {
+    state: 'filled',
+  },
+);
 
 const emit = defineEmits<TerminalLandingHeaderEmits>();
 
@@ -72,6 +77,12 @@ const setActiveChapter = (
   padding: 38px 100px;
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
+  border-bottom: 2px solid transparent;
+  transition: background-color 200ms, border-color 200ms;
+}
+
+.filled {
+  background-color: rgb(var(--color-background-1));
   border-bottom: 2px solid rgba(var(--color-accent-2), 0.1);
 }
 

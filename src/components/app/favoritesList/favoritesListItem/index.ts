@@ -1,7 +1,7 @@
-import { PairData } from '@/api/types/pair';
+import { Pair } from '@/api/types/pair';
 
 export interface FavoritesListItemProps {
-    pairData: PairData,
+    pairData: Pair,
 
     last24HoursPercentChange: number | null,
     isActive?: boolean,

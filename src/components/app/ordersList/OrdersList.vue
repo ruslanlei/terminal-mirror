@@ -300,18 +300,21 @@ import InlineSpace from '@/components/core/inlineSpace/InlineSpace.vue';
 import CoinLogo from '@/components/core/coinLogo/CoinLogo.vue';
 import ListSkeleton from '@/components/app/listSkeleton/ListSkeleton.vue';
 import Icon from '@/components/core/icon/Icon.vue';
-import { isPositive } from '@/helpers/number';
+import { isPositive } from '@/utils/number';
 import Badge from '@/components/core/badge/Badge.vue';
 import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
 import {
-  computed, onActivated, onBeforeUnmount, onDeactivated,
+  computed,
+  onActivated,
+  onBeforeUnmount,
+  onDeactivated,
 } from 'vue';
 import SubOrdersTable from '@/components/app/ordersList/subOrdersTable/SubOrdersTable.vue';
 import { useOrdersList } from '@/hooks/useOrdersList';
 import Typography from '@/components/app/typography/Typography.vue';
 import OrdersListPlaceholder from '@/components/app/ordersList/OrdersListPlaceholder.vue';
 import CloseOrderButton from '@/components/app/closeOrderButton/CloseOrderButton.vue';
-import { toPositiveNumberString } from '@/utils/dom';
+import { toPositiveNumberString } from '@/utils/style';
 import { OrdersListProps } from './index';
 
 const props = withDefaults(

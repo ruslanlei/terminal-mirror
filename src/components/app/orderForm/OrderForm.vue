@@ -8,15 +8,27 @@
     <div
       :class="[
         $style.playerOverlay,
-        !emulatorStore.isPlaying && $style.hidden,
+        !showBlockingCap && $style.hidden,
       ]"
-      @click="emulatorStore.turnOffPlayer"
+      @click="onBlockingCapClick"
     >
-      <Typography
-        :text="t('emulator.player.orderInteractionsWarning')"
-        :state="['accent1', 'alignCenter', 'bold']"
-        size="title1"
-      />
+      <transition
+        mode="out-in"
+        name="orderFormCapTextTransition"
+      >
+        <Typography
+          v-if="isEmulatorPlaying"
+          :text="t('emulator.player.orderInteractionsWarning')"
+          :state="['accent1', 'alignCenter', 'bold']"
+          size="title1"
+        />
+        <Typography
+          v-else-if="isActiveOrdersForCurrentPairExists"
+          :text="t('emulator.player.orderExistsFormCap')"
+          :state="['accent1', 'alignCenter', 'bold']"
+          size="title1"
+        />
+      </transition>
     </div>
     <OrderFromContainer>
       <template
@@ -95,10 +107,10 @@ import { useOrderCreate } from '@/hooks/useOrderCreate';
 import { OrderFormInjectionKey, OrderFormTab } from '@/components/app/orderForm/index';
 import { Tab } from '@/components/core/tabs';
 
-import { divideRight, roundToDecimalPoint } from '@/helpers/number';
-import { compose } from '@/utils/fp';
 import Typography from '@/components/app/typography/Typography.vue';
 import { useEmulatorStore } from '@/stores/emulator';
+import { useMarketStore } from '@/stores/market';
+import { storeToRefs } from 'pinia';
 import OrderFormInputPart from './composables/orderFormInputPart/OrderFormInputPart.vue';
 import OrderFormTakeProfitPart from './composables/orderFormTakeProfitPart/OrderFormTakeProfitPart.vue';
 import OrderFormStopLossPart from './composables/orderFormStopLossPart/OrderFormStopLossPart.vue';
@@ -106,10 +118,23 @@ import OrderFormStopLossPart from './composables/orderFormStopLossPart/OrderForm
 const { t } = useI18n();
 
 const emulatorStore = useEmulatorStore();
+const {
+  isPlaying: isEmulatorPlaying,
+} = storeToRefs(emulatorStore);
+
+const marketStore = useMarketStore();
+const {
+  isActiveOrdersForCurrentPairExists,
+} = storeToRefs(marketStore);
 
 const settingsActiveTab = ref<OrderFormTab>('input');
 const openTab = (tab: OrderFormTab) => {
   settingsActiveTab.value = tab;
+};
+
+const onBlockingCapClick = () => {
+  if (!isEmulatorPlaying.value) return;
+  emulatorStore.turnOffPlayer();
 };
 
 const orderCreateState = useOrderCreate();
@@ -155,6 +180,13 @@ const settingsTabs = computed<Tab<OrderFormTab>[]>(() => [
     value: 'slx',
   },
 ]);
+
+const showBlockingCap = computed(
+  () => [
+    isEmulatorPlaying.value,
+    isActiveOrdersForCurrentPairExists.value,
+  ].some(Boolean),
+);
 </script>
 
 <style lang="scss" module>
@@ -201,5 +233,19 @@ const settingsTabs = computed<Tab<OrderFormTab>[]>(() => [
 
 .tab {
   height: 100%;
+}
+</style>
+
+<style lang="scss">
+.orderFormCapTextTransition {
+  &-enter-active,
+  &-leave-active {
+    transition: opacity 200ms;
+  }
+
+  &-enter-from,
+  &-leave-to {
+    opacity: 0;
+  }
 }
 </style>

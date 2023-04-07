@@ -20,19 +20,22 @@ import { nextTick, onBeforeUnmount, ref } from 'vue';
 import OrderEventToast from '@/components/core/orderEventToast/OrderEventToast.vue';
 import { useEmulatorStore } from '@/stores/emulator';
 import { Order } from '@/api/types/order';
-import { findAndDelete } from '@/helpers/array';
 import { collectOrderToastId, collectOrderToastWrapperId } from '@/components/app/orderEventsToastLayer/index';
 import { playAnimation } from '@/utils/animation';
-import { toCssPixelValue, toIdSelector } from '@/utils/dom';
+import { addCssProperty, getRect } from '@/utils/dom';
 import { compose } from '@/utils/fp';
-import { addCssProperty, getRect } from '@/helpers/style';
-import { roundToDecimalPoint } from '@/helpers/number';
+import { roundToDecimalPoint } from '@/utils/number';
+import { useMarketStore } from '@/stores/market';
+import { awaitTimeout } from '@/utils/promise';
+import { toCssPxValue, toIdSelector } from '@/utils/style';
+import { findAndDelete } from '@/utils/array';
 
+const marketStore = useMarketStore();
 const emulatorStore = useEmulatorStore();
 
 const orders = ref<Order[]>([]);
 
-const HIDE_ANIMATION_DURATION = 420;
+const HIDE_ANIMATION_DURATION = 300;
 
 const hideOrder = async (orderId: Order['id']) => {
   const toastWrapper = document.getElementById(collectOrderToastWrapperId(orderId));
@@ -48,14 +51,14 @@ const hideOrder = async (orderId: Order['id']) => {
     addCssProperty([
       'width',
       compose(
-        toCssPixelValue,
+        toCssPxValue,
         roundToDecimalPoint(2),
       )(toastRect.width),
     ]),
     addCssProperty([
       'height',
       compose(
-        toCssPixelValue,
+        toCssPxValue,
         roundToDecimalPoint(2),
       )(toastRect.height),
     ]),
@@ -85,14 +88,23 @@ const removeOrder = async (
   orderId: Order['id'],
 ) => {
   await hideOrder(orderId);
+
   findAndDelete(
     (iterableOrder: Order) => iterableOrder.id === orderId,
     orders.value,
   );
 };
 
-const unsubscribeSimulateEvent = emulatorStore.subscribeSimulateEvent(async (order: Order) => {
+const onOrderEvent = async (order: Order) => {
+  if (
+    orders.value.some((iterableOrder) => iterableOrder.id === order.id)
+  ) {
+    await removeOrder(order.id);
+    await awaitTimeout(100);
+  }
+
   orders.value.push(order);
+
   await nextTick();
 
   const selector = compose(
@@ -105,9 +117,22 @@ const unsubscribeSimulateEvent = emulatorStore.subscribeSimulateEvent(async (ord
     translateY: [-90, 0],
     duration: 700,
   });
+};
+
+const simulateEventSubscription = emulatorStore.subscribeSimulateEvent(onOrderEvent);
+onBeforeUnmount(() => {
+  simulateEventSubscription.unsubscribe();
 });
 
-onBeforeUnmount(unsubscribeSimulateEvent);
+const orderCreatedSubscription = marketStore.subscribeOrderCreated(onOrderEvent);
+onBeforeUnmount(() => {
+  orderCreatedSubscription.unsubscribe();
+});
+
+const orderDeleteSubscription = marketStore.subscribeOrderDelete(onOrderEvent);
+onBeforeUnmount(() => {
+  orderDeleteSubscription.unsubscribe();
+});
 </script>
 
 <style lang="scss" module>
@@ -130,7 +155,7 @@ onBeforeUnmount(unsubscribeSimulateEvent);
   z-index: 4;
   display: flex;
   align-items: center;
-  margin-top: 20px;
+  margin-top: 10px;
   & > * {
     width: 100%;
   }

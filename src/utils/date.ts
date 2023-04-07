@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import { compose, curry } from '@/utils/fp';
 import now from 'lodash/now';
-import { divide, divideRight, multiply } from '@/helpers/number';
+import { divide, divideRight, multiply } from '@/utils/number';
 
 export {
   now as dateNow,
@@ -84,3 +84,21 @@ export const toSecondsTimestamp = (
   divideRight(1000),
   toTimestamp,
 )(date);
+
+export const isDateWithinCurrentMonth = (
+  date: DateValue,
+) => (
+  dayjs(date).isSame(new Date(), 'month')
+);
+
+export const isDateWithinCurrentDay = (
+  date: DateValue,
+) => (
+  dayjs(date).isSame(new Date(), 'day')
+);
+
+export const isDateWithinCurrentWeek = (
+  date: DateValue,
+) => (
+  dayjs(date).isSame(new Date(), 'week')
+);

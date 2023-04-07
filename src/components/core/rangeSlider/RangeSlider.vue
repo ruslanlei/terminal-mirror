@@ -28,11 +28,10 @@ import { useLocalValue } from '@/hooks/useLocalValue';
 import { awaitFrame } from '@/utils/window';
 import {
   add,
-  divide, divideRight, multiply, subtract, subtractRight,
-} from '@/helpers/number';
+  divide, divideRight, multiply, roundNumber, subtract, subtractRight,
+} from '@/utils/number';
 import { compose } from '@/utils/fp';
-import { roundNumber } from '@/utils/number';
-import { getRect } from '@/helpers/style';
+import { getRect } from '@/utils/dom';
 import { RangeSliderEmits, RangeSliderProps } from './index';
 
 const props = withDefaults(

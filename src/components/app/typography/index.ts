@@ -6,6 +6,7 @@ export type TypographyState =
     | 'bold'
     | 'semiBold'
     | 'alignCenter'
+    | 'alignRight'
     | 'medium'
     | 'accent1'
     | 'black'

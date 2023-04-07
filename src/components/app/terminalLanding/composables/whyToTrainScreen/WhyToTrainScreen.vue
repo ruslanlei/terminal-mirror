@@ -35,12 +35,15 @@ import WhyToTrainCardRow
   from '@/components/app/terminalLanding/composables/whyToTrainScreen/whyToTrainCardRow/WhyToTrainCardRow.vue';
 import { useElementBounding, useWindowSize } from '@vueuse/core';
 import {
-  add, divide, multiply, subtract,
-} from '@/helpers/number';
-import { min } from '@/utils/number';
+  add,
+  divide,
+  min,
+  multiply,
+  subtract,
+} from '@/utils/number';
 import { compose } from '@/utils/fp';
-import { toCssPercentValue } from '@/utils/dom';
 import Typography from '@/components/app/typography/Typography.vue';
+import { toCssPercentValue } from '@/utils/style';
 
 const { t } = useI18n();
 

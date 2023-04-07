@@ -1,48 +1,61 @@
 <template>
-  <div :class="$style.ordersAndStatistics">
-    <div :class="$style.header">
+  <OrdersAndStatisticsContainer>
+    <template #mainTabSelect>
       <Selector
         v-model="activeTab"
         :options="mainSelectorOptions"
         :state="['simpleColor', 'lgSize']"
       />
-      <div :class="$style.additionalTab">
-        <transition
-          name="orderAndStatisticsTabs"
-          mode="out-in"
-        >
-          <Selector
-            v-if="activeTab === 'orders'"
-            v-model="ordersListType"
-            :options="orderListOptions"
-            :state="['secondaryColor2', 'mdSize']"
-          />
-          <Selector
-            v-else-if="activeTab === 'statistics'"
-            v-model="statisticsActiveTab"
-            :options="statisticsTabs"
-            :state="['secondaryColor2', 'mdSize']"
-          />
-        </transition>
-      </div>
-    </div>
-    <div :class="$style.content">
-      <KeepAlive>
-        <OrdersList
+    </template>
+    <template #additionalTabSelect>
+      <Transition
+        name="orderAndStatisticsTabs"
+        mode="out-in"
+      >
+        <Selector
           v-if="activeTab === 'orders'"
-          :list-type="ordersListType"
-          :class="$style.ordersList"
+          v-model="ordersListType"
+          :options="orderListOptions"
+          :state="['secondaryColor2', 'mdSize']"
         />
-      </KeepAlive>
-    </div>
-  </div>
+        <Selector
+          v-else-if="activeTab === 'statistics'"
+          v-model="statisticsActiveTab"
+          :options="statisticsTabs"
+          :state="['secondaryColor2', 'mdSize']"
+        />
+      </Transition>
+    </template>
+    <template #content>
+      <Transition
+        name="orderAndStatisticsTabContent"
+        mode="out-in"
+      >
+        <KeepAlive>
+          <OrdersList
+            v-if="isOrdersVisible"
+            :key="activeTab"
+            :list-type="ordersListType"
+          />
+          <MarketStatistics
+            v-else-if="isStatisticsVisible"
+            :key="activeTab"
+            v-model:active-chapter="statisticsActiveTab"
+          />
+        </KeepAlive>
+      </Transition>
+    </template>
+  </OrdersAndStatisticsContainer>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, defineAsyncComponent, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Selector from '@/components/core/selector/Selector.vue';
 import OrdersList from '@/components/app/ordersList/OrdersList.vue';
+import OrdersAndStatisticsContainer from '@/containers/ordersAndStatisticsContainer/OrdersAndStatisticsContainer.vue';
+import MarketOrderStatistics from '@/components/app/marketOrdersStatistics/MarketOrderStatistics.vue';
+import MarketStatistics from '@/components/app/marketStatistics/MarketStatistics.vue';
 import {
   MainSelectorOptions,
   MainSelectorOptionValue,
@@ -56,40 +69,49 @@ const { t } = useI18n();
 
 const activeTab = ref<MainSelectorOptionValue>('orders');
 
-const mainSelectorOptions = computed<MainSelectorOptions>(() => [
-  {
-    label: t('ordersAndStatistics.ordersLabel'),
-    value: 'orders',
-  },
-  {
-    label: t('ordersAndStatistics.statisticsLabel'),
-    value: 'statistics',
-  },
-]);
+const mainSelectorOptions = computed<MainSelectorOptions>(
+  () => [
+    {
+      label: t('ordersAndStatistics.ordersLabel'),
+      value: 'orders',
+    },
+    {
+      label: t('ordersAndStatistics.statisticsLabel'),
+      value: 'statistics',
+    },
+  ],
+);
 
 const ordersListType = ref<OrdersSelectorOptionValue>('active');
-const orderListOptions = computed<OrdersSelectorOptions>(() => [
-  {
-    label: t('ordersAndStatistics.ordersTab.current'),
-    value: 'active',
-  },
-  {
-    label: t('ordersAndStatistics.ordersTab.closed'),
-    value: 'closed',
-  },
-]);
+const orderListOptions = computed<OrdersSelectorOptions>(
+  () => [
+    {
+      label: t('ordersAndStatistics.ordersTab.current'),
+      value: 'active',
+    },
+    {
+      label: t('ordersAndStatistics.ordersTab.closed'),
+      value: 'closed',
+    },
+  ],
+);
 
 const statisticsActiveTab = ref<StatisticsSelectorOptionValue>('common');
-const statisticsTabs = computed<StatisticsSelectorOptions>(() => [
-  {
-    label: t('ordersAndStatistics.statisticsTab.common'),
-    value: 'common',
-  },
-  {
-    label: t('ordersAndStatistics.statisticsTab.orders'),
-    value: 'orders',
-  },
-]);
+const statisticsTabs = computed<StatisticsSelectorOptions>(
+  () => [
+    {
+      label: t('ordersAndStatistics.statisticsTab.common'),
+      value: 'common',
+    },
+    {
+      label: t('ordersAndStatistics.statisticsTab.orders'),
+      value: 'orders',
+    },
+  ],
+);
+
+const isOrdersVisible = computed(() => activeTab.value === 'orders');
+const isStatisticsVisible = computed(() => activeTab.value === 'statistics');
 </script>
 
 <style lang="scss" module>
@@ -107,15 +129,14 @@ const statisticsTabs = computed<StatisticsSelectorOptions>(() => [
 .content {
   flex-grow: 1;
   display: flex;
+  padding-top: 20px;
+  & > * {
+    width: 100%;
+    flex-grow: 1;
+  }
 }
 
 .additionalTab {}
-
-.ordersList {
-  width: 100%;
-  margin-top: 20px;
-  flex-grow: 1;
-}
 </style>
 
 <style lang="scss">
@@ -134,17 +155,21 @@ const statisticsTabs = computed<StatisticsSelectorOptions>(() => [
     transform: translateY(-10px);
   }
 }
+
 .orderAndStatisticsTabContent {
   &-enter-active,
   &-leave-active {
-    transition: opacity 160ms, transform 160ms;
+    transition: opacity 200ms, transform 200ms;
   }
 
   &-enter-from {
     opacity: 0;
+    transform: scale(1.05);
+
   }
   &-leave-to {
     opacity: 0;
+    transform: scale(0.95);
   }
 }
 </style>

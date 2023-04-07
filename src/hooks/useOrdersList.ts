@@ -5,16 +5,16 @@ import { useMarketStore } from '@/stores/market';
 import {
   MasterOrder, Order, StopLoss, TakeProfit,
 } from '@/api/types/order';
-import { add, roundToDecimalPoint } from '@/helpers/number';
+import { add, roundToDecimalPoint } from '@/utils/number';
 import { compose } from '@/utils/fp';
 import { collectActiveOrderRecord, collectClosedOrderRecord } from '@/components/app/ordersList/collectTableRecord';
 import { createEmptyRecord } from '@/components/core/table/helpers';
 import { awaitTimeout } from '@/utils/promise';
 import { useEmulatorStore } from '@/stores/emulator';
-import { findAndDelete, findAndUpdateObject } from '@/helpers/array';
 import { useChartDataStore } from '@/stores/chartData';
 import { storeToRefs } from 'pinia';
 import { TableColumn } from '@/components/core/table';
+import { findAndDelete, findAndUpdateObject } from '@/utils/array';
 
 interface GroupedOrder {
   order: MasterOrder,
@@ -228,24 +228,25 @@ export const useOrdersList = (
 
   watch(() => props.listType, () => getList(true));
 
-  const unsubscribeOrderCreate = marketStore.subscribeOrderCreated(async () => {
+  const orderCreatedEventSubscription = marketStore.subscribeOrderCreated(async () => {
     if (props.listType !== 'active') return;
 
     await getList(false);
   });
 
-  const unsubscribeOrderDelete = marketStore.subscribeOrderDelete(async (
-    orderId: Order['id'],
+  const orderDeleteSubscription = marketStore.subscribeOrderDelete(async (
+    deletedOrder: Order,
   ) => {
     if (props.listType !== 'active') return;
 
     await awaitTimeout(300); // FIXME: awaiting for modal close animation
+
     activeOrders.value = activeOrders.value.filter(
-      (order: Order) => order.id !== orderId && order.master !== orderId,
+      (order: Order) => order.id !== deletedOrder.id && order.master !== deletedOrder.id,
     );
   });
 
-  const unsubscribeSimulateEvent = emulatorStore.subscribeSimulateEvent(
+  const simulateEventSubscription = emulatorStore.subscribeSimulateEvent(
     (updatedOrder: Order) => {
       if (
         updatedOrder.order_type === 'limit'
@@ -274,7 +275,7 @@ export const useOrdersList = (
   //  "filled" status even if it executed
   //  if at the same time was executed TP
   //  or SL
-  const unsubscribeSimulationEndedEvent = emulatorStore.subscribeSimulationEndedEvent(getList);
+  const simulationEndedEventSubscription = emulatorStore.subscribeSimulationEndedEvent(getList);
 
   const isDeletingOrder = ref(false);
   const deleteOrder = async (
@@ -286,10 +287,10 @@ export const useOrdersList = (
   };
 
   const clearSubscriptions = () => {
-    unsubscribeOrderCreate();
-    unsubscribeOrderDelete();
-    unsubscribeSimulateEvent();
-    unsubscribeSimulationEndedEvent();
+    orderCreatedEventSubscription.unsubscribe();
+    orderDeleteSubscription.unsubscribe();
+    simulateEventSubscription.unsubscribe();
+    simulationEndedEventSubscription.unsubscribe();
   };
 
   const onRecordClick = (

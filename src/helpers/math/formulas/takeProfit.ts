@@ -10,7 +10,7 @@ import {
   multiply,
   subtract,
   subtractRight,
-} from '@/helpers/number';
+} from '@/utils/number';
 import { calculateOnePercent } from '@/helpers/math/percents';
 import { TakeProfit } from '@/api/types/order';
 import { getLength, reduce } from '@/utils/array';
@@ -91,7 +91,6 @@ export const calculateCommonTakeProfitPercent = curry((
   return compose(
     multiply(100),
     divideRight(orderVolume),
-    subtractRight(orderVolume),
     reduceTakeProfitsToAmountOfProfit(orderPrice),
   )(takeProfits);
 });

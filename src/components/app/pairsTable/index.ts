@@ -1,5 +1,5 @@
 import { TableColumn, TableProps, TableRecord } from '@/components/core/table';
-import { PairData } from '@/api/types/pair';
+import { Pair } from '@/api/types/pair';
 
 export type PairsTableColumnSlug = 'common' | 'priceAndVolume' | 'last24HoursPercentChange';
 
@@ -8,23 +8,23 @@ export type PairsTableColumn = TableColumn<PairsTableColumnSlug>;
 export type PairsTableRecord = TableRecord<PairsTableColumnSlug, {
   common: {
     isFavorite: boolean,
-    pairId: PairData['id'],
-    base: PairData['base'],
-    quote: PairData['quote'],
+    pairId: Pair['id'],
+    base: Pair['base'],
+    quote: Pair['quote'],
   },
   priceAndVolume: {
     currentPrice: number,
-    totalTrades: PairData['total_trades'] | string,
+    totalTrades: Pair['total_trades'] | string,
   }
   last24HoursPercentChange: number | null,
 }>;
 
 export interface PairsTableProps {
-  pairs: PairData[],
+  pairs: Pair[],
   state?: TableProps['state'],
 }
 
 export interface PairsTableEmits {
-  (e: 'selectPair', value: PairData['id']): void,
-  (e: 'toggleFavorite', value: PairData['id']): void,
+  (e: 'selectPair', value: Pair['id']): void,
+  (e: 'toggleFavorite', value: Pair['id']): void,
 }

@@ -18,11 +18,11 @@
 </template>
 
 <script setup lang="ts">
-import { collectSrcSet } from '@/helpers/dom';
 
 import Picture from '@/components/core/picture/Picture.vue';
 import { useCssModules } from '@/hooks/useCssModules';
 import { reactive } from 'vue';
+import { collectSrcSet } from '@/utils/dom';
 import PurpleSquarePng from './assets/purpleSquare.png';
 import PurpleSquareWebp from './assets/purpleSquare.webp';
 import PurpleSquareAvif from './assets/purpleSquare.avif';

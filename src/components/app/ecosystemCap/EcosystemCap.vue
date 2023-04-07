@@ -126,7 +126,7 @@ const courseCard = computed<IEcosystemCard>(() => ({
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 300px 0;
+  height: 100%;
 }
 
 .cardsWrapper {

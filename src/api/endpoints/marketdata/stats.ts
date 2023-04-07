@@ -1,4 +1,4 @@
 import { get } from '@/api';
-import { PairData } from '@/api/types/pair';
+import { Pair } from '@/api/types/pair';
 
-export const getPairs = () => get<PairData[]>('/marketdata/stats');
+export const getPairs = () => get<Pair[]>('/marketdata/stats');

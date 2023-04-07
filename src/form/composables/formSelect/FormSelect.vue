@@ -57,8 +57,6 @@ const emit = defineEmits<{(e: 'change'): any,
 const {
   value,
   error,
-  // isValidated,
-  // isTouched,
   onInput: activeFieldOnInput,
   onFocus: activeFieldOnFocus,
   onBlur: activeFieldOnBlur,

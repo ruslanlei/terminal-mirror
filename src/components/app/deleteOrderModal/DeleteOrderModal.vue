@@ -68,19 +68,19 @@ import {
 import { useI18n } from 'vue-i18n';
 import Modal from '@/components/core/modal/Modal.vue';
 import Picture from '@/components/core/picture/Picture.vue';
-import { collectSrcSet } from '@/helpers/dom';
 import Typography from '@/components/app/typography/Typography.vue';
 import Button from '@/components/core/button/Button.vue';
 import { Order, TakeProfit } from '@/api/types/order';
 import { reduceTakeProfitsToQuantitiesSum } from '@/helpers/math/formulas/takeProfit';
 import { calculatePnl } from '@/helpers/math/formulas/pnl';
-import { isPositive, subtractRight } from '@/helpers/number';
+import { isPositive, subtractRight } from '@/utils/number';
 import { useMarketStore } from '@/stores/market';
 import { useEmulatorStore } from '@/stores/emulator';
 import { compose } from '@/utils/fp';
 import { cloneDeep } from '@/utils/object';
 import { filter } from '@/utils/array';
 import { useChartDataStore } from '@/stores/chartData';
+import { collectSrcSet } from '@/utils/dom';
 import { DeleteOrderModalEmits, DeleteOrderModalProps } from './index';
 
 import IllustrationPng from './assets/illustration.png';
@@ -158,7 +158,7 @@ if (props.takeProfits) {
   setTakeProfits(props.takeProfits);
 }
 
-const unsubscribeSimulateEvent = emulatorStore.subscribeSimulateEvent(onEmulatorEvent);
+const simulateEventSubscription = emulatorStore.subscribeSimulateEvent(onEmulatorEvent);
 
 const isDeleting = ref(false);
 const handleDelete = async () => {
@@ -175,7 +175,7 @@ const handleDelete = async () => {
   }
 };
 
-onBeforeUnmount(unsubscribeSimulateEvent);
+onBeforeUnmount(simulateEventSubscription.unsubscribe);
 </script>
 
 <style lang="scss" module>

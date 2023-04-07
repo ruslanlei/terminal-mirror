@@ -16,6 +16,7 @@
       <Button
         size="xl"
         state="backgroundAccent1"
+        @click="onClickBuy"
       >
         {{ t('courseLanding.buyCourseBadge.button') }}
       </Button>
@@ -24,14 +25,19 @@
 </template>
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
-import { collectSrcSet } from '@/helpers/dom';
 import Typography from '@/components/app/typography/Typography.vue';
 import Picture from '@/components/core/picture/Picture.vue';
 import Button from '@/components/core/button/Button.vue';
 
+import { LandingFooterEmits } from '@/components/app/courseLanding/composables/landingFooter/index';
+import { collectSrcSet } from '@/utils/dom';
 import BenjaminPng from './assets/benjaminFranklin.png';
 import BenjaminWebp from './assets/benjaminFranklin.webp';
 import BenjaminAvif from './assets/benjaminFranklin.avif';
+
+const emit = defineEmits<LandingFooterEmits>();
+
+const { t } = useI18n();
 
 const franklinSrcSet = collectSrcSet([
   BenjaminAvif,
@@ -39,7 +45,9 @@ const franklinSrcSet = collectSrcSet([
   BenjaminPng,
 ]);
 
-const { t } = useI18n();
+const onClickBuy = () => {
+  emit('clickBuy');
+};
 </script>
 
 <style lang="scss" module>

@@ -34,10 +34,11 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
 import { useEnvironmentObserver } from '@/hooks/useEnvironmentObserver';
-import { getRectField, toCssPxValue } from '@/helpers/style';
+import { toCssPxValue } from '@/utils/style';
 import { compose } from '@/utils/fp';
 import { useComputedState } from '@/hooks/useComputedState';
-import { add } from '@/helpers/number';
+import { add } from '@/utils/number';
+import { getRectField } from '@/utils/dom';
 import { InlineDropdownProps } from './index';
 
 const props = withDefaults(

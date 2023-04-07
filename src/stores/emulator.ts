@@ -6,27 +6,30 @@ import {
 } from 'vue';
 import { defineStore, storeToRefs } from 'pinia';
 import { useStorage } from '@vueuse/core';
+import { useI18n } from 'vue-i18n';
+import { Subject } from 'rxjs';
 import { useMarketStore } from '@/stores/market';
 import { simulate } from '@/api/endpoints/emulator/simulate';
-import { compose, curry } from '@/utils/fp';
+import { compose } from '@/utils/fp';
 import {
   addDays,
   addSeconds,
-  dateNow, millisecondsToSeconds,
+  dateNow,
+  millisecondsToSeconds,
   subtractYears,
-  toISOString, toTimestamp,
+  toISOString,
+  toTimestamp,
 } from '@/utils/date';
-import { multiply } from '@/helpers/number';
-import { createEventBus } from '@/utils/eventBus';
+import { multiply } from '@/utils/number';
 import { Order } from '@/api/types/order';
 import { processServerErrors } from '@/api/common';
-import { PairData } from '@/api/types/pair';
+import { Pair } from '@/api/types/pair';
 import { useChartDataStore } from '@/stores/chartData';
 import { getBalance } from '@/api/endpoints/profile/getBalance';
 import { isMoreThan } from '@/utils/boolean';
 import { isExactOrder } from '@/helpers/orders';
 import { useToastStore } from '@/stores/toasts';
-import { useI18n } from 'vue-i18n';
+import { AnyFunction } from '@/utils/typescript';
 
 export const getDefaultEmulatorDate = () => compose(
   toISOString,
@@ -34,12 +37,7 @@ export const getDefaultEmulatorDate = () => compose(
   dateNow,
 )();
 
-export enum emulatorEvent {
-  ORDER_CHANGED_STATUS = 'orderChangedStatus',
-  SIMULATION_ENDED = 'simulationEnded',
-}
-
-export type PlayerDatesMap = Record<PairData['id'], string>;
+export type PlayerDatesMap = Record<Pair['id'], string>;
 
 export const useEmulatorStore = defineStore('emulator', () => {
   const { t } = useI18n();
@@ -56,16 +54,22 @@ export const useEmulatorStore = defineStore('emulator', () => {
     candleSize,
   } = storeToRefs(chartDataStore);
 
-  const {
-    subscribeEvent,
-    emitEvent,
-  } = createEventBus<emulatorEvent>();
+  const simulateEventSubject = new Subject<Order>();
+  const subscribeSimulateEvent = (
+    callback: AnyFunction,
+  ) => simulateEventSubject.subscribe(callback);
+  const emitSimulateEvent = (order: Order) => {
+    simulateEventSubject.next(order);
+  };
 
-  const subscribeSimulateEvent = curry(subscribeEvent<Order>)(emulatorEvent.ORDER_CHANGED_STATUS);
-  const emitSimulateEvent = curry(emitEvent<Order>)(emulatorEvent.ORDER_CHANGED_STATUS);
+  const simulationEndedSubject = new Subject<true>();
 
-  const subscribeSimulationEndedEvent = curry(subscribeEvent)(emulatorEvent.SIMULATION_ENDED);
-  const emitSimulationEndedEvent = curry(emitEvent)(emulatorEvent.SIMULATION_ENDED);
+  const subscribeSimulationEndedEvent = (
+    callback: AnyFunction,
+  ) => simulationEndedSubject.subscribe(callback);
+  const emitSimulationEndedEvent = () => {
+    simulationEndedSubject.next(true);
+  };
 
   const playerDatesMap = useStorage<PlayerDatesMap>('playerDatesMap', {
     1: getDefaultEmulatorDate(),
@@ -110,7 +114,7 @@ export const useEmulatorStore = defineStore('emulator', () => {
   const compressionFactor = ref<number>(5);
 
   const handleSimulate = async (
-    pair: PairData['id'],
+    pair: Pair['id'],
     dateFrom: string,
     candleSize: number,
     compression: number,
@@ -153,6 +157,7 @@ export const useEmulatorStore = defineStore('emulator', () => {
     tiks: number,
   ) => {
     isFetchingEmulatorTimeframe.value = true;
+
     const compression = compose(
       multiply(candlesPerSecond),
       multiply(candleSize),
@@ -171,7 +176,7 @@ export const useEmulatorStore = defineStore('emulator', () => {
       data.events.forEach(emitSimulateEvent);
       increaseEmulatorDate(tiks);
     } else {
-      emitSimulationEndedEvent(null);
+      emitSimulationEndedEvent();
     }
 
     nextTick(() => {

@@ -4,18 +4,18 @@ import {
   SubOrderTableItem,
 } from '@/components/app/ordersList/subOrdersTable/index';
 import { compose, curry } from '@/utils/fp';
-import { roundToDecimalPoint } from '@/helpers/number';
+import { roundToDecimalPoint } from '@/utils/number';
 import { valueToPercents } from '@/helpers/math/percents';
 import { humanizeDate } from '@/utils/date';
 import { MasterOrder } from '@/api/types/order';
-import { PairData } from '@/api/types/pair';
+import { Pair } from '@/api/types/pair';
 import { collectTableRecord } from '@/components/core/table/helpers';
 import { TableRowState } from '@/components/core/table/tableRow';
 
 interface CollectRecordPayload {
   order: SubOrderTableItem,
   masterOrder: MasterOrder,
-  pairData: PairData,
+  pairData: Pair,
 }
 
 const orderTypeMixin = (

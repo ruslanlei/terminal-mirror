@@ -1,5 +1,6 @@
 <template>
   <div :class="$style.marketLayout">
+    <OrderEventsToastLayer :class="$style.orderEventsToastLayer" />
     <div :class="$style.header">
       <MarketHeader />
     </div>
@@ -9,6 +10,7 @@
 
 <script setup lang="ts">
 import MarketHeader from '@/components/app/marketHeader/MarketHeader.vue';
+import OrderEventsToastLayer from '@/components/app/orderEventsToastLayer/OrderEventsToastLayer.vue';
 </script>
 
 <style lang="scss" module>
@@ -20,5 +22,11 @@ import MarketHeader from '@/components/app/marketHeader/MarketHeader.vue';
   background-color: rgb(var(--color-background-1));
   z-index: 100;
   height: 102px;
+}
+
+.orderEventsToastLayer {
+  position: fixed;
+  inset: 0;
+  z-index: 6000;
 }
 </style>

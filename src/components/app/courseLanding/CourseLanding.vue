@@ -5,13 +5,18 @@
         <CourseLandingHeader
           v-model:active-chapter="activeSection"
           :chapters="chapters"
+          :state="computedHeaderState"
         />
       </template>
       <template #welcomeScreen>
-        <WelcomeScreen id="about" />
+        <WelcomeScreen
+          id="about"
+          @click-buy="scrollToTarifs"
+          @click-course-program="onClickCourseProgram"
+        />
       </template>
       <template #courseExplanationCard>
-        <CourseExplanation />
+        <CourseExplanation @click-sign-up="scrollToTarifs" />
       </template>
       <template #creatorsTeamInfo>
         <CreatorsTeamInfo id="whoWeAre" />
@@ -23,7 +28,10 @@
         <PracticeBadge />
       </template>
       <template #courseAdvantagesCard>
-        <CourseAdvantages id="benefits" />
+        <CourseAdvantages
+          id="benefits"
+          @click-sign-up="scrollToTarifs"
+        />
       </template>
       <template #studentsReviews>
         <StudentsReviews id="reviews" />
@@ -44,7 +52,7 @@
         <Faq id="questions" />
       </template>
       <template #landingFooter>
-        <LandingFooter />
+        <LandingFooter @click-buy="scrollToTarifs" />
       </template>
     </CourseLandingContainer>
   </div>
@@ -72,6 +80,7 @@ import Faq from '@/components/app/courseLanding/composables/faq/Faq.vue';
 import LandingFooter from '@/components/app/courseLanding/composables/landingFooter/LandingFooter.vue';
 import StartDateTape from '@/components/app/courseLanding/composables/startDateTape/StartDateTape.vue';
 import { useLandingAnchor } from '@/hooks/useLandingAnchor';
+import { useScroll } from '@vueuse/core';
 import { CourseLandingChapter } from './index';
 
 const { t } = useI18n();
@@ -112,12 +121,26 @@ const chapters = computed<CourseLandingChapter[]>(() => [
 ]);
 
 const {
+  y,
+} = useScroll(window);
+
+const computedHeaderState = computed(() => (y.value > 100 ? 'filled' : 'transparent'));
+
+const {
   activeSection,
 } = useLandingAnchor(
   chapters.value.map((
     { slug }: CourseLandingChapter,
   ) => slug),
 );
+
+const onClickCourseProgram = () => {
+  activeSection.value = 'courseProgram';
+};
+
+const scrollToTarifs = () => {
+  activeSection.value = 'tariffs';
+};
 </script>
 
 <style lang="scss" module>

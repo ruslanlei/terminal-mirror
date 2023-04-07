@@ -8,7 +8,7 @@ import {
 } from '@/utils/date';
 import { compose, curry } from '@/utils/fp';
 import { concat, filterNoneUniqueByKey, getLastElement } from '@/utils/array';
-import { multiply, subtractRight } from '@/helpers/number';
+import { multiply, subtractRight } from '@/utils/number';
 import { isMoreThan } from '@/utils/boolean';
 
 export const transformCandlesForChart = (

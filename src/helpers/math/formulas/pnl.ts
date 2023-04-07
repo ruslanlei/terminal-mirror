@@ -1,22 +1,29 @@
-import { compose, curry } from '@/utils/fp';
+import { compose, curry, log } from '@/utils/fp';
 import {
   add,
-  multiply,
-  subtractRight,
-} from '@/helpers/number';
+  multiply, roundToDecimalPoint,
+  subtractRight, toAbsolute,
+} from '@/utils/number';
 import { calculatePercentOfDifference } from '@/helpers/math/percents';
-import { toAbsolute } from '@/utils/number';
+import { Order } from '@/api/types/order';
+import { isDateWithinCurrentDay, isDateWithinCurrentMonth, isDateWithinCurrentWeek } from '@/utils/date';
+import { Maybe } from '@/utils/functors';
+import {
+  filter, getLength, map, reduce,
+} from '@/utils/array';
+import { isOrderOfType } from '@/helpers/orders';
+import { isLessThan, isMoreThan, isMoreThanOrEqualTo } from '@/utils/boolean';
 
 export const calculatePnl = curry((
   orderPrice: number,
   quantity: number,
-  currentPrice: number,
+  closePrice: number,
 ) => compose(
   subtractRight(
     multiply(orderPrice, quantity),
   ),
   multiply,
-)(quantity, currentPrice));
+)(quantity, closePrice));
 
 export const calculatePnlPercent = curry((
   orderPrice: number,
@@ -31,3 +38,90 @@ export const calculatePnlPercent = curry((
     add(orderVolume),
   )(pnl);
 });
+
+export const calculateCommonPnl = (
+  orders: Order[],
+) => (
+  reduce(
+    (commonPnl: number, order: Order) => add(
+      commonPnl,
+      calculatePnl(order.price, order.quantity, order.executed_price),
+    ),
+    0,
+    orders,
+  )
+);
+
+export const calculateCommonPnlPercent = (
+  orders: Order[],
+) => (
+  reduce(
+    (commonPnl: number, order: Order) => add(
+      commonPnl,
+      calculatePnlPercent(order.price, order.quantity, order.executed_price),
+    ),
+    0,
+    orders,
+  )
+);
+
+export const calculateCommonPnlForPeriod = curry(
+  (
+    period: 'day' | 'week' | 'month' | 'allTime',
+    orders: Order[],
+  ) => {
+    const dateFilter = ({
+      day: isDateWithinCurrentDay,
+      week: isDateWithinCurrentWeek,
+      month: isDateWithinCurrentMonth,
+      allTime: () => true,
+    }[period]);
+
+    return Maybe.of(orders)
+      .map((orders: Order[]) => (
+        filter(
+          (order: Order) => (
+            dateFilter(order.modified) && isOrderOfType('limit', order)
+          ),
+          orders,
+        )
+      ))
+      .chain(calculateCommonPnl);
+  },
+);
+
+export const getSuccessOrders = (
+  orders: Order[],
+) => (
+  compose(
+    filter(
+      (order: Order) => compose(
+        isMoreThanOrEqualTo(0),
+        calculatePnl,
+      )(
+        order.price,
+        order.quantity,
+        order.executed_price,
+      ),
+    ),
+  )(orders)
+);
+
+export const getFailedOrders = (
+  orders: Order[],
+) => (
+  compose(
+    filter(
+      (order: Order) => (
+        compose(
+          isLessThan(0),
+          calculatePnl,
+        )(
+          order.price,
+          order.quantity,
+          order.executed_price,
+        )
+      ),
+    ),
+  )(orders)
+);

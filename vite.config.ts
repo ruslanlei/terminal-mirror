@@ -22,6 +22,7 @@ export default defineConfig({
       preset: 'safest',
       propertyReadSideEffects: true,
     },
+    sourcemap: true,
   },
   plugins: [
     vue({

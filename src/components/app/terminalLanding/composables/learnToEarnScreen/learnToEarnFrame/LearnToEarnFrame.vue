@@ -50,11 +50,11 @@ import Card from '@/components/core/card/Card.vue';
 import {
   computed, onBeforeUnmount, onMounted, ref, watch,
 } from 'vue';
-import { roundToDecimalPoint } from '@/helpers/number';
+import { roundToDecimalPoint } from '@/utils/number';
 import Typography from '@/components/app/typography/Typography.vue';
-import { getRect } from '@/helpers/style';
-import { toCssPixelValue } from '@/utils/dom';
+import { getRect } from '@/utils/dom';
 import { useEnvironmentObserver } from '@/hooks/useEnvironmentObserver';
+import { toCssPxValue } from '@/utils/style';
 import {
   LearnToEarnFrameProps,
 } from './index';
@@ -69,14 +69,14 @@ const descriptionContainer = ref<HTMLElement>();
 const root = ref<HTMLElement>();
 
 const computedDescriptionContainerStyles = ref({
-  height: toCssPixelValue(0),
+  height: toCssPxValue(0),
 });
 
 const calculateDescriptionContainerStyles = () => {
   if (!descriptionContainer.value) return;
 
   if (!props.isActive) {
-    computedDescriptionContainerStyles.value.height = toCssPixelValue(0);
+    computedDescriptionContainerStyles.value.height = toCssPxValue(0);
     return;
   }
 
@@ -84,7 +84,7 @@ const calculateDescriptionContainerStyles = () => {
     height,
   } = getRect(descriptionContainer.value);
 
-  computedDescriptionContainerStyles.value.height = toCssPixelValue(height);
+  computedDescriptionContainerStyles.value.height = toCssPxValue(height);
 };
 
 watch(() => props.isActive, calculateDescriptionContainerStyles);

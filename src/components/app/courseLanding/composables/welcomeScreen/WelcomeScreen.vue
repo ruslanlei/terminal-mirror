@@ -26,6 +26,7 @@
             size="xl"
             :is-wide="false"
             :class="$style.buyCourseButton"
+            @click="onClickBuy"
           >
             {{ t('courseLanding.welcomeScreen.options.buyCourse') }}
           </Button>
@@ -34,6 +35,7 @@
             size="xl"
             :is-wide="false"
             :class="$style.courseProgramButton"
+            @click="onClickCourseProgram"
           >
             {{ t('courseLanding.welcomeScreen.options.courseProgram') }}
           </Button>
@@ -61,9 +63,10 @@ import Typography from '@/components/app/typography/Typography.vue';
 import Picture from '@/components/core/picture/Picture.vue';
 import ImageBackgroundBlock from '@/components/core/imageBackgroundBlock/ImageBackgroundBlock.vue';
 import AdvantagesCard from '@/components/app/courseLanding/composables/welcomeScreen/advantagesCard/AdvantagesCard.vue';
-import { collectSrcSet } from '@/helpers/dom';
 import Button from '@/components/core/button/Button.vue';
 
+import { WelcomeScreenEmits } from '@/components/app/courseLanding/composables/welcomeScreen/index';
+import { collectSrcSet } from '@/utils/dom';
 import BackgroundPng from './assets/welcomeScreenBg.png';
 import BackgroundWebp from './assets/welcomeScreenBg.webp';
 import BackgroundAvif from './assets/welcomeScreenBg.avif';
@@ -90,6 +93,16 @@ import TentAvif from './assets/tent.avif';
 
 const { t } = useI18n();
 
+const emit = defineEmits<WelcomeScreenEmits>();
+
+const onClickBuy = () => {
+  emit('clickBuy');
+};
+
+const onClickCourseProgram = () => {
+  emit('clickCourseProgram');
+};
+
 const backgroundSrcset = collectSrcSet([
   BackgroundAvif,
   BackgroundWebp,
@@ -102,49 +115,41 @@ const astronautSrcset = collectSrcSet([
   AstronautPng,
 ]);
 
-const buildingSrcset = collectSrcSet([
-  BuildingAvif,
-  BuildingWebp,
-  BuildingPng,
-]);
-
-const certificateSrcset = collectSrcSet([
-  CertificateAvif,
-  CertificateWebp,
-  CertificatePng,
-]);
-
-const tetrisSrcset = collectSrcSet([
-  TetrisAvif,
-  TetrisWebp,
-  TetrisPng,
-]);
-
-const tentSrcset = collectSrcSet([
-  TentAvif,
-  TentWebp,
-  TentPng,
-]);
-
 const cards = computed(() => [
   {
     pictureBackground: 'yellow',
-    picture: buildingSrcset,
+    picture: collectSrcSet([
+      BuildingAvif,
+      BuildingWebp,
+      BuildingPng,
+    ]),
     text: t('courseLanding.welcomeScreen.advantageCards.modules'),
   },
   {
     pictureBackground: 'green',
-    picture: certificateSrcset,
+    picture: collectSrcSet([
+      CertificateAvif,
+      CertificateWebp,
+      CertificatePng,
+    ]),
     text: t('courseLanding.welcomeScreen.advantageCards.systems'),
   },
   {
     pictureBackground: 'purple',
-    picture: tetrisSrcset,
+    picture: collectSrcSet([
+      TetrisAvif,
+      TetrisWebp,
+      TetrisPng,
+    ]),
     text: t('courseLanding.welcomeScreen.advantageCards.videoLesson'),
   },
   {
     pictureBackground: 'blue',
-    picture: tentSrcset,
+    picture: collectSrcSet([
+      TentAvif,
+      TentWebp,
+      TentPng,
+    ]),
     text: t('courseLanding.welcomeScreen.advantageCards.experience'),
   },
 ]);

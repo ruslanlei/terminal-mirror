@@ -13,7 +13,7 @@
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { compose } from '@/utils/fp';
-import { divideRight, roundToDecimalPoint } from '@/helpers/number';
+import { divideRight, roundToDecimalPoint } from '@/utils/number';
 import Badge from '@/components/core/badge/Badge.vue';
 import Typography from '@/components/app/typography/Typography.vue';
 import { isMoreThan } from '@/utils/boolean';
@@ -23,10 +23,15 @@ const props = defineProps<OrderRatioBadgeProps>();
 
 const { t } = useI18n();
 
-const takeProfitToStopLossRelation = computed(() => compose(
-  roundToDecimalPoint(1),
-  divideRight,
-)(props.stopLossRisk, props.takeProfitsSum));
+const takeProfitToStopLossRelation = computed(() => {
+  if (props.stopLossRisk <= 0) {
+    return 0;
+  }
+  return compose(
+    roundToDecimalPoint(1),
+    divideRight,
+  )(props.stopLossRisk, props.takeProfitsSum);
+});
 
 const isDanger = computed(
   () => isMoreThan(takeProfitToStopLossRelation.value, 3) && (props.stopLossRisk > 0),
@@ -41,7 +46,6 @@ const computedRatio = computed(() => t('order.ratio', {
 <style lang="scss" module>
 .orderRatioBadge {
   padding: 2px 10px;
-  //background-color: rgb(var(--color-accent-3));
   color: rgb(var(--color-accent-1));
   border-radius: 12px;
   font-weight: 600;

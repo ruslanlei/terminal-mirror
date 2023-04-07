@@ -1,6 +1,6 @@
 import { del } from '@/api';
-import { PairData } from '@/api/types/pair';
+import { Pair } from '@/api/types/pair';
 
 export const removeFromFavorites = (
-  id: PairData['id'],
+  id: Pair['id'],
 ) => del(`/members/favorites/${id}`);

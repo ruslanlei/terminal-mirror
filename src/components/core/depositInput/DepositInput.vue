@@ -6,7 +6,7 @@
         :key="option.percents"
         type="button"
         :state="[
-          checkIsValueEqualToPercent(option.percents)
+          option.isActive
             ? 'colored'
             : 'secondary2Color',
         ]"
@@ -75,7 +75,7 @@ import RangeSlider from '@/components/core/rangeSlider/RangeSlider.vue';
 import NumberInput from '@/components/core/numberInput/NumberInput.vue';
 import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
 import { useDepositInput } from '@/hooks/useDepositInput';
-import { roundToDecimalPoint } from '@/helpers/number';
+import { roundToDecimalPoint } from '@/utils/number';
 import { DepositInputEmits, DepositInputProps } from './index';
 
 const props = withDefaults(
@@ -92,7 +92,7 @@ const {
   showLeveragedBalance,
   localValueInPercents,
   setPercentOfBalance,
-  checkIsValueEqualToPercent,
+  checkIsPercentEqualToModelValue,
   maxQuoteCurrencyDeposit,
   maxQuoteCurrencyDepositLeveraged,
 } = useDepositInput(props, emit);
@@ -122,7 +122,10 @@ const options = computed(() => [
     label: '100%',
     percents: 100,
   },
-]);
+].map((option) => ({
+  ...option,
+  isActive: checkIsPercentEqualToModelValue(option.percents),
+})));
 </script>
 
 <style lang="scss" module>

@@ -1,6 +1,6 @@
 import { TableColumn, TableRecord } from '@/components/core/table';
 import { MasterOrder, SubOrder } from '@/api/types/order';
-import { PairData } from '@/api/types/pair';
+import { Pair } from '@/api/types/pair';
 import { OrdersListProps } from '@/components/app/ordersList';
 
 export type ActiveSubOrdersColumnSlug =
@@ -33,7 +33,7 @@ export type ActiveSubOrderRecord = TableRecord<ActiveSubOrdersColumnSlug, {
 
 export interface SubOrderTableItem extends SubOrder {
   masterOrder: MasterOrder,
-  pairData: PairData,
+  pairData: Pair,
   orderIndex?: number,
 }
 

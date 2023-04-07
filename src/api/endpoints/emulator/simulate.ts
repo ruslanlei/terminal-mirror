@@ -1,10 +1,10 @@
 import { post } from '@/api';
-import { PairData } from '@/api/types/pair';
+import { Pair } from '@/api/types/pair';
 import { Candle } from '@/api/types/marketData';
 import { Order } from '@/api/types/order';
 
 export interface SimulateDTO {
-  pair: PairData['id'],
+  pair: Pair['id'],
   date_from: string,
   candle_size: number,
   compression: number,

@@ -8,9 +8,9 @@ import {
   multiply,
   roundToDecimalPoint, subtract,
   subtractRight,
-} from '@/helpers/number';
+} from '@/utils/number';
 import { isEqual } from '@/utils/boolean';
-import { percentFormat } from '@/utils/number';
+import { percentFormat } from '@/utils/numberFormat';
 
 export const calculateOnePercent = (
   total: number,
@@ -96,11 +96,13 @@ export const checkIsRoundedValueEqualToPercentOfTotal = curry((
   total: number,
   percents: number,
   comparisonValue: number,
-) => compose(
-  isEqual(comparisonValue),
-  roundToDecimalPoint(decimals),
-  percentsToValue(total),
-)(percents));
+) => {
+  const percentsInValue = percentsToValue(total, percents);
+
+  if (percentsInValue === 0) return false;
+
+  return isEqual(comparisonValue, roundToDecimalPoint(decimals, percentsInValue));
+});
 
 export const humanizePercents = (
   percents: number,

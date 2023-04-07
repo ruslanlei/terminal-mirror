@@ -53,6 +53,14 @@ const computedState = useComputedState(props);
   background-color: rgb(var(--color-danger));
 }
 
+.danger2 {
+  background-color: rgb(var(--color-danger-2));
+}
+
+.primary1Background {
+  background-color: rgb(var(--color-primary-1));
+}
+
 .skeleton {
   position: relative;
   overflow: hidden;

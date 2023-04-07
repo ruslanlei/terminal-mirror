@@ -52,7 +52,7 @@ import { computed } from 'vue';
 import { useMarketStore } from '@/stores/market';
 import { storeToRefs } from 'pinia';
 import { compose } from '@/utils/fp';
-import { roundToDecimalPoint } from '@/helpers/number';
+import { roundToDecimalPoint } from '@/utils/number';
 import { reduceTakeProfitsToAmountOfProfit } from '@/helpers/math/formulas/takeProfit';
 import { injectOrderFormState } from '@/components/app/orderForm';
 import { calculateVolumeDifference } from '@/helpers/math/formulas/order';

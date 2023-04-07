@@ -29,3 +29,11 @@ export const getValueByKey = curry((
 ) => object?.[key] || null);
 
 export { isEmpty };
+
+export const getKeyWithBiggestValue = (
+  object: Record<string, number>,
+) => (
+  Object
+    .keys(object)
+    .reduce((keyA, keyB) => (object[keyA] > object[keyB] ? keyA : keyB))
+);

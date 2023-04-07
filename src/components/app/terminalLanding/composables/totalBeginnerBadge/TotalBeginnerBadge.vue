@@ -42,11 +42,11 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
-import { collectSrcSet } from '@/helpers/dom';
 import Typography from '@/components/app/typography/Typography.vue';
 import Picture from '@/components/core/picture/Picture.vue';
 import Button from '@/components/core/button/Button.vue';
 import Link from '@/components/core/link/Link.vue';
+import { collectSrcSet } from '@/utils/dom';
 import IllustrationAvif from './assets/illustration.avif';
 import IllustrationWebp from './assets/illustration.webp';
 import IllustrationPng from './assets/illustration.png';

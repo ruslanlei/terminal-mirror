@@ -34,17 +34,15 @@ import Input from '@/components/core/input/Input.vue';
 import Icon from '@/components/core/icon/Icon.vue';
 import PairsTable from '@/components/app/pairsTable/PairsTable.vue';
 import { usePairSelect } from '@/hooks/usePairSelect';
+import { onMounted } from 'vue';
 
 const { t } = useI18n();
 
 const {
   query,
   pairs,
-  fetchPairs,
   setPair,
   isTogglingFavorite,
   onToggleFavorite,
 } = usePairSelect();
-
-fetchPairs();
 </script>

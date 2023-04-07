@@ -2,14 +2,16 @@ import {
   compose,
   curry,
 } from '@/utils/fp';
-import { PairData } from '@/api/types/pair';
+import { Pair } from '@/api/types/pair';
 import {
   MasterOrder,
   TakeProfit,
   StopLoss,
   Order,
 } from '@/api/types/order';
-import { isPositive, multiply, roundToDecimalPoint } from '@/helpers/number';
+import {
+  isPositive, multiply, roundToDecimalPoint, toAbsolute,
+} from '@/utils/number';
 import { calculatePercentOfDifference } from '@/helpers/math/percents';
 import { calculatePnl, calculatePnlPercent } from '@/helpers/math/formulas/pnl';
 import { calculateCommonTakeProfitPercent } from '@/helpers/math/formulas/takeProfit';
@@ -19,10 +21,9 @@ import { SubOrderTableItem } from '@/components/app/ordersList/subOrdersTable';
 import { collectTableRecord } from '@/components/core/table/helpers';
 import { getOrdersWithStatus, reduceSubOrderListToCommonPnl } from '@/helpers/orders';
 import { TableRowState } from '@/components/core/table/tableRow';
-import { toAbsolute } from '@/utils/number';
 
 interface CollectRecordPayload {
-  pairData: PairData,
+  pairData: Pair,
   pairPrice: number | null,
   order: MasterOrder,
   takeProfits: TakeProfit[] | undefined,

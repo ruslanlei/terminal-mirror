@@ -10,8 +10,6 @@ export const useActiveField = (
   formKey: string,
   chain: string,
 ) => {
-  const isValidated = inject('isValidated');
-
   const form = inject<FormProvide>(getFormInjectKey(formKey));
 
   if (!form) {
@@ -69,7 +67,6 @@ export const useActiveField = (
     : null));
 
   return {
-    isValidated,
     value,
     isTouched,
     touch,

@@ -90,10 +90,10 @@
         save-on="blur"
       />
     </template>
-    <template #leverageLiquidationPrice>
+    <template #amountOfRealMoney>
       {{ pledge }}
     </template>
-    <template #leveragePositionMargin>
+    <template #leverageLiquidationPrice>
       {{ liquidationPrice }}
     </template>
     <template #submit>

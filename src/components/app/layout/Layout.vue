@@ -104,11 +104,13 @@ onBeforeUnmount(() => {
 .layoutTransitionTakeOff {
   &-enter-active,
   &-leave-active {
-    transition: opacity 200ms, transform 480ms;
+    transition: transform 360ms ease;
+  }
+  &-enter-active {
+    z-index: 100000;
   }
 
   &-enter-from {
-    opacity: 0;
     transform: scale(0.96);
     position: fixed;
     top: 0;
@@ -117,7 +119,6 @@ onBeforeUnmount(() => {
     z-index: 5000;
   }
   &-leave-to {
-    opacity: 0;
     transform: translateY(-100%);
     position: fixed;
     top: 0;
@@ -129,20 +130,20 @@ onBeforeUnmount(() => {
 
 .layoutTransitionPutOn {
   &-leave-active, &-enter-active {
-    transition: opacity 200ms, transform 480ms;
+    transition: transform 360ms ease;
+  }
+  &-enter-active {
+    z-index: 100000;
   }
 
   &-enter-from {
-    opacity: 0;
     transform: translateY(-100%);
     position: fixed;
     top: 0;
     left: 0;
     inset: 0;
-    z-index: 10000;
   }
   &-leave-to {
-    opacity: 0;
     transform: scale(0.96);
     position: fixed;
     top: 0;

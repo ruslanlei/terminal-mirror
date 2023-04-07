@@ -3,18 +3,22 @@ import concat from 'lodash/concat';
 import repeat from 'lodash/repeat';
 import lodashReduceRight from 'lodash/reduceRight';
 import {
-  map as rambdaMap,
-  reduce as rambdaReduce,
   filter as rambdaFilter,
   forEach as rambdaForEach,
+  map as rambdaMap,
+  reduce as rambdaReduce,
 } from 'rambda';
 import collect from 'collect.js';
 
-import { curry, CurriedFunc } from '@/utils/fp';
+import { CurriedFunc, curry } from '@/utils/fp';
 
 export { flatten, concat, repeat };
 
 export const arrayFrom = (value: any | any[]) => (Array.isArray(value) ? value : [value]);
+
+export const isArray = (
+  maybeArray: any,
+) => Array.isArray(maybeArray);
 
 export const { from: toArray } = Array;
 
@@ -52,7 +56,10 @@ export const arraySum = (
   array: number[],
 ) => collect(array).sum();
 
-export const map = curry(rambdaMap<any, any>);
+export const map = curry(rambdaMap) as CurriedFunc<(
+  predicate?: (...args: any[]) => boolean,
+  array?: any[],
+) => any>;
 export const reduce = curry(rambdaReduce<any, any>) as typeof rambdaReduce;
 
 export const reduceRight = curry(
@@ -68,3 +75,38 @@ export const forEach = curry(rambdaForEach) as CurriedFunc<(
   predicate?: (...args: any[]) => boolean,
   array?: any[],
 ) => any>;
+
+export const countBy = curry(
+  (
+    key: string,
+    listOfObjects: Array<Record<string, any>>,
+  ) => (
+    collect(listOfObjects)
+      .countBy(key)
+      .all()
+  ),
+);
+export const findAndDelete = curry((
+  predicate: Parameters<typeof Array.prototype.findIndex>[0],
+  array: any[],
+) => {
+  const deletingIndex = array.findIndex(predicate);
+
+  const isElementFound = deletingIndex !== -1;
+
+  if (isElementFound) {
+    array.splice(deletingIndex, 1);
+  }
+});
+
+export const findAndUpdateObject = curry((
+  predicate: Parameters<typeof Array.prototype.find>[0],
+  array: any[],
+  updatedObject: Record<any, any>,
+) => {
+  const cachedObject = array.find(predicate);
+
+  if (cachedObject) {
+    Object.assign(cachedObject, updatedObject);
+  }
+});

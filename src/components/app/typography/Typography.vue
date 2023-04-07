@@ -170,6 +170,10 @@ const computedState = useComputedState(props);
   text-align: center;
 }
 
+.alignRight {
+  text-align: right;
+}
+
 .nowrap {
   white-space: nowrap;
 }

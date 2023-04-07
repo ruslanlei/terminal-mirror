@@ -128,13 +128,13 @@ import TrendingIcon from '@/components/core/trendingIcon/TrendingIcon.vue';
 import CoinLogo from '@/components/core/coinLogo/CoinLogo.vue';
 import Icon from '@/components/core/icon/Icon.vue';
 import { SortDirection } from '@/components/core/table';
-import { humanizeNumber } from '@/utils/number';
-import { PairData } from '@/api/types/pair';
+import { humanizeNumber } from '@/utils/numberFormat';
+import { Pair } from '@/api/types/pair';
 import { useMarketStore } from '@/stores/market';
 import Typography from '@/components/app/typography/Typography.vue';
 import { useChartDataStore } from '@/stores/chartData';
 import Badge from '@/components/core/badge/Badge.vue';
-import { isPositive } from '@/helpers/number';
+import { isPositive } from '@/utils/number';
 import { humanizePercents } from '@/helpers/math/percents';
 import {
   PairsTableColumn, PairsTableEmits,
@@ -177,7 +177,7 @@ const sortBy = ref(null);
 const sortDirection = ref(SortDirection.ASC);
 
 const computedRecords = computed<PairsTableRecord[]>(
-  () => props.pairs.map((pair: PairData) => ({
+  () => props.pairs.map((pair: Pair) => ({
     id: pair.id,
     data: {
       common: {
@@ -196,11 +196,11 @@ const computedRecords = computed<PairsTableRecord[]>(
 );
 
 const onRecordClick = (record: PairsTableRecord) => {
-  emit('selectPair', record.id as PairData['id']);
+  emit('selectPair', record.id as Pair['id']);
 };
 
 const onToggleFavorite = (
-  pairId: PairData['id'],
+  pairId: Pair['id'],
 ) => {
   emit('toggleFavorite', pairId);
 };

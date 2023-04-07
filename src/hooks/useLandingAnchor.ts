@@ -5,10 +5,9 @@ import {
   onBeforeUnmount,
   onMounted,
 } from 'vue';
-import { getElementById } from '@/utils/dom';
+import { getElementById, getRectField } from '@/utils/dom';
 import { compose } from '@/utils/fp';
-import { add } from '@/helpers/number';
-import { getRectField } from '@/helpers/style';
+import { add } from '@/utils/number';
 
 export const useLandingAnchor = (
   sectionIds: string[],

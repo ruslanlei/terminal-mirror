@@ -70,7 +70,7 @@ import {
   divideRight,
   multiply,
   roundToDecimalPoint,
-} from '@/helpers/number';
+} from '@/utils/number';
 import { compose } from '@/utils/fp';
 import {
   addPercents,

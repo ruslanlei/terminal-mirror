@@ -15,6 +15,11 @@
     "colon": "{key}: {value}"
   },
   "dateTime": {
+    "unit": {
+      "day": "Day",
+      "month": "Month",
+      "week": "Week"
+    },
     "shortHours": "{hours}h"
   },
   "validationError": {
@@ -31,7 +36,7 @@
     "email": "Enter your email",
     "password": "Enter password",
     "newPassword": "Pick a password",
-    "username": "What is your name",
+    "username": "Enter your nickname",
     "passwordConfirmation": "Repeat password"
   },
   "ecosystem": {
@@ -47,9 +52,9 @@
     }
   },
   "auth": {
-    "description": "Crypto terminal blah blah blah la la lala framework and place of staff training require us to analyze.",
+    "description": "The terminal system behaves like a real exchange, allowing you to safely learn cryptocurrency transactions and gain trading experience. The terminal has the ability to trade on history, which allows you to learn faster by rewinding the chart “to the future",
     "greetings": "Welcome to Terminal",
-    "submit": "Open",
+    "submit": "Sign in",
     "privacy": "©Terminal, all rights reserved.",
     "support": "Technical support",
     "agreement": {
@@ -92,7 +97,7 @@
     },
     "changePassword": {
       "label": "New password",
-      "description": "Think of a new password",
+      "description": "Enter а new password",
       "submit": "Save new password"
     }
   },
@@ -123,7 +128,8 @@
       },
       "label": "Player",
       "calculateResult": "Calculate result",
-      "orderInteractionsWarning": "Editing or adding orders will pause the player"
+      "orderInteractionsWarning": "Editing or adding orders will pause the player",
+      "orderExistsFormCap": "There is already one limit order in place. Unfortunately, in the emulator, it's not possible to open multiple active orders."
     }
   },
   "pairStats": {
@@ -170,6 +176,18 @@
     }
   },
   "order": {
+    "shortType": {
+      "tp": "TP",
+      "sl": "SL"
+    },
+    "status": {
+      "new": "New",
+      "filled": "Filled",
+      "expired": "Expired",
+      "canceled": "Canceled",
+      "executed": "Executed",
+      "closed": "Closed"
+    },
     "tab": {
       "orders": "Orders",
       "pairs": "Pairs"
@@ -193,31 +211,31 @@
     "price": "Price",
     "amount": "Amount",
     "volume": "Volume",
-    "deposit": "Deposit",
+    "deposit": "% of deposit in deal",
     "leverageSize": "Leverage size",
     "submit": "Open",
     "takeProfit": {
-      "profit": "Profit",
+      "profit": "Take profit",
       "amountOfOrders": "Amount of orders",
       "price": "Price",
       "income": "Income",
       "percentOfOrder": "%",
       "quantity": "Quantity",
       "quantityPercent": "%",
-      "ratio": "Ratio",
+      "ratio": "Risk/profit ratio",
       "risk": "Risk",
       "profitValue": "TP +{profit}",
       "riskValue": "SL -{risk}"
     },
     "stopLoss": {
-      "switchLabel": "Loss",
+      "switchLabel": "Stop loss",
       "exactPrice": "Exact price",
       "sumOfRisk": "Amount of risk",
-      "percentOfOrder": "% of order",
+      "percentOfOrder": "% from input",
       "percentOfDeposit": "% of deposit"
     },
     "ratio": "{loss} to {profit}",
-    "ratioLabel": "Ratio",
+    "ratioLabel": "Risk/profit ratio",
     "failedToCreate": "Failed to create order",
     "failedToCreateTakeProfits": "Failed to create one or more TPs",
     "failedToCreateStopLoss": "Failed to create SL",
@@ -404,42 +422,42 @@
   },
   "courseLanding": {
     "chapter": {
-     "about": "About course",
-     "whoWeAre": "Who are we",
-     "forWhom": "For whom this course",
-     "benefits": "What do i get",
-     "courseProgram": "Course program",
-     "reviews": "Reviews",
-     "tariffs": "Tariffs",
-     "questions": "Questions",
-     "goToTerminal": "Go to Terminal"
+      "about": "About course",
+      "whoWeAre": "Who are we",
+      "forWhom": "For whom this course",
+      "benefits": "What do i get",
+      "courseProgram": "Course program",
+      "reviews": "Reviews",
+      "tariffs": "Tariffs",
+      "questions": "Questions",
+      "goToTerminal": "Go to Terminal"
     },
     "welcomeScreen": {
-     "label": "Get up-to-date knowledge about cryptocurrency with practice at our terminal",
-     "description": "Full immersion in the world of cryptocurrency for beginners and analysis of difficult topics for more experienced listeners. Only relevant knowledge from real practitioners and creators of the crypto exchange emulator.",
-     "options": {
-       "buyCourse": "Buy course",
-       "courseProgram": "Course program"
-     },
-     "advantageCards": {
-       "modules": "Possibility to purchase only modules of interest",
-       "systems": "No need to write a summary, there is a convenient system of ready-made materials",
-       "videoLesson": "Not boring video tutorials diluted with author's memes",
-       "experience": "Maximum practical experience"
-     }
+      "label": "Get up-to-date knowledge about cryptocurrency with practice at our terminal",
+      "description": "Full immersion in the world of cryptocurrency for beginners and analysis of difficult topics for more experienced listeners. Only relevant knowledge from real practitioners and creators of the crypto exchange emulator.",
+      "options": {
+        "buyCourse": "Buy course",
+        "courseProgram": "Course program"
+      },
+      "advantageCards": {
+        "modules": "Possibility to purchase only modules of interest",
+        "systems": "No need to write a summary, there is a convenient system of ready-made materials",
+        "videoLesson": "Not boring video tutorials diluted with author's memes",
+        "experience": "Maximum practical experience"
+      }
     },
     "courseExplanationCard": {
-     "heading": "What awaits you on the course?",
-     "cardText": {
-       "ourCourse": "Our course will help you gain knowledge about cryptocurrency for Investing and trading on stock exchanges.",
-       "inAddition": "In addition to trading, we cover general issues on the operation of wallets, tell you how to store and buy cryptocurrency, and analyze the psychological aspects of trading.",
-       "avoidMistakes": "We know why many lose money and will help to avoid mistakes, like most novice traders.",
-       "weExplain": "We explain everything complex in simple words using memes, so that the training is interesting and even a beginner can figure it out."
-     },
-     "signUpForCourse": "Sign up for a course"
+      "heading": "What awaits you on the course?",
+      "cardText": {
+        "ourCourse": "Our course will help you gain knowledge about cryptocurrency for Investing and trading on stock exchanges.",
+        "inAddition": "In addition to trading, we cover general issues on the operation of wallets, tell you how to store and buy cryptocurrency, and analyze the psychological aspects of trading.",
+        "avoidMistakes": "We know why many lose money and will help to avoid mistakes, like most novice traders.",
+        "weExplain": "We explain everything complex in simple words using memes, so that the training is interesting and even a beginner can figure it out."
+      },
+      "signUpForCourse": "Sign up for a course"
     },
     "creatorsTeamInfo": {
-     "heading": "We are the team of creators of the educational cryptocurrency exchange Terminal.",
+      "heading": "We are the team of creators of the educational cryptocurrency exchange Terminal.",
       "text": [
         "A few years ago we decided to dive in earnings on cryptocurrency. We ourselves started from scratch, that's why we understand what beginners face and what mistakes they do.",
         "Having absorbed a ton of information, studied many courses, most of which turned out to be useless and outdated, spending a lot of time and money on practical training. Based on this, we have collected really useful information that will be understandable and safe for everyone.",
@@ -447,48 +465,48 @@
       ]
     },
     "forWhomTheCourse": {
-     "heading": "Who is our course for?",
-     "card": {
-       "beginners": {
-         "label": "Beginners",
-         "text": "Who do not know anything about cryptocurrency, but want to learn how to make transactions in the market without losing real money."
-       },
-       "relocants": {
-         "label": "For those who want to live in another country",
-         "text": "Who want to have a remote source of income independent of from the country."
-       },
-       "entrepreneurs": {
-         "label": "Entrepreneurs and freelancers",
-         "text": "Who want to cooperate with international organizations, you will learn how to accept payment for your goods and services in the crypt, you will find an additional source of income, thanks to trading."
-       },
-       "traders": {
-         "label": "Traders",
-         "text": "Who are already trading, but not able to earn They feel that they lack knowledge and experience. We will help you get rid of mistakes and master the missing trading skills so that you reach a new level of income."
-       },
-       "propCompanies": {
-         "label": "Prop-companies",
-         "text": "Who want to be able to quickly test trading strategies, quickly check and train employees."
-       }
-     }
+      "heading": "Who is our course for?",
+      "card": {
+        "beginners": {
+          "label": "Beginners",
+          "text": "Who do not know anything about cryptocurrency, but want to learn how to make transactions in the market without losing real money."
+        },
+        "relocants": {
+          "label": "For those who want to live in another country",
+          "text": "Who want to have a remote source of income independent of from the country."
+        },
+        "entrepreneurs": {
+          "label": "Entrepreneurs and freelancers",
+          "text": "Who want to cooperate with international organizations, you will learn how to accept payment for your goods and services in the crypt, you will find an additional source of income, thanks to trading."
+        },
+        "traders": {
+          "label": "Traders",
+          "text": "Who are already trading, but not able to earn They feel that they lack knowledge and experience. We will help you get rid of mistakes and master the missing trading skills so that you reach a new level of income."
+        },
+        "propCompanies": {
+          "label": "Prop-companies",
+          "text": "Who want to be able to quickly test trading strategies, quickly check and train employees."
+        }
+      }
     },
     "practiceBadge": {
-     "heading": "Move from theory to practice without losing real money",
-     "description": "We have developed a complete platform for you, where you can train and earn.",
-     "goToTerminal": "Go to Terminal"
+      "heading": "Move from theory to practice without losing real money",
+      "description": "We have developed a complete platform for you, where you can train and earn.",
+      "goToTerminal": "Go to Terminal"
     },
     "advantagesCard": {
-     "heading": "What do you eventually get",
-     "button": "Sign up for a course",
-     "getPractice": "Get practice on the real Terminal to develop real skills",
-     "exchangeCrypto": "You can buy freely and sell cryptocurrency",
-     "whatCourseDepends": "You will understand what the course depends on and in what periods are better to transact",
-     "payNAcceptPayments": "Learn how to pay for goods and accept payment for your services in cryptocurrency",
-     "tradingStrategies": "Understand trading strategies and you can make your own",
-     "gainKnowledge": "Gain knowledge gained through long practice not just another course with outdated theory",
-     "reliableExchanges": "Do you know which exchanges reliable and which are not.",
-     "incomeLevel": "Can you get out to a new level of income",
-     "psychologicalAspects": "Be aware of psychological aspects of trading and you won't get caught on the tricks of thinking",
-     "protectCrypto": "You will know how to protect your crypto wallet from fraudulent schemes"
+      "heading": "What do you eventually get",
+      "button": "Sign up for a course",
+      "getPractice": "Get practice on the real Terminal to develop real skills",
+      "exchangeCrypto": "You can buy freely and sell cryptocurrency",
+      "whatCourseDepends": "You will understand what the course depends on and in what periods are better to transact",
+      "payNAcceptPayments": "Learn how to pay for goods and accept payment for your services in cryptocurrency",
+      "tradingStrategies": "Understand trading strategies and you can make your own",
+      "gainKnowledge": "Gain knowledge gained through long practice not just another course with outdated theory",
+      "reliableExchanges": "Do you know which exchanges reliable and which are not.",
+      "incomeLevel": "Can you get out to a new level of income",
+      "psychologicalAspects": "Be aware of psychological aspects of trading and you won't get caught on the tricks of thinking",
+      "protectCrypto": "You will know how to protect your crypto wallet from fraudulent schemes"
     },
     "reviews": {
       "heading": "Reviews of our students",
@@ -533,51 +551,51 @@
       }
     },
     "studyPlans": {
-     "heading": "Our study plans",
-     "card": {
-       "studyTimeText": "of the best education",
-       "extraBenefit": "+ We give advanced tech. analysis",
-       "planContains": "Plan contains:",
-       "planOptions": {
-         "videoLessons1and2": "Video lessons of 1 and 2 blocks",
-         "videoLessons3": "Video lessons of 3rd block",
-         "presentation": "Understandable presentation",
-         "terminalAccess": "Free access to the Terminal",
-         "currency": "1 000 000 currency in Terminal",
-         "chatSupport": "24 / 7 chat support",
-         "homework": "Homework and review"
-       },
-       "planPlacesQuantity": "Places quan-ty:",
-       "buyCourse": "Buy a course",
-       "activatePromocode": "Activate promocode"
-     },
-     "tariff": {
-       "basicModules": {
-         "heading": "Basic modules",
-         "studyTime": "2 months"
-       },
-       "secretModule": {
-         "heading": "Secret 3rd module",
-         "studyTime": "1 month",
-         "additionalBenefit": "+ We give advanced tech. analysis"
-       },
-       "mentoring": {
-         "heading": "Teaching",
-         "studyTime": "3 months"
-       }
-     }
+      "heading": "Our study plans",
+      "card": {
+        "studyTimeText": "of the best education",
+        "extraBenefit": "+ We give advanced tech. analysis",
+        "planContains": "Plan contains:",
+        "planOptions": {
+          "videoLessons1and2": "Video lessons of 1 and 2 blocks",
+          "videoLessons3": "Video lessons of 3rd block",
+          "presentation": "Understandable presentation",
+          "terminalAccess": "Free access to the Terminal",
+          "currency": "1 000 000 currency in Terminal",
+          "chatSupport": "24 / 7 chat support",
+          "homework": "Homework and review"
+        },
+        "planPlacesQuantity": "Places quan-ty:",
+        "buyCourse": "Buy a course",
+        "activatePromocode": "Activate promocode"
+      },
+      "tariff": {
+        "basicModules": {
+          "heading": "Basic modules",
+          "studyTime": "2 months"
+        },
+        "secretModule": {
+          "heading": "Secret 3rd module",
+          "studyTime": "1 month",
+          "additionalBenefit": "+ We give advanced tech. analysis"
+        },
+        "mentoring": {
+          "heading": "Teaching",
+          "studyTime": "3 months"
+        }
+      }
     },
     "ecoSystemCard": {
-     "heading": "Macro - freedom",
-     "subheading": "Our cryptocurrency ecosystem",
-     "terminalHeading": "Terminal",
-     "terminalSubheading": "Instructional video + manual in Russian",
-     "courseHeading": "Course RU",
-     "courseSubheading": "Our cryptocurrency ecosystem",
-     "followButton": "Follow to"
+      "heading": "Macro - freedom",
+      "subheading": "Our cryptocurrency ecosystem",
+      "terminalHeading": "Terminal",
+      "terminalSubheading": "Instructional video + manual in Russian",
+      "courseHeading": "Course RU",
+      "courseSubheading": "Our cryptocurrency ecosystem",
+      "followButton": "Follow to"
     },
     "faq": {
-     "heading": "We answer frequently asked questions",
+      "heading": "We answer frequently asked questions",
       "trainingQuestion": {
         "label": "How will the training take place?",
         "text": "The training terminal is a service developed by us for fast, safe and effective training in trading. The terminal system behaves like a real exchange, allowing you to safely learn how to trade with cryptocurrency and gain trading experience. The terminal works with the 50 most popular coins on the Binance platform. Practicing on our top 50 Binance terminal will help you acquire the most relevant skills and move on to real trading."
@@ -600,8 +618,8 @@
       }
     },
     "buyCourseBadge": {
-     "heading": "Don't miss your chance to get the knowledge we need today",
-     "button": "Buy course"
+      "heading": "Don't miss your chance to get the knowledge we need today",
+      "button": "Buy course"
     },
     "discordLink": {
       "tip": "Click to copy username",
@@ -621,5 +639,37 @@
     "tryTrial": "Try a 2 day trial",
     "activatePromoCode": "Activate promo code",
     "amountOfPlaces": "Amount of places"
+  },
+  "statistics": {
+    "resultPeriodLabel": "{period} results",
+    "toDeposit": "to the deposit",
+    "commonResult": {
+      "label": "Common result",
+      "commonDepositTopUp": "Common top up: {value}",
+      "currentDeposit": "Current deposit: {value}"
+    },
+    "todayResults": {
+      "periodLabel": "Today"
+    },
+    "weekResults": {
+      "periodLabel": "Week"
+    },
+    "orders": {
+      "commonAmountLabel": "Total number of transactions",
+      "successRateLabel": "Success rate",
+      "success": {
+        "label": "Successful transactions",
+        "averageIncome": "Average income {value}",
+        "popularCoin": "Popular coin in orders"
+      },
+      "failed": {
+        "label": "Unsuccessful transactions",
+        "averageIncome": "Average loss {value}",
+        "popularCoin": "Popular coin in orders"
+      }
+    },
+    "turnover": {
+      "label": "Orders turnover"
+    }
   }
 }

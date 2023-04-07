@@ -67,15 +67,13 @@ export const useDepositInput = (
     }
   });
 
-  const checkIsValueEqualToPercent = (
+  const checkIsPercentEqualToModelValue = (
     percents: number,
-  ) => (!!baseCurrencyBalance.value
-    && checkIsRoundedValueEqualToPercentOfTotal(
-      baseCurrencyDecimals.value,
-      baseCurrencyBalance.value,
-      percents,
-      localValue.value,
-    )
+  ) => checkIsRoundedValueEqualToPercentOfTotal(
+    baseCurrencyDecimals.value,
+    baseCurrencyBalance.value,
+    percents,
+    localValue.value,
   );
 
   return {
@@ -84,7 +82,7 @@ export const useDepositInput = (
     baseCurrencyBalance,
     localValueInPercents,
     setPercentOfBalance,
-    checkIsValueEqualToPercent,
+    checkIsPercentEqualToModelValue,
     maxQuoteCurrencyDeposit,
     maxQuoteCurrencyDepositLeveraged,
   };

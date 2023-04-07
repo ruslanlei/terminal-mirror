@@ -1,4 +1,5 @@
 import { getCssVariable } from '@/utils/dom';
+import { isPositive } from '@/utils/number';
 
 export const toCssPxValue = (
   value: number,
@@ -23,3 +24,11 @@ export const toIdSelector = (
 export const toCssPercentValue = (
   percents: number,
 ) => `${percents}%`;
+
+export const toPnlString = (
+  value: number,
+) => (
+  isPositive(value)
+    ? toPositiveNumberString(value)
+    : String(value)
+);

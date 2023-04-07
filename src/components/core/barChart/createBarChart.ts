@@ -13,7 +13,7 @@ import { toCssPxValue } from '@/utils/style';
 export type BarChartDataElement = [string, number];
 export type BarChartData = BarChartDataElement[];
 
-type ValueLabelFormatter = (value: number) => number | string;
+export type ValueLabelFormatter = (value: number) => number | string;
 
 export interface CreateBarChartProps {
   container: HTMLElement;

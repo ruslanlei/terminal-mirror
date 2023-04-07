@@ -66,12 +66,12 @@ export const addCssProperty = curry((
 
 export const getRect = (
   element: HTMLElement,
-) => element.getBoundingClientRect();
+): Omit<DOMRect, 'toJSON'> => element.getBoundingClientRect();
 
 export const getRectField = curry((
-  field: keyof DOMRect,
+  field: keyof Omit<DOMRect, 'toJSON'>,
   element: HTMLElement,
-) => getRect(element)[field]);
+): number => getRect(element)[field]);
 
 export const arrayOfElements = (
   selector: string,

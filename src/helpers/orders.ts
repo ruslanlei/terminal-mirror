@@ -6,9 +6,12 @@ import { Order, OrderStatus, SubOrder } from '@/api/types/order';
 import { calculateVolumeDifference } from '@/helpers/math/formulas/order';
 import { add, divideRight } from '@/helpers/number';
 import {
-  filter, getLength, isArray, reduce,
+  countBy,
+  filter, getLength, isArray, map, reduce,
 } from '@/utils/array';
 import { calculateCommonPnlPercent, calculatePnl } from '@/helpers/math/formulas/pnl';
+import { PairsMap } from '@/hooks/usePairs';
+import { getKeyWithBiggestValue } from '@/utils/object';
 
 export const reduceSubOrderListToCommonPnl = curry((
   order: Order,
@@ -96,4 +99,21 @@ export const calculateAverageLoss = (
       ),
     ),
   )(orders)
+);
+
+export const findMostFrequentCoin = curry(
+  (
+    pairsMap: PairsMap,
+    orders: Order[],
+  ) => (
+    compose(
+      getKeyWithBiggestValue,
+      countBy('base'),
+      map(
+        (order: Order) => (
+          pairsMap[order.pair]
+        ),
+      ),
+    )(orders)
+  ),
 );

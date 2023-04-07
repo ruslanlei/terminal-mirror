@@ -11,6 +11,8 @@ import { addToFavorites } from '@/api/endpoints/profile/addToFavorites';
 import { removeFromFavorites } from '@/api/endpoints/profile/removeFromFavorites';
 import { findAndDelete } from '@/helpers/array';
 
+export type PairsMap = Record<Pair['id'], Pair>;
+
 export const usePairs = () => {
   const { t } = useI18n();
 
@@ -18,7 +20,7 @@ export const usePairs = () => {
 
   const pairs = useStorage<Pair[]>('pairs', []);
 
-  const pairsMap = computed<Record<Pair['id'], Pair>>(
+  const pairsMap = computed<PairsMap>(
     () => pairs.value.reduce((acc, pair: Pair) => ({
       ...acc,
       [pair.id]: pair,

@@ -75,3 +75,14 @@ export const forEach = curry(rambdaForEach) as CurriedFunc<(
   predicate?: (...args: any[]) => boolean,
   array?: any[],
 ) => any>;
+
+export const countBy = curry(
+  (
+    key: string,
+    listOfObjects: Array<Record<string, any>>,
+  ) => (
+    collect(listOfObjects)
+      .countBy(key)
+      .all()
+  ),
+);

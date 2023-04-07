@@ -38,7 +38,7 @@ import StatisticsTurnover from '@/components/app/statisticsTurnover/StatisticsTu
 import { Order } from '@/api/types/order';
 import { compose, log } from '@/utils/fp';
 import { Maybe } from '@/utils/functors';
-import { getSuccessOrdersAmount } from '@/helpers/math/formulas/pnl';
+import { getSuccessOrders } from '@/helpers/math/formulas/pnl';
 import { getLength } from '@/utils/array';
 import { filterOrdersByType } from '@/helpers/orders';
 import { divideRight, multiply } from '@/helpers/number';
@@ -59,7 +59,10 @@ const calculateSuccessRate = (
   orders: Order[],
 ) => Maybe.of(orders)
   .map(filterOrdersByType('limit'))
-  .map(getSuccessOrdersAmount)
+  .map(compose(
+    getLength,
+    getSuccessOrders,
+  ))
   .chain((successOrdersAmount: number) => (
     compose(
       multiply(100),
@@ -73,4 +76,6 @@ const successRate = computed(() => (
     calculateSuccessRate,
   )(closedOrders.value)
 ));
+
+console.log(closedOrders.value);
 </script>

@@ -43,7 +43,7 @@
       </Typography>
     </template>
     <template #append>
-      <CoinLogo coin="ETH" />
+      <CoinLogo :coin="mostFrequentCoin" />
     </template>
   </StatisticsResultRow>
 </template>
@@ -57,10 +57,11 @@ import { computed } from 'vue';
 import { compose } from '@/utils/fp';
 import { toCssPercentValue } from '@/utils/dom';
 import { roundToDecimalPoint } from '@/helpers/number';
-import { calculateAverageIncome, calculateAverageLoss, filterOrdersByType } from '@/helpers/orders';
+import { calculateAverageLoss, filterOrdersByType, findMostFrequentCoin } from '@/helpers/orders';
 import { useMarketStore } from '@/stores/market';
 import { storeToRefs } from 'pinia';
-import { getFailedOrdersLength, getSuccessOrdersAmount } from '@/helpers/math/formulas/pnl';
+import { getFailedOrders } from '@/helpers/math/formulas/pnl';
+import { getLength } from '@/utils/array';
 
 const { t } = useI18n();
 
@@ -71,7 +72,8 @@ const {
 
 const unsuccessfulOrdersAmount = computed(() => (
   compose(
-    getFailedOrdersLength,
+    getLength,
+    getFailedOrders,
     filterOrdersByType('limit'),
   )(closedOrders.value)
 ));
@@ -81,6 +83,14 @@ const averageLoss = computed(() => (
     toCssPercentValue,
     roundToDecimalPoint(0),
     calculateAverageLoss,
+  )(closedOrders.value)
+));
+
+const mostFrequentCoin = computed(() => (
+  compose(
+    findMostFrequentCoin(marketStore.pairsMap),
+    getFailedOrders,
+    filterOrdersByType('limit'),
   )(closedOrders.value)
 ));
 </script>

@@ -13,6 +13,7 @@ import {
   filter, getLength, map, reduce,
 } from '@/utils/array';
 import { isOrderOfType } from '@/helpers/orders';
+import { isLessThan, isMoreThan, isMoreThanOrEqualTo } from '@/utils/boolean';
 
 export const calculatePnl = curry((
   orderPrice: number,
@@ -90,46 +91,38 @@ export const calculateCommonPnlForPeriod = curry(
   },
 );
 
-export const getSuccessOrdersAmount = (
+export const getSuccessOrders = (
   orders: Order[],
 ) => (
-  Maybe.of(orders)
-    .map((orders: Order[]) => (
-      map(
-        (order: Order) => (
-          calculatePnl(order.price, order.quantity, order.executed_price)
-        ),
-        orders,
-      )
-    ))
-    .chain((pnlList: number[]) => (
-      compose(
-        getLength,
-        filter(
-          (pnl: number) => pnl >= 0,
-        ),
-      )(pnlList)
-    ))
+  compose(
+    filter(
+      (order: Order) => compose(
+        isMoreThanOrEqualTo(0),
+        calculatePnl,
+      )(
+        order.price,
+        order.quantity,
+        order.executed_price,
+      ),
+    ),
+  )(orders)
 );
 
-export const getFailedOrdersLength = (
+export const getFailedOrders = (
   orders: Order[],
 ) => (
-  Maybe.of(orders)
-    .map((orders: Order[]) => (
-      map(
-        (order: Order) => (
-          calculatePnl(order.price, order.quantity, order.executed_price)
-        ),
-        orders,
-      )
-    ))
-    .chain((pnlList: number[]) => (
-      compose(
-        getLength,
-        filter(
-          (pnl: number) => pnl < 0,
-        ),
-      )(pnlList)
-    ))
+  compose(
+    filter(
+      (order: Order) => (
+        compose(
+          isLessThan(0),
+          calculatePnl,
+        )(
+          order.price,
+          order.quantity,
+          order.executed_price,
+        )
+      ),
+    ),
+  )(orders)
 );

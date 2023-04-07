@@ -43,24 +43,25 @@
       </Typography>
     </template>
     <template #append>
-      <CoinLogo coin="BTC" />
+      <CoinLogo :coin="mostFrequentCoin" />
     </template>
   </StatisticsResultRow>
 </template>
 
 <script setup lang="ts">
-import StatisticsResultRow from '@/containers/statisticsResultRow/StatisticsResultRow.vue';
+import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { storeToRefs } from 'pinia';
+import StatisticsResultRow from '@/containers/statisticsResultRow/StatisticsResultRow.vue';
 import Typography from '@/components/app/typography/Typography.vue';
 import CoinLogo from '@/components/core/coinLogo/CoinLogo.vue';
 import { useMarketStore } from '@/stores/market';
-import { storeToRefs } from 'pinia';
-import { computed } from 'vue';
 import { compose } from '@/utils/fp';
-import { calculateAverageIncome, filterOrdersByType } from '@/helpers/orders';
-import { getSuccessOrdersAmount } from '@/helpers/math/formulas/pnl';
+import { calculateAverageIncome, filterOrdersByType, findMostFrequentCoin } from '@/helpers/orders';
+import { getSuccessOrders } from '@/helpers/math/formulas/pnl';
 import { toCssPercentValue } from '@/utils/dom';
 import { roundToDecimalPoint } from '@/helpers/number';
+import { getLength } from '@/utils/array';
 
 const { t } = useI18n();
 
@@ -71,7 +72,8 @@ const {
 
 const successOrdersAmount = computed(() => (
   compose(
-    getSuccessOrdersAmount,
+    getLength,
+    getSuccessOrders,
     filterOrdersByType('limit'),
   )(closedOrders.value)
 ));
@@ -81,6 +83,14 @@ const averageIncome = computed(() => (
     toCssPercentValue,
     roundToDecimalPoint(0),
     calculateAverageIncome,
+  )(closedOrders.value)
+));
+
+const mostFrequentCoin = computed(() => (
+  compose(
+    findMostFrequentCoin(marketStore.pairsMap),
+    getSuccessOrders,
+    filterOrdersByType('limit'),
   )(closedOrders.value)
 ));
 </script>

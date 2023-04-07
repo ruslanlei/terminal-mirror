@@ -11,14 +11,15 @@ import { storeToRefs } from 'pinia';
 import BarChart from '@/components/core/barChart/BarChart.vue';
 import { toPnlString } from '@/utils/style';
 import { useMarketStore } from '@/stores/market';
-import { customFormatDate } from '@/utils/date';
+import { getMonthIndex } from '@/utils/date';
 import { filterOrdersByType } from '@/helpers/orders';
-import { compose, curry, log } from '@/utils/fp';
+import { compose } from '@/utils/fp';
 import { Order } from '@/api/types/order';
 import { filter, map } from '@/utils/array';
 import { groupBy, objectEntries } from '@/utils/object';
 import { roundToDecimalPoint } from '@/utils/number';
-import { calculateCommonPnl, calculateCommonPnlForPeriod } from '@/helpers/math/formulas/pnl';
+import { calculateCommonPnl } from '@/helpers/math/formulas/pnl';
+import { Maybe } from '@/utils/functors';
 
 const { t } = useI18n();
 
@@ -42,30 +43,41 @@ const demoData = [
   ['dec', 4788],
 ];
 
-console.log(
+const calculatePnlByMonths = (orders: Order[]) => (
   compose(
     map(
       ([
-        monthName,
+        monthNumber,
         monthOrders,
-      ]: [string, Array<Order>]) => [
-        monthName,
-        compose(
-          roundToDecimalPoint(2),
-          calculateCommonPnl,
-        )(monthOrders),
-      ],
+      ]: [string, Array<Order>]) => (
+        [
+          Number(monthNumber),
+          compose(
+            roundToDecimalPoint(2),
+            calculateCommonPnl,
+          )(monthOrders),
+        ]
+      ),
     ),
     objectEntries,
     groupBy((order: Order) => (
-      // TODO: instead get month number and then change it to label after sort
-      customFormatDate('MMM' /* TODO: 'MMM YYYY' if jan */, order.executed_at)
+      getMonthIndex(order.modified)
     )),
-    // TODO: sort by month
-    filter((order: Order) => !!order?.executed_at),
-    filterOrdersByType('limit'),
-  )(closedOrders.value),
+  )(orders)
 );
+
+console.log(
+  Maybe.of(closedOrders.value)
+    .map<Order[]>((orders: Order[]) => (
+      compose(
+        filter((order: Order) => !!order?.modified),
+        filterOrdersByType('limit'),
+      )(orders) as Order[]
+    ))
+    .chain(calculatePnlByMonths),
+);
+
+// customFormatDate('MMM' /* TODO: 'MMM YYYY' if jan */, order.executed_at)
 
 const labelFormatter = (
   value: number,

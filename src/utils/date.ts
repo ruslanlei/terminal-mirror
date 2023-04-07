@@ -1,7 +1,9 @@
 import dayjs from 'dayjs';
 import { compose, curry } from '@/utils/fp';
 import now from 'lodash/now';
-import { divide, divideRight, multiply } from '@/utils/number';
+import {
+  add, divide, divideRight, multiply,
+} from '@/utils/number';
 
 export {
   now as dateNow,
@@ -102,3 +104,13 @@ export const isDateWithinCurrentWeek = (
 ) => (
   dayjs(date).isSame(new Date(), 'week')
 );
+
+export const getMonthIndex = (
+  date: DateValue,
+) => (
+  dayjs(date).month()
+);
+
+export const getMonthName = (
+  monthIndex: number,
+) => dayjs().month(monthIndex).format('MMM');

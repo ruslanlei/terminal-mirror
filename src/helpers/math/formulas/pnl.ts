@@ -81,7 +81,7 @@ export const calculateCommonPnlForPeriod = curry(
       .map((orders: Order[]) => (
         filter(
           (order: Order) => (
-            dateFilter(order.executed_at) && isOrderOfType('limit', order)
+            dateFilter(order.modified) && isOrderOfType('limit', order)
           ),
           orders,
         )

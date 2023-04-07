@@ -48,8 +48,12 @@ export const groupBy = curry(
     key: any,
     array: any[],
   ) => (
-    collect(array).groupBy(key)
-      .map((items: any) => items.all())
+    collect(array)
+      .groupBy(key)
+      .map((items: any, key) => {
+        console.log(items, key);
+        return items.all();
+      })
       .all()
   ),
 );

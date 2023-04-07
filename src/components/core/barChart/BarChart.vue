@@ -11,7 +11,8 @@ import { useResizeObserver } from '@vueuse/core';
 import { setMaximalScrollLeft } from '@/utils/element';
 import { getRectField } from '@/utils/dom';
 import { getCssRgbColor } from '@/utils/style';
-import { isMoreThan } from '@/utils/boolean';
+import { isEqual } from '@/utils/boolean';
+import { compose } from '@/utils/fp';
 import { BarChartProps } from './index';
 import { createBarChart } from './createBarChart';
 
@@ -27,6 +28,13 @@ const container = ref<HTMLElement>();
 const renderChart = () => {
   if (!container.value) return;
 
+  const isContainerNotPrepared = compose(
+    isEqual(0),
+    getRectField('height'),
+  )(container.value);
+
+  if (isContainerNotPrepared) return;
+
   createBarChart({
     container: container.value,
     data: props.data,
@@ -40,15 +48,7 @@ const renderChart = () => {
   setMaximalScrollLeft(container.value);
 };
 
-useResizeObserver(container, (entries) => {
-  const entry = entries[0];
-
-  const { height } = entry.contentRect;
-
-  if (!isMoreThan(0, height)) return;
-
-  renderChart();
-});
+useResizeObserver(container, renderChart);
 </script>
 
 <style lang="scss" module>

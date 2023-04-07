@@ -66,7 +66,7 @@ const displaySuccessRate = computed(() => (
 ));
 
 const successRateTextState = computed<TypographyState>(() => (
-  isMoreThanOrEqualTo(50, successRate.value)
+  isMoreThanOrEqualTo(50, successRate.value) /* right to left */
     ? 'success'
     : 'danger'
 ));

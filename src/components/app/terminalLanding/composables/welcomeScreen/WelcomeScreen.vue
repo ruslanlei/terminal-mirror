@@ -59,7 +59,6 @@
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import ImageBackgroundBlock from '@/components/core/imageBackgroundBlock/ImageBackgroundBlock.vue';
-import { collectSrcSet } from '@/helpers/dom';
 import BackgroundPng from '@/assets/images/auth/background.png';
 import BackgroundWebp from '@/assets/images/auth/background.webp';
 import BackgroundAvif from '@/assets/images/auth/background.avif';
@@ -67,6 +66,7 @@ import BadgeSupportedByTradingView from '@/components/app/badgeSupportedByTradin
 import Typography from '@/components/app/typography/Typography.vue';
 import Button from '@/components/core/button/Button.vue';
 import Link from '@/components/core/link/Link.vue';
+import { collectSrcSet } from '@/utils/dom';
 import TerminalScreenshotVector from './assets/terminalScreenshotVector.svg';
 
 const { t } = useI18n();

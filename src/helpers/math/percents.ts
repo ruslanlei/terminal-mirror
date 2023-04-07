@@ -1,6 +1,6 @@
 import {
   compose,
-  curry, log,
+  curry,
 } from '@/utils/fp';
 import {
   add,

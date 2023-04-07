@@ -15,7 +15,6 @@
 <script setup lang="ts">
 import ImageBackgroundBlock from '@/components/core/imageBackgroundBlock/ImageBackgroundBlock.vue';
 import Picture from '@/components/core/picture/Picture.vue';
-import { collectSrcSet } from '@/helpers/dom';
 
 import BackgroundPng from '@/assets/images/auth/background.png';
 import BackgroundWebp from '@/assets/images/auth/background.webp';
@@ -24,6 +23,7 @@ import BackgroundAvif from '@/assets/images/auth/background.avif';
 import WalletAvif from '@/assets/images/auth/wallet.avif';
 import WalletPng from '@/assets/images/auth/wallet.png';
 import WalletWebp from '@/assets/images/auth/wallet.webp';
+import { collectSrcSet } from '@/utils/dom';
 
 const illustrationSrcset = collectSrcSet([
   BackgroundAvif,

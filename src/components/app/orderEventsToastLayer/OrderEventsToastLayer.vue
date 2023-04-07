@@ -20,7 +20,6 @@ import { nextTick, onBeforeUnmount, ref } from 'vue';
 import OrderEventToast from '@/components/core/orderEventToast/OrderEventToast.vue';
 import { useEmulatorStore } from '@/stores/emulator';
 import { Order } from '@/api/types/order';
-import { findAndDelete } from '@/helpers/array';
 import { collectOrderToastId, collectOrderToastWrapperId } from '@/components/app/orderEventsToastLayer/index';
 import { playAnimation } from '@/utils/animation';
 import { addCssProperty, getRect } from '@/utils/dom';
@@ -29,6 +28,7 @@ import { roundToDecimalPoint } from '@/utils/number';
 import { useMarketStore } from '@/stores/market';
 import { awaitTimeout } from '@/utils/promise';
 import { toCssPxValue, toIdSelector } from '@/utils/style';
+import { findAndDelete } from '@/utils/array';
 
 const marketStore = useMarketStore();
 const emulatorStore = useEmulatorStore();

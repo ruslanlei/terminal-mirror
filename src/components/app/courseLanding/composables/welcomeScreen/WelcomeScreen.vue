@@ -63,10 +63,10 @@ import Typography from '@/components/app/typography/Typography.vue';
 import Picture from '@/components/core/picture/Picture.vue';
 import ImageBackgroundBlock from '@/components/core/imageBackgroundBlock/ImageBackgroundBlock.vue';
 import AdvantagesCard from '@/components/app/courseLanding/composables/welcomeScreen/advantagesCard/AdvantagesCard.vue';
-import { collectSrcSet } from '@/helpers/dom';
 import Button from '@/components/core/button/Button.vue';
 
 import { WelcomeScreenEmits } from '@/components/app/courseLanding/composables/welcomeScreen/index';
+import { collectSrcSet } from '@/utils/dom';
 import BackgroundPng from './assets/welcomeScreenBg.png';
 import BackgroundWebp from './assets/welcomeScreenBg.webp';
 import BackgroundAvif from './assets/welcomeScreenBg.avif';

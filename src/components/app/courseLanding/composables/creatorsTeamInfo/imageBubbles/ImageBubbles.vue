@@ -26,7 +26,6 @@
 import {
   computed, onMounted, reactive, ref, toRefs, watch,
 } from 'vue';
-import { collectSrcSet } from '@/helpers/dom';
 import Picture from '@/components/core/picture/Picture.vue';
 
 import { useCssModules } from '@/hooks/useCssModules';
@@ -43,6 +42,7 @@ import {
 } from '@/utils/numberFormat';
 import { useAnimation } from '@/hooks/useAnimation';
 import anime from 'animejs';
+import { collectSrcSet } from '@/utils/dom';
 import HamsterPng from './assets/hamsterNft.png';
 import HamsterWebp from './assets/hamsterNft.webp';
 import HamsterAvif from './assets/hamsterNft.avif';

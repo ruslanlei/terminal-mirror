@@ -31,8 +31,8 @@ import { useI18n } from 'vue-i18n';
 import Typography from '@/components/app/typography/Typography.vue';
 import { IPhotoCard } from '@/components/core/photoCard';
 import PhotoCard from '@/components/core/photoCard/PhotoCard.vue';
-import { collectSrcSet } from '@/helpers/dom';
 
+import { collectSrcSet } from '@/utils/dom';
 import BeginnersImageAvif from './assets/determinationScreenBeginnersImage.avif';
 import BeginnersImageWebp from './assets/determinationScreenBeginnersImage.webp';
 import BeginnersImagePng from './assets/determinationScreenBeginnersImage.png';

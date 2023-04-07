@@ -9,7 +9,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import Picture from '@/components/core/picture/Picture.vue';
-import { collectSrcSet } from '@/helpers/dom';
+import { collectSrcSet } from '@/utils/dom';
 import { CertificateImageProps } from './index';
 
 import PurpleCertificatePng from '../assets/purpleCertificate.png';

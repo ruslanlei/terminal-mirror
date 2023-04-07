@@ -9,7 +9,7 @@ import { FavoritePair, getFavorites } from '@/api/endpoints/profile/getFavorites
 import { processServerErrors } from '@/api/common';
 import { addToFavorites } from '@/api/endpoints/profile/addToFavorites';
 import { removeFromFavorites } from '@/api/endpoints/profile/removeFromFavorites';
-import { findAndDelete } from '@/helpers/array';
+import { findAndDelete } from '@/utils/array';
 
 export type PairsMap = Record<Pair['id'], Pair>;
 

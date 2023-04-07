@@ -1,15 +1,22 @@
 import {
   compose,
-  curry, log,
+  curry,
 } from '@/utils/fp';
 import { Order, OrderStatus, SubOrder } from '@/api/types/order';
 import { calculateVolumeDifference } from '@/helpers/math/formulas/order';
 import {
-  add, divideRight, multiply, roundToDecimalPoint,
+  add,
+  divideRight,
+  multiply,
+  roundToDecimalPoint,
 } from '@/utils/number';
 import {
   countBy,
-  filter, getLength, isArray, map, reduce,
+  filter,
+  getLength,
+  isArray,
+  map,
+  reduce,
 } from '@/utils/array';
 import { calculateCommonPnlPercent, calculatePnl, getSuccessOrders } from '@/helpers/math/formulas/pnl';
 import { PairsMap } from '@/hooks/usePairs';

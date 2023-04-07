@@ -1,7 +1,8 @@
-import { curry } from '@/utils/fp';
+import { compose, curry } from '@/utils/fp';
+import { reduce, toArray } from '@/utils/array';
 
 export const getCssVariable = (
-  variable: string, // argument format: --variable-name
+  variable: string, /* argument format: --variable-name */
 ) => getComputedStyle(document.body)
   .getPropertyValue(variable);
 
@@ -71,3 +72,21 @@ export const getRectField = curry((
   field: keyof DOMRect,
   element: HTMLElement,
 ) => getRect(element)[field]);
+
+export const arrayOfElements = (
+  selector: string,
+) => compose(
+  toArray,
+  querySelectorAll,
+)(selector);
+
+export const collectSrcSet = (
+  src: string[],
+) => reduce(
+  (
+    srcset: string,
+    link: string,
+  ) => (srcset === '' ? `${link}` : `${srcset}, ${link}`),
+  '',
+  src,
+);

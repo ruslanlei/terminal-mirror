@@ -43,9 +43,9 @@
 import { useI18n } from 'vue-i18n';
 import Typography from '@/components/app/typography/Typography.vue';
 import Icon from '@/components/core/icon/Icon.vue';
-import { collectSrcSet } from '@/helpers/dom';
 import Slider from '@/components/core/slider/Slider.vue';
 import { computed, ref } from 'vue';
+import { collectSrcSet } from '@/utils/dom';
 import ReviewCard from './reviewCard/ReviewCard.vue';
 
 import ReviewPicSmallPng from './assets/reviewSmall.png';

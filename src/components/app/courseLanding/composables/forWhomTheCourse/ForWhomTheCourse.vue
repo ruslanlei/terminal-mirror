@@ -23,9 +23,9 @@ import Typography from '@/components/app/typography/Typography.vue';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { IPhotoCard } from '@/components/core/photoCard';
-import { collectSrcSet } from '@/helpers/dom';
 import PhotoCard from '@/components/core/photoCard/PhotoCard.vue';
 
+import { collectSrcSet } from '@/utils/dom';
 import BeginnersBgPng from './assets/beginnersBg.png';
 import BeginnersBgWebp from './assets/beginnersBg.webp';
 import BeginnersBgAvif from './assets/beginnersBg.avif';

@@ -1,5 +1,5 @@
 import {
-  computed,
+  computed, nextTick,
   watch,
 } from 'vue';
 import { storeToRefs } from 'pinia';
@@ -71,6 +71,8 @@ export const useMarketChart = () => {
   };
   watch([activePair, marketType], async () => {
     if (chartDataStore.checkIsDataExistByPairId(activePair.value)) return;
+
+    await nextTick();
 
     await fetchCandles();
   }, { immediate: true });

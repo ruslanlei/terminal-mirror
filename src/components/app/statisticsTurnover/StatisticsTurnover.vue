@@ -27,7 +27,7 @@
               is-inline
               state="accent1"
             >
-              {{ averageIncome }}
+              {{ t('common.currencyAmount', { amount: averageIncome, currency: '$' }) }}
             </Typography>
           </template>
         </i18n-t>

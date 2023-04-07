@@ -27,7 +27,7 @@
               is-inline
               state="accent1"
             >
-              {{ averageIncome }}
+              {{ t('common.currencyAmount', { amount: averageIncome, currency: '$' }) }}
             </Typography>
           </template>
         </i18n-t>
@@ -36,7 +36,7 @@
     <template #append>
       <div :class="$style.popularCoin">
         <Typography
-          size="title5"
+          size="title7"
           :state="['accent2', 'medium', 'alignRight']"
           :class="$style.popularCoinLabel"
         >

@@ -186,7 +186,8 @@ import GradientCheckIcon from '@/components/core/gradientCheckIcon/GradientCheck
 import Badge from '@/components/core/badge/Badge.vue';
 import { computed } from 'vue';
 import { compose } from '@/utils/fp';
-import { percentFormat, toNegative } from '@/utils/numberFormat';
+import { percentFormat } from '@/utils/numberFormat';
+import { toNegative } from '@/utils/number';
 import { PlanCardProps } from './index';
 
 const props = defineProps<PlanCardProps>();

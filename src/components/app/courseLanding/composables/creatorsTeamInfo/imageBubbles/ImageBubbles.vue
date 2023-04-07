@@ -32,14 +32,13 @@ import Picture from '@/components/core/picture/Picture.vue';
 import { useCssModules } from '@/hooks/useCssModules';
 import { useElementBounding, useMouseInElement, useTimeout } from '@vueuse/core';
 import {
-  divide,
   divideRight,
+  max,
+  min,
   subtractRight,
 } from '@/utils/number';
 import { compose } from '@/utils/fp';
 import {
-  max,
-  min,
   percentFormat,
 } from '@/utils/numberFormat';
 import { useAnimation } from '@/hooks/useAnimation';

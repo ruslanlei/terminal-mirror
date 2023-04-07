@@ -38,14 +38,12 @@ import {
   watch, nextTick,
 } from 'vue';
 import { teleportTargets } from '@/enums/teleport';
-import { useLocalValue } from '@/hooks/useLocalValue';
 import { useEnvironmentObserver } from '@/hooks/useEnvironmentObserver';
 import { playAnimation } from '@/utils/animation';
 import { getRect } from '@/helpers/style';
 import { compose } from '@/utils/fp';
 import { getValueByKey } from '@/utils/object';
-import { divideRight, roundToDecimalPoint } from '@/utils/number';
-import { max } from '@/utils/numberFormat';
+import { divideRight, max, roundToDecimalPoint } from '@/utils/number';
 import { DropdownProps, DropdownEmits, DropdownPlacement } from './index';
 
 const props = withDefaults(

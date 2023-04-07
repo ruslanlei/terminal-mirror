@@ -39,3 +39,15 @@ export const roundToDecimalPoint = curry(
 );
 
 export const isPositive = (number: number): boolean => number >= 0;
+
+export const max = curry((
+  firstNumber: number,
+  secondNumber: number,
+) => Math.max(firstNumber, secondNumber));
+
+export const min = curry((
+  firstNumber: number,
+  secondNumber: number,
+) => Math.min(firstNumber, secondNumber));
+
+export const toNegative = (number: number) => (number < 0 ? number : -number);

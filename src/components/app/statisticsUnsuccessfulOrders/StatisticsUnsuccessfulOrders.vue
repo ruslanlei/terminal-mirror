@@ -33,17 +33,17 @@
         </i18n-t>
       </Typography>
     </template>
-    <template #secondaryInfoTop>
-      <Typography
-        size="title5"
-        :state="['accent2', 'medium', 'alignRight']"
-        :class="$style.popularCoinLabel"
-      >
-        {{ t('statistics.orders.unsuccessful.popularCoin') }}
-      </Typography>
-    </template>
     <template #append>
-      <CoinLogo :coin="mostFrequentCoin" />
+      <div :class="$style.popularCoin">
+        <Typography
+          size="title5"
+          :state="['accent2', 'medium', 'alignRight']"
+          :class="$style.popularCoinLabel"
+        >
+          {{ t('statistics.orders.unsuccessful.popularCoin') }}
+        </Typography>
+        <CoinLogo :coin="mostFrequentCoin" />
+      </div>
     </template>
   </StatisticsResultRow>
 </template>
@@ -96,6 +96,12 @@ const mostFrequentCoin = computed(() => (
 </script>
 
 <style lang="scss" module>
+.popularCoin {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .popularCoinLabel {
   max-width: 95px;
   line-height: 14px;

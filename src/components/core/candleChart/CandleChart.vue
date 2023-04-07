@@ -35,12 +35,12 @@ import {
   ISeriesApi,
   ITimeScaleApi,
 } from 'lightweight-charts';
-import { getCssRgbColor } from '@/utils/dom';
 import { useLocalValue } from '@/hooks/useLocalValue';
 import { toISOString } from '@/utils/date';
 import { compose } from '@/utils/fp';
 import { multiply } from '@/utils/number';
 import Typography from '@/components/app/typography/Typography.vue';
+import { getCssRgbColor } from '@/utils/style';
 import { CandleChartEmits, CandleChartProps } from './index';
 
 const props = defineProps<CandleChartProps>();

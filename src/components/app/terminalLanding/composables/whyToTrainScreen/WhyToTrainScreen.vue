@@ -42,8 +42,8 @@ import {
   subtract,
 } from '@/utils/number';
 import { compose } from '@/utils/fp';
-import { toCssPercentValue } from '@/utils/dom';
 import Typography from '@/components/app/typography/Typography.vue';
+import { toCssPercentValue } from '@/utils/style';
 
 const { t } = useI18n();
 

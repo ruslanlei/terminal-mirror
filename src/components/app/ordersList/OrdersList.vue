@@ -314,7 +314,7 @@ import { useOrdersList } from '@/hooks/useOrdersList';
 import Typography from '@/components/app/typography/Typography.vue';
 import OrdersListPlaceholder from '@/components/app/ordersList/OrdersListPlaceholder.vue';
 import CloseOrderButton from '@/components/app/closeOrderButton/CloseOrderButton.vue';
-import { toPositiveNumberString } from '@/utils/dom';
+import { toPositiveNumberString } from '@/utils/style';
 import { OrdersListProps } from './index';
 
 const props = withDefaults(

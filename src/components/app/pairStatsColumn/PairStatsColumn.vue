@@ -56,7 +56,8 @@ import Typography from '@/components/app/typography/Typography.vue';
 import { isPositive, roundToDecimalPoint } from '@/utils/number';
 import { TypographyProps } from '@/components/app/typography';
 import { useResizeObserver } from '@vueuse/core';
-import { getRect, toCssPxValue } from '@/helpers/style';
+import { toCssPxValue } from '@/utils/style';
+import { getRect } from '@/utils/dom';
 import { PairStat, PairStatsColumnProps } from './index';
 
 const props = defineProps<PairStatsColumnProps>();

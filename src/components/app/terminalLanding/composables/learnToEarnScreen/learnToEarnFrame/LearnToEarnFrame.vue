@@ -52,9 +52,9 @@ import {
 } from 'vue';
 import { roundToDecimalPoint } from '@/utils/number';
 import Typography from '@/components/app/typography/Typography.vue';
-import { getRect } from '@/helpers/style';
-import { toCssPixelValue } from '@/utils/dom';
+import { getRect } from '@/utils/dom';
 import { useEnvironmentObserver } from '@/hooks/useEnvironmentObserver';
+import { toCssPixelValue } from '@/utils/style';
 import {
   LearnToEarnFrameProps,
 } from './index';

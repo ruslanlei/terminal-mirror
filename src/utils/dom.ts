@@ -1,34 +1,73 @@
+import { curry } from '@/utils/fp';
+
 export const getCssVariable = (
   variable: string, // argument format: --variable-name
 ) => getComputedStyle(document.body)
   .getPropertyValue(variable);
-
-export const getCssRgbColor = (
-  variable: string,
-) => `rgb(${getCssVariable(variable)})`;
-
-export const toCssPixelValue = (
-  value: string | number,
-) => `${value}px`;
-
-export const toCssClassSelector = (
-  value: string | number,
-) => `.${value}`;
-
-export const toPositiveNumberString = (
-  number: number | string,
-) => `+${number}`;
-
-export const toIdSelector = (
-  id: string | number,
-) => `#${id}`;
-
-export const toCssPercentValue = (
-  percents: number,
-) => `${percents}%`;
 
 export const querySelectorAll = (
   selector: string,
 ) => document.querySelectorAll(selector);
 
 export const getElementById = (id: string) => document.getElementById(id);
+
+const removeCssPropertyFromSingleElement = curry((
+  property: string | string[],
+  element: HTMLElement,
+) => {
+  const isManyProperties = Array.isArray(property);
+
+  if (isManyProperties) {
+    property.forEach((prop: string) => {
+      element.style.removeProperty(prop);
+    });
+  } else {
+    element.style.removeProperty(property);
+  }
+
+  return element;
+});
+
+export const removeCssProperty = curry((
+  property: keyof CSSStyleDeclaration | (keyof CSSStyleDeclaration)[],
+  element: HTMLElement | HTMLElement[],
+) => {
+  const isManyElements = Array.isArray(element);
+
+  if (isManyElements) {
+    // @ts-ignore
+    element.forEach(removeCssPropertyFromSingleElement(property));
+  } else {
+    // @ts-ignore
+    removeCssPropertyFromSingleElement(property, element);
+  }
+
+  return element;
+});
+
+export const addCssProperty = curry((
+  property: [
+    keyof CSSStyleDeclaration,
+      string | number,
+  ],
+  element: HTMLElement,
+) => {
+  const [
+    cssProperty,
+    cssPropertyValue,
+  ] = property;
+
+  // @ts-ignore
+  element.style[cssProperty] = String(cssPropertyValue);
+
+  return element;
+});
+
+export const getRect = (
+  element: HTMLElement,
+) => element.getBoundingClientRect();
+
+export const getRectField = curry((
+  field: keyof DOMRect,
+  element: HTMLElement,
+) => getRect(element)[field]);

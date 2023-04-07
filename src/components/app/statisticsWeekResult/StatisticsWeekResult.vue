@@ -75,9 +75,9 @@ import { computed } from 'vue';
 import { useMarketStore } from '@/stores/market';
 import { storeToRefs } from 'pinia';
 import { calculateCommonPnlForPeriod } from '@/helpers/math/formulas/pnl';
-import { toPositiveNumberString } from '@/utils/dom';
 import { compose } from '@/utils/fp';
 import { roundToDecimalPoint } from '@/utils/number';
+import { toPositiveNumberString } from '@/utils/style';
 
 const { t } = useI18n();
 

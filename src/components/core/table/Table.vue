@@ -126,13 +126,11 @@ import { uuid } from '@/utils/uuid';
 import { arrayOfElements } from '@/helpers/dom';
 import { compose, log } from '@/utils/fp';
 import {
-  addCssProperty,
-  getRect,
-  removeCssProperty,
   toCssPxValue,
-} from '@/helpers/style';
+} from '@/utils/style';
 import { awaitTimeout } from '@/utils/promise';
 import { filter, forEach, toArray } from '@/utils/array';
+import { addCssProperty, getRect, removeCssProperty } from '@/utils/dom';
 import {
   TableRecord,
   TableProps,

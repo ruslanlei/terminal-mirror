@@ -7,8 +7,8 @@ import {
   select,
   Selection,
 } from 'd3';
-import {multiply, toAbsolute} from '@/utils/number';
-import { toCssPixelValue } from '@/utils/dom';
+import { multiply, toAbsolute } from '@/utils/number';
+import { toCssPixelValue } from '@/utils/style';
 
 export type BarChartDataElement = [string, number];
 export type BarChartData = BarChartDataElement[];

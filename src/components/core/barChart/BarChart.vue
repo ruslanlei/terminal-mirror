@@ -15,8 +15,8 @@
 import { onMounted, ref } from 'vue';
 import { setMaximalScrollLeft } from '@/utils/element';
 import { isPositive } from '@/utils/number';
-import { getCssRgbColor, toPositiveNumberString } from '@/utils/dom';
-import { getRectField } from '@/helpers/style';
+import { getRectField } from '@/utils/dom';
+import { getCssRgbColor, toPositiveNumberString } from '@/utils/style';
 import { createBarChart } from './createBarChart';
 
 const container = ref<HTMLElement>();

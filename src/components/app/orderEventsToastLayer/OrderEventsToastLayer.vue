@@ -23,12 +23,12 @@ import { Order } from '@/api/types/order';
 import { findAndDelete } from '@/helpers/array';
 import { collectOrderToastId, collectOrderToastWrapperId } from '@/components/app/orderEventsToastLayer/index';
 import { playAnimation } from '@/utils/animation';
-import { toCssPixelValue, toIdSelector } from '@/utils/dom';
+import { addCssProperty, getRect } from '@/utils/dom';
 import { compose } from '@/utils/fp';
-import { addCssProperty, getRect } from '@/helpers/style';
 import { roundToDecimalPoint } from '@/utils/number';
 import { useMarketStore } from '@/stores/market';
 import { awaitTimeout } from '@/utils/promise';
+import { toCssPixelValue, toIdSelector } from '@/utils/style';
 
 const marketStore = useMarketStore();
 const emulatorStore = useEmulatorStore();

@@ -74,11 +74,11 @@ import StatisticsResultRow from '@/containers/statisticsResultRow/StatisticsResu
 import Avatar from '@/components/core/avatar/Avatar.vue';
 import Typography from '@/components/app/typography/Typography.vue';
 import { customFormatDate, dateNow } from '@/utils/date';
-import { toPositiveNumberString } from '@/utils/dom';
 import { useMarketStore } from '@/stores/market';
 import { calculateCommonPnlForPeriod } from '@/helpers/math/formulas/pnl';
 import { compose } from '@/utils/fp';
 import { roundToDecimalPoint } from '@/utils/number';
+import { toPositiveNumberString } from '@/utils/style';
 
 const { t } = useI18n();
 

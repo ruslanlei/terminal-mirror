@@ -31,7 +31,7 @@ import {
   divide, divideRight, multiply, roundNumber, subtract, subtractRight,
 } from '@/utils/number';
 import { compose } from '@/utils/fp';
-import { getRect } from '@/helpers/style';
+import { getRect } from '@/utils/dom';
 import { RangeSliderEmits, RangeSliderProps } from './index';
 
 const props = withDefaults(

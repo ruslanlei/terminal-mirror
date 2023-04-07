@@ -40,10 +40,10 @@ import {
 import { teleportTargets } from '@/enums/teleport';
 import { useEnvironmentObserver } from '@/hooks/useEnvironmentObserver';
 import { playAnimation } from '@/utils/animation';
-import { getRect } from '@/helpers/style';
 import { compose } from '@/utils/fp';
 import { getValueByKey } from '@/utils/object';
 import { divideRight, max, roundToDecimalPoint } from '@/utils/number';
+import { getRect } from '@/utils/dom';
 import { DropdownProps, DropdownEmits, DropdownPlacement } from './index';
 
 const props = withDefaults(

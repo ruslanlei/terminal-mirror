@@ -37,7 +37,7 @@ import StatisticsFailedOrders
 import StatisticsTurnover from '@/components/app/statisticsTurnover/StatisticsTurnover.vue';
 import { compose } from '@/utils/fp';
 import { calculateSuccessRate } from '@/helpers/orders';
-import { toCssPercentValue } from '@/utils/dom';
+import { toCssPercentValue } from '@/utils/style';
 
 const { t } = useI18n();
 

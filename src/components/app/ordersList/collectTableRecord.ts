@@ -9,7 +9,9 @@ import {
   StopLoss,
   Order,
 } from '@/api/types/order';
-import {isPositive, multiply, roundToDecimalPoint, toAbsolute} from '@/utils/number';
+import {
+  isPositive, multiply, roundToDecimalPoint, toAbsolute,
+} from '@/utils/number';
 import { calculatePercentOfDifference } from '@/helpers/math/percents';
 import { calculatePnl, calculatePnlPercent } from '@/helpers/math/formulas/pnl';
 import { calculateCommonTakeProfitPercent } from '@/helpers/math/formulas/takeProfit';

@@ -1,4 +1,4 @@
-  <template>
+<template>
   <Table
     v-model:sort-by="sortBy"
     v-model:sort-direction="sortDirection"

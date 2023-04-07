@@ -41,7 +41,7 @@ import { Maybe } from '@/utils/functors';
 import { getSuccessOrders } from '@/helpers/math/formulas/pnl';
 import { getLength } from '@/utils/array';
 import { filterOrdersByType } from '@/helpers/orders';
-import { divideRight, multiply } from '@/helpers/number';
+import { divideRight, multiply, roundToDecimalPoint } from '@/helpers/number';
 import { toCssPercentValue } from '@/utils/dom';
 
 const { t } = useI18n();
@@ -58,14 +58,20 @@ const commonAmountOfTransactions = computed(() => (
 const calculateSuccessRate = (
   orders: Order[],
 ) => Maybe.of(orders)
-  .map(filterOrdersByType('limit'))
   .map(compose(
     getLength,
     getSuccessOrders,
+    filterOrdersByType('limit'),
   ))
   .chain(compose(
+    roundToDecimalPoint(2),
     multiply(100),
-    divideRight(getLength(orders)),
+    divideRight(
+      compose(
+        getLength,
+        filterOrdersByType('limit'),
+      )(orders),
+    ),
   ));
 
 const successRate = computed(() => (

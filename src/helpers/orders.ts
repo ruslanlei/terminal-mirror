@@ -130,7 +130,7 @@ export const findMostFrequentCoin = curry(
 
 export const calculateSuccessRate = (
   orders: Order[],
-) => Maybe.of(orders)
+): number => Maybe.of(orders)
   .map(compose(
     getLength,
     getSuccessOrders,

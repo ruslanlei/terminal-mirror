@@ -23,7 +23,7 @@
         :class="$style.primaryCard"
       >
         <Typography
-          :state="['success', 'bold']"
+          state="bold"
           size="massive2sm"
         >
           <slot name="successRate" />

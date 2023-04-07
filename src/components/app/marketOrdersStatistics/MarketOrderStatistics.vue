@@ -7,7 +7,12 @@
       {{ t('statistics.orders.commonAmountLabel') }}
     </template>
     <template #successRate>
-      {{ successRate }}
+      <Typography
+        :state="successRateTextState"
+        is-inline
+      >
+        {{ displaySuccessRate }}
+      </Typography>
     </template>
     <template #successRateLabel>
       {{ t('statistics.orders.successRateLabel') }}
@@ -35,9 +40,11 @@ import StatisticsSuccessOrders from '@/components/app/statisticsSuccessOrders/St
 import StatisticsFailedOrders
   from '@/components/app/statisticsFailedOrders/StatisticsFailedOrders.vue';
 import StatisticsTurnover from '@/components/app/statisticsTurnover/StatisticsTurnover.vue';
-import { compose } from '@/utils/fp';
 import { calculateSuccessRate } from '@/helpers/orders';
 import { toCssPercentValue } from '@/utils/style';
+import Typography from '@/components/app/typography/Typography.vue';
+import { isMoreThanOrEqualTo } from '@/utils/boolean';
+import { TypographyState } from '@/components/app/typography';
 
 const { t } = useI18n();
 
@@ -51,9 +58,16 @@ const commonAmountOfTransactions = computed(() => (
 ));
 
 const successRate = computed(() => (
-  compose(
-    toCssPercentValue,
-    calculateSuccessRate,
-  )(closedOrders.value)
+  calculateSuccessRate(closedOrders.value)
+));
+
+const displaySuccessRate = computed(() => (
+  toCssPercentValue(successRate.value)
+));
+
+const successRateTextState = computed<TypographyState>(() => (
+  isMoreThanOrEqualTo(50, successRate.value)
+    ? 'success'
+    : 'danger'
 ));
 </script>

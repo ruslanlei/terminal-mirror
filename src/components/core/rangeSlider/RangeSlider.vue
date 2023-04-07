@@ -29,9 +29,9 @@ import { awaitFrame } from '@/utils/window';
 import {
   add,
   divide, divideRight, multiply, subtract, subtractRight,
-} from '@/helpers/number';
+} from '@/utils/number';
 import { compose } from '@/utils/fp';
-import { roundNumber } from '@/utils/number';
+import { roundNumber } from '@/utils/numberFormat';
 import { getRect } from '@/helpers/style';
 import { RangeSliderEmits, RangeSliderProps } from './index';
 

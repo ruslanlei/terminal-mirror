@@ -127,7 +127,7 @@ import Button from '@/components/core/button/Button.vue';
 import { computed } from 'vue';
 import { useMarketStore } from '@/stores/market';
 import CoinLogo from '@/components/core/coinLogo/CoinLogo.vue';
-import { multiply, roundToDecimalPoint } from '@/helpers/number';
+import { multiply, roundToDecimalPoint } from '@/utils/number';
 import { compose } from '@/utils/fp';
 import Badge from '@/components/core/badge/Badge.vue';
 import OrderSideLabel from '@/components/core/orderSideLabel/OrderSideLabel.vue';

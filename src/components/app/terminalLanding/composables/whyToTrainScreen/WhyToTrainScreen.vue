@@ -36,8 +36,8 @@ import WhyToTrainCardRow
 import { useElementBounding, useWindowSize } from '@vueuse/core';
 import {
   add, divide, multiply, subtract,
-} from '@/helpers/number';
-import { min } from '@/utils/number';
+} from '@/utils/number';
+import { min } from '@/utils/numberFormat';
 import { compose } from '@/utils/fp';
 import { toCssPercentValue } from '@/utils/dom';
 import Typography from '@/components/app/typography/Typography.vue';

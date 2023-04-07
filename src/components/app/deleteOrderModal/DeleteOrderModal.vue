@@ -74,7 +74,7 @@ import Button from '@/components/core/button/Button.vue';
 import { Order, TakeProfit } from '@/api/types/order';
 import { reduceTakeProfitsToQuantitiesSum } from '@/helpers/math/formulas/takeProfit';
 import { calculatePnl } from '@/helpers/math/formulas/pnl';
-import { isPositive, subtractRight } from '@/helpers/number';
+import { isPositive, subtractRight } from '@/utils/number';
 import { useMarketStore } from '@/stores/market';
 import { useEmulatorStore } from '@/stores/emulator';
 import { compose } from '@/utils/fp';

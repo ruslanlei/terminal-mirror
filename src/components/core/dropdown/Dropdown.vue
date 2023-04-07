@@ -44,8 +44,8 @@ import { playAnimation } from '@/utils/animation';
 import { getRect } from '@/helpers/style';
 import { compose } from '@/utils/fp';
 import { getValueByKey } from '@/utils/object';
-import { divideRight, roundToDecimalPoint } from '@/helpers/number';
-import { max } from '@/utils/number';
+import { divideRight, roundToDecimalPoint } from '@/utils/number';
+import { max } from '@/utils/numberFormat';
 import { DropdownProps, DropdownEmits, DropdownPlacement } from './index';
 
 const props = withDefaults(

@@ -79,7 +79,7 @@ import { useEnvironmentObserver } from '@/hooks/useEnvironmentObserver';
 import { useComputedState } from '@/hooks/useComputedState';
 import { addCssProperty, getRect, toCssPxValue } from '@/helpers/style';
 import { compose } from '@/utils/fp';
-import { add, multiply, roundToDecimalPoint } from '@/helpers/number';
+import { add, multiply, roundToDecimalPoint } from '@/utils/number';
 import { SelectorEmits, SelectorOption, SelectorProps } from './index';
 
 const props = withDefaults(

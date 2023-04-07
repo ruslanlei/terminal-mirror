@@ -35,13 +35,13 @@ import {
   divide,
   divideRight,
   subtractRight,
-} from '@/helpers/number';
+} from '@/utils/number';
 import { compose } from '@/utils/fp';
 import {
   max,
   min,
   percentFormat,
-} from '@/utils/number';
+} from '@/utils/numberFormat';
 import { useAnimation } from '@/hooks/useAnimation';
 import anime from 'animejs';
 import HamsterPng from './assets/hamsterNft.png';

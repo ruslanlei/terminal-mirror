@@ -11,11 +11,6 @@ interface Monad<T> extends Applicative<T> {
   join(): T;
 }
 
-// interface Traversable<T> extends Functor<T> {
-//   traverse<U>(of: (x: U) => Traversable<U>, fn: (x: T) => Traversable<U>): Traversable<T>;
-//   sequence<U>(of: (x: U) => Traversable<U>): Traversable<T>;
-// }
-
 export class Maybe<T> implements Monad<T>/* , Traversable<T> */ {
   private readonly $value: T | null | undefined;
 
@@ -67,13 +62,4 @@ export class Maybe<T> implements Monad<T>/* , Traversable<T> */ {
   getOrElse(defaultValue: T): T {
     return this.isNothing ? defaultValue : this.$value as T;
   }
-
-  // // ----- Traversable Maybe
-  // traverse<U>(of: (x: U) => Maybe<U>, fn: (x: T) => Maybe<U>): Maybe<T> {
-  //   return this.isNothing ? Maybe.of<T>(null) : fn(this.$value as T).map(Maybe.of);
-  // }
-  //
-  // sequence<U>(of: (x: U) => Maybe<U>): Maybe<T> {
-  //   return this.traverse(of, (x) => x);
-  // }
 }

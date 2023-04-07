@@ -128,13 +128,13 @@ import TrendingIcon from '@/components/core/trendingIcon/TrendingIcon.vue';
 import CoinLogo from '@/components/core/coinLogo/CoinLogo.vue';
 import Icon from '@/components/core/icon/Icon.vue';
 import { SortDirection } from '@/components/core/table';
-import { humanizeNumber } from '@/utils/number';
+import { humanizeNumber } from '@/utils/numberFormat';
 import { Pair } from '@/api/types/pair';
 import { useMarketStore } from '@/stores/market';
 import Typography from '@/components/app/typography/Typography.vue';
 import { useChartDataStore } from '@/stores/chartData';
 import Badge from '@/components/core/badge/Badge.vue';
-import { isPositive } from '@/helpers/number';
+import { isPositive } from '@/utils/number';
 import { humanizePercents } from '@/helpers/math/percents';
 import {
   PairsTableColumn, PairsTableEmits,

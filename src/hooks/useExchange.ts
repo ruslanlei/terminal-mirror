@@ -7,7 +7,7 @@ import {
   divideRight,
   multiply,
   roundToDecimalPoint,
-} from '@/helpers/number';
+} from '@/utils/number';
 import {
   incrementQuoteDepositByBaseStep,
   decrementQuoteDepositByBaseStep,

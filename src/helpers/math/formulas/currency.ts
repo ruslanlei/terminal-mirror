@@ -1,6 +1,6 @@
 import {
   add, divideRight, multiply, subtractRight,
-} from '@/helpers/number';
+} from '@/utils/number';
 import { compose, curry } from '@/utils/fp';
 import { Maybe } from '@/utils/functors';
 

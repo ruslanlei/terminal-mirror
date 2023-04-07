@@ -9,8 +9,8 @@ import {
   multiply,
   subtract,
   subtractRight,
-} from '@/helpers/number';
-import { toAbsolute } from '@/utils/number';
+} from '@/utils/number';
+import { toAbsolute } from '@/utils/numberFormat';
 import { Maybe } from '@/utils/functors';
 
 export const calculateRisk = curry((

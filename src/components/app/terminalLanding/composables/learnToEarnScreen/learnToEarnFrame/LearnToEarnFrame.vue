@@ -50,7 +50,7 @@ import Card from '@/components/core/card/Card.vue';
 import {
   computed, onBeforeUnmount, onMounted, ref, watch,
 } from 'vue';
-import { roundToDecimalPoint } from '@/helpers/number';
+import { roundToDecimalPoint } from '@/utils/number';
 import Typography from '@/components/app/typography/Typography.vue';
 import { getRect } from '@/helpers/style';
 import { toCssPixelValue } from '@/utils/dom';

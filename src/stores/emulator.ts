@@ -20,7 +20,7 @@ import {
   toISOString,
   toTimestamp,
 } from '@/utils/date';
-import { multiply } from '@/helpers/number';
+import { multiply } from '@/utils/number';
 import { Order } from '@/api/types/order';
 import { processServerErrors } from '@/api/common';
 import { Pair } from '@/api/types/pair';

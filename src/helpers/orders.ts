@@ -6,7 +6,7 @@ import { Order, OrderStatus, SubOrder } from '@/api/types/order';
 import { calculateVolumeDifference } from '@/helpers/math/formulas/order';
 import {
   add, divideRight, multiply, roundToDecimalPoint,
-} from '@/helpers/number';
+} from '@/utils/number';
 import {
   countBy,
   filter, getLength, isArray, map, reduce,

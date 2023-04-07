@@ -52,11 +52,11 @@
 <script setup lang="ts">
 import CoinLogo from '@/components/core/coinLogo/CoinLogo.vue';
 import Typography from '@/components/app/typography/Typography.vue';
-import { humanizeNumber } from '@/utils/number';
+import { humanizeNumber } from '@/utils/numberFormat';
 import Badge from '@/components/core/badge/Badge.vue';
 import { computed } from 'vue';
 import { humanizePercents } from '@/helpers/math/percents';
-import { isPositive } from '@/helpers/number';
+import { isPositive } from '@/utils/number';
 import { FavoritesListItemProps } from './index';
 
 const props = defineProps<FavoritesListItemProps>();

@@ -18,7 +18,7 @@ import { useI18n } from 'vue-i18n';
 import { useMarketStore } from '@/stores/market';
 import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
 import { useEmulatorStore } from '@/stores/emulator';
-import { roundToDecimalPoint } from '@/helpers/number';
+import { roundToDecimalPoint } from '@/utils/number';
 
 const { t } = useI18n();
 

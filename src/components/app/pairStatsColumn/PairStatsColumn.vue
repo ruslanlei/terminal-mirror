@@ -53,7 +53,7 @@ import { onMounted, ref } from 'vue';
 import Divider from '@/components/core/divider/Divider.vue';
 import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
 import Typography from '@/components/app/typography/Typography.vue';
-import { isPositive, roundToDecimalPoint } from '@/helpers/number';
+import { isPositive, roundToDecimalPoint } from '@/utils/number';
 import { TypographyProps } from '@/components/app/typography';
 import { useResizeObserver } from '@vueuse/core';
 import { getRect, toCssPxValue } from '@/helpers/style';

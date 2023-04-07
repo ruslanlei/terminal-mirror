@@ -39,7 +39,7 @@ import { getCssRgbColor } from '@/utils/dom';
 import { useLocalValue } from '@/hooks/useLocalValue';
 import { toISOString } from '@/utils/date';
 import { compose } from '@/utils/fp';
-import { multiply } from '@/helpers/number';
+import { multiply } from '@/utils/number';
 import Typography from '@/components/app/typography/Typography.vue';
 import { CandleChartEmits, CandleChartProps } from './index';
 

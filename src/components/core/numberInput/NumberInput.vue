@@ -89,7 +89,7 @@ import { useLocalValue } from '@/hooks/useLocalValue';
 import FieldError from '@/components/core/fieldError/FieldError.vue';
 import Icon from '@/components/core/icon/Icon.vue';
 import { useComputedState } from '@/hooks/useComputedState';
-import { add, subtract, roundToDecimalPoint } from '@/helpers/number';
+import { add, subtract, roundToDecimalPoint } from '@/utils/number';
 import { NumberInputEmits, NumberInputNormalizer, NumberInputProps } from './index';
 
 const props = withDefaults(

@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import { compose, curry } from '@/utils/fp';
 import now from 'lodash/now';
-import { divide, divideRight, multiply } from '@/helpers/number';
+import { divide, divideRight, multiply } from '@/utils/number';
 
 export {
   now as dateNow,

@@ -5,7 +5,7 @@ import { useMarketStore } from '@/stores/market';
 import {
   MasterOrder, Order, StopLoss, TakeProfit,
 } from '@/api/types/order';
-import { add, roundToDecimalPoint } from '@/helpers/number';
+import { add, roundToDecimalPoint } from '@/utils/number';
 import { compose } from '@/utils/fp';
 import { collectActiveOrderRecord, collectClosedOrderRecord } from '@/components/app/ordersList/collectTableRecord';
 import { createEmptyRecord } from '@/components/core/table/helpers';

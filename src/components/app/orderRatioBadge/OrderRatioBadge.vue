@@ -13,7 +13,7 @@
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { compose } from '@/utils/fp';
-import { divideRight, roundToDecimalPoint } from '@/helpers/number';
+import { divideRight, roundToDecimalPoint } from '@/utils/number';
 import Badge from '@/components/core/badge/Badge.vue';
 import Typography from '@/components/app/typography/Typography.vue';
 import { isMoreThan } from '@/utils/boolean';

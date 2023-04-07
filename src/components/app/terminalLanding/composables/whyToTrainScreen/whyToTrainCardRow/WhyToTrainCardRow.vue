@@ -38,7 +38,7 @@ import WhyToTrainCard
 import {
   WhyToTrainCardRowProps,
 } from '@/components/app/terminalLanding/composables/whyToTrainScreen/whyToTrainCardRow/index';
-import { divide, multiply } from '@/helpers/number';
+import { divide, multiply } from '@/utils/number';
 import { useAnimation } from '@/hooks/useAnimation';
 
 const props = defineProps<WhyToTrainCardRowProps>();

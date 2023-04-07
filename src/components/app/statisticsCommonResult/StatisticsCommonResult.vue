@@ -89,7 +89,7 @@ import StatisticsResultRow from '@/containers/statisticsResultRow/StatisticsResu
 import Avatar from '@/components/core/avatar/Avatar.vue';
 import Typography from '@/components/app/typography/Typography.vue';
 import Icon from '@/components/core/icon/Icon.vue';
-import { roundToDecimalPoint } from '@/helpers/number';
+import { roundToDecimalPoint } from '@/utils/number';
 import { useEmulatorStore } from '@/stores/emulator';
 import { calculateCommonPnlForPeriod } from '@/helpers/math/formulas/pnl';
 import { useMarketStore } from '@/stores/market';

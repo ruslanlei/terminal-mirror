@@ -55,7 +55,7 @@ import Typography from '@/components/app/typography/Typography.vue';
 import CoinLogo from '@/components/core/coinLogo/CoinLogo.vue';
 import { computed } from 'vue';
 import { compose } from '@/utils/fp';
-import { roundToDecimalPoint } from '@/helpers/number';
+import { roundToDecimalPoint } from '@/utils/number';
 import { calculateAverageLoss, filterOrdersByType, findMostFrequentCoin } from '@/helpers/orders';
 import { useMarketStore } from '@/stores/market';
 import { storeToRefs } from 'pinia';

@@ -7,7 +7,7 @@ import {
 } from 'vue';
 import { getElementById } from '@/utils/dom';
 import { compose } from '@/utils/fp';
-import { add } from '@/helpers/number';
+import { add } from '@/utils/number';
 import { getRectField } from '@/helpers/style';
 
 export const useLandingAnchor = (

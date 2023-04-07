@@ -10,7 +10,7 @@ import {
   multiply,
   subtract,
   subtractRight,
-} from '@/helpers/number';
+} from '@/utils/number';
 import { calculateOnePercent } from '@/helpers/math/percents';
 import { TakeProfit } from '@/api/types/order';
 import { getLength, reduce } from '@/utils/array';

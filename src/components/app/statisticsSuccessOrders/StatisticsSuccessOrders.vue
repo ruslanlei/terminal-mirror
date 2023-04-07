@@ -59,7 +59,7 @@ import { useMarketStore } from '@/stores/market';
 import { compose } from '@/utils/fp';
 import { calculateAverageIncome, filterOrdersByType, findMostFrequentCoin } from '@/helpers/orders';
 import { getSuccessOrders } from '@/helpers/math/formulas/pnl';
-import { roundToDecimalPoint } from '@/helpers/number';
+import { roundToDecimalPoint } from '@/utils/number';
 import { getLength } from '@/utils/array';
 
 const { t } = useI18n();

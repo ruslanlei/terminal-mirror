@@ -37,7 +37,7 @@ import { useEnvironmentObserver } from '@/hooks/useEnvironmentObserver';
 import { getRectField, toCssPxValue } from '@/helpers/style';
 import { compose } from '@/utils/fp';
 import { useComputedState } from '@/hooks/useComputedState';
-import { add } from '@/helpers/number';
+import { add } from '@/utils/number';
 import { InlineDropdownProps } from './index';
 
 const props = withDefaults(

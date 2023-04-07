@@ -77,7 +77,7 @@ import { storeToRefs } from 'pinia';
 import { calculateCommonPnlForPeriod } from '@/helpers/math/formulas/pnl';
 import { toPositiveNumberString } from '@/utils/dom';
 import { compose } from '@/utils/fp';
-import { roundToDecimalPoint } from '@/helpers/number';
+import { roundToDecimalPoint } from '@/utils/number';
 
 const { t } = useI18n();
 

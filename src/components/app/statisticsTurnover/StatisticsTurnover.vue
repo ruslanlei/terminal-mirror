@@ -42,7 +42,7 @@ import Typography from '@/components/app/typography/Typography.vue';
 import { useI18n } from 'vue-i18n';
 import { computed } from 'vue';
 import { compose } from '@/utils/fp';
-import { add, multiply, roundToDecimalPoint } from '@/helpers/number';
+import { add, multiply, roundToDecimalPoint } from '@/utils/number';
 import { calculateAverageIncome } from '@/helpers/orders';
 import { useMarketStore } from '@/stores/market';
 import { storeToRefs } from 'pinia';

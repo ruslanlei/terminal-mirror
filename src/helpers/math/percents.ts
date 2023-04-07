@@ -8,9 +8,9 @@ import {
   multiply,
   roundToDecimalPoint, subtract,
   subtractRight,
-} from '@/helpers/number';
+} from '@/utils/number';
 import { isEqual } from '@/utils/boolean';
-import { percentFormat } from '@/utils/number';
+import { percentFormat } from '@/utils/numberFormat';
 
 export const calculateOnePercent = (
   total: number,

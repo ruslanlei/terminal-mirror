@@ -3,7 +3,7 @@ import {
   divideRight,
   multiply,
   subtract,
-} from '@/helpers/number';
+} from '@/utils/number';
 import { calculateVolumeDifference } from '@/helpers/math/formulas/order';
 import { calculateOnePercent } from '@/helpers/math/percents';
 

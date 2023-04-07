@@ -23,7 +23,7 @@ import {
   calculatePledge,
   calculateVolumeDifference,
 } from '@/helpers/math/formulas/order';
-import { roundToDecimalPoint } from '@/helpers/number';
+import { roundToDecimalPoint } from '@/utils/number';
 import { useChartDataStore } from '@/stores/chartData';
 import { TakeProfit } from '@/api/types/order';
 import { arrayOf } from '@/utils/array';

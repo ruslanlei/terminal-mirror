@@ -43,7 +43,7 @@ import { useI18n } from 'vue-i18n';
 import TakeProfitInput from '@/components/core/takeProfitInput/TakeProfitInput.vue';
 import { useLocalValue } from '@/hooks/useLocalValue';
 import { TakeProfitListEmit, TakeProfitListProps } from '@/components/app/takeProfitList/index';
-import { subtract } from '@/helpers/number';
+import { subtract } from '@/utils/number';
 import { reduceTakeProfitsToQuantitiesSum } from '@/helpers/math/formulas/takeProfit';
 import { awaitFrame } from '@/utils/window';
 import { TakeProfit } from '@/api/types/order';

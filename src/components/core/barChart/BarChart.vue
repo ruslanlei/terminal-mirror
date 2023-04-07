@@ -14,7 +14,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import { setMaximalScrollLeft } from '@/utils/element';
-import { isPositive } from '@/helpers/number';
+import { isPositive } from '@/utils/number';
 import { getCssRgbColor, toPositiveNumberString } from '@/utils/dom';
 import { getRectField } from '@/helpers/style';
 import { createBarChart } from './createBarChart';

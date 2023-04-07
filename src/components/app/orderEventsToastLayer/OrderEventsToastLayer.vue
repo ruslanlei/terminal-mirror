@@ -26,7 +26,7 @@ import { playAnimation } from '@/utils/animation';
 import { toCssPixelValue, toIdSelector } from '@/utils/dom';
 import { compose } from '@/utils/fp';
 import { addCssProperty, getRect } from '@/helpers/style';
-import { roundToDecimalPoint } from '@/helpers/number';
+import { roundToDecimalPoint } from '@/utils/number';
 import { useMarketStore } from '@/stores/market';
 import { awaitTimeout } from '@/utils/promise';
 

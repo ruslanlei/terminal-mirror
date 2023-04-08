@@ -13,7 +13,7 @@ import { toCssPxValue } from '@/utils/style';
 export type BarChartDataElement = [string, number];
 export type BarChartData = BarChartDataElement[];
 
-export type LabelFormatter = (value: number | string) => string;
+export type LabelFormatter = (value: number | string, index: number) => string;
 
 export interface CreateBarChartProps {
   container: HTMLElement;
@@ -54,7 +54,7 @@ const createXAxis = ({
   const xAxisLabels = data.map(([label]) => label);
   const xAxis = axisBottom(xScale)
     .tickFormat((d, i) => (
-      labelFormatter(xAxisLabels[i])
+      labelFormatter(xAxisLabels[i], i)
     ))
     .tickPadding(10);
 
@@ -140,7 +140,7 @@ const createBars = (
     .data(data)
     .enter()
     .append('text')
-    .text(([, value]) => labelFormatter(value))
+    .text(([, value], index) => labelFormatter(value, index))
     .attr('x', (d, i) => xScale(i) as number + xScale.bandwidth() / 2)
     .attr('y', ([, value]) => yScale(toAbsolute(value)) - labelGap)
     .style('font-size', '12px')

@@ -13,7 +13,7 @@ import BarChart from '@/components/core/barChart/BarChart.vue';
 import { toPnlString } from '@/utils/style';
 import { useMarketStore } from '@/stores/market';
 import {
-  addMonths, customFormatDate, DateValue, getDifferenceInMonths,
+  addMonths, customFormatDate, DateValue, getDifferenceInMonths, getMonthIndex,
 } from '@/utils/date';
 import { filterOrdersByType } from '@/helpers/orders';
 import { compose } from '@/utils/fp';
@@ -137,5 +137,19 @@ const barLabelFormatter = (
 
 const xAxisLabelFormatter = (
   date: DateValue,
-) => (date);
+  index: number,
+) => {
+  const isJanuary = isEqual(
+    getMonthIndex(date),
+    0,
+  );
+
+  const isFirstMonthInList = isEqual(index, 0);
+
+  const dateFormat = (isJanuary || isFirstMonthInList)
+    ? 'MMM YYYY'
+    : 'MMM';
+
+  return customFormatDate(dateFormat, date);
+};
 </script>

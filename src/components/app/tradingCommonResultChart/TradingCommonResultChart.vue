@@ -22,7 +22,7 @@ import {
   arrayOf,
   filter,
   getFirstElement,
-  getLastElement,
+  getLastElement, getLength,
   map,
   sortByKey,
 } from '@/utils/array';
@@ -32,7 +32,7 @@ import { calculateCommonPnl } from '@/helpers/math/formulas/pnl';
 import { Maybe } from '@/utils/functors';
 import { computed, watch } from 'vue';
 import { BarChartData, BarChartDataElement } from '@/components/core/barChart/createBarChart';
-import { isEqual } from '@/utils/boolean';
+import { isEqual, isMoreThanOrEqualTo } from '@/utils/boolean';
 
 const { t } = useI18n();
 
@@ -103,6 +103,12 @@ const fillMissedMonths = (data: BarChartData) => {
         )(earliestDate),
       ),
     )
+    .map((
+      chartData: BarChartData,
+    ) => (
+      // TODO: if less than 12 months, fill previous months as empty
+      chartData
+    ))
     .chain(
       // map array to fill it with existing data
       map(

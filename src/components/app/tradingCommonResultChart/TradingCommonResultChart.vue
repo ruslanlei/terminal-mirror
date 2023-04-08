@@ -128,12 +128,6 @@ const computedData = computed(() => (
     .chain(fillMissedMonths)
 ));
 
-watch(computedData, () => {
-  console.log(computedData.value);
-}, { immediate: true });
-
-// customFormatDate('MMM' /* TODO: 'MMM YYYY' if jan */, order.executed_at)
-
 const barLabelFormatter = (
   value: number,
 ) => t('common.currencyAmount', {

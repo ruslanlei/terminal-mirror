@@ -41,6 +41,31 @@ const {
   closedOrders,
 } = storeToRefs(marketStore);
 
+const barLabelFormatter = (
+  value: number,
+) => t('common.currencyAmount', {
+  amount: toPnlString(value),
+  currency: '$',
+});
+
+const xAxisLabelFormatter = (
+  date: DateValue,
+  index: number,
+) => {
+  const isJanuary = isEqual(
+    getMonthIndex(date),
+    0,
+  );
+
+  const isFirstMonthInList = isEqual(index, 0);
+
+  const dateFormat = (isJanuary || isFirstMonthInList)
+    ? 'MMM YYYY'
+    : 'MMM';
+
+  return customFormatDate(dateFormat, date);
+};
+
 const filterInappropriateOrders = (orders: Order[]) => (
     compose(
       filter((order: Order) => !!order?.modified),
@@ -48,7 +73,7 @@ const filterInappropriateOrders = (orders: Order[]) => (
     )(orders) as Order[]
 );
 
-const groupPnlByMonths = (orders: Order[]) => (
+const groupPnlByMonths = (orders: Order[]): BarChartData => (
   compose(
     map(
       ([
@@ -75,7 +100,7 @@ const groupPnlByMonths = (orders: Order[]) => (
   )(orders) as BarChartData
 );
 
-const fillMissedMonths = (data: BarChartData) => {
+const fillMissedMonths = (data: BarChartData): BarChartData => {
   const earliestDate = compose(
     getValueByKey('0'),
     getFirstElement,
@@ -121,35 +146,16 @@ const fillMissedMonths = (data: BarChartData) => {
     );
 };
 
-const computedData = computed(() => (
-  Maybe.of(closedOrders.value)
+const collectChartData = (
+  orders: Order[],
+) => (
+  Maybe.of(orders)
     .map<Order[]>(filterInappropriateOrders)
     .map<BarChartData>(groupPnlByMonths)
-    .chain(fillMissedMonths)
+    .chain<BarChartData>(fillMissedMonths)
+);
+
+const computedData = computed<BarChartData>(() => (
+  collectChartData(closedOrders.value)
 ));
-
-const barLabelFormatter = (
-  value: number,
-) => t('common.currencyAmount', {
-  amount: toPnlString(value),
-  currency: '$',
-});
-
-const xAxisLabelFormatter = (
-  date: DateValue,
-  index: number,
-) => {
-  const isJanuary = isEqual(
-    getMonthIndex(date),
-    0,
-  );
-
-  const isFirstMonthInList = isEqual(index, 0);
-
-  const dateFormat = (isJanuary || isFirstMonthInList)
-    ? 'MMM YYYY'
-    : 'MMM';
-
-  return customFormatDate(dateFormat, date);
-};
 </script>

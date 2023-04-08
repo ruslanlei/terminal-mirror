@@ -1,10 +1,11 @@
-import dayjs from 'dayjs';
+import dayjs, { QUnitType } from 'dayjs';
 import { compose, curry } from '@/utils/fp';
 import now from 'lodash/now';
 import {
-  add, divide, divideRight, multiply,
+  divide,
+  divideRight,
+  multiply,
 } from '@/utils/number';
-import collect from 'collect.js';
 
 export {
   now as dateNow,
@@ -120,3 +121,15 @@ export const getMonthIndex = (
 export const getMonthName = (
   monthIndex: number,
 ) => dayjs().month(monthIndex).format('MMM');
+
+export const getDateDifferenceIn = curry(
+  (
+    unit: QUnitType,
+    dateA: DateValue,
+    dateB: DateValue,
+  ) => (
+    dayjs(dateA).diff(dayjs(dateB), unit)
+  ),
+);
+
+export const getDifferenceInMonths = getDateDifferenceIn('month');

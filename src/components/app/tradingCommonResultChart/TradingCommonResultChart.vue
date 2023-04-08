@@ -11,21 +11,21 @@ import { storeToRefs } from 'pinia';
 import BarChart from '@/components/core/barChart/BarChart.vue';
 import { toPnlString } from '@/utils/style';
 import { useMarketStore } from '@/stores/market';
-import { addMonths, customFormatDate } from '@/utils/date';
+import { addMonths, customFormatDate, getDifferenceInMonths } from '@/utils/date';
 import { filterOrdersByType } from '@/helpers/orders';
 import { compose, curry, log } from '@/utils/fp';
 import { Order } from '@/api/types/order';
 import {
+  arrayOf,
   filter, getFirstElement, getLastElement, map, sortByKey,
 } from '@/utils/array';
-import { groupBy, objectEntries } from '@/utils/object';
-import { roundToDecimalPoint } from '@/utils/number';
+import { getValueByKey, groupBy, objectEntries } from '@/utils/object';
+import { add, roundToDecimalPoint } from '@/utils/number';
 import { calculateCommonPnl } from '@/helpers/math/formulas/pnl';
 import { Maybe } from '@/utils/functors';
 import { computed, watch } from 'vue';
 import { BarChartData, BarChartDataElement } from '@/components/core/barChart/createBarChart';
 import collect from 'collect.js';
-import dayjs from 'dayjs';
 
 const { t } = useI18n();
 
@@ -42,48 +42,56 @@ const filterInappropriateOrders = (orders: Order[]) => (
 );
 
 const groupPnlByMonths = (orders: Order[]) => (
-  compose(
-    map(
-      ([
-        monthNumber,
-        monthOrders,
-      ]: [string, Array<Order>]) => (
-        [
+    compose(
+      map(
+        ([
           monthNumber,
-          compose(
-            roundToDecimalPoint(2),
-            calculateCommonPnl,
-          )(monthOrders),
-        ]
+          monthOrders,
+        ]: [string, Array<Order>]) => (
+          [
+            monthNumber,
+            compose(
+              roundToDecimalPoint(2),
+              calculateCommonPnl,
+            )(monthOrders),
+          ]
+        ),
       ),
-    ),
-    objectEntries,
-    groupBy((order: Order) => (
-      /* Day index is set to default "01" */
-      /* to group orders by months and be */
-      /* able to extract month later from */
-      /* date string. */
-      customFormatDate('YYYY-MM-01', order.modified)
-    )),
-  )(orders) as BarChartData
+      objectEntries,
+      groupBy((order: Order) => (
+        /* Day index is set to default "01" */
+        /* to group orders by months and be */
+        /* able to extract month later from */
+        /* date string. */
+        customFormatDate('YYYY-MM-01', order.modified)
+      )),
+    )(orders) as BarChartData
 );
 
 const fillMissedMonths = (data: BarChartData) => {
   const earliestDate = compose(
+    getValueByKey('0'),
     getFirstElement,
     sortByKey('0' as BarChartDataElement[0]),
   )(data);
 
   const latestDate = compose(
+    getValueByKey('0'),
     getLastElement,
     sortByKey('0' as BarChartDataElement[0]),
   )(data);
 
-  const monthsDiff = dayjs(latestDate[0]).diff(dayjs(earliestDate[0]), 'month');
+  const monthsDiff = getDifferenceInMonths(
+    latestDate,
+    earliestDate,
+  );
 
-  const allMonths = Array.from(
-    { length: monthsDiff + 1 },
-    (_, i) => dayjs(earliestDate[0]).add(i, 'month').format('YYYY-MM-01'),
+  const allMonths = arrayOf(
+    (_, i) => compose(
+      customFormatDate('YYYY-MM-01'),
+      addMonths(i),
+    )(earliestDate),
+    add(monthsDiff, 1),
   );
 
   const filledData = collect(allMonths)

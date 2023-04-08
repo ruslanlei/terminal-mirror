@@ -4,6 +4,7 @@ import now from 'lodash/now';
 import {
   add, divide, divideRight, multiply,
 } from '@/utils/number';
+import collect from 'collect.js';
 
 export {
   now as dateNow,
@@ -114,3 +115,34 @@ export const getMonthIndex = (
 export const getMonthName = (
   monthIndex: number,
 ) => dayjs().month(monthIndex).format('MMM');
+
+/// ///////
+
+const data = [
+  ['2023-01-01', 113.6],
+  ['2023-02-01', 2194.84],
+  ['2023-05-01', 1.05],
+];
+
+const startDate = collect(data).min('0');
+const endDate = collect(data).max('0');
+
+console.log(
+  startDate,
+  endDate,
+);
+
+// const newData = collect([]);
+// dayjs
+//   .range(startDate, endDate.add(1, 'month'))
+//   .forEach((date) => {
+//     const dateStr = date.format('YYYY-MM');
+//     const existingData = data.find((d) => d[0].slice(0, 7) === dateStr);
+//     if (existingData) {
+//       newData.push(existingData);
+//     } else {
+//       newData.push([`${dateStr}-01`, 0]);
+//     }
+//   });
+//
+// console.log(newData.all());

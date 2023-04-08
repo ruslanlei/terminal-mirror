@@ -11,9 +11,9 @@ import { storeToRefs } from 'pinia';
 import BarChart from '@/components/core/barChart/BarChart.vue';
 import { toPnlString } from '@/utils/style';
 import { useMarketStore } from '@/stores/market';
-import { getMonthIndex } from '@/utils/date';
+import { customFormatDate } from '@/utils/date';
 import { filterOrdersByType } from '@/helpers/orders';
-import { compose } from '@/utils/fp';
+import { compose, log } from '@/utils/fp';
 import { Order } from '@/api/types/order';
 import { filter, map } from '@/utils/array';
 import { groupBy, objectEntries } from '@/utils/object';
@@ -30,6 +30,13 @@ const {
   closedOrders,
 } = storeToRefs(marketStore);
 
+const filterInappropriateOrders = (orders: Order[]) => (
+    compose(
+      filter((order: Order) => !!order?.modified),
+      filterOrdersByType('limit'),
+    )(orders) as Order[]
+);
+
 const groupPnlByMonths = (orders: Order[]) => (
   compose(
     map(
@@ -38,7 +45,7 @@ const groupPnlByMonths = (orders: Order[]) => (
         monthOrders,
       ]: [string, Array<Order>]) => (
         [
-          Number(monthNumber),
+          monthNumber,
           compose(
             roundToDecimalPoint(2),
             calculateCommonPnl,
@@ -48,7 +55,11 @@ const groupPnlByMonths = (orders: Order[]) => (
     ),
     objectEntries,
     groupBy((order: Order) => (
-      getMonthIndex(order.modified)
+      /* Day index is set to default "01" */
+      /* to group orders by months and be */
+      /* able to extract month later from */
+      /* date string. */
+      customFormatDate('YYYY-MM-01', order.modified)
     )),
   )(orders) as BarChartData
 );
@@ -64,12 +75,7 @@ const fillMissedMonths = (
 
 const computedData = computed(() => (
   Maybe.of(closedOrders.value)
-    .map<Order[]>((orders: Order[]) => (
-      compose(
-        filter((order: Order) => !!order?.modified),
-        filterOrdersByType('limit'),
-      )(orders) as Order[]
-    ))
+    .map<Order[]>(filterInappropriateOrders)
     .map<BarChartData>(groupPnlByMonths)
     .chain(fillMissedMonths)
 ));

@@ -13,15 +13,17 @@ import { toPnlString } from '@/utils/style';
 import { useMarketStore } from '@/stores/market';
 import { addMonths, customFormatDate } from '@/utils/date';
 import { filterOrdersByType } from '@/helpers/orders';
-import { compose, log } from '@/utils/fp';
+import { compose, curry, log } from '@/utils/fp';
 import { Order } from '@/api/types/order';
-import { filter, map } from '@/utils/array';
+import {
+  filter, getFirstElement, getLastElement, map, sortByKey,
+} from '@/utils/array';
 import { groupBy, objectEntries } from '@/utils/object';
 import { roundToDecimalPoint } from '@/utils/number';
 import { calculateCommonPnl } from '@/helpers/math/formulas/pnl';
 import { Maybe } from '@/utils/functors';
 import { computed, watch } from 'vue';
-import { BarChartData } from '@/components/core/barChart/createBarChart';
+import { BarChartData, BarChartDataElement } from '@/components/core/barChart/createBarChart';
 import collect from 'collect.js';
 import dayjs from 'dayjs';
 
@@ -67,14 +69,15 @@ const groupPnlByMonths = (orders: Order[]) => (
 );
 
 const fillMissedMonths = (data: BarChartData) => {
-  const sortedList = collect(data)
-    .sortBy('0');
+  const earliestDate = compose(
+    getFirstElement,
+    sortByKey('0' as BarChartDataElement[0]),
+  )(data);
 
-  const earliestDate = sortedList
-    .first();
-
-  const latestDate = sortedList
-    .last();
+  const latestDate = compose(
+    getLastElement,
+    sortByKey('0' as BarChartDataElement[0]),
+  )(data);
 
   const monthsDiff = dayjs(latestDate[0]).diff(dayjs(earliestDate[0]), 'month');
 
@@ -103,7 +106,7 @@ const computedData = computed(() => (
     .chain(() => fillMissedMonths(
       [
         ['2023-02-01', 2194.84],
-        ['2023-05-01', 113.6],
+        ['2023-05-01', 613.6],
         ['2023-08-01', 1000.05],
       ],
     ))

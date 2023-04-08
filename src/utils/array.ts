@@ -111,3 +111,12 @@ export const findAndUpdateObject = curry((
     Object.assign(cachedObject, updatedObject);
   }
 });
+
+export const sortByKey = curry(
+  <T extends []>(
+    key: string,
+    list: T,
+  ): T => collect(list)
+    .sortBy(key)
+    .all() as T,
+);

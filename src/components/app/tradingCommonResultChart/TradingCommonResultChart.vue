@@ -11,7 +11,7 @@ import { storeToRefs } from 'pinia';
 import BarChart from '@/components/core/barChart/BarChart.vue';
 import { toPnlString } from '@/utils/style';
 import { useMarketStore } from '@/stores/market';
-import { customFormatDate } from '@/utils/date';
+import { addMonths, customFormatDate } from '@/utils/date';
 import { filterOrdersByType } from '@/helpers/orders';
 import { compose, log } from '@/utils/fp';
 import { Order } from '@/api/types/order';
@@ -22,6 +22,8 @@ import { calculateCommonPnl } from '@/helpers/math/formulas/pnl';
 import { Maybe } from '@/utils/functors';
 import { computed, watch } from 'vue';
 import { BarChartData } from '@/components/core/barChart/createBarChart';
+import collect from 'collect.js';
+import dayjs from 'dayjs';
 
 const { t } = useI18n();
 
@@ -64,20 +66,47 @@ const groupPnlByMonths = (orders: Order[]) => (
   )(orders) as BarChartData
 );
 
-const fillMissedMonths = (
-  data: BarChartData,
-) => {
-  // implement this
-  console.log(data);
+const fillMissedMonths = (data: BarChartData) => {
+  const sortedList = collect(data)
+    .sortBy('0');
 
-  return data;
+  const earliestDate = sortedList
+    .first();
+
+  const latestDate = sortedList
+    .last();
+
+  const monthsDiff = dayjs(latestDate[0]).diff(dayjs(earliestDate[0]), 'month');
+
+  const allMonths = Array.from(
+    { length: monthsDiff + 1 },
+    (_, i) => dayjs(earliestDate[0]).add(i, 'month').format('YYYY-MM-01'),
+  );
+
+  const filledData = collect(allMonths)
+    .map((month) => {
+      const existingMonthData = data.find((d) => d[0] === month);
+
+      return existingMonthData || [month, 0];
+    })
+    .toArray();
+
+  console.log('filledData', filledData);
+
+  return filledData;
 };
 
 const computedData = computed(() => (
   Maybe.of(closedOrders.value)
     .map<Order[]>(filterInappropriateOrders)
     .map<BarChartData>(groupPnlByMonths)
-    .chain(fillMissedMonths)
+    .chain(() => fillMissedMonths(
+      [
+        ['2023-02-01', 2194.84],
+        ['2023-05-01', 113.6],
+        ['2023-08-01', 1000.05],
+      ],
+    ))
 ));
 
 watch(computedData, () => {

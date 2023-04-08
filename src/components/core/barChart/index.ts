@@ -1,6 +1,7 @@
-import { BarChartData, ValueLabelFormatter } from '@/components/core/barChart/createBarChart';
+import { BarChartData, LabelFormatter } from '@/components/core/barChart/createBarChart';
 
 export interface BarChartProps {
   data: BarChartData,
-  barLabelFormatter?: ValueLabelFormatter,
+  barLabelFormatter?: LabelFormatter,
+  xAxisLabelFormatter?: LabelFormatter,
 }

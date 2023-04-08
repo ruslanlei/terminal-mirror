@@ -1,7 +1,8 @@
 <template>
   <BarChart
     :data="computedData"
-    :bar-label-formatter="labelFormatter"
+    :bar-label-formatter="barLabelFormatter"
+    :x-axis-label-formatter="xAxisLabelFormatter"
   />
 </template>
 
@@ -11,7 +12,9 @@ import { storeToRefs } from 'pinia';
 import BarChart from '@/components/core/barChart/BarChart.vue';
 import { toPnlString } from '@/utils/style';
 import { useMarketStore } from '@/stores/market';
-import { addMonths, customFormatDate, getDifferenceInMonths } from '@/utils/date';
+import {
+  addMonths, customFormatDate, DateValue, getDifferenceInMonths,
+} from '@/utils/date';
 import { filterOrdersByType } from '@/helpers/orders';
 import { compose } from '@/utils/fp';
 import { Order } from '@/api/types/order';
@@ -46,30 +49,30 @@ const filterInappropriateOrders = (orders: Order[]) => (
 );
 
 const groupPnlByMonths = (orders: Order[]) => (
-    compose(
-      map(
-        ([
+  compose(
+    map(
+      ([
+        monthNumber,
+        monthOrders,
+      ]: [string, Array<Order>]) => (
+        [
           monthNumber,
-          monthOrders,
-        ]: [string, Array<Order>]) => (
-          [
-            monthNumber,
-            compose(
-              roundToDecimalPoint(2),
-              calculateCommonPnl,
-            )(monthOrders),
-          ]
-        ),
+          compose(
+            roundToDecimalPoint(2),
+            calculateCommonPnl,
+          )(monthOrders),
+        ]
       ),
-      objectEntries,
-      groupBy((order: Order) => (
-        /* Day index is set to default "01" */
-        /* to group orders by months and be */
-        /* able to extract month later from */
-        /* date string. */
-        customFormatDate('YYYY-MM-01', order.modified)
-      )),
-    )(orders) as BarChartData
+    ),
+    objectEntries,
+    groupBy((order: Order) => (
+      /* Day index is set to default "01" */
+      /* to group orders by months and be */
+      /* able to extract month later from */
+      /* date string. */
+      customFormatDate('YYYY-MM-01', order.modified)
+    )),
+  )(orders) as BarChartData
 );
 
 const fillMissedMonths = (data: BarChartData) => {
@@ -101,15 +104,13 @@ const fillMissedMonths = (data: BarChartData) => {
       ),
     )
     .chain(
-      // map array to to fill it with existing data
+      // map array to fill it with existing data
       map(
-        (date: string) => {
-          const existingMonthData = data.find(
+        (date: string) => (
+          data.find(
             ([existingMonthDataDate]) => isEqual(existingMonthDataDate, date),
-          );
-
-          return existingMonthData || [date, 0];
-        },
+          ) || [date, 0]
+        ),
       ),
     );
 };
@@ -118,13 +119,7 @@ const computedData = computed(() => (
   Maybe.of(closedOrders.value)
     .map<Order[]>(filterInappropriateOrders)
     .map<BarChartData>(groupPnlByMonths)
-    .chain(() => fillMissedMonths(
-      [
-        ['2023-02-01', 2194.84],
-        ['2023-05-01', 613.6],
-        ['2023-08-01', 1000.05],
-      ],
-    ))
+    .chain(fillMissedMonths)
 ));
 
 watch(computedData, () => {
@@ -133,10 +128,14 @@ watch(computedData, () => {
 
 // customFormatDate('MMM' /* TODO: 'MMM YYYY' if jan */, order.executed_at)
 
-const labelFormatter = (
+const barLabelFormatter = (
   value: number,
 ) => t('common.currencyAmount', {
   amount: toPnlString(value),
   currency: '$',
 });
+
+const xAxisLabelFormatter = (
+  date: DateValue,
+) => (date);
 </script>

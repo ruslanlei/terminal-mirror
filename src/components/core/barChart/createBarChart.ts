@@ -13,7 +13,7 @@ import { toCssPxValue } from '@/utils/style';
 export type BarChartDataElement = [string, number];
 export type BarChartData = BarChartDataElement[];
 
-export type ValueLabelFormatter = (value: number) => number | string;
+export type LabelFormatter = (value: number | string) => string;
 
 export interface CreateBarChartProps {
   container: HTMLElement;
@@ -22,7 +22,8 @@ export interface CreateBarChartProps {
   minWidthPerBar?: number;
   barBorderRadius?: number;
   topMargin?: number;
-  barLabelFormatter?: ValueLabelFormatter,
+  barLabelFormatter?: LabelFormatter,
+  xAxisLabelFormatter?: LabelFormatter,
   barNameColor?: string,
   positiveBarColor?: string,
   negativeBarColor?: string,
@@ -39,6 +40,7 @@ const createXAxis = ({
   topMargin,
   tickFontSize = 12,
   tickColor = 'white',
+  labelFormatter,
 }: {
   svgContainer: SVGContainer,
   data: BarChartData,
@@ -47,9 +49,14 @@ const createXAxis = ({
   topMargin: number,
   tickFontSize?: number,
   tickColor?: string,
+  labelFormatter: LabelFormatter,
 }) => {
   const xAxisLabels = data.map(([label]) => label);
-  const xAxis = axisBottom(xScale).tickFormat((d, i) => xAxisLabels[i]).tickPadding(10);
+  const xAxis = axisBottom(xScale)
+    .tickFormat((d, i) => (
+      labelFormatter(xAxisLabels[i])
+    ))
+    .tickPadding(10);
 
   const xAxisElement = svgContainer
     .append('g')
@@ -101,7 +108,7 @@ const createBars = (
     positiveColor: string,
     negativeColor: string,
     labelGap: number,
-    labelFormatter: ValueLabelFormatter,
+    labelFormatter: LabelFormatter,
     nameColor: string,
     barAnimationDuration?: number,
   },
@@ -164,7 +171,8 @@ export const createBarChart = ({
   minWidthPerBar = 50,
   barBorderRadius = 5,
   topMargin = 30,
-  barLabelFormatter = ((value) => value) as ValueLabelFormatter,
+  barLabelFormatter = ((value) => value) as LabelFormatter,
+  xAxisLabelFormatter = ((value) => value) as LabelFormatter,
   barNameColor = 'gray',
   positiveBarColor = 'steelblue',
   negativeBarColor = 'red',
@@ -194,6 +202,7 @@ export const createBarChart = ({
     height,
     topMargin,
     data,
+    labelFormatter: xAxisLabelFormatter,
   });
 
   createBars({

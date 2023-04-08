@@ -21,6 +21,7 @@ const props = withDefaults(
   {
     data: () => [],
     barLabelFormatter: (value: any) => value,
+    xAxisLabelFormatter: (value: any) => value,
   },
 );
 
@@ -39,6 +40,7 @@ const renderChart = () => {
     container: container.value,
     data: props.data,
     barLabelFormatter: props.barLabelFormatter,
+    xAxisLabelFormatter: props.xAxisLabelFormatter,
     positiveBarColor: getCssRgbColor('--color-success'),
     negativeBarColor: getCssRgbColor('--color-danger'),
     barNameColor: getCssRgbColor('--color-accent-2'),

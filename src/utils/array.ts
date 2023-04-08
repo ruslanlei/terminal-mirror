@@ -23,7 +23,7 @@ export const isArray = (
 export const { from: toArray } = Array;
 
 export const arrayOf = curry((
-  initializer: () => any,
+  initializer: (el: any, index: number) => any,
   length: number,
 ) => Array(length).fill(0).map(initializer));
 

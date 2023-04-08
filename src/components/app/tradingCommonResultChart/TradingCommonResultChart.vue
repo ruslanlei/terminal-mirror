@@ -13,11 +13,15 @@ import { toPnlString } from '@/utils/style';
 import { useMarketStore } from '@/stores/market';
 import { addMonths, customFormatDate, getDifferenceInMonths } from '@/utils/date';
 import { filterOrdersByType } from '@/helpers/orders';
-import { compose, curry, log } from '@/utils/fp';
+import { compose } from '@/utils/fp';
 import { Order } from '@/api/types/order';
 import {
   arrayOf,
-  filter, getFirstElement, getLastElement, map, sortByKey,
+  filter,
+  getFirstElement,
+  getLastElement,
+  map,
+  sortByKey,
 } from '@/utils/array';
 import { getValueByKey, groupBy, objectEntries } from '@/utils/object';
 import { add, roundToDecimalPoint } from '@/utils/number';
@@ -25,7 +29,7 @@ import { calculateCommonPnl } from '@/helpers/math/formulas/pnl';
 import { Maybe } from '@/utils/functors';
 import { computed, watch } from 'vue';
 import { BarChartData, BarChartDataElement } from '@/components/core/barChart/createBarChart';
-import collect from 'collect.js';
+import { isEqual } from '@/utils/boolean';
 
 const { t } = useI18n();
 
@@ -81,30 +85,33 @@ const fillMissedMonths = (data: BarChartData) => {
     sortByKey('0' as BarChartDataElement[0]),
   )(data);
 
-  const monthsDiff = getDifferenceInMonths(
-    latestDate,
-    earliestDate,
-  );
+  const monthsDiff = compose(
+    add(1),
+    getDifferenceInMonths,
+  )(latestDate, earliestDate);
 
-  const allMonths = arrayOf(
-    (_, i) => compose(
-      customFormatDate('YYYY-MM-01'),
-      addMonths(i),
-    )(earliestDate),
-    add(monthsDiff, 1),
-  );
+  return Maybe.of(monthsDiff)
+    .map(
+      // create array of all months including missed
+      arrayOf(
+        (_, i) => compose(
+          customFormatDate('YYYY-MM-01'),
+          addMonths(i),
+        )(earliestDate),
+      ),
+    )
+    .chain(
+      // map array to to fill it with existing data
+      map(
+        (date: string) => {
+          const existingMonthData = data.find(
+            ([existingMonthDataDate]) => isEqual(existingMonthDataDate, date),
+          );
 
-  const filledData = collect(allMonths)
-    .map((month) => {
-      const existingMonthData = data.find((d) => d[0] === month);
-
-      return existingMonthData || [month, 0];
-    })
-    .toArray();
-
-  console.log('filledData', filledData);
-
-  return filledData;
+          return existingMonthData || [date, 0];
+        },
+      ),
+    );
 };
 
 const computedData = computed(() => (

@@ -127,7 +127,7 @@ export const getDateDifferenceIn = curry(
     unit: QUnitType,
     dateA: DateValue,
     dateB: DateValue,
-  ) => (
+  ): number => (
     dayjs(dateA).diff(dayjs(dateB), unit)
   ),
 );

@@ -7,30 +7,35 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { storeToRefs } from 'pinia';
 import BarChart from '@/components/core/barChart/BarChart.vue';
 import { toPnlString } from '@/utils/style';
 import { useMarketStore } from '@/stores/market';
 import {
-  addMonths, customFormatDate, DateValue, getDifferenceInMonths, getMonthIndex,
+  addMonths,
+  customFormatDate,
+  DateValue,
+  getDifferenceInMonths,
+  getMonthIndex,
+  subtractMonths,
 } from '@/utils/date';
 import { filterOrdersByType } from '@/helpers/orders';
-import { compose } from '@/utils/fp';
+import { compose, curry } from '@/utils/fp';
 import { Order } from '@/api/types/order';
 import {
   arrayOf,
   filter,
   getFirstElement,
-  getLastElement, getLength,
+  getLastElement,
   map,
   sortByKey,
 } from '@/utils/array';
 import { getValueByKey, groupBy, objectEntries } from '@/utils/object';
-import { add, roundToDecimalPoint } from '@/utils/number';
+import { add, roundToDecimalPoint, subtract } from '@/utils/number';
 import { calculateCommonPnl } from '@/helpers/math/formulas/pnl';
 import { Maybe } from '@/utils/functors';
-import { computed, watch } from 'vue';
 import { BarChartData, BarChartDataElement } from '@/components/core/barChart/createBarChart';
 import { isEqual, isMoreThanOrEqualTo } from '@/utils/boolean';
 
@@ -100,16 +105,42 @@ const groupPnlByMonths = (orders: Order[]): BarChartData => (
   )(orders) as BarChartData
 );
 
-const fillMissedMonths = (data: BarChartData): BarChartData => {
-  const earliestDate = compose(
-    getValueByKey('0'),
-    getFirstElement,
-    sortByKey('0' as BarChartDataElement[0]),
-  )(data);
+const ensureOrFallback = curry(
+  (
+    validator: (value: any) => boolean,
+    defaultValue: any | ((value: any) => boolean),
+    value: any,
+  ) => (
+    validator(value) ? value : (
+      typeof defaultValue === 'function'
+        ? defaultValue(value)
+        : defaultValue
+    )
+  ),
+);
 
+const fillMissedMonths = (data: BarChartData): BarChartData => {
   const latestDate = compose(
     getValueByKey('0'),
     getLastElement,
+    sortByKey('0' as BarChartDataElement[0]),
+  )(data);
+
+  const earliestDate = compose(
+    ensureOrFallback(
+      /* if difference in months less than 12 */
+      /* add additional empty months to fill. */
+      (date: DateValue) => compose(
+        isMoreThanOrEqualTo(12),
+        getDifferenceInMonths,
+      )(date, latestDate),
+      (date: DateValue) => subtractMonths(
+        subtract(12, getDifferenceInMonths(latestDate, date)),
+        date,
+      ),
+    ),
+    getValueByKey('0'),
+    getFirstElement,
     sortByKey('0' as BarChartDataElement[0]),
   )(data);
 
@@ -128,12 +159,6 @@ const fillMissedMonths = (data: BarChartData): BarChartData => {
         )(earliestDate),
       ),
     )
-    .map((
-      chartData: BarChartData,
-    ) => (
-      // TODO: if less than 12 months, fill previous months as empty
-      chartData
-    ))
     .chain(
       // map array to fill it with existing data
       map(

@@ -114,6 +114,13 @@ const createBars = ({
   nameColor: string;
   barAnimationDuration?: number;
 }) => {
+  const computeBarHeight = (
+    value: number,
+  ) => (
+    /* leave space for label */
+    subtractRight(20, yScale(value))
+  );
+
   const bars = svgContainer
     .selectChildren<SVGRectElement, number>('rect')
     .data(data)
@@ -122,7 +129,7 @@ const createBars = ({
     .attr('width', xScale.bandwidth())
     .attr('height', ([, value]) => (
       Math.max(
-        yScale(value),
+        computeBarHeight(value),
         20,
       )
     ))
@@ -130,7 +137,7 @@ const createBars = ({
     .attr('y', ([, value]) => {
       const [, scaleHeight] = yScale.range();
 
-      const normalizedHeight = Math.max(20, yScale(value));
+      const normalizedHeight = Math.max(20, computeBarHeight(value));
 
       return subtract(
         scaleHeight,
@@ -162,7 +169,7 @@ const createBars = ({
     .attr('y', ([, value]) => {
       const [, scaleHeight] = yScale.range();
 
-      const normalizedHeight = Math.max(20, yScale(value));
+      const normalizedHeight = Math.max(20, computeBarHeight(value));
 
       return compose(
         subtractRight(labelGap),
@@ -220,7 +227,7 @@ export const createBarChart = ({
 
   const yScale = scaleLinear<number>()
     .domain([0, max(data.map(([, value]) => toAbsolute(value))) as number])
-    .range([topMargin, subtract(height, topMargin)]);
+    .range([0, subtract(height, topMargin)]);
 
   createXAxis({
     svgContainer,

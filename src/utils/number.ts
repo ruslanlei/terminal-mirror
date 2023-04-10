@@ -32,10 +32,22 @@ export const subtractRight = curry((
 ) => numeral(value).subtract(subtrahend).value() || 0);
 
 export const roundToDecimalPoint = curry(
-  (decimals: number, number: number) => {
-    const divider = 10 ** decimals;
+  (
+    decimalPlaces: number,
+    number: number,
+  ) => {
+    const divider = 10 ** decimalPlaces;
     return Math.round(number * divider) / divider;
   },
+);
+
+export const floorToDecimalPoint = curry(
+  (
+    decimalPlaces: number,
+    num: number,
+  ): number => (
+    Math.floor(num * 10 ** decimalPlaces) / 10 ** decimalPlaces
+  ),
 );
 
 export const isPositive = (number: number): boolean => number >= 0;

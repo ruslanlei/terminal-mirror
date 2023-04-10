@@ -30,7 +30,11 @@ export const useOrders = (
   ));
 
   const isActiveOrdersForCurrentPairExists = computed(
-    () => activeOrders.value.some((order: Order) => order.pair === activePair.value),
+    () => activeOrders.value.some(
+      (order: Order) => order.pair === activePair.value && (
+        order.status === 'new' || order.status === 'filled'
+      ),
+    ),
   );
 
   const getActiveOrdersList = async () => {

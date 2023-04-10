@@ -43,6 +43,7 @@ const renderChart = () => {
     xAxisLabelFormatter: props.xAxisLabelFormatter,
     positiveBarColor: getCssRgbColor('--color-success'),
     negativeBarColor: getCssRgbColor('--color-danger'),
+    defaultBarColor: getCssRgbColor('--color-background-3'),
     barNameColor: getCssRgbColor('--color-accent-2'),
     height: getRectField('height', container.value),
   });

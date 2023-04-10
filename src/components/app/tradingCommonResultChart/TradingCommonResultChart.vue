@@ -37,7 +37,7 @@ import { add, roundToDecimalPoint, subtract } from '@/utils/number';
 import { calculateCommonPnl } from '@/helpers/math/formulas/pnl';
 import { Maybe } from '@/utils/functors';
 import { BarChartData, BarChartDataElement } from '@/components/core/barChart/createBarChart';
-import { isEqual, isMoreThanOrEqualTo } from '@/utils/boolean';
+import { ensureOrFallback, isEqual, isMoreThanOrEqualTo } from '@/utils/boolean';
 
 const { t } = useI18n();
 
@@ -103,20 +103,6 @@ const groupPnlByMonths = (orders: Order[]): BarChartData => (
       customFormatDate('YYYY-MM-01', order.modified)
     )),
   )(orders) as BarChartData
-);
-
-const ensureOrFallback = curry(
-  (
-    validator: (value: any) => boolean,
-    defaultValue: any | ((value: any) => boolean),
-    value: any,
-  ) => (
-    validator(value) ? value : (
-      typeof defaultValue === 'function'
-        ? defaultValue(value)
-        : defaultValue
-    )
-  ),
 );
 
 const fillMissedMonths = (data: BarChartData): BarChartData => {

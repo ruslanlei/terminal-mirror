@@ -8,6 +8,7 @@ import {
   Selection,
 } from 'd3';
 import {
+  isPositive,
   multiply, subtract, subtractRight, toAbsolute,
 } from '@/utils/number';
 import { toCssPxValue } from '@/utils/style';
@@ -30,6 +31,7 @@ export interface CreateBarChartProps {
   barNameColor?: string,
   positiveBarColor?: string,
   negativeBarColor?: string,
+  defaultBarColor?: string,
   height?: number,
 }
 
@@ -95,6 +97,7 @@ const createBars = ({
   xScale,
   yScale,
   borderRadius,
+  defaultColor,
   positiveColor,
   negativeColor,
   labelGap,
@@ -109,6 +112,7 @@ const createBars = ({
   borderRadius: number;
   positiveColor: string;
   negativeColor: string;
+  defaultColor: string;
   labelGap: number;
   labelFormatter: LabelFormatter;
   nameColor: string;
@@ -146,7 +150,9 @@ const createBars = ({
     })
     .attr('rx', borderRadius)
     .attr('ry', borderRadius)
-    .attr('fill', ([, value]) => (value >= 0 ? positiveColor : negativeColor));
+    .attr('fill', ([, value]) => (value === 0 ? defaultColor : (
+      isPositive(value) ? positiveColor : negativeColor
+    )));
 
   // animate bars
   bars
@@ -209,6 +215,7 @@ export const createBarChart = ({
   barNameColor = 'gray',
   positiveBarColor = 'steelblue',
   negativeBarColor = 'red',
+  defaultBarColor = 'black',
   height = 300,
 }: CreateBarChartProps) => {
   const numBars = data.length;
@@ -245,6 +252,7 @@ export const createBarChart = ({
     borderRadius: barBorderRadius,
     positiveColor: positiveBarColor,
     negativeColor: negativeBarColor,
+    defaultColor: defaultBarColor,
     labelGap,
     labelFormatter: barLabelFormatter,
     nameColor: barNameColor,

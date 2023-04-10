@@ -2,13 +2,16 @@ import {
   axisBottom,
   max,
   range,
-  scaleBand,
+  scaleBand, ScaleLinear,
   scaleLinear,
   select,
   Selection,
 } from 'd3';
-import { multiply, toAbsolute } from '@/utils/number';
+import {
+  multiply, subtract, subtractRight, toAbsolute,
+} from '@/utils/number';
 import { toCssPxValue } from '@/utils/style';
+import { compose } from '@/utils/fp';
 
 export type BarChartDataElement = [string, number];
 export type BarChartData = BarChartDataElement[];
@@ -86,44 +89,57 @@ const createXAxis = ({
   };
 };
 
-const createBars = (
-  {
-    svgContainer,
-    data,
-    xScale,
-    yScale,
-    borderRadius,
-    positiveColor,
-    negativeColor,
-    labelGap,
-    labelFormatter,
-    barAnimationDuration = 300,
-    nameColor,
-  }: {
-    svgContainer: SVGContainer,
-    data: BarChartData,
-    xScale: any,
-    yScale: any,
-    borderRadius: number,
-    positiveColor: string,
-    negativeColor: string,
-    labelGap: number,
-    labelFormatter: LabelFormatter,
-    nameColor: string,
-    barAnimationDuration?: number,
-  },
-) => {
-  const bars = svgContainer.selectChildren<SVGRectElement, number>('rect')
+const createBars = ({
+  svgContainer,
+  data,
+  xScale,
+  yScale,
+  borderRadius,
+  positiveColor,
+  negativeColor,
+  labelGap,
+  labelFormatter,
+  barAnimationDuration = 300,
+  nameColor,
+}: {
+  svgContainer: SVGContainer;
+  data: BarChartData;
+  xScale: any;
+  yScale: ScaleLinear<number, number, any>;
+  borderRadius: number;
+  positiveColor: string;
+  negativeColor: string;
+  labelGap: number;
+  labelFormatter: LabelFormatter;
+  nameColor: string;
+  barAnimationDuration?: number;
+}) => {
+  const bars = svgContainer
+    .selectChildren<SVGRectElement, number>('rect')
     .data(data)
     .enter()
     .append('rect')
-    .attr('x', (d, i) => xScale(i) as number)
-    .attr('y', ([, value]) => yScale(toAbsolute(value)))
     .attr('width', xScale.bandwidth())
-    .attr('height', ([, value]) => yScale(0) - yScale(toAbsolute(value)))
-    .attr('fill', ([, value]) => (value >= 0 ? positiveColor : negativeColor))
+    .attr('height', ([, value]) => (
+      Math.max(
+        yScale(value),
+        20,
+      )
+    ))
+    .attr('x', (d, i) => xScale(i) as number)
+    .attr('y', ([, value]) => {
+      const [, scaleHeight] = yScale.range();
+
+      const normalizedHeight = Math.max(20, yScale(value));
+
+      return subtract(
+        scaleHeight,
+        normalizedHeight,
+      );
+    })
     .attr('rx', borderRadius)
-    .attr('ry', borderRadius);
+    .attr('ry', borderRadius)
+    .attr('fill', ([, value]) => (value >= 0 ? positiveColor : negativeColor));
 
   // animate bars
   bars
@@ -136,13 +152,23 @@ const createBars = (
     .delay((d, i) => multiply(data.length - i, 20))
     .ease();
 
-  const labels = svgContainer.selectChildren<SVGTextElement, number>('text')
+  const labels = svgContainer
+    .selectChildren<SVGTextElement, number>('text')
     .data(data)
     .enter()
     .append('text')
     .text(([, value], index) => labelFormatter(value, index))
     .attr('x', (d, i) => xScale(i) as number + xScale.bandwidth() / 2)
-    .attr('y', ([, value]) => yScale(toAbsolute(value)) - labelGap)
+    .attr('y', ([, value]) => {
+      const [, scaleHeight] = yScale.range();
+
+      const normalizedHeight = Math.max(20, yScale(value));
+
+      return compose(
+        subtractRight(labelGap),
+        subtractRight(normalizedHeight),
+      )(scaleHeight);
+    })
     .style('font-size', '12px')
     .style('font-weight', '500')
     .style('text-anchor', 'middle')
@@ -194,7 +220,7 @@ export const createBarChart = ({
 
   const yScale = scaleLinear<number>()
     .domain([0, max(data.map(([, value]) => toAbsolute(value))) as number])
-    .range([height - topMargin, topMargin]);
+    .range([topMargin, subtract(height, topMargin)]);
 
   createXAxis({
     svgContainer,

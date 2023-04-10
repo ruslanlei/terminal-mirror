@@ -14,7 +14,8 @@ import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { compose } from '@/utils/fp';
 import {
-  divideRight, floorToDecimalPlace, floorToDecimalPoint, roundToDecimalPoint,
+  divideRight,
+  floorToDecimalPoint,
 } from '@/utils/number';
 import Badge from '@/components/core/badge/Badge.vue';
 import Typography from '@/components/app/typography/Typography.vue';

@@ -39,11 +39,20 @@ export const useOrders = (
       getOrdersList('filled'),
     ]);
 
+    const executedOrdersResponse = await getOrdersList('executed');
+
     if (!response.result) {
       processServerErrors(response.data, t('order.failedToGetList'));
+    } else if (!executedOrdersResponse.result) {
+      processServerErrors(executedOrdersResponse.data, t('order.failedToGetList'));
     }
 
-    activeOrders.value = flatten(response.data);
+    const filteredExecutedOrders = filter(
+      (order: Order) => order.order_type === 'tp',
+      executedOrdersResponse.data,
+    );
+
+    activeOrders.value = flatten([...response.data, ...filteredExecutedOrders]);
   };
 
   // closed orders

@@ -44,9 +44,11 @@ const isOrderStatisticsVisible = computed(() => (
 
 const marketStore = useMarketStore();
 if (marketStore.isClosedOrdersFetched) {
+  console.log('fetched');
   // fetch on the background
   marketStore.getClosedOrdersList();
 } else {
+  console.log('not fetched');
   await marketStore.getClosedOrdersList();
 }
 </script>

@@ -59,7 +59,7 @@ export const useOrders = (
   const closedOrders = ref<Order[]>([]);
 
   const isClosedOrdersFetched = computed(() => (
-    activeOrders.value.length
+    closedOrders.value.length
   ));
 
   const getClosedOrdersList = async () => {

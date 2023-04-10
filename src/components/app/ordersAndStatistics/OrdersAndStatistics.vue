@@ -67,7 +67,7 @@ import {
 
 const { t } = useI18n();
 
-const activeTab = ref<MainSelectorOptionValue>('statistics');
+const activeTab = ref<MainSelectorOptionValue>('orders');
 
 const mainSelectorOptions = computed<MainSelectorOptions>(
   () => [

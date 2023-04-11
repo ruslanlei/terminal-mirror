@@ -3,6 +3,12 @@
     :src="computedBackground"
     :content-class="$style.ecoSystemCard"
   >
+    <template #picture>
+      <Lottie
+        :class="$style.background"
+        :path="SpaceLottie"
+      />
+    </template>
     <div :class="$style.ecoSystemCardContent">
       <Typography
         :state="['accent1', 'bold', 'uppercase']"
@@ -54,9 +60,11 @@ import Logo from '@/components/core/logo/Logo.vue';
 import { computed } from 'vue';
 import { IEcosystemCard } from '@/components/app/ecosystemCap/ecosystemCard';
 import CourseLogo from '@/components/core/courseLogo/CourseLogo.vue';
+import Lottie from '@/components/core/lottie/Lottie.vue';
 import BackgroundPurplePng from './assets/spaceBackgroundPurple.png';
 import BackgroundBluePng from './assets/spaceBackgroundBlue.png';
 import { EcosystemCapProps } from './index';
+import SpaceLottie from './assets/space.json?url';
 
 const { t } = useI18n();
 
@@ -117,6 +125,10 @@ const courseCard = computed<IEcosystemCard>(() => ({
         rgba(var(--color-background-1), 0)
       );
   }
+}
+
+.background {
+
 }
 
 .ecoSystemCardContent {

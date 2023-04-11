@@ -3,13 +3,15 @@
     :class="[$style.wrapper, interactive && $style.interactive]"
   >
     <div :class="$style.backgroundImageContainer">
-      <Picture
-        :class="$style.backgroundImage"
-        :src="src"
-        :srcset="srcset"
-        alt=""
-        :transition-duration="1400"
-      />
+      <slot name="picture">
+        <Picture
+          :class="$style.backgroundImage"
+          :src="src"
+          :srcset="srcset"
+          alt=""
+          :transition-duration="1400"
+        />
+      </slot>
     </div>
     <div :class="[contentClass, $style.content]">
       <slot />

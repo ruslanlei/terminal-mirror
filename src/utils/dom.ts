@@ -10,6 +10,15 @@ export const querySelectorAll = (
   selector: string,
 ) => document.querySelectorAll(selector);
 
+export const querySelector = (
+  selector: string,
+) => document.querySelector(selector);
+
+export const queryChildSelector = (
+  selector: string,
+  parent: HTMLElement,
+) => parent.querySelector(selector);
+
 export const getElementById = (id: string) => document.getElementById(id);
 
 const removeCssPropertyFromSingleElement = curry((

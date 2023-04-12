@@ -14,7 +14,26 @@
       </div>
     </template>
     <template #dropdown>
-      <Tooltip :text="t('ordersList.closeTip')" />
+      <Tooltip>
+        <Typography
+          size="title4"
+          :state="['semiBold', 'accent1']"
+        >
+          <i18n-t
+            tag="span"
+            keypath="ordersList.closeTip.mainPart"
+          >
+            <template #close>
+              <Typography
+                is-inline
+                :state="['danger', 'bold']"
+              >
+                {{ t('ordersList.closeTip.close') }}
+              </Typography>
+            </template>
+          </i18n-t>
+        </Typography>
+      </Tooltip>
     </template>
   </Dropdown>
 </template>
@@ -26,6 +45,7 @@ import Dropdown from '@/components/core/dropdown/Dropdown.vue';
 import Icon from '@/components/core/icon/Icon.vue';
 import Tooltip from '@/components/core/tooltip/Tooltip.vue';
 import { useI18n } from 'vue-i18n';
+import Typography from '@/components/app/typography/Typography.vue';
 import { CloseOrderButtonEmits } from './index';
 
 const emit = defineEmits<CloseOrderButtonEmits>();

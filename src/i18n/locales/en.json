@@ -293,7 +293,10 @@
     },
     "placeholder": "You don't have Orders. Create an order and it will appear here",
     "edit": "Edit",
-    "closeTip": "Click again to close quickly"
+    "closeTip": {
+      "mainPart": "Click again to {close} quickly",
+      "close": "close"
+    }
   },
   "changePlayerDateModal": {
     "label": "To change date in the player, you need to delete and/or close all existing orders. Delete and/or close orders right now?",

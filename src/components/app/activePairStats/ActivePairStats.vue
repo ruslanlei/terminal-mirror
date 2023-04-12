@@ -16,7 +16,7 @@ import { IPairStats } from '@/components/core/pairStats';
 import { compose } from '@/utils/fp';
 import { roundToDecimalPoint, subtractRight } from '@/utils/number';
 import { humanizeNumber, percentFormat } from '@/utils/numberFormat';
-import { calculatePercentOfDifference } from '@/helpers/math/percents';
+import { calculatePercentageOfTotal } from '@/helpers/math/percents';
 import { findMaxByKey, findMinByKey } from '@/utils/array';
 import { isMoreThan } from '@/utils/boolean';
 
@@ -49,7 +49,7 @@ const change = computed(() => ((currentPrice.value && firstPriceWithinLast24Hour
 const changePercents = computed(() => ((firstPriceWithinLast24Hours.value && currentPrice.value)
   ? compose(
     percentFormat(2),
-    calculatePercentOfDifference,
+    calculatePercentageOfTotal,
   )(firstPriceWithinLast24Hours.value, currentPrice.value)
   : null));
 

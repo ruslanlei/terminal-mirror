@@ -50,6 +50,9 @@
         size="sm"
         state="defaultColor"
         :step="0.01"
+        :max="0"
+        :min="-100"
+        save-on="blur"
       >
         <template #append>
           {{ '%' }}
@@ -105,15 +108,14 @@ import { useMarketStore } from '@/stores/market';
 import { compose } from '@/utils/fp';
 import { useEmulatorStore } from '@/stores/emulator';
 import { injectOrderFormState } from '@/components/app/orderForm';
-import { roundToDecimalPoint, toAbsolute } from '@/utils/number';
+import { roundToDecimalPoint, toAbsolute, toNegative } from '@/utils/number';
 import {
   calculateOriginalPriceByVolumeDecrease, calculateOriginalPriceByVolumeIncrease,
   calculateVolumeDifference,
 } from '@/helpers/math/formulas/order';
 import {
   addPercents,
-  calculatePercentOfDifference,
-  subtractPercents,
+  calculatePercentageOfTotal,
 } from '@/helpers/math/percents';
 import {
   calculatePriceByPercentOfDeposit,
@@ -179,17 +181,21 @@ const amountOfRisk = computed({
 const percentOfOrderPrice = computed({
   get: () => compose(
     roundToDecimalPoint(2),
-    toAbsolute,
-    calculatePercentOfDifference,
+    toNegative,
+    calculatePercentageOfTotal,
   )(model.price, stopLossPrice.value),
 
-  set: (percent: number) => {
+  set: (
+    percent: number, /* negative value such as -10 */
+  ) => {
+    const fixedPercent = (orderSide.value === 'buy')
+      ? percent // to subtract percents
+      : toAbsolute(percent); // to add percents
+
     stopLossPrice.value = compose(
       roundToDecimalPoint(quoteCurrencyDecimals.value),
-      (orderSide.value === 'buy'
-        ? subtractPercents
-        : addPercents),
-    )(model.price, percent);
+      addPercents,
+    )(model.price, fixedPercent);
   },
 });
 

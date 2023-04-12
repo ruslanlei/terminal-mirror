@@ -50,7 +50,7 @@ export const valueToRoundedPercents = curry((
   valueToPercents(total),
 )(value));
 
-export const calculatePercentOfDifference = curry((
+export const calculatePercentageOfTotal = curry((
   total: number,
   comparingNumber: number,
 ) => compose(

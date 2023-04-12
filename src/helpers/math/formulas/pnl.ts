@@ -4,7 +4,7 @@ import {
   multiply,
   subtractRight, toAbsolute,
 } from '@/utils/number';
-import { calculatePercentOfDifference } from '@/helpers/math/percents';
+import { calculatePercentageOfTotal } from '@/helpers/math/percents';
 import { Order } from '@/api/types/order';
 import { isDateWithinCurrentDay, isDateWithinCurrentMonth, isDateWithinCurrentWeek } from '@/utils/date';
 import { Maybe } from '@/utils/functors';
@@ -34,7 +34,7 @@ export const calculatePnlPercent = curry((
 
   return compose(
     toAbsolute,
-    calculatePercentOfDifference(orderVolume),
+    calculatePercentageOfTotal(orderVolume),
     add(orderVolume),
   )(pnl);
 });

@@ -129,7 +129,8 @@
       "label": "Player",
       "calculateResult": "Calculate result",
       "orderInteractionsWarning": "Editing or adding orders will pause the player",
-      "orderExistsFormCap": "There is already one limit order in place. Unfortunately, in the emulator, it's not possible to open multiple active orders."
+      "orderExistsFormCap": "There is already one limit order in place. Unfortunately, in the emulator, it's not possible to open multiple active orders.",
+      "candlesPerSecond": "C/sec.: {value}"
     }
   },
   "pairStats": {

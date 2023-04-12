@@ -50,8 +50,8 @@
         size="sm"
         state="defaultColor"
         :step="0.01"
-        :max="0"
-        :min="-100"
+        :min="percentOfOrderPriceMin"
+        :max="percentOfOrderPriceMax"
         save-on="blur"
       >
         <template #append>
@@ -115,7 +115,7 @@ import {
 } from '@/helpers/math/formulas/order';
 import {
   addPercents,
-  calculatePercentageOfTotal,
+  calculatePercentageOfTotal, subtractPercents,
 } from '@/helpers/math/percents';
 import {
   calculatePriceByPercentOfDeposit,
@@ -181,23 +181,19 @@ const amountOfRisk = computed({
 const percentOfOrderPrice = computed({
   get: () => compose(
     roundToDecimalPoint(2),
-    toNegative,
     calculatePercentageOfTotal,
   )(model.price, stopLossPrice.value),
 
-  set: (
-    percent: number, /* negative value such as -10 */
-  ) => {
-    const fixedPercent = (orderSide.value === 'buy')
-      ? percent // to subtract percents
-      : toAbsolute(percent); // to add percents
-
+  set: (percent: number) => {
     stopLossPrice.value = compose(
       roundToDecimalPoint(quoteCurrencyDecimals.value),
       addPercents,
-    )(model.price, fixedPercent);
+    )(model.price, percent);
   },
 });
+
+const percentOfOrderPriceMin = computed(() => (orderSide.value === 'buy' ? -100 : 0));
+const percentOfOrderPriceMax = computed(() => (orderSide.value === 'buy' ? 0 : 100));
 
 const percentOfDeposit = computed({
   get: () => compose(

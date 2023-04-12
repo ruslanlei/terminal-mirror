@@ -10,7 +10,7 @@ import { getUserLanguage } from '@/utils/navigator';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 
-export interface LocaleOptions {
+export interface LocaleOption {
   value: AppLocale,
   label: string,
 }
@@ -31,15 +31,15 @@ export const useI18nStore = defineStore('i18n', () => {
     dayjs.locale(locale.value);
   }, { immediate: true });
 
-  const locales = computed<LocaleOptions[]>(() => [
+  const locales = computed<LocaleOption[]>(() => [
     {
       value: 'en',
       label: 'ENG',
     },
-    // {
-    //   value: 'ru',
-    //   label: 'РУС',
-    // },
+    {
+      value: 'ru',
+      label: 'РУС',
+    },
   ]);
 
   return {

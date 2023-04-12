@@ -9,10 +9,10 @@
           icon="verificationCircle"
         />
       </div>
-      <LanguageSelect
-        state="default"
-        :class="$style.languageSelect"
-      />
+      <!--      <LanguageSelect-->
+      <!--        state="default"-->
+      <!--        :class="$style.languageSelect"-->
+      <!--      />-->
       <Icon
         :class="$style.logoutButton"
         icon="exit"
@@ -134,7 +134,8 @@ const {
   cursor: pointer;
   color: rgb(var(--color-accent-2));
   transition: color 150ms;
-  margin-left: 20px;
+  //margin-left: 20px;
+  margin-left: auto; // temporary
   &:hover {
     color: rgb(var(--color-accent-1));
   }

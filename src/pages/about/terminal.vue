@@ -10,7 +10,3 @@ meta:
 <script setup lang="ts">
 import TerminalLanding from '@/components/app/terminalLanding/TerminalLanding.vue';
 </script>
-
-<style lang="scss" module>
-
-</style>

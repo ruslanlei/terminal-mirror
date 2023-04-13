@@ -99,3 +99,20 @@ export const collectSrcSet = (
   '',
   src,
 );
+
+export const setHref = curry(
+  (href: string, element: HTMLLinkElement | HTMLAnchorElement) => {
+    element.href = href;
+
+    return element;
+  },
+);
+
+export const setFavicon = (iconLink: string) => {
+  console.log(iconLink);
+
+  compose(
+    setHref(iconLink),
+    querySelector,
+  )('link[rel="icon"]');
+};

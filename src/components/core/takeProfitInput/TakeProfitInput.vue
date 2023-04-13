@@ -16,6 +16,7 @@
         type="number"
         :step="0.01"
         :min="0"
+        :max="100"
         :class="$style.input"
         state="alignRight"
         size="xs"

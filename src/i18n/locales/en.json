@@ -10,7 +10,7 @@
     "yes": "Yes",
     "hide": "Hide",
     "cancel": "Cancel",
-    "supportedBy": "Supported by - {supporter}",
+    "supportedBy": "Supported by",
     "followLink": "Follow",
     "colon": "{key}: {value}"
   },

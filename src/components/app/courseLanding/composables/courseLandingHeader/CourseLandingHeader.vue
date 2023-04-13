@@ -95,7 +95,8 @@ const setActiveChapter = (
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 40px;
+  flex-wrap: wrap;
+  gap: 13px 26px;
 }
 
 .rightColumn {

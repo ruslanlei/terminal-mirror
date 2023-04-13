@@ -1,6 +1,6 @@
 <template>
-  <div
-    :class="$style.creatorsTeamInfo"
+  <ImageBackgroundBlock
+    :content-class="$style.creatorsTeamInfo"
   >
     <Typography
       :state="['accent1', 'bold', 'alignCenter']"
@@ -19,7 +19,7 @@
           size="h2"
         >
           <template
-            v-for="(text, textIndex) in 3"
+            v-for="(_, textIndex) in 3"
             :key="textIndex"
           >
             <template v-if="textIndex">
@@ -41,7 +41,7 @@
         <DiscordLink :class="$style.discordLink" />
       </div>
     </div>
-  </div>
+  </ImageBackgroundBlock>
 </template>
 
 <script setup lang="ts">
@@ -50,6 +50,7 @@ import { useI18n } from 'vue-i18n';
 import Card from '@/components/core/card/Card.vue';
 import ImageBubbles from '@/components/app/courseLanding/composables/creatorsTeamInfo/imageBubbles/ImageBubbles.vue';
 import DiscordLink from '@/components/app/courseLanding/composables/creatorsTeamInfo/discordLink/DiscordLink.vue';
+import ImageBackgroundBlock from '@/components/core/imageBackgroundBlock/ImageBackgroundBlock.vue';
 
 const { t } = useI18n();
 </script>

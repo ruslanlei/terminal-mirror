@@ -109,8 +109,6 @@ export const setHref = curry(
 );
 
 export const setFavicon = (iconLink: string) => {
-  console.log(iconLink);
-
   compose(
     setHref(iconLink),
     querySelector,

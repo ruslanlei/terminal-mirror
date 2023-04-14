@@ -13,6 +13,7 @@
         :card="card"
         :state="state"
         :class="$style.card"
+        @click-subscribe="onClickSubscribe"
       />
     </div>
   </div>
@@ -26,8 +27,12 @@ import { computed } from 'vue';
 import { uuid } from '@/utils/uuid';
 import PlanCard from '@/components/core/planCard/PlanCard.vue';
 import { LandingPlan, PlanCardProps } from '@/components/core/planCard';
+import { useClipboard } from '@vueuse/core';
+import { useToastStore } from '@/stores/toasts';
 
 const { t } = useI18n();
+
+const toastStore = useToastStore();
 
 const cards = computed<{
   id: string,
@@ -81,8 +86,6 @@ const cards = computed<{
       },
       purchaseButton: t('courseLanding.studyPlans.card.buyCourse'),
       placesAmount: 25,
-      subscribeLink: { name: 'auth-sign-up' },
-      trialLink: { name: 'auth-sign-up' },
     },
   },
   {
@@ -136,8 +139,6 @@ const cards = computed<{
       },
       purchaseButton: t('courseLanding.studyPlans.card.buyCourse'),
       placesAmount: 25,
-      subscribeLink: { name: 'auth-sign-up' },
-      trialLink: { name: 'auth-sign-up' },
     },
   },
   {
@@ -187,11 +188,21 @@ const cards = computed<{
       },
       purchaseButton: t('courseLanding.studyPlans.card.buyCourse'),
       placesAmount: 25,
-      subscribeLink: { name: 'auth-sign-up' },
-      trialLink: { name: 'auth-sign-up' },
     },
   },
 ]));
+
+const discordUsername = String(import.meta.env.VITE_APP_DISCORD_USERNAME);
+
+const { copy } = useClipboard();
+
+const onClickSubscribe = () => {
+  copy(discordUsername);
+  toastStore.showSuccess({
+    text: t('courseLanding.discordLink.copiedForSubscribe'),
+    duration: 10000,
+  });
+};
 </script>
 
 <style lang="scss" module>

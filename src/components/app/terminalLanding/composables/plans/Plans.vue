@@ -65,6 +65,7 @@ const cards = computed<{
       },
       subscribeLink: { name: 'auth-sign-up' },
       trialLink: { name: 'auth-sign-up' },
+      hasTrial: true,
     },
   },
   {
@@ -99,6 +100,7 @@ const cards = computed<{
       },
       subscribeLink: { name: 'auth-sign-up' },
       trialLink: { name: 'auth-sign-up' },
+      hasTrial: true,
     },
   },
   {
@@ -133,6 +135,7 @@ const cards = computed<{
       },
       subscribeLink: { name: 'auth-sign-up' },
       trialLink: { name: 'auth-sign-up' },
+      hasTrial: true,
     },
   },
 ]));

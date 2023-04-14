@@ -635,7 +635,8 @@
     },
     "discordLink": {
       "tip": "Click to copy username",
-      "copied": "Discord username copied to clipboard"
+      "copied": "Discord username has been copied to your clipboard.",
+      "copiedForSubscribe": "Discord username has been copied to your clipboard. To purchase the course, please send us a message"
     },
     "beginningDate": "Beginning at - {date} Moscow time"
   },

@@ -1,6 +1,6 @@
 <template>
   <Component
-    :is="isExternal ? 'a' : 'RouterLink'"
+    :is="computedComponent"
     :to="to"
     :href="to"
     :class="[
@@ -30,6 +30,8 @@ const props = withDefaults(
 );
 
 const isExternal = computed(() => typeof props.to === 'string');
+
+const computedComponent = computed(() => (isExternal.value || !props.to ? 'a' : 'RouterLink'));
 </script>
 
 <style lang="scss" module>

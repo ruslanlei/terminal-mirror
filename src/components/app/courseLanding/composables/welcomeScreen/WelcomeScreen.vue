@@ -44,6 +44,7 @@
       <Picture
         is-fill
         :srcset="astronautSrcset"
+        :class="$style.image"
       />
     </div>
     <div :class="$style.advantageCardsWrapper">
@@ -172,6 +173,12 @@ const cards = computed(() => [
   grid-template-columns: 1fr 1fr;
   align-items: center;
   max-width: 1400px;
+  padding: 0 60px;
+}
+
+.image {
+  width: 610px;
+  height: 610px;
 }
 
 .textInformation {}

@@ -78,7 +78,7 @@ import Typography from '@/components/app/typography/Typography.vue';
 import Button from '@/components/core/button/Button.vue';
 import Link from '@/components/core/link/Link.vue';
 import { collectSrcSet } from '@/utils/dom';
-import TerminalScreenshotVector from './assets/terminalScreenshotVector.svg';
+import TerminalScreenshotVector from '@/components/app/terminalScreenshotVector/TerminalScreenshotVector.vue';
 
 const { t } = useI18n();
 

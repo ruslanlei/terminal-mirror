@@ -27,19 +27,23 @@ import { ILearnToEarnFrame } from '@/components/app/terminalLanding/composables/
 import { useAnimation } from '@/hooks/useAnimation';
 import { useIntersectionObserver } from '@vueuse/core';
 import { useEnvironmentObserver } from '@/hooks/useEnvironmentObserver';
+import { useLocalValue } from '@/hooks/useLocalValue';
 import {
+  LearnToEarnFramesEmits,
   LearnToEarnFramesProps,
 } from './index';
 
 const props = defineProps<LearnToEarnFramesProps>();
 
+const emit = defineEmits<LearnToEarnFramesEmits>();
+
 const root = ref<HTMLElement>();
 
 const progress = ref(0);
 
-const duration = ref(11000);
+const duration = ref(12000);
 
-const activeFrameIndex = ref(0);
+const activeFrameIndex = useLocalValue<number>(props, emit, 'modelValue');
 
 type IFrame = (ILearnToEarnFrame & { isActive: boolean });
 

@@ -3,16 +3,17 @@
     :data-space-backgrond-id="id"
     :class="$style.background"
     :path="SpaceLottie"
+    @data-ready="adjustSvgSize"
   />
 </template>
 
 <script setup lang="ts">
+import { onBeforeUnmount } from 'vue';
 import Lottie from '@/components/core/lottie/Lottie.vue';
 import { uuid } from '@/utils/uuid';
 import { addCssProperty, queryChildSelector, querySelector } from '@/utils/dom';
 import { compose } from '@/utils/fp';
 import { toCssPercentValue } from '@/utils/style';
-import { onBeforeUnmount, onMounted } from 'vue';
 import { divide } from '@/utils/number';
 import SpaceLottie from './assets/space.json?url';
 
@@ -24,6 +25,7 @@ const adjustSvgSize = () => {
   if (!container) return;
 
   const svg = queryChildSelector('svg', container) as HTMLElement;
+
   if (!svg) return;
 
   const containerAspectRatio = divide(container.clientWidth, container.clientHeight);
@@ -40,11 +42,8 @@ const adjustSvgSize = () => {
     : compose(
       addCssProperty(['width', 'auto']),
       addCssProperty(['height', toCssPercentValue(100)]),
-    )
-  )(svg);
+    ))(svg);
 };
-
-onMounted(adjustSvgSize);
 window.addEventListener('resize', adjustSvgSize);
 
 onBeforeUnmount(() => {

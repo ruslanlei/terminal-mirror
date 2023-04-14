@@ -425,6 +425,7 @@
     }
   },
   "courseLanding": {
+    "buyCourse": "Buy course",
     "chapter": {
       "about": "About course",
       "whoWeAre": "Who are we",

@@ -97,6 +97,8 @@ const closedOrderResultsMixin = (
         calculatePnlPercent(order.price, order.quantity),
       )(rawPnl),
       isPositive: isPositive(rawPnl),
+      isCancelled: order.status === 'canceled',
+      orderStatus: order.status,
     },
   };
 };

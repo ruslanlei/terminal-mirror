@@ -73,6 +73,8 @@ export type ClosedOrdersTableRecord = TableRecord<ClosedOrdersTableColumnSlug, {
     },
     pnlPercent: number,
     isPositive: boolean,
+    isCancelled: boolean,
+    orderStatus: Order['status']
   },
   date: {
     open: string,

@@ -13,7 +13,7 @@
         :card="card"
         :state="state"
         :class="$style.card"
-        @click-subscribe="onClickSubscribe"
+        @click-subscribe="copyDiscordLink"
       />
     </div>
   </div>
@@ -27,8 +27,8 @@ import { computed } from 'vue';
 import { uuid } from '@/utils/uuid';
 import PlanCard from '@/components/core/planCard/PlanCard.vue';
 import { LandingPlan, PlanCardProps } from '@/components/core/planCard';
-import { useClipboard } from '@vueuse/core';
 import { useToastStore } from '@/stores/toasts';
+import { useDiscordLink } from '@/hooks/useDiscordLink';
 
 const { t } = useI18n();
 
@@ -192,17 +192,11 @@ const cards = computed<{
   },
 ]));
 
-const discordUsername = String(import.meta.env.VITE_APP_DISCORD_USERNAME);
-
-const { copy } = useClipboard();
-
-const onClickSubscribe = () => {
-  copy(discordUsername);
-  toastStore.showSuccess({
-    text: t('courseLanding.discordLink.copiedForSubscribe'),
-    duration: 10000,
-  });
-};
+const {
+  copyDiscordLink,
+} = useDiscordLink(
+  t('discordLink.copiedForSubscribe'),
+);
 </script>
 
 <style lang="scss" module>

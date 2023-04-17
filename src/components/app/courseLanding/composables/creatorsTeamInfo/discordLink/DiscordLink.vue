@@ -7,7 +7,7 @@
     <template #trigger>
       <button
         :class="$style.trigger"
-        @click="onClick"
+        @click="copyDiscordLink"
       >
         <DiscordLogo />
         <Typography
@@ -22,7 +22,7 @@
     <template #dropdown>
       <Tooltip>
         <Typography :state="['accent1']">
-          {{ t('courseLanding.discordLink.tip') }}
+          {{ t('discordLink.tip') }}
         </Typography>
       </Tooltip>
     </template>
@@ -34,24 +34,20 @@ import { useI18n } from 'vue-i18n';
 import Typography from '@/components/app/typography/Typography.vue';
 import Dropdown from '@/components/core/dropdown/Dropdown.vue';
 import Tooltip from '@/components/core/tooltip/Tooltip.vue';
-import { useClipboard } from '@vueuse/core';
 import { useToastStore } from '@/stores/toasts';
+import { useDiscordLink } from '@/hooks/useDiscordLink';
 import DiscordLogo from './assets/discordLogo.svg';
 
 const toastStore = useToastStore();
 
 const { t } = useI18n();
 
-const { copy } = useClipboard();
-
-const discordUsername = String(import.meta.env.VITE_APP_DISCORD_USERNAME);
-
-const onClick = () => {
-  copy(discordUsername);
-  toastStore.showSuccess({
-    text: t('courseLanding.discordLink.copied'),
-  });
-};
+const {
+  discordUsername,
+  copyDiscordLink,
+} = useDiscordLink(
+  t('discordLink.copied'),
+);
 </script>
 
 <style lang="scss" module>

@@ -424,6 +424,12 @@
       "followButton": "Go to platform"
     }
   },
+  "discordLink": {
+    "tip": "Click to copy username",
+    "copied": "Discord username has been copied to your clipboard.",
+    "copiedForSubscribe": "Discord username has been copied to your clipboard. To purchase the course, please send us a message",
+    "copiedForSupport": "Discord username has been copied to your clipboard. To get support, please send us a message"
+  },
   "courseLanding": {
     "buyCourse": "Buy course",
     "chapter": {
@@ -633,11 +639,6 @@
     "buyCourseBadge": {
       "heading": "Don't miss your chance to get the knowledge we need today",
       "button": "Buy course"
-    },
-    "discordLink": {
-      "tip": "Click to copy username",
-      "copied": "Discord username has been copied to your clipboard.",
-      "copiedForSubscribe": "Discord username has been copied to your clipboard. To purchase the course, please send us a message"
     },
     "beginningDate": "Beginning at - {date} Moscow time"
   },

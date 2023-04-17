@@ -81,8 +81,11 @@ const frames = computed<ILearnToEarnFrame[]>(() => [
   gap: 80px;
   display: grid;
   grid-template-columns: 588px 1fr;
+  grid-template-rows: minmax(660px, auto);
 }
 
 .lottieScene {
+  background: var(--color-main-gradient);
+  border-radius: 10px;
 }
 </style>

@@ -8,9 +8,7 @@
       {{ t('terminalLanding.learnToEarn.label') }}
     </Typography>
     <div :class="$style.content">
-      <Lottie
-        :path="activeScena"
-      />
+      <Lottie :path="activeScene" />
       <LearnToEarnFrames
         v-model="activeFrameIndex"
         :frames="frames"
@@ -28,20 +26,20 @@ import LearnToEarnFrames
 import { ILearnToEarnFrame } from '@/components/app/terminalLanding/composables/learnToEarnScreen/learnToEarnFrame';
 
 import Lottie from '@/components/core/lottie/Lottie.vue';
-import scena1 from './assets/scena1.json?url';
-import scena2 from './assets/scena2.json?url';
-import scena3 from './assets/scena3.json?url';
-import scena4 from './assets/scena4.json?url';
+import scene1 from './assets/scene1.json?url';
+import scene2 from './assets/scene2.json?url';
+import scene3 from './assets/scene3.json?url';
+import scene4 from './assets/scene4.json?url';
 
 const { t } = useI18n();
 
 const activeFrameIndex = ref(0);
 
-const activeScena = computed(() => ([
-  scena1,
-  scena2,
-  scena3,
-  scena4,
+const activeScene = computed(() => ([
+  scene1,
+  scene2,
+  scene3,
+  scene4,
 ][activeFrameIndex.value]));
 
 const frames = computed<ILearnToEarnFrame[]>(() => [

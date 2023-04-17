@@ -8,7 +8,10 @@
       {{ t('terminalLanding.learnToEarn.label') }}
     </Typography>
     <div :class="$style.content">
-      <Lottie :path="activeScene" />
+      <Lottie
+        :class="$style.lottieScene"
+        :path="activeScene"
+      />
       <LearnToEarnFrames
         v-model="activeFrameIndex"
         :frames="frames"
@@ -77,6 +80,9 @@ const frames = computed<ILearnToEarnFrame[]>(() => [
   margin-top: 80px;
   gap: 80px;
   display: grid;
-  grid-template-columns: 1fr 1.2fr;
+  grid-template-columns: 588px 1fr;
+}
+
+.lottieScene {
 }
 </style>

@@ -5,10 +5,15 @@ export const useEnvironmentObserver = (
   target: MaybeComputedElementRef,
   callback: () => any,
   watchScroll: boolean = false,
+  watchResize: boolean = true,
 ) => {
   const {
     stop: disconnect,
   } = useResizeObserver(target, callback);
+
+  if (!watchResize) {
+    disconnect();
+  }
 
   const setListeners = () => {
     window.addEventListener('resize', callback);

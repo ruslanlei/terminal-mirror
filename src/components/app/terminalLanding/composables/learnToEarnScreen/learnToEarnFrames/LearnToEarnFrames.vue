@@ -106,7 +106,7 @@ const {
   timer.value = setTimeout(() => {
     animation.value?.play();
   }, 100);
-}, true);
+}, true, false);
 
 onMounted(setListeners);
 onBeforeUnmount(removeListeners);

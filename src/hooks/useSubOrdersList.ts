@@ -3,8 +3,6 @@ import {
   ActiveSubOrderRecord,
   ActiveSubOrdersTableProps,
   SubOrderTableItem,
-  ClosedSubOrdersColumn,
-  ActiveSubOrdersColumn,
 } from '@/components/app/ordersList/subOrdersTable';
 import { compose } from '@/utils/fp';
 import {

@@ -7,6 +7,7 @@
       $style.link,
       $style[state],
       $style[size],
+      isInline && $style.inline,
     ]"
     :tabindex="tabIndex"
   >
@@ -26,6 +27,7 @@ const props = withDefaults(
     state: 'default',
     size: 'md',
     tabIndex: 0,
+    isInline: false,
   },
 );
 
@@ -40,6 +42,10 @@ const computedComponent = computed(() => (isExternal.value || !props.to ? 'a' : 
 .link {
   cursor: pointer;
   display: block;
+}
+
+.inline {
+  display: inline;
 }
 
 .default, .accent1 {

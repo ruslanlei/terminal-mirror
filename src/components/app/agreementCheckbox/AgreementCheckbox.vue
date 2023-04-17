@@ -16,6 +16,7 @@
             :label="t('auth.agreement.conditions')"
             state="primary"
             :tab-index="-1"
+            is-inline
           />
         </template>
         <template #privacy>
@@ -24,6 +25,7 @@
             :label="t('auth.agreement.privacy')"
             state="primary"
             :tab-index="-1"
+            is-inline
           />
         </template>
       </i18n-t>

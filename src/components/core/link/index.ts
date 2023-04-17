@@ -6,4 +6,5 @@ export interface LinkProps {
   state?: 'default' | 'primary' | 'accent1' | 'accent2',
   size?: 'md' | 'sm',
   tabIndex?: number,
+  isInline?: boolean,
 }

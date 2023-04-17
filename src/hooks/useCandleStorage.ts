@@ -11,7 +11,7 @@ import {
 import { getCandleField, getCandlesWithin24HoursFromLastCandleDate, mixCandles } from '@/helpers/candles';
 import { compose } from '@/utils/fp';
 import { divideRight } from '@/utils/number';
-import { calculatePercentOfDifference } from '@/helpers/math/percents';
+import { calculatePercentageOfTotal } from '@/helpers/math/percents';
 
 export type CandlesMap = Record<Pair['id'], Candle[]>;
 
@@ -80,7 +80,7 @@ export const useCandleStorage = (
     )
       ? compose(
         divideRight(100),
-        calculatePercentOfDifference,
+        calculatePercentageOfTotal,
       )(firstPriceWithinLast24Hours, lastPriceWithinLast24Hours)
       : null;
   };

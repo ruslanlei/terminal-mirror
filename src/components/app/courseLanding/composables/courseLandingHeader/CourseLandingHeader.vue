@@ -22,20 +22,15 @@
       </Button>
     </div>
     <div :class="$style.rightColumn">
-      <Link
-        :size="null"
-        :state="null"
-        :to="{ name: 'index' }"
+      <Button
+        :state="['blueGradientColor']"
+        size="xl"
+        :is-wide="false"
+        :class="$style.signUpButton"
+        @click="setActiveChapter('tariffs')"
       >
-        <Button
-          :state="['gradientColor']"
-          size="xl"
-          :is-wide="false"
-          :class="$style.signUpButton"
-        >
-          {{ t('courseLanding.chapter.goToTerminal') }}
-        </Button>
-      </Link>
+        {{ t('courseLanding.buyCourse') }}
+      </Button>
       <LanguageSelect />
     </div>
   </header>
@@ -95,7 +90,8 @@ const setActiveChapter = (
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 40px;
+  flex-wrap: wrap;
+  gap: 13px 26px;
 }
 
 .rightColumn {

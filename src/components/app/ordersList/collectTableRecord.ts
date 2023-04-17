@@ -12,7 +12,7 @@ import {
 import {
   isPositive, multiply, roundToDecimalPoint, toAbsolute,
 } from '@/utils/number';
-import { calculatePercentOfDifference } from '@/helpers/math/percents';
+import { calculatePercentageOfTotal } from '@/helpers/math/percents';
 import { calculatePnl, calculatePnlPercent } from '@/helpers/math/formulas/pnl';
 import { calculateCommonTakeProfitPercent } from '@/helpers/math/formulas/takeProfit';
 import { humanizeDate } from '@/utils/date';
@@ -97,6 +97,8 @@ const closedOrderResultsMixin = (
         calculatePnlPercent(order.price, order.quantity),
       )(rawPnl),
       isPositive: isPositive(rawPnl),
+      isCancelled: order.status === 'canceled',
+      orderStatus: order.status,
     },
   };
 };
@@ -108,7 +110,7 @@ const stopLossDataMixin = (
     sl: compose(
       roundToDecimalPoint(2),
       toAbsolute,
-      calculatePercentOfDifference,
+      calculatePercentageOfTotal,
     )(payload.order.price, payload.stopLoss.price),
   } : {
     sl: null,

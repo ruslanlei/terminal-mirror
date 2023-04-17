@@ -2,8 +2,13 @@ import cloneDeep from 'lodash/cloneDeep';
 import lodashSet from 'lodash/set';
 import isEmpty from 'lodash/isEmpty';
 import { curry } from '@/utils/fp';
+import collect, { Collection } from 'collect.js';
 
 export const isObject = (item: any) => (typeof item === 'object' && !Array.isArray(item) && item !== null);
+
+export const objectEntries = <T extends Record<any, any>>(
+  object: T,
+) => Object.entries(object);
 
 export const createObjectWithValues = (
   object: Record<any, any>,
@@ -36,4 +41,16 @@ export const getKeyWithBiggestValue = (
   Object
     .keys(object)
     .reduce((keyA, keyB) => (object[keyA] > object[keyB] ? keyA : keyB))
+);
+
+export const groupBy = curry(
+  (
+    key: any,
+    array: any[],
+  ) => (
+    collect(array)
+      .groupBy(key)
+      .map((items: any) => items.all())
+      .all()
+  ),
 );

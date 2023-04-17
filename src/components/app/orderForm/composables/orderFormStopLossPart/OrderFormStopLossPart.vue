@@ -50,6 +50,9 @@
         size="sm"
         state="defaultColor"
         :step="0.01"
+        :min="percentOfOrderPriceMin"
+        :max="percentOfOrderPriceMax"
+        save-on="blur"
       >
         <template #append>
           {{ '%' }}
@@ -105,15 +108,14 @@ import { useMarketStore } from '@/stores/market';
 import { compose } from '@/utils/fp';
 import { useEmulatorStore } from '@/stores/emulator';
 import { injectOrderFormState } from '@/components/app/orderForm';
-import { roundToDecimalPoint, toAbsolute } from '@/utils/number';
+import { roundToDecimalPoint, toAbsolute, toNegative } from '@/utils/number';
 import {
   calculateOriginalPriceByVolumeDecrease, calculateOriginalPriceByVolumeIncrease,
   calculateVolumeDifference,
 } from '@/helpers/math/formulas/order';
 import {
   addPercents,
-  calculatePercentOfDifference,
-  subtractPercents,
+  calculatePercentageOfTotal, subtractPercents,
 } from '@/helpers/math/percents';
 import {
   calculatePriceByPercentOfDeposit,
@@ -179,19 +181,19 @@ const amountOfRisk = computed({
 const percentOfOrderPrice = computed({
   get: () => compose(
     roundToDecimalPoint(2),
-    toAbsolute,
-    calculatePercentOfDifference,
+    calculatePercentageOfTotal,
   )(model.price, stopLossPrice.value),
 
   set: (percent: number) => {
     stopLossPrice.value = compose(
       roundToDecimalPoint(quoteCurrencyDecimals.value),
-      (orderSide.value === 'buy'
-        ? subtractPercents
-        : addPercents),
+      addPercents,
     )(model.price, percent);
   },
 });
+
+const percentOfOrderPriceMin = computed(() => (orderSide.value === 'buy' ? -100 : 0));
+const percentOfOrderPriceMax = computed(() => (orderSide.value === 'buy' ? 0 : 100));
 
 const percentOfDeposit = computed({
   get: () => compose(

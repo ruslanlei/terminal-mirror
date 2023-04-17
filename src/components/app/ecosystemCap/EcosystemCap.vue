@@ -3,6 +3,9 @@
     :src="computedBackground"
     :content-class="$style.ecoSystemCard"
   >
+    <template #picture>
+      <SpaceBackground />
+    </template>
     <div :class="$style.ecoSystemCardContent">
       <Typography
         :state="['accent1', 'bold', 'uppercase']"
@@ -54,6 +57,7 @@ import Logo from '@/components/core/logo/Logo.vue';
 import { computed } from 'vue';
 import { IEcosystemCard } from '@/components/app/ecosystemCap/ecosystemCard';
 import CourseLogo from '@/components/core/courseLogo/CourseLogo.vue';
+import SpaceBackground from '@/components/app/ecosystemCap/spaceBackground/SpaceBackground.vue';
 import BackgroundPurplePng from './assets/spaceBackgroundPurple.png';
 import BackgroundBluePng from './assets/spaceBackgroundBlue.png';
 import { EcosystemCapProps } from './index';

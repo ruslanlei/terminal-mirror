@@ -8,7 +8,8 @@
         :state="null"
         size="xs"
         :step="0.01"
-        :min="0"
+        :min="minPrice"
+        :max="maxPrice"
         :hide-arrows="true"
       />
       <NumberInput
@@ -16,6 +17,7 @@
         type="number"
         :step="0.01"
         :min="0"
+        :max="100"
         :class="$style.input"
         state="alignRight"
         size="xs"
@@ -90,6 +92,18 @@ const localQuantity = useLocalValue<number>(props, emit, 'quantity');
 const onQuantityInput = () => {
   emit('quantityInput');
 };
+
+const minPrice = computed(() => (
+  props.orderSide === 'buy'
+    ? props.orderPrice
+    : 0
+));
+
+const maxPrice = computed(() => (
+  props.orderSide === 'buy'
+    ? Infinity
+    : props.orderPrice
+));
 
 const percentOfProfitValue = computed({
   get: () => compose(

@@ -99,27 +99,38 @@
             data: {
               pnlPercent,
               pnl: { value: pnl, currency },
-              isPositive
+              isPositive,
+              isCancelled,
+              orderStatus,
             }
           }"
         >
           <div :class="$style.resultsWrapper">
             <div :class="$style.results">
               <Typography
-                :text="t('common.percents', {
-                  value: isPositive
-                    ? toPositiveNumberString(pnlPercent)
-                    : pnlPercent
-                })"
                 :state="[
-                  isPositive
+                  (isPositive && !isCancelled)
                     ? 'success'
                     : 'danger',
                   'semiBold',
                 ]"
                 size="title2"
-              />
+              >
+                <template v-if="isCancelled">
+                  {{ t(`order.status.${orderStatus}`) }}
+                </template>
+                <template v-else>
+                  {{
+                    t('common.percents', {
+                      value: isPositive
+                        ? toPositiveNumberString(pnlPercent)
+                        : pnlPercent
+                    })
+                  }}
+                </template>
+              </Typography>
               <Typography
+                v-if="!isCancelled"
                 size="title4"
                 :text="t('common.currencyAmount', { amount: pnl, currency })"
                 :state="['accent2']"

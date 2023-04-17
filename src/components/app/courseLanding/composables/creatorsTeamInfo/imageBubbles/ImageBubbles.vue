@@ -6,7 +6,11 @@
     <div
       v-for="{ srcset, className } in images"
       :key="className"
-      :class="[className, isSmoothContainer && $style.imageMoveContainer]"
+      :class="[
+        className,
+        $style.imageMoveContainer,
+        isReturningToDefaultPosition && $style.returningToDefaultPosition
+      ]"
       :style="computedStyles"
     >
       <div
@@ -112,21 +116,21 @@ const elementShift = computed(() => ({
   )(y.value),
 }));
 
-const isSmoothContainer = ref(false);
+const isReturningToDefaultPosition = ref(false);
 
 const computedStyles = reactive({
   transform: 'translateY(0) translateX(0)',
 });
 
-const { start, stop } = useTimeout(100, {
+const { start, stop } = useTimeout(260, {
   controls: true,
   callback: () => {
-    isSmoothContainer.value = false;
+    isReturningToDefaultPosition.value = false;
   },
 });
 watch(isOutside, () => {
   stop();
-  isSmoothContainer.value = true;
+  isReturningToDefaultPosition.value = true;
   start();
 });
 
@@ -224,9 +228,10 @@ onMounted(() => {
 
 <style lang="scss" module>
 .imageBubbles {
+  //border: 1px solid red;
   position: relative;
-  width: 500px;
-  height: 711px;
+  width: 560px;
+  height: 771px;
 }
 
 .imageContainer {
@@ -235,60 +240,65 @@ onMounted(() => {
 }
 
 .imageMoveContainer {
-  transition: 100ms transform;
+  transition: 150ms transform ease;
+}
+
+.returningToDefaultPosition {
+  transition: 300ms transform ease;
 }
 
 .hamsterNft {
   position: absolute;
-  left: 100px;
-  top: 15px;
+  left: 130px;
+  top: 45px;
   width: 78px;
   height: 78px;
 }
 
 .etheriumNft {
   position: absolute;
-  left: 225px;
+  left: 255px;
+  top: 30px;
   width: 166px;
   height: 166px;
 }
 
 .pixelArtNft {
   position: absolute;
-  right: 0;
-  top: 50px;
+  right: 30px;
+  top: 80px;
   width: 94px;
   height: 94px;
 }
 
 .monkeyNft {
   position: absolute;
-  left: 0;
-  top: 116px;
+  left: 30px;
+  top: 146px;
   width: 285px;
   height: 285px;
 }
 
 .pepeFrogImg {
   position: absolute;
-  right: 25px;
-  top: 195px;
+  right: 55px;
+  top: 225px;
   width: 166px;
   height: 166px;
 }
 
 .girlImg {
   position: absolute;
-  left: 5px;
-  bottom: 140px;
+  left: 35px;
+  bottom: 170px;
   width: 154px;
   height: 154px;
 }
 
 .yodaImg {
   position: absolute;
-  bottom: 0;
-  right: 0;
+  bottom: 30px;
+  right: 30px;
   width: 330px;
   height: 330px;
 }

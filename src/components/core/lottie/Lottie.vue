@@ -3,13 +3,20 @@
 </template>
 
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref } from 'vue';
+import {
+  onBeforeUnmount, onMounted, ref, toRefs, watch,
+} from 'vue';
 import lottie, { AnimationItem } from 'lottie-web';
 import { useEnvironmentObserver } from '@/hooks/useEnvironmentObserver';
 import { useIntersectionObserver } from '@vueuse/core';
-import { LottieProps } from './index';
+import { LottieEmits, LottieProps } from './index';
 
 const props = defineProps<LottieProps>();
+const {
+  path,
+} = toRefs(props);
+
+const emit = defineEmits<LottieEmits>();
 
 const lottieContainer = ref();
 
@@ -21,8 +28,13 @@ const initAnimation = () => {
     renderer: 'svg',
     loop: true,
     autoplay: true,
-    path: props.path,
+    path: path.value,
   });
+
+  animationInstance.value?.addEventListener('data_ready', () => {
+    emit('dataReady');
+  });
+
   animationInstance.value?.pause();
 };
 
@@ -32,6 +44,11 @@ const destroyAnimation = () => {
   animationInstance.value?.destroy();
 };
 onBeforeUnmount(destroyAnimation);
+
+watch(path, () => {
+  destroyAnimation();
+  initAnimation();
+});
 
 const timer = ref();
 

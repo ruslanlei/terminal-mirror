@@ -1,18 +1,18 @@
-import { compose, curry, log } from '@/utils/fp';
+import { compose, curry } from '@/utils/fp';
 import {
   add,
-  multiply, roundToDecimalPoint,
+  multiply,
   subtractRight, toAbsolute,
 } from '@/utils/number';
-import { calculatePercentOfDifference } from '@/helpers/math/percents';
+import { calculatePercentageOfTotal } from '@/helpers/math/percents';
 import { Order } from '@/api/types/order';
 import { isDateWithinCurrentDay, isDateWithinCurrentMonth, isDateWithinCurrentWeek } from '@/utils/date';
 import { Maybe } from '@/utils/functors';
 import {
-  filter, getLength, map, reduce,
+  filter, reduce,
 } from '@/utils/array';
 import { isOrderOfType } from '@/helpers/orders';
-import { isLessThan, isMoreThan, isMoreThanOrEqualTo } from '@/utils/boolean';
+import { isLessThan, isMoreThanOrEqualTo } from '@/utils/boolean';
 
 export const calculatePnl = curry((
   orderPrice: number,
@@ -34,7 +34,7 @@ export const calculatePnlPercent = curry((
 
   return compose(
     toAbsolute,
-    calculatePercentOfDifference(orderVolume),
+    calculatePercentageOfTotal(orderVolume),
     add(orderVolume),
   )(pnl);
 });

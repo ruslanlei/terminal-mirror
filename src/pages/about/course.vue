@@ -5,6 +5,7 @@
 <route lang="yaml">
 meta:
   layout: blank
+  favicon: /courseFavicon.svg
 </route>
 
 <script setup lang="ts">

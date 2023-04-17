@@ -21,7 +21,6 @@ import { addPercents, subtractPercents } from '@/helpers/math/percents';
 import {
   calculateLiquidationPrice,
   calculatePledge,
-  calculateVolumeDifference,
 } from '@/helpers/math/formulas/order';
 import { roundToDecimalPoint } from '@/utils/number';
 import { useChartDataStore } from '@/stores/chartData';

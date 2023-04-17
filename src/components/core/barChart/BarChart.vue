@@ -3,66 +3,47 @@
     ref="container"
     :class="$style.barChart"
   />
-<!--  <Button-->
-<!--    style="color: white"-->
-<!--    @click="rerender"-->
-<!--  >-->
-<!--    Rerender-->
-<!--  </Button>-->
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
+import { useResizeObserver } from '@vueuse/core';
 import { setMaximalScrollLeft } from '@/utils/element';
-import { isPositive } from '@/utils/number';
 import { getRectField } from '@/utils/dom';
-import { getCssRgbColor, toPositiveNumberString } from '@/utils/style';
+import { getCssRgbColor } from '@/utils/style';
+import { isEqual } from '@/utils/boolean';
+import { compose } from '@/utils/fp';
+import { BarChartProps } from './index';
 import { createBarChart } from './createBarChart';
+
+const props = withDefaults(
+  defineProps<BarChartProps>(),
+  {
+    data: () => [],
+    barLabelFormatter: (value: any) => value,
+    xAxisLabelFormatter: (value: any) => value,
+  },
+);
 
 const container = ref<HTMLElement>();
 const renderChart = () => {
   if (!container.value) return;
 
-  const demoData = [
-    ['jan', -4000],
-    ['feb', -231],
-    ['mar', -779],
-    ['apr', 1479],
-    ['may', 2512],
-    ['jun', 1267],
-    ['jul', 800],
-    ['aug', 495],
-    ['sep', 23],
-    ['oct', 597],
-    ['nov', 100],
-    ['dec', 4788],
-  ];
+  const isContainerNotPrepared = compose(
+    isEqual(0),
+    getRectField('height'),
+  )(container.value);
 
-  const demoData2 = [
-    ['Jan', -100],
-    ['Feb', -331],
-    ['Mar', -7479],
-    ['Apr', 179],
-    ['May', 1512],
-    ['Jun', 567],
-    ['Jul', 800],
-    ['Aug', 495],
-    ['Sep', 433],
-    ['Oct', 57],
-    ['Nov', 1400],
-    ['Dec', 4288],
-  ];
+  if (isContainerNotPrepared) return;
 
   createBarChart({
     container: container.value,
-    data: [
-      ...demoData,
-      ...demoData,
-      ...demoData,
-    ],
-    barLabelFormatter: (value) => `${isPositive(value) ? toPositiveNumberString(value) : value}$`,
+    data: props.data,
+    barLabelFormatter: props.barLabelFormatter,
+    xAxisLabelFormatter: props.xAxisLabelFormatter,
     positiveBarColor: getCssRgbColor('--color-success'),
     negativeBarColor: getCssRgbColor('--color-danger'),
+    defaultBarColor: getCssRgbColor('--color-background-3'),
     barNameColor: getCssRgbColor('--color-accent-2'),
     height: getRectField('height', container.value),
   });
@@ -70,15 +51,7 @@ const renderChart = () => {
   setMaximalScrollLeft(container.value);
 };
 
-onMounted(renderChart);
-
-// TODO: delete after develop
-const rerender = () => {
-  if (!container.value) return;
-
-  container.value.innerHTML = '';
-  renderChart();
-};
+useResizeObserver(container, renderChart);
 </script>
 
 <style lang="scss" module>

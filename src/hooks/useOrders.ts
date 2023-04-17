@@ -30,7 +30,11 @@ export const useOrders = (
   ));
 
   const isActiveOrdersForCurrentPairExists = computed(
-    () => activeOrders.value.some((order: Order) => order.pair === activePair.value),
+    () => activeOrders.value.some(
+      (order: Order) => order.pair === activePair.value && (
+        order.status === 'new' || order.status === 'filled'
+      ),
+    ),
   );
 
   const getActiveOrdersList = async () => {
@@ -39,18 +43,27 @@ export const useOrders = (
       getOrdersList('filled'),
     ]);
 
+    const executedOrdersResponse = await getOrdersList('executed');
+
     if (!response.result) {
       processServerErrors(response.data, t('order.failedToGetList'));
+    } else if (!executedOrdersResponse.result) {
+      processServerErrors(executedOrdersResponse.data, t('order.failedToGetList'));
     }
 
-    activeOrders.value = flatten(response.data);
+    const filteredExecutedOrders = filter(
+      (order: Order) => order.order_type === 'tp',
+      executedOrdersResponse.data,
+    );
+
+    activeOrders.value = flatten([...response.data, ...filteredExecutedOrders]);
   };
 
   // closed orders
   const closedOrders = ref<Order[]>([]);
 
   const isClosedOrdersFetched = computed(() => (
-    activeOrders.value.length
+    closedOrders.value.length
   ));
 
   const getClosedOrdersList = async () => {

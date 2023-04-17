@@ -13,7 +13,10 @@
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { compose } from '@/utils/fp';
-import { divideRight, roundToDecimalPoint } from '@/utils/number';
+import {
+  divideRight,
+  floorToDecimalPoint,
+} from '@/utils/number';
 import Badge from '@/components/core/badge/Badge.vue';
 import Typography from '@/components/app/typography/Typography.vue';
 import { isMoreThan } from '@/utils/boolean';
@@ -28,7 +31,7 @@ const takeProfitToStopLossRelation = computed(() => {
     return 0;
   }
   return compose(
-    roundToDecimalPoint(1),
+    floorToDecimalPoint(1),
     divideRight,
   )(props.stopLossRisk, props.takeProfitsSum);
 });

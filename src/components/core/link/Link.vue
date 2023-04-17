@@ -1,12 +1,13 @@
 <template>
   <Component
-    :is="isExternal ? 'a' : 'RouterLink'"
+    :is="computedComponent"
     :to="to"
     :href="to"
     :class="[
       $style.link,
       $style[state],
       $style[size],
+      isInline && $style.inline,
     ]"
     :tabindex="tabIndex"
   >
@@ -26,10 +27,13 @@ const props = withDefaults(
     state: 'default',
     size: 'md',
     tabIndex: 0,
+    isInline: false,
   },
 );
 
 const isExternal = computed(() => typeof props.to === 'string');
+
+const computedComponent = computed(() => (isExternal.value || !props.to ? 'a' : 'RouterLink'));
 </script>
 
 <style lang="scss" module>
@@ -38,6 +42,10 @@ const isExternal = computed(() => typeof props.to === 'string');
 .link {
   cursor: pointer;
   display: block;
+}
+
+.inline {
+  display: inline;
 }
 
 .default, .accent1 {

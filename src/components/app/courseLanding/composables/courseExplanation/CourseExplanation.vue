@@ -69,13 +69,15 @@ import ImageBackgroundBlock from '@/components/core/imageBackgroundBlock/ImageBa
 import ImagesStack from '@/components/app/courseLanding/composables/courseExplanation/imagesStack/ImagesStack.vue';
 import { CourseExplanationEmits } from '@/components/app/courseLanding/composables/courseExplanation/index';
 import { collectSrcSet } from '@/utils/dom';
-import BackgroundPng from './imagesStack/assets/courseExplanationBackground.png';
+import BackgroundPng from './assets/courseExplanationBackground.png';
+import BackgroundWebp from './assets/courseExplanationBackground.webp';
 
 const { t } = useI18n();
 
 const emit = defineEmits<CourseExplanationEmits>();
 
 const backgroundSrcset = computed(() => collectSrcSet([
+  BackgroundWebp,
   BackgroundPng,
 ]));
 

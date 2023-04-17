@@ -2,18 +2,22 @@ import {
   axisBottom,
   max,
   range,
-  scaleBand,
+  scaleBand, ScaleLinear,
   scaleLinear,
   select,
   Selection,
 } from 'd3';
-import { multiply, toAbsolute } from '@/utils/number';
+import {
+  isPositive,
+  multiply, subtract, subtractRight, toAbsolute,
+} from '@/utils/number';
 import { toCssPxValue } from '@/utils/style';
+import { compose } from '@/utils/fp';
 
 export type BarChartDataElement = [string, number];
 export type BarChartData = BarChartDataElement[];
 
-type ValueLabelFormatter = (value: number) => number | string;
+export type LabelFormatter = (value: number | string, index: number) => string;
 
 export interface CreateBarChartProps {
   container: HTMLElement;
@@ -22,10 +26,12 @@ export interface CreateBarChartProps {
   minWidthPerBar?: number;
   barBorderRadius?: number;
   topMargin?: number;
-  barLabelFormatter?: ValueLabelFormatter,
+  barLabelFormatter?: LabelFormatter,
+  xAxisLabelFormatter?: LabelFormatter,
   barNameColor?: string,
   positiveBarColor?: string,
   negativeBarColor?: string,
+  defaultBarColor?: string,
   height?: number,
 }
 
@@ -39,6 +45,7 @@ const createXAxis = ({
   topMargin,
   tickFontSize = 12,
   tickColor = 'white',
+  labelFormatter,
 }: {
   svgContainer: SVGContainer,
   data: BarChartData,
@@ -47,9 +54,14 @@ const createXAxis = ({
   topMargin: number,
   tickFontSize?: number,
   tickColor?: string,
+  labelFormatter: LabelFormatter,
 }) => {
   const xAxisLabels = data.map(([label]) => label);
-  const xAxis = axisBottom(xScale).tickFormat((d, i) => xAxisLabels[i]).tickPadding(10);
+  const xAxis = axisBottom(xScale)
+    .tickFormat((d, i) => (
+      labelFormatter(xAxisLabels[i], i)
+    ))
+    .tickPadding(10);
 
   const xAxisElement = svgContainer
     .append('g')
@@ -79,44 +91,68 @@ const createXAxis = ({
   };
 };
 
-const createBars = (
-  {
-    svgContainer,
-    data,
-    xScale,
-    yScale,
-    borderRadius,
-    positiveColor,
-    negativeColor,
-    labelGap,
-    labelFormatter,
-    barAnimationDuration = 300,
-    nameColor,
-  }: {
-    svgContainer: SVGContainer,
-    data: BarChartData,
-    xScale: any,
-    yScale: any,
-    borderRadius: number,
-    positiveColor: string,
-    negativeColor: string,
-    labelGap: number,
-    labelFormatter: ValueLabelFormatter,
-    nameColor: string,
-    barAnimationDuration?: number,
-  },
-) => {
-  const bars = svgContainer.selectChildren<SVGRectElement, number>('rect')
+const createBars = ({
+  svgContainer,
+  data,
+  xScale,
+  yScale,
+  borderRadius,
+  defaultColor,
+  positiveColor,
+  negativeColor,
+  labelGap,
+  labelFormatter,
+  barAnimationDuration = 300,
+  nameColor,
+}: {
+  svgContainer: SVGContainer;
+  data: BarChartData;
+  xScale: any;
+  yScale: ScaleLinear<number, number, any>;
+  borderRadius: number;
+  positiveColor: string;
+  negativeColor: string;
+  defaultColor: string;
+  labelGap: number;
+  labelFormatter: LabelFormatter;
+  nameColor: string;
+  barAnimationDuration?: number;
+}) => {
+  const computeBarHeight = (
+    value: number,
+  ) => (
+    /* leave space for label */
+    subtractRight(20, yScale(value))
+  );
+
+  const bars = svgContainer
+    .selectChildren<SVGRectElement, number>('rect')
     .data(data)
     .enter()
     .append('rect')
-    .attr('x', (d, i) => xScale(i) as number)
-    .attr('y', ([, value]) => yScale(toAbsolute(value)))
     .attr('width', xScale.bandwidth())
-    .attr('height', ([, value]) => yScale(0) - yScale(toAbsolute(value)))
-    .attr('fill', ([, value]) => (value >= 0 ? positiveColor : negativeColor))
+    .attr('height', ([, value]) => (
+      Math.max(
+        computeBarHeight(value),
+        20,
+      )
+    ))
+    .attr('x', (d, i) => xScale(i) as number)
+    .attr('y', ([, value]) => {
+      const [, scaleHeight] = yScale.range();
+
+      const normalizedHeight = Math.max(20, computeBarHeight(value));
+
+      return subtract(
+        scaleHeight,
+        normalizedHeight,
+      );
+    })
     .attr('rx', borderRadius)
-    .attr('ry', borderRadius);
+    .attr('ry', borderRadius)
+    .attr('fill', ([, value]) => (value === 0 ? defaultColor : (
+      isPositive(value) ? positiveColor : negativeColor
+    )));
 
   // animate bars
   bars
@@ -129,13 +165,23 @@ const createBars = (
     .delay((d, i) => multiply(data.length - i, 20))
     .ease();
 
-  const labels = svgContainer.selectChildren<SVGTextElement, number>('text')
+  const labels = svgContainer
+    .selectChildren<SVGTextElement, number>('text')
     .data(data)
     .enter()
     .append('text')
-    .text(([, value]) => labelFormatter(value))
+    .text(([, value], index) => labelFormatter(value, index))
     .attr('x', (d, i) => xScale(i) as number + xScale.bandwidth() / 2)
-    .attr('y', ([, value]) => yScale(toAbsolute(value)) - labelGap)
+    .attr('y', ([, value]) => {
+      const [, scaleHeight] = yScale.range();
+
+      const normalizedHeight = Math.max(20, computeBarHeight(value));
+
+      return compose(
+        subtractRight(labelGap),
+        subtractRight(normalizedHeight),
+      )(scaleHeight);
+    })
     .style('font-size', '12px')
     .style('font-weight', '500')
     .style('text-anchor', 'middle')
@@ -164,10 +210,12 @@ export const createBarChart = ({
   minWidthPerBar = 50,
   barBorderRadius = 5,
   topMargin = 30,
-  barLabelFormatter = ((value) => value) as ValueLabelFormatter,
+  barLabelFormatter = ((value) => value) as LabelFormatter,
+  xAxisLabelFormatter = ((value) => value) as LabelFormatter,
   barNameColor = 'gray',
   positiveBarColor = 'steelblue',
   negativeBarColor = 'red',
+  defaultBarColor = 'black',
   height = 300,
 }: CreateBarChartProps) => {
   const numBars = data.length;
@@ -186,7 +234,7 @@ export const createBarChart = ({
 
   const yScale = scaleLinear<number>()
     .domain([0, max(data.map(([, value]) => toAbsolute(value))) as number])
-    .range([height - topMargin, topMargin]);
+    .range([0, subtract(height, topMargin)]);
 
   createXAxis({
     svgContainer,
@@ -194,6 +242,7 @@ export const createBarChart = ({
     height,
     topMargin,
     data,
+    labelFormatter: xAxisLabelFormatter,
   });
 
   createBars({
@@ -203,6 +252,7 @@ export const createBarChart = ({
     borderRadius: barBorderRadius,
     positiveColor: positiveBarColor,
     negativeColor: negativeBarColor,
+    defaultColor: defaultBarColor,
     labelGap,
     labelFormatter: barLabelFormatter,
     nameColor: barNameColor,

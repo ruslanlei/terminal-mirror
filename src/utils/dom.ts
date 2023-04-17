@@ -10,6 +10,15 @@ export const querySelectorAll = (
   selector: string,
 ) => document.querySelectorAll(selector);
 
+export const querySelector = (
+  selector: string,
+) => document.querySelector(selector);
+
+export const queryChildSelector = (
+  selector: string,
+  parent: HTMLElement,
+) => parent.querySelector(selector);
+
 export const getElementById = (id: string) => document.getElementById(id);
 
 const removeCssPropertyFromSingleElement = curry((
@@ -66,12 +75,12 @@ export const addCssProperty = curry((
 
 export const getRect = (
   element: HTMLElement,
-) => element.getBoundingClientRect();
+): Omit<DOMRect, 'toJSON'> => element.getBoundingClientRect();
 
 export const getRectField = curry((
-  field: keyof DOMRect,
+  field: keyof Omit<DOMRect, 'toJSON'>,
   element: HTMLElement,
-) => getRect(element)[field]);
+): number => getRect(element)[field]);
 
 export const arrayOfElements = (
   selector: string,
@@ -90,3 +99,18 @@ export const collectSrcSet = (
   '',
   src,
 );
+
+export const setHref = curry(
+  (href: string, element: HTMLLinkElement | HTMLAnchorElement) => {
+    element.href = href;
+
+    return element;
+  },
+);
+
+export const setFavicon = (iconLink: string) => {
+  compose(
+    setHref(iconLink),
+    querySelector,
+  )('link[rel="icon"]');
+};

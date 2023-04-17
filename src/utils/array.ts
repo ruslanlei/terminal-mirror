@@ -23,7 +23,7 @@ export const isArray = (
 export const { from: toArray } = Array;
 
 export const arrayOf = curry((
-  initializer: () => any,
+  initializer: (el: any, index: number) => any,
   length: number,
 ) => Array(length).fill(0).map(initializer));
 
@@ -60,6 +60,7 @@ export const map = curry(rambdaMap) as CurriedFunc<(
   predicate?: (...args: any[]) => boolean,
   array?: any[],
 ) => any>;
+
 export const reduce = curry(rambdaReduce<any, any>) as typeof rambdaReduce;
 
 export const reduceRight = curry(
@@ -110,3 +111,12 @@ export const findAndUpdateObject = curry((
     Object.assign(cachedObject, updatedObject);
   }
 });
+
+export const sortByKey = curry(
+  <T extends []>(
+    key: string,
+    list: T,
+  ): T => collect(list)
+    .sortBy(key)
+    .all() as T,
+);

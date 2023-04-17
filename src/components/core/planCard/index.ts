@@ -18,11 +18,16 @@ export interface LandingPlan {
     value: number,
     withoutSale: number,
   },
-  trialLink: RouteLocationRaw,
-  subscribeLink: RouteLocationRaw,
+  trialLink?: RouteLocationRaw,
+  subscribeLink?: RouteLocationRaw,
+  hasTrial?: boolean,
 }
 
 export interface PlanCardProps {
   state: 'purple' | 'orange' | 'blue'
   card: LandingPlan,
+}
+
+export interface PlanCardEmits {
+  (e: 'clickSubscribe'): void,
 }

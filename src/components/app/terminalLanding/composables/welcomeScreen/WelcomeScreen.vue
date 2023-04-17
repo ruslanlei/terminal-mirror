@@ -4,7 +4,18 @@
     :srcset="illustrationSrcset"
     :content-class="$style.content"
   >
-    <BadgeSupportedByTradingView :class="$style.tradingViewBadge" />
+    <div :class="$style.partners">
+      <Typography
+        size="text"
+        :state="['accent2', 'medium']"
+      >
+        {{ t('common.supportedBy') }}
+      </Typography>
+      <div :class="$style.partnerBadges">
+        <BadgePartners partner="tradingView" />
+        <BadgePartners partner="binance" />
+      </div>
+    </div>
     <Typography
       :state="['accent1', 'bold', 'alignCenter']"
       size="massive1"
@@ -62,12 +73,12 @@ import ImageBackgroundBlock from '@/components/core/imageBackgroundBlock/ImageBa
 import BackgroundPng from '@/assets/images/auth/background.png';
 import BackgroundWebp from '@/assets/images/auth/background.webp';
 import BackgroundAvif from '@/assets/images/auth/background.avif';
-import BadgeSupportedByTradingView from '@/components/app/badgeSupportedByTradingView/BadgeSupportedByTradingView.vue';
+import BadgePartners from '@/components/app/badgePartners/BadgePartners.vue';
 import Typography from '@/components/app/typography/Typography.vue';
 import Button from '@/components/core/button/Button.vue';
 import Link from '@/components/core/link/Link.vue';
 import { collectSrcSet } from '@/utils/dom';
-import TerminalScreenshotVector from './assets/terminalScreenshotVector.svg';
+import TerminalScreenshotVector from '@/components/app/terminalScreenshotVector/TerminalScreenshotVector.vue';
 
 const { t } = useI18n();
 
@@ -84,8 +95,17 @@ const illustrationSrcset = computed(() => collectSrcSet([
   position: relative;
 }
 
-.tradingViewBadge {
+.partners {
   margin-top: 136px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.partnerBadges {
+  display: flex;
+  gap: 20px;
+  margin-top: 15px;
 }
 
 .content {

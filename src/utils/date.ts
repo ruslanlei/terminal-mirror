@@ -1,13 +1,17 @@
-import dayjs from 'dayjs';
+import dayjs, { QUnitType } from 'dayjs';
 import { compose, curry } from '@/utils/fp';
 import now from 'lodash/now';
-import { divide, divideRight, multiply } from '@/utils/number';
+import {
+  divide,
+  divideRight,
+  multiply,
+} from '@/utils/number';
 
 export {
   now as dateNow,
 };
 
-type DateValue = Date | number | string;
+export type DateValue = Date | number | string;
 
 export const toISOString = (
   date: DateValue,
@@ -64,6 +68,11 @@ export const subtractDays = curry((
   date: DateValue,
 ) => dayjs(date).subtract(days, 'days'));
 
+export const addMonths = curry((
+  months: number,
+  date: DateValue,
+) => dayjs(date).add(months, 'months'));
+
 export const subtractMonths = curry((
   months: number,
   date: DateValue,
@@ -102,3 +111,25 @@ export const isDateWithinCurrentWeek = (
 ) => (
   dayjs(date).isSame(new Date(), 'week')
 );
+
+export const getMonthIndex = (
+  date: DateValue,
+) => (
+  dayjs(date).month()
+);
+
+export const getMonthName = (
+  monthIndex: number,
+) => dayjs().month(monthIndex).format('MMM');
+
+export const getDateDifferenceIn = curry(
+  (
+    unit: QUnitType,
+    dateA: DateValue,
+    dateB: DateValue,
+  ): number => (
+    dayjs(dateA).diff(dayjs(dateB), unit)
+  ),
+);
+
+export const getDifferenceInMonths = getDateDifferenceIn('month');

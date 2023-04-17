@@ -98,7 +98,10 @@ const {
   isCalculateResultAbortionQueued,
 } = storeToRefs(emulatorStore);
 
-const displaySpeed = computed(() => `CPS: ${candlesPerSecond.value}`);
+const displaySpeed = computed(() => t(
+  'emulator.player.candlesPerSecond',
+  { value: candlesPerSecond.value },
+));
 
 const isDisabledAll = computed(() => [
   isRewinding.value,
@@ -187,8 +190,9 @@ const onDatepickerClick = () => {
 }
 
 .displaySpeed {
-  width: 110px;
+  min-width: 76px;
   text-align: right;
+  white-space: nowrap;
   @include title3;
   color: rgb(var(--color-accent-1));
   font-weight: 600;

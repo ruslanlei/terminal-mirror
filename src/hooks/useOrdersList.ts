@@ -3,7 +3,10 @@ import { useI18n } from 'vue-i18n';
 import { ActiveOrdersTableRecord, ClosedOrdersTableRecord, OrdersListProps } from '@/components/app/ordersList';
 import { useMarketStore } from '@/stores/market';
 import {
-  MasterOrder, Order, StopLoss, TakeProfit,
+  MasterOrder,
+  Order,
+  StopLoss,
+  TakeProfit,
 } from '@/api/types/order';
 import { add, roundToDecimalPoint } from '@/utils/number';
 import { compose } from '@/utils/fp';
@@ -13,7 +16,6 @@ import { awaitTimeout } from '@/utils/promise';
 import { useEmulatorStore } from '@/stores/emulator';
 import { useChartDataStore } from '@/stores/chartData';
 import { storeToRefs } from 'pinia';
-import { TableColumn } from '@/components/core/table';
 import { findAndDelete, findAndUpdateObject } from '@/utils/array';
 
 interface GroupedOrder {

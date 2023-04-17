@@ -129,20 +129,22 @@
       <Link
         :state="null"
         :size="null"
-        :to="card.subscribeLink"
+        :to="card?.subscribeLink"
       >
         <Button
           size="xl"
           :state="['accent3Color', 'interactive']"
           :class="$style.subscribeButton"
+          @click="onSubscribeClick"
         >
           {{ t('planCard.subscribe') }}
         </Button>
       </Link>
       <Link
+        v-if="card.hasTrial"
         :state="null"
         :size="null"
-        :to="card.trialLink"
+        :to="card?.trialLink"
       >
         <Button
           size="xl"
@@ -184,13 +186,15 @@ import Button from '@/components/core/button/Button.vue';
 import Link from '@/components/core/link/Link.vue';
 import GradientCheckIcon from '@/components/core/gradientCheckIcon/GradientCheckIcon.vue';
 import Badge from '@/components/core/badge/Badge.vue';
-import { computed } from 'vue';
+import { computed, resolveComponent } from 'vue';
 import { compose } from '@/utils/fp';
 import { percentFormat } from '@/utils/numberFormat';
 import { toNegative } from '@/utils/number';
-import { PlanCardProps } from './index';
+import { PlanCardEmits, PlanCardProps } from './index';
 
 const props = defineProps<PlanCardProps>();
+
+const emit = defineEmits<PlanCardEmits>();
 
 const { t } = useI18n();
 
@@ -198,6 +202,10 @@ const saleBadgeText = computed(() => (props.card?.salePercents ? compose(
   percentFormat(0),
   toNegative,
 )(props.card.salePercents) : ''));
+
+const onSubscribeClick = () => {
+  emit('clickSubscribe');
+};
 </script>
 
 <style lang="scss" module>

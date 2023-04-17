@@ -76,6 +76,16 @@ const faqList = computed<FaqItem[]>(() => [
     label: t('courseLanding.faq.runOutOfCurrencyQuestion.label'),
     text: t('courseLanding.faq.runOutOfCurrencyQuestion.text'),
   },
+  {
+    id: uuid(),
+    label: t('courseLanding.faq.isThereGuarantee.label'),
+    text: t('courseLanding.faq.isThereGuarantee.text'),
+  },
+  {
+    id: uuid(),
+    label: t('courseLanding.faq.ifYouCanDoEverythingWhyTeach.label'),
+    text: t('courseLanding.faq.ifYouCanDoEverythingWhyTeach.text'),
+  },
 ]);
 
 </script>

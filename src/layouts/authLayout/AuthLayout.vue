@@ -32,11 +32,18 @@
           {{ t('auth.privacy') }}
         </div>
         <div :class="$style.support">
-          <Link
-            :to="{ name: 'support' }"
-            :label="t('auth.support')"
-            size="sm"
-          />
+          <Button
+            :size="null"
+            :state="null"
+            @click="copyDiscordLink"
+          >
+            <Typography
+              state="accent1"
+              size="title3"
+            >
+              {{ t('auth.support') }}
+            </Typography>
+          </Button>
         </div>
       </footer>
     </div>
@@ -51,9 +58,18 @@ import Link from '@/components/core/link/Link.vue';
 import LanguageSelect from '@/components/app/languageSelect/LanguageSelect.vue';
 import AuthIllustration from '@/components/app/authIllustration/AuthIllustration.vue';
 import Picture from '@/components/core/picture/Picture.vue';
+import Button from '@/components/core/button/Button.vue';
+import Typography from '@/components/app/typography/Typography.vue';
+import { useDiscordLink } from '@/hooks/useDiscordLink';
 import DemiGroupLogo from './assets/demiGroup.png';
 
 const { t } = useI18n();
+
+const {
+  copyDiscordLink,
+} = useDiscordLink(
+  t('discordLink.copiedForSupport'),
+);
 </script>
 
 <style lang="scss" module>

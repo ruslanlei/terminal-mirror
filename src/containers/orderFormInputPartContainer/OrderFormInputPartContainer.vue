@@ -88,11 +88,11 @@ import Icon from '@/components/core/icon/Icon.vue';
   height: 100%;
   padding: 0 10px;
   overflow-y: auto;
-  @include scrollbarPrimary(4px, 6px, true);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: stretch;
+  @include scrollbarSecondary(4px, 6px, true);
 }
 
 .topBlock {

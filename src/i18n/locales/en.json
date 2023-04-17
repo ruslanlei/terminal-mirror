@@ -10,7 +10,7 @@
     "yes": "Yes",
     "hide": "Hide",
     "cancel": "Cancel",
-    "supportedBy": "Supported by - {supporter}",
+    "supportedBy": "Supported by",
     "followLink": "Follow",
     "colon": "{key}: {value}"
   },
@@ -129,7 +129,8 @@
       "label": "Player",
       "calculateResult": "Calculate result",
       "orderInteractionsWarning": "Editing or adding orders will pause the player",
-      "orderExistsFormCap": "There is already one limit order in place. Unfortunately, in the emulator, it's not possible to open multiple active orders."
+      "orderExistsFormCap": "There is already one limit order in place. Unfortunately, in the emulator, it's not possible to open multiple active orders.",
+      "candlesPerSecond": "C/sec.: {value}"
     }
   },
   "pairStats": {
@@ -292,7 +293,10 @@
     },
     "placeholder": "You don't have Orders. Create an order and it will appear here",
     "edit": "Edit",
-    "closeTip": "Click again to close quickly"
+    "closeTip": {
+      "mainPart": "Click again to {close} quickly",
+      "close": "close"
+    }
   },
   "changePlayerDateModal": {
     "label": "To change date in the player, you need to delete and/or close all existing orders. Delete and/or close orders right now?",
@@ -420,7 +424,14 @@
       "followButton": "Go to platform"
     }
   },
+  "discordLink": {
+    "tip": "Click to copy username",
+    "copied": "Discord username has been copied to your clipboard.",
+    "copiedForSubscribe": "Discord username has been copied to your clipboard. To purchase the course, please send us a message",
+    "copiedForSupport": "Discord username has been copied to your clipboard. To get support, please send us a message"
+  },
   "courseLanding": {
+    "buyCourse": "Buy course",
     "chapter": {
       "about": "About course",
       "whoWeAre": "Who are we",
@@ -615,15 +626,19 @@
       "runOutOfCurrencyQuestion": {
         "label": "What should I do if I run out of virtual currency?",
         "text": "The training terminal is a service developed by us for fast, safe and effective training in trading. The terminal system behaves like a real exchange, allowing you to safely learn how to trade with cryptocurrency and gain trading experience. The terminal works with the 50 most popular coins on the Binance platform. Practicing on our top 50 Binance terminal will help you acquire the most relevant skills and move on to real trading."
+      },
+      "isThereGuarantee": {
+        "label": "Is there a guarantee that I will earn",
+        "text": "Learning to trade is like learning at a business school, we will tell you the rules of the game, how to use the tools, and share the maximum experience. And then it all depends on your abilities and perseverance. As in business, two people can start with the same conditions, but get a completely different result."
+      },
+      "ifYouCanDoEverythingWhyTeach": {
+        "label": "If you can do everything, why teach?",
+        "text": "The best analogy is athletes who have become coaches. They have a lot of experience and knowledge to share. Trading will require intellectual efforts, it has a certain emotional load, so the standard period of a trader's work is about 5-10 years, according to some methods, 2 years. Therefore, like coaches, we can earn money for training. At the same time, there is no competition to how many people we would not transfer knowledge to our earnings on the stock exchange, this will not affect in any way."
       }
     },
     "buyCourseBadge": {
       "heading": "Don't miss your chance to get the knowledge we need today",
       "button": "Buy course"
-    },
-    "discordLink": {
-      "tip": "Click to copy username",
-      "copied": "Discord username copied to clipboard"
     },
     "beginningDate": "Beginning at - {date} Moscow time"
   },

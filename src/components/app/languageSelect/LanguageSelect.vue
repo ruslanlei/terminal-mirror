@@ -22,7 +22,7 @@
       <template #dropdown>
         <div :class="$style.dropdown">
           <button
-            v-for="localeOption in filteredLocales"
+            v-for="localeOption in selectLocales"
             :key="localeOption.value"
             :class="$style.dropdownOption"
             @click="setLocale(localeOption.value)"
@@ -53,15 +53,17 @@
 <script setup lang="ts">
 import { computed, ref, toRefs } from 'vue';
 import { LanguageSelectProps } from '@/components/app/languageSelect/index';
-import { LocaleOptions, useI18nStore } from '@/stores/i18n';
+import { LocaleOption, useI18nStore } from '@/stores/i18n';
 import { AppLocale } from '@/i18n';
 import Icon from '@/components/core/icon/Icon.vue';
 import Dropdown from '@/components/core/dropdown/Dropdown.vue';
+import { filter } from '@/utils/array';
 
-withDefaults(
+const props = withDefaults(
   defineProps<LanguageSelectProps>(),
   {
     state: 'select',
+    excludeLocale: () => [],
   },
 );
 
@@ -72,10 +74,12 @@ const {
 } = toRefs(i18nStore);
 
 const activeLocale = computed(() => locales.value.find(
-  (localeOption: LocaleOptions) => localeOption.value === locale.value,
+  (localeOption: LocaleOption) => localeOption.value === locale.value,
 ));
-const filteredLocales = computed(() => locales.value.filter(
-  (localeOption: LocaleOptions) => localeOption.value !== locale.value,
+
+const selectLocales = computed(() => filter(
+  (localeOption: LocaleOption) => localeOption.value !== locale.value,
+  locales.value,
 ));
 
 const isDropdownVisible = ref(false);

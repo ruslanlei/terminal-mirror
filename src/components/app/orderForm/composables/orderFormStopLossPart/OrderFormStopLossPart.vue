@@ -111,7 +111,8 @@ import { useEmulatorStore } from '@/stores/emulator';
 import { injectOrderFormState } from '@/components/app/orderForm';
 import { multiply, roundToDecimalPlaces } from '@/utils/number';
 import {
-  calculateOriginalPriceByVolumeDecrease, calculateOriginalPriceByVolumeIncrease,
+  calculateOriginalPriceByVolumeDecrease,
+  calculateOriginalPriceByVolumeIncrease,
   calculateVolumeDifference,
 } from '@/helpers/math/formulas/order';
 import {

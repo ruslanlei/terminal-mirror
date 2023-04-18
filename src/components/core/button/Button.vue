@@ -49,6 +49,7 @@ const computedLoaderSize = computed(
 @import "src/assets/styles/utils";
 
 .button {
+  user-select: none;
   display: block;
   position: relative;
   transition: 160ms background-color;

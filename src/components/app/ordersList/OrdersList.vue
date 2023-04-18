@@ -305,31 +305,46 @@
 </template>
 
 <script setup lang="ts">
+import {
+  computed,
+  toRefs,
+} from 'vue';
 import { useI18n } from 'vue-i18n';
 import Table from '@/components/core/table/Table.vue';
 import InlineSpace from '@/components/core/inlineSpace/InlineSpace.vue';
 import CoinLogo from '@/components/core/coinLogo/CoinLogo.vue';
 import ListSkeleton from '@/components/app/listSkeleton/ListSkeleton.vue';
 import Icon from '@/components/core/icon/Icon.vue';
-import { add, isPositive, roundToDecimalPlaces } from '@/utils/number';
 import Badge from '@/components/core/badge/Badge.vue';
 import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
-import {
-  computed,
-  onActivated,
-  onBeforeUnmount,
-  onDeactivated, toRefs,
-} from 'vue';
 import SubOrdersTable from '@/components/app/ordersList/subOrdersTable/SubOrdersTable.vue';
-import { useOrdersList } from '@/hooks/useOrdersList';
 import Typography from '@/components/app/typography/Typography.vue';
 import OrdersListPlaceholder from '@/components/app/ordersList/OrdersListPlaceholder.vue';
 import CloseOrderButton from '@/components/app/closeOrderButton/CloseOrderButton.vue';
 import { toPositiveNumberString } from '@/utils/style';
+import { createEmptyRecord } from '@/components/core/table/helpers';
 import { compose } from '@/utils/fp';
-import { Order } from '@/api/types/order';
 import {
-  ActiveOrdersTableRecord, ClosedOrdersTableRecord, OrdersListEmits, OrdersListProps,
+  add,
+  isPositive,
+  roundToDecimalPlaces,
+} from '@/utils/number';
+import {
+  MasterOrder,
+  Order,
+  StopLoss,
+  TakeProfit,
+} from '@/api/types/order';
+import {
+  collectActiveOrderRecord,
+  collectClosedOrderRecord,
+} from '@/components/app/ordersList/collectTableRecord';
+import { useChartDataStore } from '@/stores/chartData';
+import {
+  ActiveOrdersTableRecord,
+  ClosedOrdersTableRecord,
+  OrdersListProps,
+  OrdersListEmits,
 } from './index';
 
 const props = withDefaults(
@@ -340,11 +355,15 @@ const props = withDefaults(
 );
 const {
   listType,
+  orders,
+  pairsMap,
 } = toRefs(props);
 
 const emit = defineEmits<OrdersListEmits>();
 
 const { t } = useI18n();
+
+const chartDataStore = useChartDataStore();
 
 const columns = computed(() => [
   {
@@ -421,6 +440,88 @@ const columns = computed(() => [
   },
 ]);
 
+interface GroupedOrder {
+  order: MasterOrder,
+  takeProfits: TakeProfit[],
+  stopLoss: StopLoss | undefined,
+}
+
+const groupOrders = (
+  orders: Order[],
+): GroupedOrder[] => (
+  orders.filter((order: Order) => order.order_type === 'limit') as MasterOrder[]
+)
+  .map((order: MasterOrder) => {
+    const relatedTakeProfits = (
+      orders.filter(
+        (targetOrder: Order) => targetOrder.order_type === 'tp' && targetOrder.master === order.id,
+      ) as TakeProfit[]
+    ).sort((orderA: TakeProfit, orderB: TakeProfit) => orderB.price - orderA.price);
+
+    const relatedStopLoss = orders.filter(
+      (targetOrder: Order) => targetOrder.order_type === 'sl' && targetOrder.master === order.id,
+    )[0] as StopLoss | undefined;
+
+    return {
+      order,
+      takeProfits: relatedTakeProfits,
+      stopLoss: relatedStopLoss,
+    };
+  });
+
+const mapOrdersToActiveOrderTableRecords = (
+  orders: GroupedOrder[],
+) => orders
+  .map(({ order, takeProfits, stopLoss }: GroupedOrder) => {
+    const pairData = pairsMap.value?.[order.pair];
+
+    if (!pairData) {
+      throw new Error('[Orders list]: pair data not found');
+    }
+
+    return compose(
+      collectActiveOrderRecord({
+        pairData,
+        pairPrice: chartDataStore.getCurrentPriceByPairId(pairData.id),
+        takeProfits,
+        stopLoss,
+        order,
+      }),
+      createEmptyRecord,
+    )(order.id);
+  });
+
+const mapOrdersToClosedOrderTableRecords = (
+  orders: GroupedOrder[],
+) => orders
+  .map(({ order, takeProfits, stopLoss }: GroupedOrder) => {
+    const pairData = pairsMap.value?.[order.pair];
+
+    if (!pairData) {
+      throw new Error('[Orders list]: pair data not found');
+    }
+
+    return compose(
+      collectClosedOrderRecord({
+        pairData,
+        takeProfits,
+        stopLoss,
+        order,
+        pairPrice: 0,
+      }),
+      createEmptyRecord,
+    )(order.id);
+  });
+
+const records = computed(() => (
+  compose(
+    listType.value === 'active'
+      ? mapOrdersToActiveOrderTableRecords
+      : mapOrdersToClosedOrderTableRecords,
+    groupOrders,
+  )(orders.value)
+));
+
 const calculateCommonPnl = (
   records: ActiveOrdersTableRecord[],
 ) => records.reduce((
@@ -433,7 +534,7 @@ const calculateCommonPnl = (
 
 const commonPnl = computed(() => (
   listType.value === 'active'
-    ? calculateCommonPnl(props.records as ActiveOrdersTableRecord[])
+    ? calculateCommonPnl(records.value as ActiveOrdersTableRecord[])
     : 0
 ));
 

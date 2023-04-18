@@ -2,23 +2,27 @@
   <OrdersList
     :is-loading="isLoading"
     :list-type="listType"
-    :records="records"
     :is-disabled="isDisabled"
+    :orders="orders"
+    :pairs-map="pairsMap || {}"
     @delete-order="deleteOrder"
     @record-click="onRecordClick"
   />
 </template>
 
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n';
-import { useOrdersList } from '@/hooks/useOrdersList';
 import {
   computed,
   onActivated,
   onBeforeUnmount,
-  onDeactivated, toRefs,
+  onDeactivated,
+  toRefs,
 } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useOrdersList } from '@/hooks/useOrdersList';
 import OrdersList from '@/components/app/ordersList/OrdersList.vue';
+import { useMarketStore } from '@/stores/market';
+import { storeToRefs } from 'pinia';
 import { ActiveOrderListProps } from './index';
 
 const props = defineProps<ActiveOrderListProps>();
@@ -26,11 +30,16 @@ const {
   listType,
 } = toRefs(props);
 
+const marketStore = useMarketStore();
+const {
+  pairsMap,
+} = storeToRefs(marketStore);
+
 const { t } = useI18n();
 
 const {
   isLoading,
-  records,
+  orders,
   getList,
   clearSubscriptions,
   onRecordClick,
@@ -43,7 +52,7 @@ const isDisabled = computed(() => [
 ].some(Boolean));
 
 onActivated(() => {
-  const showLoading = !records.value?.length;
+  const showLoading = !orders.value?.length;
   getList(showLoading);
 });
 

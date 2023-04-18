@@ -4,32 +4,18 @@ import {
   computed,
   Ref,
 } from 'vue';
-import { useI18n } from 'vue-i18n';
 import {
   ActiveOrdersTableRecord,
   ClosedOrdersTableRecord,
 } from '@/components/app/ordersList';
 import { useMarketStore } from '@/stores/market';
 import {
-  MasterOrder,
   Order,
-  StopLoss,
-  TakeProfit,
 } from '@/api/types/order';
-import { compose } from '@/utils/fp';
-import { collectActiveOrderRecord, collectClosedOrderRecord } from '@/components/app/ordersList/collectTableRecord';
-import { createEmptyRecord } from '@/components/core/table/helpers';
 import { awaitTimeout } from '@/utils/promise';
 import { useEmulatorStore } from '@/stores/emulator';
-import { useChartDataStore } from '@/stores/chartData';
 import { storeToRefs } from 'pinia';
 import { findAndDelete, findAndUpdateObject } from '@/utils/array';
-
-interface GroupedOrder {
-  order: MasterOrder,
-  takeProfits: TakeProfit[],
-  stopLoss: StopLoss | undefined,
-}
 
 export const useOrdersList = (
   listType: Ref<'active' | 'closed'>,
@@ -40,98 +26,11 @@ export const useOrdersList = (
     closedOrders,
   } = storeToRefs(marketStore);
 
-  const chartDataStore = useChartDataStore();
   const emulatorStore = useEmulatorStore();
-
-  const groupOrders = (
-    orders: Order[],
-  ): GroupedOrder[] => (
-    orders.filter((order: Order) => order.order_type === 'limit') as MasterOrder[]
-  )
-    .map((order: MasterOrder) => {
-      const relatedTakeProfits = (
-        orders.filter(
-          (targetOrder: Order) => targetOrder.order_type === 'tp' && targetOrder.master === order.id,
-        ) as TakeProfit[]
-      ).sort((orderA: TakeProfit, orderB: TakeProfit) => orderB.price - orderA.price);
-
-      const relatedStopLoss = orders.filter(
-        (targetOrder: Order) => targetOrder.order_type === 'sl' && targetOrder.master === order.id,
-      )[0] as StopLoss | undefined;
-
-      return {
-        order,
-        takeProfits: relatedTakeProfits,
-        stopLoss: relatedStopLoss,
-      };
-    });
-
-  const mapOrdersToActiveOrderTableRecords = (
-    orders: GroupedOrder[],
-  ) => orders
-    .map(({ order, takeProfits, stopLoss }: GroupedOrder) => {
-      const pairData = marketStore.pairsMap?.[order.pair];
-
-      if (!pairData) {
-        throw new Error('[Orders list]: pair data not found');
-      }
-
-      return compose(
-        collectActiveOrderRecord({
-          pairData,
-          pairPrice: chartDataStore.getCurrentPriceByPairId(pairData.id),
-          takeProfits,
-          stopLoss,
-          order,
-        }),
-        createEmptyRecord,
-      )(order.id);
-    });
-
-  const mapOrdersToClosedOrderTableRecords = (
-    orders: GroupedOrder[],
-  ) => orders
-    .map(({ order, takeProfits, stopLoss }: GroupedOrder) => {
-      const pairData = marketStore.pairsMap?.[order.pair];
-
-      if (!pairData) {
-        throw new Error('[Orders list]: pair data not found');
-      }
-
-      return compose(
-        collectClosedOrderRecord({
-          pairData,
-          takeProfits,
-          stopLoss,
-          order,
-          pairPrice: 0,
-        }),
-        createEmptyRecord,
-      )(order.id);
-    });
 
   const orders = computed<Order[]>(() => ({
     active: activeOrders.value,
     closed: closedOrders.value,
-  }[listType.value]));
-
-  const activeOrderRecords = computed<ActiveOrdersTableRecord[]>(
-    () => compose(
-      mapOrdersToActiveOrderTableRecords,
-      groupOrders,
-    )(activeOrders.value),
-  );
-
-  const closedOrderRecords = computed<ClosedOrdersTableRecord[]>(
-    () => compose(
-      mapOrdersToClosedOrderTableRecords,
-      groupOrders,
-    )(closedOrders.value),
-  );
-
-  const records = computed(() => ({
-    active: activeOrderRecords.value,
-    closed: closedOrderRecords.value,
   }[listType.value]));
 
   const isLoading = ref(false);
@@ -229,7 +128,6 @@ export const useOrdersList = (
 
   return {
     orders,
-    records,
     isLoading,
     getList,
     clearSubscriptions,

@@ -85,8 +85,6 @@ export type ClosedOrdersTableRecord = TableRecord<ClosedOrdersTableColumnSlug, {
 
 export interface OrdersListProps {
   listType: 'active' | 'closed',
-  isLoading?: boolean,
-  isDisabled?: boolean,
   orders: Order[],
   pairsMap: PairsMap,
 }

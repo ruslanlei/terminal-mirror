@@ -1,307 +1,290 @@
 <template>
-  <div
-    :class="[
-      $style.ordersListWrapper,
-      isDisabled && $style.disabled,
-    ]"
+  <Table
+    :columns="columns"
+    :records="records"
+    :state="['ordersListColor', 'defaultSize']"
+    :class="$style.ordersList"
+    :is-rows-clickable="true"
+    @record-click="onRecordClick"
   >
-    <transition
-      name="skeletonTransition"
-      mode="out-in"
-    >
-      <ListSkeleton
-        v-if="isLoading"
-        :class="$style.skeleton"
-      />
-      <Table
-        v-else
-        :columns="columns"
-        :records="records"
-        :state="['ordersListColor', 'defaultSize']"
-        :class="$style.ordersList"
-        :is-rows-clickable="true"
-        @record-click="onRecordClick"
-      >
-        <template #cell(pair)="{ data: { base } }">
-          <div :class="$style.pairCell">
-            <CoinLogo :coin="base" />
-            <span :class="$style.pairName">
-              {{ base }}
-            </span>
-          </div>
-        </template>
+    <template #cell(pair)="{ data: { base } }">
+      <div :class="$style.pairCell">
+        <CoinLogo :coin="base" />
+        <span :class="$style.pairName">
+          {{ base }}
+        </span>
+      </div>
+    </template>
 
-        <template #cell(type)="{ data: orderDirection }">
-          <span :class="[$style.orderDirection, $style[orderDirection]]">
-            {{ t(`order.direction.${ ({ sell: 'short', buy: 'long' }[orderDirection]) }`) }}
+    <template #cell(type)="{ data: orderDirection }">
+      <span :class="[$style.orderDirection, $style[orderDirection]]">
+        {{ t(`order.direction.${ ({ sell: 'short', buy: 'long' }[orderDirection]) }`) }}
+      </span>
+    </template>
+
+    <template #column(volume)>
+      <i18n-t keypath="ordersList.column.volume">
+        <template #currencyName>
+          <InlineSpace />
+          <span :class="$style.quoteCurrency">
+            {{ 'USDT' }}
           </span>
         </template>
+      </i18n-t>
+    </template>
+    <template #cell(volume)="{ data }">
+      {{ data }}
+    </template>
 
-        <template #column(volume)>
-          <i18n-t keypath="ordersList.column.volume">
-            <template #currencyName>
-              <InlineSpace />
-              <span :class="$style.quoteCurrency">
-                {{ 'USDT' }}
-              </span>
-            </template>
-          </i18n-t>
-        </template>
-        <template #cell(volume)="{ data }">
-          {{ data }}
-        </template>
+    <template #cell(coins)="{ data }">
+      {{ data }}
+    </template>
 
-        <template #cell(coins)="{ data }">
-          {{ data }}
-        </template>
-
-        <template #column(prices)>
-          <i18n-t keypath="ordersList.column.prices.order">
-            <template #current>
-              <span :class="$style.priceLabelCurrent">
-                <template v-if="listType === 'active'">
-                  {{ t('ordersList.column.prices.current') }}
-                </template>
-                <template v-if="listType === 'closed'">
-                  {{ t('ordersList.column.prices.close') }}
-                </template>
-              </span>
-            </template>
-          </i18n-t>
-        </template>
-        <template #cell(prices)="{ data }">
-          <div :class="$style.pricesCell">
-            <span>
-              {{ data.order }}
-            </span>
-            <span :class="$style.pricesCellCurrent">
-              {{ '/' }}
-              <template v-if="listType === 'active'">
-                <template v-if="data.current">
-                  {{ data.current }}
-                </template>
-                <template v-else>
-                  {{ '-' }}
-                </template>
-              </template>
-              <template v-if="listType === 'closed'">
-                {{ data.close }}
-              </template>
-            </span>
-          </div>
-        </template>
-
-        <template #column(results)>
-          {{ t('ordersList.column.results') }}
-        </template>
-        <template
-          #cell(results)="{
-            data: {
-              pnlPercent,
-              pnl: { value: pnl, currency },
-              isPositive,
-              isCancelled,
-              orderStatus,
-            }
-          }"
-        >
-          <div :class="$style.resultsWrapper">
-            <div :class="$style.results">
-              <Typography
-                :state="[
-                  (isPositive && !isCancelled)
-                    ? 'success'
-                    : 'danger',
-                  'semiBold',
-                ]"
-                size="title2"
-              >
-                <template v-if="isCancelled">
-                  {{ t(`order.status.${orderStatus}`) }}
-                </template>
-                <template v-else>
-                  {{
-                    t('common.percents', {
-                      value: isPositive
-                        ? toPositiveNumberString(pnlPercent)
-                        : pnlPercent
-                    })
-                  }}
-                </template>
-              </Typography>
-              <Typography
-                v-if="!isCancelled"
-                size="title4"
-                :text="t('common.currencyAmount', { amount: pnl, currency })"
-                :state="['accent2']"
-              />
-            </div>
-          </div>
-        </template>
-
-        <template #cell(sl)="{ data: stopLossPercent }">
-          <div
-            v-if="stopLossPercent !== null"
-            :class="$style.stopLossPercent"
-          >
-            {{ t('common.percents', { value: -Math.abs(stopLossPercent) }) }}
-          </div>
-          <div
-            v-else
-            :class="$style.emptyValue"
-          >
-            {{ '-' }}
-          </div>
-        </template>
-
-        <template #column(pnl)>
-          <i18n-t keypath="ordersList.column.pnl">
-            <template #value>
-              <InlineSpace />
-              <Typography
-                :state="[
-                  'semiBold',
-                  isPositive(commonPnl)
-                    ? 'success'
-                    : 'danger',
-                ]"
-              >
-                <i18n-t
-                  :class="$style.pnlColumnValue"
-                  tag="span"
-                  keypath="common.currencyAmount"
-                >
-                  <template #amount>
-                    <AnimatedText
-                      :text="commonPnl"
-                      animation-type="verticalAuto"
-                    >
-                      {{ commonPnl }}
-                    </AnimatedText>
-                  </template>
-                  <template #currency>
-                    <InlineSpace />
-                    {{ '$' }}
-                  </template>
-                </i18n-t>
-              </Typography>
-            </template>
-          </i18n-t>
-        </template>
-        <template #cell(pnl)="{ data: { value, currency } }">
-          <Badge
-            v-if="value !== null"
-            :state="isPositive(value) ? 'success' : 'danger'"
-            size="sm"
-          >
-            <AnimatedText
-              :text="value"
-              animation-type="verticalAuto"
-            >
-              {{ t('common.currencyAmount', { amount: value, currency }) }}
-            </AnimatedText>
-          </Badge>
-        </template>
-
-        <template #cell(tp)="{ data: commonTakeProfitPercent }">
-          <div
-            v-if="commonTakeProfitPercent"
-            :class="$style.commonTakeProfit"
-          >
-            {{ t('common.percents', { value: commonTakeProfitPercent }) }}
-          </div>
-          <div
-            v-else
-            :class="$style.emptyValue"
-          >
-            {{ '-' }}
-          </div>
-        </template>
-
-        <template #column(date)>
-          <div v-if="listType === 'active'">
-            {{ t('ordersList.column.date') }}
-          </div>
-          <i18n-t
-            v-if="listType === 'closed'"
-            tag="span"
-            keypath="ordersList.column.dateOpenClose.open"
-          >
-            <template #close>
-              <span :class="$style.dateClose">
-                {{ t('ordersList.column.dateOpenClose.close') }}
-              </span>
-            </template>
-          </i18n-t>
-        </template>
-        <template #cell(date)="{ data }">
-          <div
-            :class="$style.date"
-          >
+    <template #column(prices)>
+      <i18n-t keypath="ordersList.column.prices.order">
+        <template #current>
+          <span :class="$style.priceLabelCurrent">
             <template v-if="listType === 'active'">
-              {{ data }}
+              {{ t('ordersList.column.prices.current') }}
             </template>
             <template v-if="listType === 'closed'">
-              {{ data.open }}
-              <InlineSpace />
-              <span :class="$style.dateClose">
-                {{ data.close }}
-              </span>
-            </template>
-          </div>
-        </template>
-
-        <template #cell(comment)>
-          <button
-            type="button"
-            :class="$style.commentButton"
-          >
-            <Icon icon="textAlignLeft" />
-          </button>
-        </template>
-
-        <template #column(options)="{ label }">
-          <span>
-            <template v-if="listType === 'closed'">
-              {{ label }}
+              {{ t('ordersList.column.prices.close') }}
             </template>
           </span>
         </template>
-        <template #cell(options)="{ data: { order } }">
-          <button
-            v-if="listType === 'closed'"
-            type="button"
-            :class="$style.commentButton"
-          >
-            <Icon icon="textAlignLeft" />
-          </button>
-          <div
-            v-if="listType === 'active'"
-            :class="$style.orderOptions"
-          >
-            <!--          <button-->
-            <!--            type="button"-->
-            <!--            :class="$style.swapButton"-->
-            <!--          >-->
-            <!--            <Icon icon="swap" />-->
-            <!--          </button>-->
-            <CloseOrderButton @delete="deleteOrder(order)" />
-          </div>
-        </template>
+      </i18n-t>
+    </template>
+    <template #cell(prices)="{ data }">
+      <div :class="$style.pricesCell">
+        <span>
+          {{ data.order }}
+        </span>
+        <span :class="$style.pricesCellCurrent">
+          {{ '/' }}
+          <template v-if="listType === 'active'">
+            <template v-if="data.current">
+              {{ data.current }}
+            </template>
+            <template v-else>
+              {{ '-' }}
+            </template>
+          </template>
+          <template v-if="listType === 'closed'">
+            {{ data.close }}
+          </template>
+        </span>
+      </div>
+    </template>
 
-        <template #recordChildren="{ children }">
-          <SubOrdersTable
-            :list-type="listType"
-            :orders="children"
+    <template #column(results)>
+      {{ t('ordersList.column.results') }}
+    </template>
+    <template
+      #cell(results)="{
+        data: {
+          pnlPercent,
+          pnl: { value: pnl, currency },
+          isPositive,
+          isCancelled,
+          orderStatus,
+        }
+      }"
+    >
+      <div :class="$style.resultsWrapper">
+        <div :class="$style.results">
+          <Typography
+            :state="[
+              (isPositive && !isCancelled)
+                ? 'success'
+                : 'danger',
+              'semiBold',
+            ]"
+            size="title2"
+          >
+            <template v-if="isCancelled">
+              {{ t(`order.status.${orderStatus}`) }}
+            </template>
+            <template v-else>
+              {{
+                t('common.percents', {
+                  value: isPositive
+                    ? toPositiveNumberString(pnlPercent)
+                    : pnlPercent
+                })
+              }}
+            </template>
+          </Typography>
+          <Typography
+            v-if="!isCancelled"
+            size="title4"
+            :text="t('common.currencyAmount', { amount: pnl, currency })"
+            :state="['accent2']"
           />
-        </template>
+        </div>
+      </div>
+    </template>
 
-        <template #placeholder>
-          <OrdersListPlaceholder />
+    <template #cell(sl)="{ data: stopLossPercent }">
+      <div
+        v-if="stopLossPercent !== null"
+        :class="$style.stopLossPercent"
+      >
+        {{ t('common.percents', { value: -Math.abs(stopLossPercent) }) }}
+      </div>
+      <div
+        v-else
+        :class="$style.emptyValue"
+      >
+        {{ '-' }}
+      </div>
+    </template>
+
+    <template #column(pnl)>
+      <i18n-t keypath="ordersList.column.pnl">
+        <template #value>
+          <InlineSpace />
+          <Typography
+            :state="[
+              'semiBold',
+              isPositive(commonPnl)
+                ? 'success'
+                : 'danger',
+            ]"
+          >
+            <i18n-t
+              :class="$style.pnlColumnValue"
+              tag="span"
+              keypath="common.currencyAmount"
+            >
+              <template #amount>
+                <AnimatedText
+                  :text="commonPnl"
+                  animation-type="verticalAuto"
+                >
+                  {{ commonPnl }}
+                </AnimatedText>
+              </template>
+              <template #currency>
+                <InlineSpace />
+                {{ '$' }}
+              </template>
+            </i18n-t>
+          </Typography>
         </template>
-      </Table>
-    </transition>
-  </div>
+      </i18n-t>
+    </template>
+    <template #cell(pnl)="{ data: { value, currency } }">
+      <Badge
+        v-if="value !== null"
+        :state="isPositive(value) ? 'success' : 'danger'"
+        size="sm"
+      >
+        <AnimatedText
+          :text="value"
+          animation-type="verticalAuto"
+        >
+          {{ t('common.currencyAmount', { amount: value, currency }) }}
+        </AnimatedText>
+      </Badge>
+    </template>
+
+    <template #cell(tp)="{ data: commonTakeProfitPercent }">
+      <div
+        v-if="commonTakeProfitPercent"
+        :class="$style.commonTakeProfit"
+      >
+        {{ t('common.percents', { value: commonTakeProfitPercent }) }}
+      </div>
+      <div
+        v-else
+        :class="$style.emptyValue"
+      >
+        {{ '-' }}
+      </div>
+    </template>
+
+    <template #column(date)>
+      <div v-if="listType === 'active'">
+        {{ t('ordersList.column.date') }}
+      </div>
+      <i18n-t
+        v-if="listType === 'closed'"
+        tag="span"
+        keypath="ordersList.column.dateOpenClose.open"
+      >
+        <template #close>
+          <span :class="$style.dateClose">
+            {{ t('ordersList.column.dateOpenClose.close') }}
+          </span>
+        </template>
+      </i18n-t>
+    </template>
+    <template #cell(date)="{ data }">
+      <div
+        :class="$style.date"
+      >
+        <template v-if="listType === 'active'">
+          {{ data }}
+        </template>
+        <template v-if="listType === 'closed'">
+          {{ data.open }}
+          <InlineSpace />
+          <span :class="$style.dateClose">
+            {{ data.close }}
+          </span>
+        </template>
+      </div>
+    </template>
+
+    <template #cell(comment)>
+      <button
+        type="button"
+        :class="$style.commentButton"
+      >
+        <Icon icon="textAlignLeft" />
+      </button>
+    </template>
+
+    <template #column(options)="{ label }">
+      <span>
+        <template v-if="listType === 'closed'">
+          {{ label }}
+        </template>
+      </span>
+    </template>
+    <template #cell(options)="{ data: { order } }">
+      <button
+        v-if="listType === 'closed'"
+        type="button"
+        :class="$style.commentButton"
+      >
+        <Icon icon="textAlignLeft" />
+      </button>
+      <div
+        v-if="listType === 'active'"
+        :class="$style.orderOptions"
+      >
+        <!--          <button-->
+        <!--            type="button"-->
+        <!--            :class="$style.swapButton"-->
+        <!--          >-->
+        <!--            <Icon icon="swap" />-->
+        <!--          </button>-->
+        <CloseOrderButton @delete="deleteOrder(order)" />
+      </div>
+    </template>
+
+    <template #recordChildren="{ children }">
+      <SubOrdersTable
+        :list-type="listType"
+        :orders="children"
+      />
+    </template>
+
+    <template #placeholder>
+      <OrdersListPlaceholder />
+    </template>
+  </Table>
 </template>
 
 <script setup lang="ts">
@@ -550,12 +533,7 @@ const onRecordClick = (
 <style lang="scss" module>
 @import "src/assets/styles/utils";
 
-.ordersListWrapper {
-  display: flex;
-  @include transparentOnDisabled;
-}
-
-.ordersList, .skeleton {
+.ordersList {
   width: 100%;
   flex-grow: 1;
 }

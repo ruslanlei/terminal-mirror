@@ -1,13 +1,28 @@
 <template>
-  <OrdersList
-    :is-loading="isLoading"
-    :list-type="listType"
-    :is-disabled="isDisabled"
-    :orders="orders"
-    :pairs-map="pairsMap || {}"
-    @delete-order="deleteOrder"
-    @record-click="onRecordClick"
-  />
+  <div
+    :class="[
+      $style.ordersListWrapper,
+      isDisabled && $style.disabled,
+    ]"
+  >
+    <transition
+      name="skeletonTransition"
+      mode="out-in"
+    >
+      <ListSkeleton
+        v-if="isLoading"
+        :class="$style.skeleton"
+      />
+      <OrdersList
+        v-else
+        :list-type="listType"
+        :orders="orders"
+        :pairs-map="pairsMap || {}"
+        @delete-order="deleteOrder"
+        @record-click="onRecordClick"
+      />
+    </transition>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -15,7 +30,7 @@ import {
   computed,
   onActivated,
   onBeforeUnmount,
-  onDeactivated,
+  onDeactivated, ref,
   toRefs,
 } from 'vue';
 import { useI18n } from 'vue-i18n';
@@ -23,6 +38,7 @@ import OrdersList from '@/components/app/ordersList/OrdersList.vue';
 import { useMarketStore } from '@/stores/market';
 import { storeToRefs } from 'pinia';
 import { useActiveOrderList } from '@/hooks/useActiveOrderList';
+import ListSkeleton from '@/components/app/listSkeleton/ListSkeleton.vue';
 import { ActiveOrderListProps } from './index';
 
 const props = defineProps<ActiveOrderListProps>();
@@ -36,6 +52,8 @@ const {
 } = storeToRefs(marketStore);
 
 const { t } = useI18n();
+
+const activePage = ref(0);
 
 const {
   isLoading,
@@ -59,3 +77,17 @@ onActivated(() => {
 onDeactivated(clearSubscriptions);
 onBeforeUnmount(clearSubscriptions);
 </script>
+
+<style lang="scss" module>
+@import "src/assets/styles/utils";
+
+.ordersListWrapper {
+  display: flex;
+  @include transparentOnDisabled;
+}
+
+.skeleton {
+  width: 100%;
+  flex-grow: 1;
+}
+</style>

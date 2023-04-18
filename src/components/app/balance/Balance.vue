@@ -27,7 +27,7 @@ const emulatorStore = useEmulatorStore();
 
 const computedLabel = computed(() => ({
   emulator: t('market.type.emulator'),
-  real: t('market.type.real'),
+  combat: t('market.type.combat'),
 }[marketStore.marketType]));
 
 const balance = computed(() => t('common.currencyAmount', {

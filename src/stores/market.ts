@@ -6,7 +6,7 @@ import { useStorage } from '@vueuse/core';
 import { useOrders } from '@/hooks/useOrders';
 import { usePairs } from '@/hooks/usePairs';
 
-export type MarketType = 'emulator' | 'real';
+export type MarketType = 'emulator' | 'combat';
 
 export const useMarketStore = defineStore('market', () => {
   const marketType = useStorage<MarketType>('marketType', 'emulator');

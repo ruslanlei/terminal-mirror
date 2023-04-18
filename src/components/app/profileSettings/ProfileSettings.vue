@@ -42,12 +42,18 @@
     </div>
     <footer :class="$style.footer">
       <CurrentTheme />
-      <Link
-        :class="$style.support"
-        :to="{ name: 'support' }"
-        :label="t('auth.support')"
+      <Button
         :size="null"
-      />
+        :state="null"
+        @click="copyDiscordLink"
+      >
+        <Typography
+          state="accent1"
+          size="title5"
+        >
+          {{ t('auth.support') }}
+        </Typography>
+      </Button>
     </footer>
   </Card>
 </template>
@@ -60,8 +66,10 @@ import Icon from '@/components/core/icon/Icon.vue';
 import LanguageSelect from '@/components/app/languageSelect/LanguageSelect.vue';
 import SubscriptionBadge from '@/components/core/subscriptionBadge/SubscriptionBadge.vue';
 import CurrentTheme from '@/components/app/currentTheme/CurrentTheme.vue';
-import Link from '@/components/core/link/Link.vue';
+import Button from '@/components/core/button/Button.vue';
 import { useProfileSettings } from '@/hooks/useProfileSettings';
+import Typography from '@/components/app/typography/Typography.vue';
+import { useDiscordLink } from '@/hooks/useDiscordLink';
 import DefaultAvatar from '@/assets/images/defaultAvatar.svg?url';
 
 const { t } = useI18n();
@@ -72,6 +80,12 @@ const {
   username,
   testKey,
 } = useProfileSettings();
+
+const {
+  copyDiscordLink,
+} = useDiscordLink(
+  t('discordLink.copiedForSupport'),
+);
 </script>
 
 <style lang="scss" module>
@@ -142,6 +156,5 @@ const {
 }
 
 .support {
-  @include title5;
 }
 </style>

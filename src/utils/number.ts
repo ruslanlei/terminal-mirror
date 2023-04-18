@@ -31,7 +31,7 @@ export const subtractRight = curry((
   value: number,
 ) => numeral(value).subtract(subtrahend).value() || 0);
 
-export const roundToDecimalPoint = curry(
+export const roundToDecimalPlaces = curry(
   (
     decimalPlaces: number,
     number: number,
@@ -41,7 +41,7 @@ export const roundToDecimalPoint = curry(
   },
 );
 
-export const floorToDecimalPoint = curry(
+export const floorToDecimalPlaces = curry(
   (
     decimalPlaces: number,
     num: number,

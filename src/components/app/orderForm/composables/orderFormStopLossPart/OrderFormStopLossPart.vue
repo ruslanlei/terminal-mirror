@@ -109,7 +109,7 @@ import { useMarketStore } from '@/stores/market';
 import { compose } from '@/utils/fp';
 import { useEmulatorStore } from '@/stores/emulator';
 import { injectOrderFormState } from '@/components/app/orderForm';
-import { multiply, roundToDecimalPoint } from '@/utils/number';
+import { multiply, roundToDecimalPlaces } from '@/utils/number';
 import {
   calculateOriginalPriceByVolumeDecrease, calculateOriginalPriceByVolumeIncrease,
   calculateVolumeDifference,
@@ -158,7 +158,7 @@ const maxAmountOfRisk = computed(() => multiply(model.quantity, model.price));
 
 const amountOfRisk = computed({
   get: () => compose(
-    roundToDecimalPoint(quoteCurrencyDecimals.value),
+    roundToDecimalPlaces(quoteCurrencyDecimals.value),
     calculateVolumeDifference,
   )(
     model.quantity,
@@ -168,7 +168,7 @@ const amountOfRisk = computed({
 
   set: (amountOfRisk: number) => {
     stopLossPrice.value = compose(
-      roundToDecimalPoint(quoteCurrencyDecimals.value),
+      roundToDecimalPlaces(quoteCurrencyDecimals.value),
       (orderSide.value === 'buy'
         ? calculateOriginalPriceByVolumeDecrease
         : calculateOriginalPriceByVolumeIncrease
@@ -183,13 +183,13 @@ const amountOfRisk = computed({
 
 const percentOfOrderPrice = computed({
   get: () => compose(
-    roundToDecimalPoint(2),
+    roundToDecimalPlaces(2),
     calculatePercentageOfTotal,
   )(model.price, stopLossPrice.value),
 
   set: (percent: number) => {
     stopLossPrice.value = compose(
-      roundToDecimalPoint(quoteCurrencyDecimals.value),
+      roundToDecimalPlaces(quoteCurrencyDecimals.value),
       addPercents,
     )(model.price, percent);
   },
@@ -200,7 +200,7 @@ const percentOfOrderPriceMax = computed(() => (orderSide.value === 'buy' ? 0 : 1
 
 const percentOfDeposit = computed({
   get: () => compose(
-    roundToDecimalPoint(2),
+    roundToDecimalPlaces(2),
     calculateVolumeDifferenceInPercentsOfDeposit,
   )(
     model.quantity,
@@ -211,7 +211,7 @@ const percentOfDeposit = computed({
 
   set: (percentOfDeposit: number) => {
     stopLossPrice.value = compose(
-      roundToDecimalPoint(quoteCurrencyDecimals.value),
+      roundToDecimalPlaces(quoteCurrencyDecimals.value),
       calculatePriceByPercentOfDeposit(
         model.quantity,
         model.price,

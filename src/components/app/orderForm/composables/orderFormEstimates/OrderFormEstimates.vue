@@ -52,7 +52,7 @@ import { computed } from 'vue';
 import { useMarketStore } from '@/stores/market';
 import { storeToRefs } from 'pinia';
 import { compose } from '@/utils/fp';
-import { roundToDecimalPoint } from '@/utils/number';
+import { roundToDecimalPlaces } from '@/utils/number';
 import { reduceTakeProfitsToAmountOfProfit } from '@/helpers/math/formulas/takeProfit';
 import { injectOrderFormState } from '@/components/app/orderForm';
 import { calculateVolumeDifference } from '@/helpers/math/formulas/order';
@@ -78,7 +78,7 @@ const isRadioLabelIconVisible = computed(() => props.state === 'default');
 const isMetricsLabelVisible = computed(() => props.state === 'default');
 
 const takeProfitsSum = computed(() => compose(
-  roundToDecimalPoint(quoteCurrencyDecimals.value),
+  roundToDecimalPlaces(quoteCurrencyDecimals.value),
   reduceTakeProfitsToAmountOfProfit(model.price),
 )(takeProfits.value));
 
@@ -92,7 +92,7 @@ const profitDisplayValue = computed(() => t('order.takeProfit.profitValue', {
 
 const stopLossRisk = computed(
   () => compose(
-    roundToDecimalPoint(quoteCurrencyDecimals.value),
+    roundToDecimalPlaces(quoteCurrencyDecimals.value),
     calculateVolumeDifference,
   )(
     model.quantity,

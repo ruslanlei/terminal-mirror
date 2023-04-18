@@ -4,7 +4,7 @@ import {
   SubOrderTableItem,
 } from '@/components/app/ordersList/subOrdersTable/index';
 import { compose, curry } from '@/utils/fp';
-import { roundToDecimalPoint } from '@/utils/number';
+import { roundToDecimalPlaces } from '@/utils/number';
 import { valueToPercents } from '@/helpers/math/percents';
 import { humanizeDate } from '@/utils/date';
 import { MasterOrder } from '@/api/types/order';
@@ -39,7 +39,7 @@ const quantityMixin = (
   quantity: {
     value: order.quantity,
     percent: compose(
-      roundToDecimalPoint(2),
+      roundToDecimalPlaces(2),
       valueToPercents,
     )(masterOrder.quantity, order.quantity),
   },

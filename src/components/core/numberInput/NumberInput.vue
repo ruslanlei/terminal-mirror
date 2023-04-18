@@ -89,7 +89,7 @@ import { useLocalValue } from '@/hooks/useLocalValue';
 import FieldError from '@/components/core/fieldError/FieldError.vue';
 import Icon from '@/components/core/icon/Icon.vue';
 import { useComputedState } from '@/hooks/useComputedState';
-import { add, subtract, roundToDecimalPoint } from '@/utils/number';
+import { add, subtract, roundToDecimalPlaces } from '@/utils/number';
 import { NumberInputEmits, NumberInputNormalizer, NumberInputProps } from './index';
 
 const props = withDefaults(
@@ -101,7 +101,7 @@ const props = withDefaults(
     step: 1,
     saveOn: 'input',
     normalizeOnKeydown: false,
-    roundToDecimalPoint: true,
+    roundToDecimalPlaces: true,
     state: 'defaultColor',
     size: 'sm',
     hideArrows: false,
@@ -121,8 +121,8 @@ const computedTabIndex = computed(
 const localValue = useLocalValue<number>(props, emit, 'modelValue');
 
 watch(localValue, () => {
-  if (props.decimals && props.roundToDecimalPoint) {
-    localValue.value = roundToDecimalPoint(props.decimals, localValue.value);
+  if (props.decimals && props.roundToDecimalPlaces) {
+    localValue.value = roundToDecimalPlaces(props.decimals, localValue.value);
   }
 });
 

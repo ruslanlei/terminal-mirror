@@ -14,7 +14,7 @@ import { useMarketStore } from '@/stores/market';
 import { useChartDataStore } from '@/stores/chartData';
 import { IPairStats } from '@/components/core/pairStats';
 import { compose } from '@/utils/fp';
-import { roundToDecimalPoint, subtractRight } from '@/utils/number';
+import { roundToDecimalPlaces, subtractRight } from '@/utils/number';
 import { humanizeNumber, percentFormat } from '@/utils/numberFormat';
 import { calculatePercentageOfTotal } from '@/helpers/math/percents';
 import { findMaxByKey, findMinByKey } from '@/utils/array';
@@ -41,7 +41,7 @@ const amountOfTransactions = computed(
 
 const change = computed(() => ((currentPrice.value && firstPriceWithinLast24Hours.value)
   ? compose(
-    roundToDecimalPoint(4),
+    roundToDecimalPlaces(4),
     subtractRight(firstPriceWithinLast24Hours.value),
   )(currentPrice.value)
   : null));

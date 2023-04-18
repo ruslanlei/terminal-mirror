@@ -8,7 +8,7 @@ import {
   StopLoss,
   TakeProfit,
 } from '@/api/types/order';
-import { add, roundToDecimalPoint } from '@/utils/number';
+import { add, roundToDecimalPlaces } from '@/utils/number';
 import { compose } from '@/utils/fp';
 import { collectActiveOrderRecord, collectClosedOrderRecord } from '@/components/app/ordersList/collectTableRecord';
 import { createEmptyRecord } from '@/components/core/table/helpers';
@@ -195,7 +195,7 @@ export const useOrdersList = (
     commonPnl: number,
     record: ActiveOrdersTableRecord,
   ) => compose(
-    roundToDecimalPoint(2),
+    roundToDecimalPlaces(2),
     add,
   )(commonPnl, (record.data.pnl.value || 0)), 0));
 

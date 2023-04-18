@@ -53,7 +53,7 @@ import { onMounted, ref } from 'vue';
 import Divider from '@/components/core/divider/Divider.vue';
 import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
 import Typography from '@/components/app/typography/Typography.vue';
-import { isPositive, roundToDecimalPoint } from '@/utils/number';
+import { isPositive, roundToDecimalPlaces } from '@/utils/number';
 import { TypographyProps } from '@/components/app/typography';
 import { useResizeObserver } from '@vueuse/core';
 import { toCssPxValue } from '@/utils/style';
@@ -100,10 +100,10 @@ const setContainerWidth = () => {
 
   computedContainerStyles.value = {
     width: toCssPxValue(
-      roundToDecimalPoint(2, width),
+      roundToDecimalPlaces(2, width),
     ),
     height: toCssPxValue(
-      roundToDecimalPoint(2, height),
+      roundToDecimalPlaces(2, height),
     ),
   };
 };

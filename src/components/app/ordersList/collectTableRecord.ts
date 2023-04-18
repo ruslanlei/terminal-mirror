@@ -10,7 +10,7 @@ import {
   Order,
 } from '@/api/types/order';
 import {
-  isPositive, multiply, roundToDecimalPoint, toAbsolute,
+  isPositive, multiply, roundToDecimalPlaces, toAbsolute,
 } from '@/utils/number';
 import { calculatePercentageOfTotal } from '@/helpers/math/percents';
 import { calculatePnl, calculatePnlPercent } from '@/helpers/math/formulas/pnl';
@@ -50,7 +50,7 @@ const orderVolumeMixin = (
   payload: CollectRecordPayload,
 ) => ({
   volume: compose(
-    roundToDecimalPoint(2),
+    roundToDecimalPlaces(2),
     multiply,
   )(payload.order.quantity, payload.order.price),
 });
@@ -89,11 +89,11 @@ const closedOrderResultsMixin = (
   return {
     results: {
       pnl: {
-        value: roundToDecimalPoint(2, rawPnl),
+        value: roundToDecimalPlaces(2, rawPnl),
         currency: pairData.quote,
       },
       pnlPercent: compose(
-        roundToDecimalPoint(2),
+        roundToDecimalPlaces(2),
         calculatePnlPercent(order.price, order.quantity),
       )(rawPnl),
       isPositive: isPositive(rawPnl),
@@ -108,7 +108,7 @@ const stopLossDataMixin = (
 ) => ({
   ...(payload.stopLoss ? {
     sl: compose(
-      roundToDecimalPoint(2),
+      roundToDecimalPlaces(2),
       toAbsolute,
       calculatePercentageOfTotal,
     )(payload.order.price, payload.stopLoss.price),
@@ -129,7 +129,7 @@ const pnlMixin = (
     ...(order.status !== 'new' && pairPrice
       ? {
         value: compose(
-          roundToDecimalPoint(2),
+          roundToDecimalPlaces(2),
           calculatePnl(
             order.price,
             order.position,
@@ -147,7 +147,7 @@ const takeProfitDataMixin = (
 ) => ({
   ...(payload.takeProfits?.length ? {
     tp: compose(
-      roundToDecimalPoint(2),
+      roundToDecimalPlaces(2),
       calculateCommonTakeProfitPercent,
     )(
       payload.order.price,

@@ -19,7 +19,7 @@ export interface NumberInputProps {
 
   isDisabled?: boolean,
   tabIndex?: number,
-  roundToDecimalPoint?: boolean,
+  roundToDecimalPlaces?: boolean,
   error?: string,
   label?: string,
   hideArrows?: boolean,

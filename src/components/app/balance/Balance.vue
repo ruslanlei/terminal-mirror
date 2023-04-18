@@ -18,7 +18,7 @@ import { useI18n } from 'vue-i18n';
 import { useMarketStore } from '@/stores/market';
 import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
 import { useEmulatorStore } from '@/stores/emulator';
-import { roundToDecimalPoint } from '@/utils/number';
+import { roundToDecimalPlaces } from '@/utils/number';
 
 const { t } = useI18n();
 
@@ -31,7 +31,7 @@ const computedLabel = computed(() => ({
 }[marketStore.marketType]));
 
 const balance = computed(() => t('common.currencyAmount', {
-  amount: roundToDecimalPoint(2, emulatorStore.balance),
+  amount: roundToDecimalPlaces(2, emulatorStore.balance),
   currency: marketStore.activePairData?.quote,
 }));
 </script>

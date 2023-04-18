@@ -42,7 +42,7 @@ import Typography from '@/components/app/typography/Typography.vue';
 import { useI18n } from 'vue-i18n';
 import { computed } from 'vue';
 import { compose } from '@/utils/fp';
-import { add, multiply, roundToDecimalPoint } from '@/utils/number';
+import { add, multiply, roundToDecimalPlaces } from '@/utils/number';
 import { calculateAverageIncome } from '@/helpers/orders';
 import { useMarketStore } from '@/stores/market';
 import { storeToRefs } from 'pinia';
@@ -58,7 +58,7 @@ const {
 
 const turnover = computed(() => (
   compose(
-    roundToDecimalPoint(2),
+    roundToDecimalPlaces(2),
     reduce(
       (commonVolume: number, order: Order) => (
         compose(
@@ -73,7 +73,7 @@ const turnover = computed(() => (
 
 const averageIncome = computed(() => (
   compose(
-    roundToDecimalPoint(0),
+    roundToDecimalPlaces(0),
     calculateAverageIncome,
   )(closedOrders.value)
 ));

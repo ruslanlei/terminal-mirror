@@ -50,7 +50,7 @@ import Card from '@/components/core/card/Card.vue';
 import {
   computed, onBeforeUnmount, onMounted, ref, watch,
 } from 'vue';
-import { roundToDecimalPoint } from '@/utils/number';
+import { roundToDecimalPlaces } from '@/utils/number';
 import Typography from '@/components/app/typography/Typography.vue';
 import { getRect } from '@/utils/dom';
 import { useEnvironmentObserver } from '@/hooks/useEnvironmentObserver';
@@ -62,7 +62,7 @@ import {
 const props = defineProps<LearnToEarnFrameProps>();
 
 const computedProgressBarStyles = computed(() => ({
-  transform: `translateX(${roundToDecimalPoint(2, props.progress)}%)`,
+  transform: `translateX(${roundToDecimalPlaces(2, props.progress)}%)`,
 }));
 
 const descriptionContainer = ref<HTMLElement>();

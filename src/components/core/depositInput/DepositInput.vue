@@ -27,7 +27,7 @@
           <AnimatedText
             animation-type="verticalAuto"
             :class="$style.realBalance"
-            :text="roundToDecimalPoint(2, maxQuoteCurrencyDeposit)"
+            :text="roundToDecimalPlaces(2, maxQuoteCurrencyDeposit)"
           />
           <transition name="depositInputLeverageBalance">
             <div
@@ -37,7 +37,7 @@
               <AnimatedText
                 animation-type="verticalAuto"
                 :class="$style.leveragedBalance"
-                :text="roundToDecimalPoint(2, maxQuoteCurrencyDepositLeveraged)"
+                :text="roundToDecimalPlaces(2, maxQuoteCurrencyDepositLeveraged)"
               />
             </div>
           </transition>
@@ -75,7 +75,7 @@ import RangeSlider from '@/components/core/rangeSlider/RangeSlider.vue';
 import NumberInput from '@/components/core/numberInput/NumberInput.vue';
 import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
 import { useDepositInput } from '@/hooks/useDepositInput';
-import { roundToDecimalPoint } from '@/utils/number';
+import { roundToDecimalPlaces } from '@/utils/number';
 import { DepositInputEmits, DepositInputProps } from './index';
 
 const props = withDefaults(

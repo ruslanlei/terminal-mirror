@@ -42,7 +42,7 @@ import { useEnvironmentObserver } from '@/hooks/useEnvironmentObserver';
 import { playAnimation } from '@/utils/animation';
 import { compose } from '@/utils/fp';
 import { getValueByKey } from '@/utils/object';
-import { divideRight, max, roundToDecimalPoint } from '@/utils/number';
+import { divideRight, max, roundToDecimalPlaces } from '@/utils/number';
 import { getRect } from '@/utils/dom';
 import { DropdownProps, DropdownEmits, DropdownPlacement } from './index';
 
@@ -257,7 +257,7 @@ watch(localIsVisible, () => {
     : props.placement;
 
   const positionShift = compose(
-    roundToDecimalPoint(2),
+    roundToDecimalPlaces(2),
     max(26),
     divideRight(2.8),
     getValueByKey(

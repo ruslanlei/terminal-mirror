@@ -59,7 +59,7 @@ import { useMarketStore } from '@/stores/market';
 import { compose } from '@/utils/fp';
 import { calculateAverageIncome, filterOrdersByType, findMostFrequentCoin } from '@/helpers/orders';
 import { getSuccessOrders } from '@/helpers/math/formulas/pnl';
-import { roundToDecimalPoint } from '@/utils/number';
+import { roundToDecimalPlaces } from '@/utils/number';
 import { getLength } from '@/utils/array';
 
 const { t } = useI18n();
@@ -79,7 +79,7 @@ const successOrdersAmount = computed(() => (
 
 const averageIncome = computed(() => (
   compose(
-    roundToDecimalPoint(0),
+    roundToDecimalPlaces(0),
     calculateAverageIncome,
   )(closedOrders.value)
 ));

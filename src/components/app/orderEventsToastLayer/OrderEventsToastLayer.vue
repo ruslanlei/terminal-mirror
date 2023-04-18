@@ -24,7 +24,7 @@ import { collectOrderToastId, collectOrderToastWrapperId } from '@/components/ap
 import { playAnimation } from '@/utils/animation';
 import { addCssProperty, getRect } from '@/utils/dom';
 import { compose } from '@/utils/fp';
-import { roundToDecimalPoint } from '@/utils/number';
+import { roundToDecimalPlaces } from '@/utils/number';
 import { useMarketStore } from '@/stores/market';
 import { awaitTimeout } from '@/utils/promise';
 import { toCssPxValue, toIdSelector } from '@/utils/style';
@@ -52,14 +52,14 @@ const hideOrder = async (orderId: Order['id']) => {
       'width',
       compose(
         toCssPxValue,
-        roundToDecimalPoint(2),
+        roundToDecimalPlaces(2),
       )(toastRect.width),
     ]),
     addCssProperty([
       'height',
       compose(
         toCssPxValue,
-        roundToDecimalPoint(2),
+        roundToDecimalPlaces(2),
       )(toastRect.height),
     ]),
   )(toastWrapper);

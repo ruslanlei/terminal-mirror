@@ -6,7 +6,6 @@
 meta:
   guestRequired: true
   layout: auth
-  layoutTransition: putOn
 </route>
 
 <script setup lang="ts">

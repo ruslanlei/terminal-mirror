@@ -18,7 +18,6 @@
 meta:
   authRequired: true
   layout: market
-  layoutTransition: takeOff
 </route>
 
 <script setup lang="ts">

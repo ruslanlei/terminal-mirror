@@ -17,7 +17,7 @@ import { useEmulatorStore } from '@/stores/emulator';
 import { storeToRefs } from 'pinia';
 import { findAndDelete, findAndUpdateObject } from '@/utils/array';
 
-export const useOrdersList = (
+export const useActiveOrderList = (
   listType: Ref<'active' | 'closed'>,
 ) => {
   const marketStore = useMarketStore();

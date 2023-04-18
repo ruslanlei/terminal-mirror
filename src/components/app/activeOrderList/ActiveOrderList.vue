@@ -19,10 +19,10 @@ import {
   toRefs,
 } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useOrdersList } from '@/hooks/useOrdersList';
 import OrdersList from '@/components/app/ordersList/OrdersList.vue';
 import { useMarketStore } from '@/stores/market';
 import { storeToRefs } from 'pinia';
+import { useActiveOrderList } from '@/hooks/useActiveOrderList';
 import { ActiveOrderListProps } from './index';
 
 const props = defineProps<ActiveOrderListProps>();
@@ -45,7 +45,7 @@ const {
   onRecordClick,
   deleteOrder,
   isDeletingOrder,
-} = useOrdersList(listType);
+} = useActiveOrderList(listType);
 
 const isDisabled = computed(() => [
   isDeletingOrder.value,

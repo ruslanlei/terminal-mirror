@@ -2,7 +2,7 @@
   <div
     :class="[
       $style.ordersListWrapper,
-      isDisabled && $style.disabled
+      isDisabled && $style.disabled,
     ]"
   >
     <transition

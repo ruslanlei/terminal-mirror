@@ -1,6 +1,14 @@
-import { computed, ref, watch } from 'vue';
+import {
+  ref,
+  watch,
+  computed,
+  Ref,
+} from 'vue';
 import { useI18n } from 'vue-i18n';
-import { ActiveOrdersTableRecord, ClosedOrdersTableRecord, OrdersListProps } from '@/components/app/ordersList';
+import {
+  ActiveOrdersTableRecord,
+  ClosedOrdersTableRecord,
+} from '@/components/app/ordersList';
 import { useMarketStore } from '@/stores/market';
 import {
   MasterOrder,
@@ -8,7 +16,6 @@ import {
   StopLoss,
   TakeProfit,
 } from '@/api/types/order';
-import { add, roundToDecimalPlaces } from '@/utils/number';
 import { compose } from '@/utils/fp';
 import { collectActiveOrderRecord, collectClosedOrderRecord } from '@/components/app/ordersList/collectTableRecord';
 import { createEmptyRecord } from '@/components/core/table/helpers';
@@ -25,9 +32,8 @@ interface GroupedOrder {
 }
 
 export const useOrdersList = (
-  props: OrdersListProps,
+  listType: Ref<'active' | 'closed'>,
 ) => {
-  const { t } = useI18n();
   const marketStore = useMarketStore();
   const {
     activeOrders,
@@ -36,81 +42,6 @@ export const useOrdersList = (
 
   const chartDataStore = useChartDataStore();
   const emulatorStore = useEmulatorStore();
-
-  const columns = computed(() => [
-    {
-      label: t('ordersList.column.pair'),
-      slug: 'pair',
-      size: 1,
-    },
-    {
-      label: t('ordersList.column.type'),
-      slug: 'type',
-      size: 0.7,
-    },
-    {
-      label: '',
-      slug: 'volume',
-      size: 1.1,
-    },
-    {
-      label: t('ordersList.column.coins'),
-      slug: 'coins',
-      size: 1,
-    },
-    {
-      label: '',
-      slug: 'prices',
-      size: 1.4,
-    },
-    ...(props.listType === 'active' ? [
-      {
-        label: t('ordersList.column.sl'),
-        slug: 'sl',
-        size: 0.7,
-        align: 'center',
-      },
-      {
-        label: '',
-        slug: 'pnl',
-        size: 1,
-        align: 'center',
-      },
-      {
-        label: t('ordersList.column.tp'),
-        slug: 'tp',
-        size: 0.7,
-        align: 'center',
-      },
-    ] : []),
-    ...(props.listType === 'closed' ? [
-      {
-        label: '',
-        slug: 'results',
-        size: 1,
-      },
-    ] : []),
-    {
-      label: '',
-      slug: 'date',
-      size: 1,
-    },
-    ...(props.listType === 'active' ? [
-      {
-        label: t('ordersList.column.comment'),
-        slug: 'comment',
-        size: 0.7,
-        align: 'center',
-      },
-    ] : []),
-    {
-      label: t('ordersList.column.parameters'),
-      slug: 'options',
-      size: 0.7,
-      align: 'center',
-      isClickable: true,
-    },
-  ]);
 
   const groupOrders = (
     orders: Order[],
@@ -182,7 +113,7 @@ export const useOrdersList = (
   const orders = computed<Order[]>(() => ({
     active: activeOrders.value,
     closed: closedOrders.value,
-  }[props.listType]));
+  }[listType.value]));
 
   const activeOrderRecords = computed<ActiveOrdersTableRecord[]>(
     () => compose(
@@ -190,14 +121,6 @@ export const useOrdersList = (
       groupOrders,
     )(activeOrders.value),
   );
-
-  const commonPnl = computed(() => activeOrderRecords.value.reduce((
-    commonPnl: number,
-    record: ActiveOrdersTableRecord,
-  ) => compose(
-    roundToDecimalPlaces(2),
-    add,
-  )(commonPnl, (record.data.pnl.value || 0)), 0));
 
   const closedOrderRecords = computed<ClosedOrdersTableRecord[]>(
     () => compose(
@@ -209,7 +132,7 @@ export const useOrdersList = (
   const records = computed(() => ({
     active: activeOrderRecords.value,
     closed: closedOrderRecords.value,
-  }[props.listType]));
+  }[listType.value]));
 
   const isLoading = ref(false);
 
@@ -218,20 +141,20 @@ export const useOrdersList = (
       isLoading.value = true;
     }
 
-    if (props.listType === 'active') {
+    if (listType.value === 'active') {
       await marketStore.getActiveOrdersList();
     }
-    if (props.listType === 'closed') {
+    if (listType.value === 'closed') {
       await marketStore.getClosedOrdersList();
     }
 
     isLoading.value = false;
   };
 
-  watch(() => props.listType, () => getList(true));
+  watch(() => listType.value, () => getList(true));
 
   const orderCreatedEventSubscription = marketStore.subscribeOrderCreated(async () => {
-    if (props.listType !== 'active') return;
+    if (listType.value !== 'active') return;
 
     await getList(false);
   });
@@ -239,7 +162,7 @@ export const useOrdersList = (
   const orderDeleteSubscription = marketStore.subscribeOrderDelete(async (
     deletedOrder: Order,
   ) => {
-    if (props.listType !== 'active') return;
+    if (listType.value !== 'active') return;
 
     await awaitTimeout(300); // FIXME: awaiting for modal close animation
 
@@ -254,7 +177,7 @@ export const useOrdersList = (
         updatedOrder.order_type === 'limit'
           && updatedOrder.status !== 'new'
           && updatedOrder.status !== 'filled'
-          && props.listType === 'active'
+          && listType.value === 'active'
       ) {
         findAndDelete(
           (order: Order) => order.id !== updatedOrder.id,
@@ -305,10 +228,8 @@ export const useOrdersList = (
   };
 
   return {
-    columns,
     orders,
     records,
-    commonPnl,
     isLoading,
     getList,
     clearSubscriptions,

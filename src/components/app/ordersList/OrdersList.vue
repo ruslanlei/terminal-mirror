@@ -311,14 +311,14 @@ import InlineSpace from '@/components/core/inlineSpace/InlineSpace.vue';
 import CoinLogo from '@/components/core/coinLogo/CoinLogo.vue';
 import ListSkeleton from '@/components/app/listSkeleton/ListSkeleton.vue';
 import Icon from '@/components/core/icon/Icon.vue';
-import { isPositive } from '@/utils/number';
+import { add, isPositive, roundToDecimalPlaces } from '@/utils/number';
 import Badge from '@/components/core/badge/Badge.vue';
 import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
 import {
   computed,
   onActivated,
   onBeforeUnmount,
-  onDeactivated,
+  onDeactivated, toRefs,
 } from 'vue';
 import SubOrdersTable from '@/components/app/ordersList/subOrdersTable/SubOrdersTable.vue';
 import { useOrdersList } from '@/hooks/useOrdersList';
@@ -326,7 +326,11 @@ import Typography from '@/components/app/typography/Typography.vue';
 import OrdersListPlaceholder from '@/components/app/ordersList/OrdersListPlaceholder.vue';
 import CloseOrderButton from '@/components/app/closeOrderButton/CloseOrderButton.vue';
 import { toPositiveNumberString } from '@/utils/style';
-import { OrdersListProps } from './index';
+import { compose } from '@/utils/fp';
+import { Order } from '@/api/types/order';
+import {
+  ActiveOrdersTableRecord, ClosedOrdersTableRecord, OrdersListEmits, OrdersListProps,
+} from './index';
 
 const props = withDefaults(
   defineProps<OrdersListProps>(),
@@ -334,33 +338,112 @@ const props = withDefaults(
     listType: 'active',
   },
 );
+const {
+  listType,
+} = toRefs(props);
+
+const emit = defineEmits<OrdersListEmits>();
 
 const { t } = useI18n();
 
-const {
-  columns,
-  orders,
-  records,
-  isLoading,
-  getList,
-  commonPnl,
-  clearSubscriptions,
-  onRecordClick,
-  deleteOrder,
-  isDeletingOrder,
-} = useOrdersList(props);
+const columns = computed(() => [
+  {
+    label: t('ordersList.column.pair'),
+    slug: 'pair',
+    size: 1,
+  },
+  {
+    label: t('ordersList.column.type'),
+    slug: 'type',
+    size: 0.7,
+  },
+  {
+    label: '',
+    slug: 'volume',
+    size: 1.1,
+  },
+  {
+    label: t('ordersList.column.coins'),
+    slug: 'coins',
+    size: 1,
+  },
+  {
+    label: '',
+    slug: 'prices',
+    size: 1.4,
+  },
+  ...(props.listType === 'active' ? [
+    {
+      label: t('ordersList.column.sl'),
+      slug: 'sl',
+      size: 0.7,
+      align: 'center',
+    },
+    {
+      label: '',
+      slug: 'pnl',
+      size: 1,
+      align: 'center',
+    },
+    {
+      label: t('ordersList.column.tp'),
+      slug: 'tp',
+      size: 0.7,
+      align: 'center',
+    },
+  ] : []),
+  ...(props.listType === 'closed' ? [
+    {
+      label: '',
+      slug: 'results',
+      size: 1,
+    },
+  ] : []),
+  {
+    label: '',
+    slug: 'date',
+    size: 1,
+  },
+  ...(props.listType === 'active' ? [
+    {
+      label: t('ordersList.column.comment'),
+      slug: 'comment',
+      size: 0.7,
+      align: 'center',
+    },
+  ] : []),
+  {
+    label: t('ordersList.column.parameters'),
+    slug: 'options',
+    size: 0.7,
+    align: 'center',
+    isClickable: true,
+  },
+]);
 
-const isDisabled = computed(() => [
-  isDeletingOrder.value,
-].some(Boolean));
+const calculateCommonPnl = (
+  records: ActiveOrdersTableRecord[],
+) => records.reduce((
+  commonPnl: number,
+  record: ActiveOrdersTableRecord,
+) => compose(
+  roundToDecimalPlaces(2),
+  add,
+)(commonPnl, (record.data.pnl.value || 0)), 0);
 
-onActivated(() => {
-  const showLoading = !orders.value?.length;
-  getList(showLoading);
-});
+const commonPnl = computed(() => (
+  listType.value === 'active'
+    ? calculateCommonPnl(props.records as ActiveOrdersTableRecord[])
+    : 0
+));
 
-onDeactivated(clearSubscriptions);
-onBeforeUnmount(clearSubscriptions);
+const deleteOrder = (
+  order: Order,
+) => emit('deleteOrder', order);
+
+const onRecordClick = (
+  record: ActiveOrdersTableRecord | ClosedOrdersTableRecord,
+) => emit('recordClick', record);
 </script>
 
 <style lang="scss" module>

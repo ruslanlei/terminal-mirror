@@ -34,6 +34,7 @@
         size="sm"
         state="defaultColor"
         :step="0.01"
+        :max="maxAmountOfRisk"
         :is-disabled="isDependentFieldsDisabled"
       >
         <template #append>
@@ -108,14 +109,14 @@ import { useMarketStore } from '@/stores/market';
 import { compose } from '@/utils/fp';
 import { useEmulatorStore } from '@/stores/emulator';
 import { injectOrderFormState } from '@/components/app/orderForm';
-import { roundToDecimalPoint, toAbsolute, toNegative } from '@/utils/number';
+import { multiply, roundToDecimalPoint } from '@/utils/number';
 import {
   calculateOriginalPriceByVolumeDecrease, calculateOriginalPriceByVolumeIncrease,
   calculateVolumeDifference,
 } from '@/helpers/math/formulas/order';
 import {
   addPercents,
-  calculatePercentageOfTotal, subtractPercents,
+  calculatePercentageOfTotal,
 } from '@/helpers/math/percents';
 import {
   calculatePriceByPercentOfDeposit,
@@ -152,6 +153,8 @@ const {
 } = injectOrderFormState();
 
 const isDependentFieldsDisabled = computed(() => !model.quantity);
+
+const maxAmountOfRisk = computed(() => multiply(model.quantity, model.price));
 
 const amountOfRisk = computed({
   get: () => compose(

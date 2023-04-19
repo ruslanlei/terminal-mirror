@@ -256,7 +256,7 @@
     "label": "Are you sure you want close position?",
     "pnl": "PNL of position {pnl}"
   },
-  "ordersList": {
+  "orderList": {
     "column": {
       "pair": "Pair",
       "type": "Type",

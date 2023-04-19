@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.ordersListPlaceholder">
+  <div :class="$style.orderListPlaceholder">
     <Button
       :is-wide="false"
       state="gradientColor"
@@ -31,7 +31,7 @@ const { t } = useI18n();
 </script>
 
 <style lang="scss" module>
-.ordersListPlaceholder {
+.orderListPlaceholder {
   background-color: rgb(var(--color-background-3));
   display: flex;
   flex-direction: column;

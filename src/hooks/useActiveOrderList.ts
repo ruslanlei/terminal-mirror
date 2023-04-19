@@ -47,10 +47,10 @@ export const useActiveOrderList = (
     }
 
     if (listType.value === 'active') {
-      await marketStore.getActiveOrdersList();
+      await marketStore.getActiveorderList();
     }
     if (listType.value === 'closed') {
-      await marketStore.getClosedOrdersList();
+      await marketStore.getClosedorderList();
     }
 
     isLoading.value = false;

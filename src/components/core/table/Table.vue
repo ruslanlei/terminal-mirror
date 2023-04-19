@@ -409,7 +409,7 @@ onMounted(() => {
   }
 }
 
-.ordersListColor {
+.orderListColor {
   .head {
     background-color: rgb(var(--color-background-2));
   }

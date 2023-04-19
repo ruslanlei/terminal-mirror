@@ -39,11 +39,11 @@ export const useMarketStore = defineStore('market', () => {
     activeOrders,
     isActiveOrdersFetched,
     isActiveOrdersForCurrentPairExists,
-    getActiveOrdersList,
+    getActiveorderList,
 
     closedOrders,
     isClosedOrdersFetched,
-    getClosedOrdersList,
+    getClosedorderList,
 
     handleCreateOrder,
     createListOfTakeProfits,
@@ -85,11 +85,11 @@ export const useMarketStore = defineStore('market', () => {
     activeOrders,
     isActiveOrdersFetched,
     isActiveOrdersForCurrentPairExists,
-    getActiveOrdersList,
+    getActiveorderList,
 
     closedOrders,
     isClosedOrdersFetched,
-    getClosedOrdersList,
+    getClosedorderList,
 
     handleCreateOrder,
     createListOfTakeProfits,

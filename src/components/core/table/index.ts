@@ -40,7 +40,7 @@ export type TableState = 'scrollable'
   | 'defaultSize'
   | 'smSize'
   | 'tinySize'
-  | 'ordersListColor'
+  | 'orderListColor'
   | 'secondaryColor3'
   | 'subOrdersColor';
 

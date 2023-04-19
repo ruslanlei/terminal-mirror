@@ -1,7 +1,7 @@
 import { TableColumn, TableRecord } from '@/components/core/table';
 import { MasterOrder, SubOrder } from '@/api/types/order';
 import { Pair } from '@/api/types/pair';
-import { OrdersListProps } from '@/components/app/ordersList';
+import { OrderListProps } from 'src/components/app/orderList';
 
 export type ActiveSubOrdersColumnSlug =
   'type'
@@ -37,9 +37,9 @@ export interface SubOrderTableItem extends SubOrder {
   orderIndex?: number,
 }
 
-export interface ActiveSubOrdersTableProps {
+export interface SubOrderListProps {
   orders: SubOrderTableItem[],
-  listType: OrdersListProps['listType'],
+  listType: OrderListProps['listType'],
 }
 
 export type ClosedSubOrdersColumnSlug =

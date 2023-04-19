@@ -10,14 +10,17 @@ import {
   Order,
 } from '@/api/types/order';
 import {
-  isPositive, multiply, roundToDecimalPlaces, toAbsolute,
+  isPositive,
+  multiply,
+  roundToDecimalPlaces,
+  toAbsolute,
 } from '@/utils/number';
 import { calculatePercentageOfTotal } from '@/helpers/math/percents';
 import { calculatePnl, calculatePnlPercent } from '@/helpers/math/formulas/pnl';
 import { calculateCommonTakeProfitPercent } from '@/helpers/math/formulas/takeProfit';
 import { humanizeDate } from '@/utils/date';
-import { ActiveOrdersTableRecord, ClosedOrdersTableRecord } from '@/components/app/ordersList';
-import { SubOrderTableItem } from '@/components/app/ordersList/subOrdersTable';
+import { ActiveOrdersTableRecord, ClosedOrdersTableRecord } from 'src/components/app/orderList';
+import { SubOrderTableItem } from 'src/components/app/orderList/subOrderList';
 import { collectTableRecord } from '@/components/core/table/helpers';
 import { getOrdersWithStatus, reduceSubOrderListToCommonPnl } from '@/helpers/orders';
 import { TableRowState } from '@/components/core/table/tableRow';

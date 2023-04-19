@@ -45,10 +45,10 @@
         <template #current>
           <span :class="$style.priceLabelCurrent">
             <template v-if="listType === 'active'">
-              {{ t('ordersList.column.prices.current') }}
+              {{ t('orderList.column.prices.current') }}
             </template>
             <template v-if="listType === 'closed'">
-              {{ t('ordersList.column.prices.close') }}
+              {{ t('orderList.column.prices.close') }}
             </template>
           </span>
         </template>
@@ -77,7 +77,7 @@
     </template>
 
     <template #column(results)>
-      {{ t('ordersList.column.results') }}
+      {{ t('orderList.column.results') }}
     </template>
     <template
       #cell(results)="{
@@ -205,7 +205,7 @@
 
     <template #column(date)>
       <div v-if="listType === 'active'">
-        {{ t('ordersList.column.date') }}
+        {{ t('orderList.column.date') }}
       </div>
       <i18n-t
         v-if="listType === 'closed'"
@@ -214,7 +214,7 @@
       >
         <template #close>
           <span :class="$style.dateClose">
-            {{ t('ordersList.column.dateOpenClose.close') }}
+            {{ t('orderList.column.dateOpenClose.close') }}
           </span>
         </template>
       </i18n-t>
@@ -275,14 +275,14 @@
     </template>
 
     <template #recordChildren="{ children }">
-      <SubOrdersTable
+      <SubOrderList
         :list-type="listType"
         :orders="children"
       />
     </template>
 
     <template #placeholder>
-      <OrdersListPlaceholder :class="$style.placeHolder" />
+      <OrderListPlaceholder :class="$style.placeHolder" />
     </template>
   </Table>
 </template>
@@ -296,13 +296,12 @@ import { useI18n } from 'vue-i18n';
 import Table from '@/components/core/table/Table.vue';
 import InlineSpace from '@/components/core/inlineSpace/InlineSpace.vue';
 import CoinLogo from '@/components/core/coinLogo/CoinLogo.vue';
-import ListSkeleton from '@/components/app/listSkeleton/ListSkeleton.vue';
 import Icon from '@/components/core/icon/Icon.vue';
 import Badge from '@/components/core/badge/Badge.vue';
 import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
-import SubOrdersTable from '@/components/app/ordersList/subOrdersTable/SubOrdersTable.vue';
+import SubOrderList from '@/components/app/orderList/subOrderList/SubOrderList.vue';
 import Typography from '@/components/app/typography/Typography.vue';
-import OrdersListPlaceholder from '@/components/app/ordersList/OrdersListPlaceholder.vue';
+import OrderListPlaceholder from '@/components/app/orderList/OrderListPlaceholder.vue';
 import CloseOrderButton from '@/components/app/closeOrderButton/CloseOrderButton.vue';
 import { toPositiveNumberString } from '@/utils/style';
 import { createEmptyRecord } from '@/components/core/table/helpers';
@@ -321,17 +320,17 @@ import {
 import {
   collectActiveOrderRecord,
   collectClosedOrderRecord,
-} from '@/components/app/ordersList/collectTableRecord';
+} from '@/components/app/orderList/collectTableRecord';
 import { useChartDataStore } from '@/stores/chartData';
 import {
   ActiveOrdersTableRecord,
   ClosedOrdersTableRecord,
-  OrdersListProps,
-  OrdersListEmits,
+  OrderListProps,
+  OrderListEmits,
 } from './index';
 
 const props = withDefaults(
-  defineProps<OrdersListProps>(),
+  defineProps<OrderListProps>(),
   {
     listType: 'active',
   },
@@ -342,7 +341,7 @@ const {
   pairsMap,
 } = toRefs(props);
 
-const emit = defineEmits<OrdersListEmits>();
+const emit = defineEmits<OrderListEmits>();
 
 const { t } = useI18n();
 
@@ -350,12 +349,12 @@ const chartDataStore = useChartDataStore();
 
 const columns = computed(() => [
   {
-    label: t('ordersList.column.pair'),
+    label: t('orderList.column.pair'),
     slug: 'pair',
     size: 1,
   },
   {
-    label: t('ordersList.column.type'),
+    label: t('orderList.column.type'),
     slug: 'type',
     size: 0.7,
   },
@@ -365,7 +364,7 @@ const columns = computed(() => [
     size: 1.1,
   },
   {
-    label: t('ordersList.column.coins'),
+    label: t('orderList.column.coins'),
     slug: 'coins',
     size: 1,
   },
@@ -376,7 +375,7 @@ const columns = computed(() => [
   },
   ...(props.listType === 'active' ? [
     {
-      label: t('ordersList.column.sl'),
+      label: t('orderList.column.sl'),
       slug: 'sl',
       size: 0.7,
       align: 'center',
@@ -388,7 +387,7 @@ const columns = computed(() => [
       align: 'center',
     },
     {
-      label: t('ordersList.column.tp'),
+      label: t('orderList.column.tp'),
       slug: 'tp',
       size: 0.7,
       align: 'center',
@@ -408,14 +407,14 @@ const columns = computed(() => [
   },
   ...(props.listType === 'active' ? [
     {
-      label: t('ordersList.column.comment'),
+      label: t('orderList.column.comment'),
       slug: 'comment',
       size: 0.7,
       align: 'center',
     },
   ] : []),
   {
-    label: t('ordersList.column.parameters'),
+    label: t('orderList.column.parameters'),
     slug: 'options',
     size: 0.7,
     align: 'center',

@@ -44,7 +44,7 @@ import {
   toRefs,
 } from 'vue';
 import { useI18n } from 'vue-i18n';
-import OrdersList from '@/components/app/ordersList/OrdersList.vue';
+import OrdersList from '@/components/app/orderList/OrderList.vue';
 import { useMarketStore } from '@/stores/market';
 import { storeToRefs } from 'pinia';
 import { useActiveOrderList } from '@/hooks/useActiveOrderList';

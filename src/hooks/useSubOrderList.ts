@@ -1,18 +1,18 @@
 import { computed, ref } from 'vue';
 import {
   ActiveSubOrderRecord,
-  ActiveSubOrdersTableProps,
+  SubOrderListProps,
   SubOrderTableItem,
-} from '@/components/app/ordersList/subOrdersTable';
+} from 'src/components/app/orderList/subOrderList';
 import { compose } from '@/utils/fp';
 import {
   collectActiveSubOrderRecord,
   collectClosedSubOrderRecord,
-} from '@/components/app/ordersList/subOrdersTable/collectTableRecord';
+} from '@/components/app/orderList/subOrderList/collectTableRecord';
 import { createEmptyRecord } from '@/components/core/table/helpers';
 
-export const useSubOrdersList = (
-  props: ActiveSubOrdersTableProps,
+export const useSubOrderList = (
+  props: SubOrderListProps,
 ) => {
   const columns = ref([
     {

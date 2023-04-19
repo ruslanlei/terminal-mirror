@@ -16,7 +16,7 @@
       :state="['accent1', 'alignCenter']"
       :class="$style.text"
     >
-      {{ t('ordersList.placeholder') }}
+      {{ t('orderList.placeholder') }}
     </Typography>
   </div>
 </template>

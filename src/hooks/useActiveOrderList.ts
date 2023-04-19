@@ -7,7 +7,7 @@ import {
 import {
   ActiveOrdersTableRecord,
   ClosedOrdersTableRecord,
-} from '@/components/app/ordersList';
+} from 'src/components/app/orderList';
 import { useMarketStore } from '@/stores/market';
 import {
   Order,

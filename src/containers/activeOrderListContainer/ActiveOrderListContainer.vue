@@ -17,20 +17,14 @@
         v-else
         :class="$style.content"
       >
-        <div
-          v-if="'paginationTop' in $slots"
-          :class="$style.pagination"
-        >
-          <slot name="paginationTop" />
-        </div>
         <div :class="$style.orderList">
           <slot name="orderList" />
         </div>
         <div
-          v-if="'paginationBottom' in $slots"
-          :class="$style.pagination"
+          v-if="'pagination' in $slots"
+          :class="$style.paginationContainer"
         >
-          <slot name="paginationBottom" />
+          <slot name="pagination" />
         </div>
       </div>
     </transition>
@@ -62,7 +56,16 @@ defineProps<ActiveOrderListContainerProps>();
   flex-direction: column;
 }
 
-.pagination {
+.paginationContainer {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  position: sticky;
+  bottom: 0;
+  z-index: 3;
+  background: linear-gradient(to top, rgb(var(--color-background-1)), transparent);
+  padding-bottom: 20px;
+
   & + .orderList {
     margin-top: 20px;
   }
@@ -76,7 +79,7 @@ defineProps<ActiveOrderListContainerProps>();
     width: 100%;
   }
 
-  & + .pagination {
+  & + .paginationContainer {
     margin-top: 20px;
   }
 }

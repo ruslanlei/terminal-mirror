@@ -15,9 +15,11 @@
         @record-click="onRecordClick"
       />
     </template>
-    <template #pagination>
+    <template
+      v-if="isPaginationVisible"
+      #pagination
+    >
       <Pagination
-        v-if="isPaginationVisible"
         v-model="activePage"
         :total-pages="totalPages"
       />

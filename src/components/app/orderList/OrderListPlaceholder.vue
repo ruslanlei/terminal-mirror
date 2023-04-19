@@ -38,6 +38,7 @@ const { t } = useI18n();
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  padding: 26px;
   &:hover {
     .button {
       transform: rotate(225deg);

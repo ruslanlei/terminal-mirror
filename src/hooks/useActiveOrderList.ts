@@ -33,11 +33,20 @@ export const useActiveOrderList = (
     closed: closedOrders.value,
   }[listType.value]));
 
+  const majorOrders = computed(() => (
+    orders.value.filter((order: Order) => order.order_type === 'limit')
+  ));
+
   const isMajorOrdersExist = computed(() => (
-    !!orders.value.filter((order: Order) => order.order_type === 'limit').length
+    !!majorOrders.value.length
   ));
 
   const activePage = ref(1);
+  const totalPages = ref(1);
+
+  const isPaginationVisible = computed(() => (
+    isMajorOrdersExist.value && totalPages.value > 1
+  ));
 
   const isLoading = ref(false);
 
@@ -136,6 +145,8 @@ export const useActiveOrderList = (
     orders,
     isMajorOrdersExist,
     activePage,
+    totalPages,
+    isPaginationVisible,
     isLoading,
     getList,
     clearSubscriptions,

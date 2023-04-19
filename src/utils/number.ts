@@ -65,6 +65,7 @@ export const min = curry((
 export const {
   abs: toAbsolute,
   round: roundNumber,
+  ceil,
 } = Math;
 
 export const toNegative = (number: number) => -toAbsolute(number);

@@ -87,9 +87,15 @@ export interface OrderListProps {
   listType: 'active' | 'closed',
   orders: Order[],
   pairsMap: PairsMap,
+  page: number,
+  perPage: number,
+  totalPages: number,
 }
 
 export interface OrderListEmits {
   (e: 'deleteOrder', payload: Order): void,
   (e: 'recordClick', payload: ActiveOrdersTableRecord | ClosedOrdersTableRecord): void,
+  (e: 'update:page', value: number): void,
+  (e: 'update:perPage', value: number): void,
+  (e: 'update:totalPages', value: number): void,
 }

@@ -282,7 +282,7 @@
     </template>
 
     <template #placeholder>
-      <OrdersListPlaceholder />
+      <OrdersListPlaceholder :class="$style.placeHolder" />
     </template>
   </Table>
 </template>
@@ -634,6 +634,10 @@ const onRecordClick = (
 
 .deleteButton {
   color: rgb(var(--color-danger));
+}
+
+.placeHolder {
+  width: 100%;
 }
 </style>
 

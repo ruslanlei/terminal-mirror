@@ -33,6 +33,12 @@ export const useActiveOrderList = (
     closed: closedOrders.value,
   }[listType.value]));
 
+  const isMajorOrdersExist = computed(() => (
+    !!orders.value.filter((order: Order) => order.order_type === 'limit').length
+  ));
+
+  const activePage = ref(1);
+
   const isLoading = ref(false);
 
   const getList = async (showLoading: boolean) => {
@@ -128,6 +134,8 @@ export const useActiveOrderList = (
 
   return {
     orders,
+    isMajorOrdersExist,
+    activePage,
     isLoading,
     getList,
     clearSubscriptions,

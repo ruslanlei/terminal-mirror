@@ -1,5 +1,5 @@
 <template>
-  <div
+  <table
     :class="[
       $style.table,
       isRowsClickable && $style.rowsClickable,
@@ -50,7 +50,7 @@
             name="tableElementAppearance"
             @before-leave="onElementRemove"
           >
-            <div
+            <tr
               v-for="record in computedRecords"
               :key="record.id"
               :class="$style.tableRowContainer"
@@ -98,7 +98,7 @@
                   />
                 </template>
               </TableRow>
-            </div>
+            </tr>
           </transition-group>
         </div>
       </template>
@@ -108,7 +108,7 @@
         </div>
       </template>
     </transition>
-  </div>
+  </table>
 </template>
 
 <script setup lang="ts">
@@ -267,6 +267,7 @@ onMounted(() => {
   .head {
     display: grid;
     position: relative;
+    z-index: 2;
   }
   .records {
     width: 100%;

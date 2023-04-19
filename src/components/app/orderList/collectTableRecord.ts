@@ -173,7 +173,7 @@ const closedOrderDateMixin = (
 ) => ({
   date: {
     open: humanizeDate(payload.order.created),
-    close: humanizeDate(payload.order.created),
+    close: humanizeDate(payload.order.modified),
   },
 });
 

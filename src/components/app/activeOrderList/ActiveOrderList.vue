@@ -3,13 +3,6 @@
     :is-loading="isLoading"
     :is-disabled="isDisabled"
   >
-    <template #paginationTop>
-      <Pagination
-        v-if="isPaginationVisible"
-        v-model="activePage"
-        :total-pages="totalPages"
-      />
-    </template>
     <template #orderList>
       <OrderList
         v-model:page="activePage"
@@ -22,9 +15,11 @@
         @record-click="onRecordClick"
       />
     </template>
-    <template #paginationBottom>
+    <template
+      v-if="isPaginationVisible"
+      #pagination
+    >
       <Pagination
-        v-if="isPaginationVisible"
         v-model="activePage"
         :total-pages="totalPages"
       />

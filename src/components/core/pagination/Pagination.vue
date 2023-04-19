@@ -14,6 +14,34 @@
       />
     </Button>
     <Button
+      v-if="pages[0] !== 1"
+      size="sm"
+      :is-wide="false"
+      :state="[
+        'interactive',
+        'secondary1Color',
+        localValue === 1 ? 'background3' : 'background2'
+      ]"
+      :class="$style.button"
+      @click="changePage(1)"
+    >
+      1
+    </Button>
+    <Button
+      v-if="pages[0] > 2"
+      size="sm"
+      :is-wide="false"
+      :state="[
+        'interactive',
+        'secondary1Color',
+        'background2'
+      ]"
+      :class="$style.button"
+      disabled
+    >
+      {{ gapSymbol }}
+    </Button>
+    <Button
       v-for="pageNumber in pages"
       :key="pageNumber"
       size="sm"
@@ -27,6 +55,34 @@
       @click="changePage(pageNumber)"
     >
       {{ pageNumber }}
+    </Button>
+    <Button
+      v-if="pages[pages.length - 1] < props.totalPages - 1"
+      size="sm"
+      :is-wide="false"
+      :state="[
+        'interactive',
+        'secondary1Color',
+        'background2'
+      ]"
+      :class="$style.button"
+      disabled
+    >
+      {{ gapSymbol }}
+    </Button>
+    <Button
+      v-if="pages[pages.length - 1] !== props.totalPages"
+      size="sm"
+      :is-wide="false"
+      :state="[
+        'interactive',
+        'secondary1Color',
+        props.totalPages === modelValue ? 'background3' : 'background2'
+      ]"
+      :class="$style.button"
+      @click="changePage(props.totalPages)"
+    >
+      {{ props.totalPages }}
     </Button>
     <Button
       v-if="showNextButton"
@@ -43,7 +99,6 @@
     </Button>
   </div>
 </template>
-
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useLocalValue } from '@/hooks/useLocalValue';
@@ -62,6 +117,8 @@ const emit = defineEmits<PaginationEmits>();
 
 const localValue = useLocalValue<number>(props, emit, 'modelValue');
 
+const gapSymbol = '...';
+
 const getPages = (
   visiblePageCount: number,
   modelValue: number,
@@ -73,6 +130,8 @@ const getPages = (
   if (end > totalPages) {
     end = totalPages;
     start = Math.max(end - visiblePageCount + 1, 1);
+  } else if (end < totalPages - 2) {
+    end = Math.min(totalPages, end + 1);
   }
   return Array.from({ length: end - start + 1 }, (_, i) => i + start);
 };

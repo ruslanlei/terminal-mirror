@@ -15,7 +15,7 @@
     </template>
     <template #cell(quantity)="{ data: { value, percent } }">
       <i18n-t
-        keypath="ordersList.subOrder.quantity"
+        keypath="orderList.subOrder.quantity"
         tag="div"
         :class="$style.quantity"
       >
@@ -46,7 +46,7 @@
         ]"
       >
         <i18n-t
-          keypath="ordersList.subOrder.volume"
+          keypath="orderList.subOrder.volume"
           tag="span"
         >
           <template #volume>

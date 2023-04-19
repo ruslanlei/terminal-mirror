@@ -2,8 +2,8 @@
   <Table
     :columns="columns"
     :records="records"
-    :state="['ordersListColor', 'defaultSize']"
-    :class="$style.ordersList"
+    :state="['orderListColor', 'defaultSize']"
+    :class="$style.orderList"
     :is-rows-clickable="true"
     @record-click="onRecordClick"
   >
@@ -23,7 +23,7 @@
     </template>
 
     <template #column(volume)>
-      <i18n-t keypath="ordersList.column.volume">
+      <i18n-t keypath="orderList.column.volume">
         <template #currencyName>
           <InlineSpace />
           <span :class="$style.quoteCurrency">
@@ -41,7 +41,7 @@
     </template>
 
     <template #column(prices)>
-      <i18n-t keypath="ordersList.column.prices.order">
+      <i18n-t keypath="orderList.column.prices.order">
         <template #current>
           <span :class="$style.priceLabelCurrent">
             <template v-if="listType === 'active'">
@@ -140,7 +140,7 @@
     </template>
 
     <template #column(pnl)>
-      <i18n-t keypath="ordersList.column.pnl">
+      <i18n-t keypath="orderList.column.pnl">
         <template #value>
           <InlineSpace />
           <Typography
@@ -210,7 +210,7 @@
       <i18n-t
         v-if="listType === 'closed'"
         tag="span"
-        keypath="ordersList.column.dateOpenClose.open"
+        keypath="orderList.column.dateOpenClose.open"
       >
         <template #close>
           <span :class="$style.dateClose">
@@ -532,7 +532,7 @@ const onRecordClick = (
 <style lang="scss" module>
 @import "src/assets/styles/utils";
 
-.ordersList {
+.orderList {
   width: 100%;
   flex-grow: 1;
 }

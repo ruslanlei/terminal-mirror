@@ -139,7 +139,7 @@ onBeforeUnmount(removeListeners);
   }
 }
 
-.ordersListColor {
+.orderListColor {
   transition: background-color 150ms, opacity 200ms;
   background-color: rgb(var(--color-background-1));
   &:hover {

@@ -1,7 +1,7 @@
 <template>
   <div
     :class="[
-      $style.ordersListWrapper,
+      $style.orderListWrapper,
       isDisabled && $style.disabled,
     ]"
   >
@@ -92,7 +92,7 @@ onBeforeUnmount(clearSubscriptions);
 <style lang="scss" module>
 @import "src/assets/styles/utils";
 
-.ordersListWrapper {
+.orderListWrapper {
   width: 100%;
   display: flex;
   @include transparentOnDisabled;

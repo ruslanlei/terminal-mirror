@@ -14,7 +14,7 @@
       >
         <Selector
           v-if="activeTab === 'orders'"
-          v-model="ordersListType"
+          v-model="orderListType"
           :options="orderListOptions"
           :state="['secondaryColor2', 'mdSize']"
         />
@@ -35,7 +35,7 @@
           <ActiveOrderList
             v-if="isOrdersVisible"
             :key="activeTab"
-            :list-type="ordersListType"
+            :list-type="orderListType"
           />
           <MarketStatistics
             v-else-if="isStatisticsVisible"
@@ -52,7 +52,7 @@
 import { computed, defineAsyncComponent, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Selector from '@/components/core/selector/Selector.vue';
-import OrdersList from '@/components/app/orderList/OrderList.vue';
+import orderList from '@/components/app/orderList/OrderList.vue';
 import OrdersAndStatisticsContainer from '@/containers/ordersAndStatisticsContainer/OrdersAndStatisticsContainer.vue';
 import MarketOrderStatistics from '@/components/app/marketOrdersStatistics/MarketOrderStatistics.vue';
 import MarketStatistics from '@/components/app/marketStatistics/MarketStatistics.vue';
@@ -83,7 +83,7 @@ const mainSelectorOptions = computed<MainSelectorOptions>(
   ],
 );
 
-const ordersListType = ref<OrdersSelectorOptionValue>('active');
+const orderListType = ref<OrdersSelectorOptionValue>('active');
 const orderListOptions = computed<OrdersSelectorOptions>(
   () => [
     {

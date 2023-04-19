@@ -6,7 +6,7 @@ import { useToastStore } from '@/stores/toasts';
 import { modalType, useModalStore } from '@/stores/modals';
 import { Order, StopLoss, TakeProfit } from '@/api/types/order';
 import { processServerErrors, requestMany } from '@/api/common';
-import { getOrdersList } from '@/api/endpoints/orders/getList';
+import { getorderList } from '@/api/endpoints/orders/getList';
 import { filter, flatten, map } from '@/utils/array';
 import { createOrder, CreateOrderDTO } from '@/api/endpoints/orders/create';
 import { OrderModel } from '@/hooks/useOrderCreate';
@@ -37,13 +37,13 @@ export const useOrders = (
     ),
   );
 
-  const getActiveOrdersList = async () => {
+  const getActiveorderList = async () => {
     const response = await requestMany<Order[][]>([
-      getOrdersList('new'),
-      getOrdersList('filled'),
+      getorderList('new'),
+      getorderList('filled'),
     ]);
 
-    const executedOrdersResponse = await getOrdersList('executed');
+    const executedOrdersResponse = await getorderList('executed');
 
     if (!response.result) {
       processServerErrors(response.data, t('order.failedToGetList'));
@@ -66,12 +66,12 @@ export const useOrders = (
     closedOrders.value.length
   ));
 
-  const getClosedOrdersList = async () => {
+  const getClosedorderList = async () => {
     const response = await requestMany<Order[][]>([
-      getOrdersList('expired'),
-      getOrdersList('canceled'),
-      getOrdersList('executed'),
-      getOrdersList('closed'),
+      getorderList('expired'),
+      getorderList('canceled'),
+      getorderList('executed'),
+      getorderList('closed'),
     ]);
 
     if (!response.result) {
@@ -277,11 +277,11 @@ export const useOrders = (
     activeOrders,
     isActiveOrdersFetched,
     isActiveOrdersForCurrentPairExists,
-    getActiveOrdersList,
+    getActiveorderList,
 
     closedOrders,
     isClosedOrdersFetched,
-    getClosedOrdersList,
+    getClosedorderList,
 
     handleCreateOrder,
     createListOfTakeProfits,

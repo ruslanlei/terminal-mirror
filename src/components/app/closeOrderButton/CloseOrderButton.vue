@@ -21,7 +21,7 @@
         >
           <i18n-t
             tag="span"
-            keypath="ordersList.closeTip.mainPart"
+            keypath="orderList.closeTip.mainPart"
           >
             <template #close>
               <Typography

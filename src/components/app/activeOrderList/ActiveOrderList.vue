@@ -1,38 +1,35 @@
 <template>
-  <div
-    :class="[
-      $style.orderListWrapper,
-      isDisabled && $style.disabled,
-    ]"
+  <ActiveOrderListContainer
+    :is-loading="isLoading"
+    :is-disabled="isDisabled"
   >
-    <transition
-      name="skeletonTransition"
-      mode="out-in"
-    >
-      <ListSkeleton
-        v-if="isLoading"
-        :class="$style.skeleton"
+    <template #paginationTop>
+      <Pagination
+        v-if="isPaginationVisible"
+        v-model="activePage"
+        :total-pages="totalPages"
       />
-      <div
-        v-else
-        :class="$style.content"
-      >
-        <Pagination
-          v-if="isMajorOrdersExist"
-          v-model="activePage"
-          :total-pages="10"
-        />
-        <OrderList
-          :class="$style.orderList"
-          :list-type="listType"
-          :orders="orders"
-          :pairs-map="pairsMap || {}"
-          @delete-order="deleteOrder"
-          @record-click="onRecordClick"
-        />
-      </div>
-    </transition>
-  </div>
+    </template>
+    <template #orderList>
+      <OrderList
+        v-model:page="activePage"
+        v-model:total-pages="totalPages"
+        :list-type="listType"
+        :orders="orders"
+        :pairs-map="pairsMap || {}"
+        :per-page="10"
+        @delete-order="deleteOrder"
+        @record-click="onRecordClick"
+      />
+    </template>
+    <template #paginationBottom>
+      <Pagination
+        v-if="isPaginationVisible"
+        v-model="activePage"
+        :total-pages="totalPages"
+      />
+    </template>
+  </ActiveOrderListContainer>
 </template>
 
 <script setup lang="ts">
@@ -48,8 +45,8 @@ import OrderList from '@/components/app/orderList/OrderList.vue';
 import { useMarketStore } from '@/stores/market';
 import { storeToRefs } from 'pinia';
 import { useActiveOrderList } from '@/hooks/useActiveOrderList';
-import ListSkeleton from '@/components/app/listSkeleton/ListSkeleton.vue';
 import Pagination from '@/components/core/pagination/Pagination.vue';
+import ActiveOrderListContainer from '@/containers/activeOrderListContainer/ActiveOrderListContainer.vue';
 import { ActiveOrderListProps } from './index';
 
 const props = defineProps<ActiveOrderListProps>();
@@ -67,8 +64,9 @@ const { t } = useI18n();
 const {
   isLoading,
   orders,
-  isMajorOrdersExist,
   activePage,
+  totalPages,
+  isPaginationVisible,
   getList,
   clearSubscriptions,
   onRecordClick,
@@ -88,31 +86,3 @@ onActivated(() => {
 onDeactivated(clearSubscriptions);
 onBeforeUnmount(clearSubscriptions);
 </script>
-
-<style lang="scss" module>
-@import "src/assets/styles/utils";
-
-.orderListWrapper {
-  width: 100%;
-  display: flex;
-  @include transparentOnDisabled;
-  flex-grow: 1;
-}
-
-.content {
-  width: 100%;
-  flex-grow: 1;
-  display: flex;
-  align-items: flex-end;
-  flex-direction: column;
-}
-
-.orderList {
-  margin-top: 20px;
-}
-
-.skeleton {
-  width: 100%;
-  flex-grow: 1;
-}
-</style>

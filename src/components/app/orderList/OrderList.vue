@@ -289,8 +289,8 @@
 
 <script setup lang="ts">
 import {
-  computed,
-  toRefs,
+  computed, ref,
+  toRefs, watch,
 } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Table from '@/components/core/table/Table.vue';
@@ -307,9 +307,9 @@ import { toPositiveNumberString } from '@/utils/style';
 import { createEmptyRecord } from '@/components/core/table/helpers';
 import { compose } from '@/utils/fp';
 import {
-  add,
-  isPositive,
-  roundToDecimalPlaces,
+  add, ceil, divide, divideRight,
+  isPositive, multiply,
+  roundToDecimalPlaces, subtract,
 } from '@/utils/number';
 import {
   MasterOrder,
@@ -322,6 +322,8 @@ import {
   collectClosedOrderRecord,
 } from '@/components/app/orderList/collectTableRecord';
 import { useChartDataStore } from '@/stores/chartData';
+import { useLocalValue } from '@/hooks/useLocalValue';
+import { getLength } from '@/utils/array';
 import {
   ActiveOrdersTableRecord,
   ClosedOrdersTableRecord,
@@ -495,7 +497,7 @@ const mapOrdersToClosedOrderTableRecords = (
     )(order.id);
   });
 
-const records = computed(() => (
+const allRecords = computed(() => (
   compose(
     listType.value === 'active'
       ? mapOrdersToActiveOrderTableRecords
@@ -503,6 +505,36 @@ const records = computed(() => (
     groupOrders,
   )(orders.value)
 ));
+
+/* <--
+FIXME: all logic that controls pagination
+  should no be here, but for now its
+  easier to place here, bc raw order
+  list on the level above is ungrouped.
+  Move this logic to component above after
+  backend update.
+*/
+const page = useLocalValue<number>(props, emit, 'page');
+
+const perPage = useLocalValue<number>(props, emit, 'perPage');
+
+const totalPages = useLocalValue<number>(props, emit, 'totalPages');
+
+watch(allRecords, () => {
+  totalPages.value = compose(
+    ceil,
+    divideRight(perPage.value),
+    getLength,
+  )(allRecords.value);
+}, { immediate: true });
+
+const records = computed(() => {
+  const lastElementIndex = multiply(perPage.value, page.value);
+  const firstElementIndex = subtract(lastElementIndex, perPage.value);
+
+  return allRecords.value.slice(firstElementIndex, lastElementIndex);
+});
+/* --> */
 
 const calculateCommonPnl = (
   records: ActiveOrdersTableRecord[],

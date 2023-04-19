@@ -13,6 +13,13 @@ export {
 
 export type DateValue = Date | number | string;
 
+export const isDateBefore = curry((
+  date1: DateValue,
+  date2: DateValue,
+) => (
+  dayjs(date1).isBefore(dayjs(date2))
+));
+
 export const toISOString = (
   date: DateValue,
 ) => dayjs(date).toISOString();

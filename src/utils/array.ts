@@ -7,6 +7,7 @@ import {
   forEach as rambdaForEach,
   map as rambdaMap,
   reduce as rambdaReduce,
+  sort as rambdaSort, T,
 } from 'rambda';
 import collect from 'collect.js';
 
@@ -70,6 +71,11 @@ export const reduceRight = curry(
 export const filter = curry(rambdaFilter) as CurriedFunc<(
   predicate?: (...args: any[]) => boolean,
   array?: any[],
+) => any>;
+
+export const sort = curry(rambdaSort) as CurriedFunc<(
+  sortFn: (a: any, b: any) => number,
+  list: any[]
 ) => any>;
 
 export const forEach = curry(rambdaForEach) as CurriedFunc<(

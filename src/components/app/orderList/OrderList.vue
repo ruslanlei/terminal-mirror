@@ -220,15 +220,12 @@
       </i18n-t>
     </template>
     <template #cell(date)="{ data }">
-      <div
-        :class="$style.date"
-      >
+      <div :class="$style.date">
         <template v-if="listType === 'active'">
           {{ data }}
         </template>
         <template v-if="listType === 'closed'">
           {{ data.open }}
-          <InlineSpace />
           <span :class="$style.dateClose">
             {{ data.close }}
           </span>
@@ -323,7 +320,8 @@ import {
 } from '@/components/app/orderList/collectTableRecord';
 import { useChartDataStore } from '@/stores/chartData';
 import { useLocalValue } from '@/hooks/useLocalValue';
-import { getLength } from '@/utils/array';
+import { getLength, sort } from '@/utils/array';
+import { isDateBefore } from '@/utils/date';
 import {
   ActiveOrdersTableRecord,
   ClosedOrdersTableRecord,
@@ -497,13 +495,22 @@ const mapOrdersToClosedOrderTableRecords = (
     )(order.id);
   });
 
-const allRecords = computed(() => (
+const allRecords = computed<GroupedOrder[]>(() => (
   compose(
-    listType.value === 'active'
+    (listType.value === 'active'
       ? mapOrdersToActiveOrderTableRecords
-      : mapOrdersToClosedOrderTableRecords,
+      : mapOrdersToClosedOrderTableRecords),
+    sort((
+      orderA: GroupedOrder,
+      orderB: GroupedOrder,
+    ) => (
+      isDateBefore(
+        orderA.order.modified,
+        orderB.order?.modified,
+      ) ? 1 : -1
+    )),
     groupOrders,
-  )(orders.value)
+  )(orders.value) as GroupedOrder[]
 ));
 
 /* <--
@@ -647,6 +654,8 @@ const onRecordClick = (
   color: rgb(var(--color-accent-1));
   @include title2;
   font-weight: 600 !important;
+  display: flex;
+  gap: 10px;
 }
 
 .orderOptions {

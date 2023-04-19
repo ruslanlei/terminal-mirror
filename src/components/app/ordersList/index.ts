@@ -2,10 +2,7 @@ import { TableColumn, TableRecord } from '@/components/core/table';
 import { Order, TakeProfit } from '@/api/types/order';
 import { SubOrderTableItem } from '@/components/app/ordersList/subOrdersTable';
 import { Pair } from '@/api/types/pair';
-
-export interface OrdersListProps {
-  listType: 'active' | 'closed',
-}
+import { PairsMap } from '@/hooks/usePairs';
 
 export type ActiveOrdersTableColumnSlug =
   'pair'
@@ -85,3 +82,14 @@ export type ClosedOrdersTableRecord = TableRecord<ClosedOrdersTableColumnSlug, {
     takeProfits: TakeProfit[] | undefined,
   },
 }, SubOrderTableItem[]>;
+
+export interface OrdersListProps {
+  listType: 'active' | 'closed',
+  orders: Order[],
+  pairsMap: PairsMap,
+}
+
+export interface OrdersListEmits {
+  (e: 'deleteOrder', payload: Order): void,
+  (e: 'recordClick', payload: ActiveOrdersTableRecord | ClosedOrdersTableRecord): void,
+}

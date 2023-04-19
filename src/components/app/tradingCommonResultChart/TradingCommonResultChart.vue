@@ -33,7 +33,7 @@ import {
   sortByKey,
 } from '@/utils/array';
 import { getValueByKey, groupBy, objectEntries } from '@/utils/object';
-import { add, roundToDecimalPoint, subtract } from '@/utils/number';
+import { add, roundToDecimalPlaces, subtract } from '@/utils/number';
 import { calculateCommonPnl } from '@/helpers/math/formulas/pnl';
 import { Maybe } from '@/utils/functors';
 import { BarChartData, BarChartDataElement } from '@/components/core/barChart/createBarChart';
@@ -88,7 +88,7 @@ const groupPnlByMonths = (orders: Order[]): BarChartData => (
         [
           monthNumber,
           compose(
-            roundToDecimalPoint(2),
+            roundToDecimalPlaces(2),
             calculateCommonPnl,
           )(monthOrders),
         ]

@@ -6,7 +6,7 @@ import { compose } from '@/utils/fp';
 import {
   divideRight,
   multiply,
-  roundToDecimalPoint,
+  roundToDecimalPlaces,
 } from '@/utils/number';
 import {
   incrementQuoteDepositByBaseStep,
@@ -21,7 +21,7 @@ export const useExchange = (
   leverage: Ref<number>,
 ) => {
   const incrementDeposit = (deposit: number) => compose(
-    roundToDecimalPoint(quoteCurrencyDecimals.value),
+    roundToDecimalPlaces(quoteCurrencyDecimals.value),
     incrementQuoteDepositByBaseStep(
       baseCurrencyStep.value,
       price.value,
@@ -29,7 +29,7 @@ export const useExchange = (
   )(deposit);
 
   const decrementDeposit = (quoteDeposit: number) => compose(
-    roundToDecimalPoint(quoteCurrencyDecimals.value),
+    roundToDecimalPlaces(quoteCurrencyDecimals.value),
     decrementQuoteDepositByBaseStep(
       baseCurrencyStep.value,
       price.value,

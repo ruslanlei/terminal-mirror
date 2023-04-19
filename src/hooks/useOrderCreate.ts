@@ -22,7 +22,7 @@ import {
   calculateLiquidationPrice,
   calculatePledge,
 } from '@/helpers/math/formulas/order';
-import { roundToDecimalPoint } from '@/utils/number';
+import { roundToDecimalPlaces } from '@/utils/number';
 import { useChartDataStore } from '@/stores/chartData';
 import { TakeProfit } from '@/api/types/order';
 import { arrayOf } from '@/utils/array';
@@ -214,7 +214,7 @@ export const useOrderCreate = () => {
   ) => Maybe
     .of((leverage > 1) || null)
     .map(() => compose(
-      roundToDecimalPoint(2),
+      roundToDecimalPlaces(2),
       calculatePledge,
     )(price, quantity, leverage))
     .getOrElse(0);
@@ -236,7 +236,7 @@ export const useOrderCreate = () => {
     .of((!!quantity && (leverage > 1)) || null)
     .map(() => (
       compose(
-        roundToDecimalPoint(2),
+        roundToDecimalPlaces(2),
         calculateLiquidationPrice,
       )(price, quantity, leverage, balance)
     ))

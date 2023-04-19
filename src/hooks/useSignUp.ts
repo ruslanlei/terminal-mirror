@@ -39,7 +39,11 @@ export const useSignUp = () => {
       .email(() => t('validationError.email'))
       .required(() => t('validationError.required')),
     password: string()
-      .required(() => t('validationError.required')),
+      .required(() => t('validationError.required'))
+      .matches(
+        OnlyLatinCharactersAndNumbersRegex,
+        () => t('validationError.onlyLatinCharactersAndNumbers'),
+      ),
     passwordConfirmation: string()
       .required(() => t('validationError.required'))
       .oneOf([yupRef('password')], () => t('validationError.passwordsMismatch')),

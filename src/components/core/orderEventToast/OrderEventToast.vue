@@ -127,7 +127,7 @@ import Button from '@/components/core/button/Button.vue';
 import { computed } from 'vue';
 import { useMarketStore } from '@/stores/market';
 import CoinLogo from '@/components/core/coinLogo/CoinLogo.vue';
-import { multiply, roundToDecimalPoint } from '@/utils/number';
+import { multiply, roundToDecimalPlaces } from '@/utils/number';
 import { compose } from '@/utils/fp';
 import Badge from '@/components/core/badge/Badge.vue';
 import OrderSideLabel from '@/components/core/orderSideLabel/OrderSideLabel.vue';
@@ -150,7 +150,7 @@ const marketStore = useMarketStore();
 const pairData = computed(() => marketStore.getPairData(props.order.pair));
 
 const quoteCurrencyAmount = computed(() => compose(
-  roundToDecimalPoint(6),
+  roundToDecimalPlaces(6),
   multiply,
 )(props.order.quantity, props.order.price));
 

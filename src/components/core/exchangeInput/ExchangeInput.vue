@@ -29,7 +29,7 @@ import NumberInput from '@/components/core/numberInput/NumberInput.vue';
 import { NumberInputNormalizer } from '@/components/core/numberInput';
 import { useExchange } from '@/hooks/useExchange';
 import { compose } from '@/utils/fp';
-import { divideRight, multiply, roundToDecimalPoint } from '@/utils/number';
+import { divideRight, multiply, roundToDecimalPlaces } from '@/utils/number';
 import { ExchangeInputProps, ExchangeInputEmits } from './index';
 
 const props = defineProps<ExchangeInputProps>();
@@ -70,12 +70,12 @@ const normalizer: NumberInputNormalizer = (
 
 const localValue = computed({
   get: () => compose(
-    roundToDecimalPoint(quoteCurrencyDecimals.value),
+    roundToDecimalPlaces(quoteCurrencyDecimals.value),
     multiply(price.value),
   )(props.modelValue),
   set: (value: number) => {
     emit('update:modelValue', compose(
-      roundToDecimalPoint(baseCurrencyDecimals.value),
+      roundToDecimalPlaces(baseCurrencyDecimals.value),
       divideRight(price.value),
     )(value));
   },

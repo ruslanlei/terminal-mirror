@@ -32,7 +32,7 @@
         mode="out-in"
       >
         <KeepAlive>
-          <OrdersList
+          <ActiveOrderList
             v-if="isOrdersVisible"
             :key="activeTab"
             :list-type="ordersListType"
@@ -56,6 +56,7 @@ import OrdersList from '@/components/app/ordersList/OrdersList.vue';
 import OrdersAndStatisticsContainer from '@/containers/ordersAndStatisticsContainer/OrdersAndStatisticsContainer.vue';
 import MarketOrderStatistics from '@/components/app/marketOrdersStatistics/MarketOrderStatistics.vue';
 import MarketStatistics from '@/components/app/marketStatistics/MarketStatistics.vue';
+import ActiveOrderList from '@/components/app/activeOrderList/ActiveOrderList.vue';
 import {
   MainSelectorOptions,
   MainSelectorOptionValue,

@@ -71,7 +71,7 @@ import {
   divide,
   divideRight,
   multiply,
-  roundToDecimalPoint,
+  roundToDecimalPlaces,
 } from '@/utils/number';
 import { compose } from '@/utils/fp';
 import {
@@ -107,7 +107,7 @@ const maxPrice = computed(() => (
 
 const percentOfProfitValue = computed({
   get: () => compose(
-    roundToDecimalPoint(2),
+    roundToDecimalPlaces(2),
     // FIXME
     (props.orderSide === 'buy'
       ? calculateIncreasePercent
@@ -116,7 +116,7 @@ const percentOfProfitValue = computed({
   )(localPrice.value),
   set: (percentValue: number) => {
     localPrice.value = compose(
-      roundToDecimalPoint(2),
+      roundToDecimalPlaces(2),
       // FIXME
       (props.orderSide === 'buy'
         ? addPercents
@@ -129,19 +129,19 @@ const percentOfProfitValue = computed({
 const percentOfOrderQuantity = computed(() => props.orderQuantity / 100);
 
 const percentOfQuantity = computed({
-  get: () => roundToDecimalPoint(2, localQuantity.value / percentOfOrderQuantity.value),
+  get: () => roundToDecimalPlaces(2, localQuantity.value / percentOfOrderQuantity.value),
   set: (percentValue: number) => {
     localQuantity.value = compose(
-      roundToDecimalPoint(props.baseCurrencyStep),
+      roundToDecimalPlaces(props.baseCurrencyStep),
       multiply(percentOfOrderQuantity.value),
-      roundToDecimalPoint(2),
+      roundToDecimalPlaces(2),
     )(percentValue);
   },
 });
 
 const percentOfQuantityInputStep = computed(
   () => compose(
-    roundToDecimalPoint(2),
+    roundToDecimalPlaces(2),
     divide(100),
     divideRight,
   )(props.baseCurrencyStep, props.orderQuantity),

@@ -1,1 +1,1 @@
-export const OnlyLatinCharactersAndNumbersRegex = /^[a-zA-Z0-9]+$/g;
+export const OnlyLatinCharactersAndNumbersRegex = /^[a-zA-Z0-9]*$/g;

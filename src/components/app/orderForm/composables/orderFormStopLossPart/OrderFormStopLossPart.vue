@@ -34,6 +34,7 @@
         size="sm"
         state="defaultColor"
         :step="0.01"
+        :max="maxAmountOfRisk"
         :is-disabled="isDependentFieldsDisabled"
       >
         <template #append>
@@ -108,14 +109,15 @@ import { useMarketStore } from '@/stores/market';
 import { compose } from '@/utils/fp';
 import { useEmulatorStore } from '@/stores/emulator';
 import { injectOrderFormState } from '@/components/app/orderForm';
-import { roundToDecimalPoint, toAbsolute, toNegative } from '@/utils/number';
+import { multiply, roundToDecimalPlaces } from '@/utils/number';
 import {
-  calculateOriginalPriceByVolumeDecrease, calculateOriginalPriceByVolumeIncrease,
+  calculateOriginalPriceByVolumeDecrease,
+  calculateOriginalPriceByVolumeIncrease,
   calculateVolumeDifference,
 } from '@/helpers/math/formulas/order';
 import {
   addPercents,
-  calculatePercentageOfTotal, subtractPercents,
+  calculatePercentageOfTotal,
 } from '@/helpers/math/percents';
 import {
   calculatePriceByPercentOfDeposit,
@@ -153,9 +155,11 @@ const {
 
 const isDependentFieldsDisabled = computed(() => !model.quantity);
 
+const maxAmountOfRisk = computed(() => multiply(model.quantity, model.price));
+
 const amountOfRisk = computed({
   get: () => compose(
-    roundToDecimalPoint(quoteCurrencyDecimals.value),
+    roundToDecimalPlaces(quoteCurrencyDecimals.value),
     calculateVolumeDifference,
   )(
     model.quantity,
@@ -165,7 +169,7 @@ const amountOfRisk = computed({
 
   set: (amountOfRisk: number) => {
     stopLossPrice.value = compose(
-      roundToDecimalPoint(quoteCurrencyDecimals.value),
+      roundToDecimalPlaces(quoteCurrencyDecimals.value),
       (orderSide.value === 'buy'
         ? calculateOriginalPriceByVolumeDecrease
         : calculateOriginalPriceByVolumeIncrease
@@ -180,13 +184,13 @@ const amountOfRisk = computed({
 
 const percentOfOrderPrice = computed({
   get: () => compose(
-    roundToDecimalPoint(2),
+    roundToDecimalPlaces(2),
     calculatePercentageOfTotal,
   )(model.price, stopLossPrice.value),
 
   set: (percent: number) => {
     stopLossPrice.value = compose(
-      roundToDecimalPoint(quoteCurrencyDecimals.value),
+      roundToDecimalPlaces(quoteCurrencyDecimals.value),
       addPercents,
     )(model.price, percent);
   },
@@ -197,7 +201,7 @@ const percentOfOrderPriceMax = computed(() => (orderSide.value === 'buy' ? 0 : 1
 
 const percentOfDeposit = computed({
   get: () => compose(
-    roundToDecimalPoint(2),
+    roundToDecimalPlaces(2),
     calculateVolumeDifferenceInPercentsOfDeposit,
   )(
     model.quantity,
@@ -208,7 +212,7 @@ const percentOfDeposit = computed({
 
   set: (percentOfDeposit: number) => {
     stopLossPrice.value = compose(
-      roundToDecimalPoint(quoteCurrencyDecimals.value),
+      roundToDecimalPlaces(quoteCurrencyDecimals.value),
       calculatePriceByPercentOfDeposit(
         model.quantity,
         model.price,

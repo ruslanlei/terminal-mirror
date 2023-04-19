@@ -89,7 +89,7 @@ import StatisticsResultRow from '@/containers/statisticsResultRow/StatisticsResu
 import Avatar from '@/components/core/avatar/Avatar.vue';
 import Typography from '@/components/app/typography/Typography.vue';
 import Icon from '@/components/core/icon/Icon.vue';
-import { roundToDecimalPoint } from '@/utils/number';
+import { roundToDecimalPlaces } from '@/utils/number';
 import { useEmulatorStore } from '@/stores/emulator';
 import { calculateCommonPnlForPeriod } from '@/helpers/math/formulas/pnl';
 import { useMarketStore } from '@/stores/market';
@@ -104,11 +104,11 @@ const {
   closedOrders,
 } = storeToRefs(marketStore);
 
-const displayBalance = computed(() => roundToDecimalPoint(2, emulatorStore.balance));
+const displayBalance = computed(() => roundToDecimalPlaces(2, emulatorStore.balance));
 
 const commonPnl = computed(() => (
   compose(
-    roundToDecimalPoint(2),
+    roundToDecimalPlaces(2),
     calculateCommonPnlForPeriod('allTime'),
   )(closedOrders.value)
 ));

@@ -40,8 +40,8 @@ const marketVariants = computed<MarketTypeSelectorOption[]>(() => [
     icon: 'cube',
   },
   {
-    label: t('market.type.real'),
-    value: 'real',
+    label: t('market.type.combat'),
+    value: 'combat',
     icon: 'sword',
   },
 ]);

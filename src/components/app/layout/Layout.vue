@@ -1,5 +1,5 @@
 <template>
-  <Transition :name="layoutTransition">
+  <Transition name="defaultLayoutTransition">
     <Layout
       v-if="Layout"
       :key="route.meta?.layout"
@@ -50,29 +50,6 @@ const Layout = computed(() => {
   return layoutsMap[layoutName];
 });
 
-const layoutTransition = ref('defaultLayoutTransition');
-
-router.beforeEach((to, from, next) => {
-  if (!from.name) {
-    next();
-    return;
-  }
-
-  if (
-    to.meta?.layoutTransition
-      && typeof to.meta.layoutTransition === 'string'
-  ) {
-    layoutTransition.value = ({
-      putOn: 'layoutTransitionPutOn',
-      takeOff: 'layoutTransitionTakeOff',
-      default: 'defaultLayoutTransition',
-      // @ts-ignore
-    }[to.meta?.layoutTransition as ('putOn' | 'takeOff' | 'default') || 'default']);
-  }
-
-  next();
-});
-
 const handleBaseUnit = () => {
   const vh = window.innerHeight / 100;
   document.documentElement.style.setProperty('--vh', `${vh}px`);
@@ -101,71 +78,24 @@ onBeforeUnmount(() => {
 </style>
 
 <style lang="scss">
-.layoutTransitionTakeOff {
-  &-enter-active,
-  &-leave-active {
-    transition: transform 360ms ease;
-  }
-  &-enter-active {
-    z-index: 100000;
-  }
-
-  &-enter-from {
-    transform: scale(0.96);
-    position: fixed;
-    top: 0;
-    left: 0;
-    inset: 0;
-    z-index: 5000;
-  }
-  &-leave-to {
-    transform: translateY(-100%);
-    position: fixed;
-    top: 0;
-    left: 0;
-    inset: 0;
-    z-index: 10000;
-  }
-}
-
-.layoutTransitionPutOn {
-  &-leave-active, &-enter-active {
-    transition: transform 360ms ease;
-  }
-  &-enter-active {
-    z-index: 100000;
-  }
-
-  &-enter-from {
-    transform: translateY(-100%);
-    position: fixed;
-    top: 0;
-    left: 0;
-    inset: 0;
-  }
-  &-leave-to {
-    transform: scale(0.96);
-    position: fixed;
-    top: 0;
-    left: 0;
-    inset: 0;
-    z-index: 5000;
-  }
-}
-
 .defaultLayoutTransition {
   &-enter-active,
   &-leave-active {
-    transition: opacity 200ms, transform 460ms;
+    transition: opacity 480ms, transform 460ms;
   }
 
   &-enter-from {
     opacity: 0;
-    transform: scale(0.96);
+    transform: translateY(80px);
   }
   &-leave-to {
+    transition: opacity 200ms, transform 360ms;
+
     opacity: 0;
-    transform: scale(1.04);
+    transform: translateY(-80px);
+    z-index: 10;
+    position: fixed;
+    inset: 0;
   }
 }
 
@@ -177,11 +107,11 @@ onBeforeUnmount(() => {
 
   &-enter-from {
     opacity: 0;
-    transform: translateY(-16px);
+    transform: translateY(16px);
   }
   &-leave-to {
     opacity: 0;
-    transform: translateY(16px);
+    transform: translateY(-16px);
   }
 }
 </style>

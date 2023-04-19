@@ -6,7 +6,7 @@ import {
   add,
   divideRight,
   multiply,
-  roundToDecimalPoint, subtract,
+  roundToDecimalPlaces, subtract,
   subtractRight,
 } from '@/utils/number';
 import { isEqual } from '@/utils/boolean';
@@ -29,7 +29,7 @@ export const percentsToRoundedValue = curry((
   total: number,
   percents: number,
 ) => compose(
-  roundToDecimalPoint(decimals),
+  roundToDecimalPlaces(decimals),
   percentsToValue(total),
 )(percents));
 
@@ -46,7 +46,7 @@ export const valueToRoundedPercents = curry((
   total: number,
   value: number,
 ) => compose(
-  roundToDecimalPoint(decimals),
+  roundToDecimalPlaces(decimals),
   valueToPercents(total),
 )(value));
 
@@ -101,12 +101,12 @@ export const checkIsRoundedValueEqualToPercentOfTotal = curry((
 
   if (percentsInValue === 0) return false;
 
-  return isEqual(comparisonValue, roundToDecimalPoint(decimals, percentsInValue));
+  return isEqual(comparisonValue, roundToDecimalPlaces(decimals, percentsInValue));
 });
 
 export const humanizePercents = (
   percents: number,
 ) => compose(
   percentFormat(2),
-  roundToDecimalPoint(2),
+  roundToDecimalPlaces(2),
 )(percents);

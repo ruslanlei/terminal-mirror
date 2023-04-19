@@ -79,7 +79,7 @@ import { useEnvironmentObserver } from '@/hooks/useEnvironmentObserver';
 import { useComputedState } from '@/hooks/useComputedState';
 import { toCssPxValue } from '@/utils/style';
 import { compose } from '@/utils/fp';
-import { add, multiply, roundToDecimalPoint } from '@/utils/number';
+import { add, multiply, roundToDecimalPlaces } from '@/utils/number';
 import { addCssProperty, getRect } from '@/utils/dom';
 import { SelectorEmits, SelectorOption, SelectorProps } from './index';
 
@@ -168,11 +168,11 @@ const findActiveTab = () => {
 
   computedGhostStyles.value.transform = `translateX(${
     toCssPxValue(
-      roundToDecimalPoint(2, (left - containerLeft) - (normalized / 2)),
+      roundToDecimalPlaces(2, (left - containerLeft) - (normalized / 2)),
     )
   }) translateY(${
     toCssPxValue(
-      roundToDecimalPoint(2, (top - containerTop) - (normalized / 2)),
+      roundToDecimalPlaces(2, (top - containerTop) - (normalized / 2)),
     )
   })`;
 };

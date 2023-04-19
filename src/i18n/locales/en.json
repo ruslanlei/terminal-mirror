@@ -113,7 +113,7 @@
   "market": {
     "type": {
       "emulator": "Emulator",
-      "real": "Real"
+      "combat": "Combat"
     },
     "failedToGetPairs": "Failed to get pairs",
     "noPairCandles": "No pair data provided"
@@ -254,7 +254,7 @@
   },
   "deleteOrder": {
     "label": "Are you sure you want close position?",
-    "pnl": "by PNL of position {pnl}"
+    "pnl": "PNL of position {pnl}"
   },
   "ordersList": {
     "column": {
@@ -299,7 +299,7 @@
     }
   },
   "changePlayerDateModal": {
-    "label": "To change date in the player, you need to delete and/or close all existing orders. Delete and/or close orders right now?",
+    "label": "To change date in the player, you need to delete and/or close all existing orders.",
     "submitText": "Close/delete all orders"
   },
   "terminalLanding": {
@@ -322,23 +322,23 @@
       }
     },
     "learnToEarn": {
-      "label": "Learn to earn with us",
+      "label": "With our terminal you will no longer lose money on trading",
       "frame": {
         "safeOperations": {
-          "label": "Safe Operations",
-          "description": "Our terminal system behaves like a real exchange, allowing you to safely learn how to trade\nwith cryptocurrency and gain trading experience."
+          "label": "Ease of learning",
+          "description": "Our terminal system behaves like a real exchange, allowing you to safely learn cryptocurrency transactions and gain trading experience."
         },
         "easeOfLearning": {
-          "label": "Ease of learning",
-          "description": "Our terminal system behaves like a real exchange, allowing you to safely learn how to trade\nwith cryptocurrency and gain trading experience."
+          "label": "Safe Operations",
+          "description": "Trading is carried out with virtual money, so you save money and gain skills that you can use when moving to real trading."
         },
         "playerInTerminal": {
           "label": "Player in Terminal",
-          "description": "Our terminal system behaves like a real exchange, allowing you to safely learn how to trade\nwith cryptocurrency and gain trading experience."
+          "description": "The terminal has the ability to trade on history, which allows you to speed up learning and test new trading strategies faster by rewinding the graph “to the future”."
         },
         "cryptocurrencyMarket": {
           "label": "Cryptocurrency market",
-          "description": "Our terminal system behaves like a real exchange, allowing you to safely learn how to trade\nwith cryptocurrency and gain trading experience."
+          "description": "You can no longer postpone learning. The ability to perform operations with cryptocurrency is a vital skill in our time."
         }
       }
     },
@@ -426,7 +426,7 @@
   },
   "discordLink": {
     "tip": "Click to copy username",
-    "copied": "Discord username has been copied to your clipboard.",
+    "copied": "Username has been copied, in Discord search for me",
     "copiedForSubscribe": "Discord username has been copied to your clipboard. To purchase the course, please send us a message",
     "copiedForSupport": "Discord username has been copied to your clipboard. To get support, please send us a message"
   },
@@ -659,8 +659,8 @@
     "resultPeriodLabel": "{period} results",
     "toDeposit": "to the deposit",
     "commonResult": {
-      "label": "Common result",
-      "commonDepositTopUp": "Common top up: {value}",
+      "label": "All time result",
+      "commonDepositTopUp": "All time top up: {value}",
       "currentDeposit": "Current deposit: {value}"
     },
     "todayResults": {
@@ -670,15 +670,15 @@
       "periodLabel": "Week"
     },
     "orders": {
-      "commonAmountLabel": "Total number of transactions",
+      "commonAmountLabel": "Total number of deals",
       "successRateLabel": "Success rate",
       "success": {
-        "label": "Successful transactions",
+        "label": "Successful deals",
         "averageIncome": "Average income {value}",
         "popularCoin": "Popular coin in orders"
       },
       "failed": {
-        "label": "Unsuccessful transactions",
+        "label": "Unsuccessful deals",
         "averageIncome": "Average loss {value}",
         "popularCoin": "Popular coin in orders"
       }

@@ -48,6 +48,6 @@ const hideFavorites = () => {
   isFavoritesExpanded.value = false;
 };
 
-// delay before end of animation between routes
+// FIXME: delay before end of animation between routes
 await awaitTimeout(300);
 </script>

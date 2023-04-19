@@ -12,7 +12,7 @@
               state="defaultState"
             />
           </Link>
-          <LanguageSelect />
+          <!--          <LanguageSelect />-->
         </header>
         <div :class="$style.description">
           {{ t('auth.description') }}

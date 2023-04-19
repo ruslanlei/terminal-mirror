@@ -8,7 +8,7 @@ import {
   add,
   divideRight,
   multiply,
-  roundToDecimalPoint,
+  roundToDecimalPlaces,
 } from '@/utils/number';
 import {
   countBy,
@@ -137,7 +137,7 @@ export const calculateSuccessRate = (
     filterOrdersByType('limit'),
   ))
   .chain(compose(
-    roundToDecimalPoint(2),
+    roundToDecimalPlaces(2),
     multiply(100),
     divideRight(
       compose(

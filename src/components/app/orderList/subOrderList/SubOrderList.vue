@@ -73,9 +73,10 @@
       v-if="listType === 'active'"
       #cell(options)
     >
-      <button :class="$style.editButton">
-        {{ t('orderList.edit') }}
-      </button>
+      <!--      TODO: return after new method on backend -->
+      <!--      <button :class="$style.editButton"> -->
+      <!--        {{ t('orderList.edit') }} -->
+      <!--      </button> -->
     </template>
   </Table>
 </template>

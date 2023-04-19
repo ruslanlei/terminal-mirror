@@ -58,6 +58,10 @@ import WalletPicPng from './assets/wallet.png';
 import WalletPicWebp from './assets/wallet.webp';
 import WalletPicAvif from './assets/wallet.avif';
 
+import Planet2PicPng from './assets/planet2.png';
+import Planet2PicWebp from './assets/planet2.webp';
+import Planet2PicAvif from './assets/planet2.avif';
+
 const { t } = useI18n();
 
 const slider = ref();
@@ -116,9 +120,9 @@ const slides = computed<{ data: ICourseProgramCard }[]>(() => [
       },
       contents: t('courseLanding.courseProgram.modules.third.contents'),
       imageSrcSet: collectSrcSet([
-        WalletPicAvif,
-        WalletPicWebp,
-        WalletPicPng,
+        Planet2PicAvif,
+        Planet2PicWebp,
+        Planet2PicPng,
       ]),
     },
   },

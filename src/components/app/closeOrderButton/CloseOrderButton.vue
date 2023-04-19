@@ -28,7 +28,7 @@
                 is-inline
                 :state="['danger', 'bold']"
               >
-                {{ t('ordersList.closeTip.close') }}
+                {{ t('orderList.closeTip.close') }}
               </Typography>
             </template>
           </i18n-t>

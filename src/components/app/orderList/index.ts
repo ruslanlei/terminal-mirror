@@ -1,6 +1,6 @@
 import { TableColumn, TableRecord } from '@/components/core/table';
 import { Order, TakeProfit } from '@/api/types/order';
-import { SubOrderTableItem } from '@/components/app/ordersList/subOrdersTable';
+import { SubOrderTableItem } from 'src/components/app/orderList/subOrderList';
 import { Pair } from '@/api/types/pair';
 import { PairsMap } from '@/hooks/usePairs';
 
@@ -83,13 +83,13 @@ export type ClosedOrdersTableRecord = TableRecord<ClosedOrdersTableColumnSlug, {
   },
 }, SubOrderTableItem[]>;
 
-export interface OrdersListProps {
+export interface OrderListProps {
   listType: 'active' | 'closed',
   orders: Order[],
   pairsMap: PairsMap,
 }
 
-export interface OrdersListEmits {
+export interface OrderListEmits {
   (e: 'deleteOrder', payload: Order): void,
   (e: 'recordClick', payload: ActiveOrdersTableRecord | ClosedOrdersTableRecord): void,
 }

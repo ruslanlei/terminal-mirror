@@ -13,14 +13,24 @@
         v-if="isLoading"
         :class="$style.skeleton"
       />
-      <OrdersList
+      <div
         v-else
-        :list-type="listType"
-        :orders="orders"
-        :pairs-map="pairsMap || {}"
-        @delete-order="deleteOrder"
-        @record-click="onRecordClick"
-      />
+        :class="$style.content"
+      >
+        <Pagination
+          v-if="isMajorOrdersExist"
+          v-model="activePage"
+          :total-pages="10"
+        />
+        <OrderList
+          :class="$style.orderList"
+          :list-type="listType"
+          :orders="orders"
+          :pairs-map="pairsMap || {}"
+          @delete-order="deleteOrder"
+          @record-click="onRecordClick"
+        />
+      </div>
     </transition>
   </div>
 </template>
@@ -30,15 +40,16 @@ import {
   computed,
   onActivated,
   onBeforeUnmount,
-  onDeactivated, ref,
+  onDeactivated,
   toRefs,
 } from 'vue';
 import { useI18n } from 'vue-i18n';
-import OrdersList from '@/components/app/ordersList/OrdersList.vue';
+import OrderList from '@/components/app/orderList/OrderList.vue';
 import { useMarketStore } from '@/stores/market';
 import { storeToRefs } from 'pinia';
 import { useActiveOrderList } from '@/hooks/useActiveOrderList';
 import ListSkeleton from '@/components/app/listSkeleton/ListSkeleton.vue';
+import Pagination from '@/components/core/pagination/Pagination.vue';
 import { ActiveOrderListProps } from './index';
 
 const props = defineProps<ActiveOrderListProps>();
@@ -53,11 +64,11 @@ const {
 
 const { t } = useI18n();
 
-const activePage = ref(0);
-
 const {
   isLoading,
   orders,
+  isMajorOrdersExist,
+  activePage,
   getList,
   clearSubscriptions,
   onRecordClick,
@@ -82,8 +93,22 @@ onBeforeUnmount(clearSubscriptions);
 @import "src/assets/styles/utils";
 
 .ordersListWrapper {
+  width: 100%;
   display: flex;
   @include transparentOnDisabled;
+  flex-grow: 1;
+}
+
+.content {
+  width: 100%;
+  flex-grow: 1;
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+}
+
+.orderList {
+  margin-top: 20px;
 }
 
 .skeleton {

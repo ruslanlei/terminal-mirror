@@ -52,7 +52,7 @@
 import { computed, defineAsyncComponent, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Selector from '@/components/core/selector/Selector.vue';
-import OrdersList from '@/components/app/ordersList/OrdersList.vue';
+import OrdersList from '@/components/app/orderList/OrderList.vue';
 import OrdersAndStatisticsContainer from '@/containers/ordersAndStatisticsContainer/OrdersAndStatisticsContainer.vue';
 import MarketOrderStatistics from '@/components/app/marketOrdersStatistics/MarketOrderStatistics.vue';
 import MarketStatistics from '@/components/app/marketStatistics/MarketStatistics.vue';

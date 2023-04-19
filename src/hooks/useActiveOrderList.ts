@@ -7,7 +7,7 @@ import {
 import {
   ActiveOrdersTableRecord,
   ClosedOrdersTableRecord,
-} from '@/components/app/ordersList';
+} from 'src/components/app/orderList';
 import { useMarketStore } from '@/stores/market';
 import {
   Order,
@@ -32,6 +32,12 @@ export const useActiveOrderList = (
     active: activeOrders.value,
     closed: closedOrders.value,
   }[listType.value]));
+
+  const isMajorOrdersExist = computed(() => (
+    !!orders.value.filter((order: Order) => order.order_type === 'limit').length
+  ));
+
+  const activePage = ref(1);
 
   const isLoading = ref(false);
 
@@ -128,6 +134,8 @@ export const useActiveOrderList = (
 
   return {
     orders,
+    isMajorOrdersExist,
+    activePage,
     isLoading,
     getList,
     clearSubscriptions,

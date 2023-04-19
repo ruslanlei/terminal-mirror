@@ -2,7 +2,7 @@ import {
   ActiveSubOrderRecord,
   ClosedSubOrdersRecord,
   SubOrderTableItem,
-} from '@/components/app/ordersList/subOrdersTable/index';
+} from '@/components/app/orderList/subOrderList/index';
 import { compose, curry } from '@/utils/fp';
 import { roundToDecimalPlaces } from '@/utils/number';
 import { valueToPercents } from '@/helpers/math/percents';

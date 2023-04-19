@@ -26,7 +26,7 @@
           <span :class="$style.quantityPercent">
             {{
               t(
-                'ordersList.subOrder.quantityPercent',
+                'orderList.subOrder.quantityPercent',
                 { percent: t('common.percents', { value: percent }) },
               )
             }}
@@ -74,7 +74,7 @@
       #cell(options)
     >
       <button :class="$style.editButton">
-        {{ t('ordersList.edit') }}
+        {{ t('orderList.edit') }}
       </button>
     </template>
   </Table>
@@ -83,25 +83,25 @@
 <script setup lang="ts">
 import Table from '@/components/core/table/Table.vue';
 import { useI18n } from 'vue-i18n';
-import { useSubOrdersList } from '@/hooks/useSubOrdersList';
 import Typography from '@/components/app/typography/Typography.vue';
+import { useSubOrderList } from '@/hooks/useSubOrderList';
 import {
-  ActiveSubOrdersTableProps,
+  SubOrderListProps,
 } from './index';
 
-const props = defineProps<ActiveSubOrdersTableProps>();
+const props = defineProps<SubOrderListProps>();
 
 const { t } = useI18n();
 
 const {
   columns,
   records,
-} = useSubOrdersList(props);
+} = useSubOrderList(props);
 
 const orderLabelMap = {
-  tp: 'ordersList.subOrder.type.takeProfit',
-  sl: 'ordersList.subOrder.type.stopLoss',
-  limit: 'ordersList.subOrder.masterType.limit',
+  tp: 'orderList.subOrder.type.takeProfit',
+  sl: 'orderList.subOrder.type.stopLoss',
+  limit: 'orderList.subOrder.masterType.limit',
 };
 </script>
 

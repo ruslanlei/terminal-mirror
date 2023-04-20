@@ -24,12 +24,13 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, defineAsyncComponent } from 'vue';
 import { useModalStore, Modal, modalType } from '@/stores/modals';
-import ConfirmModal from '@/components/app/confirmModal/ConfirmModal.vue';
-import SuccessSignUpModal from '@/components/app/successSignUpModal/SuccessSignUpModal.vue';
-import DeleteOrderModal from '@/components/app/deleteOrderModal/DeleteOrderModal.vue';
-import ChangePlayerDateModal from '@/components/app/changePlayerDateModal/ChangePlayerDateModal.vue';
+
+const ChangePlayerDateModal = defineAsyncComponent(() => import('@/components/app/changePlayerDateModal/ChangePlayerDateModal.vue'));
+const DeleteOrderModal = defineAsyncComponent(() => import('@/components/app/deleteOrderModal/DeleteOrderModal.vue'));
+const SuccessSignUpModal = defineAsyncComponent(() => import('@/components/app/successSignUpModal/SuccessSignUpModal.vue'));
+const ConfirmModal = defineAsyncComponent(() => import('@/components/app/confirmModal/ConfirmModal.vue'));
 
 const modalsStore = useModalStore();
 

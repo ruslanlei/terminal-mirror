@@ -108,6 +108,8 @@ const props = defineProps<CourseProgramCard>();
   background: var(--color-main-gradient);
   border-radius: 10px;
   width: fit-content;
+  position: relative;
+  z-index: 2;
 }
 
 .topBlock {

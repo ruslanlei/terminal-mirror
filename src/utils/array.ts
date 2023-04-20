@@ -26,7 +26,7 @@ export const { from: toArray } = Array;
 export const arrayOf = curry((
   initializer: (el: any, index: number) => any,
   length: number,
-) => Array(length).fill(0).map(initializer));
+) => Array.from({ length }, initializer));
 
 export const getLength = (array: any[]) => array.length;
 

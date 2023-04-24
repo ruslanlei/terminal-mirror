@@ -86,27 +86,18 @@
         size="massive4"
         :class="$style.price"
       >
-        <i18n-t
-          tag="span"
-          keypath="common.slashWithSpaces"
+        <Typography
+          is-inline
+          :state="['danger3', 'bold']"
         >
-          <template #value1>
-            <Typography
-              is-inline
-              :state="['danger3', 'bold']"
-            >
-              {{ t('common.currencyAmount', { amount: card.price.value, currency: '₽' }) }}
-            </Typography>
-          </template>
-          <template #value2>
-            {{ t('common.currencyAmount', { amount: card.price.withoutSale, currency: '₽' }) }}
-          </template>
-        </i18n-t>
+          {{ t('common.currencyAmount', { amount: card.price, currency: 'USDT' }) }}
+        </Typography>
       </Typography>
       <Link
+        v-if="card.purchaseButton"
         :state="null"
         :size="null"
-        :to="card?.subscribeLink"
+        :to="card.purchaseButton"
       >
         <Button
           size="xl"
@@ -118,10 +109,10 @@
         </Button>
       </Link>
       <Link
-        v-if="card.hasTrial"
+        v-if="card.trialLink"
         :state="null"
         :size="null"
-        :to="card?.trialLink"
+        :to="card.trialLink"
       >
         <Button
           size="xl"

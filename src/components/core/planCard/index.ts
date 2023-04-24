@@ -13,13 +13,9 @@ export interface LandingPlan {
     label: string,
     active: boolean,
   }[],
-  price: {
-    value: number,
-    withoutSale: number,
-  },
+  price: number | string,
   trialLink?: RouteLocationRaw,
-  subscribeLink?: RouteLocationRaw,
-  hasTrial?: boolean,
+  purchaseButton?: RouteLocationRaw,
 }
 
 export interface PlanCardProps {

@@ -40,7 +40,7 @@ const cards = computed<{
       headerText: {
         textLg: t('terminalLanding.plans.headerText'),
       },
-      name: t('terminalLanding.plans.list.singlePackage'),
+      name: t('terminalLanding.plans.list.singlePackage.label'),
       benefits: [
         {
           label: t('terminalLanding.plans.benefits.accessToEmulator'),
@@ -59,83 +59,9 @@ const cards = computed<{
           active: false,
         },
       ],
-      price: {
-        value: 890,
-        withoutSale: 1430,
-      },
-      subscribeLink: { name: 'auth-sign-up' },
+      price: t('terminalLanding.plans.list.singlePackage.price'),
+      purchaseButton: { name: 'auth-sign-up' },
       trialLink: { name: 'auth-sign-up' },
-      hasTrial: true,
-    },
-  },
-  {
-    id: uuid(),
-    state: 'orange',
-    card: {
-      headerText: {
-        textLg: t('terminalLanding.plans.headerText'),
-      },
-      name: t('terminalLanding.plans.list.propGroups'),
-      benefits: [
-        {
-          label: t('terminalLanding.plans.benefits.accessToEmulator'),
-          active: true,
-        },
-        {
-          label: t('terminalLanding.plans.benefits.accessToRealMarket'),
-          active: true,
-        },
-        {
-          label: t('terminalLanding.plans.benefits.propGroups'),
-          active: true,
-        },
-        {
-          label: t('terminalLanding.plans.benefits.trainingGroupsForTenPeople'),
-          active: false,
-        },
-      ],
-      price: {
-        value: 2980,
-        withoutSale: 3440,
-      },
-      subscribeLink: { name: 'auth-sign-up' },
-      trialLink: { name: 'auth-sign-up' },
-      hasTrial: true,
-    },
-  },
-  {
-    id: uuid(),
-    state: 'blue',
-    card: {
-      headerText: {
-        textLg: t('terminalLanding.plans.headerText'),
-      },
-      name: t('terminalLanding.plans.list.trainingPackage'),
-      benefits: [
-        {
-          label: t('terminalLanding.plans.benefits.accessToEmulator'),
-          active: true,
-        },
-        {
-          label: t('terminalLanding.plans.benefits.accessToRealMarket'),
-          active: true,
-        },
-        {
-          label: t('terminalLanding.plans.benefits.propGroups'),
-          active: false,
-        },
-        {
-          label: t('terminalLanding.plans.benefits.trainingGroupsForTenPeople'),
-          active: true,
-        },
-      ],
-      price: {
-        value: 2165,
-        withoutSale: 2990,
-      },
-      subscribeLink: { name: 'auth-sign-up' },
-      trialLink: { name: 'auth-sign-up' },
-      hasTrial: true,
     },
   },
 ]));

@@ -391,9 +391,10 @@
         "trainingGroupsForTenPeople": "Training groups for 10 people."
       },
       "list": {
-        "singlePackage": "Single package",
-        "propGroups": "Prop groups",
-        "trainingPackage": "Training package"
+        "singlePackage": {
+          "label": "Single package",
+          "price": "20"
+        }
       }
     },
     "faq": {
@@ -582,16 +583,19 @@
       "tariff": {
         "basicModules": {
           "heading": "Basic modules",
-          "studyTime": "2 months"
+          "studyTime": "2 months",
+          "price": "300"
         },
         "secretModule": {
           "heading": "Secret 3rd module",
           "studyTime": "1 month",
-          "additionalBenefit": "+ We give advanced tech. analysis"
+          "additionalBenefit": "+ We give advanced tech. analysis",
+          "price": "200"
         },
         "mentoring": {
           "heading": "Teaching",
-          "studyTime": "3 months"
+          "studyTime": "3 months",
+          "price": "500"
         }
       }
     },

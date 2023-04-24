@@ -40,7 +40,7 @@
         <CourseProgram id="courseProgram" />
       </template>
       <template #startDateTape>
-        <StartDateTape />
+        <!--        <StartDateTape />-->
       </template>
       <template #studyPlans>
         <StudyPlans id="tariffs" />
@@ -78,7 +78,7 @@ import StudyPlans from '@/components/app/courseLanding/composables/studyPlans/St
 import EcosystemCap from '@/components/app/ecosystemCap/EcosystemCap.vue';
 import Faq from '@/components/app/courseLanding/composables/faq/Faq.vue';
 import LandingFooter from '@/components/app/courseLanding/composables/landingFooter/LandingFooter.vue';
-import StartDateTape from '@/components/app/courseLanding/composables/startDateTape/StartDateTape.vue';
+// import StartDateTape from '@/components/app/courseLanding/composables/startDateTape/StartDateTape.vue';
 import { useLandingAnchor } from '@/hooks/useLandingAnchor';
 import { useScroll } from '@vueuse/core';
 import { CourseLandingChapter } from './index';

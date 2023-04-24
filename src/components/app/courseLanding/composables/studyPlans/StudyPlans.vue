@@ -43,7 +43,6 @@ const cards = computed<{
     id: uuid(),
     state: 'blue',
     card: {
-      salePercents: 10,
       headerText: {
         h1: t('courseLanding.studyPlans.tariff.basicModules.studyTime'),
         text: t('courseLanding.studyPlans.card.studyTimeText'),
@@ -89,7 +88,6 @@ const cards = computed<{
     id: uuid(),
     state: 'orange',
     card: {
-      salePercents: 10,
       headerText: {
         h1: t('courseLanding.studyPlans.tariff.secretModule.studyTime'),
         text: t('courseLanding.studyPlans.card.studyTimeText'),
@@ -139,7 +137,6 @@ const cards = computed<{
     id: uuid(),
     state: 'purple',
     card: {
-      salePercents: 10,
       headerText: {
         h1: t('courseLanding.studyPlans.tariff.mentoring.studyTime'),
         text: t('courseLanding.studyPlans.card.studyTimeText'),

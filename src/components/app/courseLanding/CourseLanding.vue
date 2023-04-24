@@ -60,7 +60,7 @@
 
 <script setup lang="ts">
 import CourseLandingContainer from '@/containers/courseLandingContainer/CourseLandingContainer.vue';
-import { computed, ref, watch } from 'vue';
+import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import CourseLandingHeader
   from '@/components/app/courseLanding/composables/courseLandingHeader/CourseLandingHeader.vue';

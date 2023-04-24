@@ -13,7 +13,6 @@ export interface LandingPlan {
     label: string,
     active: boolean,
   }[],
-  placesAmount?: number,
   price: {
     value: number,
     withoutSale: number,

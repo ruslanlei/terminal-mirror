@@ -82,29 +82,6 @@
     />
     <footer :class="$style.footer">
       <Typography
-        v-if="card?.placesAmount"
-        :class="$style.amountOfPlaces"
-        state="accent1"
-      >
-        <i18n-t
-          tag="span"
-          keypath="common.colon"
-        >
-          <template #key>
-            {{ t('planCard.amountOfPlaces') }}
-          </template>
-          <template #value>
-            <Typography
-              is-inline
-              size="h3"
-              state="bold"
-            >
-              {{ card.placesAmount }}
-            </Typography>
-          </template>
-        </i18n-t>
-      </Typography>
-      <Typography
         :state="['accent2']"
         size="massive4"
         :class="$style.price"

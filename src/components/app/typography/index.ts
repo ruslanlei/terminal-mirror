@@ -9,11 +9,12 @@ export type TypographyState =
     | 'alignRight'
     | 'medium'
     | 'accent1'
+    | 'accent15'
+    | 'accent2'
     | 'black'
     | 'lightBlack'
     | 'gradientPrimary'
     | 'blueGradient'
-    | 'accent2'
     | 'background1'
     | 'uppercase'
     | 'nowrap';

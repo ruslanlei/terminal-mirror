@@ -9,7 +9,7 @@
       </Typography>
       <Typography
         size="title1"
-        :state="['accent1','medium']"
+        :state="['accent15','medium']"
         :class="$style.description"
       >
         {{ t('courseLanding.practiceBadge.description') }}

@@ -30,6 +30,7 @@
             </template>
             <Typography
               is-inline
+              :state="[textIndex !== 2 ? 'accent2' : 'accent1']"
             >
               {{ t(`courseLanding.creatorsTeamInfo.text.${textIndex}`) }}
             </Typography>

@@ -14,7 +14,7 @@ export interface NumberInputProps {
   normalizer?: NumberInputNormalizer,
   saveOn?: 'input' | 'blur',
   normalizeOnKeydown?: boolean,
-  state?: NumberInputState | NumberInputState[],
+  state?: null | NumberInputState | NumberInputState[],
   size?: NumberInputSize,
 
   isDisabled?: boolean,

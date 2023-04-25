@@ -63,90 +63,46 @@ const slider = ref();
 const slides = computed(() => [
   {
     data: {
-      username: t('courseLanding.reviews.reviewUserName'),
-      userPosition: t('courseLanding.reviews.reviewUserPosition'),
-      date: '22.02.2023',
-      chapters: [
-        {
-          label: t('courseLanding.reviews.exampleReview.chapters.first.label'),
-          text: t('courseLanding.reviews.exampleReview.chapters.first.text'),
-        },
-        {
-          label: t('courseLanding.reviews.exampleReview.chapters.second.label'),
-          text: t('courseLanding.reviews.exampleReview.chapters.second.text'),
-        },
-      ],
       picture: collectSrcSet([
         ReviewPicSmallAvif,
         ReviewPicSmallWebp,
         ReviewPicSmallPng,
       ]),
+      date: '22.02.2023',
+      text: 'text',
     },
   },
   {
     data: {
-      username: t('courseLanding.reviews.reviewUserName'),
-      userPosition: t('courseLanding.reviews.reviewUserPosition'),
-      date: '22.02.2023',
-      chapters: [
-        {
-          label: t('courseLanding.reviews.exampleReview.chapters.first.label'),
-          text: t('courseLanding.reviews.exampleReview.chapters.first.text'),
-        },
-        {
-          label: t('courseLanding.reviews.exampleReview.chapters.second.label'),
-          text: t('courseLanding.reviews.exampleReview.chapters.second.text'),
-        },
-      ],
       picture: collectSrcSet([
         ReviewPicBigAvif,
         ReviewPicBigWebp,
         ReviewPicBigPng,
       ]),
+      date: '22.02.2023',
+      text: 'text',
     },
   },
   {
     data: {
-      username: t('courseLanding.reviews.reviewUserName'),
-      userPosition: t('courseLanding.reviews.reviewUserPosition'),
-      date: '22.02.2023',
-      chapters: [
-        {
-          label: t('courseLanding.reviews.exampleReview.chapters.first.label'),
-          text: t('courseLanding.reviews.exampleReview.chapters.first.text'),
-        },
-        {
-          label: t('courseLanding.reviews.exampleReview.chapters.second.label'),
-          text: t('courseLanding.reviews.exampleReview.chapters.second.text'),
-        },
-      ],
       picture: collectSrcSet([
         ReviewPicSmallAvif,
         ReviewPicSmallWebp,
         ReviewPicSmallPng,
       ]),
+      date: '22.02.2023',
+      text: 'text',
     },
   },
   {
     data: {
-      username: t('courseLanding.reviews.reviewUserName'),
-      userPosition: t('courseLanding.reviews.reviewUserPosition'),
-      date: '22.02.2023',
-      chapters: [
-        {
-          label: t('courseLanding.reviews.exampleReview.chapters.first.label'),
-          text: t('courseLanding.reviews.exampleReview.chapters.first.text'),
-        },
-        {
-          label: t('courseLanding.reviews.exampleReview.chapters.second.label'),
-          text: t('courseLanding.reviews.exampleReview.chapters.second.text'),
-        },
-      ],
       picture: collectSrcSet([
         ReviewPicBigAvif,
         ReviewPicBigWebp,
         ReviewPicBigPng,
       ]),
+      date: '22.02.2023',
+      text: 'text',
     },
   },
 ]);

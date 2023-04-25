@@ -69,7 +69,7 @@ const slides = computed(() => [
         ReviewPicSmallPng,
       ]),
       date: '22.02.2023',
-      text: 'text',
+      text: t('courseLanding.studentsReviews.0'),
     },
   },
   {
@@ -80,7 +80,7 @@ const slides = computed(() => [
         ReviewPicBigPng,
       ]),
       date: '22.02.2023',
-      text: 'text',
+      text: t('courseLanding.studentsReviews.1'),
     },
   },
   {
@@ -91,7 +91,7 @@ const slides = computed(() => [
         ReviewPicSmallPng,
       ]),
       date: '22.02.2023',
-      text: 'text',
+      text: t('courseLanding.studentsReviews.2'),
     },
   },
   {
@@ -102,7 +102,40 @@ const slides = computed(() => [
         ReviewPicBigPng,
       ]),
       date: '22.02.2023',
-      text: 'text',
+      text: t('courseLanding.studentsReviews.3'),
+    },
+  },
+  {
+    data: {
+      picture: collectSrcSet([
+        ReviewPicBigAvif,
+        ReviewPicBigWebp,
+        ReviewPicBigPng,
+      ]),
+      date: '22.02.2023',
+      text: t('courseLanding.studentsReviews.4'),
+    },
+  },
+  {
+    data: {
+      picture: collectSrcSet([
+        ReviewPicBigAvif,
+        ReviewPicBigWebp,
+        ReviewPicBigPng,
+      ]),
+      date: '22.02.2023',
+      text: t('courseLanding.studentsReviews.5'),
+    },
+  },
+  {
+    data: {
+      picture: collectSrcSet([
+        ReviewPicBigAvif,
+        ReviewPicBigWebp,
+        ReviewPicBigPng,
+      ]),
+      date: '22.02.2023',
+      text: t('courseLanding.studentsReviews.6'),
     },
   },
 ]);

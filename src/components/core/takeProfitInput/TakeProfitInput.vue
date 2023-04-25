@@ -45,9 +45,9 @@
         v-model="percentOfQuantity"
         type="number"
         save-on="blur"
-        :min="percentOfQuantityInputStep"
+        :min="1"
         :max="100"
-        :step="percentOfQuantityInputStep"
+        :step="1"
         :class="$style.input"
         state="alignRight"
         size="xs"
@@ -69,7 +69,6 @@ import NumberInput from '@/components/core/numberInput/NumberInput.vue';
 import { useLocalValue } from '@/hooks/useLocalValue';
 import {
   divide,
-  divideRight,
   multiply,
   roundToDecimalPlaces,
 } from '@/utils/number';
@@ -126,26 +125,16 @@ const percentOfProfitValue = computed({
   },
 });
 
-const percentOfOrderQuantity = computed(() => props.orderQuantity / 100);
+const percentOfOrderQuantity = computed(() => divide(props.orderQuantity, 100));
 
 const percentOfQuantity = computed({
-  get: () => roundToDecimalPlaces(2, localQuantity.value / percentOfOrderQuantity.value),
+  get: () => roundToDecimalPlaces(2, divide(localQuantity.value, percentOfOrderQuantity.value)),
   set: (percentValue: number) => {
     localQuantity.value = compose(
-      roundToDecimalPlaces(props.baseCurrencyStep),
       multiply(percentOfOrderQuantity.value),
-      roundToDecimalPlaces(2),
     )(percentValue);
   },
 });
-
-const percentOfQuantityInputStep = computed(
-  () => compose(
-    roundToDecimalPlaces(2),
-    divide(100),
-    divideRight,
-  )(props.baseCurrencyStep, props.orderQuantity),
-);
 </script>
 
 <style lang="scss" module>

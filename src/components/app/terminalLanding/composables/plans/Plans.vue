@@ -60,7 +60,7 @@ const cards = computed<{
         },
       ],
       price: t('terminalLanding.plans.list.singlePackage.price'),
-      purchaseButton: { name: 'auth-sign-up' },
+      subscribeLink: { name: 'auth-sign-up' },
       trialLink: { name: 'auth-sign-up' },
     },
   },

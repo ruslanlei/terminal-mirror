@@ -15,7 +15,8 @@ export interface LandingPlan {
   }[],
   price: number | string,
   trialLink?: RouteLocationRaw,
-  purchaseButton?: RouteLocationRaw,
+  purchaseButton?: string,
+  subscribeLink?: RouteLocationRaw,
 }
 
 export interface PlanCardProps {
@@ -25,4 +26,5 @@ export interface PlanCardProps {
 
 export interface PlanCardEmits {
   (e: 'clickSubscribe'): void,
+  (e: 'clickPurchase'): void,
 }

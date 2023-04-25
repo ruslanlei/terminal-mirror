@@ -8,7 +8,8 @@ import {
   divideRight,
   multiply,
   subtract,
-  subtractRight, toAbsolute,
+  subtractRight,
+  toAbsolute,
 } from '@/utils/number';
 import { Maybe } from '@/utils/functors';
 

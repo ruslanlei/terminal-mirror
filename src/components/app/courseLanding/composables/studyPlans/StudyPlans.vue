@@ -13,7 +13,7 @@
         :card="card"
         :state="state"
         :class="$style.card"
-        @click-subscribe="copyDiscordLink"
+        @click-purchase="copyDiscordLink"
       />
     </div>
   </div>

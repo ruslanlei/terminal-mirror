@@ -93,11 +93,27 @@
           {{ t('common.currencyAmount', { amount: card.price, currency: 'USDT' }) }}
         </Typography>
       </Typography>
-      <Link
+      <Button
         v-if="card.purchaseButton"
+        size="xl"
+        :state="[
+          (({
+            purple: 'gradientColor',
+            orange: 'orangeGradientColor',
+            blue: 'blueGradientColor'
+          })[state]),
+          'interactive',
+        ]"
+        :class="$style.trialButton"
+        @click="onClickPurchase"
+      >
+        {{ card.purchaseButton }}
+      </Button>
+      <Link
+        v-if="card.subscribeLink"
         :state="null"
         :size="null"
-        :to="card.purchaseButton"
+        :to="card.subscribeLink"
       >
         <Button
           size="xl"
@@ -147,6 +163,7 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Typography from '@/components/app/typography/Typography.vue';
 import Divider from '@/components/core/divider/Divider.vue';
@@ -154,7 +171,6 @@ import Button from '@/components/core/button/Button.vue';
 import Link from '@/components/core/link/Link.vue';
 import GradientCheckIcon from '@/components/core/gradientCheckIcon/GradientCheckIcon.vue';
 import Badge from '@/components/core/badge/Badge.vue';
-import { computed, resolveComponent } from 'vue';
 import { compose } from '@/utils/fp';
 import { percentFormat } from '@/utils/numberFormat';
 import { toNegative } from '@/utils/number';
@@ -173,6 +189,10 @@ const saleBadgeText = computed(() => (props.card?.salePercents ? compose(
 
 const onSubscribeClick = () => {
   emit('clickSubscribe');
+};
+
+const onClickPurchase = () => {
+  emit('clickPurchase');
 };
 </script>
 

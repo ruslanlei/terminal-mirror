@@ -17,28 +17,34 @@
           {{ t('courseLanding.courseExplanationCard.heading') }}
         </Typography>
         <Typography
-          :state="['accent1']"
+          :state="['accent2']"
           size="textLg"
           :class="$style.cardText"
         >
           {{ t('courseLanding.courseExplanationCard.cardText.ourCourse') }}
         </Typography>
         <Typography
-          :state="['accent1']"
+          :state="['accent2']"
           size="textLg"
           :class="$style.cardText"
         >
           {{ t('courseLanding.courseExplanationCard.cardText.inAddition') }}
         </Typography>
         <Typography
-          :state="['accent1']"
+          :state="['accent2']"
           size="textLg"
           :class="$style.cardText"
         >
-          {{ t('courseLanding.courseExplanationCard.cardText.avoidMistakes') }}
+          {{ t('courseLanding.courseExplanationCard.cardText.avoidMistakes.0') }}
+          <Typography
+            is-inline
+            :state="['accent1']"
+          >
+            {{ t('courseLanding.courseExplanationCard.cardText.avoidMistakes.1') }}
+          </Typography>
         </Typography>
         <Typography
-          :state="['accent1']"
+          :state="['accent2']"
           size="textLg"
           :class="$style.cardText"
         >

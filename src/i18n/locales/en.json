@@ -463,7 +463,10 @@
       "cardText": {
         "ourCourse": "Our course will help you gain knowledge about cryptocurrency for Investing and trading on stock exchanges.",
         "inAddition": "In addition to trading, we cover general issues on the operation of wallets, tell you how to store and buy cryptocurrency, and analyze the psychological aspects of trading.",
-        "avoidMistakes": "We know why many lose money and will help to avoid mistakes, like most novice traders.",
+        "avoidMistakes": [
+          "We know why many lose money and will help to",
+          "avoid mistakes, like most novice traders."
+        ],
         "weExplain": "We explain everything complex in simple words using memes, so that the training is interesting and even a beginner can figure it out."
       },
       "signUpForCourse": "Sign up for a course"

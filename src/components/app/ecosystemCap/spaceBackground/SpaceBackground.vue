@@ -1,26 +1,26 @@
 <template>
-  <Lottie
+  <div
     :data-space-backgrond-id="id"
     :class="$style.background"
-    :path="SpaceLottie"
     @data-ready="adjustSvgSize"
-  />
+  >
+    <SpaceSvg />
+  </div>
 </template>
 
 <script setup lang="ts">
 import { onBeforeUnmount } from 'vue';
-import Lottie from '@/components/core/lottie/Lottie.vue';
-import { uuid } from '@/utils/uuid';
 import { addCssProperty, queryChildSelector, querySelector } from '@/utils/dom';
 import { compose } from '@/utils/fp';
 import { toCssPercentValue } from '@/utils/style';
 import { divide } from '@/utils/number';
-import SpaceLottie from './assets/space.json?url';
+import { useId } from '@/hooks/useId';
+import SpaceSvg from './assets/space.svg';
 
-const id = uuid();
+const id = useId();
 
 const adjustSvgSize = () => {
-  const container = querySelector(`[data-space-backgrond-id="${id}"]`) as HTMLElement;
+  const container = querySelector(`[data-space-backgrond-id="${id.value}"]`) as HTMLElement;
 
   if (!container) return;
 

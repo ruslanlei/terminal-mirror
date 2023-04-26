@@ -1,6 +1,5 @@
 <template>
   <ImageBackgroundBlock
-    :src="computedBackground"
     :content-class="$style.ecoSystemCard"
   >
     <template #picture>
@@ -59,8 +58,6 @@ import { IEcosystemCard } from '@/components/app/ecosystemCap/ecosystemCard';
 import CourseLogo from '@/components/core/courseLogo/CourseLogo.vue';
 import SpaceBackground from '@/components/app/ecosystemCap/spaceBackground/SpaceBackground.vue';
 import { getUrlForRelativePath } from '@/utils/window';
-import BackgroundPurplePng from './assets/spaceBackgroundPurple.png';
-import BackgroundBluePng from './assets/spaceBackgroundBlue.png';
 import { EcosystemCapProps } from './index';
 
 const { t } = useI18n();
@@ -71,11 +68,6 @@ const props = withDefaults(
     state: 'purple',
   },
 );
-
-const computedBackground = computed(() => ({
-  purple: BackgroundPurplePng,
-  blue: BackgroundBluePng,
-}[props.state]));
 
 const terminalCard = computed<IEcosystemCard>(() => ({
   label: t('ecosystem.terminal.label'),

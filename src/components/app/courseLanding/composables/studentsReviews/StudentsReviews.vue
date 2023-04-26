@@ -48,13 +48,13 @@ import { computed, ref } from 'vue';
 import { collectSrcSet } from '@/utils/dom';
 import ReviewCard from './reviewCard/ReviewCard.vue';
 
-import ReviewPicSmallPng from './assets/reviewSmall.png';
-import ReviewPicSmallWebp from './assets/reviewSmall.webp';
-import ReviewPicSmallAvif from './assets/reviewSmall.avif';
-
-import ReviewPicBigPng from './assets/reviewBig.png';
-import ReviewPicBigWebp from './assets/reviewBig.webp';
-import ReviewPicBigAvif from './assets/reviewBig.avif';
+import ReviewImg1Png from './assets/review1.png';
+import ReviewImg2Png from './assets/review2.png';
+import ReviewImg3Png from './assets/review3.png';
+import ReviewImg4Png from './assets/review4.jpg';
+import ReviewImg5Png from './assets/review5.png';
+import ReviewImg6Png from './assets/review6.png';
+import ReviewImg7Png from './assets/review7.png';
 
 const { t } = useI18n();
 
@@ -64,9 +64,7 @@ const slides = computed(() => [
   {
     data: {
       picture: collectSrcSet([
-        ReviewPicSmallAvif,
-        ReviewPicSmallWebp,
-        ReviewPicSmallPng,
+        ReviewImg1Png,
       ]),
       date: '22.02.2023',
       text: t('courseLanding.studentsReviews.0'),
@@ -75,9 +73,7 @@ const slides = computed(() => [
   {
     data: {
       picture: collectSrcSet([
-        ReviewPicBigAvif,
-        ReviewPicBigWebp,
-        ReviewPicBigPng,
+        ReviewImg2Png,
       ]),
       date: '22.02.2023',
       text: t('courseLanding.studentsReviews.1'),
@@ -86,9 +82,7 @@ const slides = computed(() => [
   {
     data: {
       picture: collectSrcSet([
-        ReviewPicSmallAvif,
-        ReviewPicSmallWebp,
-        ReviewPicSmallPng,
+        ReviewImg3Png,
       ]),
       date: '22.02.2023',
       text: t('courseLanding.studentsReviews.2'),
@@ -97,9 +91,7 @@ const slides = computed(() => [
   {
     data: {
       picture: collectSrcSet([
-        ReviewPicBigAvif,
-        ReviewPicBigWebp,
-        ReviewPicBigPng,
+        ReviewImg4Png,
       ]),
       date: '22.02.2023',
       text: t('courseLanding.studentsReviews.3'),
@@ -108,9 +100,7 @@ const slides = computed(() => [
   {
     data: {
       picture: collectSrcSet([
-        ReviewPicBigAvif,
-        ReviewPicBigWebp,
-        ReviewPicBigPng,
+        ReviewImg5Png,
       ]),
       date: '22.02.2023',
       text: t('courseLanding.studentsReviews.4'),
@@ -119,9 +109,7 @@ const slides = computed(() => [
   {
     data: {
       picture: collectSrcSet([
-        ReviewPicBigAvif,
-        ReviewPicBigWebp,
-        ReviewPicBigPng,
+        ReviewImg6Png,
       ]),
       date: '22.02.2023',
       text: t('courseLanding.studentsReviews.5'),
@@ -130,9 +118,7 @@ const slides = computed(() => [
   {
     data: {
       picture: collectSrcSet([
-        ReviewPicBigAvif,
-        ReviewPicBigWebp,
-        ReviewPicBigPng,
+        ReviewImg7Png,
       ]),
       date: '22.02.2023',
       text: t('courseLanding.studentsReviews.6'),

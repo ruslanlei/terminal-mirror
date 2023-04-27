@@ -6,6 +6,7 @@
 meta:
   layout: blank
   favicon: /courseFavicon.svg
+  pageName: Course
 </route>
 
 <script setup lang="ts">

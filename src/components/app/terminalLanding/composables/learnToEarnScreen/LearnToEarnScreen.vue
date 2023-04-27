@@ -29,17 +29,25 @@ import LearnToEarnFrames
 import { ILearnToEarnFrame } from '@/components/app/terminalLanding/composables/learnToEarnScreen/learnToEarnFrame';
 
 import Lottie from '@/components/core/lottie/Lottie.vue';
+import { useI18nStore } from '@/stores/i18n';
+import { storeToRefs } from 'pinia';
 import scene1 from './assets/scene1.json?url';
+import scene1Ru from './assets/scene1Ru.json?url';
 import scene2 from './assets/scene2.json?url';
 import scene3 from './assets/scene3.json?url';
 import scene4 from './assets/scene4.json?url';
 
 const { t } = useI18n();
 
+const i18nStore = useI18nStore();
+const {
+  locale,
+} = storeToRefs(i18nStore);
+
 const activeFrameIndex = ref(0);
 
 const activeScene = computed(() => ([
-  scene1,
+  locale.value === 'ru' ? scene1Ru : scene1,
   scene2,
   scene3,
   scene4,

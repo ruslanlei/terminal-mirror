@@ -1,6 +1,5 @@
 <template>
   <ImageBackgroundBlock
-    :src="computedBackground"
     :content-class="$style.ecoSystemCard"
   >
     <template #picture>
@@ -58,8 +57,7 @@ import { computed } from 'vue';
 import { IEcosystemCard } from '@/components/app/ecosystemCap/ecosystemCard';
 import CourseLogo from '@/components/core/courseLogo/CourseLogo.vue';
 import SpaceBackground from '@/components/app/ecosystemCap/spaceBackground/SpaceBackground.vue';
-import BackgroundPurplePng from './assets/spaceBackgroundPurple.png';
-import BackgroundBluePng from './assets/spaceBackgroundBlue.png';
+import { getUrlForRelativePath } from '@/utils/window';
 import { EcosystemCapProps } from './index';
 
 const { t } = useI18n();
@@ -71,21 +69,16 @@ const props = withDefaults(
   },
 );
 
-const computedBackground = computed(() => ({
-  purple: BackgroundPurplePng,
-  blue: BackgroundBluePng,
-}[props.state]));
-
 const terminalCard = computed<IEcosystemCard>(() => ({
   label: t('ecosystem.terminal.label'),
   description: t('ecosystem.terminal.description'),
-  link: 'https://www.youtube.com/',
+  link: getUrlForRelativePath('/about/terminal'),
 }));
 
 const courseCard = computed<IEcosystemCard>(() => ({
   label: t('ecosystem.course.label'),
   description: t('ecosystem.course.description'),
-  link: 'https://www.youtube.com/',
+  link: getUrlForRelativePath('/about/course'),
 }));
 </script>
 

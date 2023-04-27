@@ -13,7 +13,7 @@
         {{ cardData.label }}
       </Typography>
       <Typography
-        :state="['accent1', 'medium']"
+        :state="['accent2', 'medium']"
         size="textLg"
         :class="$style.description"
       >

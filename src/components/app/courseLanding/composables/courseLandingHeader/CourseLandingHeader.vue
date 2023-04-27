@@ -31,7 +31,7 @@
       >
         {{ t('courseLanding.buyCourse') }}
       </Button>
-      <LanguageSelect />
+      <!--      <LanguageSelect />-->
     </div>
   </header>
 </template>

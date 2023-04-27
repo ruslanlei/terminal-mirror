@@ -82,54 +82,38 @@
     />
     <footer :class="$style.footer">
       <Typography
-        v-if="card?.placesAmount"
-        :class="$style.amountOfPlaces"
-        state="accent1"
-      >
-        <i18n-t
-          tag="span"
-          keypath="common.colon"
-        >
-          <template #key>
-            {{ t('planCard.amountOfPlaces') }}
-          </template>
-          <template #value>
-            <Typography
-              is-inline
-              size="h3"
-              state="bold"
-            >
-              {{ card.placesAmount }}
-            </Typography>
-          </template>
-        </i18n-t>
-      </Typography>
-      <Typography
         :state="['accent2']"
         size="massive4"
         :class="$style.price"
       >
-        <i18n-t
-          tag="span"
-          keypath="common.slashWithSpaces"
+        <Typography
+          is-inline
+          :state="['danger3', 'bold']"
         >
-          <template #value1>
-            <Typography
-              is-inline
-              :state="['danger3', 'bold']"
-            >
-              {{ t('common.currencyAmount', { amount: card.price.value, currency: '₽' }) }}
-            </Typography>
-          </template>
-          <template #value2>
-            {{ t('common.currencyAmount', { amount: card.price.withoutSale, currency: '₽' }) }}
-          </template>
-        </i18n-t>
+          {{ t('common.currencyAmount', { amount: card.price, currency: 'USDT' }) }}
+        </Typography>
       </Typography>
+      <Button
+        v-if="card.purchaseButton"
+        size="xl"
+        :state="[
+          (({
+            purple: 'gradientColor',
+            orange: 'orangeGradientColor',
+            blue: 'blueGradientColor'
+          })[state]),
+          'interactive',
+        ]"
+        :class="$style.trialButton"
+        @click="onClickPurchase"
+      >
+        {{ card.purchaseButton }}
+      </Button>
       <Link
+        v-if="card.subscribeLink"
         :state="null"
         :size="null"
-        :to="card?.subscribeLink"
+        :to="card.subscribeLink"
       >
         <Button
           size="xl"
@@ -141,10 +125,10 @@
         </Button>
       </Link>
       <Link
-        v-if="card.hasTrial"
+        v-if="card.trialLink"
         :state="null"
         :size="null"
-        :to="card?.trialLink"
+        :to="card.trialLink"
       >
         <Button
           size="xl"
@@ -179,6 +163,7 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Typography from '@/components/app/typography/Typography.vue';
 import Divider from '@/components/core/divider/Divider.vue';
@@ -186,7 +171,6 @@ import Button from '@/components/core/button/Button.vue';
 import Link from '@/components/core/link/Link.vue';
 import GradientCheckIcon from '@/components/core/gradientCheckIcon/GradientCheckIcon.vue';
 import Badge from '@/components/core/badge/Badge.vue';
-import { computed, resolveComponent } from 'vue';
 import { compose } from '@/utils/fp';
 import { percentFormat } from '@/utils/numberFormat';
 import { toNegative } from '@/utils/number';
@@ -205,6 +189,10 @@ const saleBadgeText = computed(() => (props.card?.salePercents ? compose(
 
 const onSubscribeClick = () => {
   emit('clickSubscribe');
+};
+
+const onClickPurchase = () => {
+  emit('clickPurchase');
 };
 </script>
 

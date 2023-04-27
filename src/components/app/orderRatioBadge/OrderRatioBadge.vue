@@ -3,7 +3,10 @@
     :state="isDanger ? 'danger' : 'background4'"
     :class="$style.orderRatioBadge"
   >
-    <Typography size="title5">
+    <Typography
+      size="title5"
+      :state="['nowrap']"
+    >
       {{ computedRatio }}
     </Typography>
   </Badge>

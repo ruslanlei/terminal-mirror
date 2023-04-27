@@ -391,9 +391,10 @@
         "trainingGroupsForTenPeople": "Training groups for 10 people."
       },
       "list": {
-        "singlePackage": "Single package",
-        "propGroups": "Prop groups",
-        "trainingPackage": "Training package"
+        "singlePackage": {
+          "label": "Single package",
+          "price": "20"
+        }
       }
     },
     "faq": {
@@ -462,7 +463,10 @@
       "cardText": {
         "ourCourse": "Our course will help you gain knowledge about cryptocurrency for Investing and trading on stock exchanges.",
         "inAddition": "In addition to trading, we cover general issues on the operation of wallets, tell you how to store and buy cryptocurrency, and analyze the psychological aspects of trading.",
-        "avoidMistakes": "We know why many lose money and will help to avoid mistakes, like most novice traders.",
+        "avoidMistakes": [
+          "We know why many lose money and will help to",
+          "avoid mistakes, like most novice traders."
+        ],
         "weExplain": "We explain everything complex in simple words using memes, so that the training is interesting and even a beginner can figure it out."
       },
       "signUpForCourse": "Sign up for a course"
@@ -576,23 +580,25 @@
           "chatSupport": "24 / 7 chat support",
           "homework": "Homework and review"
         },
-        "planPlacesQuantity": "Places quan-ty:",
         "buyCourse": "Buy a course",
         "activatePromocode": "Activate promocode"
       },
       "tariff": {
         "basicModules": {
           "heading": "Basic modules",
-          "studyTime": "2 months"
+          "studyTime": "2 months",
+          "price": "300"
         },
         "secretModule": {
           "heading": "Secret 3rd module",
           "studyTime": "1 month",
-          "additionalBenefit": "+ We give advanced tech. analysis"
+          "additionalBenefit": "+ We give advanced tech. analysis",
+          "price": "200"
         },
         "mentoring": {
           "heading": "Teaching",
-          "studyTime": "3 months"
+          "studyTime": "3 months",
+          "price": "500"
         }
       }
     },
@@ -630,17 +636,22 @@
       "isThereGuarantee": {
         "label": "Is there a guarantee that I will earn",
         "text": "Learning to trade is like learning at a business school, we will tell you the rules of the game, how to use the tools, and share the maximum experience. And then it all depends on your abilities and perseverance. As in business, two people can start with the same conditions, but get a completely different result."
-      },
-      "ifYouCanDoEverythingWhyTeach": {
-        "label": "If you can do everything, why teach?",
-        "text": "The best analogy is athletes who have become coaches. They have a lot of experience and knowledge to share. Trading will require intellectual efforts, it has a certain emotional load, so the standard period of a trader's work is about 5-10 years, according to some methods, 2 years. Therefore, like coaches, we can earn money for training. At the same time, there is no competition to how many people we would not transfer knowledge to our earnings on the stock exchange, this will not affect in any way."
       }
     },
     "buyCourseBadge": {
       "heading": "Don't miss your chance to get the knowledge we need today",
       "button": "Buy course"
     },
-    "beginningDate": "Beginning at - {date} Moscow time"
+    "beginningDate": "Beginning at - {date} Moscow time",
+    "studentsReviews": [
+      "Вместе с обучающим терминалом освоил тему где то за три месяца.",
+      "Иду маленькими шагами но стабильно",
+      "Когда первый раз увидел биржу думал никогда не разберусь в этом, но спустя пару месяцев, довольно уверенно себя чувствую, особенно помогает что в курсе хорошо обозначены все ловушки и подводные камни",
+      "Очень помогает методичка, держу под рукой, перечитываю каждый день перед началом работы. Спасибо",
+      "Раньше боялся фьючерсов но теперь применяю, главное делать все с умом",
+      "Захожу в сделки два три раза в месяц, но это даёт дополнительный доход",
+      "Помимо трейдинга в курсе много базовой информации как хранить, как обращаться с криптовалютой. Я теперь например пользуюсь холодным кошельками, зная о возможных проблемах с биржами."
+    ]
   },
   "planCard": {
     "includedLabel": "Included in the package:",
@@ -651,6 +662,7 @@
       "trainingGroupsForTenPeople": "Training groups for 10 people."
     },
     "subscribe": "Subscribe",
+    "buyCourse": "Buy course",
     "tryTrial": "Try a 2 day trial",
     "activatePromoCode": "Activate promo code",
     "amountOfPlaces": "Amount of places"

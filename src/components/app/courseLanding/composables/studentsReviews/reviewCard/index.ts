@@ -1,12 +1,7 @@
 export interface IReviewCard {
-    username: string,
-    userPosition: string,
     date: string,
-    chapters: {
-        label: string,
-        text: string,
-    }[],
     picture: string,
+    text: string,
 }
 
 export interface ReviewCardProps {

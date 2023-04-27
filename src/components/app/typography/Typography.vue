@@ -114,6 +114,10 @@ const computedState = useComputedState(props);
   color: rgb(var(--color-accent-1));
 }
 
+.accent15 {
+  color: rgb(var(--color-accent-15));
+}
+
 .accent2 {
   color: rgb(var(--color-accent-2));
 }

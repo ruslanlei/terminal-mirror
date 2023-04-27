@@ -63,10 +63,10 @@
         </div>
         <Card
           :class="$style.advantageBadgeGradient"
-          state="blueGradient"
+          state="background1"
         >
           <Typography
-            :state="['black', 'medium', 'alignCenter']"
+            :state="['accent1', 'medium', 'alignCenter']"
             size="textLg"
           >
             {{ t('courseLanding.advantagesCard.gainKnowledge') }}

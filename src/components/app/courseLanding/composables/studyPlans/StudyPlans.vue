@@ -13,7 +13,7 @@
         :card="card"
         :state="state"
         :class="$style.card"
-        @click-subscribe="copyDiscordLink"
+        @click-purchase="copyDiscordLink"
       />
     </div>
   </div>
@@ -43,7 +43,6 @@ const cards = computed<{
     id: uuid(),
     state: 'blue',
     card: {
-      salePercents: 10,
       headerText: {
         h1: t('courseLanding.studyPlans.tariff.basicModules.studyTime'),
         text: t('courseLanding.studyPlans.card.studyTimeText'),
@@ -80,10 +79,7 @@ const cards = computed<{
         },
       ],
       placesQuantity: 25,
-      price: {
-        value: 25113,
-        withoutSale: 30990,
-      },
+      price: t('courseLanding.studyPlans.tariff.basicModules.price'),
       purchaseButton: t('courseLanding.studyPlans.card.buyCourse'),
       placesAmount: 25,
     },
@@ -92,7 +88,6 @@ const cards = computed<{
     id: uuid(),
     state: 'orange',
     card: {
-      salePercents: 10,
       headerText: {
         h1: t('courseLanding.studyPlans.tariff.secretModule.studyTime'),
         text: t('courseLanding.studyPlans.card.studyTimeText'),
@@ -133,10 +128,7 @@ const cards = computed<{
         },
       ],
       placesQuantity: 25,
-      price: {
-        value: 19413,
-        withoutSale: 28090,
-      },
+      price: t('courseLanding.studyPlans.tariff.secretModule.price'),
       purchaseButton: t('courseLanding.studyPlans.card.buyCourse'),
       placesAmount: 25,
     },
@@ -145,7 +137,6 @@ const cards = computed<{
     id: uuid(),
     state: 'purple',
     card: {
-      salePercents: 10,
       headerText: {
         h1: t('courseLanding.studyPlans.tariff.mentoring.studyTime'),
         text: t('courseLanding.studyPlans.card.studyTimeText'),
@@ -182,10 +173,7 @@ const cards = computed<{
         },
       ],
       placesQuantity: 25,
-      price: {
-        value: 36882,
-        withoutSale: 42890,
-      },
+      price: t('courseLanding.studyPlans.tariff.mentoring.price'),
       purchaseButton: t('courseLanding.studyPlans.card.buyCourse'),
       placesAmount: 25,
     },

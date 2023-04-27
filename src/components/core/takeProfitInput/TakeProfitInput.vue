@@ -11,6 +11,7 @@
         :min="minPrice"
         :max="maxPrice"
         :hide-arrows="true"
+        @input="onInput"
       />
       <NumberInput
         v-model="percentOfProfitValue"
@@ -22,6 +23,7 @@
         state="alignRight"
         size="xs"
         :hide-arrows="true"
+        @input="onInput"
       />
     </div>
     <div :class="$style.amount">
@@ -38,8 +40,8 @@
         :state="null"
         size="xs"
         :hide-arrows="true"
-        @input="onQuantityInput"
-        @blur="onQuantityInput"
+        @input="onInput"
+        @blur="onInput"
       />
       <NumberInput
         v-model="percentOfQuantity"
@@ -52,8 +54,8 @@
         state="alignRight"
         size="xs"
         :hide-arrows="true"
-        @input="onQuantityInput"
-        @blur="onQuantityInput"
+        @input="onInput"
+        @blur="onInput"
       />
     </div>
   </div>
@@ -88,8 +90,8 @@ const localPrice = useLocalValue<number>(props, emit, 'price');
 
 const localQuantity = useLocalValue<number>(props, emit, 'quantity');
 
-const onQuantityInput = () => {
-  emit('quantityInput');
+const onInput = () => {
+  emit('input');
 };
 
 const minPrice = computed(() => (

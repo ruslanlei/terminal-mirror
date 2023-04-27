@@ -18,7 +18,7 @@ export const ensureOrFallback = curry(
 );
 
 // right to left
-export const isMoreThan = curry((
+export const isMoreThanLeft = curry((
   operand1: number,
   operand2: number,
 ) => operand1 < operand2);
@@ -28,7 +28,7 @@ export const isMoreThanOrEqualTo = curry((
   operand2: number,
 ) => operand1 <= operand2);
 
-export const isLessThan = curry((
+export const isLessThanLeft = curry((
   operand1: number,
   operand2: number,
 ) => operand1 > operand2);

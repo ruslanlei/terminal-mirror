@@ -9,7 +9,7 @@ import {
 import { compose, curry } from '@/utils/fp';
 import { concat, filterNoneUniqueByKey, getLastElement } from '@/utils/array';
 import { multiply, subtractRight } from '@/utils/number';
-import { isMoreThan } from '@/utils/boolean';
+import { isMoreThanLeft } from '@/utils/boolean';
 
 export const transformCandlesForChart = (
   candles: Candle[],
@@ -78,7 +78,7 @@ export const getCandlesWithin24HoursFromLastCandleDate = (
   candles: Candle[],
 ) => (candles?.length
   ? candles.filter((candle: Candle) => compose(
-    isMoreThan(
+    isMoreThanLeft(
       compose(
         toTimestamp,
         subtractDays(1),

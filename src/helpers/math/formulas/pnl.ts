@@ -12,7 +12,7 @@ import {
   filter, reduce,
 } from '@/utils/array';
 import { isOrderOfType } from '@/helpers/orders';
-import { isLessThan, isMoreThanOrEqualTo } from '@/utils/boolean';
+import { isLessThanLeft, isMoreThanOrEqualTo } from '@/utils/boolean';
 
 export const calculatePnl = curry((
   orderPrice: number,
@@ -114,7 +114,7 @@ export const getFailedOrders = (
     filter(
       (order: Order) => (
         compose(
-          isLessThan(0),
+          isLessThanLeft(0),
           calculatePnl,
         )(
           order.price,

@@ -18,7 +18,7 @@ import { roundToDecimalPlaces, subtractRight } from '@/utils/number';
 import { humanizeNumber, percentFormat } from '@/utils/numberFormat';
 import { calculatePercentageOfTotal } from '@/helpers/math/percents';
 import { findMaxByKey, findMinByKey } from '@/utils/array';
-import { isMoreThan } from '@/utils/boolean';
+import { isMoreThanLeft } from '@/utils/boolean';
 
 const { t } = useI18n();
 
@@ -74,7 +74,7 @@ const computedPairStats = computed<IPairStats>(() => [
       value: currentPrice.value,
       appendText: '$',
       valueState:
-        isMoreThan(
+        isMoreThanLeft(
           firstPriceWithinLast24Hours.value || 0,
           currentPrice.value || 0,
         )

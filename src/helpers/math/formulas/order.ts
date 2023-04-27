@@ -11,7 +11,6 @@ import {
   subtractRight,
   toAbsolute,
 } from '@/utils/number';
-import { Maybe } from '@/utils/functors';
 
 export const calculateRisk = curry((
   originalPrice: number,
@@ -65,31 +64,17 @@ export const calculatePledge = curry((
   multiply(orderQuantity),
 )(orderPrice));
 
-// (order volume - pledge - balance) / quantity
+// price * (1 - balance / (price * quantity)
 export const calculateLiquidationPrice = curry(
   (
     price: number,
     quantity: number,
     leverage: number,
     balance: number,
-  ): number => Maybe.of<number>(price)
-    .map(
-      (priceValue) => compose(
-        multiply(leverage),
-        multiply(quantity),
-      )(priceValue),
-    )
-    .map(
-      (priceValue) => subtract(
-        priceValue,
-        calculatePledge(price, quantity, leverage),
-      ),
-    )
-    .map(
-      (priceValue) => subtract(
-        priceValue,
-        balance,
-      ),
-    )
-    .chain((priceValue) => divide(priceValue, quantity)),
+  ): number => compose(
+    multiply(price),
+    subtract(1),
+    divide(balance),
+    multiply(quantity),
+  )(price),
 );

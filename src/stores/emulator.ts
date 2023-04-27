@@ -26,7 +26,7 @@ import { processServerErrors } from '@/api/common';
 import { Pair } from '@/api/types/pair';
 import { useChartDataStore } from '@/stores/chartData';
 import { getBalance } from '@/api/endpoints/profile/getBalance';
-import { isMoreThan } from '@/utils/boolean';
+import { isMoreThanLeft } from '@/utils/boolean';
 import { isExactOrder } from '@/helpers/orders';
 import { useToastStore } from '@/stores/toasts';
 import { AnyFunction } from '@/utils/typescript';
@@ -289,7 +289,7 @@ export const useEmulatorStore = defineStore('emulator', () => {
         }
 
         const isDateBiggerThanExistingData = compose(
-          isMoreThan(
+          isMoreThanLeft(
             toTimestamp(maxDate),
           ),
           toTimestamp,

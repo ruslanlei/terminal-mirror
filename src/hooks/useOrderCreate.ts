@@ -22,12 +22,13 @@ import {
   calculateLiquidationPrice,
   calculatePledge,
 } from '@/helpers/math/formulas/order';
-import { roundToDecimalPlaces } from '@/utils/number';
+import { multiply, roundToDecimalPlaces } from '@/utils/number';
 import { useChartDataStore } from '@/stores/chartData';
 import { TakeProfit } from '@/api/types/order';
 import { arrayOf } from '@/utils/array';
 import { useEmulatorStore } from '@/stores/emulator';
 import { Maybe } from '@/utils/functors';
+import { isLessThanLeft } from '@/utils/boolean';
 
 export interface OrderModel extends CreateOrderDTO {
   leverage: number,
@@ -232,15 +233,18 @@ export const useOrderCreate = () => {
     quantity: number,
     leverage: number,
     balance: number,
-  ) => Maybe
-    .of((!!quantity && (leverage > 1)) || null)
-    .map(() => (
-      compose(
+  ) => {
+    const isLiquidationPriceActive = (
+      isLessThanLeft(multiply(price, quantity), balance) && (leverage > 1)
+    );
+
+    return isLiquidationPriceActive
+      ? compose(
         roundToDecimalPlaces(2),
         calculateLiquidationPrice,
       )(price, quantity, leverage, balance)
-    ))
-    .getOrElse(0);
+      : 0;
+  };
 
   const liquidationPrice = computed(() => (
     calculateLiquidationPriceLocal(

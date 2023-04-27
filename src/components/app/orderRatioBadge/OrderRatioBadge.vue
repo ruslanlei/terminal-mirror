@@ -22,7 +22,7 @@ import {
 } from '@/utils/number';
 import Badge from '@/components/core/badge/Badge.vue';
 import Typography from '@/components/app/typography/Typography.vue';
-import { isMoreThan } from '@/utils/boolean';
+import { isMoreThanLeft } from '@/utils/boolean';
 import { OrderRatioBadgeProps } from './index';
 
 const props = defineProps<OrderRatioBadgeProps>();
@@ -40,7 +40,7 @@ const takeProfitToStopLossRelation = computed(() => {
 });
 
 const isDanger = computed(
-  () => isMoreThan(takeProfitToStopLossRelation.value, 3) && (props.stopLossRisk > 0),
+  () => isMoreThanLeft(takeProfitToStopLossRelation.value, 3) && (props.stopLossRisk > 0),
 );
 
 const computedRatio = computed(() => t('order.ratio', {

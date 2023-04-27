@@ -32,7 +32,7 @@
         :base-currency-step="baseCurrencyStep"
         :base-currency-decimals="baseCurrencyDecimals"
         :order-side="orderSide"
-        @quantity-input="onUpdateTakeProfitQuantity(takeProfitIndex)"
+        @input="onTakeProfitInput(takeProfitIndex)"
       />
     </div>
   </div>
@@ -84,7 +84,7 @@ const fixSumOfTakeProfits = async (borrowFromFirst: boolean) => {
   }
 };
 
-const onUpdateTakeProfitQuantity = (
+const onTakeProfitInput = (
   takeProfitIndex: number,
 ) => {
   const isLast = takeProfitIndex === (localValue.value.length - 1);

@@ -11,5 +11,5 @@ export interface TakeProfitInputProps {
 export interface TakeProfitInputEmits {
   (e: 'update:price', value: number): void,
   (e: 'update:quantity', value: number): void,
-  (e: 'quantityInput'): void,
+  (e: 'input'): void,
 }

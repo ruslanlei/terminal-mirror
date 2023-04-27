@@ -189,8 +189,7 @@ const {
 
 <style lang="scss" module>
 .studentsReviews {
-  height: 1280px;
-  margin-top: 240px;
+  margin-top: 200px;
   position: relative;
   display: flex;
   flex-direction: column;

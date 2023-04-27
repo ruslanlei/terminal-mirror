@@ -137,7 +137,7 @@ const slideNext = () => {
 
 <style lang="scss" module>
 .studentsReviews {
-  height: 1065px;
+  padding: 240px 0 140px 0;
   position: relative;
   display: flex;
   flex-direction: column;

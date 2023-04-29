@@ -27,6 +27,7 @@
     <div :class="$style.reviewCardsWrapper">
       <Slider
         ref="slider"
+        :class="$style.slider"
         :slides="slides"
         :gap="20"
         :slides-per-view="3"
@@ -173,5 +174,9 @@ const slideNext = () => {
 .reviewCardsWrapper {
   width: 100%;
   margin-top: 80px;
+}
+
+.slider {
+  padding: 0 100px;
 }
 </style>

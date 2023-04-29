@@ -29,7 +29,9 @@
         ref="slider"
         :slides="slides"
         :gap="20"
+        :with-padding="true"
         :slides-per-view="3"
+        :class="$style.slider"
       >
         <template #slide="{ slideData }">
           <div :class="$style.cardContainer">
@@ -167,11 +169,14 @@ const slides = computed<{ data: ICourseProgramCard }[]>(() => [
 .courseCardsWrapper {
   width: 100%;
   display: flex;
-  margin-top: 80px;
   gap: 20px;
 }
 
 .cardContainer {
   padding-top: 40px;
+}
+
+.slider {
+  padding: 0 100px;
 }
 </style>

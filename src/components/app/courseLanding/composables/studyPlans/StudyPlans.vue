@@ -79,7 +79,9 @@ const cards = computed<{
         },
       ],
       placesQuantity: 25,
-      price: t('courseLanding.studyPlans.tariff.basicModules.price'),
+      price: {
+        value: t('courseLanding.studyPlans.tariff.basicModules.price'),
+      },
       purchaseButton: t('courseLanding.studyPlans.card.buyCourse'),
       placesAmount: 25,
     },
@@ -128,7 +130,9 @@ const cards = computed<{
         },
       ],
       placesQuantity: 25,
-      price: t('courseLanding.studyPlans.tariff.secretModule.price'),
+      price: {
+        value: t('courseLanding.studyPlans.tariff.secretModule.price'),
+      },
       purchaseButton: t('courseLanding.studyPlans.card.buyCourse'),
       placesAmount: 25,
     },
@@ -173,7 +177,9 @@ const cards = computed<{
         },
       ],
       placesQuantity: 25,
-      price: t('courseLanding.studyPlans.tariff.mentoring.price'),
+      price: {
+        value: t('courseLanding.studyPlans.tariff.mentoring.price'),
+      },
       purchaseButton: t('courseLanding.studyPlans.card.buyCourse'),
       placesAmount: 25,
     },

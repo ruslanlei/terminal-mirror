@@ -13,7 +13,10 @@ export interface LandingPlan {
     label: string,
     active: boolean,
   }[],
-  price: number | string,
+  price: {
+    value: number | string,
+    period?: string,
+  },
   trialLink?: RouteLocationRaw,
   purchaseButton?: string,
   subscribeLink?: RouteLocationRaw,

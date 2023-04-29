@@ -7,13 +7,33 @@
     :is-rows-clickable="true"
     @record-click="onRecordClick"
   >
-    <template #cell(pair)="{ data: { base } }">
+    <template #cell(pair)="{ data: { base }, record }">
       <div :class="$style.pairCell">
         <CoinLogo :coin="base" />
         <span :class="$style.pairName">
           {{ base }}
         </span>
       </div>
+      <Dropdown
+        :placement="'right'"
+        show-by="click"
+      >
+        <template #trigger>
+          info
+        </template>
+        <template #dropdown>
+          <Tooltip style="width: 700px">
+            <Typography
+              size="title7"
+              :state="['semiBold', 'accent1']"
+            >
+              <pre>
+                  {{ JSON.stringify(record.children, null, 2) }}
+              </pre>
+            </Typography>
+          </Tooltip>
+        </template>
+      </Dropdown>
     </template>
 
     <template #cell(type)="{ data: orderDirection }">
@@ -322,6 +342,8 @@ import { useChartDataStore } from '@/stores/chartData';
 import { useLocalValue } from '@/hooks/useLocalValue';
 import { getLength, sort } from '@/utils/array';
 import { isDateBefore } from '@/utils/date';
+import Tooltip from '@/components/core/tooltip/Tooltip.vue';
+import Dropdown from '@/components/core/dropdown/Dropdown.vue';
 import {
   ActiveOrdersTableRecord,
   ClosedOrdersTableRecord,

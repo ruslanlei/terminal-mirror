@@ -43,40 +43,40 @@
       </Typography>
     </template>
     <template #secondaryInfoTop>
-      <Typography
-        size="title7"
-        :state="['accent2', 'medium']"
-      >
-        <i18n-t keypath="statistics.commonResult.commonDepositTopUp">
-          <template #value>
-            <Typography
-              is-inline
-              size="title4"
-              :state="['semiBold', 'success']"
-            >
-              {{ commonTopUp }}
-            </Typography>
-          </template>
-        </i18n-t>
-      </Typography>
+      <!--      <Typography-->
+      <!--        size="title7"-->
+      <!--        :state="['accent2', 'medium']"-->
+      <!--      >-->
+      <!--        <i18n-t keypath="statistics.commonResult.commonDepositTopUp">-->
+      <!--          <template #value>-->
+      <!--            <Typography-->
+      <!--              is-inline-->
+      <!--              size="title4"-->
+      <!--              :state="['semiBold', 'success']"-->
+      <!--            >-->
+      <!--              {{ commonTopUp }}-->
+      <!--            </Typography>-->
+      <!--          </template>-->
+      <!--        </i18n-t>-->
+      <!--      </Typography>-->
     </template>
     <template #secondaryInfoBottom>
-      <Typography
-        size="title7"
-        :state="['accent2', 'medium']"
-      >
-        <i18n-t keypath="statistics.commonResult.currentDeposit">
-          <template #value>
-            <Typography
-              is-inline
-              size="title4"
-              :state="['semiBold', 'accent1']"
-            >
-              {{ displayBalance }}
-            </Typography>
-          </template>
-        </i18n-t>
-      </Typography>
+      <!--      <Typography-->
+      <!--        size="title7"-->
+      <!--        :state="['accent2', 'medium']"-->
+      <!--      >-->
+      <!--        <i18n-t keypath="statistics.commonResult.currentDeposit">-->
+      <!--          <template #value>-->
+      <!--            <Typography-->
+      <!--              is-inline-->
+      <!--              size="title4"-->
+      <!--              :state="['semiBold', 'accent1']"-->
+      <!--            >-->
+      <!--              {{ displayBalance }}-->
+      <!--            </Typography>-->
+      <!--          </template>-->
+      <!--        </i18n-t>-->
+      <!--      </Typography>-->
     </template>
   </StatisticsResultRow>
 </template>

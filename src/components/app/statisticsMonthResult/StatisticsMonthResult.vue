@@ -48,20 +48,20 @@
       </Typography>
     </template>
     <template #secondaryInfoTop>
-      <Typography
-        size="title3"
-        :state="['accent1', 'medium']"
-      >
-        {{ t('common.percents', { value: toPositiveNumberString(10) }) }}
-      </Typography>
+      <!--      <Typography-->
+      <!--        size="title3"-->
+      <!--        :state="['accent1', 'medium']"-->
+      <!--      >-->
+      <!--        {{ t('common.percents', { value: toPositiveNumberString(10) }) }}-->
+      <!--      </Typography>-->
     </template>
     <template #secondaryInfoBottom>
-      <Typography
-        size="title6"
-        :state="['accent2', 'medium']"
-      >
-        {{ t('statistics.toDeposit') }}
-      </Typography>
+      <!--      <Typography-->
+      <!--        size="title6"-->
+      <!--        :state="['accent2', 'medium']"-->
+      <!--      >-->
+      <!--        {{ t('statistics.toDeposit') }}-->
+      <!--      </Typography>-->
     </template>
   </StatisticsResultRow>
 </template>

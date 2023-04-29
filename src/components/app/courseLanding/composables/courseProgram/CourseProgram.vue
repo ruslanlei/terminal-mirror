@@ -170,6 +170,7 @@ const slides = computed<{ data: ICourseProgramCard }[]>(() => [
   width: 100%;
   display: flex;
   gap: 20px;
+  margin-top: 80px;
 }
 
 .cardContainer {

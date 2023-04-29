@@ -40,11 +40,13 @@ import StatisticsSuccessOrders from '@/components/app/statisticsSuccessOrders/St
 import StatisticsFailedOrders
   from '@/components/app/statisticsFailedOrders/StatisticsFailedOrders.vue';
 import StatisticsTurnover from '@/components/app/statisticsTurnover/StatisticsTurnover.vue';
-import { calculateSuccessRate } from '@/helpers/orders';
+import {calculateSuccessRate, isExactOrder} from '@/helpers/orders';
 import { toCssPercentValue } from '@/utils/style';
 import Typography from '@/components/app/typography/Typography.vue';
 import { isMoreThanOrEqualTo } from '@/utils/boolean';
 import { TypographyState } from '@/components/app/typography';
+import { compose } from '@/utils/fp';
+import {filter, getLength} from '@/utils/array';
 
 const { t } = useI18n();
 
@@ -54,7 +56,10 @@ const {
 } = storeToRefs(marketStore);
 
 const commonAmountOfTransactions = computed(() => (
-  closedOrders.value.length
+  compose(
+    getLength,
+    filter(isExactOrder('limit', 'executed')),
+  )(closedOrders.value)
 ));
 
 const successRate = computed(() => (

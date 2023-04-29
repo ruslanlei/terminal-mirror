@@ -18,7 +18,11 @@ import {
   map,
   reduce,
 } from '@/utils/array';
-import { calculateCommonPnlPercent, calculatePnl, getSuccessOrders } from '@/helpers/math/formulas/pnl';
+import {
+  calculateCommonPnl,
+  calculatePnl,
+  getSuccessOrders,
+} from '@/helpers/math/formulas/pnl';
 import { PairsMap } from '@/hooks/usePairs';
 import { getKeyWithBiggestValue } from '@/utils/object';
 import { Maybe } from '@/utils/functors';
@@ -48,9 +52,11 @@ export const getOrdersWithStatus = curry((
 
 export const isExactOrder = curry((
   orderType: Order['order_type'],
-  orderStatus: Order['status'],
+  orderStatus: Order['status'] | Array<Order['status']>,
   order: Order,
-) => order.order_type === orderType && order.status === orderStatus);
+) => order.order_type === orderType && (
+  Array.isArray(orderStatus) ? orderStatus.includes(order.status) : order.status === orderStatus
+));
 
 export const isOrderOfType = curry((
   orderType: Order['order_type'] | Array<Order['order_type']>,
@@ -82,10 +88,10 @@ export const calculateAverageIncome = (
     divideRight(
       getLength(orders),
     ),
-    calculateCommonPnlPercent,
+    calculateCommonPnl,
     filter(
       (order: Order) => (
-        isOrderOfType('limit', order) && (
+        isExactOrder('limit', 'executed', order) && (
           calculatePnl(order.price, order.quantity, order.executed_price) >= 0
         )
       ),
@@ -100,10 +106,10 @@ export const calculateAverageLoss = (
     divideRight(
       getLength(orders),
     ),
-    calculateCommonPnlPercent,
+    calculateCommonPnl,
     filter(
       (order: Order) => (
-        isOrderOfType('limit', order) && (
+        isExactOrder('limit', 'executed', order) && (
           calculatePnl(order.price, order.quantity, order.executed_price) < 0
         )
       ),

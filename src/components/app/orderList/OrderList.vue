@@ -14,27 +14,6 @@
           {{ base }}
         </span>
       </div>
-      <!-- TODO: REMOVE COMMENTED CODE -->
-      <!--      <Dropdown-->
-      <!--        :placement="'right'"-->
-      <!--        show-by="click"-->
-      <!--      >-->
-      <!--        <template #trigger>-->
-      <!--          info-->
-      <!--        </template>-->
-      <!--        <template #dropdown>-->
-      <!--          <Tooltip style="width: 700px">-->
-      <!--            <Typography-->
-      <!--              size="title7"-->
-      <!--              :state="['semiBold', 'accent1']"-->
-      <!--            >-->
-      <!--              <pre>-->
-      <!--                  {{ JSON.stringify(record.children, null, 2) }}-->
-      <!--              </pre>-->
-      <!--            </Typography>-->
-      <!--          </Tooltip>-->
-      <!--        </template>-->
-      <!--      </Dropdown>-->
     </template>
 
     <template #cell(type)="{ data: orderDirection }">
@@ -130,7 +109,7 @@
                 t('common.percents', {
                   value: isPositive
                     ? toPositiveNumberString(pnlPercent)
-                    : pnlPercent
+                    : toNegative(pnlPercent)
                 })
               }}
             </template>
@@ -327,7 +306,7 @@ import { compose } from '@/utils/fp';
 import {
   add, ceil, divide, divideRight,
   isPositive, multiply,
-  roundToDecimalPlaces, subtract,
+  roundToDecimalPlaces, subtract, toNegative,
 } from '@/utils/number';
 import {
   MasterOrder,

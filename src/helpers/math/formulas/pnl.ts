@@ -9,21 +9,55 @@ import { Order } from '@/api/types/order';
 import { isDateWithinCurrentDay, isDateWithinCurrentMonth, isDateWithinCurrentWeek } from '@/utils/date';
 import { Maybe } from '@/utils/functors';
 import {
-  filter, reduce,
+  filter, find, reduce,
 } from '@/utils/array';
-import { isOrderOfType } from '@/helpers/orders';
-import { isLessThanLeft, isMoreThanOrEqualTo } from '@/utils/boolean';
+import { isExactOrder, isOrderOfType } from '@/helpers/orders';
+import { isEqual, isLessThanLeft, isMoreThanOrEqualTo } from '@/utils/boolean';
 
-export const calculatePnl = curry((
+export const calculateCurrentPnl = curry((
   orderPrice: number,
   quantity: number,
-  closePrice: number,
+  currentPrice: number,
 ) => compose(
   subtractRight(
     multiply(orderPrice, quantity),
   ),
   multiply,
-)(quantity, closePrice));
+)(quantity, currentPrice));
+
+export const calculateClosePnl = curry((
+  relatedOrders: Order[],
+) => {
+  const limitOrder = find(isOrderOfType('limit'), relatedOrders);
+
+  if (!limitOrder) throw Error('["calculateClosePnl" function]: limit order not found');
+
+  const executedOrders = filter(
+    isExactOrder(['tp', 'sl'], 'executed'),
+    relatedOrders,
+  );
+
+  const returnedMoney = reduce(
+    (
+      sum: number,
+      order: Order,
+    ) => compose(
+      add(sum),
+      multiply,
+    )(order.price, order.quantity),
+    0,
+    executedOrders,
+  );
+
+  return compose(
+    subtractRight(
+      multiply(
+        limitOrder.price as number,
+        limitOrder.quantity,
+      ),
+    ),
+  )(returnedMoney);
+});
 
 export const calculatePnlPercent = curry((
   orderPrice: number,
@@ -39,31 +73,25 @@ export const calculatePnlPercent = curry((
   )(pnl);
 });
 
-export const calculateCommonPnl = (
+export const calculateCommonClosedPnl = (
   orders: Order[],
-) => (
+) => compose(
   reduce(
-    (commonPnl: number, order: Order) => add(
-      commonPnl,
-      calculatePnl(order.price, order.quantity, order.executed_price),
-    ),
-    0,
-    orders,
-  )
-);
+    (commonPnl: number, order: Order) => {
+      const relatedOrders = filter(
+        (maybeRelatedOrder: Order) => isEqual(maybeRelatedOrder.master, order.id),
+        orders,
+      );
 
-export const calculateCommonPnlPercent = (
-  orders: Order[],
-) => (
-  reduce(
-    (commonPnl: number, order: Order) => add(
-      commonPnl,
-      calculatePnlPercent(order.price, order.quantity, order.executed_price),
-    ),
+      return compose(
+        add(commonPnl),
+        calculateClosePnl,
+      )([order, ...relatedOrders]);
+    },
     0,
-    orders,
-  )
-);
+  ),
+  filter(isOrderOfType('limit')),
+)(orders);
 
 export const calculateCommonPnlForPeriod = curry(
   (
@@ -80,13 +108,11 @@ export const calculateCommonPnlForPeriod = curry(
     return Maybe.of(orders)
       .map((orders: Order[]) => (
         filter(
-          (order: Order) => (
-            dateFilter(order.modified) && isOrderOfType('limit', order)
-          ),
+          (order: Order) => dateFilter(order.modified),
           orders,
         )
       ))
-      .chain(calculateCommonPnl);
+      .chain(calculateCommonClosedPnl);
   },
 );
 
@@ -95,14 +121,17 @@ export const getSuccessOrders = (
 ) => (
   compose(
     filter(
-      (order: Order) => compose(
-        isMoreThanOrEqualTo(0),
-        calculatePnl,
-      )(
-        order.price,
-        order.quantity,
-        order.executed_price,
-      ),
+      (order: Order) => {
+        const relatedOrders = filter(
+          (maybeRelatedOrder: Order) => isEqual(maybeRelatedOrder.master, order.id),
+          orders,
+        );
+
+        return compose(
+          isMoreThanOrEqualTo(0),
+          calculateClosePnl,
+        )([order, ...relatedOrders]);
+      },
     ),
   )(orders)
 );
@@ -112,16 +141,17 @@ export const getFailedOrders = (
 ) => (
   compose(
     filter(
-      (order: Order) => (
-        compose(
+      (order: Order) => {
+        const relatedOrders = filter(
+          (maybeRelatedOrder: Order) => isEqual(maybeRelatedOrder.master, order.id),
+          orders,
+        );
+
+        return compose(
           isLessThanLeft(0),
-          calculatePnl,
-        )(
-          order.price,
-          order.quantity,
-          order.executed_price,
-        )
-      ),
+          calculateClosePnl,
+        )([order, ...relatedOrders]);
+      },
     ),
   )(orders)
 );

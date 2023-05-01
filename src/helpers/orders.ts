@@ -19,28 +19,14 @@ import {
   reduce,
 } from '@/utils/array';
 import {
-  calculateCommonPnl,
-  calculatePnl,
+  calculateClosePnl,
+  calculateCommonClosedPnl,
   getSuccessOrders,
 } from '@/helpers/math/formulas/pnl';
 import { PairsMap } from '@/hooks/usePairs';
 import { getKeyWithBiggestValue } from '@/utils/object';
 import { Maybe } from '@/utils/functors';
-
-export const reduceSubOrderListToCommonPnl = curry((
-  order: Order,
-  subOrders: SubOrder[],
-) => reduce(
-  (commonPnl: number, subOrder: Order) => compose(
-    calculateVolumeDifference(
-      order.quantity,
-      order.price,
-    ),
-    add(commonPnl),
-  )(subOrder.price),
-  0,
-  subOrders,
-));
+import { isEqual } from '@/utils/boolean';
 
 export const getOrdersWithStatus = curry((
   status: OrderStatus,
@@ -51,11 +37,17 @@ export const getOrdersWithStatus = curry((
 ));
 
 export const isExactOrder = curry((
-  orderType: Order['order_type'],
+  orderType: Order['order_type'] | Array<Order['order_type']>,
   orderStatus: Order['status'] | Array<Order['status']>,
   order: Order,
-) => order.order_type === orderType && (
-  Array.isArray(orderStatus) ? orderStatus.includes(order.status) : order.status === orderStatus
+) => (
+  Array.isArray(orderType)
+    ? orderType.includes(order.order_type)
+    : order.order_type === orderType
+) && (
+  Array.isArray(orderStatus)
+    ? orderStatus.includes(order.status)
+    : order.status === orderStatus
 ));
 
 export const isOrderOfType = curry((
@@ -67,15 +59,22 @@ export const isOrderOfType = curry((
     : order.order_type === orderType
 ));
 
+export const isOrderOfStatus = curry((
+  orderStatus: Order['status'] | Array<Order['status']>,
+  order: Order,
+) => (
+  isArray(orderStatus)
+    ? orderStatus.includes(order.status)
+    : order.status === orderStatus
+));
+
 export const filterOrdersByType = curry(
   (
     type: Order['order_type'],
     orders: Order[],
   ) => (
     filter(
-      (order: Order) => (
-        isOrderOfType(type, order)
-      ),
+      (order: Order) => isOrderOfType(type, order),
       orders,
     )
   ),
@@ -88,13 +87,18 @@ export const calculateAverageIncome = (
     divideRight(
       getLength(orders),
     ),
-    calculateCommonPnl,
+    calculateCommonClosedPnl,
     filter(
-      (order: Order) => (
-        isExactOrder('limit', 'executed', order) && (
-          calculatePnl(order.price, order.quantity, order.executed_price) >= 0
-        )
-      ),
+      (order: Order) => {
+        const relatedOrders = filter(
+          (maybeRelatedOrder: Order) => isEqual(maybeRelatedOrder.master, order.id),
+          orders,
+        );
+
+        return isOrderOfStatus('executed', order) && (
+          calculateClosePnl([order, ...relatedOrders]) >= 0
+        );
+      },
     ),
   )(orders)
 );
@@ -106,33 +110,39 @@ export const calculateAverageLoss = (
     divideRight(
       getLength(orders),
     ),
-    calculateCommonPnl,
+    calculateCommonClosedPnl,
     filter(
-      (order: Order) => (
-        isExactOrder('limit', 'executed', order) && (
-          calculatePnl(order.price, order.quantity, order.executed_price) < 0
-        )
-      ),
+      (order: Order) => {
+        const relatedOrders = filter(
+          (maybeRelatedOrder: Order) => isEqual(maybeRelatedOrder.master, order.id),
+          orders,
+        );
+
+        return isOrderOfStatus('executed', order) && (
+          calculateClosePnl([order, ...relatedOrders]) < 0
+        );
+      },
     ),
   )(orders)
 );
 
-export const findMostFrequentCoin = curry(
-  (
-    pairsMap: PairsMap,
-    orders: Order[],
-  ) => (
-    compose(
-      getKeyWithBiggestValue,
-      countBy('base'),
-      map(
-        (order: Order) => (
-          pairsMap[order.pair]
+export const
+  findMostFrequentCoin = curry(
+    (
+      pairsMap: PairsMap,
+      orders: Order[],
+    ) => (
+      compose(
+        getKeyWithBiggestValue,
+        countBy('base'),
+        map(
+          (order: Order) => (
+            pairsMap[order.pair]
+          ),
         ),
-      ),
-    )(orders)
-  ),
-);
+      )(orders)
+    ),
+  );
 
 export const calculateSuccessRate = (
   orders: Order[],

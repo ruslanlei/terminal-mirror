@@ -9,7 +9,9 @@ import { Order } from '@/api/types/order';
 import { isDateWithinCurrentDay, isDateWithinCurrentMonth, isDateWithinCurrentWeek } from '@/utils/date';
 import { Maybe } from '@/utils/functors';
 import {
-  filter, find, reduce,
+  filter,
+  find,
+  reduce,
 } from '@/utils/array';
 import { isExactOrder, isOrderOfType } from '@/helpers/orders';
 import { isEqual, isLessThanLeft, isMoreThanOrEqualTo } from '@/utils/boolean';
@@ -133,6 +135,7 @@ export const getSuccessOrders = (
         )([order, ...relatedOrders]);
       },
     ),
+    filter(isOrderOfType('limit')),
   )(orders)
 );
 

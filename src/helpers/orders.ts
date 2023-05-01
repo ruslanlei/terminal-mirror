@@ -2,10 +2,8 @@ import {
   compose,
   curry,
 } from '@/utils/fp';
-import { Order, OrderStatus, SubOrder } from '@/api/types/order';
-import { calculateVolumeDifference } from '@/helpers/math/formulas/order';
+import { Order, OrderStatus } from '@/api/types/order';
 import {
-  add,
   divideRight,
   multiply,
   roundToDecimalPlaces,
@@ -16,7 +14,6 @@ import {
   getLength,
   isArray,
   map,
-  reduce,
 } from '@/utils/array';
 import {
   calculateClosePnl,
@@ -100,6 +97,7 @@ export const calculateAverageIncome = (
         );
       },
     ),
+    filter(isOrderOfType('limit')),
   )(orders)
 );
 
@@ -123,6 +121,7 @@ export const calculateAverageLoss = (
         );
       },
     ),
+    filter(isOrderOfType('limit')),
   )(orders)
 );
 
@@ -147,18 +146,21 @@ export const
 export const calculateSuccessRate = (
   orders: Order[],
 ): number => Maybe.of(orders)
-  .map(compose(
-    getLength,
-    getSuccessOrders,
-    filterOrdersByType('limit'),
-  ))
-  .chain(compose(
-    roundToDecimalPlaces(2),
-    multiply(100),
-    divideRight(
-      compose(
-        getLength,
-        filterOrdersByType('limit'),
-      )(orders),
+  .map(
+    compose(
+      getLength,
+      getSuccessOrders,
     ),
-  ));
+  )
+  .chain(
+    compose(
+      roundToDecimalPlaces(2),
+      multiply(100),
+      divideRight(
+        compose(
+          getLength,
+          filterOrdersByType('limit'),
+        )(orders),
+      ),
+    ),
+  );

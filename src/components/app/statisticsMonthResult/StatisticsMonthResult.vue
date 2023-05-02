@@ -3,8 +3,8 @@
     <template #prepend>
       <Avatar
         size="sm"
-        state="danger"
         :label="t('dateTime.unit.month')"
+        :state="isPositive(commonPnl) ? 'success' : 'danger'"
       />
     </template>
     <template #primaryInfoTop>
@@ -77,8 +77,7 @@ import { customFormatDate, dateNow } from '@/utils/date';
 import { useMarketStore } from '@/stores/market';
 import { calculateCommonPnlForPeriod } from '@/helpers/math/formulas/pnl';
 import { compose } from '@/utils/fp';
-import { roundToDecimalPlaces } from '@/utils/number';
-import { toPositiveNumberString } from '@/utils/style';
+import { isPositive, roundToDecimalPlaces } from '@/utils/number';
 
 const { t } = useI18n();
 

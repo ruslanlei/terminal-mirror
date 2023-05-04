@@ -61,7 +61,9 @@ export const useTable = (
       localSelectedRecords.value.push(id);
     }
   };
+
   const onCellClick = (
+    event: Event,
     tableColumn: TableColumn,
     tableRecord: InnerTableRecord,
     toggleChildren?: () => void,
@@ -69,7 +71,9 @@ export const useTable = (
     if (tableColumn.isSelect) {
       toggleRecordSelect(tableRecord.id);
     }
-    if (!tableColumn.isClickable) {
+    if (tableColumn.isClickable) {
+      event.stopPropagation();
+    } else {
       toggleChildren?.();
     }
   };

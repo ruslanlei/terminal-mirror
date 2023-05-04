@@ -16,21 +16,20 @@ import {
   toAbsolute,
 } from '@/utils/number';
 import { calculatePercentageOfTotal } from '@/helpers/math/percents';
-import { calculatePnl, calculatePnlPercent } from '@/helpers/math/formulas/pnl';
+import { calculateClosePnl, calculateCommonClosedPnl, calculatePnlPercent } from '@/helpers/math/formulas/pnl';
 import { calculateCommonTakeProfitPercent } from '@/helpers/math/formulas/takeProfit';
 import { humanizeDate } from '@/utils/date';
 import { ActiveOrdersTableRecord, ClosedOrdersTableRecord } from 'src/components/app/orderList';
 import { SubOrderTableItem } from 'src/components/app/orderList/subOrderList';
 import { collectTableRecord } from '@/components/core/table/helpers';
-import { getOrdersWithStatus, reduceSubOrderListToCommonPnl } from '@/helpers/orders';
 import { TableRowState } from '@/components/core/table/tableRow';
 
 interface CollectRecordPayload {
   pairData: Pair,
   pairPrice: number | null,
   order: MasterOrder,
-  takeProfits: TakeProfit[] | undefined,
-  stopLoss: StopLoss | undefined,
+  takeProfits?: TakeProfit[],
+  stopLoss?: StopLoss,
 }
 
 const commonDataMixin = (
@@ -78,13 +77,14 @@ const closedOrderPricesMixin = (
 
 const closedOrderResultsMixin = (
   {
-    order, pairData, takeProfits, stopLoss,
+    order,
+    pairData,
+    takeProfits,
+    stopLoss,
   }: CollectRecordPayload,
 ) => {
-  const rawPnl = compose(
-    reduceSubOrderListToCommonPnl(order),
-    getOrdersWithStatus('executed'),
-  )([
+  const rawPnl = calculateCommonClosedPnl([
+    order,
     ...(takeProfits || []),
     ...(stopLoss ? [stopLoss] : []),
   ]);
@@ -125,6 +125,8 @@ const pnlMixin = (
     order,
     pairData,
     pairPrice,
+    takeProfits,
+    stopLoss,
   }: CollectRecordPayload,
 ) => ({
   pnl: {
@@ -133,10 +135,11 @@ const pnlMixin = (
       ? {
         value: compose(
           roundToDecimalPlaces(2),
-          calculatePnl(
-            order.price,
-            order.position,
-          ),
+          calculateClosePnl([
+            order,
+            ...(takeProfits || []),
+            ...(stopLoss ? [stopLoss] : []),
+          ]),
         )(pairPrice),
       }
       : {

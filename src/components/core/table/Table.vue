@@ -78,7 +78,7 @@
                       $style.recordColumn,
                       $style[column.align],
                     ]"
-                    @click="onCellClick(column, record, toggleChildren)"
+                    @click="onCellClick($event, column, record, toggleChildren)"
                   >
                     <slot
                       :name="`cell(${column.slug})`"

@@ -90,7 +90,14 @@
           is-inline
           :state="['danger3', 'bold']"
         >
-          {{ t('common.currencyAmount', { amount: card.price, currency: 'USDT' }) }}
+          {{ t('common.currencyAmount', { amount: card.price.value, currency: 'USDT' }) }}
+        </Typography>
+        <Typography
+          v-if="card.price.period"
+          is-inline
+          :state="['semiBold']"
+        >
+          {{ ` / ${card.price.period}` }}
         </Typography>
       </Typography>
       <Button

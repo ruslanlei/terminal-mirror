@@ -73,7 +73,6 @@ const successOrdersAmount = computed(() => (
   compose(
     getLength,
     getSuccessOrders,
-    filterOrdersByType('limit'),
   )(closedOrders.value)
 ));
 
@@ -88,7 +87,6 @@ const mostFrequentCoin = computed(() => (
   compose(
     findMostFrequentCoin(marketStore.pairsMap),
     getSuccessOrders,
-    filterOrdersByType('limit'),
   )(closedOrders.value)
 ));
 </script>

@@ -3,7 +3,7 @@
     <template #prepend>
       <Avatar
         size="sm"
-        state="success"
+        :state="isPositive(commonPnl) ? 'success' : 'danger'"
       >
         <Icon
           :size="20"
@@ -43,40 +43,40 @@
       </Typography>
     </template>
     <template #secondaryInfoTop>
-      <Typography
-        size="title7"
-        :state="['accent2', 'medium']"
-      >
-        <i18n-t keypath="statistics.commonResult.commonDepositTopUp">
-          <template #value>
-            <Typography
-              is-inline
-              size="title4"
-              :state="['semiBold', 'success']"
-            >
-              {{ commonTopUp }}
-            </Typography>
-          </template>
-        </i18n-t>
-      </Typography>
+      <!--      <Typography-->
+      <!--        size="title7"-->
+      <!--        :state="['accent2', 'medium']"-->
+      <!--      >-->
+      <!--        <i18n-t keypath="statistics.commonResult.commonDepositTopUp">-->
+      <!--          <template #value>-->
+      <!--            <Typography-->
+      <!--              is-inline-->
+      <!--              size="title4"-->
+      <!--              :state="['semiBold', 'success']"-->
+      <!--            >-->
+      <!--              {{ commonTopUp }}-->
+      <!--            </Typography>-->
+      <!--          </template>-->
+      <!--        </i18n-t>-->
+      <!--      </Typography>-->
     </template>
     <template #secondaryInfoBottom>
-      <Typography
-        size="title7"
-        :state="['accent2', 'medium']"
-      >
-        <i18n-t keypath="statistics.commonResult.currentDeposit">
-          <template #value>
-            <Typography
-              is-inline
-              size="title4"
-              :state="['semiBold', 'accent1']"
-            >
-              {{ displayBalance }}
-            </Typography>
-          </template>
-        </i18n-t>
-      </Typography>
+      <!--      <Typography-->
+      <!--        size="title7"-->
+      <!--        :state="['accent2', 'medium']"-->
+      <!--      >-->
+      <!--        <i18n-t keypath="statistics.commonResult.currentDeposit">-->
+      <!--          <template #value>-->
+      <!--            <Typography-->
+      <!--              is-inline-->
+      <!--              size="title4"-->
+      <!--              :state="['semiBold', 'accent1']"-->
+      <!--            >-->
+      <!--              {{ displayBalance }}-->
+      <!--            </Typography>-->
+      <!--          </template>-->
+      <!--        </i18n-t>-->
+      <!--      </Typography>-->
     </template>
   </StatisticsResultRow>
 </template>
@@ -89,7 +89,7 @@ import StatisticsResultRow from '@/containers/statisticsResultRow/StatisticsResu
 import Avatar from '@/components/core/avatar/Avatar.vue';
 import Typography from '@/components/app/typography/Typography.vue';
 import Icon from '@/components/core/icon/Icon.vue';
-import { roundToDecimalPlaces } from '@/utils/number';
+import { isPositive, roundToDecimalPlaces } from '@/utils/number';
 import { useEmulatorStore } from '@/stores/emulator';
 import { calculateCommonPnlForPeriod } from '@/helpers/math/formulas/pnl';
 import { useMarketStore } from '@/stores/market';

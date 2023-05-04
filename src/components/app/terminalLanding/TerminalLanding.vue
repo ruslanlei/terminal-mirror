@@ -40,7 +40,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import WelcomeScreen
   from '@/components/app/terminalLanding/composables/welcomeScreen/WelcomeScreen.vue';
@@ -57,7 +57,6 @@ import Plans from '@/components/app/terminalLanding/composables/plans/Plans.vue'
 import Faq from '@/components/app/terminalLanding/composables/faq/Faq.vue';
 import LandingFooter from '@/components/app/terminalLanding/composables/landingFooter/LandingFooter.vue';
 import { useLandingAnchor } from '@/hooks/useLandingAnchor';
-import { CourseLandingChapter } from '@/components/app/courseLanding';
 import { useScroll } from '@vueuse/core';
 import { TerminalLandingChapter } from './index';
 

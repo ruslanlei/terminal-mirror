@@ -6,6 +6,7 @@ import {
   AppLocale,
   checkIfLanguageIsAvailable,
 } from '@/i18n';
+import { useRouter } from 'vue-router';
 import { getUserLanguage } from '@/utils/navigator';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
@@ -25,11 +26,25 @@ const getAppLanguage = () => {
 };
 
 export const useI18nStore = defineStore('i18n', () => {
+  const router = useRouter();
+
   const locale = useStorage<AppLocale>('locale', getAppLanguage());
+  const setLocaleToLibs = (locale: AppLocale) => {
+    i18n.global.locale.value = locale;
+    dayjs.locale(locale);
+  };
+
   watch(locale, () => {
-    i18n.global.locale.value = locale.value;
-    dayjs.locale(locale.value);
+    setLocaleToLibs(locale.value);
   }, { immediate: true });
+
+  router.beforeEach((to, from, next) => {
+    const forceLocale = to.meta.forceLocale as AppLocale;
+
+    setLocaleToLibs(forceLocale || locale.value);
+
+    next();
+  });
 
   const locales = computed<LocaleOption[]>(() => [
     {

@@ -63,6 +63,13 @@
           </template>
         </i18n-t>
       </Typography>
+      <Typography
+        v-else
+        size="title3"
+        :state="['accent2', 'bold']"
+      >
+        {{ t('order.status.canceled') }}
+      </Typography>
     </template>
     <template #cell(date)="{ data: date }">
       <div :class="$style.date">

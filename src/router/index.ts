@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import { checkAuth, useSessionStore } from '@/stores/session';
 import { DEFAULT_FAVICON_PATH } from '@/enums/favicon';
 import { setFavicon } from '@/utils/dom';
 import routes from '~pages';
@@ -10,21 +9,9 @@ export const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const sessionStore = useSessionStore();
-
-  const { guestRequired, authRequired, favicon } = to.meta;
+  const { favicon } = to.meta;
 
   setFavicon((favicon as string) || DEFAULT_FAVICON_PATH);
 
-  const { result, redirect } = checkAuth(
-    sessionStore.isAuthorized,
-    guestRequired,
-    authRequired,
-  );
-
-  if (!result && redirect) {
-    next(redirect);
-    return;
-  }
   next();
 });

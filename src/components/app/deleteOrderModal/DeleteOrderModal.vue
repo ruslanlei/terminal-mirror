@@ -72,7 +72,7 @@ import Typography from '@/components/app/typography/Typography.vue';
 import Button from '@/components/core/button/Button.vue';
 import { Order, TakeProfit } from '@/api/types/order';
 import { reduceTakeProfitsToQuantitiesSum } from '@/helpers/math/formulas/takeProfit';
-import { calculatePnl } from '@/helpers/math/formulas/pnl';
+import { calculateCurrentPnl } from '@/helpers/math/formulas/pnl';
 import { isPositive, subtractRight } from '@/utils/number';
 import { useMarketStore } from '@/stores/market';
 import { useEmulatorStore } from '@/stores/emulator';
@@ -132,7 +132,7 @@ const pnl = computed(() => {
     props.order.quantity,
   );
 
-  return calculatePnl(
+  return calculateCurrentPnl(
     props.order.price,
     quantity,
     chartDataStore.currentPrice || 0,

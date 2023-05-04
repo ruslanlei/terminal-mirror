@@ -150,7 +150,6 @@ const cardsRightColumn = computed(() => [
 <style lang="scss" module>
 .courseAdvantagesCard {
   padding-top: 240px;
-  height: 1448px;
   position: relative;
   display: flex;
   justify-content: center;
@@ -164,6 +163,7 @@ const cardsRightColumn = computed(() => [
   align-items: center;
   justify-content: center;
   max-width: 1660px;
+  padding: 140px 0;
   position: relative;
 }
 

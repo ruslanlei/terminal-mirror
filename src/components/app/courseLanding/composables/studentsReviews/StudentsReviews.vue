@@ -27,6 +27,7 @@
     <div :class="$style.reviewCardsWrapper">
       <Slider
         ref="slider"
+        :class="$style.slider"
         :slides="slides"
         :gap="20"
         :slides-per-view="3"
@@ -137,7 +138,7 @@ const slideNext = () => {
 
 <style lang="scss" module>
 .studentsReviews {
-  height: 1065px;
+  padding: 240px 0 140px 0;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -173,5 +174,9 @@ const slideNext = () => {
 .reviewCardsWrapper {
   width: 100%;
   margin-top: 80px;
+}
+
+.slider {
+  padding: 0 100px;
 }
 </style>

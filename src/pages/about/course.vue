@@ -6,6 +6,8 @@
 meta:
   layout: blank
   favicon: /courseFavicon.svg
+  pageName: Course
+  forceLocale: ru
 </route>
 
 <script setup lang="ts">

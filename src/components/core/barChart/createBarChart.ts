@@ -122,7 +122,7 @@ const createBars = ({
     value: number,
   ) => (
     /* leave space for label */
-    subtractRight(20, yScale(value))
+    subtractRight(20, yScale(toAbsolute(value)))
   );
 
   const bars = svgContainer

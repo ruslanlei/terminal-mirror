@@ -46,10 +46,10 @@ const cards = computed<{
           label: t('terminalLanding.plans.benefits.accessToEmulator'),
           active: true,
         },
-        {
-          label: t('terminalLanding.plans.benefits.accessToRealMarket'),
-          active: true,
-        },
+        // {
+        //   label: t('terminalLanding.plans.benefits.accessToRealMarket'),
+        //   active: true,
+        // },
         {
           label: t('terminalLanding.plans.benefits.propGroups'),
           active: false,
@@ -59,7 +59,10 @@ const cards = computed<{
           active: false,
         },
       ],
-      price: t('terminalLanding.plans.list.singlePackage.price'),
+      price: {
+        value: t('terminalLanding.plans.list.singlePackage.price'),
+        period: 'Month',
+      },
       subscribeLink: { name: 'auth-sign-up' },
       trialLink: { name: 'auth-sign-up' },
     },

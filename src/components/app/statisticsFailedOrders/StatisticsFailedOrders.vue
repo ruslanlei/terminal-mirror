@@ -54,7 +54,7 @@ import { useI18n } from 'vue-i18n';
 import Typography from '@/components/app/typography/Typography.vue';
 import CoinLogo from '@/components/core/coinLogo/CoinLogo.vue';
 import { computed } from 'vue';
-import { compose } from '@/utils/fp';
+import { compose, log } from '@/utils/fp';
 import { roundToDecimalPlaces } from '@/utils/number';
 import { calculateAverageLoss, filterOrdersByType, findMostFrequentCoin } from '@/helpers/orders';
 import { useMarketStore } from '@/stores/market';

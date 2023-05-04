@@ -7,7 +7,7 @@
     :is-rows-clickable="true"
     @record-click="onRecordClick"
   >
-    <template #cell(pair)="{ data: { base } }">
+    <template #cell(pair)="{ data: { base }, record }">
       <div :class="$style.pairCell">
         <CoinLogo :coin="base" />
         <span :class="$style.pairName">
@@ -109,7 +109,7 @@
                 t('common.percents', {
                   value: isPositive
                     ? toPositiveNumberString(pnlPercent)
-                    : pnlPercent
+                    : toNegative(pnlPercent)
                 })
               }}
             </template>
@@ -306,7 +306,7 @@ import { compose } from '@/utils/fp';
 import {
   add, ceil, divide, divideRight,
   isPositive, multiply,
-  roundToDecimalPlaces, subtract,
+  roundToDecimalPlaces, subtract, toNegative,
 } from '@/utils/number';
 import {
   MasterOrder,
@@ -322,6 +322,8 @@ import { useChartDataStore } from '@/stores/chartData';
 import { useLocalValue } from '@/hooks/useLocalValue';
 import { getLength, sort } from '@/utils/array';
 import { isDateBefore } from '@/utils/date';
+import Tooltip from '@/components/core/tooltip/Tooltip.vue';
+import Dropdown from '@/components/core/dropdown/Dropdown.vue';
 import {
   ActiveOrdersTableRecord,
   ClosedOrdersTableRecord,

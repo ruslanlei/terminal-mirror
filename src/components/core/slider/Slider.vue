@@ -3,7 +3,6 @@
     :class="$style.slider"
     :slides-per-view="slidesPerView"
     :space-between="gap"
-    :centered-slides="true"
     @swiper="setSwiper"
   >
     <SwiperSlide

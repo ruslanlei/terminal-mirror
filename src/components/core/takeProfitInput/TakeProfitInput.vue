@@ -6,6 +6,7 @@
         type="number"
         :class="$style.input"
         :state="null"
+        save-on="blur"
         size="xs"
         :step="0.01"
         :min="minPrice"
@@ -16,6 +17,7 @@
       <NumberInput
         v-model="percentOfProfitValue"
         type="number"
+        save-on="blur"
         :step="0.01"
         :min="0"
         :max="100"

@@ -133,3 +133,21 @@ export const useSessionStore = defineStore('session', () => {
     passwordResetConfirm,
   };
 });
+
+router.beforeEach((to, from, next) => {
+  const sessionStore = useSessionStore();
+
+  const { guestRequired, authRequired } = to.meta;
+
+  const { result, redirect } = checkAuth(
+    sessionStore.isAuthorized,
+    guestRequired,
+    authRequired,
+  );
+
+  if (!result && redirect) {
+    next(redirect);
+    return;
+  }
+  next();
+});

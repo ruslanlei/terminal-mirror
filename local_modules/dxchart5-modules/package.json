@@ -1,0 +1,66 @@
+{
+  "name": "@dx-private/dxchart5-modules",
+  "version": "5.2.0",
+  "description": "DXChart5 chart modules to extends the basic functionality of DXChart5 Light",
+  "scripts": {
+    "//<----dev server---->": "dev server",
+    "watch": "tsc --watch --outDir dist",
+    "dev": "webpack serve --config webpack.dev.config.js",
+    "//<----dev builds---->": "dev builds",
+    "build": "yarn clean_dist && yarn build:standalone && yarn build:lib && yarn add_disclaimer",
+    "build:lib": "tsc --outDir dist",
+    "build:standalone": "webpack",
+    "//<----prod builds---->": "production builds (no source maps)",
+    "build:production": "yarn clean_dist && yarn build:lib:production && yarn build:standalone:production",
+    "build:lib:production": "yarn build:lib && yarn obfuscate:lib && yarn add_disclaimer",
+    "build:standalone:production": "webpack --env MODE=production",
+    "build:trial-standalone:production": "webpack --env MODE=production && yarn obfuscate:lib ${0} && yarn add_disclaimer",
+    "build:trial-lib:production": "yarn clean_dist && yarn build:lib && yarn obfuscate:lib ${0} && yarn add_disclaimer",
+    "//<----dxcity builds---->": "build will run on dxcity CI when trying to merge PR builds",
+    "build:shadow_merge": "yarn test && yarn build",
+    "//<----post process---->": "post-processign scripts",
+    "obfuscate:lib": "yarn ts-node --project ./tsconfig.node.json ../scripts/obfuscate-lib.ts",
+    "add_disclaimer": "yarn ts-node --project ./tsconfig.node.json ../scripts/add-disclaimer.ts",
+    "test": "yarn test:lint && jest",
+    "clean_dist": "rimraf ./dist",
+    "clean": "yarn clean_dist && rimraf ./node_modules",
+    "test:lint": "eslint \"./modules/**/*.ts\" \"./modules/**/*.js\" --no-error-on-unmatched-pattern",
+    "test:lint:fix": "prettier --write ./modules/**/*.ts && eslint --fix \"./modules/**/*.ts\" \"./modules/**/*.js\" --no-error-on-unmatched-pattern"
+  },
+  "author": "devexperts",
+  "license": "UNLICENSED",
+  "files": [
+    "dist/*"
+  ],
+  "devDependencies": {
+    "@types/color": "^3.0.1",
+    "@types/jest": "^24.9.0",
+    "@typescript-eslint/parser": "^5.45.0",
+    "esbuild-jest": "^0.5.0",
+    "esbuild-loader": "^2.21.0",
+    "eslint": "^8.28.0",
+    "eslint-plugin-node": "^11.1.0",
+    "fork-ts-checker-webpack-plugin": "^6.2.10",
+    "javascript-obfuscator": "^4.0.0",
+    "jest": "^24.9.0",
+    "prettier": "^2.8.0",
+    "rimraf": "^3.0.0",
+    "rxjs": "^7.5.7",
+    "ts-jest": "^24.1.0",
+    "ts-node": "^10.8.0",
+    "typescript": "^4.8.4",
+    "webpack": "^5.28.0",
+    "webpack-cli": "^4.6.0",
+    "webpack-obfuscator": "^3.5.1"
+  },
+  "dependencies": {
+    "color": "^3.1.2"
+  },
+  "peerDependencies": {
+    "date-fns": "^2.23.0",
+    "rxjs": "^7.5.7"
+  },
+  "publishConfig": {
+    "registry": "https://nexus.in.devexperts.com/repository/npm-dx-private/"
+  }
+}

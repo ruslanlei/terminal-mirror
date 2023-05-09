@@ -1,8 +1,5 @@
 <template>
-  <div
-    ref="chartContainer"
-    :class="$style.container"
-  />
+  <div ref="chartContainer" />
 </template>
 
 <script setup lang="ts">
@@ -129,52 +126,3 @@ onBeforeUnmount(() => {
   }
 });
 </script>
-
-<style lang="scss" module>
-.chart {
-  position: relative;
-  transition: 300ms opacity;
-  &.isLoading {
-    opacity: 0.1;
-    pointer-events: none;
-  }
-}
-
-.container {
-  height: 100%;
-  width: 100%;
-}
-
-.loaderCap {
-  position: absolute;
-  z-index: 2;
-  inset: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(var(--color-background-1), 0.9);
-  border-radius: 10px;
-}
-
-.noDataBadgeContainer {
-  position: absolute;
-  inset: 0;
-}
-
-.noDataBadge {
-  position: absolute;
-  inset: -5px;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(var(--color-background-2), 0.9);
-  border-radius: 10px;
-  z-index: 2;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-</style>
-
-<style lang="scss">
-@import "@/assets/styles/transitions.scss";
-</style>

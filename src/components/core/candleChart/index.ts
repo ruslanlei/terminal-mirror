@@ -9,7 +9,7 @@ export type ChartCandle = [
 ]
 
 export interface CandleChartProps {
-  engine: 'tradingView' /* | 'dxCharts' */
+  engine: 'tradingView' | 'dxChart'
   isLoading: boolean,
   dateFrom: string,
   dateTo: string,

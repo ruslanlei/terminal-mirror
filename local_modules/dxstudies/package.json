@@ -1,0 +1,23 @@
+{
+  "name": "@dx-private/dxstudies",
+  "version": "46.0.0",
+  "description": "A library of indicator calculators for an array of candles",
+  "files": [
+    "dxstudies.js"
+  ],
+  "dependencies": {
+    "kotlin": "1.3.31"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://stash.in.devexperts.com/scm/ria/dxstudies.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "publishConfig": {
+    "registry": "https://nexus.in.devexperts.com/repository/npm-dx-private/"
+  }
+}

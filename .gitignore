@@ -1,7 +1,7 @@
 node_modules
 .DS_Store
 dist
-!local_moduels/dxchart5-light/dist
+!local_modules/dxchart5-light/dist
 dist-ssr
 *.local
 

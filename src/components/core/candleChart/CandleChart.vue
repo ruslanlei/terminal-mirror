@@ -4,6 +4,7 @@
       v-model:date-from="localDateFrom"
       v-model:date-to="localDateTo"
       :candles="computedCandles"
+      :class="$style.container"
     />
     <div
       v-if="!candles?.length"
@@ -36,11 +37,16 @@ const TradingView = defineAsyncComponent(() => (
   import('@/components/core/candleChart/engines/tradingView/TradingView.vue')
 ));
 
+const DxChart = defineAsyncComponent(() => (
+  import('@/components/core/candleChart/engines/dxChart/DxChart.vue')
+));
+
 const props = defineProps<CandleChartProps>();
 const emit = defineEmits<CandleChartEmits>();
 
 const ChartEngine = computed(() => ({
   tradingView: TradingView,
+  dxChart: DxChart,
 }[props.engine]));
 
 const transformChartCandlesToTradingViewCandles = (
@@ -57,6 +63,7 @@ const transformChartCandlesToTradingViewCandles = (
 
 const candleTransformFunction = computed(() => ({
   tradingView: transformChartCandlesToTradingViewCandles,
+  dxChart: (candles: any[]) => candles,
 }[props.engine]));
 
 const computedCandles = computed(() => (

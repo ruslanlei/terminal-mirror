@@ -1,0 +1,46 @@
+{
+  "name": "@dx-private/schedule-parser",
+  "version": "0.0.8",
+  "scripts": {
+    "build_ts": "tsc --outDir dist",
+    "build": "yarn clean_dist && yarn build_ts",
+    "build:production": "yarn clean_dist && yarn build_ts && yarn obfuscate:lib && yarn add_disclaimer",
+    "build:shadow_merge": "yarn build",
+    "test": "yarn test:lint && jest",
+    "obfuscate:lib": "yarn ts-node --project ./tsconfig.node.json ../scripts/obfuscate.ts",
+    "add_disclaimer": "yarn ts-node --project ./tsconfig.node.json ../scripts/add-disclaimer.ts",
+    "clean_dist": "rimraf ./dist",
+    "clean": "yarn clean_dist && rimraf ./node_modules",
+    "test:lint": "eslint \"./js/**/*.ts\"",
+    "test:lint:fix": "prettier --write ./js/**/*.ts && eslint --fix \"./js/**/*.ts\"",
+    "prepublishOnly": "yarn build:production"
+  },
+  "author": "devexperts",
+  "license": "UNLICENSED",
+  "files": [
+    "dist/*"
+  ],
+  "devDependencies": {
+    "@babel/core": "^7.15.8",
+    "@types/jest": "^24.0.19",
+    "@typescript-eslint/eslint-plugin": "^5.6.0",
+    "@typescript-eslint/parser": "^5.6.0",
+    "babel-cli": "^6.26.0",
+    "babel-loader": "^8.1.0",
+    "babel-preset-env": "^1.7.0",
+    "eslint": "^7.32.0",
+    "jest": "^24.9.0",
+    "lite-server": "^2.2.0",
+    "rimraf": "^3.0.0",
+    "ts-node": "^10.8.0",
+    "typescript": "^4.5.5",
+    "webpack": "^5.60.0"
+  },
+  "dependencies": {
+    "date-fns": "2.23.0",
+    "date-fns-tz": "1.1.6"
+  },
+  "publishConfig": {
+    "registry": "https://nexus.in.devexperts.com/repository/npm-dx-private/"
+  }
+}

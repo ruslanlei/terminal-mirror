@@ -47,6 +47,7 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, 'src'),
       '@root': path.resolve(__dirname, ''),
+      local_modules: path.resolve(__dirname, 'local_modules'),
     },
   },
   server: {

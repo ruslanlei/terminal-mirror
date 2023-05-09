@@ -288,7 +288,7 @@
         "limit": "L"
       },
       "quantity": "{coins} coins {percentage}",
-      "quantityPercent": "/ {percent} of position",
+      "quantityPercent": "/ {percent} of pos.",
       "volume": "{volume} {currency}"
     },
     "placeholder": "You don't have Orders. Create an order and it will appear here",
@@ -334,7 +334,7 @@
         },
         "playerInTerminal": {
           "label": "Player in Terminal",
-          "description": "The terminal has the ability to trade on history, which allows you to speed up learning and test new trading strategies faster by rewinding the graph “to the future”."
+          "description": "The terminal has the ability to trade on history, which allows you to speed up learning and test new trading strategies faster by rewinding the chart “to the future”."
         },
         "cryptocurrencyMarket": {
           "label": "Cryptocurrency market",
@@ -387,8 +387,8 @@
       "benefits": {
         "accessToEmulator": "Access to emulator",
         "accessToRealMarket": "Access to real market",
-        "propGroups": "Prop groups",
-        "trainingGroupsForTenPeople": "Training groups for 10 people."
+        "propGroups": "Prop group",
+        "trainingGroupsForTenPeople": "Training group"
       },
       "list": {
         "singlePackage": {
@@ -606,7 +606,7 @@
       "heading": "Macro - freedom",
       "subheading": "Our cryptocurrency ecosystem",
       "terminalHeading": "Terminal",
-      "terminalSubheading": "Instructional video + manual in Russian",
+      "terminalSubheading": "Instructional video + manual",
       "courseHeading": "Course RU",
       "courseSubheading": "Our cryptocurrency ecosystem",
       "followButton": "Follow to"

@@ -61,7 +61,7 @@ const cards = computed<{
       ],
       price: {
         value: t('terminalLanding.plans.list.singlePackage.price'),
-        period: 'Month',
+        period: t('dateTime.unit.month'),
       },
       subscribeLink: { name: 'auth-sign-up' },
       trialLink: { name: 'auth-sign-up' },

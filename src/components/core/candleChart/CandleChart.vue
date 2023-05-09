@@ -1,11 +1,12 @@
 <template>
   <div :class="[$style.chart, isLoading && $style.isLoading]">
-    <div
-      ref="chartContainer"
-      :class="$style.container"
+    <ChartEngine
+      v-model:date-from="localDateFrom"
+      v-model:date-to="localDateTo"
+      :candles="computedCandles"
     />
     <div
-      v-if="!data?.length"
+      v-if="!candles?.length"
       :class="$style.noDataBadgeContainer"
     >
       <slot name="noDataBadge">
@@ -23,126 +24,47 @@
 </template>
 
 <script setup lang="ts">
-import {
-  ref,
-  onBeforeUnmount,
-  onMounted,
-  watch, nextTick,
-} from 'vue';
-import {
-  createChart,
-  IChartApi,
-  ISeriesApi,
-  ITimeScaleApi,
-} from 'lightweight-charts';
+import { computed, defineAsyncComponent } from 'vue';
 import { useLocalValue } from '@/hooks/useLocalValue';
-import { toISOString } from '@/utils/date';
-import { compose } from '@/utils/fp';
-import { multiply } from '@/utils/number';
 import Typography from '@/components/app/typography/Typography.vue';
-import { getCssRgbColor } from '@/utils/style';
-import { CandleChartEmits, CandleChartProps } from './index';
+import { TradingViewCandle } from '@/components/core/candleChart/engines/tradingView';
+import { toSecondsTimestamp } from '@/utils/date';
+import { Time } from 'lightweight-charts';
+import { CandleChartEmits, CandleChartProps, ChartCandle } from './index';
+
+const TradingView = defineAsyncComponent(() => (
+  import('@/components/core/candleChart/engines/tradingView/TradingView.vue')
+));
 
 const props = defineProps<CandleChartProps>();
-const emits = defineEmits<CandleChartEmits>();
+const emit = defineEmits<CandleChartEmits>();
 
-const chartContainer = ref();
+const ChartEngine = computed(() => ({
+  tradingView: TradingView,
+}[props.engine]));
 
-const chart = ref<IChartApi>();
-const initChart = () => createChart(chartContainer.value, {
-  autoSize: true,
-  layout: {
-    background: {
-      color: 'transparent',
-    },
-    textColor: getCssRgbColor('--color-accent-1'),
-  },
-  grid: {
-    vertLines: {
-      color: getCssRgbColor('--color-background-3'),
-      style: 3,
-      visible: true,
-    },
-    horzLines: {
-      color: getCssRgbColor('--color-background-3'),
-      style: 3,
-    },
-  },
-  timeScale: {
-    lockVisibleTimeRangeOnResize: true,
-    timeVisible: true,
-  },
-});
+const transformChartCandlesToTradingViewCandles = (
+  candles: ChartCandle[],
+): TradingViewCandle[] => candles.map(
+  (candle: ChartCandle) => ({
+    open: candle[0],
+    high: candle[1],
+    low: candle[2],
+    close: candle[3],
+    time: toSecondsTimestamp(candle[6]) as Time,
+  }),
+);
 
-const timeScale = ref<ITimeScaleApi>();
-const getTimeScale = (
-  chart: IChartApi,
-) => chart.timeScale();
+const candleTransformFunction = computed(() => ({
+  tradingView: transformChartCandlesToTradingViewCandles,
+}[props.engine]));
 
-const localDateFrom = useLocalValue<string>(props, emits, 'dateFrom');
-const localDateTo = useLocalValue<string>(props, emits, 'dateTo');
+const computedCandles = computed(() => (
+  candleTransformFunction.value(props.candles)
+));
 
-watch([localDateTo, localDateFrom], () => {
-  // timeScale.value?.setVisibleRange({
-  //   from: compose(
-  //     divideRight(1000),
-  //     toTimestamp,
-  //   )(localDateFrom.value) as Time,
-  //   to: compose(
-  //     divideRight(1000),
-  //     toTimestamp,
-  //   )(localDateTo.value) as Time,
-  // });
-}, { immediate: true });
-
-const candles = ref<ISeriesApi<'Candlestick'>>();
-const addCandles = (
-  chart: IChartApi,
-) => chart.addCandlestickSeries({
-  upColor: getCssRgbColor('--color-success'),
-  downColor: getCssRgbColor('--color-danger'),
-  wickUpColor: getCssRgbColor('--color-success'),
-  wickDownColor: getCssRgbColor('--color-danger'),
-  borderVisible: true,
-});
-
-const unwatchFirstData = watch(() => props.data, () => {
-  chart.value?.timeScale().fitContent();
-  unwatchFirstData();
-});
-
-onMounted(() => {
-  chart.value = initChart();
-  candles.value = addCandles(chart.value);
-  timeScale.value = getTimeScale(chart.value);
-
-  timeScale.value.subscribeVisibleTimeRangeChange((newVisibleTimeRange) => {
-    if (newVisibleTimeRange?.from) {
-      localDateFrom.value = compose(
-        toISOString,
-        multiply(1000),
-      )(newVisibleTimeRange.from as number);
-    }
-
-    if (newVisibleTimeRange?.to) {
-      localDateTo.value = compose(
-        toISOString,
-        multiply(1000),
-      )(newVisibleTimeRange.to as number);
-    }
-  });
-
-  watch(() => props.data, async () => {
-    await nextTick();
-    candles.value?.setData(props.data);
-  }, { immediate: true });
-});
-
-onBeforeUnmount(() => {
-  if (chart.value) {
-    chart.value.remove();
-  }
-});
+const localDateFrom = useLocalValue<string>(props, emit, 'dateFrom');
+const localDateTo = useLocalValue<string>(props, emit, 'dateTo');
 </script>
 
 <style lang="scss" module>

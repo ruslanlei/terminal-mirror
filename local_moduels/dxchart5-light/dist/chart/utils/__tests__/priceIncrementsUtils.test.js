@@ -1,0 +1,6 @@
+/*
+ * Copyright (C) 2002 - 2023 Devexperts LLC
+ * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+ * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ */
+import{PriceIncrementsUtils as t}from"../priceIncrements.utils";describe("PriceIncrementsUtils",()=>{describe("autoDetectIncrementOfValueRange",()=>{it("should return increment=0.01 for range=0",()=>{const e=t.autoDetectIncrementOfValueRange(0);expect(e).toBeCloseTo(.01,10)}),it("should return increment=10 for range=6300.02931",()=>{const e=t.autoDetectIncrementOfValueRange(6300.02931);expect(e).toBeCloseTo(10,10)}),it("should return increment=1 for range=124.14",()=>{const e=t.autoDetectIncrementOfValueRange(124.14);expect(e).toBeCloseTo(1,10)}),it("should return increment=0.01 for range=5",()=>{const e=t.autoDetectIncrementOfValueRange(5);expect(e).toBeCloseTo(.01,10)}),it("should return increment=0.001 for range=0.5",()=>{const e=t.autoDetectIncrementOfValueRange(.5);expect(e).toBeCloseTo(.001,10)}),it("should return increment=0.00001 for range=0.0018",()=>{const e=t.autoDetectIncrementOfValueRange(.0018);expect(e).toBeCloseTo(1e-5,10)})})});

@@ -11,16 +11,6 @@ import { concat, filterNoneUniqueByKey, getLastElement } from '@/utils/array';
 import { multiply, subtractRight } from '@/utils/number';
 import { isMoreThanLeft } from '@/utils/boolean';
 
-export const transformCandlesForChart = (
-  candles: Candle[],
-): ChartCandle[] => candles.map((candle: Candle) => ({
-  open: candle[0],
-  high: candle[1],
-  low: candle[2],
-  close: candle[3],
-  time: toSecondsTimestamp(candle[6]),
-}));
-
 export const getCandleField = curry((
   field:
     'openPrice'

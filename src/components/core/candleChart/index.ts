@@ -1,17 +1,19 @@
-import { Time } from 'lightweight-charts';
+export type ChartCandle = [
+  number, // open price
+  number, // low price
+  number, // high price
+  number, // close price
+  number, // volume (amount of coins sold)
+  number, // amount of orders in candle
+  string // iso date string of candle
+]
 
-export interface ChartCandle {
-  high: number,
-  open: number,
-  close: number,
-  low: number,
-  time: number,
-}
 export interface CandleChartProps {
+  engine: 'tradingView' /* | 'dxCharts' */
   isLoading: boolean,
   dateFrom: string,
   dateTo: string,
-  data: ChartCandle[],
+  candles: ChartCandle[],
   noDataBadgeText?: string,
 }
 

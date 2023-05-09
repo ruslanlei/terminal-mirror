@@ -1,0 +1,6 @@
+/*
+ * Copyright (C) 2002 - 2023 Devexperts LLC
+ * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+ * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ */
+export const MAX_DECIMAL_DIGITS=14;const s=[];for(let o=0;o<14+1;o++)s.push(Math.pow(10,o));const c=5e-13;export class MathUtils{static roundToNearest(t,r){return isFinite(t)?MathUtils.isZero(t)?0:(t>0?t+=c:t<0&&(t-=c),MathUtils.roundDecimal(Math.round(MathUtils.roundDecimal(t/r))*r)):t}static roundUpToNearest(t,r){return MathUtils.roundDecimal(Math.ceil(t/r))*r}static roundDecimal(t){if(isNaN(t)||t===Math.floor(t))return t;const r=Math.sign(t),e=Math.abs(t),i=Math.min(14,14-1-Math.floor(Math.log10(e)));for(let n=i;n>=0;n--){const a=Math.floor(s[n]*e+.5);if(a<s[14])return r*a/s[n]}return Math.round(t)}static makeDecimal(t,r,e){if(isFinite(t)){const i=t.toFixed(r);return e?i.replace(".",e):i}else return""}static compare(t,r,e){return t>r+e?1:t<r-e?-1:(isNaN(t)?1:0)-(isNaN(r)?1:0)}static isZero(t){return MathUtils.compare(t,0,c)===0}static cutNumber(t,r,e=0){return{K:n=>n/1e3,M:n=>n/1e6}[r](t).toFixed(e)+r}}export function easeExpOut(o){return 1-(Math.pow(2,-10*o)-.0009765625)*1.0009775171065494}export function finite(...o){for(const t of o)if(isFinite(t))return t;return NaN}

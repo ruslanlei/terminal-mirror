@@ -1,0 +1,6 @@
+/*
+ * Copyright (C) 2002 - 2023 Devexperts LLC
+ * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+ * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ */
+import{CandleSeriesModel as d}from"../../model/candle-series.model";import{floor as l}from"../../utils";export class AreaDrawer{constructor(e){this.config=e}draw(e,C,o,n){if(o instanceof d){const i=C.flat();if(i.length===0)return;n.singleColor?e.strokeStyle=n.singleColor:e.strokeStyle=o.colors.areaTheme.lineColor,o.hovered?e.lineWidth=this.config.selectedWidth:e.lineWidth=this.config.areaLineWidth;const a=o.paneComponent.getBounds(),p=i[0],T=o.view.toX(p.centerUnit);for(let s=0;s<i.length;s++){const g=i[s-1],v=i[s+1],c=i[s],t=o.view.toX(c.centerUnit),h=o.view.toY(c.close),f=a.y+a.height;if(g===void 0)e.beginPath(),e.lineTo(l(t),f),e.moveTo(l(t),h);else if(v===void 0){e.lineTo(l(t),h),e.stroke(),e.lineTo(l(t),f),e.lineTo(l(T),f),e.closePath();let r;n.singleColor?e.fillStyle=n.singleColor:e.fillStyle=o.colors.areaTheme.startColor&&o.colors.areaTheme.stopColor?(r=e.createLinearGradient(0,0,0,a.height),r.addColorStop(0,o.colors.areaTheme.startColor),r.addColorStop(1,o.colors.areaTheme.stopColor),r):"",e.fill()}else e.lineTo(l(t),h)}}}}

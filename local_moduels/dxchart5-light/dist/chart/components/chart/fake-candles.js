@@ -1,0 +1,6 @@
+/*
+ * Copyright (C) 2002 - 2023 Devexperts LLC
+ * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+ * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ */
+import{round as u}from"../../utils";import{firstOf as d,lastOf as p}from"../../utils/utils-index";import C from"../../model/visual-candle";import{nameDirection as h}from"../../model/candle.model";const r=60;export const fakeVisualCandle=(n,o,s=r)=>{const t=fakeCandle(n.dataPoints,o,s),a=n.meanCandleWidth;t.volume=a;const e=n.visualPoints;let l;if(e.length===0)l=0;else if(o>=e.length){const i=e[e.length-1],m=(o-(e.length-1))*a;l=i.centerUnit+m}else{const i=e[0],m=-o*a;l=i.centerUnit-m}return new C(l,a,t.open,t.close,t.lo,t.hi,h(t.open,t.close),t)},fakeCandle=(n,o,s=r)=>({hi:NaN,lo:NaN,open:NaN,close:NaN,timestamp:v(n,o,s),volume:NaN,expansion:!0,idx:o});function v(n,o,s=r){var t,a;const e=u(o);if(n.length===0)return 0;const l=p(n);if(e>=n.length&&l)return c(l,e,s);const i=d(n);return e<0&&i?c(i,e,s):(a=(t=n[e])===null||t===void 0?void 0:t.timestamp)!==null&&a!==void 0?a:0}const c=(n,o,s=r)=>{var t;return n.timestamp+(o-((t=n.idx)!==null&&t!==void 0?t:0))*s};

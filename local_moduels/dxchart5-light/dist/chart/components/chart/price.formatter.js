@@ -1,0 +1,6 @@
+/*
+ * Copyright (C) 2002 - 2023 Devexperts LLC
+ * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+ * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ */
+import{CandleSeriesModel as m}from"../../model/candle-series.model";import{unitToPercent as a}from"../../model/scaling/viewport.model";import{BondUtils as f}from"../../utils/bond.utils";import{PriceIncrementsUtils as s}from"../../utils/priceIncrements.utils";export const createRegularPriceFormatter=n=>t=>{let e;typeof t=="number"?e=t:typeof t=="string"?e=Number(t):e=0;const[r]=n.dataSeries;if(r!==void 0){if(r instanceof m){const o=r.instrument;if(o.bondFraction){const i=formatBond(o,e);if(i)return i}}const c=s.getPricePrecision(e,r.pricePrecisions);return e.toFixed(c)}return`${e}`},createPercentFormatter=n=>(t,e)=>{const[r]=n.dataSeries;let c=t;const o=e!=null?e:r;o!==void 0&&(c=a(t,o.getBaseLine()));const i=c.toFixed(s.DEFAULT_PRECISION).replace("-","\u2212")+" %";return i==="\u22120.00 %"?"0.00 %":i},formatBond=(n,t)=>{const e=s.getPriceIncrement(t,n);if(e){const r=f.formatBondPrice(t,e,"'");if(r)return r}},createPaneFormatters=n=>({percent:createPercentFormatter(n),regular:createRegularPriceFormatter(n)});

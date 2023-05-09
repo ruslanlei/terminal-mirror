@@ -1,5 +1,6 @@
 import {
-  computed, nextTick,
+  computed,
+  nextTick,
   watch,
 } from 'vue';
 import { storeToRefs } from 'pinia';
@@ -13,10 +14,7 @@ import {
   subtractMonths,
   toISOString,
 } from '@/utils/date';
-import {
-  transformCandlesForChart,
-  decreaseDateByAmountOfCandles,
-} from '@/helpers/candles';
+import { decreaseDateByAmountOfCandles } from '@/helpers/candles';
 import { useChartDataStore } from '@/stores/chartData';
 
 export const getDefaultChartDateFrom = compose(
@@ -77,7 +75,7 @@ export const useMarketChart = () => {
     await fetchCandles();
   }, { immediate: true });
 
-  const computedCandles = computed(() => transformCandlesForChart(candles.value));
+  const computedCandles = computed(() => candles.value);
 
   return {
     chartDateFrom,

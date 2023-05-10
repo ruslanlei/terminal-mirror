@@ -13,7 +13,7 @@ import {
   find,
   reduce,
 } from '@/utils/array';
-import { isExactOrder, isOrderOfType } from '@/helpers/orders';
+import { isExactOrder, isOrderOfStatus, isOrderOfType } from '@/helpers/orders';
 import { isEqual, isLessThanLeft, isMoreThanOrEqualTo } from '@/utils/boolean';
 
 export const calculateCurrentPnl = curry((
@@ -75,7 +75,7 @@ export const calculatePnlPercent = curry((
   )(pnl);
 });
 
-export const calculateCommonClosedPnl = (
+export const calculateCommonClosePnl = (
   orders: Order[],
 ) => compose(
   reduce(
@@ -92,7 +92,18 @@ export const calculateCommonClosedPnl = (
     },
     0,
   ),
-  filter(isOrderOfType('limit')),
+  filter(
+    (order: Order) => {
+      const relatedOrders = filter(
+        (maybeRelatedOrder: Order) => isEqual(maybeRelatedOrder.master, order.id),
+        orders,
+      );
+
+      return isExactOrder('limit', 'executed', order) && (
+        calculateClosePnl([order, ...relatedOrders]) >= 0
+      );
+    },
+  ),
 )(orders);
 
 export const calculateCommonPnlForPeriod = curry(
@@ -114,7 +125,7 @@ export const calculateCommonPnlForPeriod = curry(
           orders,
         )
       ))
-      .chain(calculateCommonClosedPnl);
+      .chain(calculateCommonClosePnl);
   },
 );
 

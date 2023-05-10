@@ -16,7 +16,7 @@ import {
   toAbsolute,
 } from '@/utils/number';
 import { calculatePercentageOfTotal } from '@/helpers/math/percents';
-import { calculateClosePnl, calculateCommonClosedPnl, calculatePnlPercent } from '@/helpers/math/formulas/pnl';
+import { calculateClosePnl, calculateCommonClosePnl, calculatePnlPercent } from '@/helpers/math/formulas/pnl';
 import { calculateCommonTakeProfitPercent } from '@/helpers/math/formulas/takeProfit';
 import { humanizeDate } from '@/utils/date';
 import { ActiveOrdersTableRecord, ClosedOrdersTableRecord } from 'src/components/app/orderList';
@@ -83,7 +83,7 @@ const closedOrderResultsMixin = (
     stopLoss,
   }: CollectRecordPayload,
 ) => {
-  const rawPnl = calculateCommonClosedPnl([
+  const rawPnl = calculateCommonClosePnl([
     order,
     ...(takeProfits || []),
     ...(stopLoss ? [stopLoss] : []),

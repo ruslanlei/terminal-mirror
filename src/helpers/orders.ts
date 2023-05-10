@@ -2,7 +2,7 @@ import {
   compose,
   curry,
 } from '@/utils/fp';
-import { Order, OrderStatus } from '@/api/types/order';
+import { Order } from '@/api/types/order';
 import {
   divideRight,
   multiply,
@@ -17,21 +17,13 @@ import {
 } from '@/utils/array';
 import {
   calculateClosePnl,
-  calculateCommonClosedPnl,
+  calculateCommonClosePnl,
   getSuccessOrders,
 } from '@/helpers/math/formulas/pnl';
 import { PairsMap } from '@/hooks/usePairs';
 import { getKeyWithBiggestValue } from '@/utils/object';
 import { Maybe } from '@/utils/functors';
 import { isEqual } from '@/utils/boolean';
-
-export const getOrdersWithStatus = curry((
-  status: OrderStatus,
-  orders: Order[],
-) => filter(
-  (order: Order) => order.status === status,
-  orders,
-));
 
 export const isExactOrder = curry((
   orderType: Order['order_type'] | Array<Order['order_type']>,
@@ -84,7 +76,7 @@ export const calculateAverageIncome = (
     divideRight(
       getLength(orders),
     ),
-    calculateCommonClosedPnl,
+    calculateCommonClosePnl,
     filter(
       (order: Order) => {
         const relatedOrders = filter(
@@ -92,12 +84,11 @@ export const calculateAverageIncome = (
           orders,
         );
 
-        return isOrderOfStatus('executed', order) && (
-          calculateClosePnl([order, ...relatedOrders]) >= 0
-        );
+        return isOrderOfType('limit', order)
+          ? isOrderOfStatus('executed', order) && calculateClosePnl([order, ...relatedOrders]) >= 0
+          : true;
       },
     ),
-    filter(isOrderOfType('limit')),
   )(orders)
 );
 
@@ -108,7 +99,7 @@ export const calculateAverageLoss = (
     divideRight(
       getLength(orders),
     ),
-    calculateCommonClosedPnl,
+    calculateCommonClosePnl,
     filter(
       (order: Order) => {
         const relatedOrders = filter(
@@ -116,12 +107,11 @@ export const calculateAverageLoss = (
           orders,
         );
 
-        return isOrderOfStatus('executed', order) && (
-          calculateClosePnl([order, ...relatedOrders]) < 0
-        );
+        return isOrderOfType('limit', order)
+          ? isOrderOfStatus('executed', order) && calculateClosePnl([order, ...relatedOrders]) < 0
+          : true;
       },
     ),
-    filter(isOrderOfType('limit')),
   )(orders)
 );
 

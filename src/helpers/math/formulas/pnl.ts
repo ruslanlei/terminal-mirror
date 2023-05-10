@@ -13,7 +13,7 @@ import {
   find,
   reduce,
 } from '@/utils/array';
-import { isExactOrder, isOrderOfStatus, isOrderOfType } from '@/helpers/orders';
+import { isExactOrder, isOrderOfType } from '@/helpers/orders';
 import { isEqual, isLessThanLeft, isMoreThanOrEqualTo } from '@/utils/boolean';
 
 export const calculateCurrentPnl = curry((
@@ -92,18 +92,7 @@ export const calculateCommonClosePnl = (
     },
     0,
   ),
-  filter(
-    (order: Order) => {
-      const relatedOrders = filter(
-        (maybeRelatedOrder: Order) => isEqual(maybeRelatedOrder.master, order.id),
-        orders,
-      );
-
-      return isExactOrder('limit', 'executed', order) && (
-        calculateClosePnl([order, ...relatedOrders]) >= 0
-      );
-    },
-  ),
+  filter(isOrderOfType('limit')),
 )(orders);
 
 export const calculateCommonPnlForPeriod = curry(

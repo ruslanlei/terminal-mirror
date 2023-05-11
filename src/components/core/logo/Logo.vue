@@ -87,6 +87,10 @@ const computedState = useComputedState(props);
     width: 26px;
     height: 26px;
   }
+
+  .logoText {
+    width: 95px;
+  }
 }
 
 .md {
@@ -147,5 +151,6 @@ const computedState = useComputedState(props);
 
 .logoText {
   margin-left: 15px;
+  width: 70px;
 }
 </style>

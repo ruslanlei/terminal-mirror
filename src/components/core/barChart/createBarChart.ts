@@ -13,6 +13,7 @@ import {
 } from '@/utils/number';
 import { toCssPxValue } from '@/utils/style';
 import { compose } from '@/utils/fp';
+import { getRectField } from '@/utils/dom';
 
 export type BarChartDataElement = [string, number];
 export type BarChartData = BarChartDataElement[];
@@ -224,7 +225,7 @@ export const createBarChart = ({
   const svgContainer = select(container)
     .append('svg')
     .attr('width', width)
-    .attr('height', height);
+    .attr('height', getRectField('height', container));
 
   const xScale = scaleBand<number>()
     .domain(range(data.length))

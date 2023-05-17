@@ -6,13 +6,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useResizeObserver } from '@vueuse/core';
 import { setMaximalScrollLeft } from '@/utils/element';
 import { getRectField } from '@/utils/dom';
 import { getCssRgbColor } from '@/utils/style';
 import { isEqual } from '@/utils/boolean';
 import { compose } from '@/utils/fp';
+import { awaitTimeout } from '@/utils/promise';
 import { BarChartProps } from './index';
 import { createBarChart } from './createBarChart';
 
@@ -26,7 +27,11 @@ const props = withDefaults(
 );
 
 const container = ref<HTMLElement>();
-const renderChart = () => {
+const renderChart = async () => {
+  // FIXME: this needed to await transition animation.
+  //  Move to upper level into order and statistics.
+  await awaitTimeout(300);
+
   if (!container.value) return;
 
   const isContainerNotPrepared = compose(
@@ -52,6 +57,7 @@ const renderChart = () => {
 };
 
 useResizeObserver(container, renderChart);
+onMounted(renderChart);
 </script>
 
 <style lang="scss" module>

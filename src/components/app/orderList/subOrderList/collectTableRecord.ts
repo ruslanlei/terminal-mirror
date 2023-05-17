@@ -37,7 +37,7 @@ const quantityMixin = (
   { order, masterOrder }: CollectRecordPayload,
 ) => ({
   quantity: {
-    value: order.quantity,
+    value: roundToDecimalPlaces(2, order.quantity),
     percent: compose(
       roundToDecimalPlaces(2),
       valueToPercents,
@@ -49,7 +49,7 @@ const activeOrderVolumeMixin = (
   { order, pairData }: CollectRecordPayload,
 ) => ({
   volume: {
-    value: order.price,
+    value: roundToDecimalPlaces(2, order.price),
     currency: pairData.quote,
   },
 });
@@ -59,7 +59,7 @@ const closedOrderVolumeMixin = (
 ) => ({
   volume: {
     orderType: order.order_type,
-    value: order.status === 'executed' ? order.price : null,
+    value: order.status === 'executed' ? roundToDecimalPlaces(2, order.price) : null,
     currency: pairData.quote,
   },
 });

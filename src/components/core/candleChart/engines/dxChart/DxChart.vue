@@ -4,8 +4,8 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { ChartBootstrap } from 'local_modules/dxchart5-light/dist'; // FIXME
-import generateCandlesData from 'local_modules/dxchart5-light/dist/common/generate-data'; // FIXME
+import { ChartBootstrap } from '@dx-private/dxchart5-light';
+import generateCandlesData from '@dx-private/dxchart5-light/common/generate-data';
 
 const chartContainer = ref();
 

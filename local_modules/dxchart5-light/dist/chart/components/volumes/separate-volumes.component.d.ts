@@ -3,10 +3,10 @@
  * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
+import { ChartBaseElement } from '../../chart-base-element';
 import { BarType, FullChartConfig } from '../../chart.config';
 import { CanvasModel } from '../../drawers/canvas.model';
 import { DrawingManager } from '../../drawers/drawing-manager';
-import { ChartBaseElement } from '../../chart-base-element';
 import { ScaleModel } from '../../model/scale.model';
 import { Pixel, Unit } from '../../model/scaling/viewport.model';
 import { ChartComponent } from '../chart/chart.component';

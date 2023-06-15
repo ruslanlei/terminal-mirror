@@ -180,3 +180,4 @@ export declare function uuid(): string;
  * @doc-tags utility,math
  */
 export declare const isDiffersBy: (first: number, second: number, times: number) => boolean;
+export declare function clamp(value: number, min: number, max: number): number;

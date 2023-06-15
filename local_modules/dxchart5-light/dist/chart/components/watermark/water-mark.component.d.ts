@@ -3,12 +3,12 @@
  * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
-import { FullChartConfig } from '../../chart.config';
-import { ChartBaseElement } from '../../chart-base-element';
-import EventBus from '../../event-bus';
 import { CanvasBoundsContainer } from '../../canvas/canvas-bounds-container';
+import { ChartBaseElement } from '../../chart-base-element';
+import { FullChartConfig } from '../../chart.config';
 import { CanvasModel } from '../../drawers/canvas.model';
 import { DrawingManager } from '../../drawers/drawing-manager';
+import EventBus from '../../event-bus';
 import { ChartModel } from '../chart/chart.model';
 import { PaneManager } from '../pane/pane-manager.component';
 export interface WaterMarkConfig {

@@ -77,7 +77,7 @@ export declare class ScaleModel extends ViewportModel {
      * @param zoomSensitivity - The sensitivity of the zoom. Default value is taken from the configuration object.
      */
     zoomXToEnd(zoomIn: boolean, zoomSensitivity?: number): void;
-    private haltAnimationIfNeeded;
+    private haltAnimation;
     private zoomXTo;
     /**
      * Moves the viewport to exactly xStart..xEnd place.

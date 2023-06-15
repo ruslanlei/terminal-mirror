@@ -17,9 +17,10 @@ import { NumericYAxisLabelsGenerator } from '../y_axis/numeric-y-axis-labels.gen
 import { YAxisDrawer } from '../y_axis/y-axis.drawer';
 import { YAxisScaleHandler } from '../y_axis/y-axis-scale.handler';
 import { PaneHitTestController } from './pane-hit-test.controller';
+import { CanvasModel } from '../../drawers/canvas.model';
 export declare class PaneComponent extends ChartBaseElement {
     private config;
-    private eventBus;
+    eventBus: EventBus;
     private canvasBoundsContainer;
     readonly uuid: string;
     readonly scaleModel: ScaleModel;
@@ -27,6 +28,7 @@ export declare class PaneComponent extends ChartBaseElement {
     readonly yAxisDrawer: YAxisDrawer;
     readonly yAxisScaleHandler: YAxisScaleHandler;
     private hitTestController;
+    readonly dataSeriesCanvasModel: CanvasModel;
     readonly subs: Unsubscriber[];
     dataSeries: Set<DataSeriesModel>;
     private formatters;
@@ -36,7 +38,7 @@ export declare class PaneComponent extends ChartBaseElement {
      */
     ht: HitBoundsTest;
     private mainDataSeries?;
-    constructor(config: FullChartConfig, eventBus: EventBus, canvasBoundsContainer: CanvasBoundsContainer, uuid: string, scaleModel: ScaleModel, yAxisLabelsGenerator: NumericYAxisLabelsGenerator, yAxisDrawer: YAxisDrawer, yAxisScaleHandler: YAxisScaleHandler, hitTestController: PaneHitTestController, subs?: Unsubscriber[], dataSeries?: Set<DataSeriesModel>, formatters?: PaneFormatters);
+    constructor(config: FullChartConfig, eventBus: EventBus, canvasBoundsContainer: CanvasBoundsContainer, uuid: string, scaleModel: ScaleModel, yAxisLabelsGenerator: NumericYAxisLabelsGenerator, yAxisDrawer: YAxisDrawer, yAxisScaleHandler: YAxisScaleHandler, hitTestController: PaneHitTestController, dataSeriesCanvasModel: CanvasModel, subs?: Unsubscriber[], dataSeries?: Set<DataSeriesModel>, formatters?: PaneFormatters);
     /**
      * Method that activates the canvas bounds container and recalculates the zoom Y of the scale model.
      * @protected

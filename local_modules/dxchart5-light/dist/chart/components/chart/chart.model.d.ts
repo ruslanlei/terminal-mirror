@@ -51,6 +51,7 @@ export declare class ChartModel extends ChartBaseElement {
     get secondaryCandleSeries(): Array<CandleSeriesModel>;
     readonly candlesUpdatedSubject: Subject<void>;
     readonly candlesSetSubject: Subject<void>;
+    readonly candlesRemovedSubject: Subject<void>;
     readonly candlesPrependSubject: Subject<number>;
     readonly nextCandleTimeStampSubject: Subject<void>;
     readonly axisTypeSetSubject: Subject<PriceAxisType>;
@@ -105,7 +106,7 @@ export declare class ChartModel extends ChartBaseElement {
      * @param mainSeries
      * @param secondarySeries
      */
-    setAllSeries(mainSeries: CandleSeries, secondarySeries: CandleSeries[]): void;
+    setAllSeries(mainSeries: CandleSeries, secondarySeries?: CandleSeries[]): void;
     /**
      * Recalculates the period of the main candle series based on the data points.
      * If a period is detected, it is set as the new period.
@@ -140,6 +141,12 @@ export declare class ChartModel extends ChartBaseElement {
      * @param secondarySeries
      */
     updateAllSeries(mainSeries: CandleSeries, secondarySeries: CandleSeries[]): void;
+    /**
+     * Removes all data points from the main candle series that are newer than the given timestamp.
+     * Can be useful for data replay.
+     * @param startTimestamp
+     */
+    removeDataFrom(startTimestamp: Timestamp): void;
     /**
      * Creates a secondary candle series model for a given instrument.
      * @param {ChartInstrument} instrument - The instrument for which the secondary candle series model is created.

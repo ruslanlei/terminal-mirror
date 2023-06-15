@@ -4,20 +4,21 @@
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 import { Observable } from 'rxjs';
-import { BarType, ChartConfigComponentsOffsets, FullChartConfig } from '../../chart.config';
-import { ChartBaseElement } from '../../chart-base-element';
 import { CanvasBoundsContainer } from '../../canvas/canvas-bounds-container';
 import { CursorHandler } from '../../canvas/cursor.handler';
+import { ChartBaseElement } from '../../chart-base-element';
+import { BarType, ChartConfigComponentsOffsets, FullChartConfig } from '../../chart.config';
 import { CanvasModel } from '../../drawers/canvas.model';
 import { SeriesDrawer } from '../../drawers/data-series.drawer';
 import { DrawingManager } from '../../drawers/drawing-manager';
 import { CanvasInputListenerComponent } from '../../inputlisteners/canvas-input-listener.component';
 import { BaselineModel } from '../../model/baseline.model';
-import { Candle } from '../../model/candle.model';
 import { CandleSeriesModel } from '../../model/candle-series.model';
+import { Candle } from '../../model/candle.model';
+import { DataSeriesType } from '../../model/data-series.config';
 import { HitTestCanvasModel } from '../../model/hit-test-canvas.model';
 import { ScaleModel } from '../../model/scale.model';
-import { DataSeriesType } from '../../model/data-series.config';
+import { Timestamp, Unit } from '../../model/scaling/viewport.model';
 import { ChartPanComponent } from '../pan/chart-pan.component';
 import { PaneManager } from '../pane/pane-manager.component';
 import { CandleWidthCalculator, ChartModel, LastCandleLabelHandler, VisualCandleCalculator } from './chart.model';
@@ -107,6 +108,19 @@ export declare class ChartComponent extends ChartBaseElement {
      */
     resetChartScale(): void;
     /**
+     * Sets the timestamp range of the chart by setting the x-axis scale.
+     * @param {Timestamp} start - The start timestamp of the range.
+     * @param {Timestamp} end - The end timestamp of the range.
+     * @returns {void}
+     */
+    setTimestampRange(start: Timestamp, end: Timestamp): void;
+    /**
+     * Moves the viewport to exactly xStart..xEnd place.
+     * @param xStart - viewport start in units
+     * @param xEnd - viewport end in units
+     */
+    setXScale(xStart: Unit, xEnd: Unit): void;
+    /**
      * Sets the visibility of the wicks in the chart.
      * @param {boolean} isShow - A boolean value indicating whether to show or hide the wicks.
      * @returns {void}
@@ -128,7 +142,7 @@ export declare class ChartComponent extends ChartBaseElement {
      * @param mainSeries
      * @param secondarySeries
      */
-    setAllSeries(mainSeries: CandleSeries, secondarySeries: CandleSeries[]): void;
+    setAllSeries(mainSeries: CandleSeries, secondarySeries?: CandleSeries[]): void;
     /**
      * Converts candle index to chart x coordinate
      */
@@ -148,6 +162,12 @@ export declare class ChartComponent extends ChartBaseElement {
      * @param secondarySeries {CandleSeries[]}
      */
     updateAllSeries(mainSeries: CandleSeries, secondarySeries: CandleSeries[]): void;
+    /**
+     * Removes all data points from the main candle series that are newer than the given timestamp.
+     * Can be useful for data replay.
+     * @param startTimestamp
+     */
+    removeDataFrom(timestamp: Timestamp): void;
     /**
      * Removes chart candles series.
      * @param instrument

@@ -10,7 +10,7 @@ export type ChartEntityState = 'initial' | 'active' | 'deactivated' | 'disabled'
  * Chart entity has the following lifecycle: initial -> active <=> deactivated -> disposed.
  * Methods of chart entity allows to transit entity between its states.
  */
-export interface ChartEnity {
+export interface ChartEntity {
     /** Make entity active. Next allowed stated: deactivated,disposed */
     activate(): void;
     /** Make entity inactive. Next allowed states: active,disposed. */
@@ -27,7 +27,7 @@ export interface ChartEnity {
  *
  * Chart entity state transition: INITIAL -> ACTIVE <-> DEACTIVATED -> DISPOSED
  */
-export declare abstract class ChartBaseElement implements ChartEnity {
+export declare abstract class ChartBaseElement implements ChartEntity {
     private subscriptions;
     private _state;
     private entities;
@@ -92,12 +92,12 @@ export declare abstract class ChartBaseElement implements ChartEnity {
      * @param {Entity} entity - The entity to be added to the entities array.
      * @returns {void}
      */
-    addChildEntity(entity: ChartEnity): void;
+    addChildEntity(entity: ChartEntity): void;
     /**
      * Removes a entity from the entities array.
      *
-     * @param {ChartEnity} entity - The entity to be removed.
+     * @param {ChartEntity} entity - The entity to be removed.
      * @returns {void}
      */
-    removeChildEntity(entity: ChartEnity): void;
+    removeChildEntity(entity: ChartEntity): void;
 }

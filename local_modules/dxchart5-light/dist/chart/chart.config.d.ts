@@ -110,7 +110,6 @@ export interface FullChartColors {
     xAxis: {
         backgroundColor: string;
         labelTextColor: string;
-        labelBoxColor: string;
     };
     crossTool: {
         lineColor: string;

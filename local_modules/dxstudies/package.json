@@ -1,23 +1,18 @@
 {
-  "name": "@dx-private/dxstudies",
-  "version": "46.0.0",
-  "description": "A library of indicator calculators for an array of candles",
-  "files": [
-    "dxstudies.js"
-  ],
-  "dependencies": {
-    "kotlin": "1.3.31"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://stash.in.devexperts.com/scm/ria/dxstudies.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "publishConfig": {
-    "registry": "https://nexus.in.devexperts.com/repository/npm-dx-private/"
-  }
+    "name": "@dx-private/dxstudies",
+    "version": "47.0.1684239539334",
+    "description": "A library of financial indicator calculators",
+    "license": "ISC",
+    "repository": {
+        "type": "git",
+        "url": "https://stash.in.devexperts.com/scm/ria/dxstudies.git"
+    },
+    "publishConfig": {
+        "registry": "https://nexus.in.devexperts.com/repository/npm-dx-private/"
+    },
+    "main": "dxstudies.js",
+    "types": "dxstudies.d.ts",
+    "dependencies": {
+        "kotlin": "1.8.20"
+    }
 }

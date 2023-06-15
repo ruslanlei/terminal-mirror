@@ -5,8 +5,8 @@
  */
 import { Subject } from 'rxjs';
 import { FullChartConfig } from '../chart.config';
-import EventBus from '../event-bus';
 import { CanvasModel } from '../drawers/canvas.model';
+import EventBus from '../event-bus';
 export type PickedDOMRect = Pick<DOMRect, 'x' | 'y' | 'width' | 'height'>;
 /**
  * Tracks chart element size and emits events whenever it changes.

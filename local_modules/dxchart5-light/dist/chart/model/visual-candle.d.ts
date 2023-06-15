@@ -6,6 +6,7 @@
 import { Candle } from './candle.model';
 import { Pixel, Unit, Viewable } from './scaling/viewport.model';
 import { PriceMovement } from './candle-series.model';
+import { VisualSeriesPoint } from './data-series.model';
 /**
  * Candle's visual representation. Candle's coordinates are adjusted by .5 unit to prevent anti-aliasing effect for
  * lines with 1px width
@@ -21,15 +22,13 @@ import { PriceMovement } from './candle-series.model';
  * @param hasBorder flag denoting if border should be drawn
  * @constructor
  */
-export default class VisualCandle {
+export default class VisualCandle extends VisualSeriesPoint {
     width: Unit;
     high: Unit;
     low: Unit;
     open: Unit;
-    close: Unit;
     name: PriceMovement;
     candle: Candle;
-    centerUnit: Unit;
     startUnit: Unit;
     hasBorder: boolean;
     isActive: boolean;

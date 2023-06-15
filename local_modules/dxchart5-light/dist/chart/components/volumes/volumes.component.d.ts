@@ -4,15 +4,15 @@
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 import { CanvasBoundsContainer } from '../../canvas/canvas-bounds-container';
-import { BarType, FullChartColors, FullChartConfig } from '../../chart.config';
 import { ChartBaseElement } from '../../chart-base-element';
+import { BarType, FullChartColors, FullChartConfig } from '../../chart.config';
 import { CanvasModel } from '../../drawers/canvas.model';
 import { DrawingManager } from '../../drawers/drawing-manager';
+import { PriceMovement } from '../../model/candle-series.model';
 import { ScaleModel } from '../../model/scale.model';
 import { ChartComponent } from '../chart/chart.component';
 import { PaneManager } from '../pane/pane-manager.component';
 import { SeparateVolumesComponent } from './separate-volumes.component';
-import { PriceMovement } from '../../model/candle-series.model';
 export type VolumeColorResolver = (priceMovement: PriceMovement, colors: FullChartColors) => string;
 export declare class VolumesComponent extends ChartBaseElement {
     private canvasModel;

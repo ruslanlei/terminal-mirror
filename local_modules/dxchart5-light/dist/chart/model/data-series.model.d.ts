@@ -9,15 +9,25 @@ import { YAxisLabelsProvider } from '../components/y_axis/price_labels/y-axis-la
 import { AtLeastOne } from '../utils/types.utils';
 import { DataSeriesView } from './data-series-view';
 import { HighLowWithIndex, ScaleModel } from './scale.model';
-import { DataSeriesConfig, DataSeriesPaintConfig } from './data-series.config';
+import { DataSeriesConfig, DataSeriesPaintConfig, DataSeriesType } from './data-series.config';
 import { HighLowProvider } from './scaling/auto-scale.model';
-import { Index, Unit } from './scaling/viewport.model';
+import { Index, Unit, Viewable } from './scaling/viewport.model';
 /**
  * Properties are named in order to match VisualCandle interface
  */
-export interface VisualSeriesPoint {
+export declare class VisualSeriesPoint {
     centerUnit: Unit;
     close: Unit;
+    constructor(centerUnit: Unit, close: Unit);
+    /**
+     * returns y coordinate in pixels
+     */
+    y(viewable: Viewable): Unit;
+    /**
+     * returns x coordinate in pixels
+     */
+    x(viewable: Viewable): Unit;
+    clone(): VisualSeriesPoint;
 }
 export interface DataSeriesPoint {
     timestamp: number;
@@ -42,7 +52,7 @@ export declare class DataSeriesModel<D extends DataSeriesPoint = DataSeriesPoint
     readonly config: DataSeriesConfig;
     scaleModel: ScaleModel;
     view: DataSeriesView;
-    private _dataPoints;
+    protected _dataPoints: D[][];
     pricePrecisions: number[];
     /**
      * Should be used for paint tools like rectrangular drawing or diff cloud
@@ -51,10 +61,10 @@ export declare class DataSeriesModel<D extends DataSeriesPoint = DataSeriesPoint
     highLowProvider: HighLowProvider;
     get dataPoints2D(): D[][];
     get dataPoints(): D[];
-    private _dataPointsFlat;
+    protected _dataPointsFlat: D[];
     set dataPoints(points: D[][] | D[]);
-    private _visualPoints;
-    private _visualPointsFlat;
+    protected _visualPoints: V[][];
+    protected _visualPointsFlat: V[];
     dataIdxStart: Index;
     dataIdxEnd: Index;
     get visualPoints(): V[];
@@ -79,6 +89,7 @@ export declare class DataSeriesModel<D extends DataSeriesPoint = DataSeriesPoint
      * @returns {V[]} An array of visual points, each with a centerUnit and close property.
      */
     toVisualPoints(data: D[]): V[];
+    setType(type: DataSeriesType): void;
     /**
      * Recalculates the visual points of the DataSeriesView based on the current data points.
      * The visual points are stored in the visualPoints property of the DataSeriesView.

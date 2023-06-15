@@ -4,24 +4,24 @@
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 import { CanvasBoundsContainer } from '../../canvas/canvas-bounds-container';
+import { CursorHandler } from '../../canvas/cursor.handler';
+import { ChartBaseElement } from '../../chart-base-element';
 import { FullChartConfig } from '../../chart.config';
 import { CanvasModel } from '../../drawers/canvas.model';
 import { DrawingManager } from '../../drawers/drawing-manager';
 import EventBus from '../../event-bus';
-import { ChartBaseElement } from '../../chart-base-element';
 import { ChartResizeHandler } from '../../inputhandlers/chart-resize.handler';
 import { CanvasInputListenerComponent } from '../../inputlisteners/canvas-input-listener.component';
 import { ScaleModel } from '../../model/scale.model';
 import { TimeZoneModel } from '../../model/time-zone.model';
 import { ChartComponent } from '../chart/chart.component';
 import { ChartPanComponent } from '../pan/chart-pan.component';
+import { TimeFormatWithDuration } from './time/parser/time-formats.model';
 import { XAxisLabelsDrawer } from './x-axis-labels.drawer';
 import { XAxisLabelsGenerator } from './x-axis-labels.generator';
 import { XAxisLabelsModel, XAxisLabelsProvider } from './x-axis-labels.model';
 import { XAxisScaleHandler } from './x-axis-scale.handler';
 import { XAxisTimeLabelsDrawer } from './x-axis-time-labels.drawer';
-import { CursorHandler } from '../../canvas/cursor.handler';
-import { TimeFormatWithDuration } from './time/parser/time-formats.model';
 /**
  * X-axis component, contains all x-axis calculation and rendering logic.
  */

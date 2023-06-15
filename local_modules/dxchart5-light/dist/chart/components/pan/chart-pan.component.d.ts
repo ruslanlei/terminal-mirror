@@ -7,7 +7,7 @@ import { CanvasAnimation } from '../../animation/canvas-animation';
 import { CanvasBoundsContainer } from '../../canvas/canvas-bounds-container';
 import { FullChartConfig } from '../../chart.config';
 import EventBus from '../../event-bus';
-import { ChartBaseElement, ChartEnity } from '../../chart-base-element';
+import { ChartBaseElement, ChartEntity } from '../../chart-base-element';
 import { CanvasInputListenerComponent } from '../../inputlisteners/canvas-input-listener.component';
 import { ScaleModel } from '../../model/scale.model';
 import { ChartAreaPanHandler } from '../chart/chart-area-pan.handler';
@@ -19,7 +19,7 @@ export declare class ChartPanComponent extends ChartBaseElement {
     private canvasAnimation;
     private canvasInputListener;
     private mainCanvasParent;
-    chartPanComponents: Array<ChartEnity>;
+    chartPanComponents: Array<ChartEntity>;
     chartAreaPanHandler: ChartAreaPanHandler;
     constructor(eventBus: EventBus, mainScaleModel: ScaleModel, canvasBoundsContainer: CanvasBoundsContainer, config: FullChartConfig, canvasAnimation: CanvasAnimation, canvasInputListener: CanvasInputListenerComponent, mainCanvasParent: Element);
     /**

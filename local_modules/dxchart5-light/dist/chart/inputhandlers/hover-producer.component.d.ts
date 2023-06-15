@@ -87,6 +87,11 @@ export declare class HoverProducerComponent extends ChartBaseElement {
      */
     createAndFireHoverFromCandle(candle: VisualCandle, showCrossTool?: boolean): void;
     /**
+     * Update current hover using a VisualCandle and fires it.
+     * @param {VisualCandle} candle - The VisualCandle object to create the hover from.
+     */
+    updateHover(candle: VisualCandle): void;
+    /**
      * Creates a hover element at the specified coordinates and fires it with the option to show the cross tool
      * @param {CrossEvent} [x,y] - The coordinates where the hover element will be created
      * @param {boolean} [showCrossTool=true] - Whether to show the cross tool or not

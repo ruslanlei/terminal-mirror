@@ -3,7 +3,6 @@
  * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
-import { ChartInstrument } from '../components/chart/chart.component';
 export declare class PriceIncrementsUtils {
     static DEFAULT_INCREMENT: number;
     static DEFAULT_PRECISION: number;
@@ -32,9 +31,9 @@ export declare class PriceIncrementsUtils {
      * @param x - any number
      */
     private static getDigitsInNumber;
-    static getPriceIncrement(price: number, instrument: ChartInstrument): number;
+    static getPriceIncrement(price: number, increments?: number[]): number;
     static getPricePrecision(price: number, precisions: number[]): number;
-    static roundPriceToIncrement(price: number, instrument: ChartInstrument, incrementReferencePrice: number): number;
+    static roundPriceToIncrement(price: number, increments: number[], incrementReferencePrice: number): number;
     static computePrecisions(increments: number[]): number[];
     static calculatePrecision(value: number): number;
     /**

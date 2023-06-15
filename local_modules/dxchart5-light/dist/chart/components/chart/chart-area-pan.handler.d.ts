@@ -5,9 +5,9 @@
  */
 import { CanvasAnimation } from '../../animation/canvas-animation';
 import { CanvasBoundsContainer, HitBoundsTest } from '../../canvas/canvas-bounds-container';
+import { ChartBaseElement } from '../../chart-base-element';
 import { AutoScaleDisableOnDrag, FullChartConfig } from '../../chart.config';
 import EventBus from '../../event-bus';
-import { ChartBaseElement } from '../../chart-base-element';
 import { CanvasInputListenerComponent, Point } from '../../inputlisteners/canvas-input-listener.component';
 import { ScaleModel } from '../../model/scale.model';
 import { DragNDropYComponent } from '../dran-n-drop_helper/drag-n-drop-y.component';
@@ -53,13 +53,18 @@ export declare class ChartAreaPanHandler extends ChartBaseElement {
     wheelTrottleTime: number;
     constructor(bus: EventBus, config: FullChartConfig, scaleModel: ScaleModel, mainCanvasParent: Element, canvasInputListener: CanvasInputListenerComponent, canvasBoundsContainer: CanvasBoundsContainer, canvasAnimation: CanvasAnimation, chartPanComponent: ChartPanComponent);
     /**
-     * This method is used to activate the zoom functionality of the canvas. It extends the doActivate method of the parent class.
      * It observes the wheel event on all panes of the canvas and throttles it to the specified time.
      * It then calculates the zoom sensitivity based on whether the event was triggered by a touchpad or not.
      * If the zoomToCursor configuration is set to true, it calculates the viewport percentage based on the zoomCanvasOffset and canvas width.
      * It then calls the zoomXToPercent method of the scaleModel to zoom in or out based on the zoomIn parameter.
      * If the zoomToCursor configuration is set to false, it calls the zoomXToEnd method of the scaleModel to zoom in or out based on the zoomIn parameter.
      * Finally, it fires the draw event of the bus to redraw the canvas.
+     * @param {WheelEvent} e - Wheel event
+     * @returns {void}
+     */
+    private zoomXHandler;
+    /**
+     * This method is used to activate the zoom functionality of the canvas. It extends the doActivate method of the parent class.
      * @protected
      * @returns {void}
      */

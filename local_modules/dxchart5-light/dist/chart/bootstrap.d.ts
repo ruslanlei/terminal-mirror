@@ -3,25 +3,25 @@
  * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
-import { BarType, ChartColors, ChartConfigComponentsOffsets, FullChartConfig, GridComponentConfig, PartialChartConfig } from './chart.config';
-import ChartContainer from './chart.container';
-import { ChartEvents } from './chart-events';
-import { ChartEnity } from './chart-base-element';
-import EventBus from './event-bus';
 import { CanvasAnimation } from './animation/canvas-animation';
 import { CanvasBoundsContainer } from './canvas/canvas-bounds-container';
 import { ValidatedChartElements } from './canvas/chart-elements';
 import { CursorHandler } from './canvas/cursor.handler';
+import { ChartEntity } from './chart-base-element';
+import { ChartEvents } from './chart-events';
+import { BarType, ChartColors, ChartConfigComponentsOffsets, FullChartConfig, GridComponentConfig, PartialChartConfig } from './chart.config';
+import ChartContainer from './chart.container';
 import { ChartComponent } from './components/chart/chart.component';
 import { ChartModel } from './components/chart/chart.model';
 import { CrossToolComponent } from './components/cross_tool/cross-tool.component';
+import { CrossToolType } from './components/cross_tool/cross-tool.model';
 import { EventsComponent } from './components/events/events.component';
 import { HighlightsComponent } from './components/highlights/highlights.component';
 import { Highlight } from './components/highlights/hightlights.model';
 import { NavigationMapComponent } from './components/navigation_map/navigation-map.component';
 import { ChartPanComponent } from './components/pan/chart-pan.component';
-import { PaneFormatters } from './components/pane/pane.component';
 import { PaneManager } from './components/pane/pane-manager.component';
+import { PaneFormatters } from './components/pane/pane.component';
 import { SnapshotComponent } from './components/snapshot/snapshot.component';
 import { VolumesComponent } from './components/volumes/volumes.component';
 import { WaterMarkComponent } from './components/watermark/water-mark.component';
@@ -29,6 +29,7 @@ import { XAxisComponent } from './components/x_axis/x-axis.component';
 import { YAxisComponent } from './components/y_axis/y-axis.component';
 import { CanvasModel } from './drawers/canvas.model';
 import { DrawingManager } from './drawers/drawing-manager';
+import EventBus from './event-bus';
 import { ChartResizeHandler } from './inputhandlers/chart-resize.handler';
 import { CrossEventProducerComponent } from './inputhandlers/cross-event-producer.component';
 import { HoverProducerComponent } from './inputhandlers/hover-producer.component';
@@ -37,7 +38,6 @@ import { HitTestCanvasModel } from './model/hit-test-canvas.model';
 import { ScaleModel } from './model/scale.model';
 import { TimeZoneModel } from './model/time-zone.model';
 import { DeepPartial, tobject } from './utils';
-import { CrossToolType } from './components/cross_tool/cross-tool.model';
 export type FitType = 'studies' | 'orders' | 'positions';
 export default class ChartBootstrap implements ChartContainer {
     id: string;
@@ -47,13 +47,13 @@ export default class ChartBootstrap implements ChartContainer {
     elements: ValidatedChartElements;
     components: Array<any>;
     events: ChartEvents;
-    chartComponents: Array<ChartEnity>;
+    chartComponents: Array<ChartEntity>;
     xAxisComponent: XAxisComponent;
     yAxisComponent: YAxisComponent;
     watermarkComponent: WaterMarkComponent;
     snapshotComponent: SnapshotComponent;
     navigationMapComponent: NavigationMapComponent;
-    userInputListenerComponents: Array<ChartEnity>;
+    userInputListenerComponents: Array<ChartEntity>;
     drawingManager: DrawingManager;
     crossEventProducer: CrossEventProducerComponent;
     cursorHandler: CursorHandler;
@@ -61,6 +61,7 @@ export default class ChartBootstrap implements ChartContainer {
     scaleModel: ScaleModel;
     timeZoneModel: TimeZoneModel;
     chartModel: ChartModel;
+    backgroundCanvasModel: CanvasModel;
     mainCanvasModel: CanvasModel;
     dataSeriesCanvasModel: CanvasModel;
     overSeriesCanvasModel: CanvasModel;
@@ -255,7 +256,7 @@ export default class ChartBootstrap implements ChartContainer {
      * @param initComponent - a function for component init
      * @param onComponentInit - will be called after component init
      */
-    registerComponent<C extends ChartEnity>(initComponent: (chartInstance: ChartBootstrap) => C, onComponentInit?: (component: C) => void): void;
+    registerComponent<C extends ChartEntity>(initComponent: (chartInstance: ChartBootstrap) => C, onComponentInit?: (component: C) => void): void;
     /**
      * Registers number formatters for pane
      * @param uuid - pane's id

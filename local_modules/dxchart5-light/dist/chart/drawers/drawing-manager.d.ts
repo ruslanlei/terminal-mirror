@@ -6,34 +6,8 @@
 import EventBus from '../event-bus';
 import { ChartResizeHandler } from '../inputhandlers/chart-resize.handler';
 export declare const HIT_TEST_PREFIX = "HIT_TEST_";
-export declare enum DrawerType {
-    MAIN_BACKGROUND = "MAIN_BACKGROUND",
-    MAIN_CLEAR = "MAIN_CLEAR",
-    HIT_TEST_CLEAR = "HIT_TEST_CLEAR",
-    YAXIS_CLEAR = "YAXIS_CLEAR",
-    SERIES_CLEAR = "SERIES_CLEAR",
-    OVER_SERIES_CLEAR = "OVER_SERIES_CLEAR",
-    HIT_TEST_DRAWINGS = "HIT_TEST_DRAWINGS",
-    GRID = "GRID",
-    VOLUMES = "VOLUMES",
-    UNDERLAY_VOLUMES_AREA = "UNDERLAY_VOLUMES_AREA",
-    X_AXIS = "X_AXIS",
-    Y_AXIS = "Y_AXIS",
-    HIGH_LOW = "HIGH_LOW",
-    DRAWINGS = "DRAWINGS",
-    DATA_SERIES = "DATA_SERIES",
-    N_MAP_CHART = "N_MAP_CHART",
-    PL_CHART = "PL_CHART",
-    WATERMARK = "WATERMARK",
-    EMPTY_CHART = "EMPTY_CHART",
-    OFFLINE_CHART = "OFFLINE_CHART",
-    LABELS = "LABELS",
-    EVENTS = "EVENTS",
-    HIT_TEST_EVENTS = "HIT_TEST_EVENTS",
-    PL_ZERO_LINE = "ZERO_LINE",
-    PL_ZERO_LINE_BACKGROUND = "PL_ZERO_LINE_BACKGROUND",
-    CROSS_TOOL = "CROSS_TOOL"
-}
+declare const drawerTypes: readonly ["MAIN_BACKGROUND", "MAIN_CLEAR", "HIT_TEST_CLEAR", "YAXIS_CLEAR", "SERIES_CLEAR", "OVER_SERIES_CLEAR", "HIT_TEST_DRAWINGS", "GRID", "VOLUMES", "UNDERLAY_VOLUMES_AREA", "X_AXIS", "Y_AXIS", "HIGH_LOW", "DRAWINGS", "DATA_SERIES", "N_MAP_CHART", "PL_CHART", "WATERMARK", "EMPTY_CHART", "OFFLINE_CHART", "LABELS", "EVENTS", "HIT_TEST_EVENTS", "ZERO_LINE", "PL_ZERO_LINE_BACKGROUND", "CROSS_TOOL"];
+export type DrawerType = typeof drawerTypes[number];
 /**
  * Manages the drawing process.
  * Can re-order drawers to make one be on top of the other.
@@ -55,8 +29,13 @@ export declare class DrawingManager {
     redrawCanvasesImmediate(): void;
     drawLastBar(): void;
     forceDraw(canvasIds?: Array<string>): void;
+    /**
+     * Indicates whether it is possible to draw chart or not.
+     * @returns {boolean} true if chart is drawable
+     */
+    isDrawable(): boolean;
     drawHitTestOnly(): void;
-    addDrawer(drawer: Drawer, name: string): void;
+    addDrawer(drawer: Drawer, name?: string): void;
     addDrawerAfter(drawer: Drawer, newDrawerName: string, drawerToPutAfterName: string): void;
     addDrawerBefore(drawer: Drawer, newDrawerName: string, drawerToPutBeforeName: string): boolean;
     getDrawerByName(name: string): Drawer;
@@ -79,3 +58,4 @@ export interface Drawer {
 export declare class DynamicDrawerType {
     static paneResizer(id: string): string;
 }
+export {};

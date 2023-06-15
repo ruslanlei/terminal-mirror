@@ -4,22 +4,22 @@
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 import { Subject } from 'rxjs';
-import { FullChartConfig } from '../../chart.config';
-import { ChartBaseElement, ChartEnity } from '../../chart-base-element';
-import EventBus from '../../event-bus';
 import { CanvasAnimation } from '../../animation/canvas-animation';
 import { CanvasBoundsContainer } from '../../canvas/canvas-bounds-container';
 import { CursorHandler } from '../../canvas/cursor.handler';
+import { ChartBaseElement, ChartEntity } from '../../chart-base-element';
+import { FullChartConfig } from '../../chart.config';
 import { CanvasModel } from '../../drawers/canvas.model';
 import { DrawingManager } from '../../drawers/drawing-manager';
+import EventBus from '../../event-bus';
 import { CrossEventProducerComponent } from '../../inputhandlers/cross-event-producer.component';
 import { CanvasInputListenerComponent } from '../../inputlisteners/canvas-input-listener.component';
 import { ScaleModel } from '../../model/scale.model';
 import { AtLeastOne } from '../../utils/types.utils';
 import { ChartPanComponent } from '../pan/chart-pan.component';
 import { BarResizerComponent } from '../resizer/bar-resizer.component';
-import { PaneComponent, PaneFormatters } from './pane.component';
 import { PaneHitTestController } from './pane-hit-test.controller';
+import { PaneComponent, PaneFormatters } from './pane.component';
 interface PaneCreationOptions {
     scaleModel: ScaleModel;
     order: number;
@@ -44,8 +44,12 @@ export declare class PaneManager extends ChartBaseElement {
     private mainCanvasModel;
     paneComponents: Record<string, PaneComponent>;
     panesChangedSubject: Subject<Record<string, PaneComponent>>;
-    hitTestContoller: PaneHitTestController;
-    constructor(userInputListenerComponents: ChartEnity[], eventBus: EventBus, mainScaleModel: ScaleModel, canvasBoundsContainer: CanvasBoundsContainer, config: FullChartConfig, canvasAnimation: CanvasAnimation, canvasInputListener: CanvasInputListenerComponent, drawingManager: DrawingManager, dataSeriesCanvasModel: CanvasModel, cursorHandler: CursorHandler, crossEventProducer: CrossEventProducerComponent, chartPanComponent: ChartPanComponent, mainCanvasModel: CanvasModel);
+    hitTestController: PaneHitTestController;
+    /**
+     * Returns order of panes in the chart from top to bottom.
+     */
+    get panesOrder(): string[];
+    constructor(userInputListenerComponents: ChartEntity[], eventBus: EventBus, mainScaleModel: ScaleModel, canvasBoundsContainer: CanvasBoundsContainer, config: FullChartConfig, canvasAnimation: CanvasAnimation, canvasInputListener: CanvasInputListenerComponent, drawingManager: DrawingManager, dataSeriesCanvasModel: CanvasModel, cursorHandler: CursorHandler, crossEventProducer: CrossEventProducerComponent, chartPanComponent: ChartPanComponent, mainCanvasModel: CanvasModel);
     /**
      * Adds a resizer to the canvas bounds container for the given uuid.
      * @param {string} uuid - The uuid of the pane to which the resizer is to be added.

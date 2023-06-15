@@ -38,8 +38,8 @@ export declare const eqeqeq: <T>(a: T, b: T) => boolean;
  * @param compareFn
  */
 export declare const arraySubtract: <T>(source: T[], target: T[], compareFn: (a: T, b: T) => boolean) => T[];
-export declare function moveInArray<T>(arr: Array<T>, start: number, end: number): Array<T>;
-export declare function moveInArrayMutable<T>(arr: Array<T>, start: number, end: number): Array<T>;
+export declare function moveInArray<T>(arr: Array<T>, from: number, to: number): Array<T>;
+export declare function moveInArrayMutable<T>(arr: Array<T>, _from: number, _to: number): Array<T>;
 type ItemFinder<T> = (item: T) => boolean;
 /**
  * Replaces item in array with another one.

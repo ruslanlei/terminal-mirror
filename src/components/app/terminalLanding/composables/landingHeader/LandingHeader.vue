@@ -37,7 +37,7 @@
           {{ t('auth.signUp.label') }}
         </Button>
       </Link>
-      <!--      <LanguageSelect />-->
+      <LanguageSelect />
     </div>
   </header>
 </template>

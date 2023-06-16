@@ -65,8 +65,6 @@ const fixSumOfTakeProfits = async (borrowFromFirst: boolean) => {
 
   const difference = subtract(sumOfTakeProfits, props.orderQuantity);
 
-  console.log('difference', difference);
-
   const donorTakeProfit = borrowFromFirst
     ? localValue.value[0]
     : localValue.value[localValue.value.length - 1];

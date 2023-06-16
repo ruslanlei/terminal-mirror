@@ -46,9 +46,9 @@ export const useOrders = (
     const executedOrdersResponse = await getorderList('executed');
 
     if (!response.result) {
-      processServerErrors(response.data, t('order.failedToGetList'));
+      processServerErrors(response.data, t, t('order.failedToGetList'));
     } else if (!executedOrdersResponse.result) {
-      processServerErrors(executedOrdersResponse.data, t('order.failedToGetList'));
+      processServerErrors(executedOrdersResponse.data, t, t('order.failedToGetList'));
     }
 
     const filteredExecutedOrders = filter(
@@ -75,7 +75,7 @@ export const useOrders = (
     ]);
 
     if (!response.result) {
-      processServerErrors(response.data, t('order.failedToGetList'));
+      processServerErrors(response.data, t, t('order.failedToGetList'));
     }
 
     closedOrders.value = flatten(response.data);
@@ -88,7 +88,7 @@ export const useOrders = (
     const response = await createOrder(dto);
 
     if (!response.result) {
-      processServerErrors(response.data, t('order.failedToCreate'));
+      processServerErrors(response.data, t, t('order.failedToCreate'));
     }
 
     return response;
@@ -125,7 +125,7 @@ export const useOrders = (
     });
 
     if (!response.result) {
-      processServerErrors(response.data, t('order.failedToCreateStopLoss'));
+      processServerErrors(response.data, t, t('order.failedToCreateStopLoss'));
     }
 
     return response;

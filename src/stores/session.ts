@@ -75,7 +75,7 @@ export const useSessionStore = defineStore('session', () => {
       setToken(data.key, !remember);
       await profileStore.fetchAllProfileData();
     } else {
-      processServerErrors(data, t('auth.signIn.failed'));
+      processServerErrors(data, t, t('auth.signIn.failed'));
     }
   };
 
@@ -88,7 +88,7 @@ export const useSessionStore = defineStore('session', () => {
         duration: 5000,
       });
     } else {
-      processServerErrors(response.data, t('auth.signUp.failed'));
+      processServerErrors(response.data, t, t('auth.signUp.failed'));
     }
 
     return response;

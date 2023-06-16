@@ -79,7 +79,7 @@ export const usePairs = () => {
     const { result, data } = await getFavorites();
 
     if (!result) {
-      processServerErrors(data);
+      processServerErrors(data, t);
       return;
     }
 

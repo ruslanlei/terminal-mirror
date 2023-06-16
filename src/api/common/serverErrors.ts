@@ -7,6 +7,7 @@ export type ErrorResponse = {
 
 export const processServerErrors = (
   errorResponse: ErrorResponse | any,
+  t?: (message: string) => string,
   fallbackError?: string,
 ): FormErrorsList => {
   const toastStore = useToastStore();
@@ -16,7 +17,7 @@ export const processServerErrors = (
   if (errorResponse?.non_field_errors) {
     errorResponse.non_field_errors.forEach((error: string) => {
       toastStore.showDanger({
-        text: error,
+        text: t ? t(`serverError["${error}"]`) : error,
         duration: 6000,
       });
     });

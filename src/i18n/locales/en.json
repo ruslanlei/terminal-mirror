@@ -1,4 +1,13 @@
 {
+  "serverError": {
+    "Unable to log in with provided credentials.": "Unable to log in with provided credentials.",
+    "Authentication credentials were not provided.": "Authentication credentials were not provided.",
+    "Password reset e-mail has been sent.": "Password reset e-mail has been sent.",
+    "This password is too short. It must contain at least 8 characters.": "This password is too short. It must contain at least 8 characters.",
+    "ok": "ok",
+    "Not found.": "Not found.",
+    "Successfully logged out": "Successfully logged out"
+  },
   "common": {
     "search": "Search",
     "save": "Save",

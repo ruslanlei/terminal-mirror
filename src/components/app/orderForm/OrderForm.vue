@@ -175,10 +175,10 @@ const settingsTabs = computed<Tab<OrderFormTab>[]>(() => [
       state: 'danger2TextColor',
     } : {}),
   },
-  {
-    label: t('order.additionalSettings.slx'),
-    value: 'slx',
-  },
+  // {
+  //   label: t('order.additionalSettings.slx'),
+  //   value: 'slx',
+  // },
 ]);
 
 const showBlockingCap = computed(

@@ -45,8 +45,8 @@ import { useLocalValue } from '@/hooks/useLocalValue';
 import { TakeProfitListEmit, TakeProfitListProps } from '@/components/app/takeProfitList/index';
 import { subtract } from '@/utils/number';
 import { reduceTakeProfitsToQuantitiesSum } from '@/helpers/math/formulas/takeProfit';
-import { awaitFrame } from '@/utils/window';
 import { TakeProfit } from '@/api/types/order';
+import { nextTick } from 'vue';
 
 const props = defineProps<TakeProfitListProps>();
 
@@ -63,25 +63,63 @@ const fixSumOfTakeProfits = async (borrowFromFirst: boolean) => {
 
   if (sumOfTakeProfits === props.orderQuantity) return;
 
-  await awaitFrame();
-
   const difference = subtract(sumOfTakeProfits, props.orderQuantity);
 
   const donorTakeProfit = borrowFromFirst
     ? localValue.value[0]
     : localValue.value[localValue.value.length - 1];
 
+  // INFO:
+  //  if possible to borrow from one take profit
   if (donorTakeProfit.quantity > difference) {
     donorTakeProfit.quantity = subtract(donorTakeProfit.quantity, difference);
     return;
   }
 
-  if (takeProfitsAmount.value > 1) {
-    takeProfitsAmount.value = subtract(takeProfitsAmount.value, 1);
+  // INFO:
+  //  if borrowing from last -
+  //  iteration from the last
+  localValue.value = (
+    borrowFromFirst
+      ? localValue.value
+      : localValue.value.slice().reverse()
+  ).reduce(
+    ({ updatedValue, quantityRemainder }, takeProfit) => {
+      if (!quantityRemainder) {
+        updatedValue[borrowFromFirst ? 'push' : 'shift'](takeProfit);
 
-    const deleteFrom = borrowFromFirst ? 0 : -1;
-    localValue.value.splice(deleteFrom, 1);
-  }
+        return {
+          updatedValue,
+          quantityRemainder,
+        };
+      }
+
+      if (takeProfit.quantity > quantityRemainder) {
+        updatedValue[borrowFromFirst ? 'push' : 'shift']({
+          ...takeProfit,
+          quantity: subtract(takeProfit.quantity, quantityRemainder),
+        });
+
+        return {
+          updatedValue,
+          quantityRemainder: 0,
+        };
+      }
+
+      return {
+        updatedValue,
+        quantityRemainder: subtract(quantityRemainder, takeProfit.quantity),
+      };
+    },
+    {
+      updatedValue: [] as TakeProfit[],
+      quantityRemainder: difference,
+    },
+  ).updatedValue;
+
+  await nextTick();
+
+  takeProfitsAmount.value = localValue.value.length;
 };
 
 const onTakeProfitInput = (

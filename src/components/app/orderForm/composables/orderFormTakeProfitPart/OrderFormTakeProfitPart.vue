@@ -31,7 +31,6 @@
         :base-currency-decimals="baseCurrencyDecimals"
         :base-currency-step="baseCurrencyStep"
         :order-side="orderSide"
-        :balance="balance"
       />
     </template>
     <template #ratio>

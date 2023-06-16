@@ -3,7 +3,6 @@
     <div :class="$style.price">
       <NumberInput
         v-model="localPrice"
-        type="number"
         :class="$style.input"
         :state="null"
         save-on="blur"
@@ -16,7 +15,6 @@
       />
       <NumberInput
         v-model="percentOfProfitValue"
-        type="number"
         save-on="blur"
         :step="0.01"
         :min="0"
@@ -31,7 +29,6 @@
     <div :class="$style.amount">
       <NumberInput
         v-model="localQuantity"
-        type="number"
         save-on="blur"
         :min="baseCurrencyStep"
         :max="orderQuantity"
@@ -47,7 +44,6 @@
       />
       <NumberInput
         v-model="percentOfQuantity"
-        type="number"
         save-on="blur"
         :min="1"
         :max="100"

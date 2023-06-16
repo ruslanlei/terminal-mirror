@@ -203,15 +203,14 @@ const onFocus = (event: InputEvent) => {
   emit('focus', event);
 };
 
-const onBlur = () => {
+const onBlur = (event: InputEvent) => {
   isFocused.value = false;
 
   if (props.saveOn === 'blur' && field.value) {
     saveValue(Number(field.value.value), props.normalizer);
   }
 
-  // FIXME: find reason why after this event input stop working
-  // emit('blur', event);
+  emit('blur', event);
 };
 
 const onKeydown = (event: KeyboardEvent) => {

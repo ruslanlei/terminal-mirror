@@ -65,6 +65,8 @@ const fixSumOfTakeProfits = async (borrowFromFirst: boolean) => {
 
   const difference = subtract(sumOfTakeProfits, props.orderQuantity);
 
+  console.log('difference', difference);
+
   const donorTakeProfit = borrowFromFirst
     ? localValue.value[0]
     : localValue.value[localValue.value.length - 1];
@@ -86,7 +88,7 @@ const fixSumOfTakeProfits = async (borrowFromFirst: boolean) => {
   ).reduce(
     ({ updatedValue, quantityRemainder }, takeProfit) => {
       if (!quantityRemainder) {
-        updatedValue[borrowFromFirst ? 'push' : 'shift'](takeProfit);
+        updatedValue[borrowFromFirst ? 'push' : 'unshift'](takeProfit);
 
         return {
           updatedValue,
@@ -95,7 +97,7 @@ const fixSumOfTakeProfits = async (borrowFromFirst: boolean) => {
       }
 
       if (takeProfit.quantity > quantityRemainder) {
-        updatedValue[borrowFromFirst ? 'push' : 'shift']({
+        updatedValue[borrowFromFirst ? 'push' : 'unshift']({
           ...takeProfit,
           quantity: subtract(takeProfit.quantity, quantityRemainder),
         });

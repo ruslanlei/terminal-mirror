@@ -7,7 +7,7 @@
       <FormNumberInput
         name="price"
         state="defaultColor"
-        :min="0"
+        :min="0.000001"
         :step="0.001"
         save-on="blur"
         :append-min-width="35"

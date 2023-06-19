@@ -47,6 +47,7 @@ export const useEmulatorStore = defineStore('emulator', () => {
   const {
     activePair,
     activePairData,
+    activeOrderForPair,
   } = storeToRefs(marketStore);
 
   const chartDataStore = useChartDataStore();
@@ -272,9 +273,9 @@ export const useEmulatorStore = defineStore('emulator', () => {
         tiks: 1,
       });
 
-      const isLimitOrderExecuted = data.events?.some(
+      const isLimitOrderExecuted = data.events?.find(
         isExactOrder('limit', 'executed'),
-      );
+      )?.position === 0;
 
       if (!result) {
         isSimulated = true;

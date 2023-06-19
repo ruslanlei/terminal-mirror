@@ -8,7 +8,7 @@ export const convertQuoteBalanceToBase = curry((
   baseCurrencyPrice: number,
   quoteCurrencyBalance: number,
 ) => divideRight(
-  baseCurrencyPrice,
+  (baseCurrencyPrice || 1),
   quoteCurrencyBalance,
 ));
 

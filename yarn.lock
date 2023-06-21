@@ -48,9 +48,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@dx-private/dxchart5-light@file:./local_modules/dxchart5-light/::locator=terminal%40workspace%3A.":
+"@dx-private/dxchart5-light@file:../../local_modules/dxchart5-light/::locator=%40terminal%2Fweb-app%40workspace%3Aapps%2Fweb-app":
   version: 5.4.0
-  resolution: "@dx-private/dxchart5-light@file:./local_modules/dxchart5-light/#./local_modules/dxchart5-light/::hash=5e3d2d&locator=terminal%40workspace%3A."
+  resolution: "@dx-private/dxchart5-light@file:../../local_modules/dxchart5-light/#../../local_modules/dxchart5-light/::hash=5e3d2d&locator=%40terminal%2Fweb-app%40workspace%3Aapps%2Fweb-app"
   dependencies:
     color: ^3.1.2
     date-fns: ^2.30.0
@@ -60,9 +60,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@dx-private/dxchart5-modules@file:./local_modules/dxchart5-modules/::locator=terminal%40workspace%3A.":
+"@dx-private/dxchart5-modules@file:../../local_modules/dxchart5-modules/::locator=%40terminal%2Fweb-app%40workspace%3Aapps%2Fweb-app":
   version: 5.4.0
-  resolution: "@dx-private/dxchart5-modules@file:./local_modules/dxchart5-modules/#./local_modules/dxchart5-modules/::hash=b8c17d&locator=terminal%40workspace%3A."
+  resolution: "@dx-private/dxchart5-modules@file:../../local_modules/dxchart5-modules/#../../local_modules/dxchart5-modules/::hash=b8c17d&locator=%40terminal%2Fweb-app%40workspace%3Aapps%2Fweb-app"
   dependencies:
     color: ^3.1.2
   peerDependencies:
@@ -72,9 +72,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@dx-private/dxstudies@file:./local_modules/dxstudies/::locator=terminal%40workspace%3A.":
+"@dx-private/dxstudies@file:../../local_modules/dxstudies/::locator=%40terminal%2Fweb-app%40workspace%3Aapps%2Fweb-app":
   version: 47.0.1684239539334
-  resolution: "@dx-private/dxstudies@file:./local_modules/dxstudies/#./local_modules/dxstudies/::hash=7df240&locator=terminal%40workspace%3A."
+  resolution: "@dx-private/dxstudies@file:../../local_modules/dxstudies/#../../local_modules/dxstudies/::hash=7df240&locator=%40terminal%2Fweb-app%40workspace%3Aapps%2Fweb-app"
   dependencies:
     kotlin: 1.8.20
   checksum: 192679ed8e3d8c497b90137ac67ab0cd922d98c33d665ee6aa96601aae4be266ce55dd6ac5681075e2ab964a66dcc6fb59450b0575443f86c10d476ad2a86e09
@@ -416,6 +416,82 @@ __metadata:
   checksum: 6bc41f22b1a0f1efec3043899e4d3b6b1497b3dea4d94292d8f83b4cf07a1073ecbaedd562a22d11913ff7659f459677b01b09e9598a98936e746780ecc93a12
   languageName: node
   linkType: hard
+
+"@terminal/monorepo@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "@terminal/monorepo@workspace:."
+  dependencies:
+    "@typescript-eslint/eslint-plugin": ^5.39.0
+    "@typescript-eslint/parser": ^5.39.0
+    eslint: 8.22.0
+    eslint-config-airbnb-base: ^15.0.0
+    eslint-import-resolver-alias: ^1.1.2
+    eslint-plugin-import: ^2.26.0
+    eslint-plugin-vue: ^9.8.0
+    eslint-plugin-vuejs-accessibility: ^1.2.0
+    turbo: ^1.10.4
+  languageName: unknown
+  linkType: soft
+
+"@terminal/web-app@workspace:apps/web-app":
+  version: 0.0.0-use.local
+  resolution: "@terminal/web-app@workspace:apps/web-app"
+  dependencies:
+    "@dx-private/dxchart5-light": "file:../../local_modules/dxchart5-light/"
+    "@dx-private/dxchart5-modules": "file:../../local_modules/dxchart5-modules/"
+    "@dx-private/dxstudies": "file:../../local_modules/dxstudies/"
+    "@types/animejs": ^3.1.7
+    "@types/d3": ^7.4.0
+    "@types/dompurify": ^3.0.1
+    "@types/lodash": ^4.14.192
+    "@types/node": ^18.15.11
+    "@types/numeral": ^2.0.2
+    "@types/qrcode-svg": ^1.1.1
+    "@types/uuid": ^9.0.1
+    "@typescript-eslint/eslint-plugin": ^5.57.1
+    "@typescript-eslint/parser": ^5.57.1
+    "@vitejs/plugin-vue": ^4.1.0
+    "@vueuse/core": ^9.13.0
+    animejs: ^3.2.1
+    axios: ^1.3.5
+    collect.js: ^4.36.1
+    d3: ^7.8.4
+    dayjs: ^1.11.7
+    dompurify: ^3.0.1
+    eslint: 8.22.0
+    eslint-config-airbnb-base: ^15.0.0
+    eslint-import-resolver-alias: ^1.1.2
+    eslint-plugin-import: ^2.27.5
+    eslint-plugin-vue: ^9.10.0
+    eslint-plugin-vuejs-accessibility: ^2.1.0
+    lightweight-charts: ^4.0.1
+    lodash: ^4.17.21
+    lottie-web: ^5.10.2
+    maska: ^2.1.7
+    numeral: ^2.0.6
+    pinia: ^2.0.33
+    qrcode-svg: ^1.1.0
+    rambda: ^7.5.0
+    rollup-plugin-visualizer: ^5.9.0
+    rxjs: ^7.8.0
+    sass: ^1.60.0
+    swiper: ^9.2.0
+    typescript: ^4.9.5
+    uuid: ^9.0.0
+    vite: ^4.2.1
+    vite-plugin-compression: ^0.5.1
+    vite-plugin-eslint: ^1.8.1
+    vite-plugin-pages: ^0.29.0
+    vite-plugin-vue-type-imports: ^0.2.4
+    vite-svg-loader: ^4.0.0
+    vue: ^3.2.47
+    vue-flatpickr-component: ^11.0.3
+    vue-i18n: ^9.2.2
+    vue-router: ^4.1.6
+    vue-tsc: ^1.2.0
+    yup: ^1.0.2
+  languageName: unknown
+  linkType: soft
 
 "@tootallnate/once@npm:2":
   version: 2.0.0
@@ -829,7 +905,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/eslint-plugin@npm:^5.57.1":
+"@typescript-eslint/eslint-plugin@npm:^5.39.0, @typescript-eslint/eslint-plugin@npm:^5.57.1":
   version: 5.60.0
   resolution: "@typescript-eslint/eslint-plugin@npm:5.60.0"
   dependencies:
@@ -853,7 +929,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/parser@npm:^5.57.1":
+"@typescript-eslint/parser@npm:^5.39.0, @typescript-eslint/parser@npm:^5.57.1":
   version: 5.60.0
   resolution: "@typescript-eslint/parser@npm:5.60.0"
   dependencies:
@@ -960,30 +1036,30 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@volar/language-core@npm:1.7.6":
-  version: 1.7.6
-  resolution: "@volar/language-core@npm:1.7.6"
+"@volar/language-core@npm:1.7.8":
+  version: 1.7.8
+  resolution: "@volar/language-core@npm:1.7.8"
   dependencies:
-    "@volar/source-map": 1.7.6
-  checksum: e616784020e5ce5cbedde8f45bf8ff4cecce471738b233408d27cad9cb0593e0ea6e53fcd7773e4abc1c722485b97e1dcb41b9d18996750fd292e8dd2ad2729d
+    "@volar/source-map": 1.7.8
+  checksum: 3a3f1c670b83b47f0dda87fe270c6aa3f5311fe0ecb3eb955cd2f3b1171c0759cd9459c56ef2cd0895938f5f22e40a8d9b5339193ebed9f2a33bcf9d06692645
   languageName: node
   linkType: hard
 
-"@volar/source-map@npm:1.7.6":
-  version: 1.7.6
-  resolution: "@volar/source-map@npm:1.7.6"
+"@volar/source-map@npm:1.7.8":
+  version: 1.7.8
+  resolution: "@volar/source-map@npm:1.7.8"
   dependencies:
     muggle-string: ^0.3.1
-  checksum: a2bc742bf0093b9addf5108333f8c1add79b72063ba4e0e8f921d2dca211089742ab06d4d159d75da8b09793be9a23eb7dce251c02cb9d3eb8726d2bad54e4cc
+  checksum: 7231b184321dfed0c025a6b43afd649695d5544aa5594d3d04f72eb988532bbb7ab148c35fece0130da15bb090686bf95f427e94990f96366678dead4d407f30
   languageName: node
   linkType: hard
 
-"@volar/typescript@npm:1.7.6":
-  version: 1.7.6
-  resolution: "@volar/typescript@npm:1.7.6"
+"@volar/typescript@npm:1.7.8":
+  version: 1.7.8
+  resolution: "@volar/typescript@npm:1.7.8"
   dependencies:
-    "@volar/language-core": 1.7.6
-  checksum: 3c485699c4da1fd61cd382b9bf51caac9f1cd41ae781d914db0426ba25f4bb348aa2dfe1a01d5f5e33eff2ee02ea4d050a7ee98e3563b9d40aae20d4b9300d8f
+    "@volar/language-core": 1.7.8
+  checksum: c151335cb70aaf394e0a01ea85a4cb59145b8213a92ab84b378029a9a20fd3921383ef784f7025d1dc0266912f40deb446fcde8f5c6987d12f95c5db7b021a44
   languageName: node
   linkType: hard
 
@@ -1044,12 +1120,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vue/language-core@npm:1.8.0":
-  version: 1.8.0
-  resolution: "@vue/language-core@npm:1.8.0"
+"@vue/language-core@npm:1.8.1":
+  version: 1.8.1
+  resolution: "@vue/language-core@npm:1.8.1"
   dependencies:
-    "@volar/language-core": 1.7.6
-    "@volar/source-map": 1.7.6
+    "@volar/language-core": 1.7.8
+    "@volar/source-map": 1.7.8
     "@vue/compiler-dom": ^3.3.0
     "@vue/reactivity": ^3.3.0
     "@vue/shared": ^3.3.0
@@ -1061,7 +1137,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: b1d893a401296042592308e3a0ef8d8ad2dc02d48a8b8c84b2fd4b48d5be71eca67a98e6a97b4623fe3f493e56df955ed515af240f02cdf95c2d7c39c0e8a0d8
+  checksum: e6e764021ea30c1630e6b33a3d10eb12983a583731bc7fda740fd2647192aa9b562d6be32f47322d017d04b846cba0ccbcc65e6e71782d13f686392c9192a4b3
   languageName: node
   linkType: hard
 
@@ -1127,13 +1203,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vue/typescript@npm:1.8.0":
-  version: 1.8.0
-  resolution: "@vue/typescript@npm:1.8.0"
+"@vue/typescript@npm:1.8.1":
+  version: 1.8.1
+  resolution: "@vue/typescript@npm:1.8.1"
   dependencies:
-    "@volar/typescript": 1.7.6
-    "@vue/language-core": 1.8.0
-  checksum: c1788c5669ddaa6317676913c482f5a6c192f153349e5fafd4883149066f85dea980a340a664ffc1afbe24586736317a3998b4d715439cdd81fd5beafeced2bf
+    "@volar/typescript": 1.7.8
+    "@vue/language-core": 1.8.1
+  checksum: 4c36968663b76f5cc48c983698a93589d3c123e47664286c788b6e5e2fa9309c6e1b7b7577108d2548d7905d42bf22a691eaacdeb6b3db9c233a67789a62199a
   languageName: node
   linkType: hard
 
@@ -1303,7 +1379,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"aria-query@npm:>=5.0.0":
+"aria-query@npm:>=5.0.0, aria-query@npm:^5.0.0":
   version: 5.2.1
   resolution: "aria-query@npm:5.2.1"
   dependencies:
@@ -2528,7 +2604,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-import@npm:^2.27.5":
+"eslint-plugin-import@npm:^2.26.0, eslint-plugin-import@npm:^2.27.5":
   version: 2.27.5
   resolution: "eslint-plugin-import@npm:2.27.5"
   dependencies:
@@ -2553,7 +2629,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-vue@npm:^9.10.0":
+"eslint-plugin-vue@npm:^9.10.0, eslint-plugin-vue@npm:^9.8.0":
   version: 9.15.0
   resolution: "eslint-plugin-vue@npm:9.15.0"
   dependencies:
@@ -2567,6 +2643,19 @@ __metadata:
   peerDependencies:
     eslint: ^6.2.0 || ^7.0.0 || ^8.0.0
   checksum: e2f135712e186c878240447a2292277a2339a374c1960b6044de5860f277de6af09587df52d559e87b795b07f23c764ccd44a7e1ab4ca65d835546b689fa25b8
+  languageName: node
+  linkType: hard
+
+"eslint-plugin-vuejs-accessibility@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "eslint-plugin-vuejs-accessibility@npm:1.2.0"
+  dependencies:
+    aria-query: ^5.0.0
+    emoji-regex: ^10.0.0
+    vue-eslint-parser: ^9.0.1
+  peerDependencies:
+    eslint: ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0
+  checksum: 2a2665f8e943a0af643c77630c8e836d0e80a2e6279cf2c170a62919f459fdb680dd00f96cb70b3561a0c34dabbf6336671bb9a7dfeeb0945009914db131c245
   languageName: node
   linkType: hard
 
@@ -3064,8 +3153,8 @@ __metadata:
   linkType: hard
 
 "glob@npm:^10.2.2":
-  version: 10.2.7
-  resolution: "glob@npm:10.2.7"
+  version: 10.3.0
+  resolution: "glob@npm:10.3.0"
   dependencies:
     foreground-child: ^3.1.0
     jackspeak: ^2.0.3
@@ -3074,7 +3163,7 @@ __metadata:
     path-scurry: ^1.7.0
   bin:
     glob: dist/cjs/src/bin.js
-  checksum: 555205a74607d6f8d9874ba888924b305b5ea1abfaa2e9ccb11ac713d040aac7edbf7d8702a2f4a1cd81b2d7666412170ce7ef061d33cddde189dae8c1a1a054
+  checksum: 6fa4ac0a86ffec1c5715a2e6fbdd63e1e7f1c2c8f5db08cc3256cdfcb81093678e7c80a3d100b502a1b9d141369ecf87bc24fe2bcb72acec7b14626d358a4eb0
   languageName: node
   linkType: hard
 
@@ -4598,15 +4687,15 @@ __metadata:
   linkType: hard
 
 "sass@npm:^1.60.0":
-  version: 1.63.4
-  resolution: "sass@npm:1.63.4"
+  version: 1.63.6
+  resolution: "sass@npm:1.63.6"
   dependencies:
     chokidar: ">=3.0.0 <4.0.0"
     immutable: ^4.0.0
     source-map-js: ">=0.6.2 <2.0.0"
   bin:
     sass: sass.js
-  checksum: 12bde5beff85a7018157d90c8b9d5aec8b56832f89fcfeca146f10936eecf97e669d22fd41f812b3407ed259bbb114d69c9ecbfc7ee9b15308211fb910cdf5eb
+  checksum: 3372319904658eeafaf78a09a6fcb3368a68e6d76fe3c43c2d009f4f72e475ab22b82ef483ef5c00fcda3ab00066846c0bd88c36b42771b855f6ab80c7eda541
   languageName: node
   linkType: hard
 
@@ -4926,66 +5015,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"terminal@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "terminal@workspace:."
-  dependencies:
-    "@dx-private/dxchart5-light": "file:./local_modules/dxchart5-light/"
-    "@dx-private/dxchart5-modules": "file:./local_modules/dxchart5-modules/"
-    "@dx-private/dxstudies": "file:./local_modules/dxstudies/"
-    "@types/animejs": ^3.1.7
-    "@types/d3": ^7.4.0
-    "@types/dompurify": ^3.0.1
-    "@types/lodash": ^4.14.192
-    "@types/node": ^18.15.11
-    "@types/numeral": ^2.0.2
-    "@types/qrcode-svg": ^1.1.1
-    "@types/uuid": ^9.0.1
-    "@typescript-eslint/eslint-plugin": ^5.57.1
-    "@typescript-eslint/parser": ^5.57.1
-    "@vitejs/plugin-vue": ^4.1.0
-    "@vueuse/core": ^9.13.0
-    animejs: ^3.2.1
-    axios: ^1.3.5
-    collect.js: ^4.36.1
-    d3: ^7.8.4
-    dayjs: ^1.11.7
-    dompurify: ^3.0.1
-    eslint: 8.22.0
-    eslint-config-airbnb-base: ^15.0.0
-    eslint-import-resolver-alias: ^1.1.2
-    eslint-plugin-import: ^2.27.5
-    eslint-plugin-vue: ^9.10.0
-    eslint-plugin-vuejs-accessibility: ^2.1.0
-    lightweight-charts: ^4.0.1
-    lodash: ^4.17.21
-    lottie-web: ^5.10.2
-    maska: ^2.1.7
-    numeral: ^2.0.6
-    pinia: ^2.0.33
-    qrcode-svg: ^1.1.0
-    rambda: ^7.5.0
-    rollup-plugin-visualizer: ^5.9.0
-    rxjs: ^7.8.0
-    sass: ^1.60.0
-    swiper: ^9.2.0
-    typescript: ^4.9.5
-    uuid: ^9.0.0
-    vite: ^4.2.1
-    vite-plugin-compression: ^0.5.1
-    vite-plugin-eslint: ^1.8.1
-    vite-plugin-pages: ^0.29.0
-    vite-plugin-vue-type-imports: ^0.2.4
-    vite-svg-loader: ^4.0.0
-    vue: ^3.2.47
-    vue-flatpickr-component: ^11.0.3
-    vue-i18n: ^9.2.2
-    vue-router: ^4.1.6
-    vue-tsc: ^1.2.0
-    yup: ^1.0.2
-  languageName: unknown
-  linkType: soft
-
 "text-table@npm:^0.2.0":
   version: 0.2.0
   resolution: "text-table@npm:0.2.0"
@@ -5057,6 +5086,77 @@ __metadata:
   peerDependencies:
     typescript: ">=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta"
   checksum: 1843f4c1b2e0f975e08c4c21caa4af4f7f65a12ac1b81b3b8489366826259323feb3fc7a243123453d2d1a02314205a7634e048d4a8009921da19f99755cdc48
+  languageName: node
+  linkType: hard
+
+"turbo-darwin-64@npm:1.10.4":
+  version: 1.10.4
+  resolution: "turbo-darwin-64@npm:1.10.4"
+  conditions: os=darwin & cpu=x64
+  languageName: node
+  linkType: hard
+
+"turbo-darwin-arm64@npm:1.10.4":
+  version: 1.10.4
+  resolution: "turbo-darwin-arm64@npm:1.10.4"
+  conditions: os=darwin & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"turbo-linux-64@npm:1.10.4":
+  version: 1.10.4
+  resolution: "turbo-linux-64@npm:1.10.4"
+  conditions: os=linux & cpu=x64
+  languageName: node
+  linkType: hard
+
+"turbo-linux-arm64@npm:1.10.4":
+  version: 1.10.4
+  resolution: "turbo-linux-arm64@npm:1.10.4"
+  conditions: os=linux & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"turbo-windows-64@npm:1.10.4":
+  version: 1.10.4
+  resolution: "turbo-windows-64@npm:1.10.4"
+  conditions: os=win32 & cpu=x64
+  languageName: node
+  linkType: hard
+
+"turbo-windows-arm64@npm:1.10.4":
+  version: 1.10.4
+  resolution: "turbo-windows-arm64@npm:1.10.4"
+  conditions: os=win32 & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"turbo@npm:^1.10.4":
+  version: 1.10.4
+  resolution: "turbo@npm:1.10.4"
+  dependencies:
+    turbo-darwin-64: 1.10.4
+    turbo-darwin-arm64: 1.10.4
+    turbo-linux-64: 1.10.4
+    turbo-linux-arm64: 1.10.4
+    turbo-windows-64: 1.10.4
+    turbo-windows-arm64: 1.10.4
+  dependenciesMeta:
+    turbo-darwin-64:
+      optional: true
+    turbo-darwin-arm64:
+      optional: true
+    turbo-linux-64:
+      optional: true
+    turbo-linux-arm64:
+      optional: true
+    turbo-windows-64:
+      optional: true
+    turbo-windows-arm64:
+      optional: true
+  bin:
+    turbo: bin/turbo
+  checksum: 5d59370ab3ec9d061d17b7c0ce6fd4a1b5941073f068a05df7aa05df12c2beb9ac4885c029a3afabc40d380511266f30409a47592c84e82737212a2cadc5082b
   languageName: node
   linkType: hard
 
@@ -5298,13 +5398,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vscode-uri@npm:^3.0.7":
-  version: 3.0.7
-  resolution: "vscode-uri@npm:3.0.7"
-  checksum: c899a0334f9f6ba53021328e083f6307978c09b94407d7e5fe86fcd8fcb8f1da0cb344123a335e55769055007a46d51aff83f9ee1dfc0296ee54b78f34ef0e4f
-  languageName: node
-  linkType: hard
-
 "vue-demi@npm:*, vue-demi@npm:>=0.14.5":
   version: 0.14.5
   resolution: "vue-demi@npm:0.14.5"
@@ -5385,18 +5478,17 @@ __metadata:
   linkType: hard
 
 "vue-tsc@npm:^1.2.0":
-  version: 1.8.0
-  resolution: "vue-tsc@npm:1.8.0"
+  version: 1.8.1
+  resolution: "vue-tsc@npm:1.8.1"
   dependencies:
-    "@vue/language-core": 1.8.0
-    "@vue/typescript": 1.8.0
+    "@vue/language-core": 1.8.1
+    "@vue/typescript": 1.8.1
     semver: ^7.3.8
-    vscode-uri: ^3.0.7
   peerDependencies:
     typescript: "*"
   bin:
     vue-tsc: bin/vue-tsc.js
-  checksum: df1ef5d7d114a9d7d24fcc6a464d5cd9bc663a9105c6fd8ee6dab31ea73b20095d611319268ed94b5b733812a6e830f2062e3805f74cba4d64225efdb0784495
+  checksum: cc9324520b3add4b8251fd89f62fe5ffa0301ddd709204c3de4adce0ccf524011eb8f1e7c4ec0b628d4621c292254a3b61587506656d65768ac644d4c5cf896d
   languageName: node
   linkType: hard
 

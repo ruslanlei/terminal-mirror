@@ -4,7 +4,6 @@ dist
 !local_modules/dxchart5-light/dist
 dist-ssr
 *.local
-.turbo
 
 .yarn/*
 !.yarn/patches

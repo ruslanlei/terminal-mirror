@@ -4,16 +4,16 @@
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 import { Subject } from 'rxjs';
-import { Bounds } from '../../common/common-types';
 import { FullChartConfig } from '../chart.config';
-import { CanvasModel } from '../drawers/canvas.model';
-import EventBus from '../event-bus';
+import { CanvasModel } from '../model/canvas.model';
+import EventBus from '../events/event-bus';
 import { ChartResizeHandler } from '../inputhandlers/chart-resize.handler';
 import { Point } from '../inputlisteners/canvas-input-listener.component';
 import { CandleSeriesModel } from '../model/candle-series.model';
 import { Pixel } from '../model/scaling/viewport.model';
-import { DateTimeFormatterFactory } from '../time.formatter';
-import { AtLeastOne } from '../utils/types.utils';
+import { DateTimeFormatterFactory } from '../model/date-time.formatter';
+import { Bounds } from '../model/bounds.model';
+import { AtLeastOne } from '../utils/object.utils';
 export declare const CHART_UUID = "CHART";
 export declare class CanvasElement {
     static CANVAS: string;

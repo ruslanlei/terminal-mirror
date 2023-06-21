@@ -8,6 +8,9 @@
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src"
   },
   "dependencies": {
+    "@dx-private/dxchart5-light": "file:./local_modules/dxchart5-light/",
+    "@dx-private/dxchart5-modules": "file:./local_modules/dxchart5-modules/",
+    "@dx-private/dxstudies": "file:./local_modules/dxstudies/",
     "@vueuse/core": "^9.13.0",
     "animejs": "^3.2.1",
     "axios": "^1.3.5",

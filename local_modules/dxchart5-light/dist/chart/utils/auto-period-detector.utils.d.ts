@@ -3,7 +3,7 @@
  * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
-import { Candle } from '../model/candle.model';
+import { DataSeriesPoint } from '../model/data-series.model';
 /**
  * Automatically detect period of candle source.
  * Cannot just take first-second candles distance because of non-trading hours.
@@ -13,4 +13,4 @@ import { Candle } from '../model/candle.model';
  * @param candles
  * @doc-tags tricky,period
  */
-export declare function autoDetectPeriod(candles: Array<Candle>): number | undefined;
+export declare function autoDetectPeriod(candles: Array<DataSeriesPoint>): number | undefined;

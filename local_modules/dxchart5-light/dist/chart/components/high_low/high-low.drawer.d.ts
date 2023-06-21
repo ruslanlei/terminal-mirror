@@ -7,7 +7,7 @@ import { Drawer } from '../../drawers/drawing-manager';
 import { CanvasBoundsContainer } from '../../canvas/canvas-bounds-container';
 import { FullChartConfig } from '../../chart.config';
 import { ChartModel } from '../chart/chart.model';
-import { CanvasModel } from '../../drawers/canvas.model';
+import { CanvasModel } from '../../model/canvas.model';
 export declare class HighLowDrawer implements Drawer {
     private canvasModel;
     private chartModel;

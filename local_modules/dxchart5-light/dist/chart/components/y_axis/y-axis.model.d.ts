@@ -5,9 +5,9 @@
  */
 import { CanvasBoundsContainer } from '../../canvas/canvas-bounds-container';
 import { ChartConfigComponentsYAxis, FullChartConfig } from '../../chart.config';
-import { CanvasModel } from '../../drawers/canvas.model';
-import EventBus from '../../event-bus';
-import { ChartBaseElement } from '../../chart-base-element';
+import { CanvasModel } from '../../model/canvas.model';
+import EventBus from '../../events/event-bus';
+import { ChartBaseElement } from '../../model/chart-base-element';
 import { ScaleModel } from '../../model/scale.model';
 import { ChartModel } from '../chart/chart.model';
 import { NumericYAxisLabelsGenerator } from './numeric-y-axis-labels.generator';

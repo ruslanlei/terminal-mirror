@@ -3,11 +3,11 @@
  * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
-import EventBus from '../event-bus';
+import EventBus from '../events/event-bus';
 import { Observable, Subject } from 'rxjs';
-import { ChartBaseElement } from '../chart-base-element';
-import { Bounds } from '../../common/common-types';
+import { ChartBaseElement } from '../model/chart-base-element';
 import { HitBoundsTest } from '../canvas/canvas-bounds-container';
+import { Bounds } from '../model/bounds.model';
 type CustomMouseEvent = MouseEvent | TouchEvent;
 /**
  * Gathers user input on canvas element:

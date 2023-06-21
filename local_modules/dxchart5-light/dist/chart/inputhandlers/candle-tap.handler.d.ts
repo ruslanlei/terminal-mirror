@@ -5,7 +5,7 @@
  */
 import { ChartModel } from '../components/chart/chart.model';
 import { CanvasInputListenerComponent } from '../inputlisteners/canvas-input-listener.component';
-import { ChartBaseElement } from '../chart-base-element';
+import { ChartBaseElement } from '../model/chart-base-element';
 import { FullChartConfig } from '../chart.config';
 export declare class CandleTapHandler extends ChartBaseElement {
     constructor(mainCanvasParent: Element, chartModel: ChartModel, canvasInputListeners: CanvasInputListenerComponent, config: FullChartConfig);

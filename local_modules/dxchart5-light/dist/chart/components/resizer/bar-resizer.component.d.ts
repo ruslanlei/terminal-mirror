@@ -4,15 +4,15 @@
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 import { Subject } from 'rxjs';
-import { Bounds } from '../../../common/common-types';
 import { CanvasAnimation } from '../../animation/canvas-animation';
 import { CanvasBoundsContainer, HitBoundsTest } from '../../canvas/canvas-bounds-container';
 import { FullChartConfig } from '../../chart.config';
-import { CanvasModel } from '../../drawers/canvas.model';
+import { CanvasModel } from '../../model/canvas.model';
 import { DrawingManager } from '../../drawers/drawing-manager';
-import { ChartBaseElement } from '../../chart-base-element';
+import { ChartBaseElement } from '../../model/chart-base-element';
 import { CanvasInputListenerComponent } from '../../inputlisteners/canvas-input-listener.component';
 import { ChartPanComponent } from '../pan/chart-pan.component';
+import { BoundsProvider } from '../../model/bounds.model';
 /**
  * Bar separator between panes.
  * Used to resize the areas height or just draw a fixed line.
@@ -35,7 +35,7 @@ export declare class BarResizerComponent extends ChartBaseElement {
     animationId: string;
     initialY: number;
     resizeEvent$: Subject<void>;
-    constructor(id: string, boundsProvider: () => Bounds, hitTest: HitBoundsTest, dragTickCb: (yDelta: number) => void, chartPanComponent: ChartPanComponent, canvasModel: CanvasModel, drawingManager: DrawingManager, canvasInputListener: CanvasInputListenerComponent, canvasAnimation: CanvasAnimation, config: FullChartConfig, canvasBoundsContainer: CanvasBoundsContainer);
+    constructor(id: string, boundsProvider: BoundsProvider, hitTest: HitBoundsTest, dragTickCb: (yDelta: number) => void, chartPanComponent: ChartPanComponent, canvasModel: CanvasModel, drawingManager: DrawingManager, canvasInputListener: CanvasInputListenerComponent, canvasAnimation: CanvasAnimation, config: FullChartConfig, canvasBoundsContainer: CanvasBoundsContainer);
     /**
      * This method activates the pane resizer component.
      * It calls the parent class's doActivate method and then checks if the fixedMode property is set to false in the config object.

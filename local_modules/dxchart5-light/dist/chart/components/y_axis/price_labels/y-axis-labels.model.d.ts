@@ -4,15 +4,15 @@
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 import { Observable } from 'rxjs';
-import { Bounds } from '../../../../common/common-types';
 import { CanvasBoundsContainer } from '../../../canvas/canvas-bounds-container';
 import { FullChartConfig, YAxisLabelMode } from '../../../chart.config';
-import { ChartBaseElement } from '../../../chart-base-element';
-import { CanvasModel } from '../../../drawers/canvas.model';
-import EventBus from '../../../event-bus';
+import { ChartBaseElement } from '../../../model/chart-base-element';
+import { CanvasModel } from '../../../model/canvas.model';
+import EventBus from '../../../events/event-bus';
 import { Unit } from '../../../model/scaling/viewport.model';
 import { ChartModel } from '../../chart/chart.model';
 import { YAxisLabelDrawConfig } from '../y-axis-labels.drawer';
+import { Bounds } from '../../../model/bounds.model';
 export type YAxisVisualLabelType = 'badge' | 'rectangle' | 'plain';
 export interface VisualYAxisLabel extends YAxisLabelDrawConfig {
     y: Unit;

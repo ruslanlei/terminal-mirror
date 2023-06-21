@@ -6,12 +6,12 @@
 import { Observable } from 'rxjs';
 import { CanvasBoundsContainer } from '../../canvas/canvas-bounds-container';
 import { CursorHandler } from '../../canvas/cursor.handler';
-import { ChartBaseElement } from '../../chart-base-element';
+import { ChartBaseElement } from '../../model/chart-base-element';
 import { FullChartConfig } from '../../chart.config';
-import { CanvasModel } from '../../drawers/canvas.model';
+import { CanvasModel } from '../../model/canvas.model';
 import { DrawingManager } from '../../drawers/drawing-manager';
 import { HitTestCanvasModel } from '../../model/hit-test-canvas.model';
-import { DateTimeFormatterFactory } from '../../time.formatter';
+import { DateTimeFormatterFactory } from '../../model/date-time.formatter';
 import { ChartModel } from '../chart/chart.model';
 import { Event, EventType, EventWithId, EventsModel } from './events.model';
 export declare class EventsComponent extends ChartBaseElement {

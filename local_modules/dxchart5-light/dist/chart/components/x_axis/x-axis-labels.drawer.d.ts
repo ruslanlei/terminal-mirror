@@ -5,7 +5,7 @@
  */
 import { CanvasBoundsContainer } from '../../canvas/canvas-bounds-container';
 import { XAxisLabelsModel } from './x-axis-labels.model';
-import { CanvasModel } from '../../drawers/canvas.model';
+import { CanvasModel } from '../../model/canvas.model';
 import { Drawer } from '../../drawers/drawing-manager';
 import { FullChartConfig } from '../../chart.config';
 /**

@@ -5,16 +5,16 @@
  */
 import { CanvasBoundsContainer } from '../canvas/canvas-bounds-container';
 import { FullChartConfig } from '../chart.config';
-import { ChartBaseElement } from '../chart-base-element';
+import { ChartBaseElement } from '../model/chart-base-element';
 import { ChartModel } from '../components/chart/chart.model';
 import { PaneManager } from '../components/pane/pane-manager.component';
-import EventBus from '../event-bus';
+import EventBus from '../events/event-bus';
 import { CanvasInputListenerComponent } from '../inputlisteners/canvas-input-listener.component';
 import { CandleHover, CandleHoverProducerPart } from '../model/candle-hover';
 import { CompareSeriesHover, CompareSeriesHoverProducerPart } from '../model/compare-series-hover';
 import { ScaleModel } from '../model/scale.model';
 import VisualCandle from '../model/visual-candle';
-import { DateTimeFormatter } from '../time.formatter';
+import { DateTimeFormatter } from '../model/date-time.formatter';
 import { CrossEvent, CrossEventProducerComponent } from './cross-event-producer.component';
 export interface BaseHover {
     readonly x: number;

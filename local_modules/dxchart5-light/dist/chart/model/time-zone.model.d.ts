@@ -5,7 +5,7 @@
  */
 import { Observable } from 'rxjs';
 import { DateFormatter, FullChartConfig } from '../chart.config';
-import { DateTimeFormatterFactory } from '../time.formatter';
+import { DateTimeFormatterFactory } from './date-time.formatter';
 export interface TimeZone {
     readonly timeZone: string;
     readonly name: string;

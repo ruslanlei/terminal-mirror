@@ -4,14 +4,14 @@
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 import { Subject } from 'rxjs';
-import { PriceAxisType } from '../../../common/numeric-axis-labels.generator';
+import { PriceAxisType } from '../labels_generator/numeric-axis-labels.generator';
 import { CanvasBoundsContainer } from '../../canvas/canvas-bounds-container';
 import { CursorHandler } from '../../canvas/cursor.handler';
-import { BarType, ChartConfigComponentsYAxis, FullChartColors, FullChartConfig, YAxisAlign, YAxisLabelMode, YAxisLabelType } from '../../chart.config';
-import { ChartBaseElement } from '../../chart-base-element';
-import { CanvasModel } from '../../drawers/canvas.model';
+import { BarType, ChartConfigComponentsYAxis, FullChartColors, FullChartConfig, YAxisAlign, YAxisLabelAppearanceType, YAxisLabelMode, YAxisLabelType } from '../../chart.config';
+import { ChartBaseElement } from '../../model/chart-base-element';
+import { CanvasModel } from '../../model/canvas.model';
 import { DrawingManager } from '../../drawers/drawing-manager';
-import EventBus from '../../event-bus';
+import EventBus from '../../events/event-bus';
 import { CanvasInputListenerComponent } from '../../inputlisteners/canvas-input-listener.component';
 import { PriceMovement } from '../../model/candle-series.model';
 import { DataSeriesType } from '../../model/data-series.config';
@@ -116,6 +116,12 @@ export declare class YAxisComponent extends ChartBaseElement {
      * @param mode - visual mode
      */
     changeLabelMode(type: YAxisLabelType, mode: YAxisLabelMode): void;
+    /**
+     * Changes the visual type of particular label.
+     * @param type - label type
+     * @param mode - visual mode
+     */
+    changeLabelAppearance(type: YAxisLabelType, mode: YAxisLabelAppearanceType): void;
     /**
      * Sets the inverse price scale mode. Inverts Y axis vertically.
      * Inversion also works for candles, drawings and overlay studies.

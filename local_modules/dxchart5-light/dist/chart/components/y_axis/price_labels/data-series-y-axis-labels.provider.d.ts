@@ -3,10 +3,10 @@
  * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
-import { BoundsProvider } from '../../../../common/common-types';
 import { DataSeriesModel } from '../../../model/data-series.model';
 import { DataSeriesConfig } from '../../../model/data-series.config';
 import { LabelGroup, YAxisLabelsProvider } from './y-axis-labels.model';
+import { BoundsProvider } from '../../../model/bounds.model';
 export declare class DataSeriesYAxisLabelsProvider implements YAxisLabelsProvider {
     private series;
     private config;

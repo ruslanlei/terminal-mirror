@@ -4,7 +4,7 @@
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 import { HitBoundsTest } from '../../canvas/canvas-bounds-container';
-import { ChartBaseElement } from '../../chart-base-element';
+import { ChartBaseElement } from '../../model/chart-base-element';
 import { CanvasInputListenerComponent, Point } from '../../inputlisteners/canvas-input-listener.component';
 import { ChartPanComponent } from '../pan/chart-pan.component';
 export interface DragInfo {

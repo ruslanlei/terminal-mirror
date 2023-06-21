@@ -38,6 +38,7 @@ export const useMarketStore = defineStore('market', () => {
   const {
     activeOrders,
     isActiveOrdersFetched,
+    activeOrderForCurrentPair,
     isActiveOrdersForCurrentPairExists,
     getActiveorderList,
 
@@ -84,6 +85,7 @@ export const useMarketStore = defineStore('market', () => {
 
     activeOrders,
     isActiveOrdersFetched,
+    activeOrderForCurrentPair,
     isActiveOrdersForCurrentPairExists,
     getActiveorderList,
 

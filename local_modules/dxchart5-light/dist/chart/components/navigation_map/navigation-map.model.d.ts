@@ -4,7 +4,7 @@
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 import { FullChartConfig } from '../../chart.config';
-import { DateTimeFormatterFactory } from '../../time.formatter';
+import { DateTimeFormatterFactory } from '../../model/date-time.formatter';
 /**
  * Calculates the bounds of a time label based on the provided timestamp, formatterFactory, and config.
  * @param {CanvasRenderingContext2D} ctx - The canvas rendering context.

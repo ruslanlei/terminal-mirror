@@ -4,8 +4,8 @@
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 import { BehaviorSubject } from 'rxjs';
-import { ChartBaseElement } from '../../chart-base-element';
-import { CanvasModel } from '../../drawers/canvas.model';
+import { ChartBaseElement } from '../../model/chart-base-element';
+import { CanvasModel } from '../../model/canvas.model';
 import { Point } from '../../inputlisteners/canvas-input-listener.component';
 import { HitTestSubscriber } from '../../model/hit-test-canvas.model';
 export declare class EventsModel extends ChartBaseElement implements HitTestSubscriber {

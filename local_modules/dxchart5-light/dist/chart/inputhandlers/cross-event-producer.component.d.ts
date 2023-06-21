@@ -5,8 +5,8 @@
  */
 import { Subscription, Subject } from 'rxjs';
 import { CanvasBoundsContainer, HitBoundsTest, HitBoundsTestOptionsPartial } from '../canvas/canvas-bounds-container';
-import EventBus from '../event-bus';
-import { ChartBaseElement } from '../chart-base-element';
+import EventBus from '../events/event-bus';
+import { ChartBaseElement } from '../model/chart-base-element';
 import { CanvasInputListenerComponent } from '../inputlisteners/canvas-input-listener.component';
 export type CrossEvent = [number, number, string];
 export declare class CrossEventProducerComponent extends ChartBaseElement {

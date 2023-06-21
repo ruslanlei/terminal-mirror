@@ -3,7 +3,7 @@
  * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
-import EventBus from '../event-bus';
+import EventBus from '../events/event-bus';
 import { ChartResizeHandler } from '../inputhandlers/chart-resize.handler';
 export declare const HIT_TEST_PREFIX = "HIT_TEST_";
 declare const drawerTypes: readonly ["MAIN_BACKGROUND", "MAIN_CLEAR", "HIT_TEST_CLEAR", "YAXIS_CLEAR", "SERIES_CLEAR", "OVER_SERIES_CLEAR", "HIT_TEST_DRAWINGS", "GRID", "VOLUMES", "UNDERLAY_VOLUMES_AREA", "X_AXIS", "Y_AXIS", "HIGH_LOW", "DRAWINGS", "DATA_SERIES", "N_MAP_CHART", "PL_CHART", "WATERMARK", "EMPTY_CHART", "OFFLINE_CHART", "LABELS", "EVENTS", "HIT_TEST_EVENTS", "ZERO_LINE", "PL_ZERO_LINE_BACKGROUND", "CROSS_TOOL"];

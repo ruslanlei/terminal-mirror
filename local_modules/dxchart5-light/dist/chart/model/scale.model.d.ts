@@ -4,12 +4,12 @@
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 import { Subject } from 'rxjs';
-import { Bounds } from '../../common/common-types';
 import { ChartConfigComponentsOffsets, ChartScale, FullChartConfig } from '../chart.config';
 import { CanvasAnimation } from '../animation/canvas-animation';
 import { AutoScaleViewportSubModel } from './scaling/auto-scale.model';
 import { ZoomXToZoomYRatio } from './scaling/lock-ratio.model';
 import { Price, Unit, ViewportModel, ViewportModelState, Zoom } from './scaling/viewport.model';
+import { BoundsProvider } from './bounds.model';
 export interface HighLowWithIndex {
     high: Price;
     low: Price;
@@ -37,7 +37,7 @@ type Constraints = (initialState: ViewportModelState, state: ViewportModelState)
  */
 export declare class ScaleModel extends ViewportModel {
     config: FullChartConfig;
-    getBounds: () => Bounds;
+    getBounds: BoundsProvider;
     private canvasAnimation;
     scaleInversedSubject: Subject<boolean>;
     history: ScaleHistoryItem[];
@@ -46,7 +46,7 @@ export declare class ScaleModel extends ViewportModel {
     offsets: ChartConfigComponentsOffsets;
     xConstraints: Constraints[];
     readonly state: ChartScale;
-    constructor(config: FullChartConfig, getBounds: () => Bounds, canvasAnimation: CanvasAnimation);
+    constructor(config: FullChartConfig, getBounds: BoundsProvider, canvasAnimation: CanvasAnimation);
     /**
      * The method adds a new "constraint" to the existing list of x-axis constraints for charting.
      * The "constrait" is expected to be an object containing information about the constraints, such as the minimum and maximum values for the x-axis.
@@ -162,8 +162,8 @@ export declare class ScaleModel extends ViewportModel {
 export declare class SyncedByXScaleModel extends ScaleModel {
     private delegate;
     config: FullChartConfig;
-    getBounds: () => Bounds;
-    constructor(delegate: ViewportModel, config: FullChartConfig, getBounds: () => Bounds, canvasAnimation: CanvasAnimation);
+    getBounds: BoundsProvider;
+    constructor(delegate: ViewportModel, config: FullChartConfig, getBounds: BoundsProvider, canvasAnimation: CanvasAnimation);
     protected doActivate(): void;
     get xStart(): Unit;
     set xStart(value: Unit);

@@ -4,9 +4,9 @@
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 import { Subject } from 'rxjs';
-import { Bounds } from '../../../common/common-types';
-import { ChartBaseElement } from '../../chart-base-element';
+import { ChartBaseElement } from '../chart-base-element';
 import { ViewportMovementAnimation } from '../../animation/types/viewport-movement-animation';
+import { Bounds } from '../bounds.model';
 export type Unit = number;
 export type Price = number;
 export type Pixel = number;

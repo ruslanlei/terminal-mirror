@@ -4,12 +4,15 @@
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 import { Drawer } from './drawing-manager';
-import { CanvasModel } from './canvas.model';
+import { CanvasModel } from '../model/canvas.model';
 import { FullChartConfig } from '../chart.config';
 export declare class BackgroundDrawer implements Drawer {
     private canvasModel;
     private config;
     constructor(canvasModel: CanvasModel, config: FullChartConfig);
+    private prevState;
+    private prevWidth;
+    private prevHeight;
     draw(): void;
     getCanvasIds(): Array<string>;
 }

@@ -4,12 +4,12 @@
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 import { Observable, Subject } from 'rxjs';
-import { PriceAxisType } from '../../../common/numeric-axis-labels.generator';
-import { ChartBaseElement } from '../../chart-base-element';
+import { PriceAxisType } from '../labels_generator/numeric-axis-labels.generator';
+import { ChartBaseElement } from '../../model/chart-base-element';
 import { CanvasBoundsContainer } from '../../canvas/canvas-bounds-container';
 import { BarType, ChartConfigComponentsOffsets, FullChartConfig } from '../../chart.config';
-import { CanvasModel } from '../../drawers/canvas.model';
-import EventBus from '../../event-bus';
+import { CanvasModel } from '../../model/canvas.model';
+import EventBus from '../../events/event-bus';
 import { ChartResizeHandler } from '../../inputhandlers/chart-resize.handler';
 import { CandleSeriesColors, CandleSeriesModel, PartialCandleSeriesColors } from '../../model/candle-series.model';
 import { Candle } from '../../model/candle.model';
@@ -20,6 +20,7 @@ import VisualCandle from '../../model/visual-candle';
 import { PaneManager } from '../pane/pane-manager.component';
 import { PaneComponent } from '../pane/pane.component';
 import { LabelGroup } from '../y_axis/price_labels/y-axis-labels.model';
+import { ChartBaseModel } from './chart-base.model';
 import { CandleSeries, ChartInstrument } from './chart.component';
 import { SecondaryChartColorsPool } from './secondary-chart-colors-pool';
 export type VisualCandleCalculator = (candle: Candle, options: {
@@ -31,6 +32,7 @@ export type VisualCandleCalculator = (candle: Candle, options: {
 export type LastCandleLabelHandler = (labels: LabelGroup, candleSeries: CandleSeriesModel) => void;
 export type CandleWidthCalculator = (candle: Candle) => Unit;
 export declare class ChartModel extends ChartBaseElement {
+    chartBaseModel: ChartBaseModel<'candle'>;
     private paneManager;
     bus: EventBus;
     private canvasModel;
@@ -42,10 +44,6 @@ export declare class ChartModel extends ChartBaseElement {
     chartResizeHandler: ChartResizeHandler;
     private prevChartWidth;
     private prevYWidth;
-    /**
-     * Candles aggregation period in ms. Required for future candles calculation.
-     */
-    private period;
     candleSeries: Array<CandleSeriesModel>;
     get mainCandleSeries(): CandleSeriesModel;
     get secondaryCandleSeries(): Array<CandleSeriesModel>;
@@ -68,7 +66,7 @@ export declare class ChartModel extends ChartBaseElement {
     timeFrameViewportTransformer: (timeframe: [number, number], zoomIn?: boolean | null) => void;
     private FAKE_CANDLES_DEFAULT;
     readonly pane: PaneComponent;
-    constructor(paneManager: PaneManager, bus: EventBus, canvasModel: CanvasModel, config: FullChartConfig, scaleModel: ScaleModel, formatterFactory: (format: string) => (timestamp: number) => string, mainCanvasParent: Element, canvasBoundsContainer: CanvasBoundsContainer, chartResizeHandler: ChartResizeHandler);
+    constructor(chartBaseModel: ChartBaseModel<'candle'>, paneManager: PaneManager, bus: EventBus, canvasModel: CanvasModel, config: FullChartConfig, scaleModel: ScaleModel, formatterFactory: (format: string) => (timestamp: number) => string, mainCanvasParent: Element, canvasBoundsContainer: CanvasBoundsContainer, chartResizeHandler: ChartResizeHandler);
     /**
      * Method that activates the canvas bounds container and subscribes to its bounds changes and bar resizer changes.
      * @protected
@@ -107,11 +105,6 @@ export declare class ChartModel extends ChartBaseElement {
      * @param secondarySeries
      */
     setAllSeries(mainSeries: CandleSeries, secondarySeries?: CandleSeries[]): void;
-    /**
-     * Recalculates the period of the main candle series based on the data points.
-     * If a period is detected, it is set as the new period.
-     */
-    recalculatePeriod(): void;
     /**
      * This function checks if the autoScaleOnCandles state is true. If it is, it calls the doBasicScale() function and then calls the autoScale() function with a true parameter.
      * @function
@@ -269,7 +262,6 @@ export declare class ChartModel extends ChartBaseElement {
      * @param idx - index of candle
      */
     candleFromIdx(idx: Index): VisualCandle;
-    getPeriod: () => number;
     /**
      * Check whether model is ready for drawing.
      */
@@ -384,6 +376,7 @@ export declare class ChartModel extends ChartBaseElement {
      * @returns {Array<Candle>} - The reindexed series.
      */
     private reindexCandlesBasedOnSeries;
+    getPeriod(): number;
     /**
      * Checks if a given candle is within the viewport.
      * @param {number} idx - The index of the candle to check.

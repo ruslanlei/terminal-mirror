@@ -3,7 +3,6 @@
  * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
-import { tobject } from '../utils';
 /**
  * Merges 2 js objects recursively with all properties.
  * - does not modify base object
@@ -14,8 +13,8 @@ import { tobject } from '../utils';
  * @param options - merge options
  * @doc-tags tricky,utility
  */
-export declare function merge(base: tobject, override: tobject, options?: MergeOptions): any;
-export declare function mergeArray<A extends tobject>(base: Array<A>, override: Array<A>, hashFn: (a: A) => string, mergeObjects?: boolean): void;
+export declare function merge(base: Record<string, any>, override: Record<string, any>, options?: MergeOptions): any;
+export declare function mergeArray<A extends Record<string, any>>(base: Array<A>, override: Array<A>, hashFn: (a: A) => string, mergeObjects?: boolean): void;
 export declare const DEFAULT_MERGE_OPTIONS: {
     overrideExisting: boolean;
     addIfMissing: boolean;

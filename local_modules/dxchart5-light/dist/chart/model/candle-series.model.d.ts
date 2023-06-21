@@ -8,14 +8,14 @@ import { BarType, FullChartColors } from '../chart.config';
 import { ChartInstrument } from '../components/chart/chart.component';
 import { CandleWidthCalculator, VisualCandleCalculator } from '../components/chart/chart.model';
 import { PaneComponent } from '../components/pane/pane.component';
-import EventBus from '../event-bus';
-import { DeepPartial } from '../utils';
+import EventBus from '../events/event-bus';
 import { Candle } from './candle.model';
 import { DataSeriesModel } from './data-series.model';
 import { HighLowWithIndex, ScaleModel } from './scale.model';
 import { Unit } from './scaling/viewport.model';
 import VisualCandle from './visual-candle';
 import { DataSeriesType } from './data-series.config';
+import { DeepPartial } from '../utils/object.utils';
 export type PriceMovement = 'up' | 'down' | 'none';
 export declare class CandleSeriesModel extends DataSeriesModel<Candle, VisualCandle> {
     private eventBus;

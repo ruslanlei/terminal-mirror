@@ -3,9 +3,9 @@
  * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
-import { NumericAxisLabel } from '../../../common/numeric-axis-labels.generator';
+import { NumericAxisLabel } from '../labels_generator/numeric-axis-labels.generator';
 import { FullChartConfig } from '../../chart.config';
-import EventBus from '../../event-bus';
+import EventBus from '../../events/event-bus';
 import { ScaleModel } from '../../model/scale.model';
 import { TimeZoneModel } from '../../model/time-zone.model';
 import { Timestamp } from '../../model/scaling/viewport.model';

@@ -6,7 +6,7 @@
 import { Drawer } from '../../drawers/drawing-manager';
 import { ChartConfigComponentsWaterMark, FullChartConfig } from '../../chart.config';
 import { CanvasBoundsContainer } from '../../canvas/canvas-bounds-container';
-import { CanvasModel } from '../../drawers/canvas.model';
+import { CanvasModel } from '../../model/canvas.model';
 import { WaterMarkData } from './water-mark.component';
 export type WaterMarkPositionType = 'center' | 'left-top' | 'left-bottom';
 export declare class WaterMarkDrawer implements Drawer {

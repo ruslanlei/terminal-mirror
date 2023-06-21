@@ -3,8 +3,8 @@
  * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
-import { Bounds, BoundsProvider } from '../../../common/common-types';
 import { ChartConfigComponentsChart } from '../../chart.config';
+import { Bounds, BoundsProvider } from '../bounds.model';
 import VisualCandle from '../visual-candle';
 import { ViewportModelState } from './viewport.model';
 /**

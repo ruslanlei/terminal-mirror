@@ -3,19 +3,26 @@
  * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
-import { PriceAxisType } from '../common/numeric-axis-labels.generator';
+import { PriceAxisType } from './components/labels_generator/numeric-axis-labels.generator';
 import { MagnetTarget } from './components/cross_tool/cross-tool.component';
 import { CrossToolType } from './components/cross_tool/cross-tool.model';
 import { EventType } from './components/events/events.model';
-import { HighlightType } from './components/highlights/hightlights.model';
+import { HighlightType } from './components/highlights/highlights.model';
 import { WaterMarkPositionType } from './components/watermark/water-mark.drawer';
 import { TimeFormatWithDuration } from './components/x_axis/time/parser/time-formats.model';
-import { DateTimeFormatConfig } from './config/labels.config';
 import { DrawerType } from './drawers/drawing-manager';
-import { DateTimeFormatter, TimeFormatterConfig } from './time.formatter';
-import { DeepPartial, tobject } from './utils';
+import { DateTimeFormatter, TimeFormatterConfig } from './model/date-time.formatter';
 import { MergeOptions } from './utils/merge.utils';
+import { DeepPartial } from './utils/object.utils';
 export declare const MAIN_FONT = "Open Sans Semibold, sans-serif";
+export interface DateTimeFormatConfig {
+    format: string;
+    showWhen?: {
+        periodLessThen?: number;
+        periodMoreThen?: number;
+    };
+    customFormatter?: DateTimeFormatter;
+}
 export interface BarTypes {
     candle: unknown;
     bar: unknown;
@@ -57,7 +64,7 @@ export declare function mergeWithDefaultConfigCopy(config: PartialChartConfig, d
  * @param {object} newObj - The object containing the new properties.
  * @returns {void}
  */
-export declare function rewrite(current: tobject, newObj: tobject): void;
+export declare function rewrite(current: Record<string, any>, newObj: Record<string, any>): void;
 /**
  * This function is intended to be used for merging config objects
  * Current chart architecture with passing references to same config between different parts of the system makes this function unusable
@@ -199,7 +206,7 @@ export interface FullChartConfig extends TimeFormatterConfig {
     drawingOrder: DrawerType[];
     useUTCTimeOverride: boolean;
     animation: AnimationConfig;
-    logEvents: boolean;
+    devexpertsPromoLink: boolean;
 }
 export type PartialChartConfig = DeepPartial<FullChartConfig>;
 export interface ChartScale {
@@ -330,6 +337,14 @@ export interface ChartConfigComponentsEvents {
      * 	</svg>'
      */
     icons?: ChartConfigComponentsEventsIcons;
+}
+export interface DateTimeFormatConfig {
+    format: string;
+    showWhen?: {
+        periodLessThen?: number;
+        periodMoreThen?: number;
+    };
+    customFormatter?: DateTimeFormatter;
 }
 export interface ChartConfigComponentsXAxis {
     visible: boolean;
@@ -680,22 +695,11 @@ export interface ChartAreaTheme {
     gridColor: string;
 }
 export type ChartColors = DeepPartial<FullChartColors>;
-/**
- * These labels always be in chart, even user has not set them from config.
- */
-export type DefaultYAxisLabelType = 'lastPrice' | 'countdownToBarClose';
-/**
- * These labels are optional. If user has not set them, labels will not appear on Y-axis.
- */
-export type ConfigurableYAxisLabelType = 'bidAsk' | 'highLow' | 'prevDayClose' | 'prePostMarket';
-export type YAxisLabelType = DefaultYAxisLabelType | ConfigurableYAxisLabelType | string;
+export type YAxisLabelType = string;
 export type YAxisLabelMode = 'none' | 'line' | 'line-label' | 'label';
 export type YAxisLabelAppearanceType = 'badge' | 'rectangle' | 'plain';
 export interface YAxisLabelConfig {
     mode: YAxisLabelMode;
-    type: YAxisLabelAppearanceType;
-}
-export interface YAxisLabelConfigWithType extends YAxisLabelConfig {
     type: YAxisLabelAppearanceType;
 }
 export interface YAxisLabelColorConfig {
@@ -741,7 +745,7 @@ export interface YAxisTypeConfigProps {
     };
 }
 export type YAxisTypeConfig = Record<YAxisLabelAppearanceType, YAxisTypeConfigProps>;
-export interface YAxisLabelsColors extends Record<YAxisLabelType, tobject> {
+export interface YAxisLabelsColors extends Record<YAxisLabelType, Record<string, any>> {
     lastPrice: YAxisLastPriceLabelColorConfig;
     bidAsk: YAxisBidAskLabelColorConfig;
     highLow: YAxisHighLowLabelColorConfig;

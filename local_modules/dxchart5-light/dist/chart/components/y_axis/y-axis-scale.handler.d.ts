@@ -6,8 +6,8 @@
 import { Subject } from 'rxjs';
 import { CanvasBoundsContainer, HitBoundsTest } from '../../canvas/canvas-bounds-container';
 import { ChartConfigComponentsYAxis } from '../../chart.config';
-import EventBus from '../../event-bus';
-import { ChartBaseElement } from '../../chart-base-element';
+import EventBus from '../../events/event-bus';
+import { ChartBaseElement } from '../../model/chart-base-element';
 import { CanvasInputListenerComponent } from '../../inputlisteners/canvas-input-listener.component';
 import { Pixel, Unit, ViewportModel } from '../../model/scaling/viewport.model';
 import { ChartPanComponent } from '../pan/chart-pan.component';

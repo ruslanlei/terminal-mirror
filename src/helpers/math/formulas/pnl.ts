@@ -27,7 +27,7 @@ export const calculateCurrentPnl = curry((
   multiply,
 )(quantity, currentPrice));
 
-export const calculateClosePnl = curry((
+export const calculateClosePnl = (
   relatedOrders: Order[],
 ) => {
   const limitOrder = find(isOrderOfType('limit'), relatedOrders);
@@ -59,7 +59,7 @@ export const calculateClosePnl = curry((
       ),
     ),
   )(returnedMoney);
-});
+};
 
 export const calculatePnlPercent = curry((
   orderPrice: number,

@@ -27,7 +27,7 @@ export interface ParsedNCTimeFormat {
 }
 export type ParsedTimeFormat = ParsedCTimeFormat | ParsedWeekFormat | ParsedNCTimeFormat;
 export type SpecialSymbol = '!' | '$';
-export declare const timeFormatConfirugableGuard: (key: string) => key is "minute" | "hour" | "day" | "month" | "year" | "second";
+export declare const timeFormatConfirugableGuard: (key: string) => key is "second" | "minute" | "hour" | "day" | "month" | "year";
 export declare const weekWeekdayGuard: (key: string) => key is "week-weekday";
 export declare const timeFormatNoNConfirugableGuard: (key: string) => key is "lessThanSecond";
 export {};

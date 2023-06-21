@@ -6,9 +6,9 @@
 import { Observable } from 'rxjs';
 import { CanvasBoundsContainer } from '../canvas/canvas-bounds-container';
 import { CursorType, FullChartConfig } from '../chart.config';
-import { CanvasModel } from '../drawers/canvas.model';
+import { CanvasModel } from './canvas.model';
 import { DrawingManager } from '../drawers/drawing-manager';
-import EventBus from '../event-bus';
+import EventBus from '../events/event-bus';
 import { CanvasInputListenerComponent, Point } from '../inputlisteners/canvas-input-listener.component';
 export type HitTestEvents = 'mousedown' | 'hover' | 'touchstart' | 'dblclick' | 'contextmenu' | 'zoom';
 type HitTestType = 'DRAWINGS' | 'DATA_SERIES' | 'EVENTS' | 'NEWS';
@@ -79,6 +79,8 @@ export declare class HitTestCanvasModel extends CanvasModel {
      * Observes rightclicked on element event, provides rightclicked element model.
      */
     observeRightClickOnElement(): Observable<HitTestEvent>;
+    private curImgData;
+    private prevAnimationFrameId;
     /**
      * Retrieves the pixel data at the specified coordinates.
      *

@@ -3,13 +3,13 @@
  * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
-import { StringTMap } from '../../common/common-types';
-import EventBus from '../event-bus';
+import EventBus from '../events/event-bus';
 import { Animation } from './types/animation';
 import { ColorAlphaAnimationConfig, ColorAlphaAnimation } from './types/color-alpha-animation';
 import { ColorTransitionAnimationConfig, ColorTransitionAnimation } from './types/color-transition-animation';
 import { ViewportMovementAnimationConfig, ViewportMovementAnimation } from './types/viewport-movement-animation';
 import { ViewportModel } from '../model/scaling/viewport.model';
+import { StringTMap } from '../utils/object.utils';
 export interface AnimationConfig {
     duration: number;
     timeLeft?: number;

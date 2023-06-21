@@ -4,8 +4,8 @@
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 import { FullChartConfig } from '../../chart.config';
-import { HighlightsModel } from './hightlights.model';
-import { CanvasModel } from '../../drawers/canvas.model';
+import { HighlightsModel } from './highlights.model';
+import { CanvasModel } from '../../model/canvas.model';
 import { CanvasBoundsContainer } from '../../canvas/canvas-bounds-container';
 import { Drawer } from '../../drawers/drawing-manager';
 import { ChartModel } from '../chart/chart.model';

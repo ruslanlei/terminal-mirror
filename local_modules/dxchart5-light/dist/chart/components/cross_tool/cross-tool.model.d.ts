@@ -4,12 +4,12 @@
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 import { ChartConfigComponentsCrossTool } from '../../chart.config';
-import { ChartBaseElement } from '../../chart-base-element';
-import EventBus from '../../event-bus';
-import { CanvasModel } from '../../drawers/canvas.model';
+import { ChartBaseElement } from '../../model/chart-base-element';
+import EventBus from '../../events/event-bus';
+import { CanvasModel } from '../../model/canvas.model';
 import { CanvasInputListenerComponent } from '../../inputlisteners/canvas-input-listener.component';
 import { TimeZoneModel } from '../../model/time-zone.model';
-import { DateTimeFormatter } from '../../time.formatter';
+import { DateTimeFormatter } from '../../model/date-time.formatter';
 import { ChartModel } from '../chart/chart.model';
 export type CrossToolType = 'cross-and-labels' | 'only-labels' | 'none' | string;
 export interface CrossToolHover {

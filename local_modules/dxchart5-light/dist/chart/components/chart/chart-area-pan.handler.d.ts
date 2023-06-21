@@ -5,9 +5,9 @@
  */
 import { CanvasAnimation } from '../../animation/canvas-animation';
 import { CanvasBoundsContainer, HitBoundsTest } from '../../canvas/canvas-bounds-container';
-import { ChartBaseElement } from '../../chart-base-element';
+import { ChartBaseElement } from '../../model/chart-base-element';
 import { AutoScaleDisableOnDrag, FullChartConfig } from '../../chart.config';
-import EventBus from '../../event-bus';
+import EventBus from '../../events/event-bus';
 import { CanvasInputListenerComponent, Point } from '../../inputlisteners/canvas-input-listener.component';
 import { ScaleModel } from '../../model/scale.model';
 import { DragNDropYComponent } from '../dran-n-drop_helper/drag-n-drop-y.component';

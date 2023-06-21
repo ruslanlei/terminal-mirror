@@ -1,6 +1,6 @@
 {
   "name": "@dx-private/dxchart5-modules",
-  "version": "5.3.4",
+  "version": "5.4.0",
   "description": "DXChart5 chart modules to extends the basic functionality of DXChart5 Light",
   "scripts": {
     "//<----dev server---->": "dev server",
@@ -57,7 +57,7 @@
     "color": "^3.1.2"
   },
   "peerDependencies": {
-    "date-fns": "^2.23.0",
+    "date-fns": "^2.30.0",
     "rxjs": "^7.5.7"
   },
   "publishConfig": {

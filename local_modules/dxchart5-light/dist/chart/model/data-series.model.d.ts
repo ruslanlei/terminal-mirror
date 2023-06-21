@@ -3,10 +3,10 @@
  * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
-import { ChartBaseElement } from '../chart-base-element';
+import { ChartBaseElement } from './chart-base-element';
 import { PaneComponent } from '../components/pane/pane.component';
 import { YAxisLabelsProvider } from '../components/y_axis/price_labels/y-axis-labels.model';
-import { AtLeastOne } from '../utils/types.utils';
+import { AtLeastOne } from '../utils/object.utils';
 import { DataSeriesView } from './data-series-view';
 import { HighLowWithIndex, ScaleModel } from './scale.model';
 import { DataSeriesConfig, DataSeriesPaintConfig, DataSeriesType } from './data-series.config';

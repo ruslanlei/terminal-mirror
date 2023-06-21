@@ -7,19 +7,20 @@ import { Subject } from 'rxjs';
 import { CanvasAnimation } from '../../animation/canvas-animation';
 import { CanvasBoundsContainer } from '../../canvas/canvas-bounds-container';
 import { CursorHandler } from '../../canvas/cursor.handler';
-import { ChartBaseElement, ChartEntity } from '../../chart-base-element';
+import { ChartBaseElement, ChartEntity } from '../../model/chart-base-element';
 import { FullChartConfig } from '../../chart.config';
-import { CanvasModel } from '../../drawers/canvas.model';
+import { CanvasModel } from '../../model/canvas.model';
 import { DrawingManager } from '../../drawers/drawing-manager';
-import EventBus from '../../event-bus';
+import EventBus from '../../events/event-bus';
 import { CrossEventProducerComponent } from '../../inputhandlers/cross-event-producer.component';
 import { CanvasInputListenerComponent } from '../../inputlisteners/canvas-input-listener.component';
 import { ScaleModel } from '../../model/scale.model';
-import { AtLeastOne } from '../../utils/types.utils';
+import { AtLeastOne } from '../../utils/object.utils';
 import { ChartPanComponent } from '../pan/chart-pan.component';
 import { BarResizerComponent } from '../resizer/bar-resizer.component';
 import { PaneHitTestController } from './pane-hit-test.controller';
 import { PaneComponent, PaneFormatters } from './pane.component';
+import { ChartBaseModel } from '../chart/chart-base.model';
 interface PaneCreationOptions {
     scaleModel: ScaleModel;
     order: number;
@@ -29,6 +30,7 @@ interface PaneCreationOptions {
     increment: number | null;
 }
 export declare class PaneManager extends ChartBaseElement {
+    private chartBaseModel;
     private userInputListenerComponents;
     private eventBus;
     private mainScaleModel;
@@ -49,7 +51,7 @@ export declare class PaneManager extends ChartBaseElement {
      * Returns order of panes in the chart from top to bottom.
      */
     get panesOrder(): string[];
-    constructor(userInputListenerComponents: ChartEntity[], eventBus: EventBus, mainScaleModel: ScaleModel, canvasBoundsContainer: CanvasBoundsContainer, config: FullChartConfig, canvasAnimation: CanvasAnimation, canvasInputListener: CanvasInputListenerComponent, drawingManager: DrawingManager, dataSeriesCanvasModel: CanvasModel, cursorHandler: CursorHandler, crossEventProducer: CrossEventProducerComponent, chartPanComponent: ChartPanComponent, mainCanvasModel: CanvasModel);
+    constructor(chartBaseModel: ChartBaseModel<'candle'>, userInputListenerComponents: ChartEntity[], eventBus: EventBus, mainScaleModel: ScaleModel, canvasBoundsContainer: CanvasBoundsContainer, config: FullChartConfig, canvasAnimation: CanvasAnimation, canvasInputListener: CanvasInputListenerComponent, drawingManager: DrawingManager, dataSeriesCanvasModel: CanvasModel, cursorHandler: CursorHandler, crossEventProducer: CrossEventProducerComponent, chartPanComponent: ChartPanComponent, mainCanvasModel: CanvasModel);
     /**
      * Adds a resizer to the canvas bounds container for the given uuid.
      * @param {string} uuid - The uuid of the pane to which the resizer is to be added.

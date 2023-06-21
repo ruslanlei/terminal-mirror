@@ -4,14 +4,14 @@
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 import { FullChartConfig } from '../../chart.config';
-import { ChartBaseElement } from '../../chart-base-element';
-import EventBus from '../../event-bus';
+import { ChartBaseElement } from '../../model/chart-base-element';
+import EventBus from '../../events/event-bus';
 import { CanvasBoundsContainer } from '../../canvas/canvas-bounds-container';
 import { CursorHandler } from '../../canvas/cursor.handler';
-import { CanvasModel } from '../../drawers/canvas.model';
+import { CanvasModel } from '../../model/canvas.model';
 import { DrawingManager } from '../../drawers/drawing-manager';
 import { CanvasInputListenerComponent } from '../../inputlisteners/canvas-input-listener.component';
-import { DateTimeFormatterFactory } from '../../time.formatter';
+import { DateTimeFormatterFactory } from '../../model/date-time.formatter';
 import { ChartModel } from '../chart/chart.model';
 import { ChartPanComponent } from '../pan/chart-pan.component';
 import { NavigationMapMoveHandler } from './navigation-map-move.handler';

@@ -5,11 +5,11 @@
  */
 import { CanvasBoundsContainer } from '../../canvas/canvas-bounds-container';
 import { CursorHandler } from '../../canvas/cursor.handler';
-import { ChartBaseElement } from '../../chart-base-element';
+import { ChartBaseElement } from '../../model/chart-base-element';
 import { FullChartConfig } from '../../chart.config';
-import { CanvasModel } from '../../drawers/canvas.model';
+import { CanvasModel } from '../../model/canvas.model';
 import { DrawingManager } from '../../drawers/drawing-manager';
-import EventBus from '../../event-bus';
+import EventBus from '../../events/event-bus';
 import { ChartResizeHandler } from '../../inputhandlers/chart-resize.handler';
 import { CanvasInputListenerComponent } from '../../inputlisteners/canvas-input-listener.component';
 import { ScaleModel } from '../../model/scale.model';

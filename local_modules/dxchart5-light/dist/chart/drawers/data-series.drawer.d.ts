@@ -3,10 +3,10 @@
  * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
-import { Bounds } from '../../common/common-types';
 import { PaneManager } from '../components/pane/pane-manager.component';
+import { Bounds } from '../model/bounds.model';
 import { DataSeriesModel, VisualSeriesPoint } from '../model/data-series.model';
-import { CanvasModel } from './canvas.model';
+import { CanvasModel } from '../model/canvas.model';
 import { Drawer } from './drawing-manager';
 export interface ChartDrawerConfig {
     singleColor?: string;

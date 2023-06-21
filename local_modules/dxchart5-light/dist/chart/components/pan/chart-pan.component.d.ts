@@ -6,8 +6,8 @@
 import { CanvasAnimation } from '../../animation/canvas-animation';
 import { CanvasBoundsContainer } from '../../canvas/canvas-bounds-container';
 import { FullChartConfig } from '../../chart.config';
-import EventBus from '../../event-bus';
-import { ChartBaseElement, ChartEntity } from '../../chart-base-element';
+import EventBus from '../../events/event-bus';
+import { ChartBaseElement, ChartEntity } from '../../model/chart-base-element';
 import { CanvasInputListenerComponent } from '../../inputlisteners/canvas-input-listener.component';
 import { ScaleModel } from '../../model/scale.model';
 import { ChartAreaPanHandler } from '../chart/chart-area-pan.handler';

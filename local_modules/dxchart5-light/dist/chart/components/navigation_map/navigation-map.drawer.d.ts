@@ -5,10 +5,10 @@
  */
 import { FullChartConfig } from '../../chart.config';
 import { ChartModel } from '../chart/chart.model';
-import { CanvasModel } from '../../drawers/canvas.model';
+import { CanvasModel } from '../../model/canvas.model';
 import { CanvasBoundsContainer } from '../../canvas/canvas-bounds-container';
 import { Drawer } from '../../drawers/drawing-manager';
-import { DateTimeFormatterFactory } from '../../time.formatter';
+import { DateTimeFormatterFactory } from '../../model/date-time.formatter';
 export declare class NavigationMapDrawer implements Drawer {
     private config;
     private chartModel;

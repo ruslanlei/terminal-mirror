@@ -28,6 +28,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/runtime@npm:^7.21.0":
+  version: 7.22.5
+  resolution: "@babel/runtime@npm:7.22.5"
+  dependencies:
+    regenerator-runtime: ^0.13.11
+  checksum: 12a50b7de2531beef38840d17af50c55a094253697600cee255311222390c68eed704829308d4fd305e1b3dfbce113272e428e9d9d45b1730e0fede997eaceb1
+  languageName: node
+  linkType: hard
+
 "@babel/types@npm:^7.19.0, @babel/types@npm:^7.8.3":
   version: 7.22.5
   resolution: "@babel/types@npm:7.22.5"
@@ -36,6 +45,39 @@ __metadata:
     "@babel/helper-validator-identifier": ^7.22.5
     to-fast-properties: ^2.0.0
   checksum: c13a9c1dc7d2d1a241a2f8363540cb9af1d66e978e8984b400a20c4f38ba38ca29f06e26a0f2d49a70bad9e57615dac09c35accfddf1bb90d23cd3e0a0bab892
+  languageName: node
+  linkType: hard
+
+"@dx-private/dxchart5-light@file:./local_modules/dxchart5-light/::locator=terminal%40workspace%3A.":
+  version: 5.4.0
+  resolution: "@dx-private/dxchart5-light@file:./local_modules/dxchart5-light/#./local_modules/dxchart5-light/::hash=5e3d2d&locator=terminal%40workspace%3A."
+  dependencies:
+    color: ^3.1.2
+    date-fns: ^2.30.0
+    date-fns-tz: ^1.3.8
+    rxjs: ^7.5.7
+  checksum: 188489a04bc3ed64ad6c367d58df296caf09c68541d9af1fbe36a815ced0981cc68f18c144bfb6918c629b1a137ce63fac5f9f1fc6f39ac3055ddd0593427d55
+  languageName: node
+  linkType: hard
+
+"@dx-private/dxchart5-modules@file:./local_modules/dxchart5-modules/::locator=terminal%40workspace%3A.":
+  version: 5.4.0
+  resolution: "@dx-private/dxchart5-modules@file:./local_modules/dxchart5-modules/#./local_modules/dxchart5-modules/::hash=b8c17d&locator=terminal%40workspace%3A."
+  dependencies:
+    color: ^3.1.2
+  peerDependencies:
+    date-fns: ^2.30.0
+    rxjs: ^7.5.7
+  checksum: bc6732bf6ea6f5f1a3a15aa16a240f045a35a1cd2778e149803e24c10ddab642f9bfbae6cca87be6c162c6208f73a42a89f2a934e18e6f4d4f3e48a416a9b866
+  languageName: node
+  linkType: hard
+
+"@dx-private/dxstudies@file:./local_modules/dxstudies/::locator=terminal%40workspace%3A.":
+  version: 47.0.1684239539334
+  resolution: "@dx-private/dxstudies@file:./local_modules/dxstudies/#./local_modules/dxstudies/::hash=7df240&locator=terminal%40workspace%3A."
+  dependencies:
+    kotlin: 1.8.20
+  checksum: 192679ed8e3d8c497b90137ac67ab0cd922d98c33d665ee6aa96601aae4be266ce55dd6ac5681075e2ab964a66dcc6fb59450b0575443f86c10d476ad2a86e09
   languageName: node
   linkType: hard
 
@@ -1496,6 +1538,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"color-convert@npm:^1.9.3":
+  version: 1.9.3
+  resolution: "color-convert@npm:1.9.3"
+  dependencies:
+    color-name: 1.1.3
+  checksum: fd7a64a17cde98fb923b1dd05c5f2e6f7aefda1b60d67e8d449f9328b4e53b228a428fd38bfeaeb2db2ff6b6503a776a996150b80cdf224062af08a5c8a3a203
+  languageName: node
+  linkType: hard
+
 "color-convert@npm:^2.0.1":
   version: 2.0.1
   resolution: "color-convert@npm:2.0.1"
@@ -1505,10 +1556,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"color-name@npm:~1.1.4":
+"color-name@npm:1.1.3":
+  version: 1.1.3
+  resolution: "color-name@npm:1.1.3"
+  checksum: 09c5d3e33d2105850153b14466501f2bfb30324a2f76568a408763a3b7433b0e50e5b4ab1947868e65cb101bb7cb75029553f2c333b6d4b8138a73fcc133d69d
+  languageName: node
+  linkType: hard
+
+"color-name@npm:^1.0.0, color-name@npm:~1.1.4":
   version: 1.1.4
   resolution: "color-name@npm:1.1.4"
   checksum: b0445859521eb4021cd0fb0cc1a75cecf67fceecae89b63f62b201cca8d345baf8b952c966862a9d9a2632987d4f6581f0ec8d957dfacece86f0a7919316f610
+  languageName: node
+  linkType: hard
+
+"color-string@npm:^1.6.0":
+  version: 1.9.1
+  resolution: "color-string@npm:1.9.1"
+  dependencies:
+    color-name: ^1.0.0
+    simple-swizzle: ^0.2.2
+  checksum: c13fe7cff7885f603f49105827d621ce87f4571d78ba28ef4a3f1a104304748f620615e6bf065ecd2145d0d9dad83a3553f52bb25ede7239d18e9f81622f1cc5
   languageName: node
   linkType: hard
 
@@ -1518,6 +1586,16 @@ __metadata:
   bin:
     color-support: bin.js
   checksum: 9b7356817670b9a13a26ca5af1c21615463b500783b739b7634a0c2047c16cef4b2865d7576875c31c3cddf9dd621fa19285e628f20198b233a5cfdda6d0793b
+  languageName: node
+  linkType: hard
+
+"color@npm:^3.1.2":
+  version: 3.2.1
+  resolution: "color@npm:3.2.1"
+  dependencies:
+    color-convert: ^1.9.3
+    color-string: ^1.6.0
+  checksum: f81220e8b774d35865c2561be921f5652117638dcda7ca4029262046e37fc2444ac7bbfdd110cf1fd9c074a4ee5eda8f85944ffbdda26186b602dd9bb05f6400
   languageName: node
   linkType: hard
 
@@ -1949,6 +2027,24 @@ __metadata:
     d3-transition: 3
     d3-zoom: 3
   checksum: e407e79731f74d946a5eb8dec2f037b5a4ad33c294409b1d3531fdf7094de48adfe364974cb37e2396bdb81e23149d56d0ede716c004d6aebb52b3cc114cd15c
+  languageName: node
+  linkType: hard
+
+"date-fns-tz@npm:^1.3.8":
+  version: 1.3.8
+  resolution: "date-fns-tz@npm:1.3.8"
+  peerDependencies:
+    date-fns: ">=2.0.0"
+  checksum: dbf17cb88de7c7b71a9f86b815ac62ebdbf725c030e78d2421309456b5001a85284a5b6763f4af0ba660183f12e876c165e725a0723f642edb7846407db03133
+  languageName: node
+  linkType: hard
+
+"date-fns@npm:^2.30.0":
+  version: 2.30.0
+  resolution: "date-fns@npm:2.30.0"
+  dependencies:
+    "@babel/runtime": ^7.21.0
+  checksum: f7be01523282e9bb06c0cd2693d34f245247a29098527d4420628966a2d9aad154bd0e90a6b1cf66d37adcb769cd108cf8a7bd49d76db0fb119af5cdd13644f4
   languageName: node
   linkType: hard
 
@@ -3269,6 +3365,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"is-arrayish@npm:^0.3.1":
+  version: 0.3.2
+  resolution: "is-arrayish@npm:0.3.2"
+  checksum: 977e64f54d91c8f169b59afcd80ff19227e9f5c791fa28fa2e5bce355cbaf6c2c356711b734656e80c9dd4a854dd7efcf7894402f1031dfc5de5d620775b4d5f
+  languageName: node
+  linkType: hard
+
 "is-bigint@npm:^1.0.1":
   version: 1.0.4
   resolution: "is-bigint@npm:1.0.4"
@@ -3565,6 +3668,13 @@ __metadata:
     graceful-fs:
       optional: true
   checksum: 7af3b8e1ac8fe7f1eccc6263c6ca14e1966fcbc74b618d3c78a0a2075579487547b94f72b7a1114e844a1e15bb00d440e5d1720bfc4612d790a6f285d5ea8354
+  languageName: node
+  linkType: hard
+
+"kotlin@npm:1.8.20":
+  version: 1.8.20
+  resolution: "kotlin@npm:1.8.20"
+  checksum: efb55577f77724bd40f7fb56560198f5cef952a663318d43dec6705de49e1110e29eb97d656e3b375bb7e0ed1e3c2fd5056a4e4e8f1f2c7d3bbe9ec7caa17fb6
   languageName: node
   linkType: hard
 
@@ -4293,6 +4403,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"regenerator-runtime@npm:^0.13.11":
+  version: 0.13.11
+  resolution: "regenerator-runtime@npm:0.13.11"
+  checksum: 27481628d22a1c4e3ff551096a683b424242a216fee44685467307f14d58020af1e19660bf2e26064de946bad7eff28950eae9f8209d55723e2d9351e632bbb4
+  languageName: node
+  linkType: hard
+
 "regexp.prototype.flags@npm:^1.4.3, regexp.prototype.flags@npm:^1.5.0":
   version: 1.5.0
   resolution: "regexp.prototype.flags@npm:1.5.0"
@@ -4446,7 +4563,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rxjs@npm:^7.8.0":
+"rxjs@npm:^7.5.7, rxjs@npm:^7.8.0":
   version: 7.8.1
   resolution: "rxjs@npm:7.8.1"
   dependencies:
@@ -4558,6 +4675,15 @@ __metadata:
   version: 4.0.2
   resolution: "signal-exit@npm:4.0.2"
   checksum: 41f5928431cc6e91087bf0343db786a6313dd7c6fd7e551dbc141c95bb5fb26663444fd9df8ea47c5d7fc202f60aa7468c3162a9365cbb0615fc5e1b1328fe31
+  languageName: node
+  linkType: hard
+
+"simple-swizzle@npm:^0.2.2":
+  version: 0.2.2
+  resolution: "simple-swizzle@npm:0.2.2"
+  dependencies:
+    is-arrayish: ^0.3.1
+  checksum: a7f3f2ab5c76c4472d5c578df892e857323e452d9f392e1b5cf74b74db66e6294a1e1b8b390b519fa1b96b5b613f2a37db6cffef52c3f1f8f3c5ea64eb2d54c0
   languageName: node
   linkType: hard
 
@@ -4804,6 +4930,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "terminal@workspace:."
   dependencies:
+    "@dx-private/dxchart5-light": "file:./local_modules/dxchart5-light/"
+    "@dx-private/dxchart5-modules": "file:./local_modules/dxchart5-modules/"
+    "@dx-private/dxstudies": "file:./local_modules/dxstudies/"
     "@types/animejs": ^3.1.7
     "@types/d3": ^7.4.0
     "@types/dompurify": ^3.0.1

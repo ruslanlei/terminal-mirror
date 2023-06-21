@@ -3,9 +3,9 @@
  * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
-import { Bounds } from '../../../../common/common-types';
 import { CanvasBoundsContainer } from '../../../canvas/canvas-bounds-container';
 import { ChartConfigComponentsYAxis, FullChartColors, YAxisLabelAppearanceType } from '../../../chart.config';
+import { Bounds } from '../../../model/bounds.model';
 import { drawBadgeLabel, drawPlainLabel, drawRectLabel } from '../y-axis-labels.drawer';
 import { VisualYAxisLabel, YAxisVisualLabelType } from './y-axis-labels.model';
 type LabelDrawer = typeof drawBadgeLabel | typeof drawRectLabel | typeof drawPlainLabel;

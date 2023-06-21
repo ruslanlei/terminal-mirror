@@ -14,6 +14,15 @@ export declare class MathUtils {
     static isZero(a: number): boolean;
     static cutNumber(value: number, amountToCut: NumberFormatLabels, zeros?: number): string;
 }
+/**
+ * Checks if first and second number are differs by specified times
+ * @param first {number}
+ * @param second {number}
+ * @param times {number}
+ * @doc-tags utility,math
+ */
+export declare function isDiffersBy(first: number, second: number, times: number): boolean;
+export declare function clamp(value: number, min: number, max: number): number;
 export declare function easeExpOut(value: number): number;
 /**
  * Returns the first finite number in a list of numbers. If no finite number is found,
@@ -22,3 +31,10 @@ export declare function easeExpOut(value: number): number;
  * @returns {number} The first finite number in the list, or NaN if no finite number is found.
  */
 export declare function finite(...args: number[]): number;
+/**
+ * These functions can be used only for chart coordinates because they all are working in positive coordinates!!!
+ */
+export declare const floor: (value: number) => number;
+export declare const ceil: (value: number) => number;
+export declare const round: (value: number) => number;
+export declare const shiftRight: (value: number, shift: number) => number;

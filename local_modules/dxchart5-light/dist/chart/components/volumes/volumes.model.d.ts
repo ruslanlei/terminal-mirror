@@ -4,7 +4,7 @@
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 import { BehaviorSubject } from 'rxjs';
-import { ChartBaseElement } from '../../chart-base-element';
+import { ChartBaseElement } from '../../model/chart-base-element';
 import { ScaleModel } from '../../model/scale.model';
 import { HighLowProvider } from '../../model/scaling/auto-scale.model';
 import { ChartComponent } from '../chart/chart.component';

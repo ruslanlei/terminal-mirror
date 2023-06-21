@@ -4,13 +4,13 @@
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 import { FullChartConfig } from '../../chart.config';
-import { Highlight } from './hightlights.model';
+import { Highlight } from './highlights.model';
 import { CanvasBoundsContainer } from '../../canvas/canvas-bounds-container';
-import { CanvasModel } from '../../drawers/canvas.model';
+import { CanvasModel } from '../../model/canvas.model';
 import { DrawingManager } from '../../drawers/drawing-manager';
-import { ChartBaseElement } from '../../chart-base-element';
+import { ChartBaseElement } from '../../model/chart-base-element';
 import { ChartModel } from '../chart/chart.model';
-import EventBus from '../../event-bus';
+import EventBus from '../../events/event-bus';
 export declare class HighlightsComponent extends ChartBaseElement {
     private eventBus;
     private config;

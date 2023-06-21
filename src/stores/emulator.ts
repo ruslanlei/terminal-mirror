@@ -27,7 +27,7 @@ import { Pair } from '@/api/types/pair';
 import { useChartDataStore } from '@/stores/chartData';
 import { getBalance } from '@/api/endpoints/profile/getBalance';
 import { isMoreThanLeft } from '@/utils/boolean';
-import { isExactOrder } from '@/helpers/orders';
+import { isExactOrder, isOrderOfType } from '@/helpers/orders';
 import { useToastStore } from '@/stores/toasts';
 import { AnyFunction } from '@/utils/typescript';
 
@@ -47,7 +47,7 @@ export const useEmulatorStore = defineStore('emulator', () => {
   const {
     activePair,
     activePairData,
-    activeOrderForPair,
+    activeOrderForCurrentPair,
   } = storeToRefs(marketStore);
 
   const chartDataStore = useChartDataStore();
@@ -239,6 +239,8 @@ export const useEmulatorStore = defineStore('emulator', () => {
 
     if (!activePairData.value?.to_date) return;
 
+    let position = activeOrderForCurrentPair.value?.position || 0;
+
     const {
       to_date: maxDate,
     } = activePairData.value;
@@ -257,6 +259,8 @@ export const useEmulatorStore = defineStore('emulator', () => {
       multiply(30),
     )(candleSize);
 
+    console.log('started');
+
     let isSimulated = false;
     while (!isSimulated) {
       if (isCalculateResultAbortionQueued.value) {
@@ -273,9 +277,24 @@ export const useEmulatorStore = defineStore('emulator', () => {
         tiks: 1,
       });
 
-      const isLimitOrderExecuted = data.events?.find(
-        isExactOrder('limit', 'executed'),
-      )?.position === 0;
+      console.log('position', position);
+      console.log('data', data);
+
+      position = (data?.events || []).reduce((newPosition, order) => {
+        console.log('event quantity', order.quantity);
+
+        if (!isOrderOfType('tp') && !isOrderOfType('sl')) return newPosition;
+
+        return newPosition - order.quantity;
+      }, position);
+
+      // FIXME: it should work like this.
+      // const isLimitOrderExecuted = data.events?.find(
+      //   isExactOrder('limit', 'executed'),
+      // )?.position === 0;
+
+      // FIXME: but works like this bc of backend.
+      const isLimitOrderExecuted = position <= 0;
 
       if (!result) {
         isSimulated = true;
@@ -310,6 +329,8 @@ export const useEmulatorStore = defineStore('emulator', () => {
         }
       }
     }
+
+    await marketStore.getActiveorderList();
 
     isCalculatingResult.value = false;
   };

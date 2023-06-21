@@ -6,9 +6,9 @@
 import { Observable } from 'rxjs';
 import { CanvasBoundsContainer } from '../../canvas/canvas-bounds-container';
 import { CursorHandler } from '../../canvas/cursor.handler';
-import { ChartBaseElement } from '../../chart-base-element';
+import { ChartBaseElement } from '../../model/chart-base-element';
 import { BarType, ChartConfigComponentsOffsets, FullChartConfig } from '../../chart.config';
-import { CanvasModel } from '../../drawers/canvas.model';
+import { CanvasModel } from '../../model/canvas.model';
 import { SeriesDrawer } from '../../drawers/data-series.drawer';
 import { DrawingManager } from '../../drawers/drawing-manager';
 import { CanvasInputListenerComponent } from '../../inputlisteners/canvas-input-listener.component';

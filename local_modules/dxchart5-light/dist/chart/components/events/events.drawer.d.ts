@@ -3,12 +3,12 @@
  * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
-import { Bounds } from '../../../common/common-types';
+import { Bounds } from '../../model/bounds.model';
 import { CanvasBoundsContainer } from '../../canvas/canvas-bounds-container';
 import { CustomIcon, FullChartConfig } from '../../chart.config';
-import { CanvasModel } from '../../drawers/canvas.model';
+import { CanvasModel } from '../../model/canvas.model';
 import { Drawer } from '../../drawers/drawing-manager';
-import { DateTimeFormatter } from '../../time.formatter';
+import { DateTimeFormatter } from '../../model/date-time.formatter';
 import { ChartModel } from '../chart/chart.model';
 import { Event, EventsModel, EventType, EventWithId } from './events.model';
 export declare class EventsDrawer implements Drawer {

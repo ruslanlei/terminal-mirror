@@ -29,12 +29,14 @@ export const useOrders = (
     activeOrders.value.length
   ));
 
-  const isActiveOrdersForCurrentPairExists = computed(
-    () => activeOrders.value.some(
-      (order: Order) => order.pair === activePair.value && (
-        order.status === 'new' || order.status === 'filled'
-      ),
+  const activeOrderForCurrentPair = computed(() => activeOrders.value.find(
+    (order: Order) => order.pair === activePair.value && (
+      order.status === 'new' || order.status === 'filled'
     ),
+  ));
+
+  const isActiveOrdersForCurrentPairExists = computed(
+    () => !!activeOrderForCurrentPair.value,
   );
 
   const getActiveorderList = async () => {
@@ -277,6 +279,7 @@ export const useOrders = (
     activeOrders,
     isActiveOrdersFetched,
     isActiveOrdersForCurrentPairExists,
+    activeOrderForCurrentPair,
     getActiveorderList,
 
     closedOrders,

@@ -4,8 +4,8 @@
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 import { CanvasBoundsContainer } from '../../canvas/canvas-bounds-container';
-import EventBus from '../../event-bus';
-import { ChartBaseElement } from '../../chart-base-element';
+import EventBus from '../../events/event-bus';
+import { ChartBaseElement } from '../../model/chart-base-element';
 import { CanvasInputListenerComponent } from '../../inputlisteners/canvas-input-listener.component';
 import { ScaleModel } from '../../model/scale.model';
 import { ChartModel } from '../chart/chart.model';

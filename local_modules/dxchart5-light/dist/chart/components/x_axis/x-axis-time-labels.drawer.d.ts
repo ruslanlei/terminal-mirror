@@ -3,11 +3,11 @@
  * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
-import { NumericAxisLabel } from '../../../common/numeric-axis-labels.generator';
-import { Bounds } from '../../../common/common-types';
+import { NumericAxisLabel } from '../labels_generator/numeric-axis-labels.generator';
+import { Bounds } from '../../model/bounds.model';
 import { FullChartConfig } from '../../chart.config';
 import { CanvasBoundsContainer } from '../../canvas/canvas-bounds-container';
-import { CanvasModel } from '../../drawers/canvas.model';
+import { CanvasModel } from '../../model/canvas.model';
 import { Drawer } from '../../drawers/drawing-manager';
 import { ViewportModel } from '../../model/scaling/viewport.model';
 /**

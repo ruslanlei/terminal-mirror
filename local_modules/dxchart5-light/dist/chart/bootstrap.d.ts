@@ -7,17 +7,16 @@ import { CanvasAnimation } from './animation/canvas-animation';
 import { CanvasBoundsContainer } from './canvas/canvas-bounds-container';
 import { ValidatedChartElements } from './canvas/chart-elements';
 import { CursorHandler } from './canvas/cursor.handler';
-import { ChartEntity } from './chart-base-element';
-import { ChartEvents } from './chart-events';
+import { ChartEntity } from './model/chart-base-element';
 import { BarType, ChartColors, ChartConfigComponentsOffsets, FullChartConfig, GridComponentConfig, PartialChartConfig } from './chart.config';
-import ChartContainer from './chart.container';
+import ChartContainer from './chart-container';
 import { ChartComponent } from './components/chart/chart.component';
 import { ChartModel } from './components/chart/chart.model';
 import { CrossToolComponent } from './components/cross_tool/cross-tool.component';
 import { CrossToolType } from './components/cross_tool/cross-tool.model';
 import { EventsComponent } from './components/events/events.component';
 import { HighlightsComponent } from './components/highlights/highlights.component';
-import { Highlight } from './components/highlights/hightlights.model';
+import { Highlight } from './components/highlights/highlights.model';
 import { NavigationMapComponent } from './components/navigation_map/navigation-map.component';
 import { ChartPanComponent } from './components/pan/chart-pan.component';
 import { PaneManager } from './components/pane/pane-manager.component';
@@ -27,9 +26,9 @@ import { VolumesComponent } from './components/volumes/volumes.component';
 import { WaterMarkComponent } from './components/watermark/water-mark.component';
 import { XAxisComponent } from './components/x_axis/x-axis.component';
 import { YAxisComponent } from './components/y_axis/y-axis.component';
-import { CanvasModel } from './drawers/canvas.model';
+import { CanvasModel } from './model/canvas.model';
 import { DrawingManager } from './drawers/drawing-manager';
-import EventBus from './event-bus';
+import EventBus from './events/event-bus';
 import { ChartResizeHandler } from './inputhandlers/chart-resize.handler';
 import { CrossEventProducerComponent } from './inputhandlers/cross-event-producer.component';
 import { HoverProducerComponent } from './inputhandlers/hover-producer.component';
@@ -37,7 +36,8 @@ import { CanvasInputListenerComponent, Point } from './inputlisteners/canvas-inp
 import { HitTestCanvasModel } from './model/hit-test-canvas.model';
 import { ScaleModel } from './model/scale.model';
 import { TimeZoneModel } from './model/time-zone.model';
-import { DeepPartial, tobject } from './utils';
+import { ChartEvents } from './events/chart-events';
+import { DeepPartial } from './utils/object.utils';
 export type FitType = 'studies' | 'orders' | 'positions';
 export default class ChartBootstrap implements ChartContainer {
     id: string;
@@ -97,10 +97,10 @@ export default class ChartBootstrap implements ChartContainer {
      * Merges a local configuration object with a global configuration object recursively.
      * @template L - Type of the local configuration object.
      * @param {L} local - The local configuration object to be merged.
-     * @param {tobject} global - The global configuration object to be merged.
+     * @param {Record<string, any>} global - The global configuration object to be merged.
      * @returns {L} - The merged local configuration object.
      */
-    static mergeConfig<L extends tobject>(local: L, global: tobject): L;
+    static mergeConfig<L extends Record<string, any>>(local: L, global: Record<string, any>): L;
     /**
      * Returns the FullChartConfig object.
      *

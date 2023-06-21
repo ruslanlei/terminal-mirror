@@ -4,11 +4,11 @@
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 import { ChartConfigComponentsYAxis, FullChartConfig } from '../../chart.config';
-import { CanvasModel } from '../../drawers/canvas.model';
-import { NumericAxisLabel } from '../../../common/numeric-axis-labels.generator';
-import { Bounds, BoundsProvider } from '../../../common/common-types';
+import { CanvasModel } from '../../model/canvas.model';
+import { NumericAxisLabel } from '../labels_generator/numeric-axis-labels.generator';
 import { Drawer } from '../../drawers/drawing-manager';
 import { Unit, ViewportModel } from '../../model/scaling/viewport.model';
+import { Bounds, BoundsProvider } from '../../model/bounds.model';
 export interface YAxisLabel {
     readonly text: string;
     readonly value: Unit;

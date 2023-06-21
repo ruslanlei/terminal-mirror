@@ -3,15 +3,15 @@
  * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
-import { Bounds } from '../../common/common-types';
 import { CanvasBoundsContainer, HitBoundsTest } from '../canvas/canvas-bounds-container';
 import { CursorHandler } from '../canvas/cursor.handler';
 import { FullChartConfig } from '../chart.config';
-import { ChartBaseElement } from '../chart-base-element';
+import { ChartBaseElement } from './chart-base-element';
 import { ChartModel } from '../components/chart/chart.model';
 import { ChartPanComponent } from '../components/pan/chart-pan.component';
-import { CanvasModel } from '../drawers/canvas.model';
+import { CanvasModel } from './canvas.model';
 import { CanvasInputListenerComponent } from '../inputlisteners/canvas-input-listener.component';
+import { Bounds } from './bounds.model';
 export declare const BASELINE_RESIZER_UUID = "BASELINE_RESIZER";
 /**
  * Baseline separator for baseline chart

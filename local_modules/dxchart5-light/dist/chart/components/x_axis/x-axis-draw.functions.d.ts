@@ -14,4 +14,4 @@ export type LabelAlign = 'start' | 'end' | 'middle';
  * @param config
  * @param label
  */
-export declare function drawXAxisLabel(backgroudCtx: CanvasRenderingContext2D, ctx: CanvasRenderingContext2D, canvasBoundsContainer: CanvasBoundsContainer, config: FullChartConfig, label: XAxisLabel): void;
+export declare function drawXAxisLabel(backgroundCtx: CanvasRenderingContext2D, ctx: CanvasRenderingContext2D, canvasBoundsContainer: CanvasBoundsContainer, config: FullChartConfig, label: XAxisLabel): void;

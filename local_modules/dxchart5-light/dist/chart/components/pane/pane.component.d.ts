@@ -3,12 +3,12 @@
  * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
-import { Bounds, Unsubscriber } from '../../../common/common-types';
-import { PriceAxisType } from '../../../common/numeric-axis-labels.generator';
+import { Bounds } from '../../model/bounds.model';
+import { PriceAxisType } from '../labels_generator/numeric-axis-labels.generator';
 import { CanvasBoundsContainer, HitBoundsTest } from '../../canvas/canvas-bounds-container';
 import { FullChartConfig } from '../../chart.config';
-import { ChartBaseElement } from '../../chart-base-element';
-import EventBus from '../../event-bus';
+import { ChartBaseElement } from '../../model/chart-base-element';
+import EventBus from '../../events/event-bus';
 import { DataSeriesModel, DataSeriesPoint } from '../../model/data-series.model';
 import { ScaleModel } from '../../model/scale.model';
 import { HighLowProvider } from '../../model/scaling/auto-scale.model';
@@ -17,8 +17,11 @@ import { NumericYAxisLabelsGenerator } from '../y_axis/numeric-y-axis-labels.gen
 import { YAxisDrawer } from '../y_axis/y-axis.drawer';
 import { YAxisScaleHandler } from '../y_axis/y-axis-scale.handler';
 import { PaneHitTestController } from './pane-hit-test.controller';
-import { CanvasModel } from '../../drawers/canvas.model';
+import { CanvasModel } from '../../model/canvas.model';
+import { Unsubscriber } from '../../utils/function.utils';
+import { ChartBaseModel } from '../chart/chart-base.model';
 export declare class PaneComponent extends ChartBaseElement {
+    private chartBaseModel;
     private config;
     eventBus: EventBus;
     private canvasBoundsContainer;
@@ -38,7 +41,7 @@ export declare class PaneComponent extends ChartBaseElement {
      */
     ht: HitBoundsTest;
     private mainDataSeries?;
-    constructor(config: FullChartConfig, eventBus: EventBus, canvasBoundsContainer: CanvasBoundsContainer, uuid: string, scaleModel: ScaleModel, yAxisLabelsGenerator: NumericYAxisLabelsGenerator, yAxisDrawer: YAxisDrawer, yAxisScaleHandler: YAxisScaleHandler, hitTestController: PaneHitTestController, dataSeriesCanvasModel: CanvasModel, subs?: Unsubscriber[], dataSeries?: Set<DataSeriesModel>, formatters?: PaneFormatters);
+    constructor(chartBaseModel: ChartBaseModel<'candle'>, config: FullChartConfig, eventBus: EventBus, canvasBoundsContainer: CanvasBoundsContainer, uuid: string, scaleModel: ScaleModel, yAxisLabelsGenerator: NumericYAxisLabelsGenerator, yAxisDrawer: YAxisDrawer, yAxisScaleHandler: YAxisScaleHandler, hitTestController: PaneHitTestController, dataSeriesCanvasModel: CanvasModel, subs?: Unsubscriber[], dataSeries?: Set<DataSeriesModel>, formatters?: PaneFormatters);
     /**
      * Method that activates the canvas bounds container and recalculates the zoom Y of the scale model.
      * @protected
@@ -80,6 +83,7 @@ export declare class PaneComponent extends ChartBaseElement {
      * @returns {void}
      */
     show(): void;
+    private toVisualPoints;
     /**
      * Creates a new DataSeriesModel object.
      * @returns {DataSeriesModel} - The newly created DataSeriesModel object.

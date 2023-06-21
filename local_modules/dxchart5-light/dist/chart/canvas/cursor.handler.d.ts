@@ -4,12 +4,12 @@
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 import { Observable, Subject } from 'rxjs';
-import { Bounds } from '../../common/common-types';
 import { CursorType, FullChartConfig } from '../chart.config';
-import { ChartBaseElement } from '../chart-base-element';
+import { ChartBaseElement } from '../model/chart-base-element';
 import { CanvasInputListenerComponent } from '../inputlisteners/canvas-input-listener.component';
 import { CanvasBoundsContainer, HitBoundsTest } from './canvas-bounds-container';
 import { HitTestCanvasModel } from '../model/hit-test-canvas.model';
+import { Bounds } from '../model/bounds.model';
 interface HitTestCursor {
     cursor: CursorType;
     hitTest: HitBoundsTest;

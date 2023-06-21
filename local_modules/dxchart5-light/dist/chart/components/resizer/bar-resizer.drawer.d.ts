@@ -3,12 +3,12 @@
  * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
-import { Bounds } from '../../../common/common-types';
 import { CanvasAnimation } from '../../animation/canvas-animation';
-import { CanvasModel } from '../../drawers/canvas.model';
+import { CanvasModel } from '../../model/canvas.model';
 import { Drawer } from '../../drawers/drawing-manager';
 import { FullChartConfig } from '../../chart.config';
 import { CanvasBoundsContainer } from '../../canvas/canvas-bounds-container';
+import { BoundsProvider } from '../../model/bounds.model';
 export declare class BarResizerDrawer implements Drawer {
     private config;
     private boundsProvider;
@@ -16,7 +16,7 @@ export declare class BarResizerDrawer implements Drawer {
     private canvasAnimation;
     private animationId;
     private canvasBoundsContainer;
-    constructor(config: FullChartConfig, boundsProvider: () => Bounds, canvasModel: CanvasModel, canvasAnimation: CanvasAnimation, animationId: string, canvasBoundsContainer: CanvasBoundsContainer);
+    constructor(config: FullChartConfig, boundsProvider: BoundsProvider, canvasModel: CanvasModel, canvasAnimation: CanvasAnimation, animationId: string, canvasBoundsContainer: CanvasBoundsContainer);
     /**
      * Draws the pane resizer on the canvas if it is visible.
      * The resizer is drawn with a fixed mode or with an animation.

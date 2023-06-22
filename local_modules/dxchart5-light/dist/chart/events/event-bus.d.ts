@@ -26,7 +26,7 @@ export interface EventBusOn {
 }
 /**
  * Event bus for chart.
- * @doc-tags core-components
+ * @doc-tags components-components
  */
 export default class EventBus {
     private UNKNOWN_ARR;

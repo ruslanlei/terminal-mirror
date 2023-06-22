@@ -38,8 +38,8 @@ export type BarType = keyof BarTypes;
 export declare const LastBarRedrawableBarTypes: BarType[];
 export declare const isLastBarRedrawAvailable: (type: BarType) => boolean;
 /**
- * Full chart-core default config.
- * @doc-tags chart-core,default-config
+ * Full chart-components default config.
+ * @doc-tags chart-components,default-config
  * @doc-tags-name getDefaultConfig=xl
  */
 export declare const getDefaultConfig: () => FullChartConfig;
@@ -162,7 +162,7 @@ export interface DateFormatter {
     };
 }
 /**
- * The main configuration file for chart-core.
+ * The main configuration file for chart-components.
  * Includes all components' configurations, global configs like dateFormatter, and colors.
  */
 export interface FullChartConfig extends TimeFormatterConfig {
@@ -177,7 +177,7 @@ export interface FullChartConfig extends TimeFormatterConfig {
      */
     components: ChartComponents;
     /**
-     * All colors in chart-core are configured here.
+     * All colors in chart-components are configured here.
      */
     colors: FullChartColors;
     /**

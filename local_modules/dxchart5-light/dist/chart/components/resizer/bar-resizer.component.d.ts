@@ -18,7 +18,7 @@ import { BoundsProvider } from '../../model/bounds.model';
  * Used to resize the areas height or just draw a fixed line.
  * Supports hover animation.
  *
- * @doc-tags chart-core,resizer
+ * @doc-tags chart-components,resizer
  */
 export declare class BarResizerComponent extends ChartBaseElement {
     private id;

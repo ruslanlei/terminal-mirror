@@ -7,7 +7,7 @@ import ChartContainer from '../chart-container';
 import { Hover } from '../inputhandlers/hover-producer.component';
 import { Unsubscriber } from '../utils/function.utils';
 /**
- * List of public API events in chart-core.
+ * List of public API events in chart-components.
  * @doc-tags api
  */
 export declare class ChartEvents {

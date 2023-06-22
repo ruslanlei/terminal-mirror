@@ -24,7 +24,7 @@ export declare const VIEWPORT_ANIMATION_ID = "VIEWPORT_ANIMATION";
  * Add specific animation here as well with typed API.
  * Like "color" animation which auto-updates color alpha channel.
  *
- * @doc-tags chart-core,animation
+ * @doc-tags chart-components,animation
  */
 export declare class CanvasAnimation {
     private eventBus;

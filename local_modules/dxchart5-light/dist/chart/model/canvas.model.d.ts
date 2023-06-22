@@ -8,9 +8,9 @@ import EventBus from '../events/event-bus';
 import { PickedDOMRect } from '../inputhandlers/chart-resize.handler';
 import { DrawingManager } from '../drawers/drawing-manager';
 /**
- * The minimum supported canvas size in chart-core (in pixels).
+ * The minimum supported canvas size in chart-components (in pixels).
  * Any size of <canvas> element below these dimensions will not be rendered (is NOT INTENDED to be rendered).
- * @doc-tags chart-core,canvas
+ * @doc-tags chart-components,canvas
  */
 export declare const MIN_SUPPORTED_CANVAS_SIZE: {
     width: number;
@@ -92,7 +92,7 @@ export interface CanvasBarType {
  * @param {CanvasModel[]} canvasModels - An array of canvas models to add the new model to.
  *
  * @returns {CanvasModel} The newly created canvas model.
- 
+
 export function createMainCanvasModel(
     eventBus,
     canvas,
@@ -126,6 +126,6 @@ export declare function createCanvasModel(eventBus: EventBus, canvas: HTMLCanvas
  * @param {CanvasModel} canvasModel - The canvas model to be initialized.
  * @param {FullChartConfig} config - The configuration object for the canvas.
  * @returns {void}
- 
+
 */
 export declare function initCanvasWithConfig(canvasModel: CanvasModel, config: FullChartConfig): void;

@@ -17,7 +17,7 @@ export declare const HIT_TEST_ID_RANGE: Record<HitTestType, [number, number]>;
  * Canvas layer for testing mouse events over the models such as Charts, Drawings, Volumes and etc.
  * !!! always add new drawers to hit-test drawingManager BEFORE the DrawerType.HIT_TEST_DRAWINGS to save the hierarchy
  *
- * @doc-tags chart-core,hit-test
+ * @doc-tags chart-components,hit-test
  */
 export declare class HitTestCanvasModel extends CanvasModel {
     private canvasInputListener;

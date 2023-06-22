@@ -9,7 +9,7 @@ export declare const getDPR: () => number;
  * Rounds a given number according to the inverse of current DPR.
  * For example, DPR = 2, num = 2, res => 2; DPR = 2, num = 2.5, res => 2.5; DPR = 2, num = 2.333, res => 2.5
  * @param num
- * @doc-tags chart-core,math,dpr
+ * @doc-tags chart-components,math,dpr
  */
 export declare const roundToDPR: (num: number) => number;
 export declare const floorToDPR: (num: number) => number;

@@ -34,7 +34,7 @@ export interface ChartWheelEvent {
  * @param {CanvasBoundsContainer} canvasBoundsContainer - An instance of the CanvasBoundsContainer class.
  * @param {CanvasAnimation} canvasAnimation - An instance of the CanvasAnimation class.
  * @param {ChartPanComponent} chartPanComponent - An instance of the ChartPanComponent class.
- 
+
 */
 export declare class ChartAreaPanHandler extends ChartBaseElement {
     private bus;
@@ -84,6 +84,6 @@ export declare class ChartAreaPanHandler extends ChartBaseElement {
  * @param point
  * @param config
  *
- * @doc-tags chart-core,auto-scale,y-axis
+ * @doc-tags chart-components,auto-scale,y-axis
  */
 export declare const shouldDisableAutoScale: (point: Point, config: Required<AutoScaleDisableOnDrag>) => boolean;

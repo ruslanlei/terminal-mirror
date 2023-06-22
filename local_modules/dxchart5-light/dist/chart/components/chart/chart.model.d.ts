@@ -100,7 +100,7 @@ export declare class ChartModel extends ChartBaseElement {
      */
     setSecondaryCandleSeries(candles: Array<Candle>, instrument?: ChartInstrument, recalculateAndUpdate?: boolean): CandleSeriesModel | undefined;
     /**
-     * Shouldn't be called outside chart-core, use ChartComponent#setAllSeries instead
+     * Shouldn't be called outside chart-components, use ChartComponent#setAllSeries instead
      * @param mainSeries
      * @param secondarySeries
      */
@@ -129,7 +129,7 @@ export declare class ChartModel extends ChartBaseElement {
      */
     rememberCurrentTimeframe(): void;
     /**
-     * Shouldn't be called outside chart-core, use ChartComponent#updateAllSeries instead
+     * Shouldn't be called outside chart-components, use ChartComponent#updateAllSeries instead
      * @param mainSeries
      * @param secondarySeries
      */
@@ -334,7 +334,7 @@ export declare class ChartModel extends ChartBaseElement {
     /**
      * Returns the last visual candle of the main candle series.
      * @returns {VisualCandle | undefined} The last visual candle of the main candle series or undefined if the series is empty.
-      
+
     */
     getLastVisualCandle(): VisualCandle | undefined;
     /**

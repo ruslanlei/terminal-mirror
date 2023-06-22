@@ -16,7 +16,7 @@ export declare const isFirefox: boolean;
  * @param {WheelEvent} e
  * @returns {boolean}
  *
- * @doc-tags chart-core, utility,
+ * @doc-tags chart-components, utility,
  */
 export declare const touchpadDetector: (e: WheelEvent) => boolean;
 /**
@@ -25,6 +25,6 @@ export declare const touchpadDetector: (e: WheelEvent) => boolean;
  * @param isTouchpad
  * @returns {number}
  *
- * @doc-tags chart-core, zoom
+ * @doc-tags chart-components, zoom
  */
 export declare const getTouchpadSensitivity: (config: FullChartConfig) => number;

@@ -15,7 +15,7 @@ interface HitTestCursor {
     hitTest: HitBoundsTest;
 }
 /**
- * @doc-tags chart-core,cursor
+ * @doc-tags chart-components,cursor
  */
 export declare class CursorHandler extends ChartBaseElement {
     private element;

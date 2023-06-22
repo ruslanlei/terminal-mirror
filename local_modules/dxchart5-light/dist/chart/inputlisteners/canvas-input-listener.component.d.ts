@@ -86,7 +86,7 @@ export declare class CanvasInputListenerComponent extends ChartBaseElement {
     private dragEndListener;
     private clickHandler;
     /**
-     * Prevents text selection inside chart-core canvas. TODO Do we need it?
+     * Prevents text selection inside chart-components canvas. TODO Do we need it?
      */
     private fixTextSelection;
     doActivate(): void;

@@ -14,10 +14,10 @@ export interface DateTimeFormatter {
 export type DateTimeFormatterFactory = (format: string) => DateTimeFormatter;
 export declare const defaultDateTimeFormatter: () => (date: Date | number) => string;
 /**
- * Default chart-core time formatter.
+ * Default chart-components time formatter.
  * @param config
  * @param offsetFunction
- * @doc-tags chart-core,default-config,date-formatter
+ * @doc-tags chart-components,default-config,date-formatter
  */
 export declare const dateTimeFormatterFactory: (config: FullChartConfig, offsetFunction: (timezone: string) => (time: number) => Date) => DateTimeFormatterFactory;
 export declare const recalculateXFormatter: (xAxisLabelFormat: string | Array<DateTimeFormatConfig>, period: number, formatterFactory: (format: string) => (timestamp: number | Date) => string) => DateTimeFormatter;

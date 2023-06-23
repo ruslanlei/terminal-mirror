@@ -1,1 +1,1 @@
-export const test: string = 'heh';
+export * from './utils';

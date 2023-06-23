@@ -14,10 +14,13 @@ export default defineConfig({
     },
     lib: {
       entry: path.resolve(__dirname, 'src/index.ts'),
-      name: '@terminal/common',
+      formats: ['es'],
     },
     rollupOptions: {
+      preset: 'safest',
+      propertyReadSideEffects: true,
       external: ['collect.js', 'lodash', 'numeral', 'uuid'],
+      // input: {},
       output: {
         globals: {
           'collect.js': 'collect.js',
@@ -29,7 +32,9 @@ export default defineConfig({
     },
     sourcemap: true,
   },
-  plugins: [dts()],
+  plugins: [
+    dts(),
+  ],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),

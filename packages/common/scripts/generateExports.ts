@@ -1,58 +1,50 @@
 // @ts-ignore
 import fs from 'fs';
 // @ts-ignore
-import path from 'path';
+import path from 'node:path';
+import { fileURLToPath } from 'url';
 
-const componentsDir = path.resolve(__dirname, '../utils');
+// @ts-ignore
+// eslint-disable-next-line no-underscore-dangle
+const __filename = fileURLToPath(import.meta.url);
+// eslint-disable-next-line no-underscore-dangle
+const __dirname = path.dirname(__filename);
 
-fs.readdir(componentsDir, (err: any, files: any) => {
-  if (err) throw err;
+const baseDir = path.resolve(__dirname, '../src');
+const outDir = path.resolve(__dirname, '../src');
+const outFile = path.join(outDir, 'index.ts');
 
-  files.forEach((file: any) => {
-    const fullPath = path.join(componentsDir, file);
+const include = ['utils'];
 
-    fs.stat(fullPath, (err: any, stats: any) => {
-      if (err) throw err;
+// Function to create index.ts for a given directory
+const createIndexFile = (dir: string) => {
+  const files = fs.readdirSync(dir);
 
-      if (stats.isDirectory()) {
-        fs.readdir(fullPath, (err: any, subFiles: any) => {
-          if (err) throw err;
+  const content = files.reduce((content: string, file: any) => {
+    const isTargetFile = path.extname(file) === '.ts' && !file.endsWith('index.ts');
+    if (!isTargetFile) return content;
 
-          const indexPath = path.join(fullPath, 'index.ts');
-          const currentContent = fs.existsSync(indexPath) ? fs.readFileSync(indexPath, 'utf8') : '';
-          const currentLines = currentContent.split('\n');
+    return `${content}export * from './${path.basename(file, '.ts')}';\n`;
+  }, '');
 
-          const subExports = subFiles
-            .filter((file: any) => file.endsWith('.vue')) // Ignore non-Vue files
-            .map((file: any) => {
-              const componentName = path.basename(file, '.vue');
-              const exportName = `Ui${componentName}`;
-              return `export { default as ${exportName} } from './${componentName}.vue'\n;`;
-            })
-            // Ignore duplicates
-            .filter((exportStatement: any) => !currentLines.includes(exportStatement))
-            .join('\n');
+  fs.writeFileSync(path.join(dir, 'index.ts'), content);
+};
 
-          const newContent = `${subExports}\n${currentContent}`;
-
-          fs.writeFile(indexPath, newContent, (err: any) => {
-            if (err) throw err;
-            console.log(`index.ts has been updated in ${file}`);
-          });
-        });
-      }
-    });
-  });
-
-  const exports = files
-    .filter((file: any) => !file.endsWith('index.ts')) // Ignore index.ts file
-    .map((file: any) => `export * from './${file}';`)
-    .join('\n');
-
-  const indexPath = path.join(componentsDir, 'index.ts');
-
-  fs.writeFile(indexPath, exports, (err: any) => {
-    if (err) throw err;
-    console.log('index.ts has been updated in components');
-  });
+// Create index.ts in each subdirectory
+include.forEach((dirName) => {
+  createIndexFile(path.join(baseDir, dirName));
 });
+
+const getDirectories = (source: string) => fs
+  .readdirSync(source, { withFileTypes: true })
+  .filter((dirent: any) => dirent.isDirectory())
+  .map((dirent: any) => dirent.name);
+
+fs.writeFileSync(
+  outFile,
+  `${getDirectories(baseDir)
+    .map((dir: string) => `export * from './${dir}';`)
+    .join('\n')}\n`,
+);
+
+console.log('Exports for @terminal/common have been generated');

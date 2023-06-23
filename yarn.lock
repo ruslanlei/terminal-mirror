@@ -485,6 +485,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@rollup/plugin-run@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "@rollup/plugin-run@npm:3.0.1"
+  dependencies:
+    "@types/node": 14.18.30
+  peerDependencies:
+    rollup: ^2.0.0||^3.0.0
+  peerDependenciesMeta:
+    rollup:
+      optional: true
+  checksum: f07d234ce09c118c863aa09e690061d3aaeec13aab9c161b386c7baf2fc91cb5c6598b000e94dccb98efd8f9fec82119ec37795afb9d57f794a8f162f90c9c0d
+  languageName: node
+  linkType: hard
+
 "@rollup/pluginutils@npm:^4.2.1":
   version: 4.2.1
   resolution: "@rollup/pluginutils@npm:4.2.1"
@@ -570,6 +584,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@terminal/monorepo@workspace:."
   dependencies:
+    "@rollup/plugin-run": ^3.0.1
     "@typescript-eslint/eslint-plugin": ^5.39.0
     "@typescript-eslint/parser": ^5.39.0
     eslint: 8.22.0
@@ -581,12 +596,6 @@ __metadata:
     npm-run-all: ^4.1.5
     ts-node: ^10.9.1
     turbo: ^1.10.4
-  languageName: unknown
-  linkType: soft
-
-"@terminal/uikit@workspace:packages/uikit":
-  version: 0.0.0-use.local
-  resolution: "@terminal/uikit@workspace:packages/uikit"
   languageName: unknown
   linkType: soft
 
@@ -1057,6 +1066,13 @@ __metadata:
   version: 0.7.31
   resolution: "@types/ms@npm:0.7.31"
   checksum: daadd354aedde024cce6f5aa873fefe7b71b22cd0e28632a69e8b677aeb48ae8caa1c60e5919bb781df040d116b01cb4316335167a3fc0ef6a63fa3614c0f6da
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:14.18.30":
+  version: 14.18.30
+  resolution: "@types/node@npm:14.18.30"
+  checksum: 347b2aa53631a2b2056f5d7b98e695eac40e8a83cbc4ee40ab7b2684f1fd4ada3d6522343a3f1ab610fbcd8457c4ad77103240474d568c905d62c1b5d6666589
   languageName: node
   linkType: hard
 

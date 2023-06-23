@@ -1,5 +1,4 @@
 import flowRight from 'lodash/flowRight';
-import map from 'lodash/map';
 import curry from 'lodash/curry';
 import { DeepPartial } from './typescript';
 
@@ -14,7 +13,6 @@ export const log = curry((
 export {
   curry,
   flowRight as compose,
-  map,
 };
 
 export type CurriedFunc<F extends (...args: any) => any> = (

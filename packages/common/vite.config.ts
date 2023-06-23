@@ -2,26 +2,23 @@
 import { defineConfig } from 'vite';
 import path from 'path';
 import dts from 'vite-plugin-dts';
+import commonjs from '@rollup/plugin-commonjs';
 
-// https://vitejs.dev/config/
 export default defineConfig({
-  optimizeDeps: {
-    disabled: false,
-  },
   build: {
-    commonjsOptions: {
-      include: [],
-    },
     lib: {
       entry: path.resolve(__dirname, 'src/index.ts'),
       formats: ['es'],
     },
     rollupOptions: {
-      preset: 'safest',
-      propertyReadSideEffects: true,
-      external: ['collect.js', 'lodash', 'numeral', 'uuid'],
-      // input: {},
+      external: (id) => (
+        /^lodash\//.test(id)
+        || ['collect.js', 'numeral', 'uuid', 'rambda', 'dayjs'].includes(id)
+      ),
       output: {
+        preserveModules: true,
+        entryFileNames: () => '[name].js',
+        format: 'es',
         globals: {
           'collect.js': 'collect.js',
           lodash: 'lodash',
@@ -29,8 +26,11 @@ export default defineConfig({
           uuid: 'uuid',
         },
       },
+      plugins: [
+        commonjs(),
+      ],
     },
-    sourcemap: true,
+    sourcemap: false,
   },
   plugins: [
     dts(),

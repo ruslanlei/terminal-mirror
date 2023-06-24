@@ -1,8 +1,5 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@terminal/common": ["packages/common/dist/src"],
-    }
+    "baseUrl": "."
   }
 }

@@ -6,10 +6,8 @@
       "outputs": ["dist/**"]
     },
     "dev": {
-      "dependsOn": ["generateExports"],
       "cache": false
     },
-    "lint": {},
-    "generateExports": {}
+    "lint": {}
   }
 }

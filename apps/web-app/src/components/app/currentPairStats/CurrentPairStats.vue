@@ -14,7 +14,7 @@ import { useMarketStore } from '@/stores/market';
 import { useChartDataStore } from '@/stores/chartData';
 import { IPairStats } from '@/components/core/pairStats';
 import { compose } from '@/utils/fp';
-// import { roundToDecimalPlaces, subtractRight } from '@/utils/number';
+import { roundToDecimalPlaces, subtractRight } from '@/utils/number';
 import { humanizeNumber, percentFormat } from '@/utils/numberFormat';
 import { calculatePercentageOfTotal } from '@/helpers/math/percents';
 import { findMaxByKey, findMinByKey } from '@/utils/array';

@@ -577,6 +577,7 @@ __metadata:
   resolution: "@terminal/common@workspace:packages/common"
   dependencies:
     "@rollup/plugin-commonjs": ^25.0.2
+    "@terminal/tsconfig": "*"
     collect.js: ^4.36.1
     lodash: ^4.17.21
     npm-run-all: ^4.1.5
@@ -605,6 +606,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@terminal/tsconfig@*, @terminal/tsconfig@workspace:packages/tsconfig":
+  version: 0.0.0-use.local
+  resolution: "@terminal/tsconfig@workspace:packages/tsconfig"
+  dependencies:
+    typescript: 5.0.4
+  languageName: unknown
+  linkType: soft
+
 "@terminal/web-app@workspace:apps/web-app":
   version: 0.0.0-use.local
   resolution: "@terminal/web-app@workspace:apps/web-app"
@@ -613,6 +622,7 @@ __metadata:
     "@dx-private/dxchart5-modules": "file:../../local_modules/dxchart5-modules/"
     "@dx-private/dxstudies": "file:../../local_modules/dxstudies/"
     "@terminal/common": "*"
+    "@terminal/tsconfig": "*"
     "@types/animejs": ^3.1.7
     "@types/d3": ^7.4.0
     "@types/dompurify": ^3.0.1
@@ -657,6 +667,7 @@ __metadata:
     vite-plugin-pages: ^0.29.0
     vite-plugin-vue-type-imports: ^0.2.4
     vite-svg-loader: ^4.0.0
+    vite-tsconfig-paths: ^4.2.0
     vue: ^3.2.47
     vue-flatpickr-component: ^11.0.3
     vue-i18n: ^9.2.2
@@ -3571,6 +3582,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"globrex@npm:^0.1.2":
+  version: 0.1.2
+  resolution: "globrex@npm:0.1.2"
+  checksum: adca162494a176ce9ecf4dd232f7b802956bb1966b37f60c15e49d2e7d961b66c60826366dc2649093cad5a0d69970cfa8875bd1695b5a1a2f33dcd2aa88da3c
+  languageName: node
+  linkType: hard
+
 "gopd@npm:^1.0.1":
   version: 1.0.1
   resolution: "gopd@npm:1.0.1"
@@ -5844,6 +5862,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tsconfck@npm:^2.1.0":
+  version: 2.1.1
+  resolution: "tsconfck@npm:2.1.1"
+  peerDependencies:
+    typescript: ^4.3.5 || ^5.0.0
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  bin:
+    tsconfck: bin/tsconfck.js
+  checksum: c531525f39763cbbd7e6dbf5e29f12a7ae67eb8712816c14d06a9db6cbdc9dda9ac3cd6db07ef645f8a4cdea906447ab44e2c8679e320871cf9dd598756e8c83
+  languageName: node
+  linkType: hard
+
 "tsconfig-paths@npm:^3.14.1":
   version: 3.14.2
   resolution: "tsconfig-paths@npm:3.14.2"
@@ -5986,6 +6018,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"typescript@npm:5.0.4, typescript@npm:~5.0.4":
+  version: 5.0.4
+  resolution: "typescript@npm:5.0.4"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 82b94da3f4604a8946da585f7d6c3025fff8410779e5bde2855ab130d05e4fd08938b9e593b6ebed165bda6ad9292b230984f10952cf82f0a0ca07bbeaa08172
+  languageName: node
+  linkType: hard
+
 "typescript@npm:^4.9.5":
   version: 4.9.5
   resolution: "typescript@npm:4.9.5"
@@ -5996,13 +6038,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:~5.0.4":
+"typescript@patch:typescript@5.0.4#~builtin<compat/typescript>, typescript@patch:typescript@~5.0.4#~builtin<compat/typescript>":
   version: 5.0.4
-  resolution: "typescript@npm:5.0.4"
+  resolution: "typescript@patch:typescript@npm%3A5.0.4#~builtin<compat/typescript>::version=5.0.4&hash=b5f058"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 82b94da3f4604a8946da585f7d6c3025fff8410779e5bde2855ab130d05e4fd08938b9e593b6ebed165bda6ad9292b230984f10952cf82f0a0ca07bbeaa08172
+  checksum: d26b6ba97b6d163c55dbdffd9bbb4c211667ebebc743accfeb2c8c0154aace7afd097b51165a72a5bad2cf65a4612259344ff60f8e642362aa1695c760d303ac
   languageName: node
   linkType: hard
 
@@ -6013,16 +6055,6 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 1f8f3b6aaea19f0f67cba79057674ba580438a7db55057eb89cc06950483c5d632115c14077f6663ea76fd09fce3c190e6414bb98582ec80aa5a4eaf345d5b68
-  languageName: node
-  linkType: hard
-
-"typescript@patch:typescript@~5.0.4#~builtin<compat/typescript>":
-  version: 5.0.4
-  resolution: "typescript@patch:typescript@npm%3A5.0.4#~builtin<compat/typescript>::version=5.0.4&hash=b5f058"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: d26b6ba97b6d163c55dbdffd9bbb4c211667ebebc743accfeb2c8c0154aace7afd097b51165a72a5bad2cf65a4612259344ff60f8e642362aa1695c760d303ac
   languageName: node
   linkType: hard
 
@@ -6221,6 +6253,22 @@ __metadata:
     "@vue/compiler-sfc": ^3.2.20
     svgo: ^3.0.2
   checksum: 2363054b33ee26baf440a43bc9f301dec4c7a89b37f00539546b2cb75ef883ec311cdf990d9d3010870d776974f8c52961ca459cd90fdf3969501840ca631feb
+  languageName: node
+  linkType: hard
+
+"vite-tsconfig-paths@npm:^4.2.0":
+  version: 4.2.0
+  resolution: "vite-tsconfig-paths@npm:4.2.0"
+  dependencies:
+    debug: ^4.1.1
+    globrex: ^0.1.2
+    tsconfck: ^2.1.0
+  peerDependencies:
+    vite: "*"
+  peerDependenciesMeta:
+    vite:
+      optional: true
+  checksum: 73a8467de72d7ac502328454fd00c19571cd4bad2dd5982643b24718bb95e449a3f4153cfc2d58a358bfc8f37e592fb442fc10884b59ae82138c1329160cd952
   languageName: node
   linkType: hard
 

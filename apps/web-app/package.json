@@ -12,6 +12,7 @@
     "@dx-private/dxchart5-modules": "file:../../local_modules/dxchart5-modules/",
     "@dx-private/dxstudies": "file:../../local_modules/dxstudies/",
     "@terminal/common": "*",
+    "@terminal/tsconfig": "*",
     "@vueuse/core": "^9.13.0",
     "animejs": "^3.2.1",
     "axios": "^1.3.5",

@@ -10,12 +10,13 @@
   ],
   "scripts": {
     "generateExports": "node --loader=ts-node/esm scripts/generateExports.ts",
-    "build": "run-p generateExports && vite build",
-    "preinstall": "vite build"
+    "build": "vite build",
+    "preinstall": "vite build --outDir ./"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@terminal/tsconfig": "*",
     "collect.js": "^4.36.1",
     "lodash": "^4.17.21",
     "numeral": "^2.0.6",

@@ -1,5 +1,5 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "@terminal/tsconfig/base.json",
   "compilerOptions": {
     "target": "esnext",
     "module": "esnext",

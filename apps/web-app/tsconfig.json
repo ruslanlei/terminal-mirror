@@ -1,4 +1,5 @@
 {
+  "extends": "@terminal/tsconfig/base.json",
   "compilerOptions": {
     "baseUrl": ".",
     "target": "esnext",
@@ -18,21 +19,11 @@
     "lib": ["esnext", "dom"],
     "types": ["vite/client"],
     "paths": {
-      "@/*": ["./src/*"],
-      "@terminal/common/*": ["./node_modules/@terminal/common/dist/*"]
+      "@/*": ["./src/*"]
     }
   },
   "linterOptions": {
-    "exclude": ["src/**", "components/**"],
+    "exclude": ["src/**", "components/**"]
   },
-  "include": [
-    "components.d.ts",
-    "components-global.d.ts",
-    "src/**/*.js",
-    "src/**/*.ts",
-    "src/**/*.d.ts",
-    "src/**/*.vue",
-    "documentation/**/*.md",
-    "src/**/*.svg"
-  ],
+  "exclude": ["node_modules"]
 }

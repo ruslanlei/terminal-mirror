@@ -19,6 +19,7 @@
     "types": ["vite/client"],
     "paths": {
       "@/*": ["./src/*"],
+      "@terminal/common/*": ["./node_modules/@terminal/common/dist/*"]
     }
   },
   "linterOptions": {

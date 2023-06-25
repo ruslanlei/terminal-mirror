@@ -55,6 +55,7 @@ module.exports = {
       alias: {
         map: [
           ['@', './src'],
+          ['@terminal/common', './package/common'],
         ],
         extensions: ['.vue', '.ts', '.js', '.jsx', '.json'],
       },

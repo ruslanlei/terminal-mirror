@@ -1,17 +1,17 @@
 {
   "name": "@terminal/common",
   "version": "1.0.0",
-  "module": "./dist/src/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
   "type": "module",
   "files": [
     "dist"
   ],
   "scripts": {
-    "dev": "vite build --watch",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "vite build",
-    "generateExports": "node --loader=ts-node/esm scripts/generateExports.ts"
+    "generateExports": "node --loader=ts-node/esm scripts/generateExports.ts",
+    "build": "run-p generateExports && vite build",
+    "preinstall": "vite build"
   },
   "author": "",
   "license": "ISC",
@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^25.0.2",
+    "npm-run-all": "^4.1.5",
     "vite": "^4.3.9",
     "vite-plugin-dts": "^2.3.0"
   },

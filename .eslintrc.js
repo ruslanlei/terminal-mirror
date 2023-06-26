@@ -34,6 +34,7 @@ module.exports = {
     'no-param-reassign': 'off',
     'vue/multi-word-component-names': 'off',
     'no-nested-ternary': 'off',
+    'no-underscore-dangle': 'off',
 
     'vuejs-accessibility/click-events-have-key-events': 'off',
     'vuejs-accessibility/form-control-has-label': 'off',

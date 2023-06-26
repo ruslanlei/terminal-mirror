@@ -6,14 +6,14 @@
 
 <script setup lang="ts">
 import anime from 'animejs';
-import { playAnimation } from '@/utils/animation';
-import { useCssModules } from '@/hooks/useCssModules';
 import {
   onBeforeUnmount,
   onMounted,
   provide,
   nextTick,
 } from 'vue';
+import { playAnimation } from '@/utils/animation';
+import { useCssModules } from '@/hooks/useCssModules';
 import { uuid } from '@/utils/uuid';
 import { SkeletonContainerIdInjectionKey } from '@/components/core/skeletonContainer/index';
 import { skeletonSelector } from '@/components/core/skeleton';

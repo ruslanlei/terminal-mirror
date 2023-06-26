@@ -1,6 +1,0 @@
-/*
- * Copyright (C) 2002 - 2023 Devexperts LLC
- * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
- * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
- */
-import{typedEntries_UNSAFE as s}from"../../../utils/object.utils";import{timeFormatMatcherFactory as c}from"./parser/time-formats-matchers.functions";import{parseTimeFormatsFromKey as g}from"./parser/time-formats-parser.functions";import{validateParsedTimeFormat as h}from"./parser/time-formats-validators.functions";import{getWeightFromTimeFormat as p}from"./x-axis-weights.functions";const f=(o,i,n,r)=>{const m=Object.entries(n).sort(([t],[e])=>parseInt(e,10)-parseInt(t,10));for(const[t,e]of m)if(e&&e(r(o.getTime()),r(i.getTime())))return parseInt(t,10);return null};export function mapCandlesToWeightedPoints(o,i,n){const r=[];if(o.length===0)return r;let m=new Date(0);for(const t of o){const e=new Date(t.candle.timestamp),a={weight:null};a.weight=f(e,m,i,n),r.push(a),m=e}return r}export const generateWeightsMapForConfig=o=>{const i={},n={};return s(o).forEach(([r,m])=>{const t=g(r),e=t===null?!1:h(t);if(t&&e){const a=p(t);i[a]=m,n[a]=c(t)}}),{weightToTimeFormatsDict:i,weightToTimeFormatMatcherDict:n}};

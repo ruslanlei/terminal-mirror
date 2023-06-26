@@ -9,7 +9,8 @@
   },
   "workspaces": [
     "apps/*",
-    "packages/*"
+    "packages/*",
+    "packages/@dx-private/*"
   ],
   "engines": {
     "node": ">=18.0.0"

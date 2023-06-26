@@ -8,9 +8,9 @@
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src"
   },
   "dependencies": {
-    "@dx-private/dxchart5-light": "file:../../local_modules/dxchart5-light/",
-    "@dx-private/dxchart5-modules": "file:../../local_modules/dxchart5-modules/",
-    "@dx-private/dxstudies": "file:../../local_modules/dxstudies/",
+    "@dx-private/dxchart5-light": "*",
+    "@dx-private/dxchart5-modules": "*",
+    "@dx-private/dxstudies": "*",
     "@terminal/common": "*",
     "@terminal/tsconfig": "*",
     "@vueuse/core": "^9.13.0",
@@ -58,7 +58,7 @@
     "rollup-plugin-visualizer": "^5.9.0",
     "sass": "^1.60.0",
     "typescript": "^4.9.5",
-    "vite": "^4.2.1",
+    "vite": "^4.3.9",
     "vite-plugin-compression": "^0.5.1",
     "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-pages": "^0.29.0",

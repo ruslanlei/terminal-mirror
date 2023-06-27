@@ -53,43 +53,42 @@ watch(text, (value, oldValue) => {
 
 <style lang="scss" module>
 .animatedText {}
-</style>
+:global {
+  .verticalBack {
+    &-enter-active,
+    &-leave-active {
+      transition: transform 160ms, opacity 160ms;
+    }
 
-<style lang="scss">
-.verticalBack {
-  &-enter-active,
-  &-leave-active {
-    transition: transform 160ms, opacity 160ms;
-  }
+    &-enter-from,
+    &-leave-to {
+      opacity: 0;
+    }
 
-  &-enter-from,
-  &-leave-to {
-    opacity: 0;
+    &-enter-from {
+      transform: translateY(6px);
+    }
+    &-leave-to {
+      transform: translateY(-6px);
+    }
   }
+  .verticalForward {
+    &-enter-active,
+    &-leave-active {
+      transition: transform 160ms, opacity 160ms;
+    }
 
-  &-enter-from {
-    transform: translateY(6px);
-  }
-  &-leave-to {
-    transform: translateY(-6px);
-  }
-}
-.verticalForward {
-  &-enter-active,
-  &-leave-active {
-    transition: transform 160ms, opacity 160ms;
-  }
+    &-enter-from,
+    &-leave-to {
+      opacity: 0;
+    }
 
-  &-enter-from,
-  &-leave-to {
-    opacity: 0;
-  }
-
-  &-enter-from {
-    transform: translateY(-6px);
-  }
-  &-leave-to {
-    transform: translateY(6px);
+    &-enter-from {
+      transform: translateY(-6px);
+    }
+    &-leave-to {
+      transform: translateY(6px);
+    }
   }
 }
 </style>

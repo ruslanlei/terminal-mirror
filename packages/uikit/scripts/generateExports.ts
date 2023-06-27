@@ -1,54 +1,60 @@
-// @ts-ignore
 import fs from 'fs';
-// @ts-ignore
-import path from 'node:path';
+import path from 'path';
 import { fileURLToPath } from 'url';
 
-// @ts-ignore
-// eslint-disable-next-line no-underscore-dangle
 const __filename = fileURLToPath(import.meta.url);
-// eslint-disable-next-line no-underscore-dangle
 const __dirname = path.dirname(__filename);
 
 const baseDir = path.resolve(__dirname, '../src');
-const outDir = path.resolve(__dirname, '../src');
-const outFile = path.join(outDir, 'index.ts');
+const outFile = path.join(baseDir, 'index.ts');
 
-const include = ['utils'];
+const getExports = (dirPath: string) => {
+  const entries = fs.readdirSync(dirPath, { withFileTypes: true });
 
-// Function to create index.ts for a given directory
-const createIndexFile = (dir: string) => {
-  const files = fs.readdirSync(dir);
+  let content = '';
+  entries.forEach((entry) => {
+    const entryPath = path.join(dirPath, entry.name);
 
-  const content = files.reduce((content: string, file: any) => {
-    const isTargetFile = path.extname(file) === '.ts' && !file.endsWith('index.ts');
-    if (!isTargetFile) return content;
+    const {
+      dir,
+      base,
+    } = path.parse(entryPath);
 
-    const isTypescriptFile = path.extname(file) === '.ts';
+    const isIndexFile = base === 'index.ts';
 
-    return isTypescriptFile
-      ? `${content}export * from './${path.basename(file, '.ts')}';\n`
-      : `${content}export * from './${path.basename(file, '.ts')}';\n`;
-  }, '');
+    const isRootIndex = dir.endsWith('src') && isIndexFile;
 
-  fs.writeFileSync(path.join(dir, 'index.ts'), content);
+    if (isRootIndex) return;
+
+    // If entry is a directory, recursively process
+    if (entry.isDirectory()) {
+      content += getExports(entryPath);
+    } else if (entry.isFile()) {
+      const ext = path.extname(entry.name);
+      if (ext === '.ts' || ext === '.vue') {
+        const baseName = path.basename(entry.name, ext);
+        let relativeFilePath = path.relative(baseDir, entryPath);
+        relativeFilePath = relativeFilePath.split(path.sep).join('/');
+
+        let relativeDirPath = path.relative(baseDir, dir);
+        relativeDirPath = relativeDirPath.split(path.sep).join('/');
+
+        if (ext === '.vue') {
+          content += `export { default as Ui${baseName} } from '@/${relativeFilePath}';\n`;
+        } else if (isIndexFile && ext === '.ts') {
+          content += `export * from '@/${relativeDirPath}';\n`;
+        } else if (ext === '.ts') {
+          content += `export * from '@/${relativeFilePath}';\n`;
+        }
+      }
+    }
+  });
+
+  return content;
 };
 
-// Create index.ts in each subdirectory
-include.forEach((dirName) => {
-  createIndexFile(path.join(baseDir, dirName));
-});
+// Start processing from the base directory
+const content = getExports(baseDir);
+fs.writeFileSync(outFile, content);
 
-const getDirectories = (source: string) => fs
-  .readdirSync(source, { withFileTypes: true })
-  .filter((dirent: any) => dirent.isDirectory())
-  .map((dirent: any) => dirent.name);
-
-fs.writeFileSync(
-  outFile,
-  `${getDirectories(baseDir)
-    .map((dir: string) => `export * from './${dir}';`)
-    .join('\n')}\n`,
-);
-
-console.log('Exports for @terminal/common have been generated');
+console.log('Exports for @terminal/uikit have been generated');

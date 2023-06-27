@@ -1,26 +1,6 @@
 {
-  "extends": "@terminal/tsconfig/base.json",
+  "extends": "@terminal/tsconfig/vue.json",
   "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
-    "moduleResolution": "node",
-    "strict": true,
-    "sourceMap": true,
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "removeComments": true,
-    "importHelpers": true,
-    "noImplicitAny": true,
-    "noImplicitThis": true,
-    "noImplicitReturns": true,
-    "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": true,
-    "lib": ["esnext", "dom"],
-    "outDir": "./dist",
-    "types": ["vite/client", "node"],
-    "paths": {
-      "@/*": ["./src/*"]
-    }
-  },
-  "exclude": ["node_modules"]
+    "baseUrl": "."
+  }
 }

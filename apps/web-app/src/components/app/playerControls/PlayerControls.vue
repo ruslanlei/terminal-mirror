@@ -35,7 +35,7 @@
         :min="1"
         :max="6"
       />
-      <AnimatedText
+      <UiAnimatedText
         :text="displaySpeed"
         :class="$style.displaySpeed"
         animation-type="verticalAuto"
@@ -151,6 +151,7 @@ const onDatepickerClick = () => {
 
 <style lang="scss" module>
 @import "src/assets/styles/utils";
+@import "@terminal/uikit/style.css";
 
 .playerSettings {
   height: 100%;

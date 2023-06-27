@@ -5,6 +5,7 @@ import dts from 'vite-plugin-dts';
 import commonjs from '@rollup/plugin-commonjs';
 import vue from '@vitejs/plugin-vue';
 import svgLoader from 'vite-svg-loader';
+import { globSync } from 'glob';
 import { bundleRawScss } from './plugins/bundleRawScss';
 
 export default defineConfig({
@@ -17,7 +18,7 @@ export default defineConfig({
       external: (id) => (
         ['vue'].includes(id)
       ),
-      input: ['./src/index.ts', './src/components/animatedText/index.ts'],
+      input: globSync('./src/**/index.ts'),
       output: {
         preserveModules: true,
         compact: true,
@@ -41,7 +42,6 @@ export default defineConfig({
     svgLoader({
       svgo: false,
     }),
-    // vueTypeImportsPlugin(),
     dts({
       root: path.resolve(__dirname, './'),
       entryRoot: path.resolve(__dirname, './src'),

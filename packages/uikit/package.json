@@ -1,5 +1,5 @@
 {
-  "name": "@terminal/common",
+  "name": "@terminal/uikit",
   "version": "1.0.0",
   "main": "index.js",
   "module": "index.js",
@@ -17,10 +17,7 @@
   "license": "ISC",
   "dependencies": {
     "@terminal/tsconfig": "*",
-    "collect.js": "^4.36.1",
-    "lodash": "^4.17.21",
-    "numeral": "^2.0.6",
-    "uuid": "^9.0.0"
+    "vue": "^3.3.4"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^25.0.2",

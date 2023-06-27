@@ -1,0 +1,10 @@
+*
+!scripts
+!src
+!.gitignore
+!plugins
+!package.json
+!tsconfig.json
+!vite.config.ts
+!yarn.lock
+!README.md

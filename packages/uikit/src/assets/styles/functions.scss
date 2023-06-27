@@ -1,0 +1,5 @@
+@use "sass:math";
+
+@function extractRgb($color) {
+  @return "#{red($color), green($color), blue($color)}";
+}

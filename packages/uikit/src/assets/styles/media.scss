@@ -1,0 +1,104 @@
+$xs: 480;
+$sm: 768;
+$md: 992;
+$lg: 1287;
+
+@mixin tighter($size) {
+  @media (max-width: #{$size}px) {
+    @content;
+  }
+}
+
+@mixin wider($size) {
+  @media (min-width: #{$size + 1}px) {
+    @content;
+  }
+}
+
+@mixin mobile {
+  @media only screen {
+    @include tighter($xs) {
+      @content;
+    }
+  }
+}
+
+@mixin wider-than-mobile {
+  @media only screen {
+    @include wider($xs) {
+      @content;
+    }
+  }
+}
+
+@mixin tighter-than-subTablet {
+  @media only screen {
+    @include tighter($sm) {
+      @content;
+    }
+  }
+}
+
+@mixin wider-than-subTablet {
+  @media only screen {
+    @include wider($sm) {
+      @content;
+    }
+  }
+}
+
+@mixin subTablet {
+  @media only screen {
+    @include wider($xs) {
+      @content;
+    }
+  }
+}
+
+@mixin tablet-or-tighter {
+  @media only screen {
+    @include tighter($md) {
+      @content;
+    }
+  }
+}
+
+@mixin tablet {
+  @media only screen {
+    @include wider($xs) {
+      @content;
+    }
+  }
+}
+
+@mixin tighter-than-tablet {
+  @media only screen {
+    @include tighter($md) {
+      @content;
+    }
+  }
+}
+
+@mixin wider-than-tablet {
+  @media only screen {
+    @include wider($md) {
+      @content;
+    }
+  }
+}
+
+@mixin tighter-than-desktop {
+  @media only screen {
+    @include tighter($lg) {
+      @content;
+    }
+  }
+}
+
+@mixin desktop {
+  @media only screen {
+    @include wider($lg) {
+      @content;
+    }
+  }
+}

@@ -1,0 +1,92 @@
+@import "functions";
+
+@mixin massive1 {
+    font-size: 56px;
+}
+
+@mixin massive2 {
+    font-size: 38px;
+}
+
+@mixin massive2sm {
+    font-size: 32px;
+}
+
+@mixin massive3 {
+    font-size: 30px;
+}
+
+@mixin massive4 {
+    font-size: 28px;
+}
+
+@mixin massive2sm {
+    font-size: 32px;
+}
+
+@mixin h1 {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 32px;
+}
+
+@mixin h2 {
+    font-size: 22px;
+}
+
+@mixin h3 {
+    font-size: 20px;
+}
+
+@mixin title1 {
+    font-size: 18px;
+    line-height: 115%;
+    letter-spacing: 0.005em;
+}
+
+@mixin title2 {
+    font-size: 15px;
+    line-height: 130%;
+    letter-spacing: 0.005em;
+}
+
+@mixin title3 {
+    font-size: 14px;
+    line-height: 130%;
+    letter-spacing: 0.5px;
+}
+
+@mixin title4 {
+    font-size: 13px;
+    line-height: 130%;
+    letter-spacing: 0.5px;
+}
+
+@mixin title5 {
+    font-size: 12px;
+    line-height: 160%;
+}
+
+@mixin title6 {
+    font-size: 11px;
+    line-height: 130%;
+    letter-spacing: 0.5px;
+}
+
+@mixin title7 {
+    font-size: 10px;
+    line-height: 120%;
+    letter-spacing: 0.005em;
+}
+
+@mixin textLg {
+    font-size: 18px;
+}
+
+@mixin text {
+    font-size: 16px;
+}
+
+@mixin textSm {
+    font-size: 14px;
+}

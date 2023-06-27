@@ -1,0 +1,54 @@
+@mixin scrollbarDefault($width: 12px, $borderRadius: 0, $absolute: false) {
+  @if ($absolute) {
+    overflow-y: overlay;
+  }
+  &::-webkit-scrollbar-track {
+    background: rgb(var(--color-background-2));
+    border-radius: $borderRadius;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: rgb(var(--color-background-3));
+    outline: none;
+    border-radius: $borderRadius;
+  }
+  &::-webkit-scrollbar {
+    width: $width;
+  }
+}
+
+@mixin scrollbarSecondary($width: 12px, $borderRadius: 6px, $absolute: false) {
+  @if ($absolute) {
+    overflow-y: overlay;
+  }
+  &::-webkit-scrollbar-track {
+    background: rgb(var(--color-background-2));
+    border-radius: $borderRadius;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: rgb(var(--color-accent-3));
+    outline: none;
+    border-radius: $borderRadius;
+  }
+  &::-webkit-scrollbar {
+    width: $width;
+  }
+}
+
+
+@mixin scrollbarPrimary($width: 12px, $borderRadius: 6px, $absolute: false) {
+  @if ($absolute) {
+    overflow-y: overlay;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: rgb(var(--color-background-2));
+    border-radius: $borderRadius;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: var(--color-main-gradient);
+    outline: none;
+    border-radius: $borderRadius;
+  }
+  &::-webkit-scrollbar {
+    width: $width;
+  }
+}

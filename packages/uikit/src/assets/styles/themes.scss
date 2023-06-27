@@ -1,0 +1,34 @@
+@import "utils";
+@import "variables";
+
+
+.purpleCat {
+  --color-main-gradient: #{$mainGradient};
+  --color-blue-gradient: #{$blueGradient};
+  --color-orange-gradient: #{$orangeGradient};
+
+  --color-accent-1: #{extractRgb($mono-white)};
+  --color-accent-15: #{extractRgb($white-2)};
+  --color-accent-2: #{extractRgb($grey1)};
+  --color-accent-3: #{extractRgb($grey2)};
+
+  --color-background-1: #{extractRgb($darkBlack)};
+  --color-background-2: #{extractRgb($lightBlack)};
+  --color-background-3: #{extractRgb($whiteBlack)};
+  --color-background-4: #{extractRgb($black4)};
+  --color-background-5: #{extractRgb($black5)};
+
+  --color-primary-1: #{extractRgb($blue)};
+  --color-primary-2: #{extractRgb($whiteBlue)};
+
+  --color-danger: #{extractRgb($red1)};
+  --color-danger-2: #{extractRgb($orange)};
+  --color-danger-3: #{extractRgb($yellow)};
+  --color-danger-4: #{extractRgb($darkOrange)};
+
+  --color-success: #{extractRgb($green1)};
+  --color-success-2: #{extractRgb($green2)};
+
+  --color-purple: #{extractRgb($purple2)};
+  --color-purple-2: #{extractRgb($purple3)};
+}

@@ -41,14 +41,19 @@ export default defineConfig({
       entryRoot: path.resolve(__dirname, './src'),
       outputDir: path.resolve(__dirname, './'),
       tsConfigFilePath: './tsconfig.json',
-      beforeWriteFile: (filePath) =>
-        /* FIXME: For some reason when */
-        /*  root folder already has d.ts files */
-        /*  plugin makes copy at upper level. */
-        /*  This callback checks if plugin write in */
-        /*  exact target directory. */
-        filePath.includes('@terminal/packages/common')
-      ,
+      beforeWriteFile: (filePath) => {
+        /* FIXME: For some reason plugin */
+        /*  places d.ts files on level above. */
+        /*  Probably because its beta. Fix it later. */
+        if (!filePath.includes('@terminal/packages/common')) {
+          return {
+            filePath: filePath.replace(
+              '@terminal/packages',
+              '@terminal/packages/common',
+            ),
+          };
+        }
+      },
     }),
   ],
 });

@@ -28,7 +28,6 @@ export default defineConfig({
     vue({
       reactivityTransform: true,
     }),
-    // eslintPlugin(),
     svgLoader({
       svgo: false,
     }),

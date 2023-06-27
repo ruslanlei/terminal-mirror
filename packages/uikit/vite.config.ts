@@ -16,7 +16,9 @@ export default defineConfig({
     },
     rollupOptions: {
       external: (id) => (
-        ['vue'].includes(id)
+        /^lodash\//.test(id) // TODO: Automate
+        || /^@terminal\/common\//.test(id)
+        || ['vue', 'numeral', 'uuid', 'rambda', 'dayjs'].includes(id)
       ),
       input: globSync('./src/**/index.ts'),
       output: {

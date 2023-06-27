@@ -1,0 +1,15 @@
+@import "functions";
+
+@keyframes fade-animation {
+  from {
+    opacity: 0;
+    transform: translateY(rem(-10px));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.fade-animation {
+  animation: .15s fade-animation ease-in-out;
+}

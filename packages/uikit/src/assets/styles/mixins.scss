@@ -1,1 +1,0 @@
-@function mainGradient($rotation: 204deg) {  @return linear-gradient(#{$rotation}, #CC42EE 0%, #6271EB 100%);}@mixin transparentOnDisabled {  transition: opacity 200ms;  opacity: 1;  &.disabled {    opacity: 0.5;    pointer-events: none;  }}

@@ -6,7 +6,6 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const baseDir = path.resolve(__dirname, '../src');
-const outFile = path.join(baseDir, 'index.ts');
 
 const getExports = (dirPath: string) => {
   const entries = fs.readdirSync(dirPath, { withFileTypes: true });
@@ -39,12 +38,21 @@ const getExports = (dirPath: string) => {
         let relativeDirPath = path.relative(baseDir, dir);
         relativeDirPath = relativeDirPath.split(path.sep).join('/');
 
+        let importStatement = '';
         if (ext === '.vue') {
-          content += `export { default as Ui${baseName} } from '@/${relativeFilePath}';\n`;
+          importStatement = `export { default as Ui${baseName} } from '@/${relativeFilePath}';\n`;
         } else if (isIndexFile && ext === '.ts') {
-          content += `export * from '@/${relativeDirPath}';\n`;
+          importStatement = `export * from '@/${relativeDirPath}';\n`;
         } else if (ext === '.ts') {
-          content += `export * from '@/${relativeFilePath}';\n`;
+          importStatement = `export * from '@/${relativeFilePath}';\n`;
+        }
+        const componentIndexFile = path.join(dir, 'index.ts');
+        if (fs.existsSync(componentIndexFile)) {
+          const componentIndexContent = fs.readFileSync(componentIndexFile, 'utf8');
+          if (!componentIndexContent.includes(importStatement)) {
+            const updatedContent = importStatement + componentIndexContent;
+            fs.writeFileSync(componentIndexFile, updatedContent);
+          }
         }
       }
     }
@@ -55,6 +63,4 @@ const getExports = (dirPath: string) => {
 
 // Start processing from the base directory
 const content = getExports(baseDir);
-fs.writeFileSync(outFile, content);
-
 console.log('Exports for @terminal/uikit have been generated');

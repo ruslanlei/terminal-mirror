@@ -5,7 +5,7 @@
     "dev": "turbo run dev",
     "build": "turbo run build",
     "start": "turbo run start",
-    "remove-modules": "npm exec --workspaces -- npx rimraf node_modules && npx rimraf node_modules"
+    "cleanup": "npm exec --workspaces -- npx rimraf node_modules && npx rimraf node_modules"
   },
   "workspaces": [
     "apps/*",

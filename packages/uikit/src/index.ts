@@ -1,2 +1,1 @@
-export { default as UiAnimatedText } from '@/components/animatedText/AnimatedText.vue';
-export * from '@/components/animatedText';
+export * from './components/animatedText';

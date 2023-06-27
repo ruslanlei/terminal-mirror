@@ -26,20 +26,29 @@ export default defineConfig({
           uuid: 'uuid',
         },
       },
-      plugins: [
-        commonjs(),
-      ],
     },
     sourcemap: false,
   },
-  plugins: [
-    dts({
-      entryRoot: 'src',
-    }),
-  ],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
     },
   },
+  plugins: [
+    commonjs(),
+    dts({
+      root: path.resolve(__dirname, './'),
+      entryRoot: path.resolve(__dirname, './src'),
+      outputDir: path.resolve(__dirname, './'),
+      tsConfigFilePath: './tsconfig.json',
+      beforeWriteFile: (filePath) =>
+        /* FIXME: For some reason when */
+        /*  root folder already has d.ts files */
+        /*  plugin makes copy at upper level. */
+        /*  This callback checks if plugin write in */
+        /*  exact target directory. */
+        filePath.includes('@terminal/packages/common')
+      ,
+    }),
+  ],
 });

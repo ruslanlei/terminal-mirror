@@ -1,6 +1,8 @@
 *
 !scripts
+!scripts/**
 !src
+!src/**
 !.gitignore
 !package.json
 !tsconfig.json

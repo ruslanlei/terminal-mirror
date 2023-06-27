@@ -8,6 +8,13 @@ import svgLoader from 'vite-svg-loader';
 import { globSync } from 'glob';
 import { bundleRawScss } from './plugins/bundleRawScss';
 
+const getRollupExternalChecker = (modules: string[]) => {
+  const regexps = modules.map((moduleName) => new RegExp(`${moduleName}\\/`));
+
+  return (id: string) =>
+    regexps.some((regexp) => regexp.test(id));
+};
+
 export default defineConfig({
   build: {
     lib: {
@@ -15,11 +22,6 @@ export default defineConfig({
       formats: ['es'],
     },
     rollupOptions: {
-      external: (id) => (
-        /^lodash\//.test(id) // TODO: Automate
-        || /^@terminal\/common\//.test(id)
-        || ['vue', 'numeral', 'uuid', 'rambda', 'dayjs'].includes(id)
-      ),
       input: globSync('./src/**/index.ts'),
       output: {
         preserveModules: true,
@@ -30,6 +32,15 @@ export default defineConfig({
           vue: 'vue',
         },
       },
+      external: getRollupExternalChecker([
+        'vue',
+        'common',
+        'lodash',
+        'numeral',
+        'uuid',
+        'rambda',
+        'dayjs',
+      ]),
     },
     sourcemap: true,
   },

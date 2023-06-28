@@ -1,5 +1,5 @@
+import { isPositive } from '@terminal/common/utils/number';
 import { getCssVariable } from '@/utils/dom';
-import { isPositive } from '@/utils/number';
 
 export const toCssPxValue = (
   value: number,

@@ -97,8 +97,6 @@ export const checkIsRoundedValueEqualToPercentOfTotal = curry((
   percents: number,
   comparisonValue: number,
 ) => {
-  console.log(total);
-
   const percentsInValue = percentsToValue(total, percents);
 
   if (percentsInValue === 0) return false;

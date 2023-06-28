@@ -1,0 +1,1 @@
+{"version":3,"file":"index2.js","sources":["../../../../../components/skeleton/index.ts"],"sourcesContent":["export { default as UiSkeleton } from './Skeleton.vue';\nexport const skeletonSelector = (id: string | number) => `[data-skeleton-id=\"${id}\"]`;\n"],"names":["skeletonSelector","id"],"mappings":";;;;;AACa,MAAAA,IAAmB,CAACC,MAAwB,sBAAsBA;"}

@@ -2,7 +2,7 @@ import {
   ref,
   computed,
 } from 'vue';
-import { inputType } from '@/components/core/input';
+import { inputType } from '@/components/input';
 
 export const useInput = (
   props: Record<any, any>,

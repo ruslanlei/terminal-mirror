@@ -8,7 +8,7 @@
   "scripts": {
     "generateExports": "node --loader=ts-node/esm scripts/generateExports.ts",
     "build": "vite build",
-    "preinstall": "vite build --outDir ./"
+    "preinstall": "vite build"
   },
   "author": "",
   "license": "ISC",

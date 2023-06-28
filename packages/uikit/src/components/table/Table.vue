@@ -123,7 +123,7 @@ import { compose } from '@terminal/common/utils/fp';
 import { awaitTimeout } from '@terminal/common/utils/promise';
 import { filter, forEach } from '@terminal/common/utils/array';
 import { useTable } from '@/hooks/useTable';
-import TableRow from '@/components/core/table/tableRow/TableRow.vue';
+import TableRow from '@/components/table/tableRow/TableRow.vue';
 import { useComputedState } from '@/hooks/useComputedState';
 import { playAnimation } from '@/utils/animation';
 import {

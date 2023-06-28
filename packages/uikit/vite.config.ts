@@ -17,7 +17,7 @@ export default defineConfig({
       formats: ['es'],
     },
     rollupOptions: {
-      input: globSync('./src/*/**/index.ts'),
+      input: globSync('./src/**/index.ts'),
       output: {
         dir: path.resolve(__dirname, 'src'),
         preserveModules: true,

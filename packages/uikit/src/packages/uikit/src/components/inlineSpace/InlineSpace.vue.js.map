@@ -1,1 +1,0 @@
-{"version":3,"file":"InlineSpace.vue.js","sources":["../../../../../components/inlineSpace/InlineSpace.vue"],"sourcesContent":["<template>\n  <span>&nbsp;</span> <!-- space symbol -->\n</template>\n"],"names":["_sfc_render","_ctx","_cache"],"mappings":";;;AACE,SAAAA,EAAAC,GAAAC,GAAA;;;;"}

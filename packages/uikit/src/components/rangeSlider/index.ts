@@ -1,4 +1,4 @@
-export { default as UiRangeSlider } from './RangeSlider.vue';
+export { default as UiRangeSlider } from '@/components/rangeSlider/RangeSlider.vue';
 export interface RangeSliderProps {
   modelValue: number,
   min?: number,

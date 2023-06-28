@@ -1,4 +1,4 @@
-export { default as UiImageBackgroundBlock } from './ImageBackgroundBlock.vue';
+export { default as UiImageBackgroundBlock } from '@/components/imageBackgroundBlock/ImageBackgroundBlock.vue';
 export interface ImageBackgroundBlockProps {
   srcset?: string,
   src?: string,

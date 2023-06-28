@@ -1,4 +1,4 @@
-export { default as UiBadge } from './Badge.vue';
+export { default as UiBadge } from '@/components/badge/Badge.vue';
 export type BadgeState =
   'success'
   | 'danger'

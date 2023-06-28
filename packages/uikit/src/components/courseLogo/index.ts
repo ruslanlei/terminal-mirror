@@ -1,4 +1,4 @@
-export { default as UiCourseLogo } from './CourseLogo.vue';
+export { default as UiCourseLogo } from '@/components/courseLogo/CourseLogo.vue';
 export type CourseLogoState =
   'xlThickBorder'
   | 'background2Color';

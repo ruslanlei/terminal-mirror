@@ -1,4 +1,4 @@
-export { default as UiSwitch } from './Switch.vue';
+export { default as UiSwitch } from '@/components/switch/Switch.vue';
 export type SwitchState = 'primaryColor';
 
 export interface SwitchProps {

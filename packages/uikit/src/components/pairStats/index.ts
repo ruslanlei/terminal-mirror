@@ -1,6 +1,6 @@
 import { PairStat } from '@/components/pairStatsColumn';
 
-export { default as UiPairStats } from './PairStats.vue';
+export { default as UiPairStats } from '@/components/pairStats/PairStats.vue';
 
 export type IPairStats = Array<PairStat[]>;
 

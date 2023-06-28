@@ -1,4 +1,4 @@
-export { default as UiFavoritesButton } from './FavoritesButton.vue';
+export { default as UiFavoritesButton } from '@/components/favoritesButton/FavoritesButton.vue';
 export interface FavoritesButtonProps {
     modelValue: boolean,
 }

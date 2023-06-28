@@ -1,4 +1,4 @@
-export { default as UiPicture } from './Picture.vue';
+export { default as UiPicture } from '@/components/picture/Picture.vue';
 export interface PictureProps {
   src?: string,
   srcset?: string,

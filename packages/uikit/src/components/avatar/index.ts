@@ -1,4 +1,4 @@
-export { default as UiAvatar } from './Avatar.vue';
+export { default as UiAvatar } from '@/components/avatar/Avatar.vue';
 export interface AvatarProps {
   src?: string,
   label?: string,

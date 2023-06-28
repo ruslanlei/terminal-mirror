@@ -1,4 +1,4 @@
-export { default as UiToast } from './Toast.vue';
+export { default as UiToast } from '@/components/toast/Toast.vue';
 export type IToast = {
   id: string,
   type: 'success' | 'danger',

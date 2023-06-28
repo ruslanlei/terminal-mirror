@@ -1,6 +1,6 @@
 import { TableRowState } from './tableRow';
 
-export { default as UiTable } from './Table.vue';
+export { default as UiTable } from '@/components/table/Table.vue';
 
 export type TableColumn<S = string> = {
   label: string,

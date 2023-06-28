@@ -1,4 +1,4 @@
-export { default as UiPhotoCard } from './PhotoCard.vue';
+export { default as UiPhotoCard } from '@/components/photoCard/PhotoCard.vue';
 export interface IPhotoCard {
     label: string,
     description: string,

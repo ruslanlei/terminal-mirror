@@ -1,4 +1,4 @@
-export { default as UiGradientCheckIcon } from './GradientCheckIcon.vue';
+export { default as UiGradientCheckIcon } from '@/components/gradientCheckIcon/GradientCheckIcon.vue';
 export interface GradientCheckIconProps {
   state: 'purple' | 'orange' | 'blue',
   value: boolean,

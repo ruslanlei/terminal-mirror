@@ -1,4 +1,4 @@
-export { default as UiPairStatsColumn } from './PairStatsColumn.vue';
+export { default as UiPairStatsColumn } from '@/components/pairStatsColumn/PairStatsColumn.vue';
 
 export interface PairStat {
   label: string,

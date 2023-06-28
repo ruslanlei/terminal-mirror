@@ -1,4 +1,4 @@
-export { default as UiCheckbox } from './Checkbox.vue';
+export { default as UiCheckbox } from '@/components/checkbox/Checkbox.vue';
 export interface CheckboxProps {
   modelValue?: boolean,
   label?: string,

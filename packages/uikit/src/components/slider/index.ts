@@ -1,4 +1,4 @@
-export { default as UiSlider } from './Slider.vue';
+export { default as UiSlider } from '@/components/slider/Slider.vue';
 export interface SliderElement {
   data: any,
 }

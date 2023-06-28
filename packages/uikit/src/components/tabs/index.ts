@@ -1,6 +1,6 @@
 import { SelectorOption, SelectorProps } from '@/components/selector';
 
-export { default as UiTabs } from './Tabs.vue';
+export { default as UiTabs } from '@/components/tabs/Tabs.vue';
 
 export type Tab<V = string> = SelectorOption<V>;
 

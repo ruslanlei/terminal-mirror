@@ -1,4 +1,4 @@
-export { default as UiSelector } from './Selector.vue';
+export { default as UiSelector } from '@/components/selector/Selector.vue';
 export type SelectorButtonState =
     'primaryTextColor'
     | 'danger2TextColor'

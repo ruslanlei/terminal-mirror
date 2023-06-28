@@ -1,4 +1,4 @@
-export { default as UiInlineDropdown } from './InlineDropdown.vue';
+export { default as UiInlineDropdown } from '@/components/inlineDropdown/InlineDropdown.vue';
 export type InlineDropdownState =
   'gradientPurpleTriggerOnActive'
   | 'gradientBlueTriggerOnActive'

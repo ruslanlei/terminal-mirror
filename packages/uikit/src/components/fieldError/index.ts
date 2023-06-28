@@ -1,4 +1,4 @@
-export { default as UiFieldError } from './FieldError.vue';
+export { default as UiFieldError } from '@/components/fieldError/FieldError.vue';
 export type FieldErrorSize = 'sm' | 'lg';
 
 export interface FieldErrorProps {

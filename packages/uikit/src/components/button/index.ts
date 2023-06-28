@@ -1,4 +1,4 @@
-export { default as UiButton } from './Button.vue';
+export { default as UiButton } from '@/components/button/Button.vue';
 export type ButtonState =
   'primaryColor'
   | 'gradientColor'

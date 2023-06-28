@@ -1,4 +1,4 @@
-export { default as UiLogo } from './Logo.vue';
+export { default as UiLogo } from '@/components/logo/Logo.vue';
 export type LogoState =
     'defaultState'
     | 'defaultState2'

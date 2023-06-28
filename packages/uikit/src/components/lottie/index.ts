@@ -1,4 +1,4 @@
-export { default as UiLottie } from './Lottie.vue';
+export { default as UiLottie } from '@/components/lottie/Lottie.vue';
 export interface LottieProps {
   path: string,
 }

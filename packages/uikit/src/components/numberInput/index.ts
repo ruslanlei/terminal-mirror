@@ -1,4 +1,4 @@
-export { default as UiNumberInput } from './NumberInput.vue';
+export { default as UiNumberInput } from '@/components/numberInput/NumberInput.vue';
 export type NumberInputState = /* 'xsSize' | 'smSize' | */ 'defaultColor' | 'alignRight';
 
 export type NumberInputSize = 'xs' | 'sm';

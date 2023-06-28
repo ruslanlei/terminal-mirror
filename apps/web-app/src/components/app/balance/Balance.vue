@@ -1,10 +1,10 @@
 <template>
   <div :class="$style.balance">
-    <AnimatedText
+    <UiAnimatedText
       :class="$style.label"
       :text="computedLabel"
     />
-    <AnimatedText
+    <UiAnimatedText
       :class="$style.value"
       :text="balance"
       animation-type="verticalAuto"
@@ -15,8 +15,8 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { UiAnimatedText } from '@terminal/uikit/components/animatedText';
 import { useMarketStore } from '@/stores/market';
-import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
 import { useEmulatorStore } from '@/stores/emulator';
 import { roundToDecimalPlaces } from '@/utils/number';
 

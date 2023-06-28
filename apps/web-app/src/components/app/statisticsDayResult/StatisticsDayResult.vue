@@ -1,7 +1,7 @@
 <template>
   <StatisticsResultRow>
     <template #prepend>
-      <Avatar
+      <UiAvatar
         size="sm"
         :label="t('dateTime.unit.day')"
         :state="isPositive(commonPnl) ? 'success' : 'danger'"
@@ -67,13 +67,13 @@
 </template>
 
 <script setup lang="ts">
-import StatisticsResultRow from '@/containers/statisticsResultRow/StatisticsResultRow.vue';
-import Avatar from '@/components/core/avatar/Avatar.vue';
 import { useI18n } from 'vue-i18n';
-import Typography from '@/components/app/typography/Typography.vue';
 import { computed } from 'vue';
-import { useMarketStore } from '@/stores/market';
 import { storeToRefs } from 'pinia';
+import { UiAvatar } from '@terminal/uikit/components/avatar';
+import StatisticsResultRow from '@/containers/statisticsResultRow/StatisticsResultRow.vue';
+import Typography from '@/components/app/typography/Typography.vue';
+import { useMarketStore } from '@/stores/market';
 import { calculateCommonPnlForPeriod } from '@/helpers/math/formulas/pnl';
 import { compose } from '@/utils/fp';
 import { isPositive, roundToDecimalPlaces } from '@/utils/number';

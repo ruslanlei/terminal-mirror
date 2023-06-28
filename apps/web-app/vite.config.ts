@@ -8,6 +8,7 @@ import vueTypeImportsPlugin from 'vite-plugin-vue-type-imports';
 import compressionPlugin from 'vite-plugin-compression';
 import { visualizer } from 'rollup-plugin-visualizer';
 import path from 'path';
+import commonjs from '@rollup/plugin-commonjs';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -28,6 +29,7 @@ export default defineConfig({
     vue({
       reactivityTransform: true,
     }),
+    commonjs(),
     svgLoader({
       svgo: false,
     }),
@@ -43,6 +45,7 @@ export default defineConfig({
     }),
   ],
   resolve: {
+    preserveSymlinks: true,
     alias: {
       '@': path.resolve(__dirname, 'src'),
     },

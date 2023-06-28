@@ -2,6 +2,7 @@
   "extends": "@terminal/tsconfig/base.json",
   "compilerOptions": {
     "baseUrl": ".",
+    "allowJs": true,
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",

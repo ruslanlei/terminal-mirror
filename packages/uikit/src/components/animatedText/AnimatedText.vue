@@ -52,9 +52,7 @@ watch(text, (value, oldValue) => {
 </script>
 
 <style lang="scss" module>
-.animatedText {
-  pointer-events: none;
-}
+.animatedText {}
 :global {
   .verticalBack {
     &-enter-active,

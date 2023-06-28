@@ -1,4 +1,4 @@
-export { default as UiTypography } from '@/components/typography/Typography.vue';
+export { default as UiTypography } from './Typography.vue';
 
 export type TypographyState =
     'success'

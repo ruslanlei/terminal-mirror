@@ -3,7 +3,7 @@ import { defineConfig } from 'vite';
 import path from 'path';
 import dts from 'vite-plugin-dts';
 import commonjs from '@rollup/plugin-commonjs';
-import { getRollupExternals } from '@terminal/utils/rollup/getExternals';
+import { getRollupExternals } from '@terminal/utils';
 import pkg from './package.json' assert { type: 'json' };
 
 export default defineConfig({

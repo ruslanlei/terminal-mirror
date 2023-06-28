@@ -1,2 +1,2 @@
-export * from './components/animatedText';
-export * from './components/typography';
+export * from './components';
+export * from './hooks';

@@ -11,7 +11,9 @@ Because of this, the `.gitignore` file is written by the selection method - only
 
 ## External libraries:
 
-All libraries should be installed in the parent project, and to avoid duplication of external library functions when used directly in the parent project, they should be excluded from the build process by modifying the `vite.config.ts` file.
+All libraries must be installed in the parent project because they are automatically excluded from the build as externals.
+
+See: `vite.config.ts`.
 
 ## Usage:
 

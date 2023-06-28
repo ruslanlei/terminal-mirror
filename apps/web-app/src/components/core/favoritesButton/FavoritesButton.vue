@@ -9,7 +9,6 @@
 </template>
 
 <script setup lang="ts">
-
 import { useLocalValue } from '@/hooks/useLocalValue';
 import ToggleButton from '@/components/app/toggleButton/ToggleButton.vue';
 import Icon from '@/components/core/icon/Icon.vue';

@@ -6,7 +6,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import vue from '@vitejs/plugin-vue';
 import svgLoader from 'vite-svg-loader';
 import { globSync } from 'glob';
-import { getRollupExternals } from '@terminal/utils/rollup/getExternals';
+import { getRollupExternals } from '@terminal/utils';
 import { bundleRawScss } from './plugins/bundleRawScss';
 import pkg from './package.json' assert { type: 'json' };
 
@@ -17,8 +17,9 @@ export default defineConfig({
       formats: ['es'],
     },
     rollupOptions: {
-      input: globSync('./src/**/index.ts'),
+      input: globSync('./src/*/**/index.ts'),
       output: {
+        dir: path.resolve(__dirname, 'src'),
         preserveModules: true,
         compact: true,
         entryFileNames: () => '[name].js',

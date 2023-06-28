@@ -7,3 +7,5 @@ export interface PairStatsProps {
   coin: Pair['base'],
   stats: IPairStats,
 }
+
+export { default as UiPairStats } from './PairStats.vue';

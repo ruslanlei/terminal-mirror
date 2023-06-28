@@ -26,9 +26,9 @@
 </template>
 
 <script setup lang="ts">
-import { SubscriptionBadgeProps } from '@/components/core/subscriptionBadge/index';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { SubscriptionBadgeProps } from '@/components/core/subscriptionBadge/index';
 import Icon from '@/components/core/icon/Icon.vue';
 import CertificateImage from './ceritificateImage/CertificateImage.vue';
 

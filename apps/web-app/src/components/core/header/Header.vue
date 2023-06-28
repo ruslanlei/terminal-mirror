@@ -15,11 +15,8 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { useI18n } from 'vue-i18n';
 import Logo from '@/components/core/logo/Logo.vue';
 import { size } from '@/enums/sizing';
-
-const { t } = useI18n();
 
 const computedStyles = computed(() => ({
   height: `${size.HEADER}px`,

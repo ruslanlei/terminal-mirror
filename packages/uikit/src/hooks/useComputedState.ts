@@ -1,6 +1,6 @@
 import { computed } from 'vue';
-import { arrayFrom } from '@terminal/common/utils/array';
 import { useCssModules } from '@/hooks/useCssModules';
+import { arrayFrom } from '@/utils/array';
 
 export const useComputedState = (
   props: { state: null | string | string[] } & Record<any, any>,

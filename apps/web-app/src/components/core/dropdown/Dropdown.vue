@@ -35,7 +35,7 @@ import {
   computed,
   onBeforeMount,
   onMounted,
-  watch, nextTick,
+  watch,
 } from 'vue';
 import { teleportTargets } from '@/enums/teleport';
 import { useEnvironmentObserver } from '@/hooks/useEnvironmentObserver';

@@ -20,8 +20,8 @@ import {
   nextTick,
   watch,
 } from 'vue';
-import CoinLogo from '@/components/coinLogo/CoinLogo.vue';
-import PairStatsColumn from '@/components/pairStatsColumn/PairStatsColumn.vue';
+import CoinLogo from '@/components/core/coinLogo/CoinLogo.vue';
+import PairStatsColumn from '@/components/app/pairStatsColumn/PairStatsColumn.vue';
 import { PairStatsProps } from './index';
 
 const props = defineProps<PairStatsProps>();

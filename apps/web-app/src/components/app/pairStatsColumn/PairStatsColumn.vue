@@ -50,12 +50,12 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
+import { useResizeObserver } from '@vueuse/core';
 import Divider from '@/components/core/divider/Divider.vue';
 import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
 import Typography from '@/components/app/typography/Typography.vue';
 import { isPositive, roundToDecimalPlaces } from '@/utils/number';
 import { TypographyProps } from '@/components/app/typography';
-import { useResizeObserver } from '@vueuse/core';
 import { toCssPxValue } from '@/utils/style';
 import { getRect } from '@/utils/dom';
 import { PairStat, PairStatsColumnProps } from './index';

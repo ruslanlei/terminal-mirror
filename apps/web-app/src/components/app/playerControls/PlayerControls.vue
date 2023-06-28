@@ -35,7 +35,7 @@
         :min="1"
         :max="6"
       />
-      <UiAnimatedText
+      <AnimatedText
         :text="displaySpeed"
         :class="$style.displaySpeed"
         animation-type="verticalAuto"
@@ -50,7 +50,7 @@
       :hide-loader-on-hover="true"
       @click="onCalculateResult"
     >
-      <UiAnimatedText
+      <AnimatedText
         animation-type="verticalForward"
         :text="calculateResultButtonText"
       />
@@ -61,14 +61,12 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { UiAnimatedText } from '@terminal/uikit/components/animatedText';
 import { storeToRefs } from 'pinia';
 import Card from '@/components/core/card/Card.vue';
 import Datepicker from '@/components/core/datepicker/Datepicker.vue';
 import RangeSlider from '@/components/core/rangeSlider/RangeSlider.vue';
 import Button from '@/components/core/button/Button.vue';
-// import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
-// import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
+import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
 
 import { useEmulatorStore } from '@/stores/emulator';
 import { useChartDataStore } from '@/stores/chartData';

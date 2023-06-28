@@ -15,14 +15,11 @@
 </template>
 
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n';
 import Typography from '@/components/typography/Typography.vue';
 import Card from '@/components/card/Card.vue';
 import { TooltipProps } from './index';
 
 defineProps<TooltipProps>();
-
-const { t } = useI18n();
 </script>
 
 <style lang="scss" module>

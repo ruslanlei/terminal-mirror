@@ -24,12 +24,10 @@
 </template>
 
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n';
 import ImageBackgroundBlock from '@/components/imageBackgroundBlock/ImageBackgroundBlock.vue';
 import Typography from '@/components/typography/Typography.vue';
 import { PhotoCardProps } from './index';
 
-const { t } = useI18n();
 defineProps<PhotoCardProps>();
 </script>
 

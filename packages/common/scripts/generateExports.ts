@@ -27,10 +27,10 @@ const createIndexFile = (dir: string) => {
     return `${content}export * from './${path.basename(file, '.ts')}';\n`;
   }, '');
 
-  fs.writeFileSync(path.join(dir, 'index.ts'), content);
+  fs.writeFileSync(path.join(dir, 'index.js'), content);
 };
 
-// Create index.ts in each subdirectory
+// Create index.js in each subdirectory
 include.forEach((dirName) => {
   createIndexFile(path.join(baseDir, dirName));
 });

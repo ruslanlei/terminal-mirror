@@ -13,15 +13,23 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@terminal/common": "*",
+    "collect.js": "^4.36.1",
+    "lodash": "^4.17.21",
+    "numeral": "^2.0.6",
+    "rambda": "^7.5.0",
+    "uuid": "^9.0.0",
     "vue": "^3.3.4"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^25.0.2",
     "@rollup/plugin-multi-entry": "^6.0.0",
     "@terminal/tsconfig": "*",
+    "@terminal/utils": "*",
     "@vitejs/plugin-vue": "^4.2.3",
     "glob": "^10.3.0",
     "npm-run-all": "^4.1.5",
+    "rollup-plugin-auto-external": "^2.0.0",
     "vite": "^4.3.9",
     "vite-plugin-dts": "^3.0.0-beta.1",
     "vite-svg-loader": "^4.0.0"

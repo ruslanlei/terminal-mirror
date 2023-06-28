@@ -1,0 +1,16 @@
+{
+  "name": "@terminal/utils",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "module": "index.js",
+  "types": "index.ts",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "typescript": "^4.9.5"
+  },
+  "devDependencies": {
+    "@terminal/tsconfig": "*"
+  }
+}

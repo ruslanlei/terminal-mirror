@@ -6,14 +6,9 @@ import commonjs from '@rollup/plugin-commonjs';
 import vue from '@vitejs/plugin-vue';
 import svgLoader from 'vite-svg-loader';
 import { globSync } from 'glob';
+import { getRollupExternals } from '@terminal/utils/rollup/getExternals';
 import { bundleRawScss } from './plugins/bundleRawScss';
-
-const getRollupExternalChecker = (modules: string[]) => {
-  const regexps = modules.map((moduleName) => new RegExp(`${moduleName}\\/`));
-
-  return (id: string) =>
-    regexps.some((regexp) => regexp.test(id));
-};
+import pkg from './package.json' assert { type: 'json' };
 
 export default defineConfig({
   build: {
@@ -32,15 +27,7 @@ export default defineConfig({
           vue: 'vue',
         },
       },
-      external: getRollupExternalChecker([
-        'vue',
-        'common',
-        'lodash',
-        'numeral',
-        'uuid',
-        'rambda',
-        'dayjs',
-      ]),
+      external: getRollupExternals(pkg),
     },
     sourcemap: true,
   },

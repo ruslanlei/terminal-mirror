@@ -3,6 +3,8 @@ import { defineConfig } from 'vite';
 import path from 'path';
 import dts from 'vite-plugin-dts';
 import commonjs from '@rollup/plugin-commonjs';
+import { getRollupExternals } from '@terminal/utils/rollup/getExternals';
+import pkg from './package.json' assert { type: 'json' };
 
 export default defineConfig({
   build: {
@@ -11,10 +13,6 @@ export default defineConfig({
       formats: ['es'],
     },
     rollupOptions: {
-      external: (id) => (
-        /^lodash\//.test(id)
-        || ['collect.js', 'numeral', 'uuid', 'rambda', 'dayjs'].includes(id)
-      ),
       output: {
         preserveModules: true,
         entryFileNames: () => '[name].js',
@@ -26,8 +24,9 @@ export default defineConfig({
           uuid: 'uuid',
         },
       },
+      external: getRollupExternals(pkg),
     },
-    sourcemap: false,
+    sourcemap: true,
   },
   resolve: {
     alias: {

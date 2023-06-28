@@ -32,6 +32,7 @@ export default defineConfig({
     sourcemap: true,
   },
   resolve: {
+    dedupe: ['vue'],
     alias: {
       '@': path.resolve(__dirname, 'src'),
     },

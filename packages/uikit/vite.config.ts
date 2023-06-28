@@ -19,7 +19,6 @@ export default defineConfig({
     rollupOptions: {
       input: globSync('./src/**/index.ts'),
       output: {
-        dir: path.resolve(__dirname, 'src'),
         preserveModules: true,
         compact: true,
         entryFileNames: () => '[name].js',

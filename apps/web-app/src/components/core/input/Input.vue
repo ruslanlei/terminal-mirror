@@ -48,9 +48,7 @@
             :tabindex="-1"
             @click="togglePassword"
           >
-            <Icon
-              :icon="isPasswordVisible ? 'eyeOpen' : 'eyeClose'"
-            />
+            <UiIcon :icon="isPasswordVisible ? 'eyeOpen' : 'eyeClose'" />
           </button>
         </Transition>
       </div>
@@ -61,7 +59,7 @@
         <slot name="append" />
       </div>
     </div>
-    <FieldError
+    <UiFieldError
       :text="error"
       :class="$style.errorMessage"
       :offset="6"
@@ -73,9 +71,9 @@
 
 <script setup lang="ts">
 import { computed, nextTick, ref } from 'vue';
+import { UiFieldError } from '@terminal/uikit/components/fieldError';
+import { UiIcon } from '@terminal/uikit/components/icon';
 import { useInput } from '@/hooks/useInput';
-import FieldError from '@/components/core/fieldError/FieldError.vue';
-import Icon from '@/components/core/icon/Icon.vue';
 import { useComputedState } from '@/hooks/useComputedState';
 import {
   inputType,

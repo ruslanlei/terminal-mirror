@@ -73,7 +73,7 @@
         <slot name="append" />
       </div>
     </div>
-    <FieldError
+    <UiFieldError
       :size="size"
       :text="error"
       :offset="4"
@@ -85,8 +85,8 @@
 
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
+import { UiFieldError } from '@terminal/uikit/components/fieldError';
 import { useLocalValue } from '@/hooks/useLocalValue';
-import FieldError from '@/components/core/fieldError/FieldError.vue';
 import Icon from '@/components/core/icon/Icon.vue';
 import { useComputedState } from '@/hooks/useComputedState';
 import { add, subtract, roundToDecimalPlaces } from '@/utils/number';

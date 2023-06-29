@@ -1,22 +1,22 @@
 <template>
-  <SkeletonContainer
+  <UiSkeletonContainer
     :style="computedStyles"
     :class="$style.marketSkeleton"
   >
-    <Skeleton />
-    <Skeleton />
+    <UiSkeleton />
+    <UiSkeleton />
     <div :class="$style.sideBar">
-      <Skeleton />
-      <Skeleton />
+      <UiSkeleton />
+      <UiSkeleton />
     </div>
-  </SkeletonContainer>
+  </UiSkeletonContainer>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import Skeleton from '@/components/core/skeleton/Skeleton.vue';
+import { UiSkeleton } from '@terminal/uikit/components/skeleton';
+import { UiSkeletonContainer } from '@terminal/uikit/components/skeletonContainer';
 import { size } from '@/enums/sizing';
-import SkeletonContainer from '@/components/core/skeletonContainer/SkeletonContainer.vue';
 
 const computedStyles = computed(() => ({
   height: `calc(100 * var(--vh) - ${size.HEADER}px)`,

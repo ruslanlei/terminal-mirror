@@ -27,7 +27,7 @@
           size="title3"
           :state="calculateValueState(pairStat)"
         >
-          <AnimatedText
+          <UiAnimatedText
             v-if="pairStat.value"
             :text="pairStat.value"
             animation-type="verticalAuto"
@@ -38,7 +38,7 @@
                 {{ pairStat.appendText }}
               </template>
             </template>
-          </AnimatedText>
+          </UiAnimatedText>
           <Typography v-else>
             {{ '-' }}
           </Typography>
@@ -51,8 +51,8 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import { useResizeObserver } from '@vueuse/core';
+import { UiAnimatedText } from '@terminal/uikit/components/animatedText';
 import Divider from '@/components/core/divider/Divider.vue';
-import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
 import Typography from '@/components/app/typography/Typography.vue';
 import { isPositive, roundToDecimalPlaces } from '@/utils/number';
 import { TypographyProps } from '@/components/app/typography';

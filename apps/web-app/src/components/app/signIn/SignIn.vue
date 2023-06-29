@@ -30,7 +30,7 @@
         />
       </template>
       <template #rememberCheckbox>
-        <Checkbox
+        <UiCheckbox
           v-model="remember"
           :label="t('auth.signIn.rememberMe')"
           state="default"
@@ -69,8 +69,8 @@
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { UiButton } from '@terminal/uikit/components/button';
+import { UiCheckbox } from '@terminal/uikit/components/checkbox';
 import { Form, FormInput } from '@/form';
-import Checkbox from '@/components/core/checkbox/Checkbox.vue';
 import SignInContainer from '@/containers/signInContainer/SignInContainer.vue';
 import Link from '@/components/core/link/Link.vue';
 import SignUpLink from '@/components/app/signUpLink/SignUpLink.vue';

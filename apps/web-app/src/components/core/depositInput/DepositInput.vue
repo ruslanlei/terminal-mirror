@@ -24,7 +24,7 @@
           icon="creditCard"
         />
         <div :class="$style.balance">
-          <AnimatedText
+          <UiAnimatedText
             animation-type="verticalAuto"
             :class="$style.realBalance"
             :text="roundToDecimalPlaces(2, maxQuoteCurrencyDeposit)"
@@ -34,7 +34,7 @@
               v-if="showLeveragedBalance"
               :class="$style.leveragedBalanceWrapper"
             >
-              <AnimatedText
+              <UiAnimatedText
                 animation-type="verticalAuto"
                 :class="$style.leveragedBalance"
                 :text="roundToDecimalPlaces(2, maxQuoteCurrencyDepositLeveraged)"
@@ -70,10 +70,10 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { UiButton } from '@terminal/uikit/components/button';
+import { UiAnimatedText } from '@terminal/uikit/components/animatedText';
 import Icon from '@/components/core/icon/Icon.vue';
 import RangeSlider from '@/components/core/rangeSlider/RangeSlider.vue';
 import NumberInput from '@/components/core/numberInput/NumberInput.vue';
-import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
 import { useDepositInput } from '@/hooks/useDepositInput';
 import { roundToDecimalPlaces } from '@/utils/number';
 import { DepositInputEmits, DepositInputProps } from './index';

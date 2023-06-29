@@ -1,5 +1,5 @@
 <template>
-  <Checkbox
+  <UiCheckbox
     v-model="value"
     @toggle="onToggle"
     @focus="onFocus"
@@ -13,11 +13,11 @@
         {{ label }}
       </slot>
     </template>
-  </Checkbox>
+  </UiCheckbox>
 </template>
 
 <script setup lang="ts">
-import Checkbox from '@/components/core/checkbox/Checkbox.vue';
+import { UiCheckbox } from '@terminal/uikit/components/checkbox';
 import { useActiveField } from '@/hooks/useActiveField';
 import { DefaultFormKey } from '@/form';
 import { FormCheckboxProps } from './index';

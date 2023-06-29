@@ -93,7 +93,7 @@ onBeforeUnmount(removeListeners);
 </script>
 
 <style lang="scss" module>
-@import "../../../assetsssets/styles/utils";
+@import "../../../assets/styles/utils";
 
 .recordWrapper {
   opacity: 1;

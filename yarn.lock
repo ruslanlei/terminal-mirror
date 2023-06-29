@@ -637,7 +637,7 @@ __metadata:
     uuid: ^9.0.0
     vite: ^4.3.9
     vite-plugin-css-injected-by-js: ^3.1.2
-    vite-plugin-dts: ^3.0.0-beta.1
+    vite-plugin-dts: 3.0.0-beta.1
     vite-svg-loader: ^4.0.0
     vue: ^3.3.4
   languageName: unknown
@@ -6101,6 +6101,23 @@ __metadata:
   peerDependencies:
     vite: ">2.0.0-0"
   checksum: 9a3abf9fae34b54850e1a4eb0280652532b12e3dd3ddf7c451116da60814ca535726a662685ef4533e250d7a8b4e957593060efe81690f4585e2e0c2ec7ec15f
+  languageName: node
+  linkType: hard
+
+"vite-plugin-dts@npm:3.0.0-beta.1":
+  version: 3.0.0-beta.1
+  resolution: "vite-plugin-dts@npm:3.0.0-beta.1"
+  dependencies:
+    "@microsoft/api-extractor": ^7.36.0
+    "@rollup/pluginutils": ^5.0.2
+    "@rushstack/node-core-library": ^3.59.4
+    "@vue/language-core": ^1.8.1
+    debug: ^4.3.4
+    kolorist: ^1.8.0
+    vue-tsc: ^1.8.1
+  peerDependencies:
+    typescript: "*"
+  checksum: a67580b78dec0239417c4887e4d69eebcd90f86a7ea5bb513d3c110a5e7a69080eba7d4dc820403d9095695bb8b140d0151b0f6a3f8bd9dd967da8ebaadf5795
   languageName: node
   linkType: hard
 

@@ -69,13 +69,13 @@
             {{ currentPrice }}
           </template>
           <template v-else>
-            <Badge
+            <UiBadge
               :state="['skeleton', 'background4']"
               :size="null"
               :class="$style.currentPriceSkeleton"
             >
               .
-            </badge>
+            </UiBadge>
           </template>
         </div>
         <div :class="$style.volume">
@@ -100,7 +100,7 @@
       </i18n-t>
     </template>
     <template #cell(last24HoursPercentChange)="{ data: value }">
-      <Badge
+      <UiBadge
         :state="[
           ...(value === null ? [
             'skeleton',
@@ -115,7 +115,7 @@
         size="sm"
       >
         {{ humanizePercents(value) }}
-      </Badge>
+      </UiBadge>
     </template>
   </Table>
 </template>
@@ -123,6 +123,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { UiBadge } from '@terminal/uikit/components/badge';
 import Table from '@/components/core/table/Table.vue';
 import TrendingIcon from '@/components/core/trendingIcon/TrendingIcon.vue';
 import CoinLogo from '@/components/core/coinLogo/CoinLogo.vue';
@@ -133,7 +134,6 @@ import { Pair } from '@/api/types/pair';
 import { useMarketStore } from '@/stores/market';
 import Typography from '@/components/app/typography/Typography.vue';
 import { useChartDataStore } from '@/stores/chartData';
-import Badge from '@/components/core/badge/Badge.vue';
 import { isPositive } from '@/utils/number';
 import { humanizePercents } from '@/helpers/math/percents';
 import {

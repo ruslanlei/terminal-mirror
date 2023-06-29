@@ -46,6 +46,21 @@ export default defineConfig({
     svgLoader({
       svgo: false,
     }),
+
+    /*
+      INFO:
+        6/28/2023 at the moment build.cssCodeSplit divide
+        css to separate files but doesn't import them automatically
+        by component in library mode, so you have to manually
+        import related CSS in every place where you use your
+        library component. This plugin adds code that
+        automatically inject css into the html head when
+        component mounted.
+     */
+    cssInjectedByJsPlugin({
+      relativeCSSInjection: true,
+    }),
+
     dts({
       root: path.resolve(__dirname, './'),
       entryRoot: path.resolve(__dirname, './src'),
@@ -65,19 +80,6 @@ export default defineConfig({
           };
         }
       },
-    }),
-    /*
-      INFO:
-        6/28/2023 at the moment build.cssCodeSplit divide
-        css to separate files but doesn't import them automatically
-        by component in library mode, so you have to manually
-        import related CSS in every place where you use your
-        library component. This plugin adds code that
-        automatically inject css into the html head when
-        component mounted.
-     */
-    cssInjectedByJsPlugin({
-      relativeCSSInjection: true,
     }),
     bundleRawScss(
       path.resolve(__dirname, './src/assets/styles'),

@@ -174,7 +174,7 @@
       </i18n-t>
     </template>
     <template #cell(pnl)="{ data: { value, currency } }">
-      <Badge
+      <UiBadge
         v-if="value !== null"
         :state="isPositive(value) ? 'success' : 'danger'"
         size="sm"
@@ -185,7 +185,7 @@
         >
           {{ t('common.currencyAmount', { amount: value, currency }) }}
         </AnimatedText>
-      </Badge>
+      </UiBadge>
     </template>
 
     <template #cell(tp)="{ data: commonTakeProfitPercent }">
@@ -286,15 +286,15 @@
 
 <script setup lang="ts">
 import {
-  computed, ref,
+  computed,
   toRefs, watch,
 } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { UiBadge } from '@terminal/uikit/components/badge';
 import Table from '@/components/core/table/Table.vue';
 import InlineSpace from '@/components/core/inlineSpace/InlineSpace.vue';
 import CoinLogo from '@/components/core/coinLogo/CoinLogo.vue';
 import Icon from '@/components/core/icon/Icon.vue';
-import Badge from '@/components/core/badge/Badge.vue';
 import AnimatedText from '@/components/core/animatedText/AnimatedText.vue';
 import SubOrderList from '@/components/app/orderList/subOrderList/SubOrderList.vue';
 import Typography from '@/components/app/typography/Typography.vue';
@@ -304,7 +304,7 @@ import { toPositiveNumberString } from '@/utils/style';
 import { createEmptyRecord } from '@/components/core/table/helpers';
 import { compose } from '@/utils/fp';
 import {
-  add, ceil, divide, divideRight,
+  add, ceil, divideRight,
   isPositive, multiply,
   roundToDecimalPlaces, subtract, toNegative,
 } from '@/utils/number';

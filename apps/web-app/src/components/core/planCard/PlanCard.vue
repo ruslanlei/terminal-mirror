@@ -22,7 +22,7 @@
       >
         {{ card.headerText?.text }}
       </Typography>
-      <Badge
+      <UiBadge
         v-if="card?.salePercents"
         state="accent1Background"
         :class="$style.saleBadge"
@@ -31,7 +31,7 @@
         <Typography :state="['background1', 'bold']">
           {{ saleBadgeText }}
         </Typography>
-      </Badge>
+      </UiBadge>
     </header>
     <main :class="$style.main">
       <Typography
@@ -172,12 +172,12 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { UiBadge } from '@terminal/uikit/components/badge';
 import Typography from '@/components/app/typography/Typography.vue';
 import Divider from '@/components/core/divider/Divider.vue';
 import Button from '@/components/core/button/Button.vue';
 import Link from '@/components/core/link/Link.vue';
 import GradientCheckIcon from '@/components/core/gradientCheckIcon/GradientCheckIcon.vue';
-import Badge from '@/components/core/badge/Badge.vue';
 import { compose } from '@/utils/fp';
 import { percentFormat } from '@/utils/numberFormat';
 import { toNegative } from '@/utils/number';

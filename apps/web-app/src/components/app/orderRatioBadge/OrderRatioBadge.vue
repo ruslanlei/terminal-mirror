@@ -1,5 +1,5 @@
 <template>
-  <Badge
+  <UiBadge
     :state="isDanger ? 'danger' : 'background4'"
     :class="$style.orderRatioBadge"
   >
@@ -9,18 +9,18 @@
     >
       {{ computedRatio }}
     </Typography>
-  </Badge>
+  </UiBadge>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { UiBadge } from '@terminal/uikit/components/badge';
 import { compose } from '@/utils/fp';
 import {
   divideRight,
   floorToDecimalPlaces,
 } from '@/utils/number';
-import Badge from '@/components/core/badge/Badge.vue';
 import Typography from '@/components/app/typography/Typography.vue';
 import { isMoreThanLeft } from '@/utils/boolean';
 import { OrderRatioBadgeProps } from './index';

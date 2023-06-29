@@ -1,16 +1,16 @@
 <template>
-  <Badge
+  <UiBadge
     state="default"
     size="sm"
     :class="$style.badgePartners"
   >
     <ComputedIcon />
-  </Badge>
+  </UiBadge>
 </template>
 
 <script setup lang="ts">
-import Badge from '@/components/core/badge/Badge.vue';
 import { computed } from 'vue';
+import { UiBadge } from '@terminal/uikit/components/badge';
 import { BadgePartnersProps } from './index';
 import TradingViewLogo from './assets/tradingviewLogo.svg';
 import BinanceLogo from './assets/binanceLogo.svg';

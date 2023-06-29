@@ -28,7 +28,7 @@
         name="favoritesListChangeTransition"
         mode="out-in"
       >
-        <Badge
+        <UiBadge
           v-if="props.last24HoursPercentChange !== null"
           :state="[
             isPositive(props.last24HoursPercentChange)
@@ -39,7 +39,7 @@
           :class="$style.pnlBadge"
         >
           {{ displayPercentChange }}
-        </Badge>
+        </UiBadge>
         <div
           v-else
           :class="$style.percentChangeSkeleton"
@@ -50,11 +50,11 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
+import { UiBadge } from '@terminal/uikit/components/badge';
 import CoinLogo from '@/components/core/coinLogo/CoinLogo.vue';
 import Typography from '@/components/app/typography/Typography.vue';
 import { humanizeNumber } from '@/utils/numberFormat';
-import Badge from '@/components/core/badge/Badge.vue';
-import { computed } from 'vue';
 import { humanizePercents } from '@/helpers/math/percents';
 import { isPositive } from '@/utils/number';
 import { FavoritesListItemProps } from './index';

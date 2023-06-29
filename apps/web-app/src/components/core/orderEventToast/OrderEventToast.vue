@@ -77,7 +77,7 @@
       </Typography>
     </div>
     <div :class="$style.badges">
-      <Badge
+      <UiBadge
         :state="computedStatusBadgeState"
         size="sm"
         :class="$style.badge"
@@ -88,8 +88,8 @@
         >
           {{ computedStatus }}
         </Typography>
-      </Badge>
-      <Badge
+      </UiBadge>
+      <UiBadge
         v-if="order.order_type === 'tp'"
         size="sm"
         state="primary1Background"
@@ -101,8 +101,8 @@
         >
           {{ t('order.shortType.tp') }}
         </Typography>
-      </Badge>
-      <Badge
+      </UiBadge>
+      <UiBadge
         v-if="order.order_type === 'sl'"
         size="sm"
         state="danger2"
@@ -114,22 +114,22 @@
         >
           {{ t('order.shortType.sl') }}
         </Typography>
-      </Badge>
+      </UiBadge>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
+import { computed } from 'vue';
+import { UiBadge } from '@terminal/uikit/components/badge';
 import Typography from '@/components/app/typography/Typography.vue';
 import Icon from '@/components/core/icon/Icon.vue';
 import Button from '@/components/core/button/Button.vue';
-import { computed } from 'vue';
 import { useMarketStore } from '@/stores/market';
 import CoinLogo from '@/components/core/coinLogo/CoinLogo.vue';
 import { multiply, roundToDecimalPlaces } from '@/utils/number';
 import { compose } from '@/utils/fp';
-import Badge from '@/components/core/badge/Badge.vue';
 import OrderSideLabel from '@/components/core/orderSideLabel/OrderSideLabel.vue';
 import { OrderEventToastEmits, OrderEventToastProps } from './index';
 

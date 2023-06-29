@@ -1,13 +1,13 @@
 <template>
   <div :class="$style.appPreloader">
-    <Logo size="lg" />
-    <Loader :class="$style.loader" />
+    <UiLogo size="lg" />
+    <UiLoader :class="$style.loader" />
   </div>
 </template>
 
 <script setup lang="ts">
-import Logo from '@/components/core/logo/Logo.vue';
-import Loader from '@/components/core/loader/Loader.vue';
+import { UiLoader } from '@terminal/uikit/components/loader';
+import { UiLogo } from '@terminal/uikit/components/logo';
 </script>
 
 <style lang="scss" module>

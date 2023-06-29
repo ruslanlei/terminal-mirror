@@ -10,12 +10,12 @@
   >
     <template #trigger>
       <div :class="$style.deleteButton">
-        <Icon icon="cross" />
+        <UiIcon icon="cross" />
       </div>
     </template>
     <template #dropdown>
-      <Tooltip>
-        <Typography
+      <UiTooltip>
+        <UiTypography
           size="title4"
           :state="['semiBold', 'accent1']"
         >
@@ -24,28 +24,28 @@
             keypath="orderList.closeTip.mainPart"
           >
             <template #close>
-              <Typography
+              <UiTypography
                 is-inline
                 :state="['danger', 'bold']"
               >
                 {{ t('orderList.closeTip.close') }}
-              </Typography>
+              </UiTypography>
             </template>
           </i18n-t>
-        </Typography>
-      </Tooltip>
+        </UiTypography>
+      </UiTooltip>
     </template>
   </Dropdown>
 </template>
 
 <script setup lang="ts">
-
 import { ref } from 'vue';
-import Dropdown from '@/components/core/dropdown/Dropdown.vue';
-import Icon from '@/components/core/icon/Icon.vue';
-import Tooltip from '@/components/core/tooltip/Tooltip.vue';
 import { useI18n } from 'vue-i18n';
-import Typography from '@/components/app/typography/Typography.vue';
+import { UiIcon } from '@terminal/uikit/components/icon';
+import { UiTypography } from '@terminal/uikit/components/typography';
+import { UiTooltip } from '@terminal/uikit/components/tooltip';
+
+import Dropdown from '@/components/core/dropdown/Dropdown.vue';
 import { CloseOrderButtonEmits } from './index';
 
 const emit = defineEmits<CloseOrderButtonEmits>();

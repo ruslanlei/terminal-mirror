@@ -19,7 +19,7 @@
       v-if="isPaginationVisible"
       #pagination
     >
-      <Pagination
+      <UiPagination
         v-model="activePage"
         :total-pages="totalPages"
       />
@@ -36,11 +36,11 @@ import {
   toRefs,
 } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { storeToRefs } from 'pinia';
+import { UiPagination } from '@terminal/uikit/components/pagination';
 import OrderList from '@/components/app/orderList/OrderList.vue';
 import { useMarketStore } from '@/stores/market';
-import { storeToRefs } from 'pinia';
 import { useActiveOrderList } from '@/hooks/useActiveOrderList';
-import Pagination from '@/components/core/pagination/Pagination.vue';
 import ActiveOrderListContainer from '@/containers/activeOrderListContainer/ActiveOrderListContainer.vue';
 import { ActiveOrderListProps } from './index';
 

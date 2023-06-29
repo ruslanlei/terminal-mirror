@@ -1,5 +1,5 @@
 <template>
-  <Checkbox
+  <UiCheckbox
     v-model="localValue"
     :class="$style.agreementCheckbox"
     label-alignment="top"
@@ -30,13 +30,13 @@
         </template>
       </i18n-t>
     </template>
-  </Checkbox>
+  </UiCheckbox>
 </template>
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
+import { UiCheckbox } from '@terminal/uikit/components/checkbox';
 import Link from '@/components/core/link/Link.vue';
-import Checkbox from '@/components/core/checkbox/Checkbox.vue';
 import { AgreementCheckboxEmits, AgreementCheckboxProps } from '@/components/app/agreementCheckbox/index';
 import { useLocalValue } from '@/hooks/useLocalValue';
 

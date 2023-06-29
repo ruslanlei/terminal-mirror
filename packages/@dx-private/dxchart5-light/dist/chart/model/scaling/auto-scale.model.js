@@ -1,0 +1,6 @@
+/*
+ * Copyright (C) 2002 - 2023 Devexperts LLC
+ * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+ * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ */
+export class AutoScaleViewportSubModel{constructor(o,e){this.delegate=o,this.auto=!0,this.highLowPostPorcessor={},this.highLowProviders=e!=null?e:{}}setHighLowProvider(o,e){this.highLowProviders[o]=e}deleteHighLowProvider(o){delete this.highLowProviders[o]}setHighLowPostProcessor(o,e){this.highLowPostPorcessor[o]=e}setAutoAndRecalculateState(o,e){this.auto=e,e&&autoScaleYViewportTransformer(this.delegate,o,Object.values(this.highLowProviders),Object.values(this.highLowPostPorcessor))}}export const autoScaleYViewportTransformer=(i,o,e,t)=>{const h=e.filter(r=>r.isHighLowActive()).map(r=>r.calculateHighLow(o)),l=mergeHighLow(h),s=t.reduce((r,c)=>c(r),l);o.yStart=s.low,o.yEnd=s.high,o.zoomY=i.calculateZoomY(o.yStart,o.yEnd)};export function mergeHighLow(i){if(i.length===0)return getDefaultHighLow();let o=i[0].high,e=i[0].low;return i.forEach(t=>{isFinite(t.high)&&t.high>=o&&(o=t.high),isFinite(t.low)&&t.low<=e&&(e=t.low)}),{low:e,high:o}}export const getDefaultHighLow=()=>({high:Number.NEGATIVE_INFINITY,low:Number.POSITIVE_INFINITY});

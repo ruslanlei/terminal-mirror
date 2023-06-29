@@ -11,12 +11,12 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
+import { watch } from 'vue';
+import { storeToRefs } from 'pinia';
 import CandleChart from '@/components/core/candleChart/CandleChart.vue';
 import { useMarketChart } from '@/hooks/useMarketChart';
-import { watch } from 'vue';
 import { useEmulator } from '@/hooks/useEmulator';
 import { useMarketStore } from '@/stores/market';
-import { storeToRefs } from 'pinia';
 
 const { t } = useI18n();
 

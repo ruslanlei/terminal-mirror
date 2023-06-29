@@ -1,5 +1,5 @@
 <template>
-  <Modal
+  <UiModal
     :class="$style.root"
     :content-class="$style.content"
     @close="handleClose"
@@ -21,12 +21,12 @@
         {{ confirmLabel || t('confirmLabel') }}
       </UiButton>
     </div>
-  </Modal>
+  </UiModal>
 </template>
 
 <script setup lang="ts">
 import { UiButton } from '@terminal/uikit/components/button';
-import Modal from '@/components/core/modal/Modal.vue';
+import { UiModal } from '@terminal/uikit/components/modal';
 import { ConfirmModalProps } from '@/components/app/confirmModal';
 import { useI18n } from '@/hooks/useI18n';
 

@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.verifyEmail">
-    <Loader v-if="isLoading" />
+    <UiLoader v-if="isLoading" />
     <div
       v-else-if="errorText"
       :class="$style.error"
@@ -11,8 +11,8 @@
 </template>
 
 <script setup lang="ts">
+import { UiLoader } from '@terminal/uikit/components/loader';
 import { useEmailVerification } from '@/hooks/useEmailVerification';
-import Loader from '@/components/core/loader/Loader.vue';
 
 const {
   errorText,

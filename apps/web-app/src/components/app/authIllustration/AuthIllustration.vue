@@ -1,20 +1,20 @@
 <template>
-  <ImageBackgroundBlock
+  <UiImageBackgroundBlock
     :srcset="illustrationSrcset"
     :content-class="$style.illustrationBlock"
   >
-    <Picture
+    <UiPicture
       :src="WalletWebp"
       :srcset="walletSrcset"
       :transition-duration="800"
       :class="$style.picture"
     />
-  </ImageBackgroundBlock>
+  </UiImageBackgroundBlock>
 </template>
 
 <script setup lang="ts">
-import ImageBackgroundBlock from '@/components/core/imageBackgroundBlock/ImageBackgroundBlock.vue';
-import Picture from '@/components/core/picture/Picture.vue';
+import { UiImageBackgroundBlock } from '@terminal/uikit/components/imageBackgroundBlock';
+import { UiPicture } from '@terminal/uikit/components/picture';
 
 import BackgroundPng from '@/assets/images/auth/background.png';
 import BackgroundWebp from '@/assets/images/auth/background.webp';

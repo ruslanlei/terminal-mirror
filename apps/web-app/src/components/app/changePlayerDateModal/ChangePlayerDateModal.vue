@@ -1,11 +1,11 @@
 <template>
-  <Modal :class="$style.changePlayerDateModal">
-    <Typography
+  <UiModal :class="$style.changePlayerDateModal">
+    <UiTypography
       :size="['h1']"
       :state="['accent1', 'bold']"
     >
       {{ t('changePlayerDateModal.label') }}
-    </Typography>
+    </UiTypography>
     <div :class="$style.controls">
       <UiButton
         size="md"
@@ -25,15 +25,15 @@
         {{ t('changePlayerDateModal.submitText') }}
       </UiButton>
     </div>
-  </Modal>
+  </UiModal>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { UiButton } from '@terminal/uikit/components/button';
-import Modal from '@/components/core/modal/Modal.vue';
-import Typography from '@/components/app/typography/Typography.vue';
+import { UiModal } from '@terminal/uikit/components/modal';
+import { UiTypography } from '@terminal/uikit/components/typography';
 import { ChangePlayerDateModalEmits } from '@/components/app/changePlayerDateModal/index';
 import { useMarketStore } from '@/stores/market';
 

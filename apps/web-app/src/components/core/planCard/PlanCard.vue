@@ -1,105 +1,105 @@
 <template>
   <div :class="[$style.planCard, $style[state]]">
     <header :class="$style.header">
-      <Typography
+      <UiTypography
         v-if="card.headerText?.h1"
         size="h1"
         :state="['accent1', 'bold']"
       >
         {{ card.headerText?.h1 }}
-      </Typography>
-      <Typography
+      </UiTypography>
+      <UiTypography
         v-if="card.headerText?.textLg"
         size="textLg"
         :state="['accent1', 'bold']"
       >
         {{ card.headerText?.textLg }}
-      </Typography>
-      <Typography
+      </UiTypography>
+      <UiTypography
         v-if="card.headerText?.text"
         size="text"
         :state="['accent1', 'semiBold']"
       >
         {{ card.headerText?.text }}
-      </Typography>
+      </UiTypography>
       <UiBadge
         v-if="card?.salePercents"
         state="accent1Background"
         :class="$style.saleBadge"
         size="md"
       >
-        <Typography :state="['background1', 'bold']">
+        <UiTypography :state="['background1', 'bold']">
           {{ saleBadgeText }}
-        </Typography>
+        </UiTypography>
       </UiBadge>
     </header>
     <main :class="$style.main">
-      <Typography
+      <UiTypography
         size="massive4"
         :state="['accent1', 'bold']"
       >
         {{ card.name }}
-      </Typography>
+      </UiTypography>
       <div :class="$style.benefits">
-        <Typography
+        <UiTypography
           v-for="(additionalBenefit, index) in card.additionalBenefits"
           :key="index"
           size="textLg"
           state="accent1"
         >
           {{ additionalBenefit }}
-        </Typography>
-        <Typography
+        </UiTypography>
+        <UiTypography
           size="h3"
           state="accent2"
         >
           {{ t('planCard.includedLabel') }}
-        </Typography>
+        </UiTypography>
         <div :class="$style.benefitsList">
           <div
             v-for="(benefit, index) in card.benefits"
             :key="index"
             :class="$style.benefit"
           >
-            <GradientCheckIcon
+            <UiGradientCheckIcon
               :state="state"
               :value="benefit.active"
             />
-            <Typography
+            <UiTypography
               :class="$style.benefitLabel"
               :state="benefit.active ? 'accent1' : 'accent2'"
             >
               {{ benefit.label }}
-            </Typography>
+            </UiTypography>
           </div>
         </div>
       </div>
     </main>
-    <Divider
+    <UiDivider
       :class="$style.divider"
       type="horizontal"
       state="accent3"
     />
     <footer :class="$style.footer">
-      <Typography
+      <UiTypography
         :state="['accent2']"
         size="massive4"
         :class="$style.price"
       >
-        <Typography
+        <UiTypography
           is-inline
           :state="['danger3', 'bold']"
         >
           {{ t('common.currencyAmount', { amount: card.price.value, currency: 'USDT' }) }}
-        </Typography>
-        <Typography
+        </UiTypography>
+        <UiTypography
           v-if="card.price.period"
           is-inline
           :state="['semiBold']"
         >
           {{ ` / ${card.price.period}` }}
-        </Typography>
-      </Typography>
+        </UiTypography>
+      </UiTypography>
       <UiButton
         v-if="card.purchaseButton"
         size="xl"
@@ -158,12 +158,12 @@
         :to="{ name: 'index' }"
         :class="$style.activePromocode"
       >
-        <Typography
+        <UiTypography
           size="textLg"
           :state="['accent2', 'alignCenter', 'semiBold']"
         >
           {{ t('planCard.activatePromoCode') }}
-        </Typography>
+        </UiTypography>
       </Link>
     </footer>
   </div>
@@ -174,13 +174,13 @@ import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { UiBadge } from '@terminal/uikit/components/badge';
 import { UiButton } from '@terminal/uikit/components/button';
-import Typography from '@/components/app/typography/Typography.vue';
-import Divider from '@/components/core/divider/Divider.vue';
+import { UiTypography } from '@terminal/uikit/components/typography';
+import { UiDivider } from '@terminal/uikit/components/divider';
+import { UiGradientCheckIcon } from '@terminal/uikit/components/gradientCheckIcon';
+import { compose } from '@terminal/common/utils/fp';
+import { percentFormat } from '@terminal/common/utils/numberFormat';
+import { toNegative } from '@terminal/common/utils/number';
 import Link from '@/components/core/link/Link.vue';
-import GradientCheckIcon from '@/components/core/gradientCheckIcon/GradientCheckIcon.vue';
-import { compose } from '@/utils/fp';
-import { percentFormat } from '@/utils/numberFormat';
-import { toNegative } from '@/utils/number';
 import { PlanCardEmits, PlanCardProps } from './index';
 
 const props = defineProps<PlanCardProps>();

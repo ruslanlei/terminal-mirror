@@ -1,7 +1,7 @@
 <template>
   <header :class="[$style.header, $style[state]]">
     <div :class="$style.logo">
-      <CourseLogo />
+      <UiCourseLogo />
     </div>
     <div :class="$style.chapters">
       <UiButton
@@ -38,8 +38,8 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import { UiButton } from '@terminal/uikit/components/button';
+import { UiCourseLogo } from '@terminal/uikit/components/courseLogo';
 import { useLocalValue } from '@/hooks/useLocalValue';
-import CourseLogo from '@/components/core/courseLogo/CourseLogo.vue';
 import { CourseLandingChapter } from '@/components/app/courseLanding';
 import { TerminalLandingHeaderEmits, TerminalLandingHeaderProps } from './index';
 

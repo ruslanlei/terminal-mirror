@@ -1,35 +1,35 @@
 <template>
-  <SkeletonContainer>
+  <UiSkeletonContainer>
     <Header>
       <template #leftColumn>
         <div :class="$style.leftColumn">
-          <Skeleton :class="$style.marketTypeSelectorSkeleton" />
-          <Divider
+          <UiSkeleton :class="$style.marketTypeSelectorSkeleton" />
+          <UiDivider
             type="vertical"
             state="default"
             :class="[$style.divider, $style.dividerLeft]"
           />
           <div :class="$style.currencyStatsSkeleton">
-            <Skeleton :class="$style.currencyLogoSkeleton" />
-            <Skeleton :class="$style.selectedCurrencySkeleton" />
+            <UiSkeleton :class="$style.currencyLogoSkeleton" />
+            <UiSkeleton :class="$style.selectedCurrencySkeleton" />
           </div>
         </div>
       </template>
       <template #rightColumn>
         <div :class="$style.profileBlock">
-          <Skeleton :class="$style.avatarSkeleton" />
-          <Skeleton :class="$style.avatarIconSkeleton" />
+          <UiSkeleton :class="$style.avatarSkeleton" />
+          <UiSkeleton :class="$style.avatarIconSkeleton" />
         </div>
       </template>
     </Header>
-  </SkeletonContainer>
+  </UiSkeletonContainer>
 </template>
 
 <script setup lang="ts">
+import { UiDivider } from '@terminal/uikit/components/divider';
+import { UiSkeleton } from '@terminal/uikit/components/skeleton';
+import { UiSkeletonContainer } from '@terminal/uikit/components/skeletonContainer';
 import Header from '@/components/core/header/Header.vue';
-import Divider from '@/components/core/divider/Divider.vue';
-import Skeleton from '@/components/core/skeleton/Skeleton.vue';
-import SkeletonContainer from '@/components/core/skeletonContainer/SkeletonContainer.vue';
 </script>
 
 <style lang="scss" module>

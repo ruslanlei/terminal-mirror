@@ -3,7 +3,7 @@
     <template #leftColumn>
       <div :class="$style.leftColumn">
         <MarketTypeSelector />
-        <Divider
+        <UiDivider
           type="vertical"
           state="default"
           :class="[$style.divider, $style.dividerLeft]"
@@ -14,7 +14,7 @@
     <template #rightColumn>
       <div :class="$style.profileBlock">
         <Balance />
-        <Divider
+        <UiDivider
           type="vertical"
           state="default"
           :class="$style.divider"
@@ -26,9 +26,9 @@
 </template>
 
 <script setup lang="ts">
+import { UiDivider } from '@terminal/uikit/components/divider';
 import Header from '@/components/core/header/Header.vue';
 import MarketTypeSelector from '@/components/app/marketTypeSelector/MarketTypeSelector.vue';
-import Divider from '@/components/core/divider/Divider.vue';
 import CurrentPairStats from '@/components/app/currentPairStats/CurrentPairStats.vue';
 import Balance from '@/components/app/balance/Balance.vue';
 import ProfileDropdown from '@/components/app/profileDropdown/ProfileDropdown.vue';

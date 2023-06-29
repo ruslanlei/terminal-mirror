@@ -1,13 +1,13 @@
 <template>
   <div :class="$style.marketChartHeader">
-    <Typography
+    <UiTypography
       size="title1"
       :state="['accent1', 'bold']"
     >
       {{ pairLabel }}
-    </Typography>
-    <Divider type="vertical" />
-    <FavoritesButton v-model="localIsFavoritesActive" />
+    </UiTypography>
+    <UiDivider type="vertical" />
+    <UiFavoritesButton v-model="localIsFavoritesActive" />
   </div>
 </template>
 
@@ -15,10 +15,10 @@
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { storeToRefs } from 'pinia';
-import Typography from '@/components/app/typography/Typography.vue';
+import { UiTypography } from '@terminal/uikit/components/typography';
+import { UiDivider } from '@terminal/uikit/components/divider';
+import { UiFavoritesButton } from '@terminal/uikit/components/favoritesButton';
 import { useMarketStore } from '@/stores/market';
-import Divider from '@/components/core/divider/Divider.vue';
-import FavoritesButton from '@/components/core/favoritesButton/FavoritesButton.vue';
 import { MarketChartHeaderEmits, MarketChartHeaderProps } from '@/components/app/marketChartHeader/index';
 import { useLocalValue } from '@/hooks/useLocalValue';
 

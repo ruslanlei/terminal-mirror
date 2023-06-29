@@ -1,29 +1,29 @@
 <template>
-  <ImageBackgroundBlock
+  <UiImageBackgroundBlock
     :content-class="$style.ecoSystemCard"
   >
     <template #picture>
       <SpaceBackground />
     </template>
     <div :class="$style.ecoSystemCardContent">
-      <Typography
+      <UiTypography
         :state="['accent1', 'bold', 'uppercase']"
         size="massive1"
       >
         {{ t('ecosystem.label') }}
-      </Typography>
-      <Typography
+      </UiTypography>
+      <UiTypography
         :state="['accent1', 'medium']"
         size="h1"
         :class="$style.subheading"
       >
         {{ t('ecosystem.description') }}
-      </Typography>
+      </UiTypography>
       <div :class="$style.cardsWrapper">
         <div :class="$style.cardWrapper">
           <EcosystemCard :card="terminalCard">
             <template #logo>
-              <Logo
+              <UiLogo
                 type="slim"
                 :size="null"
                 state="xlThickBorder"
@@ -34,7 +34,7 @@
         <div :class="$style.cardWrapper">
           <EcosystemCard :card="courseCard">
             <template #logo>
-              <CourseLogo
+              <UiCourseLogo
                 type="slim"
                 state="xlThickBorder"
                 :size="null"
@@ -44,18 +44,18 @@
         </div>
       </div>
     </div>
-  </ImageBackgroundBlock>
+  </UiImageBackgroundBlock>
 </template>
 
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n';
-import Typography from '@/components/app/typography/Typography.vue';
-import ImageBackgroundBlock from '@/components/core/imageBackgroundBlock/ImageBackgroundBlock.vue';
-import EcosystemCard from '@/components/app/ecosystemCap/ecosystemCard/EcosystemCard.vue';
-import Logo from '@/components/core/logo/Logo.vue';
 import { computed } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { UiCourseLogo } from '@terminal/uikit/components/courseLogo';
+import { UiImageBackgroundBlock } from '@terminal/uikit/components/imageBackgroundBlock';
+import { UiLogo } from '@terminal/uikit/components/logo';
+import { UiTypography } from '@terminal/uikit/components/typography';
+import EcosystemCard from '@/components/app/ecosystemCap/ecosystemCard/EcosystemCard.vue';
 import { IEcosystemCard } from '@/components/app/ecosystemCap/ecosystemCard';
-import CourseLogo from '@/components/core/courseLogo/CourseLogo.vue';
 import SpaceBackground from '@/components/app/ecosystemCap/spaceBackground/SpaceBackground.vue';
 import { getUrlForRelativePath } from '@/utils/window';
 import { EcosystemCapProps } from './index';

@@ -16,12 +16,12 @@
           {{ pairStat.label }}
         </div>
       </div>
-      <Divider />
+      <UiDivider />
       <div
         ref="valueColumn"
         :class="$style.column"
       >
-        <Typography
+        <UiTypography
           v-for="(pairStat, index) in columnData"
           :key="index"
           size="title3"
@@ -39,10 +39,10 @@
               </template>
             </template>
           </UiAnimatedText>
-          <Typography v-else>
+          <UiTypography v-else>
             {{ '-' }}
-          </Typography>
-        </Typography>
+          </UiTypography>
+        </UiTypography>
       </div>
     </div>
   </div>
@@ -52,12 +52,11 @@
 import { onMounted, ref } from 'vue';
 import { useResizeObserver } from '@vueuse/core';
 import { UiAnimatedText } from '@terminal/uikit/components/animatedText';
-import Divider from '@/components/core/divider/Divider.vue';
-import Typography from '@/components/app/typography/Typography.vue';
-import { isPositive, roundToDecimalPlaces } from '@/utils/number';
-import { TypographyProps } from '@/components/app/typography';
-import { toCssPxValue } from '@/utils/style';
-import { getRect } from '@/utils/dom';
+import { UiDivider } from '@terminal/uikit/components/divider';
+import { UiTypography, TypographyProps } from '@terminal/uikit/components/typography';
+import { isPositive, roundToDecimalPlaces } from '@terminal/common/utils/number';
+import { toCssPxValue } from '@terminal/uikit/utils/style';
+import { getRect } from '@terminal/uikit/utils/dom';
 import { PairStat, PairStatsColumnProps } from './index';
 
 const props = defineProps<PairStatsColumnProps>();

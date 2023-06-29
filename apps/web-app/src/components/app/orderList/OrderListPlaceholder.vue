@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.orderListPlaceholder">
-    <Button
+    <UiButton
       :is-wide="false"
       state="gradientColor"
       :class="$style.button"
@@ -10,7 +10,7 @@
         icon="plus"
         :class="$style.buttonIcon"
       />
-    </Button>
+    </UiButton>
     <Typography
       size="title1"
       :state="['accent1', 'alignCenter']"
@@ -22,10 +22,10 @@
 </template>
 
 <script setup lang="ts">
-import Icon from '@/components/core/icon/Icon.vue';
-import Button from '@/components/core/button/Button.vue';
-import Typography from '@/components/app/typography/Typography.vue';
 import { useI18n } from 'vue-i18n';
+import { UiButton } from '@terminal/uikit/components/button';
+import Icon from '@/components/core/icon/Icon.vue';
+import Typography from '@/components/app/typography/Typography.vue';
 
 const { t } = useI18n();
 </script>

@@ -18,12 +18,12 @@
         :size="null"
         :to="{ name: 'index' }"
       >
-        <Button
+        <UiButton
           size="xl"
           state="backgroundAccent1"
         >
           {{ t('terminalLanding.footer.followButton') }}
-        </Button>
+        </UiButton>
       </Link>
     </div>
   </div>
@@ -31,9 +31,9 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
+import { UiButton } from '@terminal/uikit/components/button';
 import Typography from '@/components/app/typography/Typography.vue';
 import Picture from '@/components/core/picture/Picture.vue';
-import Button from '@/components/core/button/Button.vue';
 import Link from '@/components/core/link/Link.vue';
 
 import WalletAvif from '@/assets/images/auth/wallet.avif';

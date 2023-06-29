@@ -13,7 +13,7 @@
           :side="order.side"
         />
       </div>
-      <Button
+      <UiButton
         :state="null"
         :size="null"
         :is-wide="false"
@@ -22,7 +22,7 @@
         <Typography state="accent2">
           <Icon icon="cross" />
         </Typography>
-      </Button>
+      </UiButton>
     </div>
     <div :class="$style.coinRow">
       <Typography
@@ -123,9 +123,9 @@
 import { useI18n } from 'vue-i18n';
 import { computed } from 'vue';
 import { UiBadge } from '@terminal/uikit/components/badge';
+import { UiButton } from '@terminal/uikit/components/button';
 import Typography from '@/components/app/typography/Typography.vue';
 import Icon from '@/components/core/icon/Icon.vue';
-import Button from '@/components/core/button/Button.vue';
 import { useMarketStore } from '@/stores/market';
 import CoinLogo from '@/components/core/coinLogo/CoinLogo.vue';
 import { multiply, roundToDecimalPlaces } from '@/utils/number';

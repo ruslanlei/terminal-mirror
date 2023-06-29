@@ -20,26 +20,26 @@
         />
       </template>
       <template #submit>
-        <Button
+        <UiButton
           type="submit"
           state="gradientColor"
           size="lg"
           :is-loading="isLoading"
         >
           {{ t('auth.forgotPassword.submit') }}
-        </Button>
+        </UiButton>
       </template>
     </PasswordResetContainer>
   </Form>
 </template>
 
 <script lang="ts" setup>
+import { onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { UiButton } from '@terminal/uikit/components/button';
 import PasswordResetContainer from '@/containers/passwordResetContainer/PasswordResetContainer.vue';
 import { Form, FormInput } from '@/form';
-import Button from '@/components/core/button/Button.vue';
 import { usePasswordReset } from '@/hooks/usePasswordReset';
-import { onMounted, ref } from 'vue';
 
 const emailInput = ref();
 

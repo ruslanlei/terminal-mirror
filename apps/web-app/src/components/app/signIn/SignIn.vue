@@ -49,14 +49,14 @@
         />
       </template>
       <template #submit>
-        <Button
+        <UiButton
           type="submit"
           :state="['gradientColor', 'interactive']"
           size="lg"
           :is-loading="isLoading"
         >
           {{ t('auth.submit') }}
-        </Button>
+        </UiButton>
       </template>
       <template #signUpLink>
         <SignUpLink />
@@ -68,11 +68,11 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { UiButton } from '@terminal/uikit/components/button';
 import { Form, FormInput } from '@/form';
 import Checkbox from '@/components/core/checkbox/Checkbox.vue';
 import SignInContainer from '@/containers/signInContainer/SignInContainer.vue';
 import Link from '@/components/core/link/Link.vue';
-import Button from '@/components/core/button/Button.vue';
 import SignUpLink from '@/components/app/signUpLink/SignUpLink.vue';
 import { useSignIn } from '@/hooks/useSignIn';
 

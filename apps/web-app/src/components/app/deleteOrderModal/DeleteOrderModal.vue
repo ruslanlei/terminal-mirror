@@ -38,15 +38,15 @@
       </Typography>
     </transition>
     <div :class="$style.controls">
-      <Button
+      <UiButton
         :class="$style.control"
         state="successColor"
         size="md"
         @click="close"
       >
         {{ t('common.no') }}
-      </Button>
-      <Button
+      </UiButton>
+      <UiButton
         :class="$style.control"
         state="dangerColor"
         size="md"
@@ -54,7 +54,7 @@
         @click="handleDelete"
       >
         {{ t('common.yes') }}
-      </Button>
+      </UiButton>
     </div>
   </Modal>
 </template>
@@ -66,10 +66,10 @@ import {
   onBeforeUnmount,
 } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { UiButton } from '@terminal/uikit/components/button';
 import Modal from '@/components/core/modal/Modal.vue';
 import Picture from '@/components/core/picture/Picture.vue';
 import Typography from '@/components/app/typography/Typography.vue';
-import Button from '@/components/core/button/Button.vue';
 import { Order, TakeProfit } from '@/api/types/order';
 import { reduceTakeProfitsToQuantitiesSum } from '@/helpers/math/formulas/takeProfit';
 import { calculateCurrentPnl } from '@/helpers/math/formulas/pnl';

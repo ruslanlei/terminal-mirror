@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.pagination">
-    <Button
+    <UiButton
       v-if="showPreviousButton"
       :is-wide="false"
       size="sm"
@@ -12,8 +12,8 @@
         icon="arrowLeft"
         :size="18"
       />
-    </Button>
-    <Button
+    </UiButton>
+    <UiButton
       v-if="pages[0] !== 1"
       size="sm"
       :is-wide="false"
@@ -26,8 +26,8 @@
       @click="changePage(1)"
     >
       1
-    </Button>
-    <Button
+    </UiButton>
+    <UiButton
       v-if="pages[0] > 2"
       size="sm"
       :is-wide="false"
@@ -40,8 +40,8 @@
       disabled
     >
       {{ gapSymbol }}
-    </Button>
-    <Button
+    </UiButton>
+    <UiButton
       v-for="pageNumber in pages"
       :key="pageNumber"
       size="sm"
@@ -55,8 +55,8 @@
       @click="changePage(pageNumber)"
     >
       {{ pageNumber }}
-    </Button>
-    <Button
+    </UiButton>
+    <UiButton
       v-if="pages[pages.length - 1] < props.totalPages - 1"
       size="sm"
       :is-wide="false"
@@ -69,8 +69,8 @@
       disabled
     >
       {{ gapSymbol }}
-    </Button>
-    <Button
+    </UiButton>
+    <UiButton
       v-if="pages[pages.length - 1] !== props.totalPages"
       size="sm"
       :is-wide="false"
@@ -83,8 +83,8 @@
       @click="changePage(props.totalPages)"
     >
       {{ props.totalPages }}
-    </Button>
-    <Button
+    </UiButton>
+    <UiButton
       v-if="showNextButton"
       :is-wide="false"
       size="sm"
@@ -96,13 +96,13 @@
         icon="arrowRight"
         :size="18"
       />
-    </Button>
+    </UiButton>
   </div>
 </template>
 <script setup lang="ts">
 import { computed } from 'vue';
+import { UiButton } from '@terminal/uikit/components/button';
 import { useLocalValue } from '@/hooks/useLocalValue';
-import Button from '@/components/core/button/Button.vue';
 import Icon from '@/components/core/icon/Icon.vue';
 import { PaginationEmits, PaginationProps } from './index';
 

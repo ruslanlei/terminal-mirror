@@ -52,7 +52,7 @@
         </Typography>
       </div>
     </Card>
-    <Button
+    <UiButton
       state="blueGradientColor"
       size="xl"
       :is-wide="false"
@@ -60,15 +60,15 @@
       @click="onClickSignUp"
     >
       {{ t('courseLanding.courseExplanationCard.signUpForCourse') }}
-    </Button>
+    </UiButton>
   </ImageBackgroundBlock>
 </template>
 
 <script setup lang="ts">
-import Typography from '@/components/app/typography/Typography.vue';
 import { computed } from 'vue';
+import { UiButton } from '@terminal/uikit/components/button';
 import { useI18n } from 'vue-i18n';
-import Button from '@/components/core/button/Button.vue';
+import Typography from '@/components/app/typography/Typography.vue';
 import Card from '@/components/core/card/Card.vue';
 
 import ImageBackgroundBlock from '@/components/core/imageBackgroundBlock/ImageBackgroundBlock.vue';

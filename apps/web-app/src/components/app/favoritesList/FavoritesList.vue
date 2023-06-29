@@ -23,7 +23,7 @@
         />
       </template>
     </Selector>
-    <Button
+    <UiButton
       :state="null"
       :size="null"
       :class="$style.closeButton"
@@ -35,20 +35,20 @@
       >
         {{ t('common.hide') }}
       </Typography>
-    </Button>
+    </UiButton>
   </Card>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { UiButton } from '@terminal/uikit/components/button';
 import Card from '@/components/core/card/Card.vue';
 import Selector from '@/components/core/selector/Selector.vue';
 import { useMarketStore } from '@/stores/market';
 import { Pair } from '@/api/types/pair';
 import Typography from '@/components/app/typography/Typography.vue';
-import { FavoritesListEmits } from '@/components/app/favoritesList/index';
-import Button from '@/components/core/button/Button.vue';
+import { FavoritesListEmits } from './index';
 import FavoritesListItem from '@/components/app/favoritesList/favoritesListItem/FavoritesListItem.vue';
 import { useChartDataStore } from '@/stores/chartData';
 import { FavoritePair } from '@/api/endpoints/profile/getFavorites';

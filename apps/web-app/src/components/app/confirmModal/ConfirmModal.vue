@@ -11,23 +11,21 @@
       {{ text || t('text') }}
     </div>
     <div :class="$style.controls">
-      <Button
-        @click="handleClose"
-      >
+      <UiButton @click="handleClose">
         {{ cancelLabel || t('cancelLabel') }}
-      </Button>
-      <Button
+      </UiButton>
+      <UiButton
         :class="$style.submit"
         @click="handleSubmit"
       >
         {{ confirmLabel || t('confirmLabel') }}
-      </Button>
+      </UiButton>
     </div>
   </Modal>
 </template>
 
 <script setup lang="ts">
-import Button from '@/components/core/button/Button.vue';
+import { UiButton } from '@terminal/uikit/components/button';
 import Modal from '@/components/core/modal/Modal.vue';
 import { ConfirmModalProps } from '@/components/app/confirmModal';
 import { useI18n } from '@/hooks/useI18n';

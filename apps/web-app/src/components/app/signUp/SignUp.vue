@@ -47,14 +47,14 @@
         <AgreementCheckbox v-model="agreement" />
       </template>
       <template #submit>
-        <Button
+        <UiButton
           :state="['gradientColor', 'interactive']"
           size="lg"
           type="submit"
           :is-loading="isLoading"
         >
           {{ t('auth.submit') }}
-        </Button>
+        </UiButton>
       </template>
       <template #signInLink>
         <SignInLink />
@@ -66,10 +66,10 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { UiButton } from '@terminal/uikit/components/button';
 import { Form, FormInput } from '@/form';
 import SignUpContainer from '@/containers/signUpContainer/SignUpContainer.vue';
 import AgreementCheckbox from '@/components/app/agreementCheckbox/AgreementCheckbox.vue';
-import Button from '@/components/core/button/Button.vue';
 import SignInLink from '@/components/app/signInLink/SignInLink.vue';
 import { useSignUp } from '@/hooks/useSignUp';
 

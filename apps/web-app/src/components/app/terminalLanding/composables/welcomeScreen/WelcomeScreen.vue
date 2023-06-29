@@ -43,21 +43,21 @@
         :size="null"
         :to="{ name: 'auth-sign-up' }"
       >
-        <Button size="xl">
+        <UiButton size="xl">
           {{ t('terminalLanding.welcomeScreen.options.tryForFree') }}
-        </Button>
+        </UiButton>
       </Link>
       <Link
         :state="null"
         :size="null"
         :to="{ name: 'index' }"
       >
-        <Button
+        <UiButton
           size="xl"
           state="borderedDefault"
         >
           {{ t('terminalLanding.welcomeScreen.options.openTerminal') }}
-        </Button>
+        </UiButton>
       </Link>
     </div>
     <div :class="$style.mockupContainer">
@@ -69,13 +69,13 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { UiButton } from '@terminal/uikit/components/button';
 import ImageBackgroundBlock from '@/components/core/imageBackgroundBlock/ImageBackgroundBlock.vue';
 import BackgroundPng from '@/assets/images/auth/background.png';
 import BackgroundWebp from '@/assets/images/auth/background.webp';
 import BackgroundAvif from '@/assets/images/auth/background.avif';
 import BadgePartners from '@/components/app/badgePartners/BadgePartners.vue';
 import Typography from '@/components/app/typography/Typography.vue';
-import Button from '@/components/core/button/Button.vue';
 import Link from '@/components/core/link/Link.vue';
 import { collectSrcSet } from '@/utils/dom';
 import TerminalScreenshotVector from '@/components/app/terminalScreenshotVector/TerminalScreenshotVector.vue';

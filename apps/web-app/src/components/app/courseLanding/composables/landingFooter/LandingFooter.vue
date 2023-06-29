@@ -13,21 +13,21 @@
           :srcset="franklinSrcSet"
         />
       </div>
-      <Button
+      <UiButton
         size="xl"
         state="backgroundAccent1"
         @click="onClickBuy"
       >
         {{ t('courseLanding.buyCourseBadge.button') }}
-      </Button>
+      </UiButton>
     </div>
   </div>
 </template>
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
+import { UiButton } from '@terminal/uikit/components/button';
 import Typography from '@/components/app/typography/Typography.vue';
 import Picture from '@/components/core/picture/Picture.vue';
-import Button from '@/components/core/button/Button.vue';
 
 import { LandingFooterEmits } from '@/components/app/courseLanding/composables/landingFooter/index';
 import { collectSrcSet } from '@/utils/dom';

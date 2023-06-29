@@ -1,7 +1,7 @@
 <template>
   <div :class="$style.depositInput">
     <div :class="$style.options">
-      <Button
+      <UiButton
         v-for="option in options"
         :key="option.percents"
         type="button"
@@ -15,7 +15,7 @@
         @click="setPercentOfBalance(option.percents)"
       >
         {{ option.label }}
-      </Button>
+      </UiButton>
     </div>
     <div :class="$style.inputs">
       <div :class="$style.value">
@@ -69,7 +69,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import Button from '@/components/core/button/Button.vue';
+import { UiButton } from '@terminal/uikit/components/button';
 import Icon from '@/components/core/icon/Icon.vue';
 import RangeSlider from '@/components/core/rangeSlider/RangeSlider.vue';
 import NumberInput from '@/components/core/numberInput/NumberInput.vue';

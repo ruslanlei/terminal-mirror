@@ -63,7 +63,7 @@
           <template #tab(input)>
             <OrderFormInputPart>
               <template #submit>
-                <Button
+                <UiButton
                   type="submit"
                   :state="['gradientColor', 'interactive']"
                   size="md"
@@ -71,7 +71,7 @@
                   :is-loading="isLoading"
                 >
                   {{ t('order.submit') }}
-                </Button>
+                </UiButton>
               </template>
             </OrderFormInputPart>
           </template>
@@ -97,10 +97,12 @@ import {
   provide,
 } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { storeToRefs } from 'pinia';
+import { UiButton } from '@terminal/uikit/components/button';
+
 import Icon from '@/components/core/icon/Icon.vue';
 import Tabs from '@/components/core/tabs/Tabs.vue';
 import OrderFromContainer from '@/containers/orderFormContainer/OrderFormContainer.vue';
-import Button from '@/components/core/button/Button.vue';
 import { Form, FormSelector } from '@/form';
 
 import { useOrderCreate } from '@/hooks/useOrderCreate';
@@ -110,7 +112,6 @@ import { Tab } from '@/components/core/tabs';
 import Typography from '@/components/app/typography/Typography.vue';
 import { useEmulatorStore } from '@/stores/emulator';
 import { useMarketStore } from '@/stores/market';
-import { storeToRefs } from 'pinia';
 import OrderFormInputPart from './composables/orderFormInputPart/OrderFormInputPart.vue';
 import OrderFormTakeProfitPart from './composables/orderFormTakeProfitPart/OrderFormTakeProfitPart.vue';
 import OrderFormStopLossPart from './composables/orderFormStopLossPart/OrderFormStopLossPart.vue';

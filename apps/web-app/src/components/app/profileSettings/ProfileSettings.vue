@@ -42,7 +42,7 @@
     </div>
     <footer :class="$style.footer">
       <CurrentTheme />
-      <Button
+      <UiButton
         :size="null"
         :state="null"
         @click="copyDiscordLink"
@@ -53,7 +53,7 @@
         >
           {{ t('auth.support') }}
         </Typography>
-      </Button>
+      </UiButton>
     </footer>
   </Card>
 </template>
@@ -61,12 +61,12 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import { UiAvatar } from '@terminal/uikit/components/avatar';
+import { UiButton } from '@terminal/uikit/components/button';
 import Card from '@/components/core/card/Card.vue';
 import Icon from '@/components/core/icon/Icon.vue';
 import LanguageSelect from '@/components/app/languageSelect/LanguageSelect.vue';
 import SubscriptionBadge from '@/components/core/subscriptionBadge/SubscriptionBadge.vue';
 import CurrentTheme from '@/components/app/currentTheme/CurrentTheme.vue';
-import Button from '@/components/core/button/Button.vue';
 import { useProfileSettings } from '@/hooks/useProfileSettings';
 import Typography from '@/components/app/typography/Typography.vue';
 import { useDiscordLink } from '@/hooks/useDiscordLink';

@@ -6,7 +6,7 @@
       state="defaultState2"
     />
     <div :class="$style.chapters">
-      <Button
+      <UiButton
         v-for="chapter in chapters"
         :key="chapter.slug"
         :state="[
@@ -20,7 +20,7 @@
         @click="setActiveChapter(chapter.slug)"
       >
         {{ chapter.label }}
-      </Button>
+      </UiButton>
     </div>
     <div :class="$style.rightColumn">
       <Link
@@ -28,14 +28,14 @@
         :state="null"
         :to="{ name: 'auth-sign-in' }"
       >
-        <Button
+        <UiButton
           :state="['gradientColor']"
           size="xl"
           :is-wide="false"
           :class="$style.signUpButton"
         >
           {{ t('auth.signUp.label') }}
-        </Button>
+        </UiButton>
       </Link>
       <LanguageSelect />
     </div>
@@ -44,8 +44,8 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
+import { UiButton } from '@terminal/uikit/components/button';
 import Logo from '@/components/core/logo/Logo.vue';
-import Button from '@/components/core/button/Button.vue';
 import Link from '@/components/core/link/Link.vue';
 import { useLocalValue } from '@/hooks/useLocalValue';
 import LanguageSelect from '@/components/app/languageSelect/LanguageSelect.vue';

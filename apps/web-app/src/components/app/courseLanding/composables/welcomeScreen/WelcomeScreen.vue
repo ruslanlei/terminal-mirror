@@ -21,7 +21,7 @@
           {{ t('courseLanding.welcomeScreen.description') }}
         </Typography>
         <div :class="$style.options">
-          <Button
+          <UiButton
             state="blueGradientColor"
             size="xl"
             :is-wide="false"
@@ -29,8 +29,8 @@
             @click="onClickBuy"
           >
             {{ t('courseLanding.welcomeScreen.options.buyCourse') }}
-          </Button>
-          <Button
+          </UiButton>
+          <UiButton
             state="greyBordered"
             size="xl"
             :is-wide="false"
@@ -38,7 +38,7 @@
             @click="onClickCourseProgram"
           >
             {{ t('courseLanding.welcomeScreen.options.courseProgram') }}
-          </Button>
+          </UiButton>
         </div>
       </div>
       <Picture
@@ -60,11 +60,12 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { UiButton } from '@terminal/uikit/components/button';
+
 import Typography from '@/components/app/typography/Typography.vue';
 import Picture from '@/components/core/picture/Picture.vue';
 import ImageBackgroundBlock from '@/components/core/imageBackgroundBlock/ImageBackgroundBlock.vue';
 import AdvantagesCard from '@/components/app/courseLanding/composables/welcomeScreen/advantagesCard/AdvantagesCard.vue';
-import Button from '@/components/core/button/Button.vue';
 
 import { WelcomeScreenEmits } from '@/components/app/courseLanding/composables/welcomeScreen/index';
 import { collectSrcSet } from '@/utils/dom';

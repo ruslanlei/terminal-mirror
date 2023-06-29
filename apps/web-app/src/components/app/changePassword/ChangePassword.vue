@@ -27,13 +27,13 @@
         />
       </template>
       <template #submit>
-        <Button
+        <UiButton
           :is-loading="isLoading"
           :state="['gradientColor', 'interactive']"
           size="lg"
         >
           {{ t('auth.changePassword.submit') }}
-        </Button>
+        </UiButton>
       </template>
     </AuthChangePasswordContainer>
   </Form>
@@ -41,9 +41,9 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
+import { UiButton } from '@terminal/uikit/components/button';
 import AuthChangePasswordContainer from '@/containers/authChangePasswordContainer/AuthChangePasswordContainer.vue';
 import { Form, FormInput } from '@/form';
-import Button from '@/components/core/button/Button.vue';
 import { usePasswordResetConfirm } from '@/hooks/usePasswordResetConfirm';
 
 const { t } = useI18n();

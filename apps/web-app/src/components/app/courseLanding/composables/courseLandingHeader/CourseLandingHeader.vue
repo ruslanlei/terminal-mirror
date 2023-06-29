@@ -4,7 +4,7 @@
       <CourseLogo />
     </div>
     <div :class="$style.chapters">
-      <Button
+      <UiButton
         v-for="chapter in chapters"
         :key="chapter.slug"
         :state="[
@@ -19,10 +19,10 @@
         @click="setActiveChapter(chapter.slug)"
       >
         {{ chapter.label }}
-      </Button>
+      </UiButton>
     </div>
     <div :class="$style.rightColumn">
-      <Button
+      <UiButton
         :state="['blueGradientColor']"
         size="xl"
         :is-wide="false"
@@ -30,20 +30,17 @@
         @click="setActiveChapter('tariffs')"
       >
         {{ t('courseLanding.buyCourse') }}
-      </Button>
-      <!--      <LanguageSelect />-->
+      </UiButton>
     </div>
   </header>
 </template>
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
-import Button from '@/components/core/button/Button.vue';
+import { UiButton } from '@terminal/uikit/components/button';
 import { useLocalValue } from '@/hooks/useLocalValue';
-import LanguageSelect from '@/components/app/languageSelect/LanguageSelect.vue';
 import CourseLogo from '@/components/core/courseLogo/CourseLogo.vue';
 import { CourseLandingChapter } from '@/components/app/courseLanding';
-import Link from '@/components/core/link/Link.vue';
 import { TerminalLandingHeaderEmits, TerminalLandingHeaderProps } from './index';
 
 const { t } = useI18n();

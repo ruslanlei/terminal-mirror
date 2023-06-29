@@ -14,7 +14,7 @@
       :to="{ name: 'auth-sign-in' }"
       :state="null"
     >
-      <Button
+      <UiButton
         type="button"
         state="gradientColor"
         size="lg"
@@ -22,7 +22,7 @@
         @click="close"
       >
         {{ t('auth.signUp.login') }}
-      </Button>
+      </UiButton>
     </Link>
   </Modal>
 </template>
@@ -30,8 +30,8 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { UiButton } from '@terminal/uikit/components/button';
 import Modal from '@/components/core/modal/Modal.vue';
-import Button from '@/components/core/button/Button.vue';
 import Picture from '@/components/core/picture/Picture.vue';
 import Link from '@/components/core/link/Link.vue';
 import IllustrationPng from './assets/illustration.png';

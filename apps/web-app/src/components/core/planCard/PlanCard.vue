@@ -100,7 +100,7 @@
           {{ ` / ${card.price.period}` }}
         </Typography>
       </Typography>
-      <Button
+      <UiButton
         v-if="card.purchaseButton"
         size="xl"
         :state="[
@@ -115,21 +115,21 @@
         @click="onClickPurchase"
       >
         {{ card.purchaseButton }}
-      </Button>
+      </UiButton>
       <Link
         v-if="card.subscribeLink"
         :state="null"
         :size="null"
         :to="card.subscribeLink"
       >
-        <Button
+        <UiButton
           size="xl"
           :state="['accent3Color', 'interactive']"
           :class="$style.subscribeButton"
           @click="onSubscribeClick"
         >
           {{ t('planCard.subscribe') }}
-        </Button>
+        </UiButton>
       </Link>
       <Link
         v-if="card.trialLink"
@@ -137,7 +137,7 @@
         :size="null"
         :to="card.trialLink"
       >
-        <Button
+        <UiButton
           size="xl"
           :state="[
             (({
@@ -150,7 +150,7 @@
           :class="$style.trialButton"
         >
           {{ t('planCard.tryTrial') }}
-        </Button>
+        </UiButton>
       </Link>
       <Link
         :state="null"
@@ -173,9 +173,9 @@
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { UiBadge } from '@terminal/uikit/components/badge';
+import { UiButton } from '@terminal/uikit/components/button';
 import Typography from '@/components/app/typography/Typography.vue';
 import Divider from '@/components/core/divider/Divider.vue';
-import Button from '@/components/core/button/Button.vue';
 import Link from '@/components/core/link/Link.vue';
 import GradientCheckIcon from '@/components/core/gradientCheckIcon/GradientCheckIcon.vue';
 import { compose } from '@/utils/fp';

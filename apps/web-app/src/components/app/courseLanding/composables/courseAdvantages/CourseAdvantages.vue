@@ -74,7 +74,7 @@
         </Card>
       </main>
     </Card>
-    <Button
+    <UiButton
       :is-wide="false"
       state="gradientColor"
       :class="$style.button"
@@ -82,17 +82,16 @@
       @click="onClickSignUp"
     >
       {{ t('courseLanding.advantagesCard.button') }}
-    </Button>
+    </UiButton>
   </section>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { UiButton } from '@terminal/uikit/components/button';
 import Typography from '@/components/app/typography/Typography.vue';
 import Card from '@/components/core/card/Card.vue';
-
-import Button from '@/components/core/button/Button.vue';
 
 import { useCssModules } from '@/hooks/useCssModules';
 import { CourseAdvantagesEmits } from '@/components/app/courseLanding/composables/courseAdvantages/index';

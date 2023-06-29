@@ -7,15 +7,15 @@
       {{ t('changePlayerDateModal.label') }}
     </Typography>
     <div :class="$style.controls">
-      <Button
+      <UiButton
         size="md"
         :state="['successColor']"
         :class="$style.control"
         @click="close"
       >
         {{ t('common.cancel') }}
-      </Button>
-      <Button
+      </UiButton>
+      <UiButton
         size="md"
         :state="['dangerColor']"
         :class="$style.control"
@@ -23,7 +23,7 @@
         @click="submit"
       >
         {{ t('changePlayerDateModal.submitText') }}
-      </Button>
+      </UiButton>
     </div>
   </Modal>
 </template>
@@ -31,9 +31,9 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { UiButton } from '@terminal/uikit/components/button';
 import Modal from '@/components/core/modal/Modal.vue';
 import Typography from '@/components/app/typography/Typography.vue';
-import Button from '@/components/core/button/Button.vue';
 import { ChangePlayerDateModalEmits } from '@/components/app/changePlayerDateModal/index';
 import { useMarketStore } from '@/stores/market';
 

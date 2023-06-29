@@ -1,7 +1,7 @@
 <template>
   <Card :class="$style.profileSettings">
     <header :class="$style.header">
-      <Avatar :src="DefaultAvatar" />
+      <UiAvatar :src="DefaultAvatar" />
       <div :class="$style.name">
         {{ username }}
         <Icon
@@ -60,8 +60,8 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
+import { UiAvatar } from '@terminal/uikit/components/avatar';
 import Card from '@/components/core/card/Card.vue';
-import Avatar from '@/components/core/avatar/Avatar.vue';
 import Icon from '@/components/core/icon/Icon.vue';
 import LanguageSelect from '@/components/app/languageSelect/LanguageSelect.vue';
 import SubscriptionBadge from '@/components/core/subscriptionBadge/SubscriptionBadge.vue';

@@ -8,7 +8,7 @@
         type="button"
         :class="$style.trigger"
       >
-        <Avatar :src="DefaultAvatar" />
+        <UiAvatar :src="DefaultAvatar" />
         <Icon
           :class="$style.triggerIcon"
           icon="arrowDown"
@@ -22,9 +22,9 @@
 </template>
 
 <script setup lang="ts">
+import { UiAvatar } from '@terminal/uikit/components/avatar';
 import Dropdown from '@/components/core/dropdown/Dropdown.vue';
 import Icon from '@/components/core/icon/Icon.vue';
-import Avatar from '@/components/core/avatar/Avatar.vue';
 import ProfileSettings from '@/components/app/profileSettings/ProfileSettings.vue';
 import DefaultAvatar from '@/assets/images/defaultAvatar.svg?url';
 </script>

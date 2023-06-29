@@ -1,7 +1,7 @@
 <template>
   <StatisticsResultRow>
     <template #prepend>
-      <Avatar
+      <UiAvatar
         size="sm"
         :state="isPositive(commonPnl) ? 'success' : 'danger'"
       >
@@ -9,7 +9,7 @@
           :size="20"
           icon="chartBar"
         />
-      </Avatar>
+      </UiAvatar>
     </template>
     <template #primaryInfoTop>
       <Typography
@@ -85,8 +85,8 @@
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { storeToRefs } from 'pinia';
+import { UiAvatar } from '@terminal/uikit/components/avatar';
 import StatisticsResultRow from '@/containers/statisticsResultRow/StatisticsResultRow.vue';
-import Avatar from '@/components/core/avatar/Avatar.vue';
 import Typography from '@/components/app/typography/Typography.vue';
 import Icon from '@/components/core/icon/Icon.vue';
 import { isPositive, roundToDecimalPlaces } from '@/utils/number';

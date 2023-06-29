@@ -1,0 +1,11 @@
+import cloneDeep from 'lodash/cloneDeep';
+import isEmpty from 'lodash/isEmpty';
+export declare const isObject: (item: any) => boolean;
+export declare const objectEntries: <T extends Record<any, any>>(object: T) => [string, any][];
+export declare const createObjectWithValues: (object: Record<any, any>, setValue: any) => Record<any, any>;
+export { cloneDeep, };
+export declare const set: import("lodash").CurriedFunction3<object, import("lodash").PropertyPath, any, unknown>;
+export declare const getValueByKey: import("lodash").CurriedFunction2<string, Record<any, any>, any>;
+export { isEmpty };
+export declare const getKeyWithBiggestValue: (object: Record<string, number>) => string;
+export declare const groupBy: import("lodash").CurriedFunction2<any, any[], any[]>;

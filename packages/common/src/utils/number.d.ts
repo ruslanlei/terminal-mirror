@@ -1,0 +1,13 @@
+export declare const multiply: import("lodash").CurriedFunction2<number, number, number>;
+export declare const divide: import("lodash").CurriedFunction2<number, number, number>;
+export declare const divideRight: import("lodash").CurriedFunction2<number, number, number>;
+export declare const add: import("lodash").CurriedFunction2<number, number, number>;
+export declare const subtract: import("lodash").CurriedFunction2<number, number, number>;
+export declare const subtractRight: import("lodash").CurriedFunction2<number, number, number>;
+export declare const roundToDecimalPlaces: import("lodash").CurriedFunction2<number, number, number>;
+export declare const floorToDecimalPlaces: import("lodash").CurriedFunction2<number, number, number>;
+export declare const isPositive: (number: number) => boolean;
+export declare const max: import("lodash").CurriedFunction2<number, number, number>;
+export declare const min: import("lodash").CurriedFunction2<number, number, number>;
+export declare const toAbsolute: (x: number) => number, roundNumber: (x: number) => number, ceil: (x: number) => number;
+export declare const toNegative: (number: number) => number;

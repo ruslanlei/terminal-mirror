@@ -1,0 +1,37 @@
+import flatten from 'lodash/flatten';
+import concat from 'lodash/concat';
+import repeat from 'lodash/repeat';
+import { reduce as rambdaReduce } from 'rambda';
+import { CurriedFunc } from '../../utils/fp';
+export { flatten, concat, repeat };
+export declare const arrayFrom: (value: any | any[]) => any[];
+export declare const isArray: (maybeArray: any) => boolean;
+export declare const toArray: {
+    <T>(arrayLike: ArrayLike<T>): T[];
+    <T_1, U>(arrayLike: ArrayLike<T_1>, mapfn: (v: T_1, k: number) => U, thisArg?: any): U[];
+    <T_2>(iterable: Iterable<T_2> | ArrayLike<T_2>): T_2[];
+    <T_3, U_1>(iterable: Iterable<T_3> | ArrayLike<T_3>, mapfn: (v: T_3, k: number) => U_1, thisArg?: any): U_1[];
+};
+export declare const arrayOf: import("lodash").CurriedFunction2<(el: any, index: number) => any, number, any[]>;
+export declare const getLength: (array: any[]) => number;
+export declare const getLastElement: (array: any[]) => any;
+export declare const getFirstElement: (array: any[]) => any;
+export declare const filterNoneUniqueByKey: import("lodash").CurriedFunction2<string | number, any[], any[]>;
+export declare const findMaxByKey: import("lodash").CurriedFunction2<string | number, (any[] | Record<any, any>)[], number>;
+export declare const findMinByKey: import("lodash").CurriedFunction2<string | number, (any[] | Record<any, any>)[], number>;
+export declare const arraySum: (array: number[]) => string | number;
+export declare const map: CurriedFunc<(predicate?: ((...args: any[]) => boolean) | undefined, array?: any[]) => any>;
+export declare const reduce: typeof rambdaReduce;
+export declare const reduceRight: CurriedFunc<{
+    (collection: any[] | null | undefined, callback: import("lodash").MemoListIterator<any, any, any[]>, accumulator: any): any;
+    (collection: import("lodash").List<any> | null | undefined, callback: import("lodash").MemoListIterator<any, any, import("lodash").List<any>>, accumulator: any): any;
+    (collection: any, callback: import("lodash").MemoObjectIterator<any, any, any>, accumulator: any): any;
+}>;
+export declare const filter: CurriedFunc<(predicate?: ((...args: any[]) => boolean) | undefined, array?: any[]) => any>;
+export declare const find: CurriedFunc<(predicate?: ((...args: any[]) => boolean) | undefined, array?: any[]) => any>;
+export declare const sort: CurriedFunc<(sortFn: (a: any, b: any) => number, list: any[]) => any>;
+export declare const forEach: CurriedFunc<(predicate?: ((...args: any[]) => boolean) | undefined, array?: any[]) => any>;
+export declare const countBy: import("lodash").CurriedFunction2<string, Record<string, any>[], any>;
+export declare const findAndDelete: import("lodash").CurriedFunction2<(value: any, index: number, obj: any[]) => unknown, any[], void>;
+export declare const findAndUpdateObject: import("lodash").CurriedFunction3<(value: any, index: number, obj: any[]) => unknown, any[], Record<any, any>, void>;
+export declare const sortByKey: (...args: any[]) => any;

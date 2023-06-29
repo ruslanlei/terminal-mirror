@@ -1,7 +1,7 @@
 <template>
   <StatisticsResultRow>
     <template #prepend>
-      <Avatar
+      <UiAvatar
         size="sm"
         :label="t('dateTime.unit.month')"
         :state="isPositive(commonPnl) ? 'success' : 'danger'"
@@ -70,8 +70,8 @@
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { storeToRefs } from 'pinia';
+import { UiAvatar } from '@terminal/uikit/components/avatar';
 import StatisticsResultRow from '@/containers/statisticsResultRow/StatisticsResultRow.vue';
-import Avatar from '@/components/core/avatar/Avatar.vue';
 import Typography from '@/components/app/typography/Typography.vue';
 import { customFormatDate, dateNow } from '@/utils/date';
 import { useMarketStore } from '@/stores/market';

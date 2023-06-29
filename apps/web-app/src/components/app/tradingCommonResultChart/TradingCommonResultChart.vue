@@ -1,5 +1,5 @@
 <template>
-  <BarChart
+  <UiBarChart
     :data="computedData"
     :bar-label-formatter="barLabelFormatter"
     :x-axis-label-formatter="xAxisLabelFormatter"
@@ -10,7 +10,7 @@
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { storeToRefs } from 'pinia';
-import BarChart from '@/components/core/barChart/BarChart.vue';
+import { UiBarChart } from '@terminal/uikit/components/barChart';
 import { toPnlString } from '@/utils/style';
 import { useMarketStore } from '@/stores/market';
 import {
@@ -22,7 +22,7 @@ import {
   subtractMonths,
 } from '@/utils/date';
 import { filterOrdersByType } from '@/helpers/orders';
-import { compose, curry } from '@/utils/fp';
+import { compose } from '@/utils/fp';
 import { Order } from '@/api/types/order';
 import {
   arrayOf,

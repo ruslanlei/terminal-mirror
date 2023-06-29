@@ -3,6 +3,7 @@ import { defineConfig } from 'vite';
 import path from 'path';
 import dts from 'vite-plugin-dts';
 import commonjs from '@rollup/plugin-commonjs';
+import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js';
 import vue from '@vitejs/plugin-vue';
 import svgLoader from 'vite-svg-loader';
 import { globSync } from 'glob';
@@ -12,6 +13,7 @@ import pkg from './package.json' assert { type: 'json' };
 
 export default defineConfig({
   build: {
+    cssCodeSplit: true,
     lib: {
       entry: path.resolve(__dirname, 'src/index.ts'),
       formats: ['es'],
@@ -26,6 +28,7 @@ export default defineConfig({
         globals: {
           vue: 'vue',
         },
+        // assetFileNames: 'assets/[name].[ext]',
       },
       external: getRollupExternals(pkg),
     },
@@ -62,6 +65,19 @@ export default defineConfig({
           };
         }
       },
+    }),
+    /*
+      INFO:
+        6/28/2023 at the moment build.cssCodeSplit divide
+        css to separate files but doesn't import them automatically
+        by component in library mode, so you have to manually
+        import related CSS in every place where you use your
+        library component. This plugin adds code that
+        automatically inject css into the html head when
+        component mounted.
+     */
+    cssInjectedByJsPlugin({
+      relativeCSSInjection: true,
     }),
     bundleRawScss(
       path.resolve(__dirname, './src/assets/styles'),

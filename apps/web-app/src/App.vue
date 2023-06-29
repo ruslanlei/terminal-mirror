@@ -10,19 +10,19 @@
         <ToastLayer :class="$style.toastLayer" />
         <LevitatingLayer :class="$style.levitatingLayer" />
         <IconsMap />
-        <CoinLogoMap />
+        <UiCoinLogoMap />
       </div>
     </template>
   </Transition>
 </template>
 
 <script setup lang="ts">
+import UiCoinLogoMap from '@terminal/uikit/components/coinLogo/CoinLogoMap.vue';
 import Layout from '@/components/app/layout/Layout.vue';
 import ToastLayer from '@/components/app/toastLayer/ToastLayer.vue';
 import ModalLayer from '@/components/app/modalLayer/ModalLayer.vue';
 import LevitatingLayer from '@/components/app/leviatingLayer/LevitatingLayer.vue';
 import IconsMap from '@/components/core/icon/IconsMap.vue';
-import CoinLogoMap from '@/components/core/coinLogo/CoinLogoMap.vue';
 import AppPreloader from '@/components/app/appPreloader/AppPreloader.vue';
 
 import { useApp } from '@/hooks/useApp';

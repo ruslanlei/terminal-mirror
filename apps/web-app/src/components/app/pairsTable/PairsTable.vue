@@ -49,7 +49,7 @@
           </transition>
         </Typography>
       </button>
-      <CoinLogo
+      <UiCoinLogo
         :coin="base"
         :class="$style.currencyLogo"
       />
@@ -124,9 +124,9 @@
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { UiBadge } from '@terminal/uikit/components/badge';
+import { UiCoinLogo } from '@terminal/uikit/components/coinLogo';
 import Table from '@/components/core/table/Table.vue';
 import TrendingIcon from '@/components/core/trendingIcon/TrendingIcon.vue';
-import CoinLogo from '@/components/core/coinLogo/CoinLogo.vue';
 import Icon from '@/components/core/icon/Icon.vue';
 import { SortDirection } from '@/components/core/table';
 import { humanizeNumber } from '@/utils/numberFormat';

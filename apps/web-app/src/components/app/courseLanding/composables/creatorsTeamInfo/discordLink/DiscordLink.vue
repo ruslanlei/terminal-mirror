@@ -10,30 +10,30 @@
         @click="copyDiscordLink"
       >
         <DiscordLogo />
-        <Typography
+        <UiTypography
           :state="['lightBlack', 'semiBold']"
           size="textLg"
           :class="$style.discordName"
         >
           {{ discordUsername }}
-        </Typography>
+        </UiTypography>
       </button>
     </template>
     <template #dropdown>
-      <Tooltip>
-        <Typography :state="['accent1']">
+      <UiTooltip>
+        <UiTypography :state="['accent1']">
           {{ t('discordLink.tip') }}
-        </Typography>
-      </Tooltip>
+        </UiTypography>
+      </UiTooltip>
     </template>
   </Dropdown>
 </template>
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
-import Typography from '@/components/app/typography/Typography.vue';
+import { UiTooltip } from '@terminal/uikit/components/tooltip';
+import { UiTypography } from '@terminal/uikit/components/typography';
 import Dropdown from '@/components/core/dropdown/Dropdown.vue';
-import Tooltip from '@/components/core/tooltip/Tooltip.vue';
 import { useToastStore } from '@/stores/toasts';
 import { useDiscordLink } from '@/hooks/useDiscordLink';
 import DiscordLogo from './assets/discordLogo.svg';

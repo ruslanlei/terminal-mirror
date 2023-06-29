@@ -1,5 +1,5 @@
 <template>
-  <Modal :class="$style.deleteOrderModal">
+  <UiModal :class="$style.deleteOrderModal">
     <Picture
       :class="$style.illustration"
       :srcset="illustrationSrcSet"
@@ -56,7 +56,7 @@
         {{ t('common.yes') }}
       </UiButton>
     </div>
-  </Modal>
+  </UiModal>
 </template>
 
 <script setup lang="ts">
@@ -67,7 +67,7 @@ import {
 } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { UiButton } from '@terminal/uikit/components/button';
-import Modal from '@/components/core/modal/Modal.vue';
+import { UiModal } from '@terminal/uikit/components/modal';
 import Picture from '@/components/core/picture/Picture.vue';
 import Typography from '@/components/app/typography/Typography.vue';
 import { Order, TakeProfit } from '@/api/types/order';

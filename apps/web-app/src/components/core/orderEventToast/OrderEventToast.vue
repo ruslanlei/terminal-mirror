@@ -33,7 +33,7 @@
         {{ t('orderExecuted.coin') }}
       </Typography>
       <div :class="$style.coin">
-        <CoinLogo :coin="pairData?.base" />
+        <UiCoinLogo :coin="pairData?.base" />
         <Typography
           size="title2"
           :state="['accent1', 'semiBold']"
@@ -124,10 +124,10 @@ import { useI18n } from 'vue-i18n';
 import { computed } from 'vue';
 import { UiBadge } from '@terminal/uikit/components/badge';
 import { UiButton } from '@terminal/uikit/components/button';
+import { UiCoinLogo } from '@terminal/uikit/components/coinLogo';
 import Typography from '@/components/app/typography/Typography.vue';
 import Icon from '@/components/core/icon/Icon.vue';
 import { useMarketStore } from '@/stores/market';
-import CoinLogo from '@/components/core/coinLogo/CoinLogo.vue';
 import { multiply, roundToDecimalPlaces } from '@/utils/number';
 import { compose } from '@/utils/fp';
 import OrderSideLabel from '@/components/core/orderSideLabel/OrderSideLabel.vue';

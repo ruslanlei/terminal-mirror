@@ -23,7 +23,7 @@
       </Typography>
     </div>
     <div :class="$style.mainContent">
-      <CoinLogo :coin="pairData.base" />
+      <UiCoinLogo :coin="pairData.base" />
       <transition
         name="favoritesListChangeTransition"
         mode="out-in"
@@ -52,7 +52,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { UiBadge } from '@terminal/uikit/components/badge';
-import CoinLogo from '@/components/core/coinLogo/CoinLogo.vue';
+import { UiCoinLogo } from '@terminal/uikit/components/coinLogo';
 import Typography from '@/components/app/typography/Typography.vue';
 import { humanizeNumber } from '@/utils/numberFormat';
 import { humanizePercents } from '@/helpers/math/percents';

@@ -42,23 +42,23 @@
         >
           {{ t('statistics.orders.failed.popularCoin') }}
         </Typography>
-        <CoinLogo :coin="mostFrequentCoin" />
+        <UiCoinLogo :coin="mostFrequentCoin" />
       </div>
     </template>
   </StatisticsResultRow>
 </template>
 
 <script setup lang="ts">
-import StatisticsResultRow from '@/containers/statisticsResultRow/StatisticsResultRow.vue';
 import { useI18n } from 'vue-i18n';
-import Typography from '@/components/app/typography/Typography.vue';
-import CoinLogo from '@/components/core/coinLogo/CoinLogo.vue';
 import { computed } from 'vue';
+import { storeToRefs } from 'pinia';
+import { UiCoinLogo } from '@terminal/uikit/components/coinLogo';
+import StatisticsResultRow from '@/containers/statisticsResultRow/StatisticsResultRow.vue';
+import Typography from '@/components/app/typography/Typography.vue';
 import { compose, log } from '@/utils/fp';
 import { roundToDecimalPlaces } from '@/utils/number';
 import { calculateAverageLoss, filterOrdersByType, findMostFrequentCoin } from '@/helpers/orders';
 import { useMarketStore } from '@/stores/market';
-import { storeToRefs } from 'pinia';
 import { getFailedOrders } from '@/helpers/math/formulas/pnl';
 import { getLength } from '@/utils/array';
 

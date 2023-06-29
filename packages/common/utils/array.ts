@@ -12,7 +12,7 @@ import {
 } from 'rambda';
 import collect from 'collect.js';
 
-import { CurriedFunc, curry } from '@/utils/fp';
+import { CurriedFunc, curry } from './fp';
 
 export { flatten, concat, repeat };
 

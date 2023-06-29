@@ -1,11 +1,11 @@
 import dayjs, { QUnitType } from 'dayjs';
-import { compose, curry } from '@/utils/fp';
+import { compose, curry } from './fp';
 import now from 'lodash/now';
 import {
   divide,
   divideRight,
   multiply,
-} from '@/utils/number';
+} from './number';
 
 export {
   now as dateNow,

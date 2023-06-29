@@ -5,30 +5,6 @@
   "module": "index.js",
   "types": "index.d.ts",
   "type": "module",
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "generateExports": "node --loader=ts-node/esm scripts/generateExports.ts",
-    "build": "vite build",
-    "preinstall": "vite build --outDir ./"
-  },
   "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "@terminal/tsconfig": "*",
-    "collect.js": "^4.36.1",
-    "dayjs": "^1.11.8",
-    "lodash": "^4.17.21",
-    "numeral": "^2.0.6",
-    "rambda": "^7.5.0",
-    "uuid": "^9.0.0"
-  },
-  "devDependencies": {
-    "@rollup/plugin-commonjs": "^25.0.2",
-    "@terminal/utils": "*",
-    "npm-run-all": "^4.1.5",
-    "vite": "^4.3.9",
-    "vite-plugin-dts": "^3.0.0-beta.1"
-  }
+  "license": "ISC"
 }

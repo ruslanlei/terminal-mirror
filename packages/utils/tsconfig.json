@@ -1,9 +1,0 @@
-{
-  "extends": "@terminal/tsconfig/base.json",
-  "compilerOptions": {
-    "baseUrl": ".",
-    "target": "esnext",
-    "module": "esnext",
-    "moduleResolution": "node"
-  }
-}

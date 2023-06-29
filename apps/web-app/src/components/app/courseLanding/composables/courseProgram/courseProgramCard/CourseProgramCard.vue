@@ -1,40 +1,40 @@
 <template>
   <div :class="$style.courseProgram">
     <div :class="$style.picture">
-      <Picture
+      <UiPicture
         is-fill
         :srcset="data.imageSrcSet"
       />
     </div>
-    <Card
+    <UiCard
       state="background3"
       :class="$style.content"
     >
       <div :class="$style.topBlock">
-        <Typography
+        <UiTypography
           :state="['accent1', 'semiBold']"
           size="textLg"
           :class="$style.moduleBadge"
         >
           {{ data.moduleIndex }}
-        </Typography>
-        <Typography
+        </UiTypography>
+        <UiTypography
           :state="['accent1', 'bold']"
           size="massive2sm"
           :class="$style.heading"
         >
           {{ data.heading }}
-        </Typography>
-        <Typography
+        </UiTypography>
+        <UiTypography
           :state="['accent1', 'medium']"
           size="textLg"
           :class="$style.topText"
         >
           {{ data.description }}
-        </Typography>
+        </UiTypography>
       </div>
       <div :class="$style.bottomBlock">
-        <Typography
+        <UiTypography
           size="text"
           :state="['accent1', 'semiBold']"
           :class="$style.subheading"
@@ -44,40 +44,39 @@
             :keypath="data.contentsHeading.keyPath"
           >
             <template #period>
-              <Typography
+              <UiTypography
                 :state="['blueGradient', 'bold']"
                 size="h3"
                 :class="$style.subheadingPt2"
                 is-inline
               >
                 {{ data.contentsHeading.period }}
-              </Typography>
+              </UiTypography>
             </template>
           </i18n-t>
-        </Typography>
-        <Typography
+        </UiTypography>
+        <UiTypography
           size="text"
           state="accent2"
           :class="$style.bottomText"
         >
           {{ data.contents }}
-        </Typography>
+        </UiTypography>
       </div>
-    </Card>
+    </UiCard>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
-import Typography from '@/components/app/typography/Typography.vue';
-import Card from '@/components/core/card/Card.vue';
+import { UiCard } from '@terminal/uikit/components/card';
+import { UiTypography } from '@terminal/uikit/components/typography';
+import { UiPicture } from '@terminal/uikit/components/picture';
 import { CourseProgramCard } from '@/components/app/courseLanding/composables/courseProgram/courseProgramCard/index';
-import Picture from '@/components/core/picture/Picture.vue';
 
 const { t } = useI18n();
 
 const props = defineProps<CourseProgramCard>();
-
 </script>
 
 <style lang="scss" module>

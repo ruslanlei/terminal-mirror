@@ -1,30 +1,30 @@
 <template>
   <section :class="$style.courseAdvantagesCard">
-    <Card :class="$style.card">
-      <Typography
+    <UiCard :class="$style.card">
+      <UiTypography
         :state="['accent1', 'bold']"
         size="massive2"
       >
         {{ t('courseLanding.advantagesCard.heading') }}
-      </Typography>
+      </UiTypography>
       <main :class="$style.main">
-        <Card
+        <UiCard
           state="background1"
           :class="[
             $style.badge,
             $style.topBadge
           ]"
         >
-          <Typography
+          <UiTypography
             :state="['accent1', 'medium', 'alignCenter']"
             size="textLg"
           >
             {{ t('courseLanding.advantagesCard.getPractice') }}
-          </Typography>
-        </Card>
+          </UiTypography>
+        </UiCard>
         <div :class="$style.columns">
           <div :class="[$style.column, $style.columnLeft]">
-            <Card
+            <UiCard
               v-for="({ label, className }, cardIndex) in cardsLeftColumn"
               :key="cardIndex"
               state="background1"
@@ -33,17 +33,17 @@
                 className,
               ]"
             >
-              <Typography
+              <UiTypography
                 :state="['accent1', 'medium', 'alignCenter']"
                 size="textLg"
               >
                 {{ label }}
-              </Typography>
-            </Card>
+              </UiTypography>
+            </UiCard>
           </div>
           <DogeCoin :class="$style.picture" />
           <div :class="[$style.column, $style.columnRight]">
-            <Card
+            <UiCard
               v-for="({ label, className }, cardIndex) in cardsRightColumn"
               :key="cardIndex"
               state="background1"
@@ -52,28 +52,28 @@
                 className,
               ]"
             >
-              <Typography
+              <UiTypography
                 :state="['accent1', 'medium', 'alignCenter']"
                 size="textLg"
               >
                 {{ label }}
-              </Typography>
-            </Card>
+              </UiTypography>
+            </UiCard>
           </div>
         </div>
-        <Card
+        <UiCard
           :class="$style.advantageBadgeGradient"
           state="background1"
         >
-          <Typography
+          <UiTypography
             :state="['accent1', 'medium', 'alignCenter']"
             size="textLg"
           >
             {{ t('courseLanding.advantagesCard.gainKnowledge') }}
-          </Typography>
-        </Card>
+          </UiTypography>
+        </UiCard>
       </main>
-    </Card>
+    </UiCard>
     <UiButton
       :is-wide="false"
       state="gradientColor"
@@ -90,11 +90,11 @@
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { UiButton } from '@terminal/uikit/components/button';
-import Typography from '@/components/app/typography/Typography.vue';
-import Card from '@/components/core/card/Card.vue';
+import { UiTypography } from '@terminal/uikit/components/typography';
+import { UiCard } from '@terminal/uikit/components/card';
+import { useCssModules } from '@terminal/uikit/hooks/useCssModules';
 
-import { useCssModules } from '@/hooks/useCssModules';
-import { CourseAdvantagesEmits } from '@/components/app/courseLanding/composables/courseAdvantages/index';
+import { CourseAdvantagesEmits } from './index';
 import DogeCoin from './assets/doge.svg';
 
 const { t } = useI18n();

@@ -2,19 +2,19 @@
   <ImageBackgroundBlock
     :content-class="$style.creatorsTeamInfo"
   >
-    <Typography
+    <UiTypography
       :state="['accent1', 'bold', 'alignCenter']"
       size="massive2"
       :class="$style.heading"
     >
       {{ t('courseLanding.creatorsTeamInfo.heading') }}
-    </Typography>
+    </UiTypography>
     <div :class="$style.mainContent">
-      <Card
+      <UiCard
         :class="$style.card"
         state="background1"
       >
-        <Typography
+        <UiTypography
           :state="['accent1', 'alignCenter']"
           size="h2"
         >
@@ -28,15 +28,15 @@
                 :key="br"
               >
             </template>
-            <Typography
+            <UiTypography
               is-inline
               :state="[textIndex !== 2 ? 'accent2' : 'accent1']"
             >
               {{ t(`courseLanding.creatorsTeamInfo.text.${textIndex}`) }}
-            </Typography>
+            </UiTypography>
           </template>
-        </Typography>
-      </Card>
+        </UiTypography>
+      </UiCard>
       <div :class="$style.bubblesContainer">
         <ImageBubbles />
         <DiscordLink :class="$style.discordLink" />
@@ -46,9 +46,10 @@
 </template>
 
 <script setup lang="ts">
-import Typography from '@/components/app/typography/Typography.vue';
 import { useI18n } from 'vue-i18n';
-import Card from '@/components/core/card/Card.vue';
+import { UiCard } from '@terminal/uikit/components/card';
+import { UiTypography } from '@terminal/uikit/components/typography';
+
 import ImageBubbles from '@/components/app/courseLanding/composables/creatorsTeamInfo/imageBubbles/ImageBubbles.vue';
 import DiscordLink from '@/components/app/courseLanding/composables/creatorsTeamInfo/discordLink/DiscordLink.vue';
 import ImageBackgroundBlock from '@/components/core/imageBackgroundBlock/ImageBackgroundBlock.vue';

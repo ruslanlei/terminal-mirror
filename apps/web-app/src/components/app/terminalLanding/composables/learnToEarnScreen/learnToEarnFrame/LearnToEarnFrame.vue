@@ -1,12 +1,12 @@
 <template>
   <div ref="root">
-    <Card
+    <UiCard
       :state="isActive ? 'background3' : 'background2'"
       style="width: 700px"
       :class="[$style.learnToEarnFrame, isActive && $style.active]"
     >
       <div :class="$style.content">
-        <Typography
+        <UiTypography
           size="h1"
           :state="[
             'semiBold',
@@ -16,7 +16,7 @@
           ]"
         >
           {{ frame.label }}
-        </Typography>
+        </UiTypography>
         <div
           :style="computedDescriptionContainerStyles"
           :class="$style.descriptionContainer"
@@ -25,13 +25,13 @@
             ref="descriptionContainer"
             :class="$style.descriptionWrapper"
           >
-            <Typography
+            <UiTypography
               size="title1"
               :state="['accent2']"
               :class="$style.description"
             >
               {{ frame.description }}
-            </Typography>
+            </UiTypography>
           </div>
         </div>
       </div>
@@ -41,20 +41,25 @@
           :style="computedProgressBarStyles"
         />
       </div>
-    </Card>
+    </UiCard>
   </div>
 </template>
 
 <script setup lang="ts">
-import Card from '@/components/core/card/Card.vue';
 import {
-  computed, onBeforeUnmount, onMounted, ref, watch,
+  computed,
+  onBeforeUnmount,
+  onMounted,
+  ref,
+  watch,
 } from 'vue';
-import { roundToDecimalPlaces } from '@/utils/number';
-import Typography from '@/components/app/typography/Typography.vue';
-import { getRect } from '@/utils/dom';
-import { useEnvironmentObserver } from '@/hooks/useEnvironmentObserver';
-import { toCssPxValue } from '@/utils/style';
+import { UiCard } from '@terminal/uikit/components/card';
+import { UiTypography } from '@terminal/uikit/components/typography';
+import { roundToDecimalPlaces } from '@terminal/common/utils/number';
+import { getRect } from '@terminal/uikit/utils/dom';
+import { useEnvironmentObserver } from '@terminal/uikit/hooks/useEnvironmentObserver';
+import { toCssPxValue } from '@terminal/uikit/utils/style';
+
 import {
   LearnToEarnFrameProps,
 } from './index';

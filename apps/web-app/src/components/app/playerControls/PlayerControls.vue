@@ -1,5 +1,5 @@
 <template>
-  <Card
+  <UiCard
     :class="[
       $style.playerSettings,
       isDisabledAll && $style.disabled,
@@ -29,7 +29,7 @@
         :class="$style.rewindButton"
         @click="emulatorStore.rewind"
       />
-      <RangeSlider
+      <UiRangeSlider
         v-model="candlesPerSecond"
         :class="$style.speedSlider"
         :min="1"
@@ -55,7 +55,7 @@
         :text="calculateResultButtonText"
       />
     </UiButton>
-  </Card>
+  </UiCard>
 </template>
 
 <script setup lang="ts">
@@ -64,9 +64,9 @@ import { useI18n } from 'vue-i18n';
 import { storeToRefs } from 'pinia';
 import { UiAnimatedText } from '@terminal/uikit/components/animatedText';
 import { UiButton } from '@terminal/uikit/components/button';
-import Card from '@/components/core/card/Card.vue';
+import { UiCard } from '@terminal/uikit/components/card';
+import { UiRangeSlider } from '@terminal/uikit/components/rangeSlider';
 import Datepicker from '@/components/core/datepicker/Datepicker.vue';
-import RangeSlider from '@/components/core/rangeSlider/RangeSlider.vue';
 
 import { useEmulatorStore } from '@/stores/emulator';
 import { useChartDataStore } from '@/stores/chartData';

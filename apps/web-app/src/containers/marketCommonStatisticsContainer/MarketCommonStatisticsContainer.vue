@@ -1,14 +1,14 @@
 <template>
   <div :class="$style.marketStatisticsContainer">
-    <Card :class="$style.card">
+    <UiCard :class="$style.card">
       <div>
         <slot name="monthResult" />
       </div>
       <div :class="$style.chartContainer">
         <slot name="chart" />
       </div>
-    </Card>
-    <Card :class="$style.card">
+    </UiCard>
+    <UiCard :class="$style.card">
       <div>
         <slot name="commonResult" />
       </div>
@@ -18,11 +18,12 @@
       <div>
         <slot name="weekResult" />
       </div>
-    </Card>
+    </UiCard>
   </div>
 </template>
 
 <script setup lang="ts">
+import { UiCard } from '@terminal/uikit/components/card';
 import Card from '@/components/core/card/Card.vue';
 </script>
 

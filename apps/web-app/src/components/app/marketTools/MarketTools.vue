@@ -1,12 +1,12 @@
 <template>
-  <Card
+  <UiCard
     :class="$style.marketTools"
     state="background2"
   />
 </template>
 
 <script setup lang="ts">
-import Card from '@/components/core/card/Card.vue';
+import { UiCard } from '@terminal/uikit/components/card';
 </script>
 
 <style lang="scss" module>

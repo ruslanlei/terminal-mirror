@@ -1,10 +1,10 @@
 <template>
-  <Card :class="$style.profileSettings">
+  <UiCard :class="$style.profileSettings">
     <header :class="$style.header">
       <UiAvatar :src="DefaultAvatar" />
       <div :class="$style.name">
         {{ username }}
-        <Icon
+        <UiIcon
           :class="$style.verificationBadge"
           icon="verificationCircle"
         />
@@ -13,7 +13,7 @@
         state="default"
         :class="$style.languageSelect"
       />
-      <Icon
+      <UiIcon
         :class="$style.logoutButton"
         icon="exit"
         @click="logout"
@@ -55,15 +55,16 @@
         </Typography>
       </UiButton>
     </footer>
-  </Card>
+  </UiCard>
 </template>
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import { UiAvatar } from '@terminal/uikit/components/avatar';
 import { UiButton } from '@terminal/uikit/components/button';
-import Card from '@/components/core/card/Card.vue';
-import Icon from '@/components/core/icon/Icon.vue';
+import { UiCard } from '@terminal/uikit/components/card';
+import { UiIcon } from '@terminal/uikit/components/icon';
+
 import LanguageSelect from '@/components/app/languageSelect/LanguageSelect.vue';
 import SubscriptionBadge from '@/components/core/subscriptionBadge/SubscriptionBadge.vue';
 import CurrentTheme from '@/components/app/currentTheme/CurrentTheme.vue';

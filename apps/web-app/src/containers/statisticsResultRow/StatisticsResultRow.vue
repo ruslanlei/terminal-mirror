@@ -1,5 +1,5 @@
 <template>
-  <Card
+  <UiCard
     state="background3"
     :class="$style.statisticsResultRow"
   >
@@ -25,11 +25,11 @@
     <div>
       <slot name="append" />
     </div>
-  </Card>
+  </UiCard>
 </template>
 
 <script setup lang="ts">
-import Card from '@/components/core/card/Card.vue';
+import { UiCard } from '@terminal/uikit/components/card';
 </script>
 
 <style lang="scss" module>

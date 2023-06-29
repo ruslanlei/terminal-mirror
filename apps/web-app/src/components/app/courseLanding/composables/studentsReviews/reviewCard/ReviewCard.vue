@@ -1,26 +1,26 @@
 <template>
   <div :class="$style.reviewCard">
-    <Card :class="$style.content">
-      <Picture
+    <UiCard :class="$style.content">
+      <UiPicture
         :srcset="data.picture"
         :class="$style.picture"
       />
-      <Typography
+      <UiTypography
         :class="$style.text"
         :state="['accent2']"
         size="text"
       >
         {{ data.text }}
-      </Typography>
-    </Card>
+      </UiTypography>
+    </UiCard>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
-import Typography from '@/components/app/typography/Typography.vue';
-import Card from '@/components/core/card/Card.vue';
-import Picture from '@/components/core/picture/Picture.vue';
+import { UiTypography } from '@terminal/uikit/components/typography';
+import { UiCard } from '@terminal/uikit/components/card';
+import { UiPicture } from '@terminal/uikit/components/picture';
 import { ReviewCardProps } from './index';
 
 const { t } = useI18n();

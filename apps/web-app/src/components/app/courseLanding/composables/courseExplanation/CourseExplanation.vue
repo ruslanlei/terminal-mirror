@@ -1,57 +1,57 @@
 <template>
-  <ImageBackgroundBlock
+  <UiImageBackgroundBlock
     :content-class="$style.courseLandingWelcomeScreen"
     :srcset="backgroundSrcset"
   >
-    <Card
+    <UiCard
       :class="$style.card"
       state="background2"
     >
       <ImagesStack />
       <div :class="$style.infoWrapper">
-        <Typography
+        <UiTypography
           :state="['accent1', 'bold']"
           size="massive2"
           :class="$style.cardHeading"
         >
           {{ t('courseLanding.courseExplanationCard.heading') }}
-        </Typography>
-        <Typography
+        </UiTypography>
+        <UiTypography
           :state="['accent2']"
           size="textLg"
           :class="$style.cardText"
         >
           {{ t('courseLanding.courseExplanationCard.cardText.ourCourse') }}
-        </Typography>
-        <Typography
+        </UiTypography>
+        <UiTypography
           :state="['accent2']"
           size="textLg"
           :class="$style.cardText"
         >
           {{ t('courseLanding.courseExplanationCard.cardText.inAddition') }}
-        </Typography>
-        <Typography
+        </UiTypography>
+        <UiTypography
           :state="['accent2']"
           size="textLg"
           :class="$style.cardText"
         >
           {{ t('courseLanding.courseExplanationCard.cardText.avoidMistakes.0') }}
-          <Typography
+          <UiTypography
             is-inline
             :state="['accent1']"
           >
             {{ t('courseLanding.courseExplanationCard.cardText.avoidMistakes.1') }}
-          </Typography>
-        </Typography>
-        <Typography
+          </UiTypography>
+        </UiTypography>
+        <UiTypography
           :state="['accent2']"
           size="textLg"
           :class="$style.cardText"
         >
           {{ t('courseLanding.courseExplanationCard.cardText.weExplain') }}
-        </Typography>
+        </UiTypography>
       </div>
-    </Card>
+    </UiCard>
     <UiButton
       state="blueGradientColor"
       size="xl"
@@ -61,20 +61,20 @@
     >
       {{ t('courseLanding.courseExplanationCard.signUpForCourse') }}
     </UiButton>
-  </ImageBackgroundBlock>
+  </UiImageBackgroundBlock>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { UiButton } from '@terminal/uikit/components/button';
 import { useI18n } from 'vue-i18n';
-import Typography from '@/components/app/typography/Typography.vue';
-import Card from '@/components/core/card/Card.vue';
+import { UiButton } from '@terminal/uikit/components/button';
+import { UiCard } from '@terminal/uikit/components/card';
+import { UiTypography } from '@terminal/uikit/components/typography';
+import { UiImageBackgroundBlock } from '@terminal/uikit/components/imageBackgroundBlock';
+import { collectSrcSet } from '@terminal/uikit/utils/dom';
 
-import ImageBackgroundBlock from '@/components/core/imageBackgroundBlock/ImageBackgroundBlock.vue';
 import ImagesStack from '@/components/app/courseLanding/composables/courseExplanation/imagesStack/ImagesStack.vue';
 import { CourseExplanationEmits } from '@/components/app/courseLanding/composables/courseExplanation/index';
-import { collectSrcSet } from '@/utils/dom';
 import BackgroundPng from './assets/courseExplanationBackground.png';
 import BackgroundWebp from './assets/courseExplanationBackground.webp';
 

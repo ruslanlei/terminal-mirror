@@ -1,42 +1,42 @@
 <template>
   <div :class="$style.marketStatisticsContainer">
-    <Card :class="$style.card">
-      <Card
+    <UiCard :class="$style.card">
+      <UiCard
         state="background3"
         :class="$style.primaryCard"
       >
-        <Typography
+        <UiTypography
           :state="['accent1', 'bold']"
           size="massive2sm"
         >
           <slot name="commonAmountOfOrders" />
-        </Typography>
-        <Typography
+        </UiTypography>
+        <UiTypography
           size="title1"
           :state="['accent1', 'semiBold']"
         >
           <slot name="commonAmountOfOrdersLabel" />
-        </Typography>
-      </Card>
-      <Card
+        </UiTypography>
+      </UiCard>
+      <UiCard
         state="background3"
         :class="$style.primaryCard"
       >
-        <Typography
+        <UiTypography
           state="bold"
           size="massive2sm"
         >
           <slot name="successRate" />
-        </Typography>
-        <Typography
+        </UiTypography>
+        <UiTypography
           size="title1"
           :state="['accent1', 'semiBold']"
         >
           <slot name="successRateLabel" />
-        </Typography>
-      </Card>
-    </Card>
-    <Card :class="$style.card">
+        </UiTypography>
+      </UiCard>
+    </UiCard>
+    <UiCard :class="$style.card">
       <div>
         <slot name="successOrders" />
       </div>
@@ -46,13 +46,13 @@
       <div>
         <slot name="ordersTurnover" />
       </div>
-    </Card>
+    </UiCard>
   </div>
 </template>
 
 <script setup lang="ts">
-import Card from '@/components/core/card/Card.vue';
-import Typography from '@/components/app/typography/Typography.vue';
+import { UiCard } from '@terminal/uikit/components/card';
+import { UiTypography } from '@terminal/uikit/components/typography';
 </script>
 
 <style lang="scss" module>

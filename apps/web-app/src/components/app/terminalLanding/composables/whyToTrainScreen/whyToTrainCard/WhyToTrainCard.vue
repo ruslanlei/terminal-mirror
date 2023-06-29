@@ -1,5 +1,5 @@
 <template>
-  <Card
+  <UiCard
     state="background3"
     :class="$style.whyToTrainCard"
   >
@@ -17,11 +17,11 @@
     >
       {{ card.text }}
     </Typography>
-  </Card>
+  </UiCard>
 </template>
 
 <script setup lang="ts">
-import Card from '@/components/core/card/Card.vue';
+import { UiCard } from '@terminal/uikit/components/card';
 import Typography from '@/components/app/typography/Typography.vue';
 import { WhyToTrainCardProps } from './index';
 

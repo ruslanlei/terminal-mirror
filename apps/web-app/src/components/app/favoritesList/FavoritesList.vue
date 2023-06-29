@@ -1,14 +1,14 @@
 <template>
-  <Card :class="$style.favoritesList">
+  <UiCard :class="$style.favoritesList">
     <header :class="$style.header">
-      <Typography
+      <UiTypography
         size="title5"
         :state="['accent1', 'alignCenter']"
       >
         {{ t('favorites.label') }}
-      </Typography>
+      </UiTypography>
     </header>
-    <Selector
+    <UiSelector
       v-model="localActivePair"
       :thickening="0"
       :state="['vertical', 'blueGlassVerticalRight', 'specialFavoritesSize']"
@@ -22,32 +22,33 @@
           :is-active="activeOption === option.value"
         />
       </template>
-    </Selector>
+    </UiSelector>
     <UiButton
       :state="null"
       :size="null"
       :class="$style.closeButton"
       @click="close"
     >
-      <Typography
+      <UiTypography
         size="title5"
         :state="['accent2', 'alignCenter']"
       >
         {{ t('common.hide') }}
-      </Typography>
+      </UiTypography>
     </UiButton>
-  </Card>
+  </UiCard>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { UiButton } from '@terminal/uikit/components/button';
-import Card from '@/components/core/card/Card.vue';
-import Selector from '@/components/core/selector/Selector.vue';
+import { UiCard } from '@terminal/uikit/components/card';
+import { UiSelector } from '@terminal/uikit/components/selector';
+import { UiTypography } from '@terminal/uikit/components/typography';
+
 import { useMarketStore } from '@/stores/market';
 import { Pair } from '@/api/types/pair';
-import Typography from '@/components/app/typography/Typography.vue';
 import { FavoritesListEmits } from './index';
 import FavoritesListItem from '@/components/app/favoritesList/favoritesListItem/FavoritesListItem.vue';
 import { useChartDataStore } from '@/stores/chartData';

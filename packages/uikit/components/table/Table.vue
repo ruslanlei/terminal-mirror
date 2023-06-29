@@ -418,7 +418,7 @@ onMounted(() => {
 </style>
 
 <style lang="scss">
-@import "../../assetsts/styles/index";
+@import "../../assets/styles/index";
 
 .tableElementAppearance {
   &-enter-active,

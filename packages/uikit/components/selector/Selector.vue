@@ -444,7 +444,7 @@ onBeforeUnmount(removeListeners);
 </style>
 
 <style lang="scss">
-@import "../../assetsts/styles/index";
+@import "../../assets/styles/index";
 
 .selectorElementAppearance {
   &-enter-active,

@@ -1,5 +1,5 @@
 <template>
-  <ImageBackgroundBlock
+  <UiImageBackgroundBlock
     :class="$style.courseLandingWelcomeScreen"
     :srcset="backgroundSrcset"
     :content-class="$style.content"
@@ -54,7 +54,7 @@
         :card="card"
       />
     </div>
-  </ImageBackgroundBlock>
+  </UiImageBackgroundBlock>
 </template>
 
 <script setup lang="ts">
@@ -62,9 +62,9 @@ import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { UiButton } from '@terminal/uikit/components/button';
 import { UiTypography } from '@terminal/uikit/components/typography';
+import { UiImageBackgroundBlock } from '@terminal/uikit/components/imageBackgroundBlock';
 
 import Picture from '@/components/core/picture/Picture.vue';
-import ImageBackgroundBlock from '@/components/core/imageBackgroundBlock/ImageBackgroundBlock.vue';
 import AdvantagesCard from '@/components/app/courseLanding/composables/welcomeScreen/advantagesCard/AdvantagesCard.vue';
 
 import { WelcomeScreenEmits } from '@/components/app/courseLanding/composables/welcomeScreen/index';

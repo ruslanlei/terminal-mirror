@@ -1,6 +1,6 @@
 <template>
   <header :class="[$style.header, $style[state]]">
-    <Logo
+    <UiLogo
       shape="square"
       size="lg"
       state="defaultState2"
@@ -45,7 +45,7 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import { UiButton } from '@terminal/uikit/components/button';
-import Logo from '@/components/core/logo/Logo.vue';
+import { UiLogo } from '@terminal/uikit/components/logo';
 import Link from '@/components/core/link/Link.vue';
 import { useLocalValue } from '@/hooks/useLocalValue';
 import LanguageSelect from '@/components/app/languageSelect/LanguageSelect.vue';

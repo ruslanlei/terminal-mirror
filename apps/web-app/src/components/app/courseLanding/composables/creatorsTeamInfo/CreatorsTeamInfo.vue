@@ -1,7 +1,5 @@
 <template>
-  <ImageBackgroundBlock
-    :content-class="$style.creatorsTeamInfo"
-  >
+  <UiImageBackgroundBlock :content-class="$style.creatorsTeamInfo">
     <UiTypography
       :state="['accent1', 'bold', 'alignCenter']"
       size="massive2"
@@ -42,17 +40,17 @@
         <DiscordLink :class="$style.discordLink" />
       </div>
     </div>
-  </ImageBackgroundBlock>
+  </UiImageBackgroundBlock>
 </template>
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import { UiCard } from '@terminal/uikit/components/card';
 import { UiTypography } from '@terminal/uikit/components/typography';
+import { UiImageBackgroundBlock } from '@terminal/uikit/components/imageBackgroundBlock';
 
 import ImageBubbles from '@/components/app/courseLanding/composables/creatorsTeamInfo/imageBubbles/ImageBubbles.vue';
 import DiscordLink from '@/components/app/courseLanding/composables/creatorsTeamInfo/discordLink/DiscordLink.vue';
-import ImageBackgroundBlock from '@/components/core/imageBackgroundBlock/ImageBackgroundBlock.vue';
 
 const { t } = useI18n();
 </script>

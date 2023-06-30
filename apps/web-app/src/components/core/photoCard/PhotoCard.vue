@@ -1,5 +1,5 @@
 <template>
-  <ImageBackgroundBlock
+  <UiImageBackgroundBlock
     :srcset="cardData.imageSrcSet"
     :class="$style.photoCard"
     :interactive="true"
@@ -20,13 +20,13 @@
         {{ cardData.description }}
       </UiTypography>
     </div>
-  </ImageBackgroundBlock>
+  </UiImageBackgroundBlock>
 </template>
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import { UiTypography } from '@terminal/uikit/components/typography';
-import ImageBackgroundBlock from '@/components/core/imageBackgroundBlock/ImageBackgroundBlock.vue';
+import { UiImageBackgroundBlock } from '@terminal/uikit/components/imageBackgroundBlock';
 import { PhotoCardProps } from './index';
 
 const { t } = useI18n();

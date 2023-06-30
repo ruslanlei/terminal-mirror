@@ -7,7 +7,7 @@
             :class="$style.logo"
             :to="{ name: 'auth-sign-in' }"
           >
-            <Logo
+            <UiLogo
               size="md"
               state="defaultState"
             />
@@ -55,7 +55,7 @@
 import { useI18n } from 'vue-i18n';
 import { UiButton } from '@terminal/uikit/components/button';
 import { UiTypography } from '@terminal/uikit/components/typography';
-import Logo from '@/components/core/logo/Logo.vue';
+import { UiLogo } from '@terminal/uikit/components/logo';
 import Link from '@/components/core/link/Link.vue';
 import LanguageSelect from '@/components/app/languageSelect/LanguageSelect.vue';
 import AuthIllustration from '@/components/app/authIllustration/AuthIllustration.vue';

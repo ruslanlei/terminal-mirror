@@ -1,5 +1,5 @@
 <template>
-  <ImageBackgroundBlock
+  <UiImageBackgroundBlock
     :class="$style.terminalLandingWelcomeScreen"
     :srcset="illustrationSrcset"
     :content-class="$style.content"
@@ -63,7 +63,7 @@
     <div :class="$style.mockupContainer">
       <TerminalScreenshotVector :class="$style.mockup" />
     </div>
-  </ImageBackgroundBlock>
+  </UiImageBackgroundBlock>
 </template>
 
 <script setup lang="ts">
@@ -71,7 +71,7 @@ import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { UiButton } from '@terminal/uikit/components/button';
 import { UiTypography } from '@terminal/uikit/components/typography';
-import ImageBackgroundBlock from '@/components/core/imageBackgroundBlock/ImageBackgroundBlock.vue';
+import { UiImageBackgroundBlock } from '@terminal/uikit/components/imageBackgroundBlock';
 import BackgroundPng from '@/assets/images/auth/background.png';
 import BackgroundWebp from '@/assets/images/auth/background.webp';
 import BackgroundAvif from '@/assets/images/auth/background.avif';

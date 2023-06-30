@@ -1,5 +1,5 @@
 <template>
-  <NumberInput
+  <UiNumberInput
     v-model="localValue"
     type="number"
     state="defaultColor"
@@ -17,7 +17,7 @@
     <template #append>
       <slot name="quoteCurrency" />
     </template>
-  </NumberInput>
+  </UiNumberInput>
 </template>
 
 <script setup lang="ts">
@@ -25,7 +25,7 @@ import {
   computed,
   toRefs,
 } from 'vue';
-import NumberInput from '@/components/core/numberInput/NumberInput.vue';
+import { UiNumberInput } from '@terminal/uikit/components/numberInput';
 import { NumberInputNormalizer } from '@/components/core/numberInput';
 import { useExchange } from '@/hooks/useExchange';
 import { compose } from '@/utils/fp';

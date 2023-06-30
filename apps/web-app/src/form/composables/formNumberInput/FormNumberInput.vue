@@ -1,5 +1,5 @@
 <template>
-  <NumberInput
+  <UiNumberInput
     v-model="value"
     :error="error"
     @input="onInput"
@@ -12,12 +12,12 @@
     >
       <slot name="append" />
     </template>
-  </NumberInput>
+  </UiNumberInput>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import NumberInput from '@/components/core/numberInput/NumberInput.vue';
+import { UiNumberInput } from '@terminal/uikit/components/numberInput';
 import { useActiveField } from '@/hooks/useActiveField';
 import { FormNumberInputProps, FormNumberInputEmits } from './index';
 

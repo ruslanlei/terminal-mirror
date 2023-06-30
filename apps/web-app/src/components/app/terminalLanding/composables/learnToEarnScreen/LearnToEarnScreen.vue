@@ -8,7 +8,7 @@
       {{ t('terminalLanding.learnToEarn.label') }}
     </UiTypography>
     <div :class="$style.content">
-      <Lottie
+      <UiLottie
         :class="$style.lottieScene"
         :path="activeScene"
       />
@@ -26,12 +26,13 @@ import { useI18n } from 'vue-i18n';
 import { storeToRefs } from 'pinia';
 
 import { UiTypography } from '@terminal/uikit/components/typography';
+import { UiLottie } from '@terminal/uikit/components/lottie';
+import { useI18nStore } from '@/stores/i18n';
+
 import LearnToEarnFrames
   from '@/components/app/terminalLanding/composables/learnToEarnScreen/learnToEarnFrames/LearnToEarnFrames.vue';
 import { ILearnToEarnFrame } from '@/components/app/terminalLanding/composables/learnToEarnScreen/learnToEarnFrame';
 
-import Lottie from '@/components/core/lottie/Lottie.vue';
-import { useI18nStore } from '@/stores/i18n';
 import scene1 from './assets/scene1.json?url';
 import scene1Ru from './assets/scene1Ru.json?url';
 import scene2 from './assets/scene2.json?url';

@@ -13,7 +13,7 @@
       {{ t('order.stopLoss.exactPrice') }}
     </template>
     <template #exactPriceInput>
-      <NumberInput
+      <UiNumberInput
         v-model="stopLossPrice"
         :min="0"
         state="defaultColor"
@@ -23,13 +23,13 @@
         <template #append>
           {{ activePairData?.quote }}
         </template>
-      </NumberInput>
+      </UiNumberInput>
     </template>
     <template #sumOfRiskLabel>
       {{ t('order.stopLoss.sumOfRisk') }}
     </template>
     <template #sumOfRiskInput>
-      <NumberInput
+      <UiNumberInput
         v-model="amountOfRisk"
         size="sm"
         state="defaultColor"
@@ -40,13 +40,13 @@
         <template #append>
           {{ activePairData?.quote }}
         </template>
-      </NumberInput>
+      </UiNumberInput>
     </template>
     <template #percentOfOrderLabel>
       {{ t('order.stopLoss.percentOfOrder') }}
     </template>
     <template #percentOfOrderInput>
-      <NumberInput
+      <UiNumberInput
         v-model="percentOfOrderPrice"
         size="sm"
         state="defaultColor"
@@ -58,13 +58,13 @@
         <template #append>
           {{ '%' }}
         </template>
-      </NumberInput>
+      </UiNumberInput>
     </template>
     <template #percentOfDepositLabel>
       {{ t('order.stopLoss.percentOfDeposit') }}
     </template>
     <template #percentOfDepositInput>
-      <NumberInput
+      <UiNumberInput
         v-model="percentOfDeposit"
         size="sm"
         state="defaultColor"
@@ -74,7 +74,7 @@
         <template #append>
           {{ '%' }}
         </template>
-      </NumberInput>
+      </UiNumberInput>
     </template>
     <template #ratio>
       <OrderFormEstimates state="default" />
@@ -100,10 +100,10 @@ import {
 import { useI18n } from 'vue-i18n';
 import { storeToRefs } from 'pinia';
 import { UiButton } from '@terminal/uikit/components/button';
+import { UiNumberInput } from '@terminal/uikit/components/numberInput';
 import OrderFormStopLossPartContainer
   from '@/containers/orderFormStopLossPartContainer/OrderFormStopLossPartContainer.vue';
 import Switch from '@/components/core/switch/Switch.vue';
-import NumberInput from '@/components/core/numberInput/NumberInput.vue';
 import OrderFormEstimates from '@/components/app/orderForm/composables/orderFormEstimates/OrderFormEstimates.vue';
 import { useMarketStore } from '@/stores/market';
 import { compose } from '@/utils/fp';

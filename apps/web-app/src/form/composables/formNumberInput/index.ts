@@ -1,4 +1,4 @@
-import { NumberInputEmits, NumberInputProps } from '@/components/core/numberInput';
+import { NumberInputEmits, NumberInputProps } from '@terminal/uikit/components/numberInput';
 
 export { default as FormNumberInput } from './FormNumberInput.vue';
 export interface FormNumberInputProps extends Omit<NumberInputProps, 'modelValue'> {

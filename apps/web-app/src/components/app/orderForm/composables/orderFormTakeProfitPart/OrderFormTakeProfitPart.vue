@@ -13,7 +13,7 @@
       {{ t('order.takeProfit.amountOfOrders') }}
     </template>
     <template #takeProfitsAmountInput>
-      <NumberInput
+      <UiNumberInput
         v-model="takeProfitsAmount"
         :min="1"
         :max="maxTakeProfits"
@@ -54,10 +54,10 @@
 import { useI18n } from 'vue-i18n';
 import { storeToRefs } from 'pinia';
 import { UiButton } from '@terminal/uikit/components/button';
+import { UiNumberInput } from '@terminal/uikit/components/numberInput';
 import OrderFormTakeProfilePartContainer from '@/containers/orderFormTakeProfitPartContainer/OrderFormTakeProfitPartContainer.vue';
 import Switch from '@/components/core/switch/Switch.vue';
 import TakeProfitList from '@/components/app/takeProfitList/TakeProfitList.vue';
-import NumberInput from '@/components/core/numberInput/NumberInput.vue';
 import OrderFormEstimates from '@/components/app/orderForm/composables/orderFormEstimates/OrderFormEstimates.vue';
 import { useMarketStore } from '@/stores/market';
 import { injectOrderFormState } from '@/components/app/orderForm';

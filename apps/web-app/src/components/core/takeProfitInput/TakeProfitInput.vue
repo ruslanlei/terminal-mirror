@@ -1,7 +1,7 @@
 <template>
   <div :class="$style.takeProfitInput">
     <div :class="$style.price">
-      <NumberInput
+      <UiNumberInput
         v-model="localPrice"
         :class="$style.input"
         :state="null"
@@ -13,7 +13,7 @@
         :hide-arrows="true"
         @input="onInput"
       />
-      <NumberInput
+      <UiNumberInput
         v-model="percentOfProfitValue"
         save-on="blur"
         :step="0.01"
@@ -27,7 +27,7 @@
       />
     </div>
     <div :class="$style.amount">
-      <NumberInput
+      <UiNumberInput
         v-model="localQuantity"
         save-on="blur"
         :min="baseCurrencyStep"
@@ -42,7 +42,7 @@
         @input="onInput"
         @blur="onInput"
       />
-      <NumberInput
+      <UiNumberInput
         v-model="percentOfQuantity"
         save-on="blur"
         :min="1"
@@ -60,12 +60,12 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
+import { UiNumberInput } from '@terminal/uikit/components/numberInput';
 import {
   TakeProfitInputEmits,
   TakeProfitInputProps,
-} from '@/components/core/takeProfitInput/index';
-import { computed } from 'vue';
-import NumberInput from '@/components/core/numberInput/NumberInput.vue';
+} from './index';
 import { useLocalValue } from '@/hooks/useLocalValue';
 import {
   divide,

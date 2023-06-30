@@ -7,7 +7,7 @@
       {{ t('courseLanding.faq.heading') }}
     </UiTypography>
     <div :class="$style.content">
-      <InlineDropdown
+      <UiInlineDropdown
         v-for="{ id, label, text } in faqList"
         :key="id"
         size="lg"
@@ -35,7 +35,7 @@
             {{ text }}
           </UiTypography>
         </template>
-      </InlineDropdown>
+      </UiInlineDropdown>
     </div>
   </div>
 </template>
@@ -44,8 +44,8 @@
 import { useI18n } from 'vue-i18n';
 import { computed } from 'vue';
 import { UiTypography } from '@terminal/uikit/components/typography';
+import { UiInlineDropdown } from '@terminal/uikit/components/inlineDropdown';
 import { uuid } from '@/utils/uuid';
-import InlineDropdown from '@/components/core/inlineDropdown/InlineDropdown.vue';
 import { FaqItem } from './index';
 
 const { t } = useI18n();

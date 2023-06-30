@@ -48,7 +48,7 @@
         :max="100"
       />
       <div :class="$style.inputWrapper">
-        <NumberInput
+        <UiNumberInput
           v-model="localValueInPercents"
           :class="$style.input"
           state="defaultColor"
@@ -72,8 +72,8 @@ import { computed } from 'vue';
 import { UiButton } from '@terminal/uikit/components/button';
 import { UiAnimatedText } from '@terminal/uikit/components/animatedText';
 import { UiIcon } from '@terminal/uikit/components/icon';
+import { UiNumberInput } from '@terminal/uikit/components/numberInput';
 import RangeSlider from '@/components/core/rangeSlider/RangeSlider.vue';
-import NumberInput from '@/components/core/numberInput/NumberInput.vue';
 import { useDepositInput } from '@/hooks/useDepositInput';
 import { roundToDecimalPlaces } from '@/utils/number';
 import { DepositInputEmits, DepositInputProps } from './index';

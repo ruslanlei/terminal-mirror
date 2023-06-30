@@ -17,7 +17,7 @@
         :class="$style.imageContainer"
         data-role="imageBubblesContainer"
       >
-        <Picture
+        <UiPicture
           :srcset="srcset"
           is-fill
         />
@@ -30,10 +30,11 @@
 import {
   computed, onMounted, reactive, ref, toRefs, watch,
 } from 'vue';
-import Picture from '@/components/core/picture/Picture.vue';
+import { useElementBounding, useMouseInElement, useTimeout } from '@vueuse/core';
+import anime from 'animejs';
+import { UiPicture } from '@terminal/uikit/components/picture';
 
 import { useCssModules } from '@/hooks/useCssModules';
-import { useElementBounding, useMouseInElement, useTimeout } from '@vueuse/core';
 import {
   divideRight,
   max,
@@ -45,7 +46,6 @@ import {
   percentFormat,
 } from '@/utils/numberFormat';
 import { useAnimation } from '@/hooks/useAnimation';
-import anime from 'animejs';
 import { collectSrcSet } from '@/utils/dom';
 import HamsterPng from './assets/hamsterNft.png';
 import HamsterWebp from './assets/hamsterNft.webp';

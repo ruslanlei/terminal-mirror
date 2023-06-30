@@ -8,7 +8,7 @@
         {{ t('terminalLanding.footer.label') }}
       </UiTypography>
       <div :class="$style.imageContainer">
-        <Picture
+        <UiPicture
           :class="$style.image"
           :srcset="walletSrcset"
         />
@@ -33,8 +33,8 @@
 import { useI18n } from 'vue-i18n';
 import { UiButton } from '@terminal/uikit/components/button';
 import { UiTypography } from '@terminal/uikit/components/typography';
+import { UiPicture } from '@terminal/uikit/components/picture';
 
-import Picture from '@/components/core/picture/Picture.vue';
 import Link from '@/components/core/link/Link.vue';
 
 import WalletAvif from '@/assets/images/auth/wallet.avif';

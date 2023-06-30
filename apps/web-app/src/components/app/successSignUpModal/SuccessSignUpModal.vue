@@ -1,6 +1,6 @@
 <template>
   <UiModal :class="$style.successSignUpModal">
-    <Picture
+    <UiPicture
       :class="$style.illustration"
       :srcset="illustrationSrcset"
     />
@@ -32,7 +32,7 @@ import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { UiButton } from '@terminal/uikit/components/button';
 import { UiModal } from '@terminal/uikit/components/modal';
-import Picture from '@/components/core/picture/Picture.vue';
+import { UiPicture } from '@terminal/uikit/components/picture';
 import Link from '@/components/core/link/Link.vue';
 import IllustrationPng from './assets/illustration.png';
 import IllustrationWebp from './assets/illustration.webp';

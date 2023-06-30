@@ -41,7 +41,7 @@
           </UiButton>
         </div>
       </div>
-      <Picture
+      <UiPicture
         is-fill
         :srcset="astronautSrcset"
         :class="$style.image"
@@ -62,9 +62,9 @@ import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { UiButton } from '@terminal/uikit/components/button';
 import { UiTypography } from '@terminal/uikit/components/typography';
+import { UiPicture } from '@terminal/uikit/components/picture';
 import { UiImageBackgroundBlock } from '@terminal/uikit/components/imageBackgroundBlock';
 
-import Picture from '@/components/core/picture/Picture.vue';
 import AdvantagesCard from '@/components/app/courseLanding/composables/welcomeScreen/advantagesCard/AdvantagesCard.vue';
 
 import { WelcomeScreenEmits } from '@/components/app/courseLanding/composables/welcomeScreen/index';

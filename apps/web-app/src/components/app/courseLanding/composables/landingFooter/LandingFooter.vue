@@ -8,7 +8,7 @@
         {{ t('courseLanding.buyCourseBadge.heading') }}
       </UiTypography>
       <div :class="$style.imageContainer">
-        <Picture
+        <UiPicture
           :class="$style.image"
           :srcset="franklinSrcSet"
         />
@@ -27,7 +27,7 @@
 import { useI18n } from 'vue-i18n';
 import { UiButton } from '@terminal/uikit/components/button';
 import { UiTypography } from '@terminal/uikit/components/typography';
-import Picture from '@/components/core/picture/Picture.vue';
+import { UiPicture } from '@terminal/uikit/components/picture';
 
 import { LandingFooterEmits } from '@/components/app/courseLanding/composables/landingFooter/index';
 import { collectSrcSet } from '@/utils/dom';

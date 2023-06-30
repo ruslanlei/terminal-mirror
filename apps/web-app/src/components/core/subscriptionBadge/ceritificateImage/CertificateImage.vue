@@ -1,5 +1,5 @@
 <template>
-  <Picture
+  <UiPicture
     :src="computedSrc"
     :srcset="computedSrcset"
     :class="$style.certificatePicture"
@@ -8,7 +8,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import Picture from '@/components/core/picture/Picture.vue';
+import { UiPicture } from '@terminal/uikit/components/picture';
 import { collectSrcSet } from '@/utils/dom';
 import { CertificateImageProps } from './index';
 

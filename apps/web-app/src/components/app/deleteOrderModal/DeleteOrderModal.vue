@@ -1,6 +1,6 @@
 <template>
   <UiModal :class="$style.deleteOrderModal">
-    <Picture
+    <UiPicture
       :class="$style.illustration"
       :srcset="illustrationSrcSet"
     />
@@ -69,7 +69,7 @@ import { useI18n } from 'vue-i18n';
 import { UiButton } from '@terminal/uikit/components/button';
 import { UiModal } from '@terminal/uikit/components/modal';
 import { UiTypography } from '@terminal/uikit/components/typography';
-import Picture from '@/components/core/picture/Picture.vue';
+import { UiPicture } from '@terminal/uikit/components/picture';
 import { Order, TakeProfit } from '@/api/types/order';
 import { reduceTakeProfitsToQuantitiesSum } from '@/helpers/math/formulas/takeProfit';
 import { calculateCurrentPnl } from '@/helpers/math/formulas/pnl';

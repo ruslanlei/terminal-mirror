@@ -12,7 +12,7 @@
               state="defaultState"
             />
           </Link>
-          <!--          <LanguageSelect />-->
+          <LanguageSelect />
         </header>
         <div :class="$style.description">
           {{ t('auth.description') }}
@@ -21,7 +21,7 @@
           <slot />
         </div>
         <div :class="$style.demiGroupLogoContainer">
-          <Picture
+          <UiPicture
             :class="$style.demiGroupLogo"
             :src="DemiGroupLogo"
           />
@@ -56,10 +56,10 @@ import { useI18n } from 'vue-i18n';
 import { UiButton } from '@terminal/uikit/components/button';
 import { UiTypography } from '@terminal/uikit/components/typography';
 import { UiLogo } from '@terminal/uikit/components/logo';
+import { UiPicture } from '@terminal/uikit/components/picture';
 import Link from '@/components/core/link/Link.vue';
 import LanguageSelect from '@/components/app/languageSelect/LanguageSelect.vue';
 import AuthIllustration from '@/components/app/authIllustration/AuthIllustration.vue';
-import Picture from '@/components/core/picture/Picture.vue';
 import { useDiscordLink } from '@/hooks/useDiscordLink';
 import DemiGroupLogo from './assets/demiGroup.png';
 

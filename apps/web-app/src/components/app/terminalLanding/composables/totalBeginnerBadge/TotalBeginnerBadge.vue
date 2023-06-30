@@ -16,7 +16,7 @@
       </UiTypography>
     </div>
     <div :class="$style.illustrationContainer">
-      <Picture
+      <UiPicture
         :class="$style.illustrationPicture"
         :srcset="illustrationSrcSet"
       />
@@ -44,7 +44,7 @@
 import { useI18n } from 'vue-i18n';
 import { UiButton } from '@terminal/uikit/components/button';
 import { UiTypography } from '@terminal/uikit/components/typography';
-import Picture from '@/components/core/picture/Picture.vue';
+import { UiPicture } from '@terminal/uikit/components/picture';
 import Link from '@/components/core/link/Link.vue';
 import { collectSrcSet } from '@/utils/dom';
 import IllustrationAvif from './assets/illustration.avif';

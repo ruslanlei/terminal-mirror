@@ -9,7 +9,7 @@
         interactive ? $style.interactive : $style.noninteractive,
       ]"
     >
-      <Picture
+      <UiPicture
         :srcset="srcset"
         is-fill
       />
@@ -18,10 +18,10 @@
 </template>
 
 <script setup lang="ts">
-
-import Picture from '@/components/core/picture/Picture.vue';
-import { useCssModules } from '@/hooks/useCssModules';
 import { reactive } from 'vue';
+import { UiPicture } from '@terminal/uikit/components/picture';
+
+import { useCssModules } from '@/hooks/useCssModules';
 import { collectSrcSet } from '@/utils/dom';
 import PurpleSquarePng from './assets/purpleSquare.png';
 import PurpleSquareWebp from './assets/purpleSquare.webp';

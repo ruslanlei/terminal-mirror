@@ -7,7 +7,7 @@
           $style[card.pictureBackground]
         ]"
       />
-      <Picture
+      <UiPicture
         :srcset="card.picture"
         :class="$style.advantageCardImg"
       />
@@ -25,7 +25,7 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import { UiTypography } from '@terminal/uikit/components/typography';
-import Picture from '@/components/core/picture/Picture.vue';
+import { UiPicture } from '@terminal/uikit/components/picture';
 import { AdvantagesCardProps } from './index';
 
 const props = defineProps<AdvantagesCardProps>();

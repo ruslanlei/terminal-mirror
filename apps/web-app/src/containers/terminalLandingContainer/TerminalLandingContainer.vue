@@ -14,7 +14,7 @@
         ref="learnToEarnScreenBlobLeft"
         :class="$style.learnToEarnScreenBlobLeft"
       >
-        <Picture
+        <UiPicture
           :class="$style.learnToEarnScreenBlobLeftImg"
           :src="LearnToEarnScreenBlob"
         />
@@ -23,7 +23,7 @@
         ref="learnToEarnScreenBlobRight"
         :class="$style.learnToEarnScreenBlobRight"
       >
-        <Picture
+        <UiPicture
           :class="$style.learnToEarnScreenBlobRightImg"
           :src="LearnToEarnScreenBlob"
         />
@@ -57,8 +57,8 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
+import { UiPicture } from '@terminal/uikit/components/picture';
 import LearnToEarnScreenBlob from '@/components/app/terminalLanding/assets/learnToEarnScreenBlob.webp';
-import Picture from '@/components/core/picture/Picture.vue';
 
 const learnToEarnScreenBlobRight = ref();
 const learnToEarnScreenBlobLeft = ref();

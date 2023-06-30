@@ -25,11 +25,10 @@ import {
   computed,
   toRefs,
 } from 'vue';
-import { UiNumberInput } from '@terminal/uikit/components/numberInput';
-import { NumberInputNormalizer } from '@/components/core/numberInput';
+import { UiNumberInput, NumberInputNormalizer } from '@terminal/uikit/components/numberInput';
+import { compose } from '@terminal/common/utils/fp';
+import { divideRight, multiply, roundToDecimalPlaces } from '@terminal/common/utils/number';
 import { useExchange } from '@/hooks/useExchange';
-import { compose } from '@/utils/fp';
-import { divideRight, multiply, roundToDecimalPlaces } from '@/utils/number';
 import { ExchangeInputProps, ExchangeInputEmits } from './index';
 
 const props = defineProps<ExchangeInputProps>();

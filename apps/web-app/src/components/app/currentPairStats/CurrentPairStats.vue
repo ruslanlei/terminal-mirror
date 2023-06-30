@@ -1,5 +1,5 @@
 <template>
-  <PairStats
+  <UiPairStats
     :coin="activePairData?.base"
     :stats="computedPairStats"
   />
@@ -9,10 +9,9 @@
 import { computed } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useI18n } from 'vue-i18n';
-import PairStats from '@/components/core/pairStats/PairStats.vue';
+import { UiPairStats, IPairStats } from '@terminal/uikit/components/pairStats';
 import { useMarketStore } from '@/stores/market';
 import { useChartDataStore } from '@/stores/chartData';
-import { IPairStats } from '@/components/core/pairStats';
 import { compose } from '@/utils/fp';
 import { roundToDecimalPlaces, subtractRight } from '@/utils/number';
 import { humanizeNumber, percentFormat } from '@/utils/numberFormat';

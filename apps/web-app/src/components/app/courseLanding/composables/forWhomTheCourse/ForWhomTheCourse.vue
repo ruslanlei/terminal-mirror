@@ -9,7 +9,7 @@
       {{ t('courseLanding.forWhomTheCourse.heading') }}
     </UiTypography>
     <div :class="$style.columnsWrapper">
-      <PhotoCard
+      <UiPhotoCard
         v-for="(card, index) in cards"
         :key="index"
         :card-data="card"
@@ -22,9 +22,9 @@
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { UiTypography } from '@terminal/uikit/components/typography';
+import { UiPhotoCard } from '@terminal/uikit/components/photoCard';
 
 import { IPhotoCard } from '@/components/core/photoCard';
-import PhotoCard from '@/components/core/photoCard/PhotoCard.vue';
 
 import { collectSrcSet } from '@/utils/dom';
 import BeginnersBgPng from './assets/beginnersBg.png';

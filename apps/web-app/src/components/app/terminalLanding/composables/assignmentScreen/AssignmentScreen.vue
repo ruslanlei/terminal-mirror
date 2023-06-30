@@ -8,14 +8,14 @@
     </UiTypography>
     <div :class="$style.content">
       <div :class="$style.columnLeft">
-        <PhotoCard
+        <UiPhotoCard
           v-for="(card, index) in cardsLeft"
           :key="index"
           :card-data="card"
         />
       </div>
       <div :class="$style.columnRight">
-        <PhotoCard
+        <UiPhotoCard
           v-for="(card, index) in cardsRight"
           :key="index"
           :card-data="card"
@@ -29,9 +29,7 @@
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { UiTypography } from '@terminal/uikit/components/typography';
-
-import { IPhotoCard } from '@/components/core/photoCard';
-import PhotoCard from '@/components/core/photoCard/PhotoCard.vue';
+import { UiPhotoCard, IPhotoCard } from '@terminal/uikit/components/photoCard';
 
 import { collectSrcSet } from '@/utils/dom';
 import BeginnersImageAvif from './assets/determinationScreenBeginnersImage.avif';

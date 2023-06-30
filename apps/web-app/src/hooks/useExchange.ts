@@ -2,12 +2,12 @@ import {
   computed,
   Ref,
 } from 'vue';
-import { compose } from '@/utils/fp';
+import { compose } from '@terminal/common/utils/fp';
 import {
   divideRight,
   multiply,
   roundToDecimalPlaces,
-} from '@/utils/number';
+} from '@terminal/common/utils/number';
 import {
   incrementQuoteDepositByBaseStep,
   decrementQuoteDepositByBaseStep,

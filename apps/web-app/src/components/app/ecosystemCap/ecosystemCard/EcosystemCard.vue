@@ -17,7 +17,7 @@
       >
         {{ card.description }}
       </UiTypography>
-      <QrCode
+      <UiQrCode
         :size="150"
         :text="card.link"
         :class="$style.qr"
@@ -38,8 +38,8 @@
 import { useI18n } from 'vue-i18n';
 import { UiIcon } from '@terminal/uikit/components/icon';
 import { UiTypography } from '@terminal/uikit/components/typography';
+import { UiQrCode } from '@terminal/uikit/components/qrCode';
 import Link from '@/components/core/link/Link.vue';
-import QrCode from '@/components/core/qrCode/QrCode.vue';
 import { EcosystemCardProps } from './index';
 
 const props = defineProps<EcosystemCardProps>();

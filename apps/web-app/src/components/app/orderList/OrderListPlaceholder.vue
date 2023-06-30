@@ -5,7 +5,7 @@
       state="gradientColor"
       :class="$style.button"
     >
-      <Icon
+      <UiIcon
         :size="18"
         icon="plus"
         :class="$style.buttonIcon"
@@ -24,7 +24,7 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import { UiButton } from '@terminal/uikit/components/button';
-import Icon from '@/components/core/icon/Icon.vue';
+import { UiIcon } from '@terminal/uikit/components/icon';
 import Typography from '@/components/app/typography/Typography.vue';
 
 const { t } = useI18n();

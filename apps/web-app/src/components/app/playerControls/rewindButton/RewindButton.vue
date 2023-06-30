@@ -5,7 +5,7 @@
       isDisabled && $style.disabled,
     ]"
   >
-    <Icon
+    <UiIcon
       :size="24"
       icon="rewind"
     />
@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import Icon from '@/components/core/icon/Icon.vue';
+import { UiIcon } from '@terminal/uikit/components/icon';
 import { RewindButtonProps } from '@/components/app/playerControls/rewindButton/index';
 
 withDefaults(

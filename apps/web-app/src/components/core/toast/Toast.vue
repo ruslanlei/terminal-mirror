@@ -13,15 +13,15 @@
       :class="$style.closeButton"
       @click="closeToast"
     >
-      <Icon icon="cross" />
+      <UiIcon icon="cross" />
     </button>
   </div>
 </template>
 
 <script setup lang="ts">
 import { onMounted, ref, toRefs } from 'vue';
+import { UiIcon } from '@terminal/uikit/components/icon';
 import { playAnimation } from '@/utils/animation';
-import Icon from '@/components/core/icon/Icon.vue';
 import { ToastEmits, ToastProps } from './index';
 
 const props = defineProps<ToastProps>();

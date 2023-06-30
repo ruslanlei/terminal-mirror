@@ -16,7 +16,7 @@
           {{ computedDescription }}
         </div>
       </div>
-      <Icon
+      <UiIcon
         v-if="to"
         :class="$style.icon"
         icon="arrowRight"
@@ -28,8 +28,8 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { UiIcon } from '@terminal/uikit/components/icon';
 import { SubscriptionBadgeProps } from '@/components/core/subscriptionBadge/index';
-import Icon from '@/components/core/icon/Icon.vue';
 import CertificateImage from './ceritificateImage/CertificateImage.vue';
 
 const props = defineProps<SubscriptionBadgeProps>();

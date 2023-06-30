@@ -6,14 +6,14 @@
     ]"
   >
     <template v-if="direction === 'up' && isVisible">
-      <Icon
+      <UiIcon
         :key="direction"
         icon="trendingUp"
         :class="$style.up"
       />
     </template>
     <template v-if="direction === 'down' && isVisible">
-      <Icon
+      <UiIcon
         :key="direction"
         icon="trendingDown"
         :class="$style.down"
@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import Icon from '@/components/core/icon/Icon.vue';
+import { UiIcon } from '@terminal/uikit/components/icon';
 import { TrendingIconProps } from '@/components/core/trendingIcon/index';
 
 defineProps<TrendingIconProps>();

@@ -9,11 +9,11 @@
       name="playButtonTransition"
       mode="out-in"
     >
-      <Icon
+      <UiIcon
         v-if="localValue"
         icon="pause"
       />
-      <Icon
+      <UiIcon
         v-else
         icon="play"
       />
@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import Icon from '@/components/core/icon/Icon.vue';
+import { UiIcon } from '@terminal/uikit/components/icon';
 import { PlayButtonEmits, PlayButtonProps } from '@/components/app/playerControls/playButton/index';
 import { useLocalValue } from '@/hooks/useLocalValue';
 

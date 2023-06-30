@@ -57,7 +57,7 @@
             {{ placeholder }}
           </div>
         </template>
-        <Icon
+        <UiIcon
           :class="$style.arrow"
           icon="small-arrow-down"
         />
@@ -133,7 +133,7 @@ import {
   onBeforeUnmount,
   onBeforeUpdate,
 } from 'vue';
-import Icon from '@/components/core/icon/Icon.vue';
+import { UiIcon } from '@terminal/uikit/components/icon';
 import { teleportTargets } from '@/enums/teleport';
 import { useSelect } from '@/hooks/useSelect';
 import { useEnvironmentObserver } from '@/hooks/useEnvironmentObserver';

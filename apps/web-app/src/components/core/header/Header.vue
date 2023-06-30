@@ -3,7 +3,7 @@
     :style="computedStyles"
     :class="$style.header"
   >
-    <Logo />
+    <UiLogo />
     <div :class="$style.leftColumn">
       <slot name="leftColumn" />
     </div>
@@ -15,7 +15,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import Logo from '@/components/core/logo/Logo.vue';
+import { UiLogo } from '@terminal/uikit/components/logo';
 import { size } from '@/enums/sizing';
 
 const computedStyles = computed(() => ({

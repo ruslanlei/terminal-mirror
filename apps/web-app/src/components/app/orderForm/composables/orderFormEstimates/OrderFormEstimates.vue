@@ -2,7 +2,7 @@
   <div :class="[$style.orderFormRatio, $style[state]]">
     <div :class="$style.ratio">
       <div :class="$style.ratioLabel">
-        <Icon
+        <UiIcon
           v-if="isRadioLabelIconVisible"
           :size="20"
           icon="info"
@@ -45,14 +45,14 @@
 </template>
 
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n';
-import Icon from '@/components/core/icon/Icon.vue';
-import OrderRatioBadge from '@/components/app/orderRatioBadge/OrderRatioBadge.vue';
 import { computed } from 'vue';
-import { useMarketStore } from '@/stores/market';
+import { useI18n } from 'vue-i18n';
+import { compose } from '@terminal/common/utils/fp';
 import { storeToRefs } from 'pinia';
-import { compose } from '@/utils/fp';
-import { roundToDecimalPlaces } from '@/utils/number';
+import { UiIcon } from '@terminal/uikit/components/icon';
+import { roundToDecimalPlaces } from '@terminal/common/utils/number';
+import OrderRatioBadge from '@/components/app/orderRatioBadge/OrderRatioBadge.vue';
+import { useMarketStore } from '@/stores/market';
 import { reduceTakeProfitsToAmountOfProfit } from '@/helpers/math/formulas/takeProfit';
 import { injectOrderFormState } from '@/components/app/orderForm';
 import { calculateVolumeDifference } from '@/helpers/math/formulas/order';

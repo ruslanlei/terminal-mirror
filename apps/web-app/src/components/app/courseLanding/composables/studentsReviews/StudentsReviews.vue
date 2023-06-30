@@ -13,14 +13,14 @@
           :class="$style.button"
           @click="slidePrev"
         >
-          <Icon icon="arrowLeft" />
+          <UiIcon icon="arrowLeft" />
         </button>
         <button
           type="button"
           :class="$style.button"
           @click="slideNext"
         >
-          <Icon icon="arrowRight" />
+          <UiIcon icon="arrowRight" />
         </button>
       </div>
     </header>
@@ -42,10 +42,9 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
-import Typography from '@/components/app/typography/Typography.vue';
-import Icon from '@/components/core/icon/Icon.vue';
-import Slider from '@/components/core/slider/Slider.vue';
 import { computed, ref } from 'vue';
+import { UiIcon } from '@terminal/uikit/components/icon';
+import Typography from '@/components/app/typography/Typography.vue';
 import { collectSrcSet } from '@/utils/dom';
 import ReviewCard from './reviewCard/ReviewCard.vue';
 

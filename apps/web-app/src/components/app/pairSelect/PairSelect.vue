@@ -8,7 +8,7 @@
         :placeholder="t('common.search')"
       >
         <template #prepend>
-          <Icon
+          <UiIcon
             :size="24"
             icon="search"
           />
@@ -29,12 +29,11 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
+import { UiIcon } from '@terminal/uikit/components/icon';
 import PairsSelectContainer from '@/containers/pairsSelectContainer/PairsSelectContainer.vue';
 import Input from '@/components/core/input/Input.vue';
-import Icon from '@/components/core/icon/Icon.vue';
 import PairsTable from '@/components/app/pairsTable/PairsTable.vue';
 import { usePairSelect } from '@/hooks/usePairSelect';
-import { onMounted } from 'vue';
 
 const { t } = useI18n();
 

@@ -43,7 +43,7 @@
         >
           <template #option="{ option }">
             <div :class="selectOptionClass">
-              <Icon :icon="option.icon" />
+              <UiIcon :icon="option.icon" />
               {{ option.label }}
             </div>
           </template>
@@ -99,8 +99,8 @@ import {
 import { useI18n } from 'vue-i18n';
 import { storeToRefs } from 'pinia';
 import { UiButton } from '@terminal/uikit/components/button';
+import { UiIcon } from '@terminal/uikit/components/icon';
 
-import Icon from '@/components/core/icon/Icon.vue';
 import Tabs from '@/components/core/tabs/Tabs.vue';
 import OrderFromContainer from '@/containers/orderFormContainer/OrderFormContainer.vue';
 import { Form, FormSelector } from '@/form';

@@ -5,7 +5,7 @@
         size="sm"
         :state="isPositive(commonPnl) ? 'success' : 'danger'"
       >
-        <Icon
+        <UiIcon
           :size="20"
           icon="chartBar"
         />
@@ -86,9 +86,9 @@ import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { storeToRefs } from 'pinia';
 import { UiAvatar } from '@terminal/uikit/components/avatar';
+import { UiIcon } from '@terminal/uikit/components/icon';
 import StatisticsResultRow from '@/containers/statisticsResultRow/StatisticsResultRow.vue';
 import Typography from '@/components/app/typography/Typography.vue';
-import Icon from '@/components/core/icon/Icon.vue';
 import { isPositive, roundToDecimalPlaces } from '@/utils/number';
 import { useEmulatorStore } from '@/stores/emulator';
 import { calculateCommonPnlForPeriod } from '@/helpers/math/formulas/pnl';

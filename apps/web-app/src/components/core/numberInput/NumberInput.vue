@@ -41,7 +41,7 @@
           ]"
           @click="onClickIncrement"
         >
-          <Icon
+          <UiIcon
             :size="6"
             icon="tinyArrowUp"
           />
@@ -55,7 +55,7 @@
           ]"
           @click="onClickDecrement"
         >
-          <Icon
+          <UiIcon
             :size="6"
             icon="tinyArrowDown"
           />
@@ -86,8 +86,8 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
 import { UiFieldError } from '@terminal/uikit/components/fieldError';
+import { UiIcon } from '@terminal/uikit/components/icon';
 import { useLocalValue } from '@/hooks/useLocalValue';
-import Icon from '@/components/core/icon/Icon.vue';
 import { useComputedState } from '@/hooks/useComputedState';
 import { add, subtract, roundToDecimalPlaces } from '@/utils/number';
 import { NumberInputEmits, NumberInputNormalizer, NumberInputProps } from './index';

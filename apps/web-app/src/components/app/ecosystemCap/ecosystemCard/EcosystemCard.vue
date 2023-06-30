@@ -28,7 +28,7 @@
         :class="$style.button"
       >
         {{ t('common.followLink') }}
-        <Icon icon="arrowRight" />
+        <UiIcon icon="arrowRight" />
       </Link>
     </div>
   </div>
@@ -36,10 +36,9 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
+import { UiIcon } from '@terminal/uikit/components/icon';
 import Typography from '@/components/app/typography/Typography.vue';
-import Icon from '@/components/core/icon/Icon.vue';
 import Link from '@/components/core/link/Link.vue';
-import Logo from '@/components/core/logo/Logo.vue';
 import QrCode from '@/components/core/qrCode/QrCode.vue';
 import { EcosystemCardProps } from './index';
 

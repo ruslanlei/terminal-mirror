@@ -12,7 +12,7 @@
           type="button"
         >
           {{ activeLocale.label }}
-          <Icon
+          <UiIcon
             :class="$style.icon"
             :size="24"
             icon="arrowDown"
@@ -52,10 +52,10 @@
 
 <script setup lang="ts">
 import { computed, ref, toRefs } from 'vue';
+import { UiIcon } from '@terminal/uikit/components/icon';
 import { LanguageSelectProps } from '@/components/app/languageSelect/index';
 import { LocaleOption, useI18nStore } from '@/stores/i18n';
 import { AppLocale } from '@/i18n';
-import Icon from '@/components/core/icon/Icon.vue';
 import Dropdown from '@/components/core/dropdown/Dropdown.vue';
 import { filter } from '@/utils/array';
 

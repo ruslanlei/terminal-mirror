@@ -19,7 +19,7 @@
     </div>
     <div :class="$style.inputs">
       <div :class="$style.value">
-        <Icon
+        <UiIcon
           :class="$style.icon"
           icon="creditCard"
         />
@@ -71,7 +71,7 @@
 import { computed } from 'vue';
 import { UiButton } from '@terminal/uikit/components/button';
 import { UiAnimatedText } from '@terminal/uikit/components/animatedText';
-import Icon from '@/components/core/icon/Icon.vue';
+import { UiIcon } from '@terminal/uikit/components/icon';
 import RangeSlider from '@/components/core/rangeSlider/RangeSlider.vue';
 import NumberInput from '@/components/core/numberInput/NumberInput.vue';
 import { useDepositInput } from '@/hooks/useDepositInput';

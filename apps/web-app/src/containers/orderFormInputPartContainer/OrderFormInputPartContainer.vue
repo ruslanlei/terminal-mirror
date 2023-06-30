@@ -40,7 +40,7 @@
             <slot name="leverageInput" />
           </div>
           <div :class="$style.leverageLiquidationPrice">
-            <Icon
+            <UiIcon
               :size="20"
               :class="$style.icon"
               icon="lock"
@@ -50,7 +50,7 @@
             </div>
           </div>
           <div :class="$style.leveragePositionMargin">
-            <Icon
+            <UiIcon
               :size="20"
               :class="$style.icon"
               icon="fire"
@@ -74,7 +74,7 @@
 </template>
 
 <script setup lang="ts">
-import Icon from '@/components/core/icon/Icon.vue';
+import { UiIcon } from '@terminal/uikit/components/icon';
 </script>
 
 <style lang="scss" module>

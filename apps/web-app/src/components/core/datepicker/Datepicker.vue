@@ -10,7 +10,7 @@
     <template #trigger>
       <button :class="[$style.trigger, $style[state]]">
         {{ displayValue }}
-        <Icon
+        <UiIcon
           :class="$style.icon"
           icon="calendar"
           :size="24"
@@ -29,17 +29,17 @@
 </template>
 
 <script setup lang="ts">
+import { computed, ref, watch } from 'vue';
+import { storeToRefs } from 'pinia';
 import FlatPickr from 'vue-flatpickr-component';
 import 'flatpickr/dist/flatpickr.css';
-import { Russian } from 'flatpickr/dist/l10n/ru.js';
 import english from 'flatpickr/dist/l10n/default';
+import { Russian } from 'flatpickr/dist/l10n/ru.js';
 import { BaseOptions as FlatpickrConfig } from 'flatpickr/dist/types/options';
+import { UiIcon } from '@terminal/uikit/components/icon';
 import { useLocalValue } from '@/hooks/useLocalValue';
 import Dropdown from '@/components/core/dropdown/Dropdown.vue';
-import Icon from '@/components/core/icon/Icon.vue';
-import { computed, ref, watch } from 'vue';
 import { useI18nStore } from '@/stores/i18n';
-import { storeToRefs } from 'pinia';
 import { AppLocale } from '@/i18n';
 import { DatepickerEmits, DatepickerProps } from './index';
 

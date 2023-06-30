@@ -8,7 +8,7 @@
       :class="$style.button"
       @click="changePage(modelValue - 1)"
     >
-      <Icon
+      <UiIcon
         icon="arrowLeft"
         :size="18"
       />
@@ -92,7 +92,7 @@
       :class="$style.button"
       @click="changePage(modelValue + 1)"
     >
-      <Icon
+      <UiIcon
         icon="arrowRight"
         :size="18"
       />
@@ -102,8 +102,8 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { UiButton } from '@terminal/uikit/components/button';
+import { UiIcon } from '@terminal/uikit/components/icon';
 import { useLocalValue } from '@/hooks/useLocalValue';
-import Icon from '@/components/core/icon/Icon.vue';
 import { PaginationEmits, PaginationProps } from './index';
 
 const props = withDefaults(

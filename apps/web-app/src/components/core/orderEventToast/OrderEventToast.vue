@@ -20,7 +20,7 @@
         @click="close"
       >
         <Typography state="accent2">
-          <Icon icon="cross" />
+          <UiIcon icon="cross" />
         </Typography>
       </UiButton>
     </div>
@@ -125,8 +125,8 @@ import { computed } from 'vue';
 import { UiBadge } from '@terminal/uikit/components/badge';
 import { UiButton } from '@terminal/uikit/components/button';
 import { UiCoinLogo } from '@terminal/uikit/components/coinLogo';
+import { UiIcon } from '@terminal/uikit/components/icon';
 import Typography from '@/components/app/typography/Typography.vue';
-import Icon from '@/components/core/icon/Icon.vue';
 import { useMarketStore } from '@/stores/market';
 import { multiply, roundToDecimalPlaces } from '@/utils/number';
 import { compose } from '@/utils/fp';

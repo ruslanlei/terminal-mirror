@@ -6,7 +6,7 @@
     :is-disabled="true"
   >
     <template #option="{ option: { icon, label } }">
-      <Icon
+      <UiIcon
         :icon="icon"
         :size="24"
       />
@@ -20,10 +20,10 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
-import Selector from '@/components/core/selector/Selector.vue';
-import Icon from '@/components/core/icon/Icon.vue';
-import { useMarketStore } from '@/stores/market';
 import { storeToRefs } from 'pinia';
+import { UiIcon } from '@terminal/uikit/components/icon';
+import Selector from '@/components/core/selector/Selector.vue';
+import { useMarketStore } from '@/stores/market';
 import { MarketTypeSelectorOption } from './index';
 
 const { t } = useI18n();

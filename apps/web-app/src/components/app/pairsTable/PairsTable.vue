@@ -41,7 +41,7 @@
             name="favoriteStarTransition"
             mode="out-in"
           >
-            <Icon
+            <UiIcon
               :key="isFavorite"
               :size="24"
               :icon="isFavorite ? 'starFilled' : 'star'"
@@ -125,9 +125,9 @@ import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { UiBadge } from '@terminal/uikit/components/badge';
 import { UiCoinLogo } from '@terminal/uikit/components/coinLogo';
+import { UiIcon } from '@terminal/uikit/components/icon';
 import Table from '@/components/core/table/Table.vue';
 import TrendingIcon from '@/components/core/trendingIcon/TrendingIcon.vue';
-import Icon from '@/components/core/icon/Icon.vue';
 import { SortDirection } from '@/components/core/table';
 import { humanizeNumber } from '@/utils/numberFormat';
 import { Pair } from '@/api/types/pair';

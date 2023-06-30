@@ -25,7 +25,7 @@
       </div>
     </header>
     <div :class="$style.courseCardsWrapper">
-      <Slider
+      <UiSlider
         ref="slider"
         :slides="slides"
         :gap="20"
@@ -38,7 +38,7 @@
             <CourseProgramCard :data="slideData" />
           </div>
         </template>
-      </Slider>
+      </UiSlider>
     </div>
   </div>
 </template>
@@ -48,6 +48,7 @@ import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { UiIcon } from '@terminal/uikit/components/icon';
 import { UiTypography } from '@terminal/uikit/components/typography';
+import { UiSlider } from '@terminal/uikit/components/slider';
 
 import { ICourseProgramCard } from '@/components/app/courseLanding/composables/courseProgram/courseProgramCard';
 import { collectSrcSet } from '@/utils/dom';

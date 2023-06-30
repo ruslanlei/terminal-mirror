@@ -1,5 +1,5 @@
 <template>
-  <Table
+  <UiTable
     :columns="columns"
     :records="records"
     :is-head-visible="false"
@@ -85,13 +85,13 @@
       <!--        {{ t('orderList.edit') }} -->
       <!--      </button> -->
     </template>
-  </Table>
+  </UiTable>
 </template>
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import { UiTypography } from '@terminal/uikit/components/typography';
-import Table from '@/components/core/table/Table.vue';
+import { UiTable } from '@terminal/uikit/components/table';
 import { useSubOrderList } from '@/hooks/useSubOrderList';
 import {
   SubOrderListProps,

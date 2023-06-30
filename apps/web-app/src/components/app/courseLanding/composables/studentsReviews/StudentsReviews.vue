@@ -25,7 +25,7 @@
       </div>
     </header>
     <div :class="$style.reviewCardsWrapper">
-      <Slider
+      <UiSlider
         ref="slider"
         :class="$style.slider"
         :slides="slides"
@@ -35,7 +35,7 @@
         <template #slide="{ slideData }">
           <ReviewCard :data="slideData" />
         </template>
-      </Slider>
+      </UiSlider>
     </div>
   </div>
 </template>
@@ -45,6 +45,7 @@ import { useI18n } from 'vue-i18n';
 import { computed, ref } from 'vue';
 import { UiIcon } from '@terminal/uikit/components/icon';
 import { UiTypography } from '@terminal/uikit/components/typography';
+import { UiSlider } from '@terminal/uikit/components/slider';
 import { collectSrcSet } from '@/utils/dom';
 import ReviewCard from './reviewCard/ReviewCard.vue';
 

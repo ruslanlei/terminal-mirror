@@ -5,7 +5,7 @@ import {
   TableColumn,
   TableProps,
   TableRecord,
-} from '@/components/core/table';
+} from '@terminal/uikit/components/table';
 import { useLocalValue } from '@/hooks/useLocalValue';
 
 export const useTable = (

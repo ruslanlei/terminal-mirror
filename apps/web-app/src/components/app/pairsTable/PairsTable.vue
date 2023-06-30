@@ -1,5 +1,5 @@
 <template>
-  <Table
+  <UiTable
     v-model:sort-by="sortBy"
     v-model:sort-direction="sortDirection"
     :columns="columns"
@@ -117,7 +117,7 @@
         {{ humanizePercents(value) }}
       </UiBadge>
     </template>
-  </Table>
+  </UiTable>
 </template>
 
 <script setup lang="ts">
@@ -127,9 +127,9 @@ import { UiBadge } from '@terminal/uikit/components/badge';
 import { UiCoinLogo } from '@terminal/uikit/components/coinLogo';
 import { UiIcon } from '@terminal/uikit/components/icon';
 import { UiTypography } from '@terminal/uikit/components/typography';
-import Table from '@/components/core/table/Table.vue';
+import { UiTable } from '@terminal/uikit/components/table';
 import TrendingIcon from '@/components/core/trendingIcon/TrendingIcon.vue';
-import { SortDirection } from '@/components/core/table';
+import { SortDirection } from '@terminal/uikit/components/table';
 import { humanizeNumber } from '@/utils/numberFormat';
 import { Pair } from '@/api/types/pair';
 import { useMarketStore } from '@/stores/market';

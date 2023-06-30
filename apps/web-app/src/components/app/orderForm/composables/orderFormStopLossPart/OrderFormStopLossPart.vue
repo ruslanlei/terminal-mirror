@@ -4,7 +4,7 @@
       {{ t('order.stopLoss.switchLabel') }}
     </template>
     <template #stopLossSwitch>
-      <Switch
+      <UiSwitch
         v-model="isStopLossEnabled"
         :is-disabled="true"
       />
@@ -101,9 +101,9 @@ import { useI18n } from 'vue-i18n';
 import { storeToRefs } from 'pinia';
 import { UiButton } from '@terminal/uikit/components/button';
 import { UiNumberInput } from '@terminal/uikit/components/numberInput';
+import { UiSwitch } from '@terminal/uikit/components/switch';
 import OrderFormStopLossPartContainer
   from '@/containers/orderFormStopLossPartContainer/OrderFormStopLossPartContainer.vue';
-import Switch from '@/components/core/switch/Switch.vue';
 import OrderFormEstimates from '@/components/app/orderForm/composables/orderFormEstimates/OrderFormEstimates.vue';
 import { useMarketStore } from '@/stores/market';
 import { compose } from '@/utils/fp';

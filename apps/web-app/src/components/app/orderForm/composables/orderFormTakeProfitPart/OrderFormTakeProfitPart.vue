@@ -4,7 +4,7 @@
       {{ t('order.takeProfit.profit') }}
     </template>
     <template #profitSwitch>
-      <Switch
+      <UiSwitch
         v-model="isTakeProfitsEnabled"
         :is-disabled="true"
       />
@@ -55,8 +55,8 @@ import { useI18n } from 'vue-i18n';
 import { storeToRefs } from 'pinia';
 import { UiButton } from '@terminal/uikit/components/button';
 import { UiNumberInput } from '@terminal/uikit/components/numberInput';
+import { UiSwitch } from '@terminal/uikit/components/switch';
 import OrderFormTakeProfilePartContainer from '@/containers/orderFormTakeProfitPartContainer/OrderFormTakeProfitPartContainer.vue';
-import Switch from '@/components/core/switch/Switch.vue';
 import TakeProfitList from '@/components/app/takeProfitList/TakeProfitList.vue';
 import OrderFormEstimates from '@/components/app/orderForm/composables/orderFormEstimates/OrderFormEstimates.vue';
 import { useMarketStore } from '@/stores/market';

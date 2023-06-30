@@ -9,7 +9,7 @@ import {
   collectActiveSubOrderRecord,
   collectClosedSubOrderRecord,
 } from '@/components/app/orderList/subOrderList/collectTableRecord';
-import { createEmptyRecord } from '@/components/core/table/helpers';
+import { createEmptyRecord } from '@terminal/uikit/components/table/helpers';
 
 export const useSubOrderList = (
   props: SubOrderListProps,

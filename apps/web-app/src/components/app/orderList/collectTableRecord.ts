@@ -26,8 +26,8 @@ import { calculateCommonTakeProfitPercent } from '@/helpers/math/formulas/takePr
 import { humanizeDate } from '@/utils/date';
 import { ActiveOrdersTableRecord, ClosedOrdersTableRecord } from 'src/components/app/orderList';
 import { SubOrderTableItem } from 'src/components/app/orderList/subOrderList';
-import { collectTableRecord } from '@/components/core/table/helpers';
-import { TableRowState } from '@/components/core/table/tableRow';
+import { collectTableRecord } from '@terminal/uikit/components/table/helpers';
+import { TableRowState } from '@terminal/uikit/components/table/tableRow';
 
 interface CollectRecordPayload {
   pairData: Pair,

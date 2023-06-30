@@ -1,4 +1,4 @@
-import { TableColumn, TableRecord } from '@/components/core/table';
+import { TableColumn, TableRecord } from '@terminal/uikit/components/table';
 import { Order, TakeProfit } from '@/api/types/order';
 import { SubOrderTableItem } from 'src/components/app/orderList/subOrderList';
 import { Pair } from '@/api/types/pair';

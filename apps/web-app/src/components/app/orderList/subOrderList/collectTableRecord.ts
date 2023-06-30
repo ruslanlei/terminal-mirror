@@ -9,8 +9,8 @@ import { valueToPercents } from '@/helpers/math/percents';
 import { humanizeDate } from '@/utils/date';
 import { MasterOrder } from '@/api/types/order';
 import { Pair } from '@/api/types/pair';
-import { collectTableRecord } from '@/components/core/table/helpers';
-import { TableRowState } from '@/components/core/table/tableRow';
+import { collectTableRecord } from '@terminal/uikit/components/table/helpers';
+import { TableRowState } from '@terminal/uikit/components/table/tableRow';
 
 interface CollectRecordPayload {
   order: SubOrderTableItem,

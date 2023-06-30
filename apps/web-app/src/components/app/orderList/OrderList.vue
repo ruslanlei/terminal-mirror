@@ -301,7 +301,7 @@ import SubOrderList from '@/components/app/orderList/subOrderList/SubOrderList.v
 import OrderListPlaceholder from '@/components/app/orderList/OrderListPlaceholder.vue';
 import CloseOrderButton from '@/components/app/closeOrderButton/CloseOrderButton.vue';
 import { toPositiveNumberString } from '@/utils/style';
-import { createEmptyRecord } from '@/components/core/table/helpers';
+import { createEmptyRecord } from '@terminal/uikit/components/table/helpers';
 import { compose } from '@/utils/fp';
 import {
   add, ceil, divideRight,

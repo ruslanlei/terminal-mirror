@@ -6,7 +6,7 @@
       :key="toast.id"
       :class="$style.toastWrapper"
     >
-      <Toast
+      <UiToast
         :class="$style.toast"
         :toast="toast"
         :smooth-appearance="true"
@@ -20,8 +20,8 @@
 import {
   computed,
 } from 'vue';
+import { UiToast } from '@terminal/uikit/components/toast';
 import { useToastStore } from '@/stores/toasts';
-import Toast from '@/components/core/toast/Toast.vue';
 import { playAnimation } from '@/utils/animation';
 import { IToast } from '@/components/core/toast';
 

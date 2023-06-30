@@ -29,7 +29,7 @@
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { UiIcon } from '@terminal/uikit/components/icon';
-import { SubscriptionBadgeProps } from '@/components/core/subscriptionBadge/index';
+import { SubscriptionBadgeProps } from '@/components/app/subscriptionBadge/index';
 import CertificateImage from './ceritificateImage/CertificateImage.vue';
 
 const props = defineProps<SubscriptionBadgeProps>();

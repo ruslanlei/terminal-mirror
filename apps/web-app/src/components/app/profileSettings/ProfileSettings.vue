@@ -67,7 +67,7 @@ import { UiIcon } from '@terminal/uikit/components/icon';
 import { UiTypography } from '@terminal/uikit/components/typography';
 
 import LanguageSelect from '@/components/app/languageSelect/LanguageSelect.vue';
-import SubscriptionBadge from '@/components/core/subscriptionBadge/SubscriptionBadge.vue';
+import SubscriptionBadge from '@/components/app/subscriptionBadge/SubscriptionBadge.vue';
 import CurrentTheme from '@/components/app/currentTheme/CurrentTheme.vue';
 import { useProfileSettings } from '@/hooks/useProfileSettings';
 import { useDiscordLink } from '@/hooks/useDiscordLink';

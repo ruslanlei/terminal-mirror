@@ -2,12 +2,12 @@
   <div
     :class="$style.forWhomCourse"
   >
-    <Typography
+    <UiTypography
       size="massive2"
       :state="['accent1', 'bold']"
     >
       {{ t('courseLanding.forWhomTheCourse.heading') }}
-    </Typography>
+    </UiTypography>
     <div :class="$style.columnsWrapper">
       <PhotoCard
         v-for="(card, index) in cards"
@@ -19,9 +19,10 @@
 </template>
 
 <script setup lang="ts">
-import Typography from '@/components/app/typography/Typography.vue';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { UiTypography } from '@terminal/uikit/components/typography';
+
 import { IPhotoCard } from '@/components/core/photoCard';
 import PhotoCard from '@/components/core/photoCard/PhotoCard.vue';
 

@@ -2,12 +2,12 @@
   <div :class="$style.orderEventToast">
     <div :class="$style.head">
       <div :class="$style.mainInfo">
-        <Typography
+        <UiTypography
           size="title1"
           :state="['accent1', 'semiBold']"
         >
           {{ t('orderExecuted.label') }}
-        </Typography>
+        </UiTypography>
         <OrderSideLabel
           v-if="!hideOrderSide"
           :side="order.side"
@@ -19,32 +19,32 @@
         :is-wide="false"
         @click="close"
       >
-        <Typography state="accent2">
+        <UiTypography state="accent2">
           <UiIcon icon="cross" />
-        </Typography>
+        </UiTypography>
       </UiButton>
     </div>
     <div :class="$style.coinRow">
-      <Typography
+      <UiTypography
         state="accent2"
         size="text"
         :class="$style.coinRowLabel"
       >
         {{ t('orderExecuted.coin') }}
-      </Typography>
+      </UiTypography>
       <div :class="$style.coin">
         <UiCoinLogo :coin="pairData?.base" />
-        <Typography
+        <UiTypography
           size="title2"
           :state="['accent1', 'semiBold']"
           :class="$style.coinLabel"
         >
           {{ pairData?.base }}
-        </Typography>
+        </UiTypography>
       </div>
     </div>
     <div :class="$style.volume">
-      <Typography
+      <UiTypography
         state="accent2"
         size="text"
       >
@@ -53,7 +53,7 @@
           keypath="orderExecuted.volume"
         >
           <template #value>
-            <Typography
+            <UiTypography
               size="title1"
               state="accent1"
               is-inline
@@ -63,18 +63,18 @@
                   {{ quoteCurrencyAmount }}
                 </template>
                 <template #currency>
-                  <Typography
+                  <UiTypography
                     state="accent2"
                     is-inline
                   >
                     {{ pairData?.quote }}
-                  </Typography>
+                  </UiTypography>
                 </template>
               </i18n-t>
-            </Typography>
+            </UiTypography>
           </template>
         </i18n-t>
-      </Typography>
+      </UiTypography>
     </div>
     <div :class="$style.badges">
       <UiBadge
@@ -82,12 +82,12 @@
         size="sm"
         :class="$style.badge"
       >
-        <Typography
+        <UiTypography
           size="title4"
           state="accent1"
         >
           {{ computedStatus }}
-        </Typography>
+        </UiTypography>
       </UiBadge>
       <UiBadge
         v-if="order.order_type === 'tp'"
@@ -95,12 +95,12 @@
         state="primary1Background"
         :class="$style.badge"
       >
-        <Typography
+        <UiTypography
           size="title4"
           state="accent1"
         >
           {{ t('order.shortType.tp') }}
-        </Typography>
+        </UiTypography>
       </UiBadge>
       <UiBadge
         v-if="order.order_type === 'sl'"
@@ -108,12 +108,12 @@
         state="danger2"
         :class="$style.badge"
       >
-        <Typography
+        <UiTypography
           size="title4"
           state="accent1"
         >
           {{ t('order.shortType.sl') }}
-        </Typography>
+        </UiTypography>
       </UiBadge>
     </div>
   </div>
@@ -126,7 +126,7 @@ import { UiBadge } from '@terminal/uikit/components/badge';
 import { UiButton } from '@terminal/uikit/components/button';
 import { UiCoinLogo } from '@terminal/uikit/components/coinLogo';
 import { UiIcon } from '@terminal/uikit/components/icon';
-import Typography from '@/components/app/typography/Typography.vue';
+import { UiTypography } from '@terminal/uikit/components/typography';
 import { useMarketStore } from '@/stores/market';
 import { multiply, roundToDecimalPlaces } from '@/utils/number';
 import { compose } from '@/utils/fp';

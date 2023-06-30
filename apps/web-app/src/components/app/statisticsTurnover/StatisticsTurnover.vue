@@ -1,51 +1,51 @@
 <template>
   <StatisticsResultRow>
     <template #prepend>
-      <Typography
+      <UiTypography
         size="h3"
         :state="['accent1', 'bold']"
       >
         {{ t('common.currencyAmount', { amount: turnover, currency: '$' }) }}
-      </Typography>
+      </UiTypography>
     </template>
     <template #primaryInfoTop>
-      <Typography
+      <UiTypography
         size="title5"
         :state="['accent1', 'semiBold']"
       >
         {{ t('statistics.turnover.label') }}
-      </Typography>
+      </UiTypography>
     </template>
     <template #primaryInfoBottom>
-      <Typography
+      <UiTypography
         size="title7"
         :state="['accent2', 'semiBold']"
       >
         <i18n-t keypath="statistics.orders.success.averageIncome">
           <template #value>
-            <Typography
+            <UiTypography
               is-inline
               state="accent1"
             >
               {{ t('common.currencyAmount', { amount: averageIncome, currency: '$' }) }}
-            </Typography>
+            </UiTypography>
           </template>
         </i18n-t>
-      </Typography>
+      </UiTypography>
     </template>
   </StatisticsResultRow>
 </template>
 
 <script setup lang="ts">
-import StatisticsResultRow from '@/containers/statisticsResultRow/StatisticsResultRow.vue';
-import Typography from '@/components/app/typography/Typography.vue';
 import { useI18n } from 'vue-i18n';
 import { computed } from 'vue';
+import { storeToRefs } from 'pinia';
+import { UiTypography } from '@terminal/uikit/components/typography';
+import StatisticsResultRow from '@/containers/statisticsResultRow/StatisticsResultRow.vue';
 import { compose } from '@/utils/fp';
 import { add, multiply, roundToDecimalPlaces } from '@/utils/number';
 import { calculateAverageIncome } from '@/helpers/orders';
 import { useMarketStore } from '@/stores/market';
-import { storeToRefs } from 'pinia';
 import { reduce } from '@/utils/array';
 import { Order } from '@/api/types/order';
 

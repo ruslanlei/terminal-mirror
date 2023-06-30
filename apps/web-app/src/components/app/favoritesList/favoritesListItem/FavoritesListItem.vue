@@ -2,25 +2,25 @@
   <div :class="[$style.favoritesListItem, isActive && $style.active]">
     <div :class="$style.info">
       <div :class="$style.coinNames">
-        <Typography
+        <UiTypography
           size="title7"
           :state="['semiBold']"
         >
           {{ pairData.base }}
-        </Typography>
-        <Typography
+        </UiTypography>
+        <UiTypography
           size="title7"
           :state="['semiBold']"
         >
           {{ pairData.quote }}
-        </Typography>
+        </UiTypography>
       </div>
-      <Typography
+      <UiTypography
         size="title7"
         state="accent2"
       >
         {{ humanizeNumber(pairData.total_trades) }}
-      </Typography>
+      </UiTypography>
     </div>
     <div :class="$style.mainContent">
       <UiCoinLogo :coin="pairData.base" />
@@ -53,7 +53,7 @@
 import { computed } from 'vue';
 import { UiBadge } from '@terminal/uikit/components/badge';
 import { UiCoinLogo } from '@terminal/uikit/components/coinLogo';
-import Typography from '@/components/app/typography/Typography.vue';
+import { UiTypography } from '@terminal/uikit/components/typography';
 import { humanizeNumber } from '@/utils/numberFormat';
 import { humanizePercents } from '@/helpers/math/percents';
 import { isPositive } from '@/utils/number';

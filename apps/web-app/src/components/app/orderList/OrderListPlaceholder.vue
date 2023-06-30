@@ -11,13 +11,13 @@
         :class="$style.buttonIcon"
       />
     </UiButton>
-    <Typography
+    <UiTypography
       size="title1"
       :state="['accent1', 'alignCenter']"
       :class="$style.text"
     >
       {{ t('orderList.placeholder') }}
-    </Typography>
+    </UiTypography>
   </div>
 </template>
 
@@ -25,7 +25,7 @@
 import { useI18n } from 'vue-i18n';
 import { UiButton } from '@terminal/uikit/components/button';
 import { UiIcon } from '@terminal/uikit/components/icon';
-import Typography from '@/components/app/typography/Typography.vue';
+import { UiTypography } from '@terminal/uikit/components/typography';
 
 const { t } = useI18n();
 </script>

@@ -1,12 +1,12 @@
 <template>
   <div :class="$style.courseProgram">
     <header :class="$style.header">
-      <Typography
+      <UiTypography
         :state="['accent1', 'bold']"
         size="massive2"
       >
         {{ t('courseLanding.courseProgram.heading') }}
-      </Typography>
+      </UiTypography>
       <div :class="$style.buttonsWrapper">
         <button
           type="button"
@@ -47,8 +47,8 @@
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { UiIcon } from '@terminal/uikit/components/icon';
-import Typography from '@/components/app/typography/Typography.vue';
-import Slider from '@/components/core/slider/Slider.vue';
+import { UiTypography } from '@terminal/uikit/components/typography';
+
 import { ICourseProgramCard } from '@/components/app/courseLanding/composables/courseProgram/courseProgramCard';
 import { collectSrcSet } from '@/utils/dom';
 import CourseProgramCard from './courseProgramCard/CourseProgramCard.vue';

@@ -1,5 +1,5 @@
 <template>
-  <Typography
+  <UiTypography
     size="title2"
     :state="['semiBold', computedTypographyColorState]"
     :class="$style.orderSideLabel"
@@ -9,14 +9,14 @@
       :direction="({ buy: 'up', sell: 'down' }[side])"
     />
     {{ ({ buy: t('order.direction.long'), sell: t('order.direction.short') }[side]) }}
-  </Typography>
+  </UiTypography>
 </template>
 
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n';
-import TrendingIcon from '@/components/core/trendingIcon/TrendingIcon.vue';
-import Typography from '@/components/app/typography/Typography.vue';
 import { computed } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { UiTypography } from '@terminal/uikit/components/typography';
+import TrendingIcon from '@/components/core/trendingIcon/TrendingIcon.vue';
 import { OrderSideLabelProps } from './index';
 
 const { t } = useI18n();

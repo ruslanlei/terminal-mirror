@@ -16,13 +16,13 @@
         mode="out-in"
         name="orderFormCapTextTransition"
       >
-        <Typography
+        <UiTypography
           v-if="isEmulatorPlaying"
           :text="t('emulator.player.orderInteractionsWarning')"
           :state="['accent1', 'alignCenter', 'bold']"
           size="title1"
         />
-        <Typography
+        <UiTypography
           v-else-if="isActiveOrdersForCurrentPairExists"
           :text="t('emulator.player.orderExistsFormCap')"
           :state="['accent1', 'alignCenter', 'bold']"
@@ -100,6 +100,7 @@ import { useI18n } from 'vue-i18n';
 import { storeToRefs } from 'pinia';
 import { UiButton } from '@terminal/uikit/components/button';
 import { UiIcon } from '@terminal/uikit/components/icon';
+import { UiTypography } from '@terminal/uikit/components/typography';
 
 import Tabs from '@/components/core/tabs/Tabs.vue';
 import OrderFromContainer from '@/containers/orderFormContainer/OrderFormContainer.vue';
@@ -109,7 +110,6 @@ import { useOrderCreate } from '@/hooks/useOrderCreate';
 import { OrderFormInjectionKey, OrderFormTab } from '@/components/app/orderForm/index';
 import { Tab } from '@/components/core/tabs';
 
-import Typography from '@/components/app/typography/Typography.vue';
 import { useEmulatorStore } from '@/stores/emulator';
 import { useMarketStore } from '@/stores/market';
 import OrderFormInputPart from './composables/orderFormInputPart/OrderFormInputPart.vue';

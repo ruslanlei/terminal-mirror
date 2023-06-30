@@ -8,7 +8,7 @@
       />
     </template>
     <template #primaryInfoTop>
-      <Typography
+      <UiTypography
         :state="['accent1', 'bold']"
         size="title3"
       >
@@ -20,48 +20,48 @@
             {{ commonPnl }}
           </template>
           <template #currency>
-            <Typography
+            <UiTypography
               :state="['accent2', 'medium']"
               is-inline
             >
               {{ '$' }}
-            </Typography>
+            </UiTypography>
           </template>
         </i18n-t>
-      </Typography>
+      </UiTypography>
     </template>
     <template #primaryInfoBottom>
-      <Typography
+      <UiTypography
         size="title6"
         :state="['accent2', 'medium']"
       >
         <i18n-t keypath="statistics.resultPeriodLabel">
           <template #period>
-            <Typography
+            <UiTypography
               is-inline
               state="accent1"
             >
               {{ customFormatDate('MMMM', dateNow()) }}
-            </Typography>
+            </UiTypography>
           </template>
         </i18n-t>
-      </Typography>
+      </UiTypography>
     </template>
     <template #secondaryInfoTop>
-      <!--      <Typography-->
+      <!--      <UiTypography-->
       <!--        size="title3"-->
       <!--        :state="['accent1', 'medium']"-->
       <!--      >-->
       <!--        {{ t('common.percents', { value: toPositiveNumberString(10) }) }}-->
-      <!--      </Typography>-->
+      <!--      </UiTypography>-->
     </template>
     <template #secondaryInfoBottom>
-      <!--      <Typography-->
+      <!--      <UiTypography-->
       <!--        size="title6"-->
       <!--        :state="['accent2', 'medium']"-->
       <!--      >-->
       <!--        {{ t('statistics.toDeposit') }}-->
-      <!--      </Typography>-->
+      <!--      </UiTypography>-->
     </template>
   </StatisticsResultRow>
 </template>
@@ -71,8 +71,8 @@ import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { storeToRefs } from 'pinia';
 import { UiAvatar } from '@terminal/uikit/components/avatar';
+import { UiTypography } from '@terminal/uikit/components/typography';
 import StatisticsResultRow from '@/containers/statisticsResultRow/StatisticsResultRow.vue';
-import Typography from '@/components/app/typography/Typography.vue';
 import { customFormatDate, dateNow } from '@/utils/date';
 import { useMarketStore } from '@/stores/market';
 import { calculateCommonPnlForPeriod } from '@/helpers/math/formulas/pnl';

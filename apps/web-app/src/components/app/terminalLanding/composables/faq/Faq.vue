@@ -1,11 +1,11 @@
 <template>
   <div :class="$style.faq">
-    <Typography
+    <UiTypography
       size="massive2"
       :state="['alignCenter', 'accent1', 'bold']"
     >
       {{ t('terminalLanding.faq.label') }}
-    </Typography>
+    </UiTypography>
     <div :class="$style.content">
       <InlineDropdown
         v-for="{ id, label, text } in faqList"
@@ -20,20 +20,20 @@
         :class="$style.faqItem"
       >
         <template #trigger>
-          <Typography
+          <UiTypography
             size="h2"
             :state="['accent1', 'semiBold']"
           >
             {{ label }}
-          </Typography>
+          </UiTypography>
         </template>
         <template #content>
-          <Typography
+          <UiTypography
             size="h3"
             state="accent1"
           >
             {{ text }}
-          </Typography>
+          </UiTypography>
         </template>
       </InlineDropdown>
     </div>
@@ -43,9 +43,9 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { UiTypography } from '@terminal/uikit/components/typography';
 import { uuid } from '@/utils/uuid';
 import InlineDropdown from '@/components/core/inlineDropdown/InlineDropdown.vue';
-import Typography from '@/components/app/typography/Typography.vue';
 import { FaqItem } from './index';
 
 const { t } = useI18n();

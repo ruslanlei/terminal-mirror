@@ -1,19 +1,19 @@
 <template>
   <div :class="$style.totalBeginnerBadge">
     <div :class="$style.text">
-      <Typography
+      <UiTypography
         size="massive3"
         :state="['bold']"
       >
         {{ t('terminalLanding.totalBeginner.label') }}
-      </Typography>
-      <Typography
+      </UiTypography>
+      <UiTypography
         size="title1"
         :state="['medium']"
         :class="$style.description"
       >
         {{ t('terminalLanding.totalBeginner.description') }}
-      </Typography>
+      </UiTypography>
     </div>
     <div :class="$style.illustrationContainer">
       <Picture
@@ -43,7 +43,7 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import { UiButton } from '@terminal/uikit/components/button';
-import Typography from '@/components/app/typography/Typography.vue';
+import { UiTypography } from '@terminal/uikit/components/typography';
 import Picture from '@/components/core/picture/Picture.vue';
 import Link from '@/components/core/link/Link.vue';
 import { collectSrcSet } from '@/utils/dom';

@@ -4,19 +4,19 @@
       <slot name="logo" />
     </div>
     <div :class="$style.card">
-      <Typography
+      <UiTypography
         :state="['background1', 'bold']"
         size="massive2sm"
       >
         {{ card.label }}
-      </Typography>
-      <Typography
+      </UiTypography>
+      <UiTypography
         :class="$style.cardSubheading"
         :state="['accent2', 'medium', 'alignCenter']"
         size="text"
       >
         {{ card.description }}
-      </Typography>
+      </UiTypography>
       <QrCode
         :size="150"
         :text="card.link"
@@ -37,7 +37,7 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import { UiIcon } from '@terminal/uikit/components/icon';
-import Typography from '@/components/app/typography/Typography.vue';
+import { UiTypography } from '@terminal/uikit/components/typography';
 import Link from '@/components/core/link/Link.vue';
 import QrCode from '@/components/core/qrCode/QrCode.vue';
 import { EcosystemCardProps } from './index';

@@ -1,12 +1,12 @@
 <template>
   <div :class="$style.landingFooter">
     <div :class="$style.container">
-      <Typography
+      <UiTypography
         size="massive4"
         :state="['accent1', 'bold']"
       >
         {{ t('courseLanding.buyCourseBadge.heading') }}
-      </Typography>
+      </UiTypography>
       <div :class="$style.imageContainer">
         <Picture
           :class="$style.image"
@@ -26,7 +26,7 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import { UiButton } from '@terminal/uikit/components/button';
-import Typography from '@/components/app/typography/Typography.vue';
+import { UiTypography } from '@terminal/uikit/components/typography';
 import Picture from '@/components/core/picture/Picture.vue';
 
 import { LandingFooterEmits } from '@/components/app/courseLanding/composables/landingFooter/index';

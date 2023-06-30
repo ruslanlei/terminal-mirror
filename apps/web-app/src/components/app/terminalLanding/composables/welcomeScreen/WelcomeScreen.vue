@@ -5,38 +5,38 @@
     :content-class="$style.content"
   >
     <div :class="$style.partners">
-      <Typography
+      <UiTypography
         size="text"
         :state="['accent2', 'medium']"
       >
         {{ t('common.supportedBy') }}
-      </Typography>
+      </UiTypography>
       <div :class="$style.partnerBadges">
         <BadgePartners partner="tradingView" />
         <BadgePartners partner="binance" />
       </div>
     </div>
-    <Typography
+    <UiTypography
       :state="['accent1', 'bold', 'alignCenter']"
       size="massive1"
       :class="$style.label"
     >
       {{ t('terminalLanding.welcomeScreen.label.part1') }}
       <br>
-      <Typography
+      <UiTypography
         is-inline
         :state="['gradientPrimary']"
       >
         {{ t('terminalLanding.welcomeScreen.label.part2') }}
-      </Typography>
-    </Typography>
-    <Typography
+      </UiTypography>
+    </UiTypography>
+    <UiTypography
       size="title1"
       :state="['accent1', 'alignCenter']"
       :class="$style.description"
     >
       {{ t('terminalLanding.welcomeScreen.description') }}
-    </Typography>
+    </UiTypography>
     <div :class="$style.options">
       <Link
         :state="null"
@@ -70,12 +70,12 @@
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { UiButton } from '@terminal/uikit/components/button';
+import { UiTypography } from '@terminal/uikit/components/typography';
 import ImageBackgroundBlock from '@/components/core/imageBackgroundBlock/ImageBackgroundBlock.vue';
 import BackgroundPng from '@/assets/images/auth/background.png';
 import BackgroundWebp from '@/assets/images/auth/background.webp';
 import BackgroundAvif from '@/assets/images/auth/background.avif';
 import BadgePartners from '@/components/app/badgePartners/BadgePartners.vue';
-import Typography from '@/components/app/typography/Typography.vue';
 import Link from '@/components/core/link/Link.vue';
 import { collectSrcSet } from '@/utils/dom';
 import TerminalScreenshotVector from '@/components/app/terminalScreenshotVector/TerminalScreenshotVector.vue';

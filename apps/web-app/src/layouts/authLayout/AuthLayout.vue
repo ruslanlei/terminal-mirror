@@ -37,12 +37,12 @@
             :state="null"
             @click="copyDiscordLink"
           >
-            <Typography
+            <UiTypography
               state="accent1"
               size="title3"
             >
               {{ t('auth.support') }}
-            </Typography>
+            </UiTypography>
           </UiButton>
         </div>
       </footer>
@@ -54,12 +54,12 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import { UiButton } from '@terminal/uikit/components/button';
+import { UiTypography } from '@terminal/uikit/components/typography';
 import Logo from '@/components/core/logo/Logo.vue';
 import Link from '@/components/core/link/Link.vue';
 import LanguageSelect from '@/components/app/languageSelect/LanguageSelect.vue';
 import AuthIllustration from '@/components/app/authIllustration/AuthIllustration.vue';
 import Picture from '@/components/core/picture/Picture.vue';
-import Typography from '@/components/app/typography/Typography.vue';
 import { useDiscordLink } from '@/hooks/useDiscordLink';
 import DemiGroupLogo from './assets/demiGroup.png';
 

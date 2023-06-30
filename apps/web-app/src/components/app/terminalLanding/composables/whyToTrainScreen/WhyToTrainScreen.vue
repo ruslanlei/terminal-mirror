@@ -3,12 +3,12 @@
     ref="root"
     :class="$style.whyToTrainScreen"
   >
-    <Typography
+    <UiTypography
       :state="['accent1', 'bold']"
       size="massive2"
     >
       {{ t('terminalLanding.whyToTrain.label') }}
-    </Typography>
+    </UiTypography>
     <div :class="$style.cardsContainer">
       <div
         :class="$style.progress"
@@ -30,10 +30,12 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { useElementBounding, useWindowSize } from '@vueuse/core';
+import { UiTypography } from '@terminal/uikit/components/typography';
+
 import { IWhyToTrainCard } from '@/components/app/terminalLanding/composables/whyToTrainScreen/whyToTrainCard';
 import WhyToTrainCardRow
   from '@/components/app/terminalLanding/composables/whyToTrainScreen/whyToTrainCardRow/WhyToTrainCardRow.vue';
-import { useElementBounding, useWindowSize } from '@vueuse/core';
 import {
   add,
   divide,
@@ -42,7 +44,6 @@ import {
   subtract,
 } from '@/utils/number';
 import { compose } from '@/utils/fp';
-import Typography from '@/components/app/typography/Typography.vue';
 import { toCssPercentValue } from '@/utils/style';
 
 const { t } = useI18n();

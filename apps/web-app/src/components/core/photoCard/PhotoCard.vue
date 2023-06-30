@@ -5,28 +5,28 @@
     :interactive="true"
   >
     <div :class="$style.content">
-      <Typography
+      <UiTypography
         :state="['accent1', 'bold']"
         size="h2"
         :class="$style.label"
       >
         {{ cardData.label }}
-      </Typography>
-      <Typography
+      </UiTypography>
+      <UiTypography
         :state="['accent2', 'medium']"
         size="textLg"
         :class="$style.description"
       >
         {{ cardData.description }}
-      </Typography>
+      </UiTypography>
     </div>
   </ImageBackgroundBlock>
 </template>
 
 <script setup lang="ts">
-import ImageBackgroundBlock from '@/components/core/imageBackgroundBlock/ImageBackgroundBlock.vue';
 import { useI18n } from 'vue-i18n';
-import Typography from '@/components/app/typography/Typography.vue';
+import { UiTypography } from '@terminal/uikit/components/typography';
+import ImageBackgroundBlock from '@/components/core/imageBackgroundBlock/ImageBackgroundBlock.vue';
 import { PhotoCardProps } from './index';
 
 const { t } = useI18n();

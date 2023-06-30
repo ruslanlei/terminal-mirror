@@ -1,47 +1,47 @@
 <template>
   <StatisticsResultRow>
     <template #prepend>
-      <Typography
+      <UiTypography
         size="h3"
         :state="['success', 'bold']"
       >
         {{ successOrdersAmount }}
-      </Typography>
+      </UiTypography>
     </template>
     <template #primaryInfoTop>
-      <Typography
+      <UiTypography
         :state="['success', 'bold']"
         size="title5"
       >
         {{ t('statistics.orders.success.label') }}
-      </Typography>
+      </UiTypography>
     </template>
     <template #primaryInfoBottom>
-      <Typography
+      <UiTypography
         size="title7"
         :state="['accent2', 'medium']"
       >
         <i18n-t keypath="statistics.orders.success.averageIncome">
           <template #value>
-            <Typography
+            <UiTypography
               is-inline
               state="accent1"
             >
               {{ t('common.currencyAmount', { amount: averageIncome, currency: '$' }) }}
-            </Typography>
+            </UiTypography>
           </template>
         </i18n-t>
-      </Typography>
+      </UiTypography>
     </template>
     <template #append>
       <div :class="$style.popularCoin">
-        <Typography
+        <UiTypography
           size="title7"
           :state="['accent2', 'medium', 'alignRight']"
           :class="$style.popularCoinLabel"
         >
           {{ t('statistics.orders.success.popularCoin') }}
-        </Typography>
+        </UiTypography>
         <UiCoinLogo :coin="mostFrequentCoin" />
       </div>
     </template>
@@ -53,8 +53,8 @@ import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { storeToRefs } from 'pinia';
 import { UiCoinLogo } from '@terminal/uikit/components/coinLogo';
+import { UiTypography } from '@terminal/uikit/components/typography';
 import StatisticsResultRow from '@/containers/statisticsResultRow/StatisticsResultRow.vue';
-import Typography from '@/components/app/typography/Typography.vue';
 import { useMarketStore } from '@/stores/market';
 import { compose } from '@/utils/fp';
 import { calculateAverageIncome, findMostFrequentCoin } from '@/helpers/orders';

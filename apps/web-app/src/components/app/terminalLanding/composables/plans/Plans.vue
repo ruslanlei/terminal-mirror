@@ -1,11 +1,11 @@
 <template>
   <div :class="$style.plans">
-    <Typography
+    <UiTypography
       :state="['accent1', 'bold', 'alignCenter']"
       size="massive2"
     >
       {{ t('terminalLanding.plans.label') }}
-    </Typography>
+    </UiTypography>
     <div :class="$style.cards">
       <PlansCard
         v-for="{ id, card, state } in cards"
@@ -20,9 +20,10 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { uuid } from '@/utils/uuid';
 import { useI18n } from 'vue-i18n';
-import Typography from '@/components/app/typography/Typography.vue';
+import { uuid } from '@terminal/common/utils/uuid';
+import { UiTypography } from '@terminal/uikit/components/typography';
+
 import PlansCard from '@/components/core/planCard/PlanCard.vue';
 import { LandingPlan, PlanCardProps } from '@/components/core/planCard';
 

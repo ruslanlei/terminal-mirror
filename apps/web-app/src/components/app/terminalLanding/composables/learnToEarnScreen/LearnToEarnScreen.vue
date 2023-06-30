@@ -1,12 +1,12 @@
 <template>
   <div :class="$style.learnToEarnScreen">
-    <Typography
+    <UiTypography
       size="massive2"
       :state="['accent1', 'bold']"
       :class="$style.label"
     >
       {{ t('terminalLanding.learnToEarn.label') }}
-    </Typography>
+    </UiTypography>
     <div :class="$style.content">
       <Lottie
         :class="$style.lottieScene"
@@ -23,14 +23,15 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import Typography from '@/components/app/typography/Typography.vue';
+import { storeToRefs } from 'pinia';
+
+import { UiTypography } from '@terminal/uikit/components/typography';
 import LearnToEarnFrames
   from '@/components/app/terminalLanding/composables/learnToEarnScreen/learnToEarnFrames/LearnToEarnFrames.vue';
 import { ILearnToEarnFrame } from '@/components/app/terminalLanding/composables/learnToEarnScreen/learnToEarnFrame';
 
 import Lottie from '@/components/core/lottie/Lottie.vue';
 import { useI18nStore } from '@/stores/i18n';
-import { storeToRefs } from 'pinia';
 import scene1 from './assets/scene1.json?url';
 import scene1Ru from './assets/scene1Ru.json?url';
 import scene2 from './assets/scene2.json?url';

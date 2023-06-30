@@ -33,7 +33,7 @@
         :class="$style.addToFavorites"
         @click.stop="onToggleFavorite(pairId)"
       >
-        <Typography
+        <UiTypography
           :state="isFavorite ? 'accent1' : 'accent2' "
           is-inline
         >
@@ -47,7 +47,7 @@
               :icon="isFavorite ? 'starFilled' : 'star'"
             />
           </transition>
-        </Typography>
+        </UiTypography>
       </button>
       <UiCoinLogo
         :coin="base"
@@ -90,12 +90,12 @@
         keypath="pairs.table.last24HoursPercentChange.history"
       >
         <template #period>
-          <Typography
+          <UiTypography
             is-inline
             state="accent2"
           >
             {{ t('dateTime.shortHours', { hours: 24 }) }}
-          </Typography>
+          </UiTypography>
         </template>
       </i18n-t>
     </template>
@@ -126,13 +126,13 @@ import { useI18n } from 'vue-i18n';
 import { UiBadge } from '@terminal/uikit/components/badge';
 import { UiCoinLogo } from '@terminal/uikit/components/coinLogo';
 import { UiIcon } from '@terminal/uikit/components/icon';
+import { UiTypography } from '@terminal/uikit/components/typography';
 import Table from '@/components/core/table/Table.vue';
 import TrendingIcon from '@/components/core/trendingIcon/TrendingIcon.vue';
 import { SortDirection } from '@/components/core/table';
 import { humanizeNumber } from '@/utils/numberFormat';
 import { Pair } from '@/api/types/pair';
 import { useMarketStore } from '@/stores/market';
-import Typography from '@/components/app/typography/Typography.vue';
 import { useChartDataStore } from '@/stores/chartData';
 import { isPositive } from '@/utils/number';
 import { humanizePercents } from '@/helpers/math/percents';

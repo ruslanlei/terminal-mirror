@@ -1,11 +1,11 @@
 <template>
   <div :class="$style.determinationScreen">
-    <Typography
+    <UiTypography
       size="massive2"
       :state="['accent1', 'bold']"
     >
       {{ t('terminalLanding.determinationScreen.label') }}
-    </Typography>
+    </UiTypography>
     <div :class="$style.content">
       <div :class="$style.columnLeft">
         <PhotoCard
@@ -28,7 +28,8 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
-import Typography from '@/components/app/typography/Typography.vue';
+import { UiTypography } from '@terminal/uikit/components/typography';
+
 import { IPhotoCard } from '@/components/core/photoCard';
 import PhotoCard from '@/components/core/photoCard/PhotoCard.vue';
 

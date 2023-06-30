@@ -3,12 +3,12 @@
     :state="isDanger ? 'danger' : 'background4'"
     :class="$style.orderRatioBadge"
   >
-    <Typography
+    <UiTypography
       size="title5"
       :state="['nowrap']"
     >
       {{ computedRatio }}
-    </Typography>
+    </UiTypography>
   </UiBadge>
 </template>
 
@@ -16,12 +16,12 @@
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { UiBadge } from '@terminal/uikit/components/badge';
+import { UiTypography } from '@terminal/uikit/components/typography';
 import { compose } from '@/utils/fp';
 import {
   divideRight,
   floorToDecimalPlaces,
 } from '@/utils/number';
-import Typography from '@/components/app/typography/Typography.vue';
 import { isMoreThanLeft } from '@/utils/boolean';
 import { OrderRatioBadgeProps } from './index';
 

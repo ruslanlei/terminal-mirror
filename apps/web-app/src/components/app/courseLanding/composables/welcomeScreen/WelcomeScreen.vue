@@ -6,20 +6,20 @@
   >
     <div :class="$style.main">
       <div :class="$style.textInformation">
-        <Typography
+        <UiTypography
           :class="$style.label"
           :state="['accent1', 'bold']"
           size="massive1"
         >
           {{ t('courseLanding.welcomeScreen.label') }}
-        </Typography>
-        <Typography
+        </UiTypography>
+        <UiTypography
           :class="$style.description"
           :state="['accent2']"
           size="textLg"
         >
           {{ t('courseLanding.welcomeScreen.description') }}
-        </Typography>
+        </UiTypography>
         <div :class="$style.options">
           <UiButton
             state="blueGradientColor"
@@ -61,8 +61,8 @@
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { UiButton } from '@terminal/uikit/components/button';
+import { UiTypography } from '@terminal/uikit/components/typography';
 
-import Typography from '@/components/app/typography/Typography.vue';
 import Picture from '@/components/core/picture/Picture.vue';
 import ImageBackgroundBlock from '@/components/core/imageBackgroundBlock/ImageBackgroundBlock.vue';
 import AdvantagesCard from '@/components/app/courseLanding/composables/welcomeScreen/advantagesCard/AdvantagesCard.vue';

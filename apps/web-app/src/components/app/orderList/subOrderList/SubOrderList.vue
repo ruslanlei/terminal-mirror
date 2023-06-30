@@ -35,7 +35,7 @@
       </i18n-t>
     </template>
     <template #cell(volume)="{ data: { value, currency, orderType } }">
-      <Typography
+      <UiTypography
         v-if="value"
         size="title2"
         :state="[
@@ -53,23 +53,23 @@
             {{ value }}
           </template>
           <template #currency>
-            <Typography
+            <UiTypography
               :is-inline="true"
               :class="$style.volumeCurrency"
               state="medium"
             >
               {{ currency }}
-            </Typography>
+            </UiTypography>
           </template>
         </i18n-t>
-      </Typography>
-      <Typography
+      </UiTypography>
+      <UiTypography
         v-else
         size="title3"
         :state="['accent2', 'bold']"
       >
         {{ t('order.status.canceled') }}
-      </Typography>
+      </UiTypography>
     </template>
     <template #cell(date)="{ data: date }">
       <div :class="$style.date">
@@ -89,9 +89,9 @@
 </template>
 
 <script setup lang="ts">
-import Table from '@/components/core/table/Table.vue';
 import { useI18n } from 'vue-i18n';
-import Typography from '@/components/app/typography/Typography.vue';
+import { UiTypography } from '@terminal/uikit/components/typography';
+import Table from '@/components/core/table/Table.vue';
 import { useSubOrderList } from '@/hooks/useSubOrderList';
 import {
   SubOrderListProps,

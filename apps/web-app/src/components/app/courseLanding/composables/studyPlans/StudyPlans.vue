@@ -1,11 +1,11 @@
 <template>
   <div :class="$style.studentsReviews">
-    <Typography
+    <UiTypography
       :state="['accent1', 'bold']"
       size="massive2"
     >
       {{ t('courseLanding.studyPlans.heading') }}
-    </Typography>
+    </UiTypography>
     <div :class="$style.cards">
       <PlanCard
         v-for="{ id, card, state } in cards"
@@ -21,10 +21,10 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
-import Typography from '@/components/app/typography/Typography.vue';
-
 import { computed } from 'vue';
-import { uuid } from '@/utils/uuid';
+import { UiTypography } from '@terminal/uikit/components/typography';
+import { uuid } from '@terminal/common/utils/uuid';
+
 import PlanCard from '@/components/core/planCard/PlanCard.vue';
 import { LandingPlan, PlanCardProps } from '@/components/core/planCard';
 import { useToastStore } from '@/stores/toasts';

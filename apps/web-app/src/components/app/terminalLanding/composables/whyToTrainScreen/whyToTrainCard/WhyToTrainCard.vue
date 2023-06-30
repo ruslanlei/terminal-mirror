@@ -4,25 +4,25 @@
     :class="$style.whyToTrainCard"
   >
     <div :class="$style.index">
-      <Typography
+      <UiTypography
         size="massive4"
         :state="['accent1', 'bold']"
       >
         {{ card.index }}
-      </Typography>
+      </UiTypography>
     </div>
-    <Typography
+    <UiTypography
       :class="$style.text"
       :state="['alignCenter', 'accent1']"
     >
       {{ card.text }}
-    </Typography>
+    </UiTypography>
   </UiCard>
 </template>
 
 <script setup lang="ts">
 import { UiCard } from '@terminal/uikit/components/card';
-import Typography from '@/components/app/typography/Typography.vue';
+import { UiTypography } from '@terminal/uikit/components/typography';
 import { WhyToTrainCardProps } from './index';
 
 const props = defineProps<WhyToTrainCardProps>();

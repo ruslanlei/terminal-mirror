@@ -12,7 +12,7 @@
       </UiAvatar>
     </template>
     <template #primaryInfoTop>
-      <Typography
+      <UiTypography
         :state="['accent1', 'bold']"
         size="title3"
       >
@@ -24,59 +24,59 @@
             {{ commonPnl }}
           </template>
           <template #currency>
-            <Typography
+            <UiTypography
               :state="['accent2', 'medium']"
               is-inline
             >
               {{ '$' }}
-            </Typography>
+            </UiTypography>
           </template>
         </i18n-t>
-      </Typography>
+      </UiTypography>
     </template>
     <template #primaryInfoBottom>
-      <Typography
+      <UiTypography
         size="title6"
         :state="['accent2', 'medium']"
       >
         {{ t('statistics.commonResult.label') }}
-      </Typography>
+      </UiTypography>
     </template>
     <template #secondaryInfoTop>
-      <!--      <Typography-->
+      <!--      <UiTypography-->
       <!--        size="title7"-->
       <!--        :state="['accent2', 'medium']"-->
       <!--      >-->
       <!--        <i18n-t keypath="statistics.commonResult.commonDepositTopUp">-->
       <!--          <template #value>-->
-      <!--            <Typography-->
+      <!--            <UiTypography-->
       <!--              is-inline-->
       <!--              size="title4"-->
       <!--              :state="['semiBold', 'success']"-->
       <!--            >-->
       <!--              {{ commonTopUp }}-->
-      <!--            </Typography>-->
+      <!--            </UiTypography>-->
       <!--          </template>-->
       <!--        </i18n-t>-->
-      <!--      </Typography>-->
+      <!--      </UiTypography>-->
     </template>
     <template #secondaryInfoBottom>
-      <!--      <Typography-->
+      <!--      <UiTypography-->
       <!--        size="title7"-->
       <!--        :state="['accent2', 'medium']"-->
       <!--      >-->
       <!--        <i18n-t keypath="statistics.commonResult.currentDeposit">-->
       <!--          <template #value>-->
-      <!--            <Typography-->
+      <!--            <UiTypography-->
       <!--              is-inline-->
       <!--              size="title4"-->
       <!--              :state="['semiBold', 'accent1']"-->
       <!--            >-->
       <!--              {{ displayBalance }}-->
-      <!--            </Typography>-->
+      <!--            </UiTypography>-->
       <!--          </template>-->
       <!--        </i18n-t>-->
-      <!--      </Typography>-->
+      <!--      </UiTypography>-->
     </template>
   </StatisticsResultRow>
 </template>
@@ -87,8 +87,8 @@ import { useI18n } from 'vue-i18n';
 import { storeToRefs } from 'pinia';
 import { UiAvatar } from '@terminal/uikit/components/avatar';
 import { UiIcon } from '@terminal/uikit/components/icon';
+import { UiTypography } from '@terminal/uikit/components/typography';
 import StatisticsResultRow from '@/containers/statisticsResultRow/StatisticsResultRow.vue';
-import Typography from '@/components/app/typography/Typography.vue';
 import { isPositive, roundToDecimalPlaces } from '@/utils/number';
 import { useEmulatorStore } from '@/stores/emulator';
 import { calculateCommonPnlForPeriod } from '@/helpers/math/formulas/pnl';

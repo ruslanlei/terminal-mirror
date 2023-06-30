@@ -12,20 +12,20 @@
         :class="$style.advantageCardImg"
       />
     </div>
-    <Typography
+    <UiTypography
       :state="['accent1', 'semiBold']"
       size="text"
       :class="$style.cardText"
     >
       {{ card.text }}
-    </Typography>
+    </UiTypography>
   </div>
 </template>
 
 <script setup lang="ts">
-import Picture from '@/components/core/picture/Picture.vue';
-import Typography from '@/components/app/typography/Typography.vue';
 import { useI18n } from 'vue-i18n';
+import { UiTypography } from '@terminal/uikit/components/typography';
+import Picture from '@/components/core/picture/Picture.vue';
 import { AdvantagesCardProps } from './index';
 
 const props = defineProps<AdvantagesCardProps>();

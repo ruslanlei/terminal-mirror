@@ -47,12 +47,12 @@
         :state="null"
         @click="copyDiscordLink"
       >
-        <Typography
+        <UiTypography
           state="accent1"
           size="title5"
         >
           {{ t('auth.support') }}
-        </Typography>
+        </UiTypography>
       </UiButton>
     </footer>
   </UiCard>
@@ -64,12 +64,12 @@ import { UiAvatar } from '@terminal/uikit/components/avatar';
 import { UiButton } from '@terminal/uikit/components/button';
 import { UiCard } from '@terminal/uikit/components/card';
 import { UiIcon } from '@terminal/uikit/components/icon';
+import { UiTypography } from '@terminal/uikit/components/typography';
 
 import LanguageSelect from '@/components/app/languageSelect/LanguageSelect.vue';
 import SubscriptionBadge from '@/components/core/subscriptionBadge/SubscriptionBadge.vue';
 import CurrentTheme from '@/components/app/currentTheme/CurrentTheme.vue';
 import { useProfileSettings } from '@/hooks/useProfileSettings';
-import Typography from '@/components/app/typography/Typography.vue';
 import { useDiscordLink } from '@/hooks/useDiscordLink';
 import DefaultAvatar from '@/assets/images/defaultAvatar.svg?url';
 

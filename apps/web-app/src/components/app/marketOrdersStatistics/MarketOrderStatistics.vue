@@ -7,12 +7,12 @@
       {{ t('statistics.orders.commonAmountLabel') }}
     </template>
     <template #successRate>
-      <Typography
+      <UiTypography
         :state="successRateTextState"
         is-inline
       >
         {{ displaySuccessRate }}
-      </Typography>
+      </UiTypography>
     </template>
     <template #successRateLabel>
       {{ t('statistics.orders.successRateLabel') }}
@@ -33,6 +33,7 @@
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { storeToRefs } from 'pinia';
+import { UiTypography, TypographyState } from '@terminal/uikit/components/typography';
 import { useMarketStore } from '@/stores/market';
 import MarketOrderStatisticsContainer
   from '@/containers/marketOrderStatisticsContainer/MarketOrderStatisticsContainer.vue';
@@ -40,13 +41,11 @@ import StatisticsSuccessOrders from '@/components/app/statisticsSuccessOrders/St
 import StatisticsFailedOrders
   from '@/components/app/statisticsFailedOrders/StatisticsFailedOrders.vue';
 import StatisticsTurnover from '@/components/app/statisticsTurnover/StatisticsTurnover.vue';
-import {calculateSuccessRate, isExactOrder} from '@/helpers/orders';
+import { calculateSuccessRate, isExactOrder } from '@/helpers/orders';
 import { toCssPercentValue } from '@/utils/style';
-import Typography from '@/components/app/typography/Typography.vue';
 import { isMoreThanOrEqualTo } from '@/utils/boolean';
-import { TypographyState } from '@/components/app/typography';
 import { compose } from '@/utils/fp';
-import {filter, getLength} from '@/utils/array';
+import { filter, getLength } from '@/utils/array';
 
 const { t } = useI18n();
 

@@ -4,15 +4,15 @@
       :class="$style.illustration"
       :srcset="illustrationSrcSet"
     />
-    <Typography
+    <UiTypography
       size="title1"
       :state="['accent1', 'bold']"
       :class="$style.label"
     >
       {{ t('deleteOrder.label') }}
-    </Typography>
+    </UiTypography>
     <transition name="orderModalPnlTransition">
-      <Typography
+      <UiTypography
         v-if="isOrderFilled"
         size="title1"
         :state="['accent1', 'medium']"
@@ -23,7 +23,7 @@
           keypath="deleteOrder.pnl"
         >
           <template #pnl>
-            <Typography
+            <UiTypography
               :is-inline="true"
               :state="[
                 isPositive(pnl)
@@ -32,10 +32,10 @@
               ]"
             >
               {{ t('common.currencyAmount', { amount: pnl, currency: orderCurrency }) }}
-            </Typography>
+            </UiTypography>
           </template>
         </i18n-t>
-      </Typography>
+      </UiTypography>
     </transition>
     <div :class="$style.controls">
       <UiButton
@@ -68,8 +68,8 @@ import {
 import { useI18n } from 'vue-i18n';
 import { UiButton } from '@terminal/uikit/components/button';
 import { UiModal } from '@terminal/uikit/components/modal';
+import { UiTypography } from '@terminal/uikit/components/typography';
 import Picture from '@/components/core/picture/Picture.vue';
-import Typography from '@/components/app/typography/Typography.vue';
 import { Order, TakeProfit } from '@/api/types/order';
 import { reduceTakeProfitsToQuantitiesSum } from '@/helpers/math/formulas/takeProfit';
 import { calculateCurrentPnl } from '@/helpers/math/formulas/pnl';

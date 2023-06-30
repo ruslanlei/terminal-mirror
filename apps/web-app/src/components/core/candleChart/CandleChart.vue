@@ -12,12 +12,12 @@
     >
       <slot name="noDataBadge">
         <div :class="$style.noDataBadge">
-          <Typography
+          <UiTypography
             size="title4"
             :state="['accent1']"
           >
             {{ noDataBadgeText }}
-          </Typography>
+          </UiTypography>
         </div>
       </slot>
     </div>
@@ -26,11 +26,11 @@
 
 <script setup lang="ts">
 import { computed, defineAsyncComponent } from 'vue';
+import { UiTypography } from '@terminal/uikit/components/typography';
+import { Time } from 'lightweight-charts';
 import { useLocalValue } from '@/hooks/useLocalValue';
-import Typography from '@/components/app/typography/Typography.vue';
 import { TradingViewCandle } from '@/components/core/candleChart/engines/tradingView';
 import { toSecondsTimestamp } from '@/utils/date';
-import { Time } from 'lightweight-charts';
 import { CandleChartEmits, CandleChartProps, ChartCandle } from './index';
 
 const TradingView = defineAsyncComponent(() => (

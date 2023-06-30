@@ -4,21 +4,21 @@
       v-for="n in 10"
       :key="n"
     >
-      <Typography
+      <UiTypography
         size="h2"
         :state="['accent1', 'nowrap', 'semiBold']"
       >
         {{ t('courseLanding.beginningDate', { date: displayDate }) }}
-      </Typography>
+      </UiTypography>
       <div :class="$style.dot" />
     </template>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
-import Typography from '@/components/app/typography/Typography.vue';
+import { UiTypography } from '@terminal/uikit/components/typography';
 import { customFormatDate } from '@/utils/date';
 
 const { t } = useI18n();

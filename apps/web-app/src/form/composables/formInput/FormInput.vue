@@ -1,5 +1,5 @@
 <template>
-  <Input
+  <UiInput
     ref="input"
     v-bind="props"
     v-model="value"
@@ -17,14 +17,14 @@
         v-bind="data"
       />
     </template>
-  </Input>
+  </UiInput>
 </template>
 
 <script setup lang="ts">
-import Input from '@/components/core/input/Input.vue';
+import { ref } from 'vue';
+import { UiInput } from '@terminal/uikit/components/input';
 import { useActiveField } from '@/hooks/useActiveField';
 import { DefaultFormKey } from '@/form';
-import { ref } from 'vue';
 import { FormInputProps } from './index';
 
 const props = withDefaults(

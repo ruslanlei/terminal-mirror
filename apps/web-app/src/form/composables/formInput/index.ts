@@ -1,6 +1,6 @@
 import {
   InputProps,
-} from '@/components/core/input';
+} from '@terminal/uikit/components/input';
 
 export { default as FormInput } from './FormInput.vue';
 

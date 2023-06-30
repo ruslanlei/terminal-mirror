@@ -1,4 +1,5 @@
 export { default as UiInput } from './Input.vue';
+
 export enum inputType {
   TEXT = 'text',
   PASSWORD = 'password',

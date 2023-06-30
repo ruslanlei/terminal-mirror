@@ -1,7 +1,7 @@
 <template>
   <PairsSelectContainer :is-busy="isTogglingFavorite">
     <template #search>
-      <Input
+      <UiInput
         v-model="query"
         size="md"
         state="secondary2Color"
@@ -13,7 +13,7 @@
             icon="search"
           />
         </template>
-      </Input>
+      </UiInput>
     </template>
     <template #list="{ tableClass }">
       <PairsTable
@@ -30,8 +30,8 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import { UiIcon } from '@terminal/uikit/components/icon';
+import { UiInput } from '@terminal/uikit/components/input';
 import PairsSelectContainer from '@/containers/pairsSelectContainer/PairsSelectContainer.vue';
-import Input from '@/components/core/input/Input.vue';
 import PairsTable from '@/components/app/pairsTable/PairsTable.vue';
 import { usePairSelect } from '@/hooks/usePairSelect';
 

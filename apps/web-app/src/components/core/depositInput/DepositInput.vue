@@ -43,7 +43,7 @@
           </transition>
         </div>
       </div>
-      <RangeSlider
+      <UiRangeSlider
         v-model="localValueInPercents"
         :max="100"
       />
@@ -73,7 +73,7 @@ import { UiButton } from '@terminal/uikit/components/button';
 import { UiAnimatedText } from '@terminal/uikit/components/animatedText';
 import { UiIcon } from '@terminal/uikit/components/icon';
 import { UiNumberInput } from '@terminal/uikit/components/numberInput';
-import RangeSlider from '@/components/core/rangeSlider/RangeSlider.vue';
+import { UiRangeSlider } from '@terminal/uikit/components/rangeSlider';
 import { useDepositInput } from '@/hooks/useDepositInput';
 import { roundToDecimalPlaces } from '@/utils/number';
 import { DepositInputEmits, DepositInputProps } from './index';

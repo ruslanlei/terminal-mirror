@@ -1,5 +1,5 @@
 <template>
-  <Selector
+  <UiSelector
     v-model="marketType"
     :options="marketVariants"
     :state="['primaryColor', 'defaultSize']"
@@ -14,7 +14,7 @@
         {{ label }}
       </span>
     </template>
-  </Selector>
+  </UiSelector>
 </template>
 
 <script setup lang="ts">
@@ -22,7 +22,7 @@ import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { storeToRefs } from 'pinia';
 import { UiIcon } from '@terminal/uikit/components/icon';
-import Selector from '@/components/core/selector/Selector.vue';
+import { UiSelector } from '@terminal/uikit/components/selector';
 import { useMarketStore } from '@/stores/market';
 import { MarketTypeSelectorOption } from './index';
 

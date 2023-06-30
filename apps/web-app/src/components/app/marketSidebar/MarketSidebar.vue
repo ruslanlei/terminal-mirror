@@ -1,5 +1,5 @@
 <template>
-  <Tabs
+  <UiTabs
     v-model="activeTab"
     :tabs="tabs"
     :class="[$style.orderForm, isDisabled && $style.disabled]"
@@ -10,17 +10,16 @@
     <template #tab(couples)>
       <PairSelect />
     </template>
-  </Tabs>
+  </UiTabs>
 </template>
 
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import Tabs from '@/components/core/tabs/Tabs.vue';
-import { TabsProps } from '@/components/core/tabs';
+import { storeToRefs } from 'pinia';
+import { UiTabs, TabsProps } from '@terminal/uikit/components/tabs';
 import OrderForm from '@/components/app/orderForm/OrderForm.vue';
 import PairSelect from '@/components/app/pairSelect/PairSelect.vue';
-import { storeToRefs } from 'pinia';
 import { useChartDataStore } from '@/stores/chartData';
 import { useEmulatorStore } from '@/stores/emulator';
 

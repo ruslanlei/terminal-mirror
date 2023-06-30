@@ -50,7 +50,7 @@
         </FormSelector>
       </template>
       <template #tabs="{ tabContentClass, tabsClass }">
-        <Tabs
+        <UiTabs
           v-model="settingsActiveTab"
           :tabs="settingsTabs"
           :selector-props="{
@@ -84,7 +84,7 @@
           <template #tab(sl)>
             <OrderFormStopLossPart @submit="openTab('input')" />
           </template>
-        </Tabs>
+        </UiTabs>
       </template>
     </OrderFromContainer>
   </Form>
@@ -101,14 +101,13 @@ import { storeToRefs } from 'pinia';
 import { UiButton } from '@terminal/uikit/components/button';
 import { UiIcon } from '@terminal/uikit/components/icon';
 import { UiTypography } from '@terminal/uikit/components/typography';
+import { UiTabs, Tab } from '@terminal/uikit/components/tabs';
 
-import Tabs from '@/components/core/tabs/Tabs.vue';
 import OrderFromContainer from '@/containers/orderFormContainer/OrderFormContainer.vue';
 import { Form, FormSelector } from '@/form';
 
 import { useOrderCreate } from '@/hooks/useOrderCreate';
 import { OrderFormInjectionKey, OrderFormTab } from '@/components/app/orderForm/index';
-import { Tab } from '@/components/core/tabs';
 
 import { useEmulatorStore } from '@/stores/emulator';
 import { useMarketStore } from '@/stores/market';

@@ -1,4 +1,4 @@
-import { SelectorOption, SelectorProps } from '@/components/core/selector';
+import { SelectorOption, SelectorProps } from '@terminal/uikit/components/selector';
 
 export type Tab<V = string> = SelectorOption<V>;
 

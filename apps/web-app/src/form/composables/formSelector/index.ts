@@ -1,4 +1,4 @@
-import { SelectorProps } from '@/components/core/selector';
+import { SelectorProps } from '@terminal/uikit/components/selector';
 
 export { default as FormSelector } from './FormSelector.vue';
 export interface FormSelectorProps extends Omit<SelectorProps, 'modelValue'> {

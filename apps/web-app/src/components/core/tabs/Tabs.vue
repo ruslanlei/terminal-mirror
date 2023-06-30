@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.tabs">
-    <Selector
+    <UiSelector
       v-model="localValue"
       :options="tabs"
       :thickening="0"
@@ -26,7 +26,7 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import Selector from '@/components/core/selector/Selector.vue';
+import { UiSelector } from '@terminal/uikit/components/selector';
 import { useLocalValue } from '@/hooks/useLocalValue';
 import { TabsEmits, TabsProps } from './index';
 

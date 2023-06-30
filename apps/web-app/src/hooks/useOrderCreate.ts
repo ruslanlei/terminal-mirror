@@ -7,9 +7,9 @@ import {
 import { storeToRefs } from 'pinia';
 import { useI18n } from 'vue-i18n';
 import { number, object, string } from 'yup';
+import { SelectorProps } from '@terminal/uikit/components/selector';
 import { CreateOrderDTO } from '@/api/endpoints/orders/create';
 import { useMarketStore } from '@/stores/market';
-import { SelectorProps } from '@/components/core/selector';
 import { useModelReset } from '@/hooks/useModelReset';
 import {
   spreadOrderQuantityBetweenTakeProfits,

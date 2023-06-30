@@ -1,7 +1,7 @@
 <template>
   <OrdersAndStatisticsContainer>
     <template #mainTabSelect>
-      <Selector
+      <UiSelector
         v-model="activeTab"
         :options="mainSelectorOptions"
         :state="['simpleColor', 'lgSize']"
@@ -12,13 +12,13 @@
         name="orderAndStatisticsTabs"
         mode="out-in"
       >
-        <Selector
+        <UiSelector
           v-if="activeTab === 'orders'"
           v-model="orderListType"
           :options="orderListOptions"
           :state="['secondaryColor2', 'mdSize']"
         />
-        <Selector
+        <UiSelector
           v-else-if="activeTab === 'statistics'"
           v-model="statisticsActiveTab"
           :options="statisticsTabs"
@@ -49,12 +49,10 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineAsyncComponent, ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import Selector from '@/components/core/selector/Selector.vue';
-import orderList from '@/components/app/orderList/OrderList.vue';
+import { UiSelector } from '@terminal/uikit/components/selector';
 import OrdersAndStatisticsContainer from '@/containers/ordersAndStatisticsContainer/OrdersAndStatisticsContainer.vue';
-import MarketOrderStatistics from '@/components/app/marketOrdersStatistics/MarketOrderStatistics.vue';
 import MarketStatistics from '@/components/app/marketStatistics/MarketStatistics.vue';
 import ActiveOrderList from '@/components/app/activeOrderList/ActiveOrderList.vue';
 import {

@@ -1,5 +1,5 @@
 <template>
-  <Selector
+  <UiSelector
     v-model="value"
     v-bind="props"
   >
@@ -9,11 +9,11 @@
         v-bind="payload"
       />
     </template>
-  </Selector>
+  </UiSelector>
 </template>
 
 <script setup lang="ts">
-import Selector from '@/components/core/selector/Selector.vue';
+import { UiSelector } from '@terminal/uikit/components/selector';
 import { useActiveField } from '@/hooks/useActiveField';
 import { FormSelectorProps } from './index';
 

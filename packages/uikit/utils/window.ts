@@ -8,8 +8,10 @@ export const getLocationOrigin = () => (
 
 export const getUrlForRelativePath = (
   path: string,
-) => (
-  path.startsWith('/')
-    ? `${getLocationOrigin()}${path}`
-    : `${getLocationOrigin()}/${path}`
-);
+) => {
+  const locationOrigin = getLocationOrigin();
+
+  return path.startsWith('/')
+    ? `${locationOrigin}${path}`
+    : `${locationOrigin}/${path}`;
+};

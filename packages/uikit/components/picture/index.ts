@@ -6,3 +6,5 @@ export interface PictureProps {
   transitionDuration?: number,
   isFill?: boolean,
 }
+
+export interface PictureEmits {}

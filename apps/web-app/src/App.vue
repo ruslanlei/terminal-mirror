@@ -70,6 +70,7 @@ const { isPreparing } = useApp();
 <style lang="scss">
 //@import "src/assets/styles";
 @import "@terminal/uikit/assets/styles";
+@import "@/assets/fonts";
 
 #nprogress {
   .bar {

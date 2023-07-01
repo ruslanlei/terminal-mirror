@@ -4,7 +4,7 @@
     :state="['semiBold', computedTypographyColorState]"
     :class="$style.orderSideLabel"
   >
-    <TrendingIcon
+    <UiTrendingIcon
       :is-visible="true"
       :direction="({ buy: 'up', sell: 'down' }[side])"
     />
@@ -16,7 +16,7 @@
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { UiTypography } from '@terminal/uikit/components/typography';
-import TrendingIcon from '@/components/core/trendingIcon/TrendingIcon.vue';
+import { UiTrendingIcon } from '@terminal/uikit/components/trendingIcon';
 import { OrderSideLabelProps } from './index';
 
 const { t } = useI18n();

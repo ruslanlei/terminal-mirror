@@ -18,7 +18,7 @@
       }"
     >
       <div :class="$style.columnPairsLabel">
-        <TrendingIcon
+        <UiTrendingIcon
           :is-visible="isSortedBy"
           :direction="({ asc: 'up', desc: 'down' }[sortDirection])"
         />
@@ -127,9 +127,8 @@ import { UiBadge } from '@terminal/uikit/components/badge';
 import { UiCoinLogo } from '@terminal/uikit/components/coinLogo';
 import { UiIcon } from '@terminal/uikit/components/icon';
 import { UiTypography } from '@terminal/uikit/components/typography';
-import { UiTable } from '@terminal/uikit/components/table';
-import TrendingIcon from '@/components/core/trendingIcon/TrendingIcon.vue';
-import { SortDirection } from '@terminal/uikit/components/table';
+import { UiTable, SortDirection } from '@terminal/uikit/components/table';
+import { UiTrendingIcon } from '@terminal/uikit/components/trendingIcon';
 import { humanizeNumber } from '@/utils/numberFormat';
 import { Pair } from '@/api/types/pair';
 import { useMarketStore } from '@/stores/market';

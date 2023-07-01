@@ -1,0 +1,29 @@
+{
+  "name": "@terminal/landings",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "devDependencies": {
+    "@intlify/bundle-utils": "^2.2.2",
+    "@nuxt/devtools": "latest",
+    "@nuxtjs/eslint-module": "^4.1.0",
+    "@types/node": "^18",
+    "nuxt": "^3.6.1",
+    "nuxt-svgo": "^3.1.0"
+  },
+  "dependencies": {
+    "@nuxtjs/i18n": "next",
+    "@pinia/nuxt": "^0.4.11",
+    "@terminal/common": "*",
+    "@terminal/tsconfig": "*",
+    "@terminal/uikit": "*",
+    "@vueuse/core": "^10.2.1",
+    "pinia": "^2.1.4",
+    "vue-i18n": "9"
+  }
+}

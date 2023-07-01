@@ -18,6 +18,7 @@ import {
   computed,
   toRefs,
   watch,
+  onBeforeMount,
 } from 'vue';
 import { PictureProps } from './index';
 
@@ -57,7 +58,7 @@ const preload = () => {
   document.documentElement.appendChild(img);
 };
 
-preload();
+onBeforeMount(preload);
 
 watch([src, srcset], () => {
   loaded.value = false;

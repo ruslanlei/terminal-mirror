@@ -8,7 +8,7 @@
         <Layout :class="$style.layout" />
         <ModalLayer :class="$style.modalLayer" />
         <ToastLayer :class="$style.toastLayer" />
-        <LevitatingLayer :class="$style.levitatingLayer" />
+        <UiLevitatingLayer :class="$style.levitatingLayer" />
         <UiIconsMap />
         <UiCoinLogoMap />
       </div>
@@ -19,10 +19,10 @@
 <script setup lang="ts">
 import UiCoinLogoMap from '@terminal/uikit/components/coinLogo/CoinLogoMap.vue';
 import UiIconsMap from '@terminal/uikit/components/icon/IconsMap.vue';
+import { UiLevitatingLayer } from '@terminal/uikit/components/leviatingLayer';
 import Layout from '@/components/app/layout/Layout.vue';
 import ToastLayer from '@/components/app/toastLayer/ToastLayer.vue';
 import ModalLayer from '@/components/app/modalLayer/ModalLayer.vue';
-import LevitatingLayer from '@/components/app/leviatingLayer/LevitatingLayer.vue';
 import AppPreloader from '@/components/app/appPreloader/AppPreloader.vue';
 
 import { useApp } from '@/hooks/useApp';
@@ -68,19 +68,8 @@ const { isPreparing } = useApp();
 </style>
 
 <style lang="scss">
-//@import "src/assets/styles";
 @import "@terminal/uikit/assets/styles";
 @import "@/assets/fonts";
-
-#nprogress {
-  .bar {
-    background: lightgray;
-    z-index: 100000;
-  }
-  .spinner {
-    display: none;
-  }
-}
 
 .appPreloaderTransition-enter-active,
 .appPreloaderTransition-leave-active {

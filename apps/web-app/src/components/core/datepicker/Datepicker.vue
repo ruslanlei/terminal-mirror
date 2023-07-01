@@ -1,5 +1,5 @@
 <template>
-  <Dropdown
+  <UiDropdown
     v-model:is-visible="isCalendarVisible"
     :placement="placement"
     :container-gap="20"
@@ -25,7 +25,7 @@
         />
       </div>
     </template>
-  </Dropdown>
+  </UiDropdown>
 </template>
 
 <script setup lang="ts">
@@ -37,6 +37,7 @@ import english from 'flatpickr/dist/l10n/default';
 import { Russian } from 'flatpickr/dist/l10n/ru.js';
 import { BaseOptions as FlatpickrConfig } from 'flatpickr/dist/types/options';
 import { UiIcon } from '@terminal/uikit/components/icon';
+import { UiDropdown } from '@terminal/uikit/components/dropdown';
 import { useLocalValue } from '@/hooks/useLocalValue';
 import Dropdown from '@/components/core/dropdown/Dropdown.vue';
 import { useI18nStore } from '@/stores/i18n';

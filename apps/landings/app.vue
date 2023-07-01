@@ -1,9 +1,11 @@
 <template>
   <NuxtPage />
+  <UiLevitatingLayer />
 </template>
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
+import { UiLevitatingLayer } from '@terminal/uikit/components/leviatingLayer';
 import { watch, useI18n, onMounted } from '#imports';
 import { useCommonStore } from '~/stores/common';
 

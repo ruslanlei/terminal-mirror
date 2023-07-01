@@ -8,7 +8,16 @@ export default defineNuxtConfig({
   ],
   i18n: {
     defaultLocale: 'en',
-    locales: ['en', 'ru'],
+    locales: [
+      {
+        code: 'en',
+        name: 'ENG',
+      },
+      {
+        code: 'ru',
+        name: 'РУС',
+      },
+    ],
     vueI18n: './i18n/config.ts',
     strategy: 'prefix_except_default',
     detectBrowserLanguage: {

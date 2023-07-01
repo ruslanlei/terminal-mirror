@@ -37,7 +37,7 @@
           {{ t('auth.signUp.label') }}
         </UiButton>
       </Link>
-      <!--      <LanguageSelect />-->
+      <LanguageSelect />
     </div>
   </header>
 </template>
@@ -48,7 +48,7 @@ import { UiButton } from '@terminal/uikit/components/button';
 import { UiLogo } from '@terminal/uikit/components/logo';
 import { useLocalValue } from '@terminal/uikit/hooks/useLocalValue';
 import Link from '~/components/common/link/Link.vue';
-// import LanguageSelect from '@/components/app/languageSelect/LanguageSelect.vue'; // TODO:
+import LanguageSelect from '~/components/common/languageSelect/LanguageSelect.vue';
 import { TerminalLandingChapter } from '~/types/terminal';
 import { TerminalLandingHeaderEmits, TerminalLandingHeaderProps } from './index';
 

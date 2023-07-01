@@ -18,8 +18,8 @@
 </template>
 
 <script setup lang="ts">
-import { LinkProps } from '@/components/core/link/index';
 import { computed } from 'vue';
+import { LinkProps } from '@/components/core/link/index';
 
 const props = withDefaults(
   defineProps<LinkProps>(),

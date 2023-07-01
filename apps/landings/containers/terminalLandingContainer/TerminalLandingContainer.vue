@@ -156,7 +156,7 @@ const learnToEarnScreenBlobLeft = ref();
 
 .ecosystemScreen {
   margin-top: 103px;
-  //height: calc(100 * var(--vh));
+  height: 100vh;
 }
 
 .faq {

@@ -7,7 +7,15 @@ export default defineNuxtConfig({
     'nuxt-svgo',
   ],
   i18n: {
+    defaultLocale: 'en',
+    locales: ['en', 'ru'],
     vueI18n: './i18n/config.ts',
+    strategy: 'prefix_except_default',
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: 'i18n_redirected',
+      redirectOn: 'root',
+    },
   },
   pinia: {
     autoImports: [
@@ -15,6 +23,12 @@ export default defineNuxtConfig({
     ],
   },
   svgo: {
+    svgo: false,
     defaultImport: 'skipsvgo',
+  },
+  runtimeConfig: {
+    public: {
+      projectName: process.env.NUXT_APP_PROJECT_NAME || 'Terminal',
+    },
   },
 });

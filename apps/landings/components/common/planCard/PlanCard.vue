@@ -180,7 +180,7 @@ import { UiGradientCheckIcon } from '@terminal/uikit/components/gradientCheckIco
 import { compose } from '@terminal/common/utils/fp';
 import { percentFormat } from '@terminal/common/utils/numberFormat';
 import { toNegative } from '@terminal/common/utils/number';
-// import Link from '@/components/core/link/Link.vue'; TODO:
+import Link from '~/components/common/link/Link.vue';
 import { PlanCardEmits, PlanCardProps } from './index';
 
 const props = defineProps<PlanCardProps>();

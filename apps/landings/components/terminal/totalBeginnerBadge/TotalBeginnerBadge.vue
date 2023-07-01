@@ -46,11 +46,10 @@ import { UiButton } from '@terminal/uikit/components/button';
 import { UiTypography } from '@terminal/uikit/components/typography';
 import { UiPicture } from '@terminal/uikit/components/picture';
 import { collectSrcSet } from '@terminal/uikit/utils/dom';
-// import Link from '@/components/core/link/Link.vue'; // TODO:
+import Link from '~/components/common/link/Link.vue';
 import IllustrationAvif from './assets/illustration.avif';
 import IllustrationWebp from './assets/illustration.webp';
 import IllustrationPng from './assets/illustration.png';
-import AppPicture from '~/components/common/AppPicture.vue';
 
 const illustrationSrcSet = collectSrcSet([
   IllustrationAvif,

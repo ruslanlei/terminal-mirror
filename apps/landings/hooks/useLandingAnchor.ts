@@ -22,25 +22,25 @@ export const useLandingAnchor = (
   };
 
   const activeSection = ref<string | null>();
-  if (!process.server) {
-    // watch(activeSection, () => {
-    //   if (isAutoScrollBlocked.value) return;
-    //
-    //   const sectionElement = getElementById(activeSection.value || '');
-    //
-    //   if (!sectionElement) return;
-    //
-    //   const targetSectionTop = compose(
-    //     add(window.scrollY),
-    //     getRectField('top'),
-    //   )(sectionElement);
-    //
-    //   window.scrollTo({
-    //     top: targetSectionTop,
-    //     behavior: 'smooth',
-    //   });
-    // });
-  }
+  watch(activeSection, () => {
+    if (process.server) return;
+
+    if (isAutoScrollBlocked.value) return;
+
+    const sectionElement = getElementById(activeSection.value || '');
+
+    if (!sectionElement) return;
+
+    const targetSectionTop = compose(
+      add(window.scrollY),
+      getRectField('top'),
+    )(sectionElement);
+
+    window.scrollTo({
+      top: targetSectionTop,
+      behavior: 'smooth',
+    });
+  });
 
   const onIntersection = (
     entries: IntersectionObserverEntry[],

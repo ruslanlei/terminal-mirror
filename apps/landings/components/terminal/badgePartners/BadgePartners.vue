@@ -4,7 +4,7 @@
     size="sm"
     :class="$style.badgePartners"
   >
-    <ComputedIcon style="width: 200px" />
+    <ComputedIcon />
   </UiBadge>
 </template>
 

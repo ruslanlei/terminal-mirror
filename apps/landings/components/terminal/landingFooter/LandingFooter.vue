@@ -39,8 +39,7 @@ import WalletAvif from '@terminal/uikit/assets/images/auth/wallet.avif';
 import WalletWebp from '@terminal/uikit/assets/images/auth/wallet.webp';
 import WalletPng from '@terminal/uikit/assets/images/auth/wallet.png';
 import { collectSrcSet } from '@terminal/uikit/utils/dom';
-
-// import Link from '@/components/core/link/Link.vue'; // TODO:
+import Link from '~/components/common/link/Link.vue';
 
 const { t } = useI18n();
 

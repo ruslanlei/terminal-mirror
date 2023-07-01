@@ -22,12 +22,10 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import { useI18n } from 'vue-i18n';
-// import { storeToRefs } from 'pinia';
 
 import { UiTypography } from '@terminal/uikit/components/typography';
 import { UiLottie } from '@terminal/uikit/components/lottie';
-// import { useI18nStore } from '@/stores/i18n';
+import { useI18n } from '#imports';
 
 import LearnToEarnFrames from './learnToEarnFrames/LearnToEarnFrames.vue';
 import { ILearnToEarnFrame } from './learnToEarnFrame';
@@ -38,14 +36,7 @@ import scene2 from './assets/scene2.json?url';
 import scene3 from './assets/scene3.json?url';
 import scene4 from './assets/scene4.json?url';
 
-const { t } = useI18n();
-
-// const i18nStore = useI18nStore();
-// const {
-//   locale,
-// } = storeToRefs(i18nStore); // TODO: All i18n in this place
-
-const locale = ref('en');
+const { t, locale } = useI18n();
 
 const activeFrameIndex = ref(0);
 

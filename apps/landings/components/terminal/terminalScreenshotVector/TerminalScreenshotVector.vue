@@ -4,19 +4,15 @@
 
 <script setup lang="ts">
 import {
-  computed, defineAsyncComponent, ref,
+  computed,
+  defineAsyncComponent,
 } from 'vue';
-// import { useI18nStore } from '@/stores/i18n';
+import { useI18n } from '#imports';
 
 const TerminalScreenshot = defineAsyncComponent(() => import('./assets/terminalScreenshot.svg'));
 const TerminalScreenshotRu = defineAsyncComponent(() => import('./assets/terminalScreenshotRu.svg'));
 
-// const i18nStore = useI18nStore();
-// const {
-//   locale,
-// } = toRefs(i18nStore); // TODO:
-
-const locale = ref('en');
+const { locale } = useI18n();
 
 const ComputedScreenShot = computed(() => ({
   en: TerminalScreenshot,

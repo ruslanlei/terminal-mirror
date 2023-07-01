@@ -47,7 +47,7 @@ import { useI18n } from 'vue-i18n';
 import { UiButton } from '@terminal/uikit/components/button';
 import { UiLogo } from '@terminal/uikit/components/logo';
 import { useLocalValue } from '@terminal/uikit/hooks/useLocalValue';
-// import Link from '@/components/core/link/Link.vue'; // TODO:
+import Link from '~/components/common/link/Link.vue';
 // import LanguageSelect from '@/components/app/languageSelect/LanguageSelect.vue'; // TODO:
 import { TerminalLandingChapter } from '~/types/terminal';
 import { TerminalLandingHeaderEmits, TerminalLandingHeaderProps } from './index';

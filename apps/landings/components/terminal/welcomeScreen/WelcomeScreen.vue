@@ -77,7 +77,7 @@ import BackgroundWebp from '@terminal/uikit/assets/images/auth/background.webp';
 import BackgroundAvif from '@terminal/uikit/assets/images/auth/background.avif';
 import { collectSrcSet } from '@terminal/uikit/utils/dom';
 import BadgePartners from '~/components/terminal/badgePartners/BadgePartners.vue';
-// import Link from '@/components/core/link/Link.vue'; TODO:
+import Link from '~/components/common/link/Link.vue';
 import TerminalScreenshotVector from '~/components/terminal/terminalScreenshotVector/TerminalScreenshotVector.vue';
 
 const { t } = useI18n();

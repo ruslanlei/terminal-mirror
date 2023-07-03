@@ -26,7 +26,7 @@
       <Link
         :size="null"
         :state="null"
-        :to="{ name: 'auth-sign-in' }"
+        :to="runtimeConfig.public.signInLink"
       >
         <UiButton
           :state="['gradientColor']"
@@ -53,6 +53,9 @@ import Link from '~/components/common/link/Link.vue';
 import LanguageSelect from '~/components/common/languageSelect/LanguageSelect.vue';
 import { TerminalLandingChapter } from '~/types/terminal';
 import { TerminalLandingHeaderEmits, TerminalLandingHeaderProps } from './index';
+import { useRuntimeConfig } from '#imports';
+
+const runtimeConfig = useRuntimeConfig();
 
 const { t } = useI18n();
 

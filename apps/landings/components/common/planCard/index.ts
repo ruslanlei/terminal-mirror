@@ -17,9 +17,9 @@ export interface LandingPlan {
     value: number | string,
     period?: string,
   },
-  trialLink?: RouteLocationRaw,
+  trialLink?: string | RouteLocationRaw,
   purchaseButton?: string,
-  subscribeLink?: RouteLocationRaw,
+  subscribeLink?: string | RouteLocationRaw,
 }
 
 export interface PlanCardProps {

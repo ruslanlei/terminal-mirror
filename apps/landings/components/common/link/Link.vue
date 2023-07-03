@@ -20,6 +20,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { LinkProps } from './index';
+import { NuxtLink } from '#components';
 
 const props = withDefaults(
   defineProps<LinkProps>(),
@@ -33,7 +34,7 @@ const props = withDefaults(
 
 const isExternal = computed(() => typeof props.to === 'string');
 
-const computedComponent = computed(() => (isExternal.value || !props.to ? 'a' : 'NuxtLink'));
+const computedComponent = computed(() => (isExternal.value || !props.to ? 'a' : NuxtLink));
 </script>
 
 <style lang="scss" module>

@@ -26,6 +26,9 @@ import { UiTypography } from '@terminal/uikit/components/typography';
 
 import PlansCard from '~/components/common/planCard/PlanCard.vue';
 import { LandingPlan, PlanCardProps } from '@/components/common/planCard';
+import { useRuntimeConfig } from '#imports';
+
+const runtimeConfig = useRuntimeConfig();
 
 const { t } = useI18n();
 
@@ -64,8 +67,8 @@ const cards = computed<{
         value: t('terminalLanding.plans.list.singlePackage.price'),
         period: t('dateTime.unit.month'),
       },
-      subscribeLink: { name: 'auth-sign-up' },
-      trialLink: { name: 'auth-sign-up' },
+      subscribeLink: String(runtimeConfig.public.signUpLink),
+      trialLink: String(runtimeConfig.public.signUpLink),
     },
   },
 ]));

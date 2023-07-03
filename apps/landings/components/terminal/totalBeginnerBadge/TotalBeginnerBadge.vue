@@ -25,7 +25,7 @@
       <Link
         :size="null"
         :state="null"
-        :to="{ name: 'about-course' }"
+        :to="{ path: '/course' }"
       >
         <UiButton
           size="xl"

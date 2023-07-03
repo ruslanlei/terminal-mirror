@@ -16,7 +16,7 @@
       <Link
         :state="null"
         :size="null"
-        :to="{ name: 'index' }"
+        :to="runtimeConfig.public.appLink"
       >
         <UiButton
           size="xl"
@@ -39,7 +39,10 @@ import WalletAvif from '@terminal/uikit/assets/images/auth/wallet.avif';
 import WalletWebp from '@terminal/uikit/assets/images/auth/wallet.webp';
 import WalletPng from '@terminal/uikit/assets/images/auth/wallet.png';
 import { collectSrcSet } from '@terminal/uikit/utils/dom';
+import { useRuntimeConfig } from '#imports';
 import Link from '~/components/common/link/Link.vue';
+
+const runtimeConfig = useRuntimeConfig();
 
 const { t } = useI18n();
 

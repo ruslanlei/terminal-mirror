@@ -41,7 +41,7 @@
       <Link
         :state="null"
         :size="null"
-        :to="{ name: 'auth-sign-up' }"
+        :to="runtimeConfig.public.signUpLink"
       >
         <UiButton size="xl">
           {{ t('terminalLanding.welcomeScreen.options.tryForFree') }}
@@ -50,7 +50,7 @@
       <Link
         :state="null"
         :size="null"
-        :to="{ name: 'index' }"
+        :to="runtimeConfig.public.appLink"
       >
         <UiButton
           size="xl"
@@ -79,6 +79,9 @@ import { collectSrcSet } from '@terminal/uikit/utils/dom';
 import BadgePartners from '~/components/terminal/badgePartners/BadgePartners.vue';
 import Link from '~/components/common/link/Link.vue';
 import TerminalScreenshotVector from '~/components/terminal/terminalScreenshotVector/TerminalScreenshotVector.vue';
+import { useRuntimeConfig } from '#imports';
+
+const runtimeConfig = useRuntimeConfig();
 
 const { t } = useI18n();
 

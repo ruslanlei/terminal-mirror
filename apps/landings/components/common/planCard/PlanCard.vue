@@ -155,7 +155,7 @@
       <Link
         :state="null"
         :size="null"
-        :to="{ name: 'index' }"
+        :to="runtimeConfig.public.appLink"
         :class="$style.activePromocode"
       >
         <UiTypography
@@ -180,12 +180,15 @@ import { UiGradientCheckIcon } from '@terminal/uikit/components/gradientCheckIco
 import { compose } from '@terminal/common/utils/fp';
 import { percentFormat } from '@terminal/common/utils/numberFormat';
 import { toNegative } from '@terminal/common/utils/number';
+import { useRuntimeConfig } from '#imports';
 import Link from '~/components/common/link/Link.vue';
 import { PlanCardEmits, PlanCardProps } from './index';
 
 const props = defineProps<PlanCardProps>();
 
 const emit = defineEmits<PlanCardEmits>();
+
+const runtimeConfig = useRuntimeConfig();
 
 const { t } = useI18n();
 

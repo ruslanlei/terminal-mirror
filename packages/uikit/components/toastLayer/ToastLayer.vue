@@ -1,5 +1,10 @@
 <template>
-  <div :class="$style.toastLayer">
+  <div
+    :style="{
+      zIndex: layerZIndex.TOAST_LAYER,
+    }"
+    :class="$style.toastLayer"
+  >
     <div
       v-for="toast in toasts"
       :id="`toast-${toast.id}`"
@@ -17,17 +22,22 @@
 </template>
 
 <script setup lang="ts">
+import { subtract } from '@terminal/common';
 import { UiToast, IToast } from '../toast';
 import { playAnimation } from '../../utils/animation';
 import { useLocalValue } from '../../hooks';
 import { ToastLayerEmits, ToastLayerProps } from './index';
+import { layerZIndex } from '../../enums';
 
-const props = defineProps<ToastLayerProps>();
+const props = withDefaults(
+  defineProps<ToastLayerProps>(),
+  {
+    hideAnimationDuration: 420,
+  },
+);
 const emit = defineEmits<ToastLayerEmits>();
 
 const toasts = useLocalValue<IToast[]>(props, emit, 'toasts');
-
-const HIDE_ANIMATION_DURATION = 420;
 
 const removeToast = (
   toastId: IToast['id'],
@@ -55,7 +65,7 @@ const animateAndRemoveToast = async (toastId: IToast['id']) => {
     scale: [1, 0.5],
     translateY: [0, -50],
     easing: 'easeInOutQuart',
-    duration: HIDE_ANIMATION_DURATION,
+    duration: props.hideAnimationDuration,
   });
 
   await playAnimation({
@@ -64,7 +74,7 @@ const animateAndRemoveToast = async (toastId: IToast['id']) => {
     height: 0,
     marginBottom: 0,
     easing: 'easeInOutQuart',
-    duration: HIDE_ANIMATION_DURATION - 100,
+    duration: subtract(props.hideAnimationDuration, 100),
   });
 
   removeToast(toastId);
@@ -75,6 +85,9 @@ const animateAndRemoveToast = async (toastId: IToast['id']) => {
 @import "../../assets/styles/utils";
 
 .toastLayer {
+  position: fixed;
+  inset: 0;
+
   display: flex;
   justify-content: flex-start;
   align-items: flex-end;

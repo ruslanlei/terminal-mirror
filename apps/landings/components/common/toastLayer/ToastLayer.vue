@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 import { UiToastLayer } from '@terminal/uikit/components/toastLayer';
-import { useToastStore } from '@/stores/toasts';
+import { useToastStore } from '~/stores/toasts';
 
 const toastStore = useToastStore();
 </script>

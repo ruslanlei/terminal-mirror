@@ -42,6 +42,7 @@ export default defineNuxtConfig({
       signInLink: process.env.NUXT_APP_SIGN_IN_LINK || 'localhost:5137/auth/sign-in',
       signUpLink: process.env.NUXT_APP_SIGN_UP_LINK || 'localhost:5137/auth/sign-in',
       appLink: process.env.NUXT_APP_WEB_APP_LINK || 'localhost:5137',
+      discordUsername: process.env.NUXT_APP_DISCORD_USERNAME || '',
     },
   },
 });

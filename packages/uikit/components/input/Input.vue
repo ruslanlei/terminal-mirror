@@ -133,7 +133,7 @@ defineExpose({
 </script>
 
 <style lang="scss" module>
-@import "src/assets/styles/utils";
+@import "../../assets/styles/utils";
 
 // states
 .defaultColor {

@@ -1,21 +1,24 @@
-// import { useToastStore } from '@/stores/toasts'; // TODO:
 import { useClipboard } from '@vueuse/core';
+import { useToastStore } from '@/stores/toasts';
+import { useRuntimeConfig } from '#imports';
 
 export const useDiscordLink = (
   message: string,
 ) => {
-  // const toastStore = useToastStore();
+  const toastStore = useToastStore();
 
-  const discordUsername = String(import.meta.env.VITE_APP_DISCORD_USERNAME);
+  const runtimeConfig = useRuntimeConfig();
+
+  const discordUsername = String(runtimeConfig.discordUsername);
 
   const { copy } = useClipboard();
 
   const copyDiscordLink = async () => {
     await copy(discordUsername);
-    // toastStore.showSuccess({
-    //   text: message,
-    //   duration: 10000,
-    // });
+    toastStore.showSuccess({
+      text: message,
+      duration: 10000,
+    });
   };
 
   return {

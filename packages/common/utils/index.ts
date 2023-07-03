@@ -1,7 +1,6 @@
 export * from './array';
 export * from './boolean';
 export * from './date';
-export * from './execute';
 export * from './fp';
 export * from './functors';
 export * from './number';

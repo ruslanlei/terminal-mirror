@@ -1,4 +1,5 @@
 // @ts-nocheck
+import path from 'path';
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import eslintPlugin from 'vite-plugin-eslint';
@@ -7,7 +8,6 @@ import svgLoader from 'vite-svg-loader';
 import vueTypeImportsPlugin from 'vite-plugin-vue-type-imports';
 import compressionPlugin from 'vite-plugin-compression';
 import { visualizer } from 'rollup-plugin-visualizer';
-import path from 'path';
 import commonjs from '@rollup/plugin-commonjs';
 
 // https://vitejs.dev/config/

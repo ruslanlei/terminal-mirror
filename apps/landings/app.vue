@@ -2,6 +2,7 @@
   <NuxtPage />
   <UiLevitatingLayer />
   <UiIconsMap />
+  <ToastLayer />
 </template>
 
 <script setup lang="ts">
@@ -10,6 +11,7 @@ import { UiLevitatingLayer } from '@terminal/uikit/components/leviatingLayer';
 import UiIconsMap from '@terminal/uikit/components/icon/IconsMap.vue';
 import { watch, useI18n, onMounted } from '#imports';
 import { useCommonStore } from '~/stores/common';
+import ToastLayer from '~/components/common/toastLayer/ToastLayer.vue';
 
 const { t } = useI18n();
 

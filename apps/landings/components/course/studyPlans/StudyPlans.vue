@@ -27,12 +27,9 @@ import { uuid } from '@terminal/common/utils/uuid';
 
 import PlanCard from '~/components/common/planCard/PlanCard.vue';
 import { LandingPlan, PlanCardProps } from '~/components/common/planCard';
-// import { useToastStore } from '@/stores/toasts'; // TODO:
 import { useDiscordLink } from '~/hooks/useDiscordLink';
 
 const { t } = useI18n();
-
-// const toastStore = useToastStore();
 
 const cards = computed<{
   id: string,

@@ -34,11 +34,8 @@ import { useI18n } from 'vue-i18n';
 import { UiTooltip } from '@terminal/uikit/components/tooltip';
 import { UiTypography } from '@terminal/uikit/components/typography';
 import { UiDropdown } from '@terminal/uikit/components/dropdown';
-// import { useToastStore } from '@/stores/toasts'; // TODO:
 import { useDiscordLink } from '~/hooks/useDiscordLink';
 import DiscordLogo from './assets/discordLogo.svg';
-
-// const toastStore = useToastStore();
 
 const { t } = useI18n();
 

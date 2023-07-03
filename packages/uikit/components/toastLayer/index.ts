@@ -3,7 +3,8 @@ import { IToast } from '../toast';
 export { default as UiToastLayer } from './ToastLayer.vue';
 
 export interface ToastLayerProps {
-  toasts: IToast[]
+  toasts: IToast[],
+  hideAnimationDuration: number,
 }
 
 export interface ToastLayerEmits {

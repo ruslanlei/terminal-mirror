@@ -62,21 +62,21 @@ import { useI18n } from 'vue-i18n';
 import { useScroll } from '@vueuse/core';
 import CourseLandingContainer from '~/containers/courseLandingContainer/CourseLandingContainer.vue';
 import CourseLandingHeader
-  from '~/components/course/composables/courseLandingHeader/CourseLandingHeader.vue';
-import WelcomeScreen from '~/components/course/composables/welcomeScreen/WelcomeScreen.vue';
+  from '~/components/course/courseLandingHeader/CourseLandingHeader.vue';
+import WelcomeScreen from '~/components/course/welcomeScreen/WelcomeScreen.vue';
 import CourseExplanation
-  from '~/components/course/composables/courseExplanation/CourseExplanation.vue';
-import CreatorsTeamInfo from '~/components/course/composables/creatorsTeamInfo/CreatorsTeamInfo.vue';
-import ForWhomTheCourse from '~/components/course/composables/forWhomTheCourse/ForWhomTheCourse.vue';
-import PracticeBadge from '~/components/course/composables/practiceBadge/PracticeBadge.vue';
+  from '~/components/course/courseExplanation/CourseExplanation.vue';
+import CreatorsTeamInfo from '~/components/course/creatorsTeamInfo/CreatorsTeamInfo.vue';
+import ForWhomTheCourse from '~/components/course/forWhomTheCourse/ForWhomTheCourse.vue';
+import PracticeBadge from '~/components/course/practiceBadge/PracticeBadge.vue';
 import CourseAdvantages
-  from '~/components/course/composables/courseAdvantages/CourseAdvantages.vue';
-import StudentsReviews from '~/components/course/composables/studentsReviews/StudentsReviews.vue';
-import CourseProgram from '~/components/course/composables/courseProgram/CourseProgram.vue';
-import StudyPlans from '~/components/course/composables/studyPlans/StudyPlans.vue';
+  from '~/components/course/courseAdvantages/CourseAdvantages.vue';
+import StudentsReviews from '~/components/course/studentsReviews/StudentsReviews.vue';
+import CourseProgram from '~/components/course/courseProgram/CourseProgram.vue';
+import StudyPlans from '~/components/course/studyPlans/StudyPlans.vue';
 import EcosystemCap from '~/components/common/ecosystemCap/EcosystemCap.vue';
-import Faq from '~/components/course/composables/faq/Faq.vue';
-import LandingFooter from '~/components/course/composables/landingFooter/LandingFooter.vue';
+import Faq from '~/components/course/faq/Faq.vue';
+import LandingFooter from '~/components/course/landingFooter/LandingFooter.vue';
 /*
 import StartDateTape
 from '@/components/app/courseLanding/composables

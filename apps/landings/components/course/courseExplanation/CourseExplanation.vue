@@ -73,7 +73,7 @@ import { UiImageBackgroundBlock } from '@terminal/uikit/components/imageBackgrou
 import { collectSrcSet } from '@terminal/uikit/utils/dom';
 import { useI18n } from '#imports';
 
-import ImagesStack from '~/components/course/composables/courseExplanation/imagesStack/ImagesStack.vue';
+import ImagesStack from '~/components/course/courseExplanation/imagesStack/ImagesStack.vue';
 import { CourseExplanationEmits } from './index';
 import BackgroundPng from './assets/courseExplanationBackground.png';
 import BackgroundWebp from './assets/courseExplanationBackground.webp';

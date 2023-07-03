@@ -58,6 +58,9 @@ import { getUrlForRelativePath } from '@terminal/uikit/utils/window';
 import EcosystemCard from './ecosystemCard/EcosystemCard.vue';
 import { IEcosystemCard, EcosystemCapProps } from './index';
 import SpaceBackground from './spaceBackground/SpaceBackground.vue';
+import { useRuntimeConfig } from '#imports';
+
+const runtimeConfig = useRuntimeConfig();
 
 const { t } = useI18n();
 

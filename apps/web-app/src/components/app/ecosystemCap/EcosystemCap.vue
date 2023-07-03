@@ -76,9 +76,9 @@ const terminalCard = computed<IEcosystemCard>(() => ({
 }));
 
 const courseCard = computed<IEcosystemCard>(() => ({
-  label: t('ecosystem.course.label'),
-  description: t('ecosystem.course.description'),
-  link: getUrlForRelativePath('/about/course'),
+  label: t('ecosystem.about.label'),
+  description: t('ecosystem.about.description'),
+  link: getUrlForRelativePath('/about/about'),
 }));
 </script>
 

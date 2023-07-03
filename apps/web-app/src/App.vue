@@ -58,13 +58,6 @@ const { isPreparing } = useApp();
   inset: 0;
   z-index: 5000;
 }
-
-.debugPanel {
-  position: fixed;
-  z-index: 999999;
-  top: 0;
-  right: 500px;
-}
 </style>
 
 <style lang="scss">

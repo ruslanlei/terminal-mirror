@@ -37,7 +37,9 @@
           {{ t('auth.signUp.label') }}
         </UiButton>
       </Link>
-      <LanguageSelect />
+      <ClientOnly>
+        <LanguageSelect />
+      </ClientOnly>
     </div>
   </header>
 </template>

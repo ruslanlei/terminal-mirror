@@ -1,5 +1,6 @@
 <template>
   <UiDropdown
+    v-model:is-visible="isDropdownVisible"
     :class="$style.languageSelect"
     :placement="['bottom', 'left']"
     :drop-animation-initial-position-shift="26"
@@ -21,11 +22,11 @@
       <div :class="$style.dropdown">
         <button
           v-for="localeOption in selectLocales"
-          :key="localeOption.value"
+          :key="localeOption.code"
           :class="$style.dropdownOption"
           @click="setLocale(localeOption.code)"
         >
-          {{ localeOption.label }}
+          {{ localeOption.name }}
         </button>
       </div>
     </template>

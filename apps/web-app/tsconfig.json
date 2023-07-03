@@ -1,9 +1,13 @@
 {
   "extends": "@terminal/tsconfig/vue.json",
-  "include": ["../../node_modules/@terminal/uikit/**/*.ts"],
+  "include": [
+    "../../node_modules/@terminal/uikit/**/*.ts",
+    "../../node_modules/@terminal/common/**/*.ts"
+  ],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
+      "@/*": "src/*",
       "@terminal/uikit": ["../../packages/uikit"]
     }
   }

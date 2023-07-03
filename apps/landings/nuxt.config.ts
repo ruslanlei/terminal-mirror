@@ -7,24 +7,24 @@ export default defineNuxtConfig({
     'nuxt-svgo',
   ],
   i18n: {
+    strategy: 'prefix_except_default',
     defaultLocale: 'en',
     locales: [
-      {
-        code: 'en',
-        name: 'ENG',
-      },
       {
         code: 'ru',
         name: 'РУС',
       },
+      {
+        code: 'en',
+        name: 'ENG',
+      },
     ],
-    vueI18n: './i18n/config.ts',
-    strategy: 'prefix_except_default',
     detectBrowserLanguage: {
       useCookie: true,
       cookieKey: 'i18n_redirected',
       redirectOn: 'root',
     },
+    vueI18n: './i18n/config.ts',
   },
   pinia: {
     autoImports: [

@@ -23,14 +23,6 @@
     "followLink": "Follow",
     "colon": "{key}: {value}"
   },
-  "dateTime": {
-    "unit": {
-      "day": "Day",
-      "month": "Month",
-      "week": "Week"
-    },
-    "shortHours": "{hours}h"
-  },
   "validationError": {
     "email": "Value is not valid email",
     "required": "This is required",

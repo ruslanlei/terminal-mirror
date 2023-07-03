@@ -1,36 +1,30 @@
-import { awaitFrame } from '@/utils/window';
+import { awaitFrame } from '../utils/window';
 
-type Handler = {
-  el: HTMLElement,
-  handler: () => void
-}
-
-const handlers: Handler[] = [];
-
-document.addEventListener('click', (event) => {
-  const { target } = event;
-  handlers.forEach(({ el, handler }) => {
-    if (
-      el === target || el.contains(target)
-    ) {
-      return;
-    }
-    handler(event);
-  });
-});
+type wrappedElement = {
+  clickOutsideHandler?: (...args: any[]) => void
+} & HTMLElement
 
 export const OutsideClickDirective = {
-  async mounted(el, binding) {
+  async mounted(
+    element: wrappedElement,
+    binding,
+  ) {
     await awaitFrame();
-    handlers.push({
-      el,
-      handler: binding.value,
-    });
+
+    const handler = (event: MouseEvent) => {
+      const { target } = event;
+      if (
+        element === target
+        || element.contains(target)
+      ) return;
+
+      binding.value(event);
+    };
+
+    document.addEventListener('click', handler);
+    element.clickOutsideHandler = handler;
   },
-  beforeUnmount(el) {
-    handlers.splice(
-      handlers.findIndex((handler) => el === handler.el),
-      1,
-    );
+  beforeUnmount(element: wrappedElement) {
+    document.removeEventListener('click', element.clickOutsideHandler || (() => {}));
   },
 };

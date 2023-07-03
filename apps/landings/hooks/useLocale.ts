@@ -8,9 +8,7 @@ export const useLocale = () => {
   const setLocale = (
     locale: string,
   ) => {
-    console.log('locale', locale);
-
-    nuxtApp.$i18n.locale.value = locale;
+    nuxtApp.$i18n.setLocale(locale);
   };
 
   const locales = computed(() => (

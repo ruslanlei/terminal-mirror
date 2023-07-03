@@ -9,7 +9,7 @@
   >
     <slot name="trigger" />
   </div>
-  <teleport :to="teleportTarget">
+  <Teleport :to="teleportTarget">
     <div
       ref="dropdown"
       v-click-outside="onClickOutside"
@@ -26,7 +26,7 @@
         <slot name="dropdown" />
       </div>
     </div>
-  </teleport>
+  </Teleport>
 </template>
 
 <script setup lang="ts">
@@ -36,6 +36,7 @@ import {
   onBeforeMount,
   onMounted,
   watch,
+  Teleport,
 } from 'vue';
 import { compose } from '@terminal/common/utils/fp';
 import { getValueByKey } from '@terminal/common/utils/object';

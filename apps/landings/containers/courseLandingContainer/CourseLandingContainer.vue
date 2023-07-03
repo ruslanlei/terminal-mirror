@@ -85,7 +85,7 @@
 }
 
 .ecoSystemBlock {
-  height: calc(100 * var(--vh));
+  height: 100vh;
 }
 
 .faq {

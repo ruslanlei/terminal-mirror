@@ -46,6 +46,7 @@ const adjustSvgSize = () => {
 };
 
 onMounted(() => {
+  adjustSvgSize();
   window.addEventListener('resize', adjustSvgSize);
 });
 

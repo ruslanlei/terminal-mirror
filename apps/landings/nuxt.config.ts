@@ -38,6 +38,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       projectName: process.env.NUXT_APP_PROJECT_NAME || 'Terminal',
+      courseName: process.env.NUXT_APP_COURSE_NAME || 'Course',
       signInLink: process.env.NUXT_APP_SIGN_IN_LINK || 'localhost:5137/auth/sign-in',
       signUpLink: process.env.NUXT_APP_SIGN_UP_LINK || 'localhost:5137/auth/sign-in',
       appLink: process.env.NUXT_APP_WEB_APP_LINK || 'localhost:5137',

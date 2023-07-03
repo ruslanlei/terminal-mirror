@@ -1,14 +1,14 @@
 <template>
-  <TerminalLanding />
+  <CourseLanding />
 </template>
 
 <script setup lang="ts">
-import TerminalLanding from '~/components/pages/TerminalLanding.vue';
+import CourseLanding from '~/components/pages/CourseLanding.vue';
 import { useSeoMeta, useRuntimeConfig } from '#imports';
 
 const runtimeConfig = useRuntimeConfig();
 
 useSeoMeta({
-  title: String(runtimeConfig.public.projectName),
+  title: String(runtimeConfig.public.courseName),
 });
 </script>

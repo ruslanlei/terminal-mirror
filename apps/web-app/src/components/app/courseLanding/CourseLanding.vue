@@ -59,9 +59,10 @@
 </template>
 
 <script setup lang="ts">
-import CourseLandingContainer from '@/containers/courseLandingContainer/CourseLandingContainer.vue';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { useScroll } from '@vueuse/core';
+import CourseLandingContainer from '@/containers/courseLandingContainer/CourseLandingContainer.vue';
 import CourseLandingHeader
   from '@/components/app/courseLanding/composables/courseLandingHeader/CourseLandingHeader.vue';
 import WelcomeScreen from '@/components/app/courseLanding/composables/welcomeScreen/WelcomeScreen.vue';
@@ -80,7 +81,6 @@ import Faq from '@/components/app/courseLanding/composables/faq/Faq.vue';
 import LandingFooter from '@/components/app/courseLanding/composables/landingFooter/LandingFooter.vue';
 // import StartDateTape from '@/components/app/courseLanding/composables/startDateTape/StartDateTape.vue';
 import { useLandingAnchor } from '@/hooks/useLandingAnchor';
-import { useScroll } from '@vueuse/core';
 import { CourseLandingChapter } from './index';
 
 const { t } = useI18n();

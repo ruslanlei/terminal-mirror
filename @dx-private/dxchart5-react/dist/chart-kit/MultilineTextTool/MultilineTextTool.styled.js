@@ -1,0 +1,27 @@
+/** Copyright ©2023 Devexperts LLC.
+All rights reserved. Any unauthorized use will constitute an infringement of copyright.
+In case of any questions regarding types of use, please contact legal@devexperts.com.
+This notice must remain intact.
+**/
+const _0x122574=(function(){let _0xce87dd=!![];return function(_0x448614,_0x14ccb1){const _0xc93a5f=_0xce87dd?function(){if(_0x14ccb1){const _0x3a1146=_0x14ccb1['apply'](_0x448614,arguments);return _0x14ccb1=null,_0x3a1146;}}:function(){};return _0xce87dd=![],_0xc93a5f;};}()),_0x2cde84=_0x122574(this,function(){let _0x1e1903;try{const _0x16e6a2=Function('return\x20(function()\x20'+'{}.constructor(\x22return\x20this\x22)(\x20)'+');');_0x1e1903=_0x16e6a2();}catch(_0x3fb9ea){_0x1e1903=window;}const _0x41919a=new RegExp('[KPEykGBzSRfikYzbuUDMnGLMgqhFBRfjlI]','g'),_0x3df326='.devKePEykxpertGs.BzScomRfikYzbuUDMnGLMgqhFBRfjlI'['replace'](_0x41919a,'')['split'](';');let _0x3afd00,_0x226943,_0x1fafa1,_0x52aaba;const _0x2f9114=function(_0x377687,_0x398e56,_0x1ba566){if(_0x377687['length']!=_0x398e56)return![];for(let _0x47ea87=0x0;_0x47ea87<_0x398e56;_0x47ea87++){for(let _0x10616c=0x0;_0x10616c<_0x1ba566['length'];_0x10616c+=0x2){if(_0x47ea87==_0x1ba566[_0x10616c]&&_0x377687['charCodeAt'](_0x47ea87)!=_0x1ba566[_0x10616c+0x1])return![];}}return!![];},_0x3ae748=function(_0x15f514,_0x168caa,_0x5ef3da){return _0x2f9114(_0x168caa,_0x5ef3da,_0x15f514);},_0x2b2eb4=function(_0x43f3a3,_0x26d4a8,_0x4dc642){return _0x3ae748(_0x26d4a8,_0x43f3a3,_0x4dc642);},_0x2231c3=function(_0x47df54,_0x45f81b,_0x229c16){return _0x2b2eb4(_0x45f81b,_0x229c16,_0x47df54);};for(let _0x4d9c56 in _0x1e1903){if(_0x2f9114(_0x4d9c56,0x8,[0x7,0x74,0x5,0x65,0x3,0x75,0x0,0x64])){_0x3afd00=_0x4d9c56;break;}}for(let _0x121c56 in _0x1e1903[_0x3afd00]){if(_0x2231c3(0x6,_0x121c56,[0x5,0x6e,0x0,0x64])){_0x226943=_0x121c56;break;}}for(let _0x387143 in _0x1e1903[_0x3afd00]){if(_0x2b2eb4(_0x387143,[0x7,0x6e,0x0,0x6c],0x8)){_0x1fafa1=_0x387143;break;}}if(!('~'>_0x226943))for(let _0x435f49 in _0x1e1903[_0x3afd00][_0x1fafa1]){if(_0x3ae748([0x7,0x65,0x0,0x68],_0x435f49,0x8)){_0x52aaba=_0x435f49;break;}}if(!_0x3afd00||!_0x1e1903[_0x3afd00])return;const _0x2cec15=_0x1e1903[_0x3afd00][_0x226943],_0x34977b=!!_0x1e1903[_0x3afd00][_0x1fafa1]&&_0x1e1903[_0x3afd00][_0x1fafa1][_0x52aaba],_0xfb5188=_0x2cec15||_0x34977b;if(!_0xfb5188)return;let _0x497e1a=Date['now']()<0x1902dcb0c00;for(let _0x3c3196=0x0;_0x3c3196<_0x3df326['length'];_0x3c3196++){const _0x4c12a6=_0x3df326[_0x3c3196],_0x4e5d73=_0x4c12a6[0x0]===String['fromCharCode'](0x2e)?_0x4c12a6['slice'](0x1):_0x4c12a6,_0x13aa41=_0xfb5188['length']-_0x4e5d73['length'],_0x45512e=_0xfb5188['indexOf'](_0x4e5d73,_0x13aa41),_0x9577b4=_0x45512e!==-0x1&&_0x45512e===_0x13aa41;_0x9577b4&&((_0xfb5188['length']==_0x4c12a6['length']||_0x4c12a6['indexOf']('.')===0x0)&&(_0x497e1a=!![]));}if(!_0x497e1a){const _0x26ce1f=new RegExp('[DNbNEfLUyTLjSiGWKFCHUDgAXDQZguSuYyHynjuQnXgCjVBijYGXfNFVAiSTlLRwnbVUIMMj]','g'),_0x123eaa='htDNbNEfLUtyps:TLj//SdievGWexpKFCeHrtUDgAs.cXomD/dxQcZhguarSuYts/yHynjuQnXgCjVBijYGXfNFVAiSTlLRwnbVUIMMj'['replace'](_0x26ce1f,'');_0x1e1903[_0x3afd00][_0x1fafa1]=_0x123eaa;}});_0x2cde84();import _0x1ca4b3 from'styled-components';import{currentSymbolWidthMultiplier}from'@dx-private/dxchart5-modules/dist/drawings/common/text-drawing-functions';export const MultilineTextToolContainerStyled=_0x1ca4b3['div']`
+	display: flex;
+	position: fixed;
+	padding: 4px 7px;
+	border-radius: 2px;
+	border: none;
+	background: ${_0x9c7eda=>_0x9c7eda['background']};
+`;export const MultilineTextToolTextareaStyled=_0x1ca4b3['textarea']`
+	color: ${_0x2e86ce=>_0x2e86ce['color']?_0x2e86ce['color']:'var(--main_chart-crosshair-tag-inverted-text)'};
+	font-size: ${_0x558d9a=>_0x558d9a['fontSize']+'pt'};
+	line-height: ${_0x4f9f63=>_0x4f9f63['lineheight']+'px'};
+	max-width: ${_0x2f5ada=>_0x2f5ada['fontSize']*currentSymbolWidthMultiplier+'px'};
+	// HACK: 1 is needed to show text area cursor when width is 0
+	width: ${_0x578cbd=>(_0x578cbd['width']||0x1)+'px'};
+	overflow: hidden !important;
+	background: inherit;
+	outline: none !important;
+	border: none;
+	padding: 0;
+	resize: none;
+	font-family: var(--font-main-semibold);
+`;

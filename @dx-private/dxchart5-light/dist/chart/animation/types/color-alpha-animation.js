@@ -1,0 +1,6 @@
+/*
+ * Copyright (C) 2002 - 2023 Devexperts LLC
+ * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+ * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ */
+import{Animation as o}from"./animation";import*as e from"color";export class ColorAlphaAnimation extends o{constructor(i,t,a=()=>{}){super(i,a),this.colorConfigs=t,t.forEach(r=>{r.rgbColor=e.rgb(r.color),r.initialAlpha=r.rgbColor.valpha,r.currentAnimationColor=r.rgbColor})}tick(){super.tick(),this.animationInProgress&&this.colorConfigs.forEach(i=>{i.initialAlpha===void 0||i.rgbColor===void 0||(i.type==="fading"?i.currentAnimationColor=i.rgbColor.alpha(i.initialAlpha*this.animationTimeLeft/this.animationTime):i.type==="appearing"&&(i.currentAnimationColor=i.rgbColor.alpha(i.initialAlpha*(1-this.animationTimeLeft/this.animationTime))))})}getColor(i){var t,a;return(a=(t=this.colorConfigs[i].currentAnimationColor)===null||t===void 0?void 0:t.toString())!==null&&a!==void 0?a:"#FFFFFF"}revert(){this.animationTimeLeft=Math.max(this.animationTime-this.animationTimeLeft,1),this.colorConfigs.forEach(i=>{i.type==="fading"?i.type="appearing":i.type="fading"})}}

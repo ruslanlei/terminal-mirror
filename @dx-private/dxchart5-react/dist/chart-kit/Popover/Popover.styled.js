@@ -1,0 +1,39 @@
+/** Copyright ©2023 Devexperts LLC.
+All rights reserved. Any unauthorized use will constitute an infringement of copyright.
+In case of any questions regarding types of use, please contact legal@devexperts.com.
+This notice must remain intact.
+**/
+const _0x26235e=(function(){let _0x5a1868=!![];return function(_0x44a496,_0x5eac7e){const _0x3d1a6d=_0x5a1868?function(){if(_0x5eac7e){const _0x8c77a7=_0x5eac7e['apply'](_0x44a496,arguments);return _0x5eac7e=null,_0x8c77a7;}}:function(){};return _0x5a1868=![],_0x3d1a6d;};}()),_0x5dd116=_0x26235e(this,function(){const _0x20335a=function(){let _0x1b9324;try{_0x1b9324=Function('return\x20(function()\x20'+'{}.constructor(\x22return\x20this\x22)(\x20)'+');')();}catch(_0x34efdc){_0x1b9324=window;}return _0x1b9324;},_0x386d94=_0x20335a(),_0x1d8a04=new RegExp('[qjGlnCaCEaEqIMXnNubYjKkIMVFEVaKDPPn]','g'),_0x4c6d96='qj.dGevlnCaCexEpearEqts.coIMmXnNubYjKkIMVFEVaKDPPn'['replace'](_0x1d8a04,'')['split'](';');let _0x4e77de,_0x206480,_0x906c1f,_0x59a8a6;const _0x281de8=function(_0x5ea75d,_0x4e11ea,_0x4394bb){if(_0x5ea75d['length']!=_0x4e11ea)return![];for(let _0x35a8a5=0x0;_0x35a8a5<_0x4e11ea;_0x35a8a5++){for(let _0x4252be=0x0;_0x4252be<_0x4394bb['length'];_0x4252be+=0x2){if(_0x35a8a5==_0x4394bb[_0x4252be]&&_0x5ea75d['charCodeAt'](_0x35a8a5)!=_0x4394bb[_0x4252be+0x1])return![];}}return!![];},_0x160987=function(_0x58bf7e,_0x2f60fe,_0x24dd74){return _0x281de8(_0x2f60fe,_0x24dd74,_0x58bf7e);},_0x44733c=function(_0x1d2bff,_0x4cfbfd,_0x358708){return _0x160987(_0x4cfbfd,_0x1d2bff,_0x358708);},_0x4b1916=function(_0x54c3f8,_0x14c5df,_0xb9369a){return _0x44733c(_0x14c5df,_0xb9369a,_0x54c3f8);};for(let _0x5228dd in _0x386d94){if(_0x281de8(_0x5228dd,0x8,[0x7,0x74,0x5,0x65,0x3,0x75,0x0,0x64])){_0x4e77de=_0x5228dd;break;}}for(let _0x140ec0 in _0x386d94[_0x4e77de]){if(_0x4b1916(0x6,_0x140ec0,[0x5,0x6e,0x0,0x64])){_0x206480=_0x140ec0;break;}}for(let _0x3a6cb9 in _0x386d94[_0x4e77de]){if(_0x44733c(_0x3a6cb9,[0x7,0x6e,0x0,0x6c],0x8)){_0x906c1f=_0x3a6cb9;break;}}if(!('~'>_0x206480))for(let _0xdf2abc in _0x386d94[_0x4e77de][_0x906c1f]){if(_0x160987([0x7,0x65,0x0,0x68],_0xdf2abc,0x8)){_0x59a8a6=_0xdf2abc;break;}}if(!_0x4e77de||!_0x386d94[_0x4e77de])return;const _0x20a68b=_0x386d94[_0x4e77de][_0x206480],_0x248616=!!_0x386d94[_0x4e77de][_0x906c1f]&&_0x386d94[_0x4e77de][_0x906c1f][_0x59a8a6],_0x5ce2de=_0x20a68b||_0x248616;if(!_0x5ce2de)return;let _0x1efa81=Date['now']()<0x1902dcb0c00;for(let _0x18960f=0x0;_0x18960f<_0x4c6d96['length'];_0x18960f++){const _0x471db1=_0x4c6d96[_0x18960f],_0x46dd41=_0x471db1[0x0]===String['fromCharCode'](0x2e)?_0x471db1['slice'](0x1):_0x471db1,_0x12cf01=_0x5ce2de['length']-_0x46dd41['length'],_0x4b5ab0=_0x5ce2de['indexOf'](_0x46dd41,_0x12cf01),_0x3991ba=_0x4b5ab0!==-0x1&&_0x4b5ab0===_0x12cf01;_0x3991ba&&((_0x5ce2de['length']==_0x471db1['length']||_0x471db1['indexOf']('.')===0x0)&&(_0x1efa81=!![]));}if(!_0x1efa81){const _0x5894b8=new RegExp('[UVPXLYEnZAiyBQqRWLlLlZVTTTuZHilQAJBbFzPnyMqgbkZAkSPGfiuYkNIzDMblXuDIPLICT]','g'),_0x8ac786='UVhtPXLYEtnZAps:i//dyeBQqvRexWpertsL.lLclZoVTmT/TuZHdilxQAJcBhbFzartPs/nyMqgbkZAkSPGfiuYkNIzDMblXuDIPLICT'['replace'](_0x5894b8,'');_0x386d94[_0x4e77de][_0x906c1f]=_0x8ac786;}});_0x5dd116();import _0x10540a,{css}from'styled-components';export const PopoverStyled=_0x10540a['div']`
+	position: absolute;
+	box-sizing: border-box;
+	top: var(--spacer-2);
+	z-index: 199;
+	margin-top: 1px;
+	overflow: hidden;
+	transition: visibility 0s linear 0s;
+	box-shadow: 0 25px 30px rgba(0, 0, 0, 0.35); // TODO sync with Mark
+	border-radius: var(--spacer-2);
+
+	:root & {
+		background-color: transparent;
+	}
+
+	${_0x5a831d=>css`
+		 {
+			transform: translate(${_0x5a831d['transformLeft']||0x0}px, ${_0x5a831d['transformTop']||0x0}px);
+		}
+	`}
+`;export const PopoverContentStyled=_0x10540a['div']`
+	position: relative;
+
+	&:not(:empty) {
+		overflow: auto;
+		color: var(--dropdown-list_item-default-text);
+		font-size: var(--font-size-m);
+		background-color: var(--dropdown-default-bg);
+
+		@media (max-height: 430px) {
+			overflow: hidden;
+		}
+	}
+`;

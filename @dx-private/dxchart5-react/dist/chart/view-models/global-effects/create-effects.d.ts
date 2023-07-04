@@ -1,0 +1,9 @@
+/** Copyright ©2023 Devexperts LLC.
+All rights reserved. Any unauthorized use will constitute an infringement of copyright.
+In case of any questions regarding types of use, please contact legal@devexperts.com.
+This notice must remain intact.
+**/
+export declare const CreateEffects: import("../../../context/context2").Context<Record<"chartInstance", import("../../components/canvas-chart-renderer/chart-with-modules").ChartWithModules> & Record<"aggregationPeriodViewModel", import("../aggregation-period.view-model").AggregationPeriodViewModel> & Record<"chartTypeViewModel", import("../chart-type.view-model").ChartTypeViewModel> & Record<"chartConfiguratorViewModel", import("../chart-configurator.view-model").ChartConfiguratorViewModel> & Record<"timeFrameViewModel", import("../timeframe.view-model").TimeFrameViewModel> & Record<"chartDataViewModel", import("../chart-data.view-model").ChartDataViewModel> & Record<"timeframePresetsViewModel", import("../timeframe-presets.view-model").TimeframePresetsViewModel> & Record<"notificationVM", import("../notification.view-model").NotificationViewModel> & Record<"drawingViewModel", import("../drawing.view-model").ChartDrawingViewModel> & Record<"multiChartViewModel", import("../multi-chart.view-model").MultiChartViewModel> & Record<"chartId", string> & Record<"chartReactConfig", import("../../../config/chart-react-config").ChartReactConfig>, import("rxjs").Observable<boolean | void | import("../../model/timeframe-presets.model").TimeframePreset | import("@dx-private/dxchart5-light/dist/chart/inputlisteners/canvas-input-listener.component").Point | {
+    start: number;
+    end: number;
+} | [[import("../../model/aggregation.model").AggregationPeriod, import("../../model/aggregation.model").AggregationPeriod], import("../../model/timeframe.model").TimestampRange] | null>>;

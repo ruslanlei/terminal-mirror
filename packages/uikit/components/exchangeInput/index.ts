@@ -1,4 +1,4 @@
-import { NumberInputProps } from '@/components/core/numberInput';
+import { NumberInputProps } from '../numberInput';
 
 export interface ExchangeInputProps {
   modelValue: number,

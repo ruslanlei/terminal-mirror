@@ -1,13 +1,13 @@
 import { computed, toRefs, watch } from 'vue';
-import { DepositInputEmits, DepositInputProps } from '@/components/core/depositInput';
-import { useLocalValue } from '@terminal/uikit/hooks/useLocalValue';
-import { useExchange } from '@/hooks/useExchange';
 import { convertQuoteBalanceToBase } from '@terminal/common/helpers/math/formulas/currency';
 import {
   checkIsRoundedValueEqualToPercentOfTotal,
   percentsToRoundedValue,
   valueToRoundedPercents,
 } from '@terminal/common/helpers/math/percents';
+import { useExchange } from './useExchange';
+import { useLocalValue } from './useLocalValue';
+import { DepositInputEmits, DepositInputProps } from '../components/depositInput';
 
 export const useDepositInput = (
   props: DepositInputProps,

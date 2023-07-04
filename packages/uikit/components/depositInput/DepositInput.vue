@@ -69,14 +69,14 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { UiButton } from '@terminal/uikit/components/button';
-import { UiAnimatedText } from '@terminal/uikit/components/animatedText';
-import { UiIcon } from '@terminal/uikit/components/icon';
-import { UiNumberInput } from '@terminal/uikit/components/numberInput';
-import { UiRangeSlider } from '@terminal/uikit/components/rangeSlider';
-import { useDepositInput } from '@/hooks/useDepositInput';
 import { roundToDecimalPlaces } from '@terminal/common/utils/number';
+import { UiButton } from '../button';
+import { UiAnimatedText } from '../animatedText';
+import { UiIcon } from '../icon';
+import { UiNumberInput } from '../numberInput';
+import { UiRangeSlider } from '../rangeSlider';
 import { DepositInputEmits, DepositInputProps } from './index';
+import { useDepositInput } from '../../hooks';
 
 const props = withDefaults(
   defineProps<DepositInputProps>(),
@@ -129,7 +129,7 @@ const options = computed(() => [
 </script>
 
 <style lang="scss" module>
-@import "@terminal/uikit/assets/styles/utils";
+@import "../../assets/styles/utils";
 
 .depositInput {}
 

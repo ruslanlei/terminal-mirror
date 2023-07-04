@@ -6,3 +6,5 @@ export * from './useComputedState';
 export * from './useEnvironmentObserver';
 export * from './useAnimation';
 export * from './useId';
+export * from './useExchange';
+export * from './useDepositInput';

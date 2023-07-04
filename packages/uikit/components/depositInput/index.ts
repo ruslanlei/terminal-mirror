@@ -1,4 +1,6 @@
-import { NumberInputProps } from '@/components/core/numberInput';
+import { NumberInputProps } from '../numberInput';
+
+export { default as UiDepositInput } from './DepositInput.vue';
 
 export interface DepositInputProps {
   modelValue: number,

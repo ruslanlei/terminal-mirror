@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import ExchangeInput from '@/components/core/exchangeInput/ExchangeInput.vue';
+import ExchangeInput from '../../../../../../packages/uikit/components/exchangeInput/ExchangeInput.vue';
 import { FormExchangeInputEmits, FormExchangeInputProps } from '@/form/composables/formExchangeInput/index';
 import { useActiveField } from '@/hooks/useActiveField';
 

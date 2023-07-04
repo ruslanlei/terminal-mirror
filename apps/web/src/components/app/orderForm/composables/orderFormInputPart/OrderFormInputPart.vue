@@ -109,7 +109,7 @@
 import { useI18n } from 'vue-i18n';
 import OrderFormInputPartContainer from '@/containers/orderFormInputPartContainer/OrderFormInputPartContainer.vue';
 import { FormDepositInput, FormExchangeInput, FormNumberInput } from '@/form';
-import { useExchange } from '@/hooks/useExchange';
+import { useExchange } from '../../../../../../../../packages/uikit/hooks/useExchange';
 import { useMarketStore } from '@/stores/market';
 import { storeToRefs } from 'pinia';
 import { useEmulatorStore } from '@/stores/emulator';

@@ -17,6 +17,12 @@ const chartInstance = ref<ChartBootstrap>();
 const createChartInstance = () => (
   new ChartBootstrap(chartContainer.value, {
     colors: {
+      candleTheme: {
+        upColor: getCssRgbColor('--color-success'),
+        downColor: getCssRgbColor('--color-danger'),
+        upWickColor: getCssRgbColor('--color-success'),
+        downWickColor: getCssRgbColor('--color-danger'),
+      },
       chartAreaTheme: {
         backgroundColor: getCssRgbColor('--color-background-1'),
       },
@@ -25,12 +31,20 @@ const createChartInstance = () => (
       },
       yAxis: {
         backgroundColor: getCssRgbColor('--color-background-1'),
+        labelTextColor: getCssRgbColor('--color-background-5'),
+        rectLabelInvertedTextColor: getCssRgbColor('--color-accent-1'),
       },
       xAxis: {
         backgroundColor: getCssRgbColor('--color-background-1'),
+        labelTextColor: getCssRgbColor('--color-background-5'),
       },
       paneResizer: {
         bgColor: getCssRgbColor('--color-background-1'),
+      },
+      crossTool: {
+        lineColor: getCssRgbColor('--color-accent-3'),
+        labelBoxColor: getCssRgbColor('--color-background-4'),
+        labelTextColor: getCssRgbColor('--color-accent-1'),
       },
     },
   })
@@ -43,10 +57,6 @@ const initChartInstance = () => {
 const setData = () => {
   chartInstance.value?.chartComponent.setMainSeries({
     candles: props.candles,
-    instrument: {
-      symbol: 'AAPL',
-      priceIncrements: [0.01],
-    },
   });
 };
 

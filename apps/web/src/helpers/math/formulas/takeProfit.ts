@@ -14,7 +14,7 @@ import {
   reduce,
   map,
 } from '@terminal/common/utils/array';
-import { TakeProfit } from '@terminal/common/types';
+import { TakeProfit } from '@/api/types/order';
 import { calculateVolumeDifference } from './order';
 import { calculateOnePercent } from '../percents';
 
@@ -58,7 +58,7 @@ export const mapTakeProfitPricesByDecreasePercent = curry((
   percentOfIncrease: number,
   orderPrice: number,
   takeProfits: TakeProfit[],
-) => map(
+) => takeProfits.map(
   (takeProfit: TakeProfit, index: number) => ({
     ...takeProfit,
     price: compose(
@@ -68,13 +68,12 @@ export const mapTakeProfitPricesByDecreasePercent = curry((
       add(1),
     )(index),
   }),
-  takeProfits,
 ));
 
 export const spreadOrderQuantityBetweenTakeProfits = curry((
   orderQuantity: number,
   takeProfits: TakeProfit[],
-) => map(
+) => takeProfits.map(
   (value: any) => ({
     ...value,
     quantity: compose(
@@ -82,7 +81,6 @@ export const spreadOrderQuantityBetweenTakeProfits = curry((
       getLength,
     )(takeProfits),
   }),
-  takeProfits,
 ));
 
 export const calculateCommonTakeProfitPercent = curry((

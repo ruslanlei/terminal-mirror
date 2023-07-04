@@ -1,0 +1,10 @@
+{
+  "ui": {
+    "order": {
+      "direction": {
+        "long": "Long",
+        "short": "Short"
+      }
+    }
+  }
+}

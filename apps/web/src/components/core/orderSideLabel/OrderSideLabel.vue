@@ -6,9 +6,9 @@
   >
     <UiTrendingIcon
       :is-visible="true"
-      :direction="({ buy: 'up', sell: 'down' }[side])"
+      :direction="trendingIconDirection"
     />
-    {{ ({ buy: t('order.direction.long'), sell: t('order.direction.short') }[side]) }}
+    {{ computedLabel }}
   </UiTypography>
 </template>
 
@@ -24,6 +24,13 @@ const { t } = useI18n();
 const props = defineProps<OrderSideLabelProps>();
 
 const computedTypographyColorState = computed(() => ({ buy: 'success', sell: 'danger' }[props.side]));
+
+const trendingIconDirection = computed<'up' | 'down'>(() => ({ buy: 'up', sell: 'down' }[props.side]) as 'up' | 'down');
+
+const computedLabel = computed(() => ({
+  buy: t('ui.order.direction.long'),
+  sell: t('ui.order.direction.short'),
+}[props.side]));
 </script>
 
 <style lang="scss" module>

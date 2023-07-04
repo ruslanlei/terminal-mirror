@@ -1,73 +1,17 @@
 <template>
-  <Component
-    :is="computedComponent"
-    :to="to"
-    :href="to"
-    :class="[
-      $style.link,
-      $style[state],
-      $style[size],
-      isInline && $style.inline,
-    ]"
-    :tabindex="tabIndex"
+  <UiLink
+    :internal-link-component="NuxtLink"
+    v-bind="props"
   >
     <slot>
       {{ label }}
     </slot>
-  </Component>
+  </UiLink>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
-import { LinkProps } from './index';
+import { UiLink, UiLinkProps } from '@terminal/uikit/components/link';
 import { NuxtLink } from '#components';
 
-const props = withDefaults(
-  defineProps<LinkProps>(),
-  {
-    state: 'default',
-    size: 'md',
-    tabIndex: 0,
-    isInline: false,
-  },
-);
-
-const isExternal = computed(() => typeof props.to === 'string');
-
-const computedComponent = computed(() => (isExternal.value || !props.to ? 'a' : NuxtLink));
+const props = defineProps<Omit<UiLinkProps, 'internalLinkComponent'>>();
 </script>
-
-<style lang="scss" module>
-@import "@terminal/uikit/assets/styles/utils";
-
-.link {
-  cursor: pointer;
-  display: block;
-}
-
-.inline {
-  display: inline;
-}
-
-.default, .accent1 {
-  color: rgba(var(--color-accent-1));
-}
-
-.accent2 {
-  color: rgba(var(--color-accent-2));
-}
-
-.primary {
-  color: rgb(var(--color-primary-1));
-}
-
-.md {
-  @include text;
-  font-weight: 600;
-}
-
-.sm {
-  @include textSm;
-  font-weight: 500;
-}
-</style>

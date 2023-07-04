@@ -16,9 +16,9 @@ import {
   ITimeScaleApi,
 } from 'lightweight-charts';
 import { useLocalValue } from '@/hooks/useLocalValue';
-import { toISOString } from '@/utils/date';
-import { compose } from '@/utils/fp';
-import { multiply } from '@/utils/number';
+import { toISOString } from '@terminal/common/utils/date';
+import { compose } from '@terminal/common/utils/fp';
+import { multiply } from '@terminal/common/utils/number';
 import { getCssRgbColor } from '@/utils/style';
 import {
   AbstractCandleChartEngineEmits,

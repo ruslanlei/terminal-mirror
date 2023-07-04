@@ -30,7 +30,7 @@ import { UiTypography } from '@terminal/uikit/components/typography';
 import { Time } from 'lightweight-charts';
 import { useLocalValue } from '@/hooks/useLocalValue';
 import { TradingViewCandle } from '@/components/core/candleChart/engines/tradingView';
-import { toSecondsTimestamp } from '@/utils/date';
+import { toSecondsTimestamp } from '@terminal/common/utils/date';
 import { CandleChartEmits, CandleChartProps, ChartCandle } from './index';
 
 const TradingView = defineAsyncComponent(() => (

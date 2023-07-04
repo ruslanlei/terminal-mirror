@@ -1,4 +1,4 @@
-import { curry } from '@/utils/fp';
+import { curry } from '@terminal/common/utils/fp';
 import numeral from 'numeral';
 
 export const multiply = curry((

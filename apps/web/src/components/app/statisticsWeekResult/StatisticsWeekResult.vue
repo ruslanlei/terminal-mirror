@@ -75,8 +75,8 @@ import { UiTypography } from '@terminal/uikit/components/typography';
 import { useMarketStore } from '@/stores/market';
 import StatisticsResultRow from '@/containers/statisticsResultRow/StatisticsResultRow.vue';
 import { calculateCommonPnlForPeriod } from '@/helpers/math/formulas/pnl';
-import { compose } from '@/utils/fp';
-import { isPositive, roundToDecimalPlaces } from '@/utils/number';
+import { compose } from '@terminal/common/utils/fp';
+import { isPositive, roundToDecimalPlaces } from '@terminal/common/utils/number';
 
 const { t } = useI18n();
 

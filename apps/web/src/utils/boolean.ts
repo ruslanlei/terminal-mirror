@@ -1,4 +1,4 @@
-import { curry } from '@/utils/fp';
+import { curry } from '@terminal/common/utils/fp';
 import lodashIsEqual from 'lodash/isEqual';
 
 export const isEqual = curry(lodashIsEqual);

@@ -302,12 +302,12 @@ import OrderListPlaceholder from '@/components/app/orderList/OrderListPlaceholde
 import CloseOrderButton from '@/components/app/closeOrderButton/CloseOrderButton.vue';
 import { toPositiveNumberString } from '@/utils/style';
 import { createEmptyRecord } from '@terminal/uikit/components/table/helpers';
-import { compose } from '@/utils/fp';
+import { compose } from '@terminal/common/utils/fp';
 import {
   add, ceil, divideRight,
   isPositive, multiply,
   roundToDecimalPlaces, subtract, toNegative,
-} from '@/utils/number';
+} from '@terminal/common/utils/number';
 import {
   MasterOrder,
   Order,
@@ -321,7 +321,7 @@ import {
 import { useChartDataStore } from '@/stores/chartData';
 import { useLocalValue } from '@/hooks/useLocalValue';
 import { getLength, sort } from '@/utils/array';
-import { isDateBefore } from '@/utils/date';
+import { isDateBefore } from '@terminal/common/utils/date';
 import {
   ActiveOrdersTableRecord,
   ClosedOrdersTableRecord,

@@ -5,10 +5,10 @@ import {
   toISOString,
   toSecondsTimestamp,
   toTimestamp,
-} from '@/utils/date';
-import { compose, curry } from '@/utils/fp';
+} from '@terminal/common/utils/date';
+import { compose, curry } from '@terminal/common/utils/fp';
 import { concat, filterNoneUniqueByKey, getLastElement } from '@/utils/array';
-import { multiply, subtractRight } from '@/utils/number';
+import { multiply, subtractRight } from '@terminal/common/utils/number';
 import { isMoreThanLeft } from '@/utils/boolean';
 
 export const getCandleField = curry((

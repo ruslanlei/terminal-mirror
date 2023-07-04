@@ -1,9 +1,9 @@
-import { compose, curry } from '@/utils/fp';
+import { compose, curry } from '@terminal/common/utils/fp';
 import {
   divideRight,
   multiply,
   subtract,
-} from '@/utils/number';
+} from '@terminal/common/utils/number';
 import { calculateVolumeDifference } from '@/helpers/math/formulas/order';
 import { calculateOnePercent } from '@/helpers/math/percents';
 

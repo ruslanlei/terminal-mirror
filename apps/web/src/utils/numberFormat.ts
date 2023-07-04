@@ -1,6 +1,6 @@
 import numeral from 'numeral';
-import { curry } from '@/utils/fp';
-import { divide } from '@/utils/number';
+import { curry } from '@terminal/common/utils/fp';
+import { divide } from '@terminal/common/utils/number';
 import { repeat } from '@/utils/array';
 
 export const humanizeNumber = (

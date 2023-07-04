@@ -1,4 +1,4 @@
-import { compose, curry } from '@/utils/fp';
+import { compose, curry } from '@terminal/common/utils/fp';
 import { reduce, toArray } from '@/utils/array';
 
 export const getCssVariable = (

@@ -4,7 +4,7 @@ import {
   SubOrderListProps,
   SubOrderTableItem,
 } from 'src/components/app/orderList/subOrderList';
-import { compose } from '@/utils/fp';
+import { compose } from '@terminal/common/utils/fp';
 import {
   collectActiveSubOrderRecord,
   collectClosedSubOrderRecord,

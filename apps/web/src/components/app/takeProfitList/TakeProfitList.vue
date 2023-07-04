@@ -44,7 +44,7 @@ import { nextTick } from 'vue';
 import TakeProfitInput from '@/components/core/takeProfitInput/TakeProfitInput.vue';
 import { useLocalValue } from '@/hooks/useLocalValue';
 import { TakeProfitListEmit, TakeProfitListProps } from '@/components/app/takeProfitList/index';
-import { subtract } from '@/utils/number';
+import { subtract } from '@terminal/common/utils/number';
 import { reduceTakeProfitsToQuantitiesSum } from '@/helpers/math/formulas/takeProfit';
 import { TakeProfit } from '@/api/types/order';
 

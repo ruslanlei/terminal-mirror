@@ -1,7 +1,7 @@
 import {
   compose,
   curry,
-} from '@/utils/fp';
+} from '@terminal/common/utils/fp';
 import { Pair } from '@/api/types/pair';
 import {
   MasterOrder,
@@ -14,7 +14,7 @@ import {
   multiply,
   roundToDecimalPlaces,
   toAbsolute,
-} from '@/utils/number';
+} from '@terminal/common/utils/number';
 import { calculatePercentageOfTotal } from '@/helpers/math/percents';
 import {
   // calculateClosePnl,
@@ -23,7 +23,7 @@ import {
   calculatePnlPercent,
 } from '@/helpers/math/formulas/pnl';
 import { calculateCommonTakeProfitPercent } from '@/helpers/math/formulas/takeProfit';
-import { humanizeDate } from '@/utils/date';
+import { humanizeDate } from '@terminal/common/utils/date';
 import { ActiveOrdersTableRecord, ClosedOrdersTableRecord } from 'src/components/app/orderList';
 import { SubOrderTableItem } from 'src/components/app/orderList/subOrderList';
 import { collectTableRecord } from '@terminal/uikit/components/table/helpers';

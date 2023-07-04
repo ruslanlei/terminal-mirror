@@ -8,12 +8,12 @@ import { useStorage } from '@vueuse/core';
 
 import { useEmulatorStore } from '@/stores/emulator';
 import { useMarketStore } from '@/stores/market';
-import { compose } from '@/utils/fp';
+import { compose } from '@terminal/common/utils/fp';
 import {
   dateNow,
   subtractMonths,
   toISOString,
-} from '@/utils/date';
+} from '@terminal/common/utils/date';
 import { decreaseDateByAmountOfCandles } from '@/helpers/candles';
 import { useChartDataStore } from '@/stores/chartData';
 

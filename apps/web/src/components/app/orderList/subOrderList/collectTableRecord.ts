@@ -3,10 +3,10 @@ import {
   ClosedSubOrdersRecord,
   SubOrderTableItem,
 } from '@/components/app/orderList/subOrderList/index';
-import { compose, curry } from '@/utils/fp';
-import { roundToDecimalPlaces } from '@/utils/number';
+import { compose, curry } from '@terminal/common/utils/fp';
+import { roundToDecimalPlaces } from '@terminal/common/utils/number';
 import { valueToPercents } from '@/helpers/math/percents';
-import { humanizeDate } from '@/utils/date';
+import { humanizeDate } from '@terminal/common/utils/date';
 import { MasterOrder } from '@/api/types/order';
 import { Pair } from '@/api/types/pair';
 import { collectTableRecord } from '@terminal/uikit/components/table/helpers';

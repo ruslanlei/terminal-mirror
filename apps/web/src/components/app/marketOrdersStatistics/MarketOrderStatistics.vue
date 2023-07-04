@@ -44,7 +44,7 @@ import StatisticsTurnover from '@/components/app/statisticsTurnover/StatisticsTu
 import { calculateSuccessRate, isExactOrder } from '@/helpers/orders';
 import { toCssPercentValue } from '@/utils/style';
 import { isMoreThanOrEqualTo } from '@/utils/boolean';
-import { compose } from '@/utils/fp';
+import { compose } from '@terminal/common/utils/fp';
 import { filter, getLength } from '@/utils/array';
 
 const { t } = useI18n();

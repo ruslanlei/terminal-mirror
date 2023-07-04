@@ -71,8 +71,8 @@ import {
   divide,
   multiply,
   roundToDecimalPlaces,
-} from '@/utils/number';
-import { compose } from '@/utils/fp';
+} from '@terminal/common/utils/number';
+import { compose } from '@terminal/common/utils/fp';
 import {
   addPercents,
   calculateDecreasePercent,

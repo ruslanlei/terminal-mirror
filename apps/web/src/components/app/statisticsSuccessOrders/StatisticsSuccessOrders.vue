@@ -56,10 +56,10 @@ import { UiCoinLogo } from '@terminal/uikit/components/coinLogo';
 import { UiTypography } from '@terminal/uikit/components/typography';
 import StatisticsResultRow from '@/containers/statisticsResultRow/StatisticsResultRow.vue';
 import { useMarketStore } from '@/stores/market';
-import { compose } from '@/utils/fp';
+import { compose } from '@terminal/common/utils/fp';
 import { calculateAverageIncome, findMostFrequentCoin } from '@/helpers/orders';
 import { getSuccessOrders } from '@/helpers/math/formulas/pnl';
-import { roundToDecimalPlaces } from '@/utils/number';
+import { roundToDecimalPlaces } from '@terminal/common/utils/number';
 import { getLength } from '@/utils/array';
 
 const { t } = useI18n();

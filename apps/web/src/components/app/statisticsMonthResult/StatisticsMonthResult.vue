@@ -73,11 +73,11 @@ import { storeToRefs } from 'pinia';
 import { UiAvatar } from '@terminal/uikit/components/avatar';
 import { UiTypography } from '@terminal/uikit/components/typography';
 import StatisticsResultRow from '@/containers/statisticsResultRow/StatisticsResultRow.vue';
-import { customFormatDate, dateNow } from '@/utils/date';
+import { customFormatDate, dateNow } from '@terminal/common/utils/date';
 import { useMarketStore } from '@/stores/market';
 import { calculateCommonPnlForPeriod } from '@/helpers/math/formulas/pnl';
-import { compose } from '@/utils/fp';
-import { isPositive, roundToDecimalPlaces } from '@/utils/number';
+import { compose } from '@terminal/common/utils/fp';
+import { isPositive, roundToDecimalPlaces } from '@terminal/common/utils/number';
 
 const { t } = useI18n();
 

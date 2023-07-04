@@ -89,11 +89,11 @@ import { UiAvatar } from '@terminal/uikit/components/avatar';
 import { UiIcon } from '@terminal/uikit/components/icon';
 import { UiTypography } from '@terminal/uikit/components/typography';
 import StatisticsResultRow from '@/containers/statisticsResultRow/StatisticsResultRow.vue';
-import { isPositive, roundToDecimalPlaces } from '@/utils/number';
+import { isPositive, roundToDecimalPlaces } from '@terminal/common/utils/number';
 import { useEmulatorStore } from '@/stores/emulator';
 import { calculateCommonPnlForPeriod } from '@/helpers/math/formulas/pnl';
 import { useMarketStore } from '@/stores/market';
-import { compose } from '@/utils/fp';
+import { compose } from '@terminal/common/utils/fp';
 
 const { t } = useI18n();
 

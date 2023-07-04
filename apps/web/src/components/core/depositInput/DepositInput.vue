@@ -75,7 +75,7 @@ import { UiIcon } from '@terminal/uikit/components/icon';
 import { UiNumberInput } from '@terminal/uikit/components/numberInput';
 import { UiRangeSlider } from '@terminal/uikit/components/rangeSlider';
 import { useDepositInput } from '@/hooks/useDepositInput';
-import { roundToDecimalPlaces } from '@/utils/number';
+import { roundToDecimalPlaces } from '@terminal/common/utils/number';
 import { DepositInputEmits, DepositInputProps } from './index';
 
 const props = withDefaults(

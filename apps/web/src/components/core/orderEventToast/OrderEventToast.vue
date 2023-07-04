@@ -128,9 +128,9 @@ import { UiCoinLogo } from '@terminal/uikit/components/coinLogo';
 import { UiIcon } from '@terminal/uikit/components/icon';
 import { UiTypography } from '@terminal/uikit/components/typography';
 import { UiOrderSideLabel } from '@terminal/uikit/components/orderSideLabel';
+import { multiply, roundToDecimalPlaces } from '@terminal/common/utils/number';
+import { compose } from '@terminal/common/utils/fp';
 import { useMarketStore } from '@/stores/market';
-import { multiply, roundToDecimalPlaces } from '@/utils/number';
-import { compose } from '@/utils/fp';
 import { OrderEventToastEmits, OrderEventToastProps } from './index';
 
 const props = defineProps<OrderEventToastProps>();

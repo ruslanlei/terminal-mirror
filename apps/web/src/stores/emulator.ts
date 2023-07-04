@@ -10,7 +10,7 @@ import { useI18n } from 'vue-i18n';
 import { Subject } from 'rxjs';
 import { useMarketStore } from '@/stores/market';
 import { simulate } from '@/api/endpoints/emulator/simulate';
-import { compose } from '@/utils/fp';
+import { compose } from '@terminal/common/utils/fp';
 import {
   addDays,
   addSeconds,
@@ -19,8 +19,8 @@ import {
   subtractYears,
   toISOString,
   toTimestamp,
-} from '@/utils/date';
-import { multiply } from '@/utils/number';
+} from '@terminal/common/utils/date';
+import { multiply } from '@terminal/common/utils/number';
 import { Order } from '@/api/types/order';
 import { processServerErrors } from '@/api/common';
 import { Pair } from '@/api/types/pair';

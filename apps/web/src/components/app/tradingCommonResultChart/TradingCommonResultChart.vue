@@ -20,9 +20,9 @@ import {
   getDifferenceInMonths,
   getMonthIndex,
   subtractMonths,
-} from '@/utils/date';
+} from '@terminal/common/utils/date';
 import { filterOrdersByType } from '@/helpers/orders';
-import { compose } from '@/utils/fp';
+import { compose } from '@terminal/common/utils/fp';
 import { Order } from '@/api/types/order';
 import {
   arrayOf,
@@ -33,7 +33,7 @@ import {
   sortByKey,
 } from '@/utils/array';
 import { getValueByKey, groupBy, objectEntries } from '@/utils/object';
-import { add, roundToDecimalPlaces, subtract } from '@/utils/number';
+import { add, roundToDecimalPlaces, subtract } from '@terminal/common/utils/number';
 import { calculateCommonClosePnl } from '@/helpers/math/formulas/pnl';
 import { Maybe } from '@/utils/functors';
 import { BarChartData, BarChartDataElement } from '@/components/core/barChart/createBarChart';

@@ -16,13 +16,13 @@ import {
   mapTakeProfitPricesByIncreasePercent,
   mapTakeProfitPricesByDecreasePercent,
 } from '@/helpers/math/formulas/takeProfit';
-import { compose } from '@/utils/fp';
+import { compose } from '@terminal/common/utils/fp';
 import { addPercents, subtractPercents } from '@/helpers/math/percents';
 import {
   calculateLiquidationPrice,
   calculatePledge,
 } from '@/helpers/math/formulas/order';
-import { multiply, roundToDecimalPlaces } from '@/utils/number';
+import { multiply, roundToDecimalPlaces } from '@terminal/common/utils/number';
 import { useChartDataStore } from '@/stores/chartData';
 import { TakeProfit } from '@/api/types/order';
 import { arrayOf } from '@/utils/array';

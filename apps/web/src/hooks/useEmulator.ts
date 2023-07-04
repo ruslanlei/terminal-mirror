@@ -5,7 +5,7 @@ import {
 import { useIntervalFn } from '@vueuse/core';
 import { useEmulatorStore } from '@/stores/emulator';
 import { storeToRefs } from 'pinia';
-import { secondsToMilliseconds } from '@/utils/date';
+import { secondsToMilliseconds } from '@terminal/common/utils/date';
 
 export const useEmulator = () => {
   const emulatorStore = useEmulatorStore();

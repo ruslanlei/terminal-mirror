@@ -1,7 +1,7 @@
 import {
   add, divideRight, multiply, subtractRight,
-} from '@/utils/number';
-import { compose, curry } from '@/utils/fp';
+} from '@terminal/common/utils/number';
+import { compose, curry } from '@terminal/common/utils/fp';
 import { Maybe } from '@/utils/functors';
 
 export const convertQuoteBalanceToBase = curry((

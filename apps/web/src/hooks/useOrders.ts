@@ -12,7 +12,7 @@ import { createOrder, CreateOrderDTO } from '@/api/endpoints/orders/create';
 import { OrderModel } from '@/hooks/useOrderCreate';
 import { deleteOrder } from '@/api/endpoints/orders/delete';
 import { closeOrder } from '@/api/endpoints/orders/cancel';
-import { compose } from '@/utils/fp';
+import { compose } from '@terminal/common/utils/fp';
 import { getBalance } from '@/api/endpoints/profile/getBalance';
 
 export const useOrders = (

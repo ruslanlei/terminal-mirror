@@ -2,7 +2,7 @@ import {
   compose,
   curry,
   map,
-} from '@/utils/fp';
+} from '@terminal/common/utils/fp';
 import {
   add,
   divide,
@@ -10,7 +10,7 @@ import {
   multiply,
   subtract,
   subtractRight,
-} from '@/utils/number';
+} from '@terminal/common/utils/number';
 import { calculateOnePercent } from '@/helpers/math/percents';
 import { TakeProfit } from '@/api/types/order';
 import { getLength, reduce } from '@/utils/array';

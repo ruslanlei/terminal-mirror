@@ -9,8 +9,8 @@ import {
   map,
 } from '@/utils/array';
 import { getCandleField, getCandlesWithin24HoursFromLastCandleDate, mixCandles } from '@/helpers/candles';
-import { compose } from '@/utils/fp';
-import { divideRight } from '@/utils/number';
+import { compose } from '@terminal/common/utils/fp';
+import { divideRight } from '@terminal/common/utils/number';
 import { calculatePercentageOfTotal } from '@/helpers/math/percents';
 
 export type CandlesMap = Record<Pair['id'], Candle[]>;

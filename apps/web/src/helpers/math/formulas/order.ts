@@ -1,7 +1,7 @@
 import {
   compose,
   curry,
-} from '@/utils/fp';
+} from '@terminal/common/utils/fp';
 import {
   add,
   divide,
@@ -10,7 +10,7 @@ import {
   subtract,
   subtractRight,
   toAbsolute,
-} from '@/utils/number';
+} from '@terminal/common/utils/number';
 
 export const calculateRisk = curry((
   originalPrice: number,

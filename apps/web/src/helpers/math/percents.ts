@@ -1,16 +1,16 @@
 import {
   compose,
   curry,
-} from '@/utils/fp';
+} from '@terminal/common/utils/fp';
 import {
   add,
   divideRight,
   multiply,
   roundToDecimalPlaces, subtract,
   subtractRight,
-} from '@/utils/number';
+} from '@terminal/common/utils/number';
 import { isEqual } from '@/utils/boolean';
-import { percentFormat } from '@/utils/numberFormat';
+import { percentFormat } from '@terminal/common/utils/numberFormat';
 
 export const calculateOnePercent = (
   total: number,

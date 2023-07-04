@@ -1,13 +1,13 @@
 import {
   compose,
   curry,
-} from '@/utils/fp';
+} from '@terminal/common/utils/fp';
 import { Order } from '@/api/types/order';
 import {
   divideRight,
   multiply,
   roundToDecimalPlaces,
-} from '@/utils/number';
+} from '@terminal/common/utils/number';
 import {
   countBy,
   filter,

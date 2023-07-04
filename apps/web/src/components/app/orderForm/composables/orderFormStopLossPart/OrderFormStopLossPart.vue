@@ -106,10 +106,10 @@ import OrderFormStopLossPartContainer
   from '@/containers/orderFormStopLossPartContainer/OrderFormStopLossPartContainer.vue';
 import OrderFormEstimates from '@/components/app/orderForm/composables/orderFormEstimates/OrderFormEstimates.vue';
 import { useMarketStore } from '@/stores/market';
-import { compose } from '@/utils/fp';
+import { compose } from '@terminal/common/utils/fp';
 import { useEmulatorStore } from '@/stores/emulator';
 import { injectOrderFormState } from '@/components/app/orderForm';
-import { multiply, roundToDecimalPlaces } from '@/utils/number';
+import { multiply, roundToDecimalPlaces } from '@terminal/common/utils/number';
 import {
   calculateOriginalPriceByVolumeDecrease,
   calculateOriginalPriceByVolumeIncrease,

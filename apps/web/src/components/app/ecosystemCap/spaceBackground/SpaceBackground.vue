@@ -11,9 +11,9 @@
 <script setup lang="ts">
 import { onBeforeUnmount } from 'vue';
 import { addCssProperty, queryChildSelector, querySelector } from '@/utils/dom';
-import { compose } from '@/utils/fp';
+import { compose } from '@terminal/common/utils/fp';
 import { toCssPercentValue } from '@/utils/style';
-import { divide } from '@/utils/number';
+import { divide } from '@terminal/common/utils/number';
 import { useId } from '@/hooks/useId';
 import SpaceSvg from './assets/space.svg';
 

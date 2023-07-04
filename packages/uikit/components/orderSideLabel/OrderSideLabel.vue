@@ -15,8 +15,8 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { UiTypography } from '@terminal/uikit/components/typography';
-import { UiTrendingIcon } from '@terminal/uikit/components/trendingIcon';
+import { UiTypography } from '../typography';
+import { UiTrendingIcon } from '../trendingIcon';
 import { OrderSideLabelProps } from './index';
 
 const { t } = useI18n();

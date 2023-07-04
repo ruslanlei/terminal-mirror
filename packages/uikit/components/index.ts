@@ -44,3 +44,4 @@ export * from './leviatingLayer';
 export * from './toastLayer';
 export * from './header';
 export * from './link';
+export * from './orderSideLabel';

@@ -8,7 +8,7 @@
         >
           {{ t('orderExecuted.label') }}
         </UiTypography>
-        <OrderSideLabel
+        <UiOrderSideLabel
           v-if="!hideOrderSide"
           :side="order.side"
         />
@@ -127,10 +127,10 @@ import { UiButton } from '@terminal/uikit/components/button';
 import { UiCoinLogo } from '@terminal/uikit/components/coinLogo';
 import { UiIcon } from '@terminal/uikit/components/icon';
 import { UiTypography } from '@terminal/uikit/components/typography';
+import { UiOrderSideLabel } from '@terminal/uikit/components/orderSideLabel';
 import { useMarketStore } from '@/stores/market';
 import { multiply, roundToDecimalPlaces } from '@/utils/number';
 import { compose } from '@/utils/fp';
-import OrderSideLabel from '@/components/core/orderSideLabel/OrderSideLabel.vue';
 import { OrderEventToastEmits, OrderEventToastProps } from './index';
 
 const props = defineProps<OrderEventToastProps>();

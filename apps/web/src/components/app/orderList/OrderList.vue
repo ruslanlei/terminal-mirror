@@ -297,9 +297,6 @@ import { UiInlineSpace } from '@terminal/uikit/components/inlineSpace';
 import { UiCoinLogo } from '@terminal/uikit/components/coinLogo';
 import { UiIcon } from '@terminal/uikit/components/icon';
 import { UiTypography } from '@terminal/uikit/components/typography';
-import SubOrderList from '@/components/app/orderList/subOrderList/SubOrderList.vue';
-import OrderListPlaceholder from '@/components/app/orderList/OrderListPlaceholder.vue';
-import CloseOrderButton from '@/components/app/closeOrderButton/CloseOrderButton.vue';
 import { toPositiveNumberString } from '@terminal/uikit/utils/style';
 import { createEmptyRecord } from '@terminal/uikit/components/table/helpers';
 import { compose } from '@terminal/common/utils/fp';
@@ -314,14 +311,17 @@ import {
   StopLoss,
   TakeProfit,
 } from '@terminal/common/types/order';
+import { useLocalValue } from '@terminal/uikit/hooks/useLocalValue';
+import { getLength, sort } from '@terminal/common/utils/array';
+import { isDateBefore } from '@terminal/common/utils/date';
+import { useChartDataStore } from '@/stores/chartData';
 import {
   collectActiveOrderRecord,
   collectClosedOrderRecord,
 } from '@/components/app/orderList/collectTableRecord';
-import { useChartDataStore } from '@/stores/chartData';
-import { useLocalValue } from '@terminal/uikit/hooks/useLocalValue';
-import { getLength, sort } from '@terminal/common/utils/array';
-import { isDateBefore } from '@terminal/common/utils/date';
+import CloseOrderButton from '@/components/app/closeOrderButton/CloseOrderButton.vue';
+import OrderListPlaceholder from '@/components/app/orderList/OrderListPlaceholder.vue';
+import SubOrderList from '@/components/app/orderList/subOrderList/SubOrderList.vue';
 import {
   ActiveOrdersTableRecord,
   ClosedOrdersTableRecord,

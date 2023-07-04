@@ -1,7 +1,7 @@
 import { computed, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { useSessionStore } from '@/stores/session';
 import { useI18n } from 'vue-i18n';
+import { useSessionStore } from '@/stores/session';
 import { modalType, useModalStore } from '@/stores/modals';
 
 type VerifyEmailError = 'noToken' | 'badToken';

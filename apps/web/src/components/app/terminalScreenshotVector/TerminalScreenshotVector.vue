@@ -3,8 +3,8 @@
 </template>
 
 <script setup lang="ts">
-import { useI18nStore } from '@/stores/i18n';
 import { computed, defineAsyncComponent, toRefs } from 'vue';
+import { useI18nStore } from '@/stores/i18n';
 
 const TerminalScreenshot = defineAsyncComponent(() => import('./assets/terminalScreenshot.svg'));
 const TerminalScreenshotRu = defineAsyncComponent(() => import('./assets/terminalScreenshotRu.svg'));

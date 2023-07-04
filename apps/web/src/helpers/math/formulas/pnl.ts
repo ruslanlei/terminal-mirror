@@ -23,7 +23,7 @@ import { isEqual, isLessThanLeft, isMoreThanOrEqualTo } from '@terminal/common/u
 
 import { isExactOrder, isOrderOfType } from '../../orders';
 import { calculatePercentageOfTotal } from '../percents';
-import { Order } from '../../../types';
+import { Order } from '@terminal/common/types';
 
 export const calculateCurrentPnl = curry((
   orderPrice: number,

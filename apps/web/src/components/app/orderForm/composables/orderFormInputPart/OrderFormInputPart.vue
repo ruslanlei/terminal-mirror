@@ -107,11 +107,11 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
+import { storeToRefs } from 'pinia';
+import { useExchange } from '@/hooks/useExchange';
 import OrderFormInputPartContainer from '@/containers/orderFormInputPartContainer/OrderFormInputPartContainer.vue';
 import { FormDepositInput, FormExchangeInput, FormNumberInput } from '@/form';
-import { useExchange } from '../../../../../../../../packages/uikit/hooks/useExchange';
 import { useMarketStore } from '@/stores/market';
-import { storeToRefs } from 'pinia';
 import { useEmulatorStore } from '@/stores/emulator';
 import OrderFormEstimates from '@/components/app/orderForm/composables/orderFormEstimates/OrderFormEstimates.vue';
 import { injectOrderFormState } from '@/components/app/orderForm';

@@ -1,5 +1,5 @@
-import { get } from '@/api';
 import { Order } from '@terminal/common/types/order';
+import { get } from '@/api';
 
 export const closeOrder = (
   orderId: Order['id'],

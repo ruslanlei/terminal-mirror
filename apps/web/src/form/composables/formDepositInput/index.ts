@@ -1,4 +1,4 @@
-import { DepositInputProps } from '../../../../../../packages/uikit/components/depositInput';
+import { DepositInputProps } from '@terminal/uikit/components/depositInput/depositInput';
 
 export { default as FormDepositInput } from './FormDepositInput.vue';
 

@@ -36,9 +36,9 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import { UiCheckbox } from '@terminal/uikit/components/checkbox';
+import { useLocalValue } from '@terminal/uikit/hooks/useLocalValue';
 import Link from '@/components/app/link/Link.vue';
 import { AgreementCheckboxEmits, AgreementCheckboxProps } from '@/components/app/agreementCheckbox/index';
-import { useLocalValue } from '@terminal/uikit/hooks/useLocalValue';
 
 const { t } = useI18n();
 

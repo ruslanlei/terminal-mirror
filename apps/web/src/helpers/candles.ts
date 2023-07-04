@@ -1,15 +1,13 @@
-import { Candle } from '@/api/types/marketData';
-import { ChartCandle } from '@/components/core/candleChart';
 import {
   subtractDays,
   toISOString,
-  toSecondsTimestamp,
   toTimestamp,
 } from '@terminal/common/utils/date';
 import { compose, curry } from '@terminal/common/utils/fp';
 import { concat, filterNoneUniqueByKey, getLastElement } from '@terminal/common/utils/array';
 import { multiply, subtractRight } from '@terminal/common/utils/number';
 import { isMoreThanLeft } from '@terminal/common/utils/boolean';
+import { Candle } from '@/api/types/marketData';
 
 export const getCandleField = curry((
   field:

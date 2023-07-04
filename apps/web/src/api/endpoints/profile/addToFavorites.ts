@@ -1,5 +1,5 @@
-import { post } from '@/api';
 import { Pair } from '@terminal/common/types/pair';
+import { post } from '@/api';
 import { FavoritePair } from '@/api/endpoints/profile/getFavorites';
 
 export const addToFavorites = (

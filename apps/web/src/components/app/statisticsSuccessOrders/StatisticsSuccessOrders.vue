@@ -54,13 +54,13 @@ import { useI18n } from 'vue-i18n';
 import { storeToRefs } from 'pinia';
 import { UiCoinLogo } from '@terminal/uikit/components/coinLogo';
 import { UiTypography } from '@terminal/uikit/components/typography';
-import StatisticsResultRow from '@/containers/statisticsResultRow/StatisticsResultRow.vue';
-import { useMarketStore } from '@/stores/market';
 import { compose } from '@terminal/common/utils/fp';
-import { calculateAverageIncome, findMostFrequentCoin } from '@terminal/common/helpers/orders';
-import { getSuccessOrders } from '@terminal/common/helpers/math/formulas/pnl';
+import { calculateAverageIncome, findMostFrequentCoin } from '@/helpers/orders';
+import { getSuccessOrders } from '@/helpers/math/formulas/pnl';
 import { roundToDecimalPlaces } from '@terminal/common/utils/number';
 import { getLength } from '@terminal/common/utils/array';
+import { useMarketStore } from '@/stores/market';
+import StatisticsResultRow from '@/containers/statisticsResultRow/StatisticsResultRow.vue';
 
 const { t } = useI18n();
 

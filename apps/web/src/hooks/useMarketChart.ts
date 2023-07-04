@@ -6,14 +6,14 @@ import {
 import { storeToRefs } from 'pinia';
 import { useStorage } from '@vueuse/core';
 
-import { useEmulatorStore } from '@/stores/emulator';
-import { useMarketStore } from '@/stores/market';
 import { compose } from '@terminal/common/utils/fp';
 import {
   dateNow,
   subtractMonths,
   toISOString,
 } from '@terminal/common/utils/date';
+import { useEmulatorStore } from '@/stores/emulator';
+import { useMarketStore } from '@/stores/market';
 import { decreaseDateByAmountOfCandles } from '@/helpers/candles';
 import { useChartDataStore } from '@/stores/chartData';
 

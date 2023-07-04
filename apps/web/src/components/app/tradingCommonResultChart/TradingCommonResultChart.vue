@@ -12,7 +12,6 @@ import { useI18n } from 'vue-i18n';
 import { storeToRefs } from 'pinia';
 import { UiBarChart } from '@terminal/uikit/components/barChart';
 import { toPnlString } from '@terminal/uikit/utils/style';
-import { useMarketStore } from '@/stores/market';
 import {
   addMonths,
   customFormatDate,
@@ -21,7 +20,7 @@ import {
   getMonthIndex,
   subtractMonths,
 } from '@terminal/common/utils/date';
-import { filterOrdersByType } from '@terminal/common/helpers/orders';
+import { filterOrdersByType } from '@/helpers/orders';
 import { compose } from '@terminal/common/utils/fp';
 import { Order } from '@terminal/common/types/order';
 import {
@@ -34,10 +33,11 @@ import {
 } from '@terminal/common/utils/array';
 import { getValueByKey, groupBy, objectEntries } from '@terminal/common/utils/object';
 import { add, roundToDecimalPlaces, subtract } from '@terminal/common/utils/number';
-import { calculateCommonClosePnl } from '@terminal/common/helpers/math/formulas/pnl';
+import { calculateCommonClosePnl } from '@/helpers/math/formulas/pnl';
 import { Maybe } from '@terminal/common/utils/functors';
-import { BarChartData, BarChartDataElement } from '@/components/core/barChart/createBarChart';
 import { ensureOrFallback, isEqual, isMoreThanOrEqualTo } from '@terminal/common/utils/boolean';
+import { BarChartData, BarChartDataElement } from '@/components/core/barChart/createBarChart';
+import { useMarketStore } from '@/stores/market';
 
 const { t } = useI18n();
 

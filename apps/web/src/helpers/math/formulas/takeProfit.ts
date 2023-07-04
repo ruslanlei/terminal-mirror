@@ -14,7 +14,7 @@ import {
   reduce,
   map,
 } from '@terminal/common/utils/array';
-import { TakeProfit } from '../../../types';
+import { TakeProfit } from '@terminal/common/types';
 import { calculateVolumeDifference } from './order';
 import { calculateOnePercent } from '../percents';
 

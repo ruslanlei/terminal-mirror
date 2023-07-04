@@ -26,7 +26,7 @@ import {
   calculateCommonClosePnl,
   getSuccessOrders,
 } from './math/formulas/pnl';
-import { Order, PairMap } from '../types';
+import { Order, PairMap } from '@terminal/common/types';
 
 export const isExactOrder = curry((
   orderType: Order['order_type'] | Array<Order['order_type']>,

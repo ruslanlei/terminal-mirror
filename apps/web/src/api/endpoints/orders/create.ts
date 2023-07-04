@@ -1,6 +1,6 @@
+import { Order } from '@terminal/common/types/order';
 import { post } from '@/api';
 import { ErrorResponse } from '@/api/common';
-import { Order } from '@terminal/common/types/order';
 
 export type CreateOrderDTO = Pick<
   Order,

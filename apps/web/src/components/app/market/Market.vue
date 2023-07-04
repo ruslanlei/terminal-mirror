@@ -28,6 +28,8 @@
 </template>
 
 <script setup lang="ts">
+import { useStorage } from '@vueuse/core';
+import { awaitTimeout } from '@terminal/common/utils/promise';
 import { useMarketStore } from '@/stores/market';
 import MarketContainer from '@/containers/marketContainer/MarketContainer.vue';
 import PlayerControls from '@/components/app/playerControls/PlayerControls.vue';
@@ -37,8 +39,6 @@ import OrdersAndStatistics from '@/components/app/ordersAndStatistics/OrdersAndS
 import MarketChart from '@/components/app/marketChart/MarketChart.vue';
 import FavoritesList from '@/components/app/favoritesList/FavoritesList.vue';
 import MarketChartHeader from '@/components/app/marketChartHeader/MarketChartHeader.vue';
-import { useStorage } from '@vueuse/core';
-import { awaitTimeout } from '@terminal/common/utils/promise';
 
 const marketStore = useMarketStore();
 

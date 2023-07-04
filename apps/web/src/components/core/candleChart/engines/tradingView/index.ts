@@ -1,5 +1,5 @@
-import { AbstractCandleChartEngineProps } from '@/components/core/candleChart/engines';
 import { Time } from 'lightweight-charts';
+import { AbstractCandleChartEngineProps } from '@/components/core/candleChart/engines';
 
 export interface TradingViewCandle {
   high: number,

@@ -55,7 +55,7 @@ import { UiBadge } from '@terminal/uikit/components/badge';
 import { UiCoinLogo } from '@terminal/uikit/components/coinLogo';
 import { UiTypography } from '@terminal/uikit/components/typography';
 import { humanizeNumber } from '@terminal/common/utils/numberFormat';
-import { humanizePercents } from '@terminal/common/helpers/math/percents';
+import { humanizePercents } from '@/helpers/math/percents';
 import { isPositive } from '@terminal/common/utils/number';
 import { FavoritesListItemProps } from './index';
 

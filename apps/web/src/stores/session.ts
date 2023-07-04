@@ -1,13 +1,13 @@
 import { ref, watch } from 'vue';
 import { defineStore } from 'pinia';
 
+import { RouteLocationRaw } from 'vue-router';
+import { useI18n } from 'vue-i18n';
 import { router } from '@/router';
 import { useAuthToken } from '@/hooks/useAuthToken';
-import { RouteLocationRaw } from 'vue-router';
 import { signIn, SignInDTO } from '@/api/endpoints/auth/signIn';
 import { signUp, SignUpModel } from '@/api/endpoints/auth/signUp';
 import { useToastStore } from '@/stores/toasts';
-import { useI18n } from 'vue-i18n';
 import { resetPassword, ResetPasswordDTO } from '@/api/endpoints/auth/resetPassword';
 import { useProfileStore } from '@/stores/profile';
 import { verifyEmail, VerifyEmailDTO } from '@/api/endpoints/auth/verifyEmail';

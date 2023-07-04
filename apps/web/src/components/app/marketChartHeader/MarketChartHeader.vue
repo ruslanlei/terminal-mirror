@@ -18,9 +18,9 @@ import { storeToRefs } from 'pinia';
 import { UiTypography } from '@terminal/uikit/components/typography';
 import { UiDivider } from '@terminal/uikit/components/divider';
 import { UiFavoritesButton } from '@terminal/uikit/components/favoritesButton';
+import { useLocalValue } from '@terminal/uikit/hooks/useLocalValue';
 import { useMarketStore } from '@/stores/market';
 import { MarketChartHeaderEmits, MarketChartHeaderProps } from '@/components/app/marketChartHeader/index';
-import { useLocalValue } from '@terminal/uikit/hooks/useLocalValue';
 
 const props = defineProps<MarketChartHeaderProps>();
 

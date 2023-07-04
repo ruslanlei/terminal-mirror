@@ -54,10 +54,10 @@ import { UiCourseLogo } from '@terminal/uikit/components/courseLogo';
 import { UiImageBackgroundBlock } from '@terminal/uikit/components/imageBackgroundBlock';
 import { UiLogo } from '@terminal/uikit/components/logo';
 import { UiTypography } from '@terminal/uikit/components/typography';
+import { getUrlForRelativePath } from '@terminal/uikit/utils/window';
 import EcosystemCard from '@/components/app/ecosystemCap/ecosystemCard/EcosystemCard.vue';
 import { IEcosystemCard } from '@/components/app/ecosystemCap/ecosystemCard';
 import SpaceBackground from '@/components/app/ecosystemCap/spaceBackground/SpaceBackground.vue';
-import { getUrlForRelativePath } from '@terminal/uikit/utils/window';
 import { EcosystemCapProps } from './index';
 
 const { t } = useI18n();

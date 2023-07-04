@@ -3,9 +3,9 @@ import {
   computed,
 } from 'vue';
 import { useIntervalFn } from '@vueuse/core';
-import { useEmulatorStore } from '@/stores/emulator';
 import { storeToRefs } from 'pinia';
 import { secondsToMilliseconds } from '@terminal/common/utils/date';
+import { useEmulatorStore } from '@/stores/emulator';
 
 export const useEmulator = () => {
   const emulatorStore = useEmulatorStore();

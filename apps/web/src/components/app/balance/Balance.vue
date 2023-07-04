@@ -16,9 +16,9 @@
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { UiAnimatedText } from '@terminal/uikit/components/animatedText';
+import { roundToDecimalPlaces } from '@terminal/common/utils/number';
 import { useMarketStore } from '@/stores/market';
 import { useEmulatorStore } from '@/stores/emulator';
-import { roundToDecimalPlaces } from '@terminal/common/utils/number';
 
 const { t } = useI18n();
 

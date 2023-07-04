@@ -73,8 +73,8 @@ import {
   calculateDecreasePercent,
   calculateIncreasePercent,
   subtractPercents,
-} from '@terminal/common/helpers/math/percents';
-import { UiNumberInput } from '../numberInput';
+} from '@/helpers/math/percents';
+import { UiNumberInput } from '@terminal/uikit/components/numberInput';
 
 import {
   TakeProfitInputEmits,

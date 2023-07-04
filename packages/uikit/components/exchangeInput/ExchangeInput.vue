@@ -28,7 +28,7 @@ import {
 import { compose } from '@terminal/common/utils/fp';
 import { divideRight, multiply, roundToDecimalPlaces } from '@terminal/common/utils/number';
 import { UiNumberInput, NumberInputNormalizer } from '../numberInput';
-import { useExchange } from '../../hooks/useExchange';
+import { useExchange } from '../../../../apps/web/src/hooks/useExchange';
 import { ExchangeInputProps, ExchangeInputEmits } from './index';
 
 const props = defineProps<ExchangeInputProps>();

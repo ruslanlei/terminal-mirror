@@ -11,7 +11,7 @@ import {
 import {
   incrementQuoteDepositByBaseStep,
   decrementQuoteDepositByBaseStep,
-} from '@terminal/common/helpers/math/formulas/currency';
+} from '@/helpers/math/formulas/currency';
 
 export const useExchange = (
   quoteCurrencyDecimals: Ref<number>,

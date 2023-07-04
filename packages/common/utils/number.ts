@@ -1,5 +1,5 @@
-import { curry } from './fp';
 import numeral from 'numeral';
+import { curry } from './fp';
 
 export const multiply = curry((
   value: number,

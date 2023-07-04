@@ -1,4 +1,4 @@
-import { ExchangeInputEmits, ExchangeInputProps } from '../../../../../../packages/uikit/components/exchangeInput';
+import { ExchangeInputEmits, ExchangeInputProps } from '@terminal/uikit/components/exchangeInput/exchangeInput';
 
 export { default as FormExchangeInput } from './FormExchangeInput.vue';
 

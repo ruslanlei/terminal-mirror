@@ -1,10 +1,10 @@
 import { ref } from 'vue';
-import { ConfirmResetPasswordDTO } from '@/api/endpoints/auth/passwordResetConfirm';
-import { useSessionStore } from '@/stores/session';
 import { useRoute, useRouter } from 'vue-router';
-import { useToastStore } from '@/stores/toasts';
 import { useI18n } from 'vue-i18n';
 import { object, ref as yupRef, string } from 'yup';
+import { ConfirmResetPasswordDTO } from '@/api/endpoints/auth/passwordResetConfirm';
+import { useSessionStore } from '@/stores/session';
+import { useToastStore } from '@/stores/toasts';
 import { FormErrorsList } from '@/form';
 
 export const usePasswordResetConfirm = () => {

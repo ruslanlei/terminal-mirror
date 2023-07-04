@@ -1,13 +1,13 @@
 import { computed, ref } from 'vue';
 import { defineStore } from 'pinia';
 import { useI18n } from 'vue-i18n';
+import { useStorage } from '@vueuse/core';
+import { isEmpty } from '@terminal/common/utils/object';
 import { useToastStore } from '@/stores/toasts';
 import { getProfile } from '@/api/endpoints/auth/getProfile';
 import { Profile } from '@/api/types/profile';
 import { useEmulatorStore } from '@/stores/emulator';
 import { useMarketStore } from '@/stores/market';
-import { useStorage } from '@vueuse/core';
-import { isEmpty } from '@terminal/common/utils/object';
 
 export const useProfileStore = defineStore('profile', () => {
   const { t } = useI18n();

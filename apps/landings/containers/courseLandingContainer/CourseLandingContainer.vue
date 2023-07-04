@@ -29,9 +29,9 @@
     <div :class="$style.courseProgram">
       <slot name="courseProgram" />
     </div>
-<!--    <div :class="$style.startDateTape">-->
-<!--      <slot name="startDateTape" />-->
-<!--    </div>-->
+    <!--    <div :class="$style.startDateTape">-->
+    <!--      <slot name="startDateTape" />-->
+    <!--    </div>-->
     <div :class="$style.studyPlans">
       <slot name="studyPlans" />
     </div>

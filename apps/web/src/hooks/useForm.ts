@@ -11,14 +11,14 @@ import { isSchema } from 'yup';
 import {
   createObjectWithValues,
 } from '@terminal/common/utils/object';
+import cloneDeep from 'lodash/cloneDeep';
+import { useLocalValue } from '@terminal/uikit/hooks/useLocalValue';
 import {
   FormProps,
   touchTrigger,
   FormEmits,
   FormErrorsList,
 } from '@/form';
-import cloneDeep from 'lodash/cloneDeep';
-import { useLocalValue } from '@terminal/uikit/hooks/useLocalValue';
 
 export const getFormInjectKey = (key: string) => `form[${key}]`;
 

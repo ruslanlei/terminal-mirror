@@ -6,5 +6,5 @@ export * from './useComputedState';
 export * from './useEnvironmentObserver';
 export * from './useAnimation';
 export * from './useId';
-export * from './useExchange';
-export * from './useDepositInput';
+export * from '../../../apps/web/src/hooks/useExchange';
+export * from '../../../apps/web/src/hooks/useDepositInput';

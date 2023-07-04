@@ -1,5 +1,3 @@
-export { default as UiTakeProfitInput } from './TakeProfitInput.vue';
-
 export interface TakeProfitInputProps {
   baseCurrencyStep: number,
   baseCurrencyDecimals: number,

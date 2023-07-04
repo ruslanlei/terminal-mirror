@@ -15,14 +15,14 @@ import {
   roundToDecimalPlaces,
   toAbsolute,
 } from '@terminal/common/utils/number';
-import { calculatePercentageOfTotal } from '@terminal/common/helpers/math/percents';
+import { calculatePercentageOfTotal } from '@/helpers/math/percents';
 import {
   // calculateClosePnl,
   calculateCommonClosePnl,
   calculateCurrentPnl,
   calculatePnlPercent,
-} from '@terminal/common/helpers/math/formulas/pnl';
-import { calculateCommonTakeProfitPercent } from '@terminal/common/helpers/math/formulas/takeProfit';
+} from '@/helpers/math/formulas/pnl';
+import { calculateCommonTakeProfitPercent } from '@/helpers/math/formulas/takeProfit';
 import { humanizeDate } from '@terminal/common/utils/date';
 import { ActiveOrdersTableRecord, ClosedOrdersTableRecord } from 'src/components/app/orderList';
 import { SubOrderTableItem } from 'src/components/app/orderList/subOrderList';

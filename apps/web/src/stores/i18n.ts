@@ -1,14 +1,14 @@
 import { computed, watch } from 'vue';
 import { defineStore } from 'pinia';
 import { useStorage } from '@vueuse/core';
+import { useRouter } from 'vue-router';
+import { getUserLanguage } from '@terminal/uikit/utils/navigator';
+import dayjs from 'dayjs';
 import {
   i18n,
   AppLocale,
   checkIfLanguageIsAvailable,
 } from '@/i18n';
-import { useRouter } from 'vue-router';
-import { getUserLanguage } from '@terminal/uikit/utils/navigator';
-import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 
 export interface LocaleOption {

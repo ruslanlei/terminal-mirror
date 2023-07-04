@@ -1,5 +1,5 @@
-import { curry } from './fp';
 import lodashIsEqual from 'lodash/isEqual';
+import { curry } from './fp';
 
 export const isEqual = curry(lodashIsEqual);
 

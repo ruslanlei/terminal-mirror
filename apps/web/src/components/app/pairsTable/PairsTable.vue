@@ -131,10 +131,10 @@ import { UiTable, SortDirection } from '@terminal/uikit/components/table';
 import { UiTrendingIcon } from '@terminal/uikit/components/trendingIcon';
 import { humanizeNumber } from '@terminal/common/utils/numberFormat';
 import { Pair } from '@terminal/common/types/pair';
+import { isPositive } from '@terminal/common/utils/number';
+import { humanizePercents } from '@/helpers/math/percents';
 import { useMarketStore } from '@/stores/market';
 import { useChartDataStore } from '@/stores/chartData';
-import { isPositive } from '@terminal/common/utils/number';
-import { humanizePercents } from '@terminal/common/helpers/math/percents';
 import {
   PairsTableColumn, PairsTableEmits,
   PairsTableProps,

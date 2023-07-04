@@ -8,14 +8,14 @@ import {
   ActiveOrdersTableRecord,
   ClosedOrdersTableRecord,
 } from 'src/components/app/orderList';
-import { useMarketStore } from '@/stores/market';
 import {
   Order,
 } from '@terminal/common/types/order';
 import { awaitTimeout } from '@terminal/common/utils/promise';
-import { useEmulatorStore } from '@/stores/emulator';
 import { storeToRefs } from 'pinia';
 import { findAndDelete, findAndUpdateObject } from '@terminal/common/utils/array';
+import { useEmulatorStore } from '@/stores/emulator';
+import { useMarketStore } from '@/stores/market';
 
 export const useActiveOrderList = (
   listType: Ref<'active' | 'closed'>,

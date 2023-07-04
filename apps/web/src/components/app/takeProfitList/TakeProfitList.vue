@@ -22,7 +22,7 @@
       </div>
     </div>
     <div :class="$style.takeProfitInputs">
-      <UiTakeProfitInput
+      <TakeProfitInput
         v-for="(takeProfit, takeProfitIndex) in localValue"
         :key="takeProfitIndex"
         v-model:price="takeProfit.price"
@@ -43,9 +43,9 @@ import { useI18n } from 'vue-i18n';
 import { nextTick } from 'vue';
 import { useLocalValue } from '@terminal/uikit/hooks/useLocalValue';
 import { subtract } from '@terminal/common/utils/number';
-import { reduceTakeProfitsToQuantitiesSum } from '@terminal/common/helpers/math/formulas/takeProfit';
+import { reduceTakeProfitsToQuantitiesSum } from '@/helpers/math/formulas/takeProfit';
 import { TakeProfit } from '@terminal/common';
-import { UiTakeProfitInput } from '../takeProfitInput';
+import TakeProfitInput from '../takeProfitInput/TakeProfitInput.vue';
 import { TakeProfitListEmit, TakeProfitListProps } from './index';
 
 const props = defineProps<TakeProfitListProps>();

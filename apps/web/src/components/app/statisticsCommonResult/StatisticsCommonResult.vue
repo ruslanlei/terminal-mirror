@@ -88,12 +88,12 @@ import { storeToRefs } from 'pinia';
 import { UiAvatar } from '@terminal/uikit/components/avatar';
 import { UiIcon } from '@terminal/uikit/components/icon';
 import { UiTypography } from '@terminal/uikit/components/typography';
-import StatisticsResultRow from '@/containers/statisticsResultRow/StatisticsResultRow.vue';
 import { isPositive, roundToDecimalPlaces } from '@terminal/common/utils/number';
-import { useEmulatorStore } from '@/stores/emulator';
-import { calculateCommonPnlForPeriod } from '@terminal/common/helpers/math/formulas/pnl';
-import { useMarketStore } from '@/stores/market';
+import { calculateCommonPnlForPeriod } from '@/helpers/math/formulas/pnl';
 import { compose } from '@terminal/common/utils/fp';
+import StatisticsResultRow from '@/containers/statisticsResultRow/StatisticsResultRow.vue';
+import { useEmulatorStore } from '@/stores/emulator';
+import { useMarketStore } from '@/stores/market';
 
 const { t } = useI18n();
 

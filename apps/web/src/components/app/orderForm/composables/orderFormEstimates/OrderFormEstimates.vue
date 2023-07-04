@@ -51,11 +51,11 @@ import { compose } from '@terminal/common/utils/fp';
 import { storeToRefs } from 'pinia';
 import { UiIcon } from '@terminal/uikit/components/icon';
 import { roundToDecimalPlaces } from '@terminal/common/utils/number';
+import { reduceTakeProfitsToAmountOfProfit } from '@/helpers/math/formulas/takeProfit';
+import { calculateVolumeDifference } from '@/helpers/math/formulas/order';
 import OrderRatioBadge from '@/components/app/orderRatioBadge/OrderRatioBadge.vue';
 import { useMarketStore } from '@/stores/market';
-import { reduceTakeProfitsToAmountOfProfit } from '@terminal/common/helpers/math/formulas/takeProfit';
 import { injectOrderFormState } from '@/components/app/orderForm';
-import { calculateVolumeDifference } from '@terminal/common/helpers/math/formulas/order';
 import { OrderFormEstimatesProps } from './index';
 
 const { t } = useI18n();

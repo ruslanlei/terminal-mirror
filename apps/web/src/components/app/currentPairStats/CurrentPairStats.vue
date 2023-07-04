@@ -10,14 +10,14 @@ import { computed } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useI18n } from 'vue-i18n';
 import { UiPairStats, IPairStats } from '@terminal/uikit/components/pairStats';
-import { useMarketStore } from '@/stores/market';
-import { useChartDataStore } from '@/stores/chartData';
 import { compose } from '@terminal/common/utils/fp';
 import { roundToDecimalPlaces, subtractRight } from '@terminal/common/utils/number';
 import { humanizeNumber, percentFormat } from '@terminal/common/utils/numberFormat';
-import { calculatePercentageOfTotal } from '@terminal/common/helpers/math/percents';
+import { calculatePercentageOfTotal } from '@/helpers/math/percents';
 import { findMaxByKey, findMinByKey } from '@terminal/common/utils/array';
 import { isMoreThanLeft } from '@terminal/common/utils/boolean';
+import { useChartDataStore } from '@/stores/chartData';
+import { useMarketStore } from '@/stores/market';
 
 const { t } = useI18n();
 

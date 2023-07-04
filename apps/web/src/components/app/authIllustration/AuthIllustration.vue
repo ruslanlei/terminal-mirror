@@ -16,6 +16,7 @@
 import { UiImageBackgroundBlock } from '@terminal/uikit/components/imageBackgroundBlock';
 import { UiPicture } from '@terminal/uikit/components/picture';
 
+import { collectSrcSet } from '@terminal/uikit/utils/dom';
 import BackgroundPng from '@/assets/images/auth/background.png';
 import BackgroundWebp from '@/assets/images/auth/background.webp';
 import BackgroundAvif from '@/assets/images/auth/background.avif';
@@ -23,7 +24,6 @@ import BackgroundAvif from '@/assets/images/auth/background.avif';
 import WalletAvif from '@/assets/images/auth/wallet.avif';
 import WalletPng from '@/assets/images/auth/wallet.png';
 import WalletWebp from '@/assets/images/auth/wallet.webp';
-import { collectSrcSet } from '@terminal/uikit/utils/dom';
 
 const illustrationSrcset = collectSrcSet([
   BackgroundAvif,

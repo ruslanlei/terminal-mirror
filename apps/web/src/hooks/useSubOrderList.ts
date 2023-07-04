@@ -5,11 +5,11 @@ import {
   SubOrderTableItem,
 } from 'src/components/app/orderList/subOrderList';
 import { compose } from '@terminal/common/utils/fp';
+import { createEmptyRecord } from '@terminal/uikit/components/table/helpers';
 import {
   collectActiveSubOrderRecord,
   collectClosedSubOrderRecord,
 } from '@/components/app/orderList/subOrderList/collectTableRecord';
-import { createEmptyRecord } from '@terminal/uikit/components/table/helpers';
 
 export const useSubOrderList = (
   props: SubOrderListProps,

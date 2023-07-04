@@ -1,5 +1,5 @@
-import { useToastStore } from '@/stores/toasts';
 import { useClipboard } from '@vueuse/core';
+import { useToastStore } from '@/stores/toasts';
 
 export const useDiscordLink = (
   message: string,

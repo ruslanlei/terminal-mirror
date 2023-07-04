@@ -13,8 +13,8 @@
 </template>
 
 <script setup lang="ts">
-import { ToggleButtonEmits, ToggleButtonProps } from '@/components/app/toggleButton/index';
 import { useLocalValue } from '@terminal/uikit/hooks/useLocalValue';
+import { ToggleButtonEmits, ToggleButtonProps } from '@/components/app/toggleButton/index';
 import { useComputedState } from '@/hooks/useComputedState';
 
 const props = withDefaults(

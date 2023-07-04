@@ -10,25 +10,25 @@ import { number, object, string } from 'yup';
 import { SelectorProps } from '@terminal/uikit/components/selector';
 import { compose } from '@terminal/common/utils/fp';
 import { multiply, roundToDecimalPlaces } from '@terminal/common/utils/number';
-import { CreateOrderDTO } from '@/api/endpoints/orders/create';
-import { useMarketStore } from '@/stores/market';
-import { useModelReset } from '@/hooks/useModelReset';
 import {
   spreadOrderQuantityBetweenTakeProfits,
   mapTakeProfitPricesByIncreasePercent,
   mapTakeProfitPricesByDecreasePercent,
-} from '@terminal/common/helpers/math/formulas/takeProfit';
-import { addPercents, subtractPercents } from '@terminal/common/helpers/math/percents';
+} from '@/helpers/math/formulas/takeProfit';
+import { addPercents, subtractPercents } from '@/helpers/math/percents';
 import {
   calculateLiquidationPrice,
   calculatePledge,
-} from '@terminal/common/helpers/math/formulas/order';
-import { useChartDataStore } from '@/stores/chartData';
+} from '@/helpers/math/formulas/order';
 import { TakeProfit } from '@terminal/common/types/order';
 import { arrayOf } from '@terminal/common/utils/array';
-import { useEmulatorStore } from '@/stores/emulator';
 import { Maybe } from '@terminal/common/utils/functors';
 import { isLessThanLeft } from '@terminal/common/utils/boolean';
+import { useEmulatorStore } from '@/stores/emulator';
+import { useChartDataStore } from '@/stores/chartData';
+import { useModelReset } from '@/hooks/useModelReset';
+import { useMarketStore } from '@/stores/market';
+import { CreateOrderDTO } from '@/api/endpoints/orders/create';
 
 export interface OrderModel extends CreateOrderDTO {
   leverage: number,
@@ -139,8 +139,6 @@ export const useOrderCreate = () => {
   );
 
   const autoCalculateTakeProfitAmounts = () => {
-    console.log(takeProfits.value);
-
     takeProfits.value = spreadOrderQuantityBetweenTakeProfits(
       model.quantity,
       takeProfits.value,

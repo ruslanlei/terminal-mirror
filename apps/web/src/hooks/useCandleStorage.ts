@@ -9,7 +9,7 @@ import {
 } from '@terminal/common/utils/array';
 import { compose } from '@terminal/common/utils/fp';
 import { divideRight } from '@terminal/common/utils/number';
-import { calculatePercentageOfTotal } from '@terminal/common/helpers/math/percents';
+import { calculatePercentageOfTotal } from '@/helpers/math/percents';
 import { getCandleField, getCandlesWithin24HoursFromLastCandleDate, mixCandles } from '@/helpers/candles';
 import { Candle } from '@/api/types/marketData';
 

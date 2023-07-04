@@ -72,11 +72,11 @@ import { computed } from 'vue';
 import { storeToRefs } from 'pinia';
 import { UiAvatar } from '@terminal/uikit/components/avatar';
 import { UiTypography } from '@terminal/uikit/components/typography';
-import StatisticsResultRow from '@/containers/statisticsResultRow/StatisticsResultRow.vue';
-import { useMarketStore } from '@/stores/market';
-import { calculateCommonPnlForPeriod } from '@terminal/common/helpers/math/formulas/pnl';
+import { calculateCommonPnlForPeriod } from '@/helpers/math/formulas/pnl';
 import { compose } from '@terminal/common/utils/fp';
 import { isPositive, roundToDecimalPlaces } from '@terminal/common/utils/number';
+import { useMarketStore } from '@/stores/market';
+import StatisticsResultRow from '@/containers/statisticsResultRow/StatisticsResultRow.vue';
 
 const { t } = useI18n();
 

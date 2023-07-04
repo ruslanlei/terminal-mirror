@@ -1,8 +1,8 @@
 import cloneDeep from 'lodash/cloneDeep';
 import lodashSet from 'lodash/set';
 import isEmpty from 'lodash/isEmpty';
-import { curry } from './fp';
 import collect, { Collection } from 'collect.js';
+import { curry } from './fp';
 
 export const isObject = (item: any) => (typeof item === 'object' && !Array.isArray(item) && item !== null);
 

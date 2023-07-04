@@ -1,5 +1,5 @@
-import { get } from '@/api';
 import { Pair } from '@terminal/common/types/pair';
+import { get } from '@/api';
 
 export interface FavoritePair {
     id: number,

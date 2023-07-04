@@ -1,8 +1,11 @@
 export class DxStudies<T extends CandleDataItem> {
-    createStudy(id: string, params: StudyParam[]): Study;
-    addCandleItem(item: T);
-    addCandleItems(item: T[]);
-    setTradingSessions(sessions: TradingSessionData[]);
+  createStudy(id: string, params: StudyParam[]): Study;
+
+  addCandleItem(item: T);
+
+  addCandleItems(item: T[]);
+
+  setTradingSessions(sessions: TradingSessionData[]);
 }
 
 export class StudyParam {
@@ -11,8 +14,9 @@ export class StudyParam {
 export function of(key: string, value: any): StudyParam;
 
 export class Study {
-    getLine(index: number): IFunction;
-    calculateAll(): number[][];
+  getLine(index: number): IFunction;
+
+  calculateAll(): number[][];
 }
 
 export function create(id: string, dataItems: TradeDataHolder, params: StudyParam[]): Study;

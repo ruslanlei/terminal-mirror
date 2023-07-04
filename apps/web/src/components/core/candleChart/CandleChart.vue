@@ -29,8 +29,8 @@ import { computed, defineAsyncComponent } from 'vue';
 import { UiTypography } from '@terminal/uikit/components/typography';
 import { Time } from 'lightweight-charts';
 import { useLocalValue } from '@terminal/uikit/hooks/useLocalValue';
-import { TradingViewCandle } from '@/components/core/candleChart/engines/tradingView';
 import { toSecondsTimestamp } from '@terminal/common/utils/date';
+import { TradingViewCandle } from '@/components/core/candleChart/engines/tradingView';
 import { CandleChartEmits, CandleChartProps, ChartCandle } from './index';
 
 const TradingView = defineAsyncComponent(() => (

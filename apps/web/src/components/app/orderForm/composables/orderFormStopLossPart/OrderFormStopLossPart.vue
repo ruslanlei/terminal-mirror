@@ -102,27 +102,27 @@ import { storeToRefs } from 'pinia';
 import { UiButton } from '@terminal/uikit/components/button';
 import { UiNumberInput } from '@terminal/uikit/components/numberInput';
 import { UiSwitch } from '@terminal/uikit/components/switch';
-import OrderFormStopLossPartContainer
-  from '@/containers/orderFormStopLossPartContainer/OrderFormStopLossPartContainer.vue';
-import OrderFormEstimates from '@/components/app/orderForm/composables/orderFormEstimates/OrderFormEstimates.vue';
-import { useMarketStore } from '@/stores/market';
 import { compose } from '@terminal/common/utils/fp';
-import { useEmulatorStore } from '@/stores/emulator';
-import { injectOrderFormState } from '@/components/app/orderForm';
 import { multiply, roundToDecimalPlaces } from '@terminal/common/utils/number';
 import {
   calculateOriginalPriceByVolumeDecrease,
   calculateOriginalPriceByVolumeIncrease,
   calculateVolumeDifference,
-} from '@terminal/common/helpers/math/formulas/order';
+} from '@/helpers/math/formulas/order';
 import {
   addPercents,
   calculatePercentageOfTotal,
-} from '@terminal/common/helpers/math/percents';
+} from '@/helpers/math/percents';
 import {
   calculatePriceByPercentOfDeposit,
   calculateVolumeDifferenceInPercentsOfDeposit,
-} from '@terminal/common/helpers/math/formulas/stopLoss';
+} from '@/helpers/math/formulas/stopLoss';
+import OrderFormStopLossPartContainer
+  from '@/containers/orderFormStopLossPartContainer/OrderFormStopLossPartContainer.vue';
+import OrderFormEstimates from '@/components/app/orderForm/composables/orderFormEstimates/OrderFormEstimates.vue';
+import { useMarketStore } from '@/stores/market';
+import { useEmulatorStore } from '@/stores/emulator';
+import { injectOrderFormState } from '@/components/app/orderForm';
 import { OrderFormStopLossPartEmits } from './index';
 
 const { t } = useI18n();

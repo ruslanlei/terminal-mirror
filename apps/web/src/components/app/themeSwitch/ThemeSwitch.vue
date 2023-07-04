@@ -23,9 +23,9 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
+import { computed } from 'vue';
 import { useCommonStore } from '@/stores/common';
 import { theme } from '@/enums/theme';
-import { computed } from 'vue';
 
 const { t } = useI18n();
 const commonStore = useCommonStore();

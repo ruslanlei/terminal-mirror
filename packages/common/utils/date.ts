@@ -1,6 +1,6 @@
 import dayjs, { QUnitType } from 'dayjs';
-import { compose, curry } from './fp';
 import now from 'lodash/now';
+import { compose, curry } from './fp';
 import {
   divide,
   divideRight,

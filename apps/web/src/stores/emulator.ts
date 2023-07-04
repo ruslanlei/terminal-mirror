@@ -8,8 +8,6 @@ import { defineStore, storeToRefs } from 'pinia';
 import { useStorage } from '@vueuse/core';
 import { useI18n } from 'vue-i18n';
 import { Subject } from 'rxjs';
-import { useMarketStore } from '@/stores/market';
-import { simulate } from '@/api/endpoints/emulator/simulate';
 import { compose } from '@terminal/common/utils/fp';
 import {
   addDays,
@@ -22,14 +20,16 @@ import {
 } from '@terminal/common/utils/date';
 import { multiply } from '@terminal/common/utils/number';
 import { Order } from '@terminal/common/types/order';
-import { processServerErrors } from '@/api/common';
 import { Pair } from '@terminal/common/types/pair';
+import { isMoreThanLeft } from '@terminal/common/utils/boolean';
+import { isExactOrder, isOrderOfType } from '@/helpers/orders';
+import { AnyFunction } from '@terminal/common/utils/typescript';
+import { processServerErrors } from '@/api/common';
 import { useChartDataStore } from '@/stores/chartData';
 import { getBalance } from '@/api/endpoints/profile/getBalance';
-import { isMoreThanLeft } from '@terminal/common/utils/boolean';
-import { isExactOrder, isOrderOfType } from '@terminal/common/helpers/orders';
 import { useToastStore } from '@/stores/toasts';
-import { AnyFunction } from '@terminal/common/utils/typescript';
+import { simulate } from '@/api/endpoints/emulator/simulate';
+import { useMarketStore } from '@/stores/market';
 
 export const getDefaultEmulatorDate = () => compose(
   toISOString,

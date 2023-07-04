@@ -1,17 +1,17 @@
 import commonEn from '@terminal/common/locales/en.json';
 import commonRu from '@terminal/common/locales/ru.json';
 
-import en from './locales/en.json';
-import ru from './locales/ru.json';
+import en from './locales/en';
+import ru from './locales/ru';
 
 const messages = {
   en: {
     ...commonEn,
-    ...JSON.parse(JSON.stringify(en)),
+    ...en,
   },
   ru: {
     ...commonRu,
-    ...JSON.parse(JSON.stringify(ru)),
+    ...ru,
   },
 };
 

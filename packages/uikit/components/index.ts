@@ -45,3 +45,4 @@ export * from './toastLayer';
 export * from './header';
 export * from './link';
 export * from './orderSideLabel';
+export * from './datepicker';

@@ -2,32 +2,32 @@ import {
   compose,
   curry,
 } from '@terminal/common/utils/fp';
-import { Pair } from '@terminal/common/types/pair';
-import {
-  MasterOrder,
-  TakeProfit,
-  StopLoss,
-  Order,
-} from '@terminal/common/types/order';
 import {
   isPositive,
   multiply,
   roundToDecimalPlaces,
   toAbsolute,
 } from '@terminal/common/utils/number';
-import { calculatePercentageOfTotal } from '@/helpers/math/percents';
+import { humanizeDate } from '@terminal/common/utils/date';
+import { ActiveOrdersTableRecord, ClosedOrdersTableRecord } from 'src/components/app/orderList';
+import { SubOrderTableItem } from 'src/components/app/orderList/subOrderList';
+import { collectTableRecord } from '@terminal/uikit/components/table/helpers';
+import { TableRowState } from '@terminal/uikit/components/table/tableRow';
+import { calculateCommonTakeProfitPercent } from '@/helpers/math/formulas/takeProfit';
 import {
   // calculateClosePnl,
   calculateCommonClosePnl,
   calculateCurrentPnl,
   calculatePnlPercent,
 } from '@/helpers/math/formulas/pnl';
-import { calculateCommonTakeProfitPercent } from '@/helpers/math/formulas/takeProfit';
-import { humanizeDate } from '@terminal/common/utils/date';
-import { ActiveOrdersTableRecord, ClosedOrdersTableRecord } from 'src/components/app/orderList';
-import { SubOrderTableItem } from 'src/components/app/orderList/subOrderList';
-import { collectTableRecord } from '@terminal/uikit/components/table/helpers';
-import { TableRowState } from '@terminal/uikit/components/table/tableRow';
+import { calculatePercentageOfTotal } from '@/helpers/math/percents';
+import {
+  MasterOrder,
+  TakeProfit,
+  StopLoss,
+  Order,
+} from '@/api/types/order';
+import { Pair } from '@/api/types/pair';
 
 interface CollectRecordPayload {
   pairData: Pair,

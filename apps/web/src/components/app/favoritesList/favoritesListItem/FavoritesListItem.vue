@@ -55,8 +55,8 @@ import { UiBadge } from '@terminal/uikit/components/badge';
 import { UiCoinLogo } from '@terminal/uikit/components/coinLogo';
 import { UiTypography } from '@terminal/uikit/components/typography';
 import { humanizeNumber } from '@terminal/common/utils/numberFormat';
-import { humanizePercents } from '@/helpers/math/percents';
 import { isPositive } from '@terminal/common/utils/number';
+import { humanizePercents } from '@/helpers/math/percents';
 import { FavoritesListItemProps } from './index';
 
 const props = defineProps<FavoritesListItemProps>();

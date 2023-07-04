@@ -305,15 +305,15 @@ import {
   isPositive, multiply,
   roundToDecimalPlaces, subtract, toNegative,
 } from '@terminal/common/utils/number';
+import { useLocalValue } from '@terminal/uikit/hooks/useLocalValue';
+import { getLength, sort } from '@terminal/common/utils/array';
+import { isDateBefore } from '@terminal/common/utils/date';
 import {
   MasterOrder,
   Order,
   StopLoss,
   TakeProfit,
-} from '@terminal/common/types/order';
-import { useLocalValue } from '@terminal/uikit/hooks/useLocalValue';
-import { getLength, sort } from '@terminal/common/utils/array';
-import { isDateBefore } from '@terminal/common/utils/date';
+} from '@/api/types/order';
 import { useChartDataStore } from '@/stores/chartData';
 import {
   collectActiveOrderRecord,

@@ -1,5 +1,5 @@
 import { TableColumn, TableProps, TableRecord } from '@terminal/uikit/components/table';
-import { Pair } from '@terminal/common/types/pair';
+import { Pair } from '@/api/types/pair';
 
 export type PairsTableColumnSlug = 'common' | 'priceAndVolume' | 'last24HoursPercentChange';
 

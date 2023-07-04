@@ -1,4 +1,4 @@
-import { Order, OrderStatus } from '@terminal/common/types/order';
+import { Order, OrderStatus } from '@/api/types/order';
 import { get } from '@/api';
 
 export const getorderList = (

@@ -27,8 +27,8 @@ import {
 } from 'vue';
 import { compose } from '@terminal/common/utils/fp';
 import { divideRight, multiply, roundToDecimalPlaces } from '@terminal/common/utils/number';
+import { useExchange } from '@terminal/web-app/src/hooks/useExchange';
 import { UiNumberInput, NumberInputNormalizer } from '../numberInput';
-import { useExchange } from '../../../../apps/web/src/hooks/useExchange';
 import { ExchangeInputProps, ExchangeInputEmits } from './index';
 
 const props = defineProps<ExchangeInputProps>();

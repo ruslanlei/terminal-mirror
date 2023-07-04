@@ -72,9 +72,9 @@ import { computed } from 'vue';
 import { storeToRefs } from 'pinia';
 import { UiAvatar } from '@terminal/uikit/components/avatar';
 import { UiTypography } from '@terminal/uikit/components/typography';
-import { calculateCommonPnlForPeriod } from '@/helpers/math/formulas/pnl';
 import { compose } from '@terminal/common/utils/fp';
 import { isPositive, roundToDecimalPlaces } from '@terminal/common/utils/number';
+import { calculateCommonPnlForPeriod } from '@/helpers/math/formulas/pnl';
 import { useMarketStore } from '@/stores/market';
 import StatisticsResultRow from '@/containers/statisticsResultRow/StatisticsResultRow.vue';
 

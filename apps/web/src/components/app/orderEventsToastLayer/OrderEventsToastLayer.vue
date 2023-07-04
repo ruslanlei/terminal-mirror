@@ -17,7 +17,6 @@
 
 <script setup lang="ts">
 import { nextTick, onBeforeUnmount, ref } from 'vue';
-import { Order } from '@terminal/common/types/order';
 import { playAnimation } from '@terminal/uikit/utils/animation';
 import { addCssProperty, getRect } from '@terminal/uikit/utils/dom';
 import { compose } from '@terminal/common/utils/fp';
@@ -25,10 +24,11 @@ import { roundToDecimalPlaces } from '@terminal/common/utils/number';
 import { awaitTimeout } from '@terminal/common/utils/promise';
 import { toCssPxValue, toIdSelector } from '@terminal/uikit/utils/style';
 import { findAndDelete } from '@terminal/common/utils/array';
+import { Order } from '@/api/types/order';
 import { useMarketStore } from '@/stores/market';
 import { collectOrderToastId, collectOrderToastWrapperId } from '@/components/app/orderEventsToastLayer/index';
 import { useEmulatorStore } from '@/stores/emulator';
-import OrderEventToast from '@/components/core/orderEventToast/OrderEventToast.vue';
+import OrderEventToast from '@/components/app/orderEventToast/OrderEventToast.vue';
 
 const marketStore = useMarketStore();
 const emulatorStore = useEmulatorStore();

@@ -68,13 +68,13 @@ import {
 } from '@terminal/common/utils/number';
 import { compose } from '@terminal/common/utils/fp';
 import { useLocalValue } from '@terminal/uikit/hooks/useLocalValue';
+import { UiNumberInput } from '@terminal/uikit/components/numberInput';
 import {
   addPercents,
   calculateDecreasePercent,
   calculateIncreasePercent,
   subtractPercents,
 } from '@/helpers/math/percents';
-import { UiNumberInput } from '@terminal/uikit/components/numberInput';
 
 import {
   TakeProfitInputEmits,

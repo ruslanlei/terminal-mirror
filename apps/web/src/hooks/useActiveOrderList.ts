@@ -8,12 +8,12 @@ import {
   ActiveOrdersTableRecord,
   ClosedOrdersTableRecord,
 } from 'src/components/app/orderList';
-import {
-  Order,
-} from '@terminal/common/types/order';
 import { awaitTimeout } from '@terminal/common/utils/promise';
 import { storeToRefs } from 'pinia';
 import { findAndDelete, findAndUpdateObject } from '@terminal/common/utils/array';
+import {
+  Order,
+} from '@/api/types/order';
 import { useEmulatorStore } from '@/stores/emulator';
 import { useMarketStore } from '@/stores/market';
 

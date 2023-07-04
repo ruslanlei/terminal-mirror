@@ -1,7 +1,7 @@
 import { TableColumn, TableRecord } from '@terminal/uikit/components/table';
 import { OrderListProps } from 'src/components/app/orderList';
-import { MasterOrder, SubOrder } from '@terminal/common/types/order';
-import { Pair } from '@terminal/common/types/pair';
+import { MasterOrder, SubOrder } from '@/api/types/order';
+import { Pair } from '@/api/types/pair';
 
 export type ActiveSubOrdersColumnSlug =
   'type'

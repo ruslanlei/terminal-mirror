@@ -43,9 +43,9 @@ import { storeToRefs } from 'pinia';
 import { UiTypography } from '@terminal/uikit/components/typography';
 import { compose } from '@terminal/common/utils/fp';
 import { add, multiply, roundToDecimalPlaces } from '@terminal/common/utils/number';
-import { calculateAverageIncome } from '@/helpers/orders';
 import { reduce } from '@terminal/common/utils/array';
-import { Order } from '@terminal/common/types/order';
+import { calculateAverageIncome } from '@/helpers/orders';
+import { Order } from '@/api/types/order';
 import { useMarketStore } from '@/stores/market';
 import StatisticsResultRow from '@/containers/statisticsResultRow/StatisticsResultRow.vue';
 

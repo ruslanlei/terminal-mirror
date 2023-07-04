@@ -21,12 +21,12 @@ import { getKeyWithBiggestValue } from '@terminal/common/utils/object';
 import { Maybe } from '@terminal/common/utils/functors';
 import { isEqual } from '@terminal/common/utils/boolean';
 
+import { Order, PairMap } from '@terminal/common/types';
 import {
   calculateClosePnl,
   calculateCommonClosePnl,
   getSuccessOrders,
 } from './math/formulas/pnl';
-import { Order, PairMap } from '@terminal/common/types';
 
 export const isExactOrder = curry((
   orderType: Order['order_type'] | Array<Order['order_type']>,

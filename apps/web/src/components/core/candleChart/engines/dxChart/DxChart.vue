@@ -6,6 +6,9 @@
 import { onMounted, ref } from 'vue';
 import { ChartBootstrap } from '@dx-private/dxchart5-light/dist';
 import { getCssRgbColor } from '@terminal/uikit/utils/style';
+import { DxChartProps } from './index';
+
+const props = defineProps<DxChartProps>();
 
 const chartContainer = ref();
 
@@ -37,26 +40,9 @@ const initChartInstance = () => {
   chartInstance.value = createChartInstance();
 };
 
-const generateMockData = () => {
+const setData = () => {
   chartInstance.value?.chartComponent.setMainSeries({
-    candles: [
-      {
-        hi: 100,
-        lo: 2,
-        open: 70,
-        close: 50,
-        timestamp: 1,
-        volume: 1,
-      },
-      {
-        hi: 140,
-        lo: 6,
-        open: 90,
-        close: 10,
-        timestamp: 1000,
-        volume: 2,
-      },
-    ],
+    candles: props.candles,
     instrument: {
       symbol: 'AAPL',
       priceIncrements: [0.01],
@@ -66,7 +52,7 @@ const generateMockData = () => {
 
 onMounted(() => {
   initChartInstance();
-  generateMockData();
+  setData();
 });
 </script>
 

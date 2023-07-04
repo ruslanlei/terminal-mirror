@@ -1,4 +1,4 @@
-import { Order } from '@terminal/common/types/order';
+import { Order } from '@/api/types/order';
 import { del } from '@/api';
 
 export const deleteOrder = (

@@ -3,7 +3,7 @@ import { useStorage } from '@vueuse/core';
 import { computed, nextTick, ref } from 'vue';
 import { isEmpty } from '@terminal/common/utils/object';
 import { findAndDelete } from '@terminal/common/utils/array';
-import { Pair } from '@terminal/common/types/pair';
+import { Pair } from '@/api/types/pair';
 import { useToastStore } from '@/stores/toasts';
 import { getPairs } from '@/api/endpoints/marketdata/stats';
 import { FavoritePair, getFavorites } from '@/api/endpoints/profile/getFavorites';

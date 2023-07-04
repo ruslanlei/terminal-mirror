@@ -1,5 +1,4 @@
 import { computed, ref, Ref } from 'vue';
-import { Pair } from '@terminal/common/types/pair';
 import { useStorage } from '@vueuse/core';
 import {
   arraySum,
@@ -9,6 +8,7 @@ import {
 } from '@terminal/common/utils/array';
 import { compose } from '@terminal/common/utils/fp';
 import { divideRight } from '@terminal/common/utils/number';
+import { Pair } from '@/api/types/pair';
 import { calculatePercentageOfTotal } from '@/helpers/math/percents';
 import { getCandleField, getCandlesWithin24HoursFromLastCandleDate, mixCandles } from '@/helpers/candles';
 import { Candle } from '@/api/types/marketData';

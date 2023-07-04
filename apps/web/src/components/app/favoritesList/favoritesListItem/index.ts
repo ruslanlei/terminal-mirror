@@ -1,4 +1,4 @@
-import { Pair } from '@terminal/common/types/pair';
+import { Pair } from '@/api/types/pair';
 
 export interface FavoritesListItemProps {
     pairData: Pair,

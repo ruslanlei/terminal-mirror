@@ -21,9 +21,9 @@ import {
 } from '@terminal/common/utils/array';
 import { isEqual, isLessThanLeft, isMoreThanOrEqualTo } from '@terminal/common/utils/boolean';
 
+import { Order } from '@terminal/common/types';
 import { isExactOrder, isOrderOfType } from '../../orders';
 import { calculatePercentageOfTotal } from '../percents';
-import { Order } from '@terminal/common/types';
 
 export const calculateCurrentPnl = curry((
   orderPrice: number,

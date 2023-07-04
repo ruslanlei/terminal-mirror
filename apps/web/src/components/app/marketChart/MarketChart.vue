@@ -2,7 +2,7 @@
   <CandleChart
     v-model:date-from="chartDateFrom"
     v-model:date-to="chartDateTo"
-    engine="tradingView"
+    engine="dxChart"
     :candles="computedCandles"
     :is-loading="isFetchingCandles"
     :no-data-badge-text="t('market.noPairCandles')"

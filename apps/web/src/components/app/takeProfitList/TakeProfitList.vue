@@ -43,8 +43,8 @@ import { useI18n } from 'vue-i18n';
 import { nextTick } from 'vue';
 import { useLocalValue } from '@terminal/uikit/hooks/useLocalValue';
 import { subtract } from '@terminal/common/utils/number';
-import { reduceTakeProfitsToQuantitiesSum } from '@/helpers/math/formulas/takeProfit';
 import { TakeProfit } from '@terminal/common';
+import { reduceTakeProfitsToQuantitiesSum } from '@/helpers/math/formulas/takeProfit';
 import TakeProfitInput from '../takeProfitInput/TakeProfitInput.vue';
 import { TakeProfitListEmit, TakeProfitListProps } from './index';
 

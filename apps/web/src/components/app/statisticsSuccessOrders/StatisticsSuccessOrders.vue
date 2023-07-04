@@ -55,10 +55,10 @@ import { storeToRefs } from 'pinia';
 import { UiCoinLogo } from '@terminal/uikit/components/coinLogo';
 import { UiTypography } from '@terminal/uikit/components/typography';
 import { compose } from '@terminal/common/utils/fp';
-import { calculateAverageIncome, findMostFrequentCoin } from '@/helpers/orders';
-import { getSuccessOrders } from '@/helpers/math/formulas/pnl';
 import { roundToDecimalPlaces } from '@terminal/common/utils/number';
 import { getLength } from '@terminal/common/utils/array';
+import { calculateAverageIncome, findMostFrequentCoin } from '@/helpers/orders';
+import { getSuccessOrders } from '@/helpers/math/formulas/pnl';
 import { useMarketStore } from '@/stores/market';
 import StatisticsResultRow from '@/containers/statisticsResultRow/StatisticsResultRow.vue';
 

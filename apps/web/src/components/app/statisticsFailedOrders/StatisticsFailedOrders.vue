@@ -56,9 +56,9 @@ import { UiCoinLogo } from '@terminal/uikit/components/coinLogo';
 import { UiTypography } from '@terminal/uikit/components/typography';
 import { compose, log } from '@terminal/common/utils/fp';
 import { roundToDecimalPlaces } from '@terminal/common/utils/number';
+import { getLength } from '@terminal/common/utils/array';
 import { calculateAverageLoss, filterOrdersByType, findMostFrequentCoin } from '@/helpers/orders';
 import { getFailedOrders } from '@/helpers/math/formulas/pnl';
-import { getLength } from '@terminal/common/utils/array';
 import { useMarketStore } from '@/stores/market';
 import StatisticsResultRow from '@/containers/statisticsResultRow/StatisticsResultRow.vue';
 

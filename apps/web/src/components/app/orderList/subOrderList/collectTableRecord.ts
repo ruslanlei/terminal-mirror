@@ -1,11 +1,11 @@
 import { compose, curry } from '@terminal/common/utils/fp';
 import { roundToDecimalPlaces } from '@terminal/common/utils/number';
-import { valueToPercents } from '@/helpers/math/percents';
 import { humanizeDate } from '@terminal/common/utils/date';
-import { MasterOrder } from '@terminal/common/types/order';
-import { Pair } from '@terminal/common/types/pair';
 import { collectTableRecord } from '@terminal/uikit/components/table/helpers';
 import { TableRowState } from '@terminal/uikit/components/table/tableRow';
+import { valueToPercents } from '@/helpers/math/percents';
+import { MasterOrder } from '@/api/types/order';
+import { Pair } from '@/api/types/pair';
 import {
   ActiveSubOrderRecord,
   ClosedSubOrdersRecord,

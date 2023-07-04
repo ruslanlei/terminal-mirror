@@ -1,4 +1,4 @@
-import { Order } from '@terminal/common/types/order';
+import { Order } from '@/api/types/order';
 import { get } from '@/api';
 
 export const closeOrder = (

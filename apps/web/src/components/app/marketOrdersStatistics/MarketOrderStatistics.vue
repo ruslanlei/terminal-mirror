@@ -34,11 +34,11 @@ import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { storeToRefs } from 'pinia';
 import { UiTypography, TypographyState } from '@terminal/uikit/components/typography';
-import { calculateSuccessRate, isExactOrder } from '@/helpers/orders';
 import { toCssPercentValue } from '@terminal/uikit/utils/style';
 import { isMoreThanOrEqualTo } from '@terminal/common/utils/boolean';
 import { compose } from '@terminal/common/utils/fp';
 import { filter, getLength } from '@terminal/common/utils/array';
+import { calculateSuccessRate, isExactOrder } from '@/helpers/orders';
 import { useMarketStore } from '@/stores/market';
 import MarketOrderStatisticsContainer
   from '@/containers/marketOrderStatisticsContainer/MarketOrderStatisticsContainer.vue';

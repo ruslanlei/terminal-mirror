@@ -10,6 +10,9 @@ import { number, object, string } from 'yup';
 import { SelectorProps } from '@terminal/uikit/components/selector';
 import { compose } from '@terminal/common/utils/fp';
 import { multiply, roundToDecimalPlaces } from '@terminal/common/utils/number';
+import { arrayOf } from '@terminal/common/utils/array';
+import { Maybe } from '@terminal/common/utils/functors';
+import { isLessThanLeft } from '@terminal/common/utils/boolean';
 import {
   spreadOrderQuantityBetweenTakeProfits,
   mapTakeProfitPricesByIncreasePercent,
@@ -20,10 +23,7 @@ import {
   calculateLiquidationPrice,
   calculatePledge,
 } from '@/helpers/math/formulas/order';
-import { TakeProfit } from '@terminal/common/types/order';
-import { arrayOf } from '@terminal/common/utils/array';
-import { Maybe } from '@terminal/common/utils/functors';
-import { isLessThanLeft } from '@terminal/common/utils/boolean';
+import { TakeProfit } from '@/api/types/order';
 import { useEmulatorStore } from '@/stores/emulator';
 import { useChartDataStore } from '@/stores/chartData';
 import { useModelReset } from '@/hooks/useModelReset';

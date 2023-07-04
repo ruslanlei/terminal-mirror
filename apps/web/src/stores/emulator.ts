@@ -19,11 +19,11 @@ import {
   toTimestamp,
 } from '@terminal/common/utils/date';
 import { multiply } from '@terminal/common/utils/number';
-import { Order } from '@terminal/common/types/order';
-import { Pair } from '@terminal/common/types/pair';
 import { isMoreThanLeft } from '@terminal/common/utils/boolean';
-import { isExactOrder, isOrderOfType } from '@/helpers/orders';
 import { AnyFunction } from '@terminal/common/utils/typescript';
+import { Order } from '@/api/types/order';
+import { Pair } from '@/api/types/pair';
+import { isExactOrder, isOrderOfType } from '@/helpers/orders';
 import { processServerErrors } from '@/api/common';
 import { useChartDataStore } from '@/stores/chartData';
 import { getBalance } from '@/api/endpoints/profile/getBalance';

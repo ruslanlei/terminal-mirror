@@ -32,6 +32,7 @@ import { useLocalValue } from '@terminal/uikit/hooks/useLocalValue';
 import { toSecondsTimestamp } from '@terminal/common/utils/date';
 import { TradingViewCandle } from '@/components/core/candleChart/engines/tradingView';
 import { CandleChartEmits, CandleChartProps, ChartCandle } from './index';
+import { DxChartCandle } from '@/components/core/candleChart/engines/dxChart';
 
 const TradingView = defineAsyncComponent(() => (
   import('@/components/core/candleChart/engines/tradingView/TradingView.vue')
@@ -61,9 +62,21 @@ const transformChartCandlesToTradingViewCandles = (
   }),
 );
 
+const transformChartCandlesToDxChartCandles = (
+  candles: ChartCandle[],
+): DxChartCandle[] => candles.map(
+  (candle: ChartCandle) => ({
+    open: candle[0],
+    hi: candle[1],
+    lo: candle[2],
+    close: candle[3],
+    timestamp: toSecondsTimestamp(candle[6]) as Time,
+  }),
+);
+
 const candleTransformFunction = computed(() => ({
   tradingView: transformChartCandlesToTradingViewCandles,
-  dxChart: (candles: any[]) => candles,
+  dxChart: transformChartCandlesToDxChartCandles,
 }[props.engine]));
 
 const computedCandles = computed(() => (

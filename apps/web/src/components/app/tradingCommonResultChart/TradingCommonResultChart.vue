@@ -20,9 +20,7 @@ import {
   getMonthIndex,
   subtractMonths,
 } from '@terminal/common/utils/date';
-import { filterOrdersByType } from '@/helpers/orders';
 import { compose } from '@terminal/common/utils/fp';
-import { Order } from '@terminal/common/types/order';
 import {
   arrayOf,
   filter,
@@ -33,9 +31,11 @@ import {
 } from '@terminal/common/utils/array';
 import { getValueByKey, groupBy, objectEntries } from '@terminal/common/utils/object';
 import { add, roundToDecimalPlaces, subtract } from '@terminal/common/utils/number';
-import { calculateCommonClosePnl } from '@/helpers/math/formulas/pnl';
 import { Maybe } from '@terminal/common/utils/functors';
 import { ensureOrFallback, isEqual, isMoreThanOrEqualTo } from '@terminal/common/utils/boolean';
+import { calculateCommonClosePnl } from '@/helpers/math/formulas/pnl';
+import { Order } from '@/api/types/order';
+import { filterOrdersByType } from '@/helpers/orders';
 import { BarChartData, BarChartDataElement } from '@/components/core/barChart/createBarChart';
 import { useMarketStore } from '@/stores/market';
 

@@ -1,5 +1,5 @@
-import { Pair } from '@terminal/common/types/pair';
-import { Order } from '@terminal/common/types/order';
+import { Pair } from '@/api/types/pair';
+import { Order } from '@/api/types/order';
 import { post } from '@/api';
 import { Candle } from '@/api/types/marketData';
 

@@ -1,4 +1,4 @@
-import { Order } from '@terminal/common/types/order';
+import { Order } from '@/api/types/order';
 import { post } from '@/api';
 import { ErrorResponse } from '@/api/common';
 

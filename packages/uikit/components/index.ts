@@ -43,3 +43,4 @@ export * from './dropdown';
 export * from './leviatingLayer';
 export * from './toastLayer';
 export * from './header';
+export * from './link';

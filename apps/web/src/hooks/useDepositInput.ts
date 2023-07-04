@@ -1,6 +1,6 @@
 import { computed, toRefs, watch } from 'vue';
 import { DepositInputEmits, DepositInputProps } from '@/components/core/depositInput';
-import { useLocalValue } from '@/hooks/useLocalValue';
+import { useLocalValue } from '@terminal/uikit/hooks/useLocalValue';
 import { useExchange } from '@/hooks/useExchange';
 import { convertQuoteBalanceToBase } from '@/helpers/math/formulas/currency';
 import {

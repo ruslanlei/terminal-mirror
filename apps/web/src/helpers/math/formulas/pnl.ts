@@ -7,14 +7,14 @@ import {
 import { calculatePercentageOfTotal } from '@/helpers/math/percents';
 import { Order } from '@/api/types/order';
 import { isDateWithinCurrentDay, isDateWithinCurrentMonth, isDateWithinCurrentWeek } from '@terminal/common/utils/date';
-import { Maybe } from '@/utils/functors';
+import { Maybe } from '@terminal/common/utils/functors';
 import {
   filter,
   find,
   reduce,
-} from '@/utils/array';
+} from '@terminal/common/utils/array';
 import { isExactOrder, isOrderOfType } from '@/helpers/orders';
-import { isEqual, isLessThanLeft, isMoreThanOrEqualTo } from '@/utils/boolean';
+import { isEqual, isLessThanLeft, isMoreThanOrEqualTo } from '@terminal/common/utils/boolean';
 
 export const calculateCurrentPnl = curry((
   orderPrice: number,

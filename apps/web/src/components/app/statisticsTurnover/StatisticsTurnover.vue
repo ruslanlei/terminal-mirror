@@ -46,7 +46,7 @@ import { compose } from '@terminal/common/utils/fp';
 import { add, multiply, roundToDecimalPlaces } from '@terminal/common/utils/number';
 import { calculateAverageIncome } from '@/helpers/orders';
 import { useMarketStore } from '@/stores/market';
-import { reduce } from '@/utils/array';
+import { reduce } from '@terminal/common/utils/array';
 import { Order } from '@/api/types/order';
 
 const { t } = useI18n();

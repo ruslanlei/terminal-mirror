@@ -11,7 +11,7 @@ import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { storeToRefs } from 'pinia';
 import { UiBarChart } from '@terminal/uikit/components/barChart';
-import { toPnlString } from '@/utils/style';
+import { toPnlString } from '@terminal/uikit/utils/style';
 import { useMarketStore } from '@/stores/market';
 import {
   addMonths,
@@ -31,13 +31,13 @@ import {
   getLastElement,
   map,
   sortByKey,
-} from '@/utils/array';
-import { getValueByKey, groupBy, objectEntries } from '@/utils/object';
+} from '@terminal/common/utils/array';
+import { getValueByKey, groupBy, objectEntries } from '@terminal/common/utils/object';
 import { add, roundToDecimalPlaces, subtract } from '@terminal/common/utils/number';
 import { calculateCommonClosePnl } from '@/helpers/math/formulas/pnl';
-import { Maybe } from '@/utils/functors';
+import { Maybe } from '@terminal/common/utils/functors';
 import { BarChartData, BarChartDataElement } from '@/components/core/barChart/createBarChart';
-import { ensureOrFallback, isEqual, isMoreThanOrEqualTo } from '@/utils/boolean';
+import { ensureOrFallback, isEqual, isMoreThanOrEqualTo } from '@terminal/common/utils/boolean';
 
 const { t } = useI18n();
 

@@ -1,6 +1,6 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
-import { uuid } from '@/utils/uuid';
+import { uuid } from '@terminal/common/utils/uuid';
 
 export enum modalType {
   CONFIRM = 'confirm',

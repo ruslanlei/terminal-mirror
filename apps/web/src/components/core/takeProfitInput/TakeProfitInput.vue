@@ -63,16 +63,16 @@
 import { computed } from 'vue';
 import { UiNumberInput } from '@terminal/uikit/components/numberInput';
 import {
-  TakeProfitInputEmits,
-  TakeProfitInputProps,
-} from './index';
-import { useLocalValue } from '@/hooks/useLocalValue';
-import {
   divide,
   multiply,
   roundToDecimalPlaces,
 } from '@terminal/common/utils/number';
 import { compose } from '@terminal/common/utils/fp';
+import { useLocalValue } from '@terminal/uikit/hooks/useLocalValue';
+import {
+  TakeProfitInputEmits,
+  TakeProfitInputProps,
+} from './index';
 import {
   addPercents,
   calculateDecreasePercent,

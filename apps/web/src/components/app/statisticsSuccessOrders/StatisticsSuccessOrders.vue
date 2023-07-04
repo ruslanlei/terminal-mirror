@@ -60,7 +60,7 @@ import { compose } from '@terminal/common/utils/fp';
 import { calculateAverageIncome, findMostFrequentCoin } from '@/helpers/orders';
 import { getSuccessOrders } from '@/helpers/math/formulas/pnl';
 import { roundToDecimalPlaces } from '@terminal/common/utils/number';
-import { getLength } from '@/utils/array';
+import { getLength } from '@terminal/common/utils/array';
 
 const { t } = useI18n();
 

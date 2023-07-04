@@ -25,10 +25,10 @@ import {
 } from '@/helpers/math/formulas/order';
 import { useChartDataStore } from '@/stores/chartData';
 import { TakeProfit } from '@/api/types/order';
-import { arrayOf } from '@/utils/array';
+import { arrayOf } from '@terminal/common/utils/array';
 import { useEmulatorStore } from '@/stores/emulator';
-import { Maybe } from '@/utils/functors';
-import { isLessThanLeft } from '@/utils/boolean';
+import { Maybe } from '@terminal/common/utils/functors';
+import { isLessThanLeft } from '@terminal/common/utils/boolean';
 
 export interface OrderModel extends CreateOrderDTO {
   leverage: number,

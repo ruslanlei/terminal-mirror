@@ -22,7 +22,7 @@ import {
   divideRight,
   floorToDecimalPlaces,
 } from '@terminal/common/utils/number';
-import { isMoreThanLeft } from '@/utils/boolean';
+import { isMoreThanLeft } from '@terminal/common/utils/boolean';
 import { OrderRatioBadgeProps } from './index';
 
 const props = defineProps<OrderRatioBadgeProps>();

@@ -7,7 +7,7 @@ import { modalType, useModalStore } from '@/stores/modals';
 import { Order, StopLoss, TakeProfit } from '@/api/types/order';
 import { processServerErrors, requestMany } from '@/api/common';
 import { getorderList } from '@/api/endpoints/orders/getList';
-import { filter, flatten, map } from '@/utils/array';
+import { filter, flatten, map } from '@terminal/common/utils/array';
 import { createOrder, CreateOrderDTO } from '@/api/endpoints/orders/create';
 import { OrderModel } from '@/hooks/useOrderCreate';
 import { deleteOrder } from '@/api/endpoints/orders/delete';

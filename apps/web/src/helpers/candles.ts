@@ -7,9 +7,9 @@ import {
   toTimestamp,
 } from '@terminal/common/utils/date';
 import { compose, curry } from '@terminal/common/utils/fp';
-import { concat, filterNoneUniqueByKey, getLastElement } from '@/utils/array';
+import { concat, filterNoneUniqueByKey, getLastElement } from '@terminal/common/utils/array';
 import { multiply, subtractRight } from '@terminal/common/utils/number';
-import { isMoreThanLeft } from '@/utils/boolean';
+import { isMoreThanLeft } from '@terminal/common/utils/boolean';
 
 export const getCandleField = curry((
   field:

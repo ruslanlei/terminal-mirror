@@ -3,13 +3,13 @@ import { useToastStore } from '@/stores/toasts';
 import { useStorage } from '@vueuse/core';
 import { Pair } from '@/api/types/pair';
 import { computed, nextTick, ref } from 'vue';
-import { isEmpty } from '@/utils/object';
+import { isEmpty } from '@terminal/common/utils/object';
 import { getPairs } from '@/api/endpoints/marketdata/stats';
 import { FavoritePair, getFavorites } from '@/api/endpoints/profile/getFavorites';
 import { processServerErrors } from '@/api/common';
 import { addToFavorites } from '@/api/endpoints/profile/addToFavorites';
 import { removeFromFavorites } from '@/api/endpoints/profile/removeFromFavorites';
-import { findAndDelete } from '@/utils/array';
+import { findAndDelete } from '@terminal/common/utils/array';
 
 export type PairsMap = Record<Pair['id'], Pair>;
 

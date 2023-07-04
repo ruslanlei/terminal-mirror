@@ -16,8 +16,8 @@ import { compose } from '@terminal/common/utils/fp';
 import { roundToDecimalPlaces, subtractRight } from '@terminal/common/utils/number';
 import { humanizeNumber, percentFormat } from '@terminal/common/utils/numberFormat';
 import { calculatePercentageOfTotal } from '@/helpers/math/percents';
-import { findMaxByKey, findMinByKey } from '@/utils/array';
-import { isMoreThanLeft } from '@/utils/boolean';
+import { findMaxByKey, findMinByKey } from '@terminal/common/utils/array';
+import { isMoreThanLeft } from '@terminal/common/utils/boolean';
 
 const { t } = useI18n();
 

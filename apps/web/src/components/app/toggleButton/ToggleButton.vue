@@ -14,7 +14,7 @@
 
 <script setup lang="ts">
 import { ToggleButtonEmits, ToggleButtonProps } from '@/components/app/toggleButton/index';
-import { useLocalValue } from '@/hooks/useLocalValue';
+import { useLocalValue } from '@terminal/uikit/hooks/useLocalValue';
 import { useComputedState } from '@/hooks/useComputedState';
 
 const props = withDefaults(

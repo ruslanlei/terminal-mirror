@@ -10,9 +10,9 @@
 
 <script setup lang="ts">
 import { onBeforeUnmount } from 'vue';
-import { addCssProperty, queryChildSelector, querySelector } from '@/utils/dom';
+import { addCssProperty, queryChildSelector, querySelector } from '@terminal/uikit/utils/dom';
 import { compose } from '@terminal/common/utils/fp';
-import { toCssPercentValue } from '@/utils/style';
+import { toCssPercentValue } from '@terminal/uikit/utils/style';
 import { divide } from '@terminal/common/utils/number';
 import { useId } from '@/hooks/useId';
 import SpaceSvg from './assets/space.svg';

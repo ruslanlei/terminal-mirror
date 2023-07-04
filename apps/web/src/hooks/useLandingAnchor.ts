@@ -5,7 +5,7 @@ import {
   onBeforeUnmount,
   onMounted,
 } from 'vue';
-import { getElementById, getRectField } from '@/utils/dom';
+import { getElementById, getRectField } from '@terminal/uikit/utils/dom';
 import { compose } from '@terminal/common/utils/fp';
 import { add } from '@terminal/common/utils/number';
 

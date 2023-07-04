@@ -77,10 +77,10 @@ import { isPositive, subtractRight } from '@terminal/common/utils/number';
 import { useMarketStore } from '@/stores/market';
 import { useEmulatorStore } from '@/stores/emulator';
 import { compose } from '@terminal/common/utils/fp';
-import { cloneDeep } from '@/utils/object';
-import { filter } from '@/utils/array';
+import { cloneDeep } from '@terminal/common/utils/object';
+import { filter } from '@terminal/common/utils/array';
 import { useChartDataStore } from '@/stores/chartData';
-import { collectSrcSet } from '@/utils/dom';
+import { collectSrcSet } from '@terminal/uikit/utils/dom';
 import { DeleteOrderModalEmits, DeleteOrderModalProps } from './index';
 
 import IllustrationPng from './assets/illustration.png';

@@ -1,4 +1,4 @@
-import { isObject } from '@/utils/object';
+import { isObject } from '@terminal/common/utils/object';
 
 export const useChain = (
   object: Record<any, any>,

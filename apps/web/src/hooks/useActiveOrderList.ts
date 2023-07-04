@@ -12,10 +12,10 @@ import { useMarketStore } from '@/stores/market';
 import {
   Order,
 } from '@/api/types/order';
-import { awaitTimeout } from '@/utils/promise';
+import { awaitTimeout } from '@terminal/common/utils/promise';
 import { useEmulatorStore } from '@/stores/emulator';
 import { storeToRefs } from 'pinia';
-import { findAndDelete, findAndUpdateObject } from '@/utils/array';
+import { findAndDelete, findAndUpdateObject } from '@terminal/common/utils/array';
 
 export const useActiveOrderList = (
   listType: Ref<'active' | 'closed'>,

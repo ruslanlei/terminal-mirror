@@ -6,7 +6,7 @@ import {
   TableProps,
   TableRecord,
 } from '@terminal/uikit/components/table';
-import { useLocalValue } from '@/hooks/useLocalValue';
+import { useLocalValue } from '@terminal/uikit/hooks/useLocalValue';
 
 export const useTable = (
   props: TableProps,

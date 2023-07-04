@@ -15,11 +15,11 @@ import {
   ISeriesApi,
   ITimeScaleApi,
 } from 'lightweight-charts';
-import { useLocalValue } from '@/hooks/useLocalValue';
+import { useLocalValue } from '@terminal/uikit/hooks/useLocalValue';
 import { toISOString } from '@terminal/common/utils/date';
 import { compose } from '@terminal/common/utils/fp';
 import { multiply } from '@terminal/common/utils/number';
-import { getCssRgbColor } from '@/utils/style';
+import { getCssRgbColor } from '@terminal/uikit/utils/style';
 import {
   AbstractCandleChartEngineEmits,
 } from '@/components/core/candleChart/engines';

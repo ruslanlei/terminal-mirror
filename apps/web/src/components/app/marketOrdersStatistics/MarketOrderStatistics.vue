@@ -42,10 +42,10 @@ import StatisticsFailedOrders
   from '@/components/app/statisticsFailedOrders/StatisticsFailedOrders.vue';
 import StatisticsTurnover from '@/components/app/statisticsTurnover/StatisticsTurnover.vue';
 import { calculateSuccessRate, isExactOrder } from '@/helpers/orders';
-import { toCssPercentValue } from '@/utils/style';
-import { isMoreThanOrEqualTo } from '@/utils/boolean';
+import { toCssPercentValue } from '@terminal/uikit/utils/style';
+import { isMoreThanOrEqualTo } from '@terminal/common/utils/boolean';
 import { compose } from '@terminal/common/utils/fp';
-import { filter, getLength } from '@/utils/array';
+import { filter, getLength } from '@terminal/common/utils/array';
 
 const { t } = useI18n();
 

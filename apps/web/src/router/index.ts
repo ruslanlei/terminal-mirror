@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { DEFAULT_FAVICON_PATH } from '@/enums/favicon';
-import { setFavicon } from '@/utils/dom';
+import { setFavicon } from '@terminal/uikit/utils/dom';
 import routes from '~pages';
 
 export const router = createRouter({

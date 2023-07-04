@@ -2,7 +2,7 @@ import {
   add, divideRight, multiply, subtractRight,
 } from '@terminal/common/utils/number';
 import { compose, curry } from '@terminal/common/utils/fp';
-import { Maybe } from '@/utils/functors';
+import { Maybe } from '@terminal/common/utils/functors';
 
 export const convertQuoteBalanceToBase = curry((
   baseCurrencyPrice: number,

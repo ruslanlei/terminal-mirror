@@ -21,14 +21,14 @@ import OrderEventToast from '@/components/core/orderEventToast/OrderEventToast.v
 import { useEmulatorStore } from '@/stores/emulator';
 import { Order } from '@/api/types/order';
 import { collectOrderToastId, collectOrderToastWrapperId } from '@/components/app/orderEventsToastLayer/index';
-import { playAnimation } from '@/utils/animation';
-import { addCssProperty, getRect } from '@/utils/dom';
+import { playAnimation } from '@terminal/uikit/utils/animation';
+import { addCssProperty, getRect } from '@terminal/uikit/utils/dom';
 import { compose } from '@terminal/common/utils/fp';
 import { roundToDecimalPlaces } from '@terminal/common/utils/number';
 import { useMarketStore } from '@/stores/market';
-import { awaitTimeout } from '@/utils/promise';
-import { toCssPxValue, toIdSelector } from '@/utils/style';
-import { findAndDelete } from '@/utils/array';
+import { awaitTimeout } from '@terminal/common/utils/promise';
+import { toCssPxValue, toIdSelector } from '@terminal/uikit/utils/style';
+import { findAndDelete } from '@terminal/common/utils/array';
 
 const marketStore = useMarketStore();
 const emulatorStore = useEmulatorStore();

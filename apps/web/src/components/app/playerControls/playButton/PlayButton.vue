@@ -24,7 +24,7 @@
 <script setup lang="ts">
 import { UiIcon } from '@terminal/uikit/components/icon';
 import { PlayButtonEmits, PlayButtonProps } from '@/components/app/playerControls/playButton/index';
-import { useLocalValue } from '@/hooks/useLocalValue';
+import { useLocalValue } from '@terminal/uikit/hooks/useLocalValue';
 
 const props = defineProps<PlayButtonProps>();
 

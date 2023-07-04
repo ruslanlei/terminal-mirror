@@ -1,5 +1,5 @@
+import { defineHookInject } from '@terminal/uikit/utils/vue';
 import { useOrderCreate } from '@/hooks/useOrderCreate';
-import { defineHookInject } from '@/utils/vue';
 
 export type OrderFormTab = 'input' | 'tp' | 'sl' | 'slx';
 

@@ -7,7 +7,7 @@ import { Profile } from '@/api/types/profile';
 import { useEmulatorStore } from '@/stores/emulator';
 import { useMarketStore } from '@/stores/market';
 import { useStorage } from '@vueuse/core';
-import { isEmpty } from '@/utils/object';
+import { isEmpty } from '@terminal/common/utils/object';
 
 export const useProfileStore = defineStore('profile', () => {
   const { t } = useI18n();

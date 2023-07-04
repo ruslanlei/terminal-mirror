@@ -60,7 +60,7 @@ import { roundToDecimalPlaces } from '@terminal/common/utils/number';
 import { calculateAverageLoss, filterOrdersByType, findMostFrequentCoin } from '@/helpers/orders';
 import { useMarketStore } from '@/stores/market';
 import { getFailedOrders } from '@/helpers/math/formulas/pnl';
-import { getLength } from '@/utils/array';
+import { getLength } from '@terminal/common/utils/array';
 
 const { t } = useI18n();
 

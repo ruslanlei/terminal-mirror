@@ -20,7 +20,7 @@ import { UiDivider } from '@terminal/uikit/components/divider';
 import { UiFavoritesButton } from '@terminal/uikit/components/favoritesButton';
 import { useMarketStore } from '@/stores/market';
 import { MarketChartHeaderEmits, MarketChartHeaderProps } from '@/components/app/marketChartHeader/index';
-import { useLocalValue } from '@/hooks/useLocalValue';
+import { useLocalValue } from '@terminal/uikit/hooks/useLocalValue';
 
 const props = defineProps<MarketChartHeaderProps>();
 

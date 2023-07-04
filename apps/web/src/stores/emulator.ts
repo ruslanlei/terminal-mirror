@@ -26,10 +26,10 @@ import { processServerErrors } from '@/api/common';
 import { Pair } from '@/api/types/pair';
 import { useChartDataStore } from '@/stores/chartData';
 import { getBalance } from '@/api/endpoints/profile/getBalance';
-import { isMoreThanLeft } from '@/utils/boolean';
+import { isMoreThanLeft } from '@terminal/common/utils/boolean';
 import { isExactOrder, isOrderOfType } from '@/helpers/orders';
 import { useToastStore } from '@/stores/toasts';
-import { AnyFunction } from '@/utils/typescript';
+import { AnyFunction } from '@terminal/common/utils/typescript';
 
 export const getDefaultEmulatorDate = () => compose(
   toISOString,

@@ -10,7 +10,7 @@
 <script setup lang="ts">
 import { UiDatepicker, DatepickerProps, DatepickerEmits } from '@terminal/uikit/components/datepicker';
 import { storeToRefs } from 'pinia';
-import { useLocalValue } from '@/hooks/useLocalValue';
+import { useLocalValue } from '@terminal/uikit/hooks/useLocalValue';
 import { useI18nStore } from '@/stores/i18n';
 
 const props = defineProps<DatepickerProps>();

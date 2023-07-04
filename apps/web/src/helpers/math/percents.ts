@@ -9,7 +9,7 @@ import {
   roundToDecimalPlaces, subtract,
   subtractRight,
 } from '@terminal/common/utils/number';
-import { isEqual } from '@/utils/boolean';
+import { isEqual } from '@terminal/common/utils/boolean';
 import { percentFormat } from '@terminal/common/utils/numberFormat';
 
 export const calculateOnePercent = (

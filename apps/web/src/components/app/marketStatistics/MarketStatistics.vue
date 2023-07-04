@@ -16,11 +16,11 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { useLocalValue } from '@/hooks/useLocalValue';
+import { useLocalValue } from '@terminal/uikit/hooks/useLocalValue';
 import { useMarketStore } from '@/stores/market';
 import MarketCommonStatistics from '@/components/app/marketCommonStatistics/MarketCommonStatistics.vue';
 import MarketOrderStatistics from '@/components/app/marketOrdersStatistics/MarketOrderStatistics.vue';
-import { isEqual } from '@/utils/boolean';
+import { isEqual } from '@terminal/common/utils/boolean';
 import { MarketStatisticsEmits, MarketStatisticsProps } from './index';
 
 const props = withDefaults(

@@ -300,7 +300,7 @@ import { UiTypography } from '@terminal/uikit/components/typography';
 import SubOrderList from '@/components/app/orderList/subOrderList/SubOrderList.vue';
 import OrderListPlaceholder from '@/components/app/orderList/OrderListPlaceholder.vue';
 import CloseOrderButton from '@/components/app/closeOrderButton/CloseOrderButton.vue';
-import { toPositiveNumberString } from '@/utils/style';
+import { toPositiveNumberString } from '@terminal/uikit/utils/style';
 import { createEmptyRecord } from '@terminal/uikit/components/table/helpers';
 import { compose } from '@terminal/common/utils/fp';
 import {
@@ -319,8 +319,8 @@ import {
   collectClosedOrderRecord,
 } from '@/components/app/orderList/collectTableRecord';
 import { useChartDataStore } from '@/stores/chartData';
-import { useLocalValue } from '@/hooks/useLocalValue';
-import { getLength, sort } from '@/utils/array';
+import { useLocalValue } from '@terminal/uikit/hooks/useLocalValue';
+import { getLength, sort } from '@terminal/common/utils/array';
 import { isDateBefore } from '@terminal/common/utils/date';
 import {
   ActiveOrdersTableRecord,

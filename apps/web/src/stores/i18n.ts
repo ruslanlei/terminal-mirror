@@ -7,7 +7,7 @@ import {
   checkIfLanguageIsAvailable,
 } from '@/i18n';
 import { useRouter } from 'vue-router';
-import { getUserLanguage } from '@/utils/navigator';
+import { getUserLanguage } from '@terminal/uikit/utils/navigator';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 

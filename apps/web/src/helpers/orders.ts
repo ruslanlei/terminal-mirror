@@ -2,7 +2,6 @@ import {
   compose,
   curry,
 } from '@terminal/common/utils/fp';
-import { Order } from '@/api/types/order';
 import {
   divideRight,
   multiply,
@@ -14,16 +13,17 @@ import {
   getLength,
   isArray,
   map,
-} from '@/utils/array';
+} from '@terminal/common/utils/array';
+import { getKeyWithBiggestValue } from '@terminal/common/utils/object';
+import { Maybe } from '@terminal/common/utils/functors';
+import { isEqual } from '@terminal/common/utils/boolean';
+import { PairsMap } from '@/hooks/usePairs';
 import {
   calculateClosePnl,
   calculateCommonClosePnl,
   getSuccessOrders,
 } from '@/helpers/math/formulas/pnl';
-import { PairsMap } from '@/hooks/usePairs';
-import { getKeyWithBiggestValue } from '@/utils/object';
-import { Maybe } from '@/utils/functors';
-import { isEqual } from '@/utils/boolean';
+import { Order } from '@/api/types/order';
 
 export const isExactOrder = curry((
   orderType: Order['order_type'] | Array<Order['order_type']>,

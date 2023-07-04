@@ -7,7 +7,7 @@ import {
   getFirstElement,
   getLastElement,
   map,
-} from '@/utils/array';
+} from '@terminal/common/utils/array';
 import { getCandleField, getCandlesWithin24HoursFromLastCandleDate, mixCandles } from '@/helpers/candles';
 import { compose } from '@terminal/common/utils/fp';
 import { divideRight } from '@terminal/common/utils/number';

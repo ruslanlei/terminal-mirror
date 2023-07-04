@@ -23,7 +23,7 @@ import BackgroundAvif from '@/assets/images/auth/background.avif';
 import WalletAvif from '@/assets/images/auth/wallet.avif';
 import WalletPng from '@/assets/images/auth/wallet.png';
 import WalletWebp from '@/assets/images/auth/wallet.webp';
-import { collectSrcSet } from '@/utils/dom';
+import { collectSrcSet } from '@terminal/uikit/utils/dom';
 
 const illustrationSrcset = collectSrcSet([
   BackgroundAvif,

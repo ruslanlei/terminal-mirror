@@ -1,5 +1,27 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import * as process from 'process';
+
 export default defineNuxtConfig({
+  // FIXME:
+  //  ssr disabled in development because i18n breaks dev build.
+  //  problem actual at 03/07/2023, probably because at the moment
+  //  nuxt-i18n still beta. Issue:
+  //  https://github.com/nuxt-modules/i18n/issues/2000
+  ssr: process.env.NODE_ENV === 'production',
+
+  app: {
+    head: {
+      link: [
+        {
+          rel: 'icon',
+          type: 'image/x-icon',
+          href: '/favicon.ico',
+          hid: 'icon',
+        },
+      ],
+    },
+  },
+
   devtools: { enabled: true },
   modules: [
     '@pinia/nuxt',

@@ -72,7 +72,7 @@ import { UiButton } from '@terminal/uikit/components/button';
 import { UiCheckbox } from '@terminal/uikit/components/checkbox';
 import { Form, FormInput } from '@/form';
 import SignInContainer from '@/containers/signInContainer/SignInContainer.vue';
-import Link from '@/components/core/link/Link.vue';
+import Link from '@/components/app/link/Link.vue';
 import SignUpLink from '@/components/app/signUpLink/SignUpLink.vue';
 import { useSignIn } from '@/hooks/useSignIn';
 

@@ -39,7 +39,7 @@ import { useI18n } from 'vue-i18n';
 import { UiIcon } from '@terminal/uikit/components/icon';
 import { UiTypography } from '@terminal/uikit/components/typography';
 import { UiQrCode } from '@terminal/uikit/components/qrCode';
-import Link from '@/components/core/link/Link.vue';
+import Link from '@/components/app/link/Link.vue';
 import { EcosystemCardProps } from './index';
 
 const props = defineProps<EcosystemCardProps>();

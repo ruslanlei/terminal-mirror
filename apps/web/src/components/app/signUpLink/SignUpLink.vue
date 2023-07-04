@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
-import Link from '@/components/core/link/Link.vue';
+import Link from '@/components/app/link/Link.vue';
 
 const { t } = useI18n();
 </script>

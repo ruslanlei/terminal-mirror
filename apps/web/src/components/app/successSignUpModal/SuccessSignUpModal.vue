@@ -33,7 +33,7 @@ import { useI18n } from 'vue-i18n';
 import { UiButton } from '@terminal/uikit/components/button';
 import { UiModal } from '@terminal/uikit/components/modal';
 import { UiPicture } from '@terminal/uikit/components/picture';
-import Link from '@/components/core/link/Link.vue';
+import Link from '@/components/app/link/Link.vue';
 import IllustrationPng from './assets/illustration.png';
 import IllustrationWebp from './assets/illustration.webp';
 import { SuccessSignUpModalEmits } from './index';

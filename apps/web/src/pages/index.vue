@@ -28,5 +28,5 @@ const Market = defineAsyncComponent(() => import('@/components/app/market/Market
 </script>
 
 <style lang="scss">
-@import "@/assets/styles/transitions.scss";
+@import "@terminal/uikit/assets/styles/transitions.scss";
 </style>

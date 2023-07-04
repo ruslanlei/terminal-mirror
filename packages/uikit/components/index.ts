@@ -42,3 +42,4 @@ export * from './typography';
 export * from './dropdown';
 export * from './leviatingLayer';
 export * from './toastLayer';
+export * from './header';

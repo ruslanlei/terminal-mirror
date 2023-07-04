@@ -57,10 +57,10 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { size } from '@/enums/sizing';
+import { size } from '@terminal/uikit/enums/sizing';
 import { MarketContainerProps } from './index';
 
-const props = defineProps<MarketContainerProps>();
+defineProps<MarketContainerProps>();
 
 const stickyElementStyles = computed(() => ({
   position: 'sticky',
@@ -70,7 +70,7 @@ const stickyElementStyles = computed(() => ({
 </script>
 
 <style lang="scss" module>
-@import "src/assets/styles/utils";
+@import "@terminal/uikit/assets/styles/utils";
 
 .marketContainer {
   display: grid;

@@ -53,7 +53,7 @@
 </template>
 
 <style lang="scss" module>
-@import "src/assets/styles/utils";
+@import "@terminal/uikit/assets/styles/utils";
 
 .orderFormStopLossPartContainer {
   padding: 0 22px 22px 22px;

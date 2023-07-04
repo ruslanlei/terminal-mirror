@@ -1,6 +1,6 @@
 <template>
   <template v-if="state === 'select'">
-    <Dropdown
+    <UiDropdown
       v-model:is-visible="isDropdownVisible"
       :class="$style.languageSelect"
       :placement="['bottom', 'left']"
@@ -31,7 +31,7 @@
           </button>
         </div>
       </template>
-    </Dropdown>
+    </UiDropdown>
   </template>
   <template v-else-if="state === 'default'">
     <div :class="$style.languageList">
@@ -53,11 +53,11 @@
 <script setup lang="ts">
 import { computed, ref, toRefs } from 'vue';
 import { UiIcon } from '@terminal/uikit/components/icon';
-import { LanguageSelectProps } from '@/components/app/languageSelect/index';
+import { UiDropdown } from '@terminal/uikit/components/dropdown';
+import { filter } from '@terminal/common/utils/array';
+import { LanguageSelectProps } from './index';
 import { LocaleOption, useI18nStore } from '@/stores/i18n';
 import { AppLocale } from '@/i18n';
-import Dropdown from '@/components/core/dropdown/Dropdown.vue';
-import { filter } from '@/utils/array';
 
 const props = withDefaults(
   defineProps<LanguageSelectProps>(),
@@ -90,7 +90,7 @@ const setLocale = (newLocale: AppLocale) => {
 </script>
 
 <style lang="scss" module>
-@import "src/assets/styles/utils";
+@import "@terminal/uikit/assets/styles/utils";
 
 .languageSelect {
   position: relative;

@@ -39,7 +39,6 @@ import { BaseOptions as FlatpickrConfig } from 'flatpickr/dist/types/options';
 import { UiIcon } from '@terminal/uikit/components/icon';
 import { UiDropdown } from '@terminal/uikit/components/dropdown';
 import { useLocalValue } from '@/hooks/useLocalValue';
-import Dropdown from '@/components/core/dropdown/Dropdown.vue';
 import { useI18nStore } from '@/stores/i18n';
 import { AppLocale } from '@/i18n';
 import { DatepickerEmits, DatepickerProps } from './index';
@@ -100,7 +99,7 @@ const onTriggerClick = () => {
 </script>
 
 <style lang="scss" module>
-@import "src/assets/styles/utils";
+@import "@terminal/uikit/assets/styles/utils";
 
 .calendarWrapper {
   background-color: rgb(var(--color-background-2));

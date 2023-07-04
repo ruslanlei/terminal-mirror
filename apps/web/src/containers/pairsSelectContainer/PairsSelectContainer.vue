@@ -19,7 +19,7 @@ const props = defineProps<PairsSelectContainerProps>();
 </script>
 
 <style lang="scss" module>
-@import "src/assets/styles/utils";
+@import "@terminal/uikit/assets/styles/utils";
 
 .pairsSelectContainer {
   padding: 22px;

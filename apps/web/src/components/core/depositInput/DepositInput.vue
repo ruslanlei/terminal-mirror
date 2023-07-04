@@ -129,7 +129,7 @@ const options = computed(() => [
 </script>
 
 <style lang="scss" module>
-@import "src/assets/styles/utils";
+@import "@terminal/uikit/assets/styles/utils";
 
 .depositInput {}
 

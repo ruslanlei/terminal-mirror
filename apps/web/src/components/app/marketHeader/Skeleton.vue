@@ -1,6 +1,6 @@
 <template>
   <UiSkeletonContainer>
-    <Header>
+    <UiHeader>
       <template #leftColumn>
         <div :class="$style.leftColumn">
           <UiSkeleton :class="$style.marketTypeSelectorSkeleton" />
@@ -21,7 +21,7 @@
           <UiSkeleton :class="$style.avatarIconSkeleton" />
         </div>
       </template>
-    </Header>
+    </UiHeader>
   </UiSkeletonContainer>
 </template>
 
@@ -29,7 +29,7 @@
 import { UiDivider } from '@terminal/uikit/components/divider';
 import { UiSkeleton } from '@terminal/uikit/components/skeleton';
 import { UiSkeletonContainer } from '@terminal/uikit/components/skeletonContainer';
-import Header from '@/components/core/header/Header.vue';
+import { UiHeader } from '@terminal/uikit/components/header';
 </script>
 
 <style lang="scss" module>

@@ -16,7 +16,7 @@
 import { computed } from 'vue';
 import { UiSkeleton } from '@terminal/uikit/components/skeleton';
 import { UiSkeletonContainer } from '@terminal/uikit/components/skeletonContainer';
-import { size } from '@/enums/sizing';
+import { size } from '@terminal/uikit/enums/sizing';
 
 const computedStyles = computed(() => ({
   height: `calc(100 * var(--vh) - ${size.HEADER}px)`,

@@ -22,7 +22,7 @@
 </script>
 
 <style lang="scss" module>
-@import "src/assets/styles/utils";
+@import "@terminal/uikit/assets/styles/utils";
 
 .authChangePasswordContainer {
   padding-top: 80px;

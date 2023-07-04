@@ -25,7 +25,7 @@ withDefaults(
 </script>
 
 <style lang="scss" module>
-@import "src/assets/styles/utils";
+@import "@terminal/uikit/assets/styles/utils";
 
 .rewindButton {
   color: rgb(var(--color-accent-1));

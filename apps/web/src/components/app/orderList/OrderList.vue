@@ -322,8 +322,6 @@ import { useChartDataStore } from '@/stores/chartData';
 import { useLocalValue } from '@/hooks/useLocalValue';
 import { getLength, sort } from '@/utils/array';
 import { isDateBefore } from '@/utils/date';
-import Tooltip from '@/components/core/tooltip/Tooltip.vue';
-import Dropdown from '@/components/core/dropdown/Dropdown.vue';
 import {
   ActiveOrdersTableRecord,
   ClosedOrdersTableRecord,
@@ -571,7 +569,7 @@ const onRecordClick = (
 </script>
 
 <style lang="scss" module>
-@import "src/assets/styles/utils";
+@import "@terminal/uikit/assets/styles/utils";
 
 .orderList {
   width: 100%;
@@ -684,5 +682,5 @@ const onRecordClick = (
 </style>
 
 <style lang="scss">
-@import "@/assets/styles/transitions.scss";
+@import "@terminal/uikit/assets/styles/transitions.scss";
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <Header>
+  <UiHeader>
     <template #leftColumn>
       <div :class="$style.leftColumn">
         <MarketTypeSelector />
@@ -22,12 +22,12 @@
         <ProfileDropdown />
       </div>
     </template>
-  </Header>
+  </UiHeader>
 </template>
 
 <script setup lang="ts">
 import { UiDivider } from '@terminal/uikit/components/divider';
-import Header from '@/components/core/header/Header.vue';
+import { UiHeader } from '@terminal/uikit/components/header';
 import MarketTypeSelector from '@/components/app/marketTypeSelector/MarketTypeSelector.vue';
 import CurrentPairStats from '@/components/app/currentPairStats/CurrentPairStats.vue';
 import Balance from '@/components/app/balance/Balance.vue';
@@ -35,7 +35,7 @@ import ProfileDropdown from '@/components/app/profileDropdown/ProfileDropdown.vu
 </script>
 
 <style lang="scss" module>
-@import "src/assets/styles/utils";
+@import "@terminal/uikit/assets/styles/utils";
 
 .leftColumn {
   display: flex;

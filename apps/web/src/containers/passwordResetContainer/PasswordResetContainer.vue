@@ -19,7 +19,7 @@
 </script>
 
 <style lang="scss" module>
-@import "@/assets/styles/utils";
+@import "@terminal/uikit/assets/styles/utils";
 
 .passwordResetContainer {}
 

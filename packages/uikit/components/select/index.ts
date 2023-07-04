@@ -1,3 +1,5 @@
+export { default as UiSelect } from './Select.vue';
+
 export type SelectOption = {
   label: string,
   value: string,

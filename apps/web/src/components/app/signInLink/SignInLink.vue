@@ -22,7 +22,7 @@ const { t } = useI18n();
 </script>
 
 <style lang="scss" module>
-@import "src/assets/styles/utils";
+@import "@terminal/uikit/assets/styles/utils";
 
 .link {
   color: rgb(var(--color-accent-1));

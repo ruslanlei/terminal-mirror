@@ -37,7 +37,7 @@
 </script>
 
 <style lang="scss" module>
-@import "src/assets/styles/utils";
+@import "@terminal/uikit/assets/styles/utils";
 
 .orderFormTakeProfitPartContainer {
   padding: 0 12px 22px 12px;

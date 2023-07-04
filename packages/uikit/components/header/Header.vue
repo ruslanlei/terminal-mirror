@@ -16,7 +16,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { UiLogo } from '@terminal/uikit/components/logo';
-import { size } from '@/enums/sizing';
+import { size } from '../../enums/sizing';
 
 const computedStyles = computed(() => ({
   height: `${size.HEADER}px`,
@@ -24,7 +24,7 @@ const computedStyles = computed(() => ({
 </script>
 
 <style lang="scss" module>
-@import "src/assets/styles/utils";
+@import "@terminal/uikit/assets/styles/utils";
 
 .header {
   padding: 30px 23px;

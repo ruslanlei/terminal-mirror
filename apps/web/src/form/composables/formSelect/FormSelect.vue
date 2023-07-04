@@ -1,5 +1,5 @@
 <template>
-  <Select
+  <UiSelect
     v-model="value"
     :error="error"
     v-bind="props"
@@ -34,11 +34,11 @@
         v-bind="data"
       />
     </template>
-  </Select>
+  </UiSelect>
 </template>
 
 <script setup lang="ts">
-import Select from '@/components/core/select/Select.vue';
+import { UiSelect } from '@terminal/uikit/components/select';
 import { FormSelectProps } from '@/form/composables/formSelect/index';
 import { useActiveField } from '@/hooks/useActiveField';
 import { DefaultFormKey } from '@/form';

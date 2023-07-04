@@ -134,9 +134,9 @@ import {
   onBeforeUpdate,
 } from 'vue';
 import { UiIcon } from '@terminal/uikit/components/icon';
-import { teleportTargets } from '@/enums/teleport';
-import { useSelect } from '@/hooks/useSelect';
-import { useEnvironmentObserver } from '@/hooks/useEnvironmentObserver';
+import { teleportTargets } from '@terminal/uikit/enums/teleport';
+import { useSelect } from '../../hooks/useSelect';
+import { useEnvironmentObserver } from '../../hooks/useEnvironmentObserver';
 import {
   SelectProps,
   SelectOption,
@@ -403,7 +403,7 @@ defineExpose({
 </script>
 
 <style lang="scss" module>
-@import "src/assets/styles/utils";
+@import "@terminal/uikit/assets/styles/utils";
 
 .arrow {
   margin-left: auto;

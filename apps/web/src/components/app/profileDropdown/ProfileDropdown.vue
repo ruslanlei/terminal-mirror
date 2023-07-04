@@ -1,5 +1,5 @@
 <template>
-  <Dropdown
+  <UiDropdown
     :distance="20"
     :placement="['bottom', 'right']"
   >
@@ -18,13 +18,13 @@
     <template #dropdown>
       <ProfileSettings />
     </template>
-  </Dropdown>
+  </UiDropdown>
 </template>
 
 <script setup lang="ts">
 import { UiAvatar } from '@terminal/uikit/components/avatar';
 import { UiIcon } from '@terminal/uikit/components/icon';
-import Dropdown from '@/components/core/dropdown/Dropdown.vue';
+import { UiDropdown } from '@terminal/uikit/components/dropdown';
 import ProfileSettings from '@/components/app/profileSettings/ProfileSettings.vue';
 import DefaultAvatar from '@/assets/images/defaultAvatar.svg?url';
 </script>

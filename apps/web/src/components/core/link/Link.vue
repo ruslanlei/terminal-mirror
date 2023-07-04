@@ -37,7 +37,7 @@ const computedComponent = computed(() => (isExternal.value || !props.to ? 'a' : 
 </script>
 
 <style lang="scss" module>
-@import "src/assets/styles/utils";
+@import "@terminal/uikit/assets/styles/utils";
 
 .link {
   cursor: pointer;

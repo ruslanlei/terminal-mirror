@@ -55,7 +55,7 @@ const closeModal = (modalId: Modal['id']) => {
 </script>
 
 <style lang="scss" module>
-@import "src/assets/styles/utils";
+@import "@terminal/uikit/assets/styles/utils";
 
 .modalLayer {
   overflow-y: auto;

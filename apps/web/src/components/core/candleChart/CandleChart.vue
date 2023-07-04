@@ -120,5 +120,5 @@ const localDateTo = useLocalValue<string>(props, emit, 'dateTo');
 </style>
 
 <style lang="scss">
-@import "@/assets/styles/transitions.scss";
+@import "@terminal/uikit/assets/styles/transitions.scss";
 </style>

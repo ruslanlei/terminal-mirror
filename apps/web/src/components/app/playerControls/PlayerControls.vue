@@ -148,7 +148,7 @@ const onDatepickerClick = () => {
 </script>
 
 <style lang="scss" module>
-@import "src/assets/styles/utils";
+@import "@terminal/uikit/assets/styles/utils";
 
 .playerSettings {
   height: 100%;

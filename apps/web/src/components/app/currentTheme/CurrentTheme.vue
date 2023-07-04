@@ -15,7 +15,7 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import { computed } from 'vue';
-import { theme } from '@/enums/theme';
+import { theme } from '@terminal/uikit/enums/theme';
 import { useCommonStore } from '@/stores/common';
 
 const commonStore = useCommonStore();
@@ -28,7 +28,7 @@ const themeName = computed(() => ({
 </script>
 
 <style lang="scss" module>
-@import "src/assets/styles/utils";
+@import "@terminal/uikit/assets/styles/utils";
 
 .theme {
   @include title4;

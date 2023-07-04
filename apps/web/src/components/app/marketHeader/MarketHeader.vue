@@ -23,5 +23,5 @@ const {
 </script>
 
 <style lang="scss">
-@import "@/assets/styles/transitions.scss";
+@import "@terminal/uikit/assets/styles/transitions.scss";
 </style>

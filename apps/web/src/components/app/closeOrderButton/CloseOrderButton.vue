@@ -1,5 +1,5 @@
 <template>
-  <Dropdown
+  <UiDropdown
     v-model:is-visible="isTooltipVisible"
     placement="top"
     :transition-duration="600"
@@ -35,7 +35,7 @@
         </UiTypography>
       </UiTooltip>
     </template>
-  </Dropdown>
+  </UiDropdown>
 </template>
 
 <script setup lang="ts">
@@ -44,8 +44,8 @@ import { useI18n } from 'vue-i18n';
 import { UiIcon } from '@terminal/uikit/components/icon';
 import { UiTypography } from '@terminal/uikit/components/typography';
 import { UiTooltip } from '@terminal/uikit/components/tooltip';
+import { UiDropdown } from '@terminal/uikit/components/dropdown';
 
-import Dropdown from '@/components/core/dropdown/Dropdown.vue';
 import { CloseOrderButtonEmits } from './index';
 
 const emit = defineEmits<CloseOrderButtonEmits>();

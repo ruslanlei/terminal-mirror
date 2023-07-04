@@ -8,6 +8,8 @@ import { storeToRefs } from 'pinia';
 import { useI18n } from 'vue-i18n';
 import { number, object, string } from 'yup';
 import { SelectorProps } from '@terminal/uikit/components/selector';
+import { compose } from '@terminal/common/utils/fp';
+import { multiply, roundToDecimalPlaces } from '@terminal/common/utils/number';
 import { CreateOrderDTO } from '@/api/endpoints/orders/create';
 import { useMarketStore } from '@/stores/market';
 import { useModelReset } from '@/hooks/useModelReset';
@@ -16,13 +18,11 @@ import {
   mapTakeProfitPricesByIncreasePercent,
   mapTakeProfitPricesByDecreasePercent,
 } from '@/helpers/math/formulas/takeProfit';
-import { compose } from '@terminal/common/utils/fp';
 import { addPercents, subtractPercents } from '@/helpers/math/percents';
 import {
   calculateLiquidationPrice,
   calculatePledge,
 } from '@/helpers/math/formulas/order';
-import { multiply, roundToDecimalPlaces } from '@terminal/common/utils/number';
 import { useChartDataStore } from '@/stores/chartData';
 import { TakeProfit } from '@/api/types/order';
 import { arrayOf } from '@/utils/array';
@@ -139,6 +139,8 @@ export const useOrderCreate = () => {
   );
 
   const autoCalculateTakeProfitAmounts = () => {
+    console.log(takeProfits.value);
+
     takeProfits.value = spreadOrderQuantityBetweenTakeProfits(
       model.quantity,
       takeProfits.value,

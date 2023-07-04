@@ -66,7 +66,7 @@ import { UiAnimatedText } from '@terminal/uikit/components/animatedText';
 import { UiButton } from '@terminal/uikit/components/button';
 import { UiCard } from '@terminal/uikit/components/card';
 import { UiRangeSlider } from '@terminal/uikit/components/rangeSlider';
-import Datepicker from '@/components/core/datepicker/Datepicker.vue';
+import Datepicker from '@/components/app/datepicker/Datepicker.vue';
 
 import { useEmulatorStore } from '@/stores/emulator';
 import { useChartDataStore } from '@/stores/chartData';

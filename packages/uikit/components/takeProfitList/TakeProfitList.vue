@@ -3,26 +3,26 @@
     <div :class="$style.inputsHeader">
       <div :class="$style.inputsHeaderColumnLeft">
         <div :class="$style.column">
-          {{ t('order.takeProfit.price') }}
+          {{ t('ui.order.takeProfit.price') }}
         </div>
         <div :class="[$style.column, $style.incomeLabel]">
-          {{ t('order.takeProfit.income') }}
+          {{ t('ui.order.takeProfit.income') }}
         </div>
         <div :class="[$style.column, $style.percentOfOrderLabel]">
-          {{ t('order.takeProfit.percentOfOrder') }}
+          {{ t('ui.order.takeProfit.percentOfOrder') }}
         </div>
       </div>
       <div :class="$style.inputsHeaderColumnRight">
         <div :class="$style.column">
-          {{ t('order.takeProfit.quantity') }}
+          {{ t('ui.order.takeProfit.quantity') }}
         </div>
         <div :class="[$style.column, $style.quantityPercent]">
-          {{ t('order.takeProfit.quantityPercent') }}
+          {{ t('ui.order.takeProfit.quantityPercent') }}
         </div>
       </div>
     </div>
     <div :class="$style.takeProfitInputs">
-      <TakeProfitInput
+      <UiTakeProfitInput
         v-for="(takeProfit, takeProfitIndex) in localValue"
         :key="takeProfitIndex"
         v-model:price="takeProfit.price"
@@ -41,12 +41,12 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import { nextTick } from 'vue';
-import TakeProfitInput from '@/components/core/takeProfitInput/TakeProfitInput.vue';
 import { useLocalValue } from '@terminal/uikit/hooks/useLocalValue';
-import { TakeProfitListEmit, TakeProfitListProps } from '@/components/app/takeProfitList/index';
 import { subtract } from '@terminal/common/utils/number';
-import { reduceTakeProfitsToQuantitiesSum } from '@/helpers/math/formulas/takeProfit';
-import { TakeProfit } from '@/api/types/order';
+import { reduceTakeProfitsToQuantitiesSum } from '@terminal/common/helpers/math/formulas/takeProfit';
+import { TakeProfit } from '@terminal/common';
+import { UiTakeProfitInput } from '../takeProfitInput';
+import { TakeProfitListEmit, TakeProfitListProps } from './index';
 
 const props = defineProps<TakeProfitListProps>();
 

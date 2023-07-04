@@ -1,10 +1,10 @@
 import { computed, ref, Ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { Subject } from 'rxjs';
-import { Pair } from '@/api/types/pair';
+import { Pair } from '@terminal/common/types/pair';
 import { useToastStore } from '@/stores/toasts';
 import { modalType, useModalStore } from '@/stores/modals';
-import { Order, StopLoss, TakeProfit } from '@/api/types/order';
+import { Order, StopLoss, TakeProfit } from '@terminal/common/types/order';
 import { processServerErrors, requestMany } from '@/api/common';
 import { getorderList } from '@/api/endpoints/orders/getList';
 import { filter, flatten, map } from '@terminal/common/utils/array';

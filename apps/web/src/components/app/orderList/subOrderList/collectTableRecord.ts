@@ -5,10 +5,10 @@ import {
 } from '@/components/app/orderList/subOrderList/index';
 import { compose, curry } from '@terminal/common/utils/fp';
 import { roundToDecimalPlaces } from '@terminal/common/utils/number';
-import { valueToPercents } from '@/helpers/math/percents';
+import { valueToPercents } from '@terminal/common/helpers/math/percents';
 import { humanizeDate } from '@terminal/common/utils/date';
-import { MasterOrder } from '@/api/types/order';
-import { Pair } from '@/api/types/pair';
+import { MasterOrder } from '@terminal/common/types/order';
+import { Pair } from '@terminal/common/types/pair';
 import { collectTableRecord } from '@terminal/uikit/components/table/helpers';
 import { TableRowState } from '@terminal/uikit/components/table/tableRow';
 

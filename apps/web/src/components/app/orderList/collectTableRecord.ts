@@ -2,27 +2,27 @@ import {
   compose,
   curry,
 } from '@terminal/common/utils/fp';
-import { Pair } from '@/api/types/pair';
+import { Pair } from '@terminal/common/types/pair';
 import {
   MasterOrder,
   TakeProfit,
   StopLoss,
   Order,
-} from '@/api/types/order';
+} from '@terminal/common/types/order';
 import {
   isPositive,
   multiply,
   roundToDecimalPlaces,
   toAbsolute,
 } from '@terminal/common/utils/number';
-import { calculatePercentageOfTotal } from '@/helpers/math/percents';
+import { calculatePercentageOfTotal } from '@terminal/common/helpers/math/percents';
 import {
   // calculateClosePnl,
   calculateCommonClosePnl,
   calculateCurrentPnl,
   calculatePnlPercent,
-} from '@/helpers/math/formulas/pnl';
-import { calculateCommonTakeProfitPercent } from '@/helpers/math/formulas/takeProfit';
+} from '@terminal/common/helpers/math/formulas/pnl';
+import { calculateCommonTakeProfitPercent } from '@terminal/common/helpers/math/formulas/takeProfit';
 import { humanizeDate } from '@terminal/common/utils/date';
 import { ActiveOrdersTableRecord, ClosedOrdersTableRecord } from 'src/components/app/orderList';
 import { SubOrderTableItem } from 'src/components/app/orderList/subOrderList';

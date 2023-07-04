@@ -1,6 +1,10 @@
 import {
-  add, divideRight, multiply, subtractRight,
+  add,
+  divideRight,
+  multiply,
+  subtractRight,
 } from '@terminal/common/utils/number';
+
 import { compose, curry } from '@terminal/common/utils/fp';
 import { Maybe } from '@terminal/common/utils/functors';
 

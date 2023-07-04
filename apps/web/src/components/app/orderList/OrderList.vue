@@ -313,7 +313,7 @@ import {
   Order,
   StopLoss,
   TakeProfit,
-} from '@/api/types/order';
+} from '@terminal/common/types/order';
 import {
   collectActiveOrderRecord,
   collectClosedOrderRecord,

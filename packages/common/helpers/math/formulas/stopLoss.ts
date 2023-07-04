@@ -4,8 +4,8 @@ import {
   multiply,
   subtract,
 } from '@terminal/common/utils/number';
-import { calculateVolumeDifference } from '@/helpers/math/formulas/order';
-import { calculateOnePercent } from '@/helpers/math/percents';
+import { calculateVolumeDifference } from './order';
+import { calculateOnePercent } from '../percents';
 
 export const calculateVolumeDifferenceInPercentsOfDeposit = curry((
   quantity: number,

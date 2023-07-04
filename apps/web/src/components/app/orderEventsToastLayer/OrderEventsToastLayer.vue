@@ -19,7 +19,7 @@
 import { nextTick, onBeforeUnmount, ref } from 'vue';
 import OrderEventToast from '@/components/core/orderEventToast/OrderEventToast.vue';
 import { useEmulatorStore } from '@/stores/emulator';
-import { Order } from '@/api/types/order';
+import { Order } from '@terminal/common/types/order';
 import { collectOrderToastId, collectOrderToastWrapperId } from '@/components/app/orderEventsToastLayer/index';
 import { playAnimation } from '@terminal/uikit/utils/animation';
 import { addCssProperty, getRect } from '@terminal/uikit/utils/dom';

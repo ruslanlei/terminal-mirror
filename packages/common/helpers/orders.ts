@@ -2,11 +2,13 @@ import {
   compose,
   curry,
 } from '@terminal/common/utils/fp';
+
 import {
   divideRight,
   multiply,
   roundToDecimalPlaces,
 } from '@terminal/common/utils/number';
+
 import {
   countBy,
   filter,
@@ -14,16 +16,17 @@ import {
   isArray,
   map,
 } from '@terminal/common/utils/array';
+
 import { getKeyWithBiggestValue } from '@terminal/common/utils/object';
 import { Maybe } from '@terminal/common/utils/functors';
 import { isEqual } from '@terminal/common/utils/boolean';
-import { PairsMap } from '@/hooks/usePairs';
+
 import {
   calculateClosePnl,
   calculateCommonClosePnl,
   getSuccessOrders,
-} from '@/helpers/math/formulas/pnl';
-import { Order } from '@/api/types/order';
+} from './math/formulas/pnl';
+import { Order, PairMap } from '../types';
 
 export const isExactOrder = curry((
   orderType: Order['order_type'] | Array<Order['order_type']>,
@@ -118,7 +121,7 @@ export const calculateAverageLoss = (
 export const
   findMostFrequentCoin = curry(
     (
-      pairsMap: PairsMap,
+      pairsMap: PairMap,
       orders: Order[],
     ) => (
       compose(

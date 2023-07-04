@@ -114,15 +114,15 @@ import {
   calculateOriginalPriceByVolumeDecrease,
   calculateOriginalPriceByVolumeIncrease,
   calculateVolumeDifference,
-} from '@/helpers/math/formulas/order';
+} from '@terminal/common/helpers/math/formulas/order';
 import {
   addPercents,
   calculatePercentageOfTotal,
-} from '@/helpers/math/percents';
+} from '@terminal/common/helpers/math/percents';
 import {
   calculatePriceByPercentOfDeposit,
   calculateVolumeDifferenceInPercentsOfDeposit,
-} from '@/helpers/math/formulas/stopLoss';
+} from '@terminal/common/helpers/math/formulas/stopLoss';
 import { OrderFormStopLossPartEmits } from './index';
 
 const { t } = useI18n();

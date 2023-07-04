@@ -7,3 +7,5 @@ export interface Pair {
   to_date: string,
   total_trades: number,
 }
+
+export type PairMap = Record<Pair['id'], Pair>;

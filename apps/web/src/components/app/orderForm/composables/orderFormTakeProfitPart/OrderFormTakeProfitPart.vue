@@ -23,7 +23,7 @@
       />
     </template>
     <template #takeProfitsList>
-      <TakeProfitList
+      <UiTakeProfitList
         v-model="takeProfits"
         v-model:take-profits-amount="takeProfitsAmount"
         :order-price="model.price"
@@ -56,8 +56,8 @@ import { storeToRefs } from 'pinia';
 import { UiButton } from '@terminal/uikit/components/button';
 import { UiNumberInput } from '@terminal/uikit/components/numberInput';
 import { UiSwitch } from '@terminal/uikit/components/switch';
+import { UiTakeProfitList } from '@terminal/uikit/components/takeProfitList';
 import OrderFormTakeProfilePartContainer from '@/containers/orderFormTakeProfitPartContainer/OrderFormTakeProfitPartContainer.vue';
-import TakeProfitList from '@/components/app/takeProfitList/TakeProfitList.vue';
 import OrderFormEstimates from '@/components/app/orderForm/composables/orderFormEstimates/OrderFormEstimates.vue';
 import { useMarketStore } from '@/stores/market';
 import { injectOrderFormState } from '@/components/app/orderForm';

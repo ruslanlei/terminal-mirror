@@ -1,4 +1,4 @@
-import { Order, TakeProfit } from '@/api/types/order';
+import { Order, TakeProfit } from '@terminal/common/types/order';
 
 export interface DeleteOrderModalProps {
     order: Order,

@@ -17,14 +17,14 @@ import {
   spreadOrderQuantityBetweenTakeProfits,
   mapTakeProfitPricesByIncreasePercent,
   mapTakeProfitPricesByDecreasePercent,
-} from '@/helpers/math/formulas/takeProfit';
-import { addPercents, subtractPercents } from '@/helpers/math/percents';
+} from '@terminal/common/helpers/math/formulas/takeProfit';
+import { addPercents, subtractPercents } from '@terminal/common/helpers/math/percents';
 import {
   calculateLiquidationPrice,
   calculatePledge,
-} from '@/helpers/math/formulas/order';
+} from '@terminal/common/helpers/math/formulas/order';
 import { useChartDataStore } from '@/stores/chartData';
-import { TakeProfit } from '@/api/types/order';
+import { TakeProfit } from '@terminal/common/types/order';
 import { arrayOf } from '@terminal/common/utils/array';
 import { useEmulatorStore } from '@/stores/emulator';
 import { Maybe } from '@terminal/common/utils/functors';

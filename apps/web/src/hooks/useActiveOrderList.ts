@@ -11,7 +11,7 @@ import {
 import { useMarketStore } from '@/stores/market';
 import {
   Order,
-} from '@/api/types/order';
+} from '@terminal/common/types/order';
 import { awaitTimeout } from '@terminal/common/utils/promise';
 import { useEmulatorStore } from '@/stores/emulator';
 import { storeToRefs } from 'pinia';

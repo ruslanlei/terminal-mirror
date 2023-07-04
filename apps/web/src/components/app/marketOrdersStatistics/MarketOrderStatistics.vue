@@ -41,7 +41,7 @@ import StatisticsSuccessOrders from '@/components/app/statisticsSuccessOrders/St
 import StatisticsFailedOrders
   from '@/components/app/statisticsFailedOrders/StatisticsFailedOrders.vue';
 import StatisticsTurnover from '@/components/app/statisticsTurnover/StatisticsTurnover.vue';
-import { calculateSuccessRate, isExactOrder } from '@/helpers/orders';
+import { calculateSuccessRate, isExactOrder } from '@terminal/common/helpers/orders';
 import { toCssPercentValue } from '@terminal/uikit/utils/style';
 import { isMoreThanOrEqualTo } from '@terminal/common/utils/boolean';
 import { compose } from '@terminal/common/utils/fp';

@@ -44,10 +44,10 @@ import { UiTypography } from '@terminal/uikit/components/typography';
 import StatisticsResultRow from '@/containers/statisticsResultRow/StatisticsResultRow.vue';
 import { compose } from '@terminal/common/utils/fp';
 import { add, multiply, roundToDecimalPlaces } from '@terminal/common/utils/number';
-import { calculateAverageIncome } from '@/helpers/orders';
+import { calculateAverageIncome } from '@terminal/common/helpers/orders';
 import { useMarketStore } from '@/stores/market';
 import { reduce } from '@terminal/common/utils/array';
-import { Order } from '@/api/types/order';
+import { Order } from '@terminal/common/types/order';
 
 const { t } = useI18n();
 

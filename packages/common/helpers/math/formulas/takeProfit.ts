@@ -14,9 +14,9 @@ import {
   reduce,
   map,
 } from '@terminal/common/utils/array';
-import { calculateOnePercent } from '@/helpers/math/percents';
-import { TakeProfit } from '@/api/types/order';
-import { calculateVolumeDifference } from '@/helpers/math/formulas/order';
+import { TakeProfit } from '../../../types';
+import { calculateVolumeDifference } from './order';
+import { calculateOnePercent } from '../percents';
 
 export const reduceTakeProfitsToAmountOfProfit = curry((
   orderPrice: number,
@@ -75,7 +75,7 @@ export const spreadOrderQuantityBetweenTakeProfits = curry((
   orderQuantity: number,
   takeProfits: TakeProfit[],
 ) => map(
-  (value) => ({
+  (value: any) => ({
     ...value,
     quantity: compose(
       divide(orderQuantity),

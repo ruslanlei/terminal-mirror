@@ -75,7 +75,7 @@ import { UiTypography } from '@terminal/uikit/components/typography';
 import StatisticsResultRow from '@/containers/statisticsResultRow/StatisticsResultRow.vue';
 import { customFormatDate, dateNow } from '@terminal/common/utils/date';
 import { useMarketStore } from '@/stores/market';
-import { calculateCommonPnlForPeriod } from '@/helpers/math/formulas/pnl';
+import { calculateCommonPnlForPeriod } from '@terminal/common/helpers/math/formulas/pnl';
 import { compose } from '@terminal/common/utils/fp';
 import { isPositive, roundToDecimalPlaces } from '@terminal/common/utils/number';
 

@@ -21,13 +21,13 @@ import {
   toTimestamp,
 } from '@terminal/common/utils/date';
 import { multiply } from '@terminal/common/utils/number';
-import { Order } from '@/api/types/order';
+import { Order } from '@terminal/common/types/order';
 import { processServerErrors } from '@/api/common';
-import { Pair } from '@/api/types/pair';
+import { Pair } from '@terminal/common/types/pair';
 import { useChartDataStore } from '@/stores/chartData';
 import { getBalance } from '@/api/endpoints/profile/getBalance';
 import { isMoreThanLeft } from '@terminal/common/utils/boolean';
-import { isExactOrder, isOrderOfType } from '@/helpers/orders';
+import { isExactOrder, isOrderOfType } from '@terminal/common/helpers/orders';
 import { useToastStore } from '@/stores/toasts';
 import { AnyFunction } from '@terminal/common/utils/typescript';
 

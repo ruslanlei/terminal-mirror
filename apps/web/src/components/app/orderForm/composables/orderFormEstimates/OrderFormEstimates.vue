@@ -53,9 +53,9 @@ import { UiIcon } from '@terminal/uikit/components/icon';
 import { roundToDecimalPlaces } from '@terminal/common/utils/number';
 import OrderRatioBadge from '@/components/app/orderRatioBadge/OrderRatioBadge.vue';
 import { useMarketStore } from '@/stores/market';
-import { reduceTakeProfitsToAmountOfProfit } from '@/helpers/math/formulas/takeProfit';
+import { reduceTakeProfitsToAmountOfProfit } from '@terminal/common/helpers/math/formulas/takeProfit';
 import { injectOrderFormState } from '@/components/app/orderForm';
-import { calculateVolumeDifference } from '@/helpers/math/formulas/order';
+import { calculateVolumeDifference } from '@terminal/common/helpers/math/formulas/order';
 import { OrderFormEstimatesProps } from './index';
 
 const { t } = useI18n();

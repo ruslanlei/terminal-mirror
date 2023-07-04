@@ -1,15 +1,15 @@
 import { useI18n } from 'vue-i18n';
-import { useToastStore } from '@/stores/toasts';
 import { useStorage } from '@vueuse/core';
-import { Pair } from '@/api/types/pair';
 import { computed, nextTick, ref } from 'vue';
 import { isEmpty } from '@terminal/common/utils/object';
+import { findAndDelete } from '@terminal/common/utils/array';
+import { useToastStore } from '@/stores/toasts';
+import { Pair } from '@terminal/common/types/pair';
 import { getPairs } from '@/api/endpoints/marketdata/stats';
 import { FavoritePair, getFavorites } from '@/api/endpoints/profile/getFavorites';
 import { processServerErrors } from '@/api/common';
 import { addToFavorites } from '@/api/endpoints/profile/addToFavorites';
 import { removeFromFavorites } from '@/api/endpoints/profile/removeFromFavorites';
-import { findAndDelete } from '@terminal/common/utils/array';
 
 export type PairsMap = Record<Pair['id'], Pair>;
 

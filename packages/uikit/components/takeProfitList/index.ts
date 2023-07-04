@@ -1,4 +1,6 @@
-import { TakeProfit } from '@/api/types/order';
+import { TakeProfit } from '@terminal/common';
+
+export { default as UiTakeProfitList } from './TakeProfitList.vue';
 
 export interface TakeProfitListProps {
   modelValue: TakeProfit[],

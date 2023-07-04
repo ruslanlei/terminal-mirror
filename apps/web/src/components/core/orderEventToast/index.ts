@@ -1,4 +1,4 @@
-import { Order } from '@/api/types/order';
+import { Order } from '@terminal/common/types/order';
 
 export interface OrderEventToastProps {
   order: Order,

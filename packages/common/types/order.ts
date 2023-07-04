@@ -1,4 +1,4 @@
-import { Pair } from '@/api/types/pair';
+import { Pair } from './pair';
 
 export type OrderStatus = 'new' | 'filled' | 'expired' | 'canceled' | 'executed' | 'closed';
 

@@ -61,7 +61,6 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { UiNumberInput } from '@terminal/uikit/components/numberInput';
 import {
   divide,
   multiply,
@@ -70,15 +69,17 @@ import {
 import { compose } from '@terminal/common/utils/fp';
 import { useLocalValue } from '@terminal/uikit/hooks/useLocalValue';
 import {
-  TakeProfitInputEmits,
-  TakeProfitInputProps,
-} from './index';
-import {
   addPercents,
   calculateDecreasePercent,
   calculateIncreasePercent,
   subtractPercents,
-} from '@/helpers/math/percents';
+} from '@terminal/common/helpers/math/percents';
+import { UiNumberInput } from '../numberInput';
+
+import {
+  TakeProfitInputEmits,
+  TakeProfitInputProps,
+} from './index';
 
 const props = defineProps<TakeProfitInputProps>();
 

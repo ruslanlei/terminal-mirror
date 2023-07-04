@@ -91,7 +91,7 @@ import { UiTypography } from '@terminal/uikit/components/typography';
 import StatisticsResultRow from '@/containers/statisticsResultRow/StatisticsResultRow.vue';
 import { isPositive, roundToDecimalPlaces } from '@terminal/common/utils/number';
 import { useEmulatorStore } from '@/stores/emulator';
-import { calculateCommonPnlForPeriod } from '@/helpers/math/formulas/pnl';
+import { calculateCommonPnlForPeriod } from '@terminal/common/helpers/math/formulas/pnl';
 import { useMarketStore } from '@/stores/market';
 import { compose } from '@terminal/common/utils/fp';
 

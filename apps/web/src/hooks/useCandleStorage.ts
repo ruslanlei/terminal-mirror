@@ -1,17 +1,17 @@
 import { computed, ref, Ref } from 'vue';
-import { Pair } from '@/api/types/pair';
+import { Pair } from '@terminal/common/types/pair';
 import { useStorage } from '@vueuse/core';
-import { Candle } from '@/api/types/marketData';
 import {
   arraySum,
   getFirstElement,
   getLastElement,
   map,
 } from '@terminal/common/utils/array';
-import { getCandleField, getCandlesWithin24HoursFromLastCandleDate, mixCandles } from '@/helpers/candles';
 import { compose } from '@terminal/common/utils/fp';
 import { divideRight } from '@terminal/common/utils/number';
-import { calculatePercentageOfTotal } from '@/helpers/math/percents';
+import { calculatePercentageOfTotal } from '@terminal/common/helpers/math/percents';
+import { getCandleField, getCandlesWithin24HoursFromLastCandleDate, mixCandles } from '@/helpers/candles';
+import { Candle } from '@/api/types/marketData';
 
 export type CandlesMap = Record<Pair['id'], Candle[]>;
 

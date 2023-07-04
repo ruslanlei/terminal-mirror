@@ -1,7 +1,7 @@
 import { post } from '@/api';
-import { Pair } from '@/api/types/pair';
+import { Pair } from '@terminal/common/types/pair';
 import { Candle } from '@/api/types/marketData';
-import { Order } from '@/api/types/order';
+import { Order } from '@terminal/common/types/order';
 
 export interface SimulateDTO {
   pair: Pair['id'],

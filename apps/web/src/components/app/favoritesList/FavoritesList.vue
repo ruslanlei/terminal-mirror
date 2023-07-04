@@ -48,7 +48,7 @@ import { UiSelector } from '@terminal/uikit/components/selector';
 import { UiTypography } from '@terminal/uikit/components/typography';
 
 import { useMarketStore } from '@/stores/market';
-import { Pair } from '@/api/types/pair';
+import { Pair } from '@terminal/common/types/pair';
 import { FavoritesListEmits } from './index';
 import FavoritesListItem from '@/components/app/favoritesList/favoritesListItem/FavoritesListItem.vue';
 import { useChartDataStore } from '@/stores/chartData';

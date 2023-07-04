@@ -2,7 +2,7 @@ import { ref, watch } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useMarketStore } from '@/stores/market';
 import debounce from 'lodash/debounce';
-import { Pair } from '@/api/types/pair';
+import { Pair } from '@terminal/common/types/pair';
 
 export const usePairSelect = () => {
   const marketStore = useMarketStore();

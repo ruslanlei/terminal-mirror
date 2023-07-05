@@ -7,14 +7,16 @@ import {
   ref,
   onBeforeUnmount,
   onMounted,
-  watch, nextTick,
+  watch, nextTick, computed,
 } from 'vue';
+
 import {
   createChart,
   IChartApi,
   ISeriesApi,
   ITimeScaleApi,
 } from 'lightweight-charts';
+
 import { useLocalValue } from '@terminal/uikit/hooks/useLocalValue';
 import { toISOString } from '@terminal/common/utils/date';
 import { compose } from '@terminal/common/utils/fp';
@@ -23,10 +25,19 @@ import { getCssRgbColor } from '@terminal/uikit/utils/style';
 import {
   AbstractCandleChartEngineEmits,
 } from '@/components/core/candleChart/engines';
-import { TradingViewProps } from '@/components/core/candleChart/engines/tradingView/index';
+import {
+  TradingViewProps,
+  transformChartCandlesToTradingViewCandles,
+  transformTradingViewCandlesToChartCandles,
+} from '@/components/core/candleChart/engines/tradingView/index';
 
 const props = defineProps<TradingViewProps>();
 const emit = defineEmits<AbstractCandleChartEngineEmits>();
+
+const localCandles = computed({
+  get: transformChartCandlesToTradingViewCandles,
+  set: transformTradingViewCandlesToChartCandles,
+});
 
 const chartContainer = ref();
 
@@ -114,9 +125,9 @@ onMounted(() => {
     }
   });
 
-  watch(() => props.candles, async () => {
+  watch(localCandles, async () => {
     await nextTick();
-    candles.value?.setData(props.candles);
+    candles.value?.setData(localCandles);
   }, { immediate: true });
 });
 

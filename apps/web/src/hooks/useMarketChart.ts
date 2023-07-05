@@ -1,6 +1,6 @@
 import {
   computed,
-  nextTick,
+  nextTick, onBeforeUnmount,
   watch,
 } from 'vue';
 import { storeToRefs } from 'pinia';
@@ -15,7 +15,7 @@ import {
 import { useEmulatorStore } from '@/stores/emulator';
 import { useMarketStore } from '@/stores/market';
 import { decreaseDateByAmountOfCandles } from '@/helpers/candles';
-import { useChartDataStore } from '@/stores/chartData';
+import { AppendCandlesListener, useChartDataStore } from '@/stores/chartData';
 
 export const getDefaultChartDateFrom = compose(
   toISOString,
@@ -23,7 +23,10 @@ export const getDefaultChartDateFrom = compose(
   dateNow,
 );
 
-export const useMarketChart = () => {
+export const useMarketChart = (
+  appendCandles: AppendCandlesListener,
+  resetCandles: () => void,
+) => {
   const emulatorStore = useEmulatorStore();
   const {
     emulatorDate,
@@ -37,11 +40,16 @@ export const useMarketChart = () => {
     marketType,
   } = storeToRefs(marketStore);
 
+  watch(activePair, resetCandles);
+
   const chartDataStore = useChartDataStore();
   const {
     candles,
     isFetchingCandles,
   } = storeToRefs(chartDataStore);
+
+  const removeCandlesListener = chartDataStore.listenForAppendCandles(appendCandles);
+  onBeforeUnmount(removeCandlesListener);
 
   const chartDateFrom = useStorage<string>('chartDateFrom', getDefaultChartDateFrom());
   const chartDateTo = useStorage<string>('chartDateTo', emulatorDate.value);

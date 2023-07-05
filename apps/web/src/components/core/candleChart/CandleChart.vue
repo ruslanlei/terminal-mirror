@@ -1,13 +1,14 @@
 <template>
   <div :class="[$style.chart, isLoading && $style.isLoading]">
     <ChartEngine
+      ref="engine"
       v-model:date-from="localDateFrom"
       v-model:date-to="localDateTo"
-      :candles="computedCandles"
+      :candles="candles"
       :class="$style.container"
     />
     <div
-      v-if="!candles?.length"
+      v-if="!candles?.length && !isLoading"
       :class="$style.noDataBadgeContainer"
     >
       <slot name="noDataBadge">
@@ -25,14 +26,10 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineAsyncComponent } from 'vue';
+import {computed, defineAsyncComponent, ref, watch} from 'vue';
 import { UiTypography } from '@terminal/uikit/components/typography';
-import { Time } from 'lightweight-charts';
 import { useLocalValue } from '@terminal/uikit/hooks/useLocalValue';
-import { toSecondsTimestamp } from '@terminal/common/utils/date';
-import { TradingViewCandle } from '@/components/core/candleChart/engines/tradingView';
 import { CandleChartEmits, CandleChartProps, ChartCandle } from './index';
-import { DxChartCandle } from '@/components/core/candleChart/engines/dxChart';
 
 const TradingView = defineAsyncComponent(() => (
   import('@/components/core/candleChart/engines/tradingView/TradingView.vue')
@@ -42,6 +39,8 @@ const DxChart = defineAsyncComponent(() => (
   import('@/components/core/candleChart/engines/dxChart/DxChart.vue')
 ));
 
+const engine = ref();
+
 const props = defineProps<CandleChartProps>();
 const emit = defineEmits<CandleChartEmits>();
 
@@ -50,41 +49,21 @@ const ChartEngine = computed(() => ({
   dxChart: DxChart,
 }[props.engine]));
 
-const transformChartCandlesToTradingViewCandles = (
-  candles: ChartCandle[],
-): TradingViewCandle[] => candles.map(
-  (candle: ChartCandle) => ({
-    open: candle[0],
-    high: candle[1],
-    low: candle[2],
-    close: candle[3],
-    time: toSecondsTimestamp(candle[6]) as Time,
-  }),
-);
-
-const transformChartCandlesToDxChartCandles = (
-  candles: ChartCandle[],
-): DxChartCandle[] => candles.map(
-  (candle: ChartCandle) => ({
-    open: candle[0],
-    hi: candle[1],
-    lo: candle[2],
-    close: candle[3],
-    timestamp: toSecondsTimestamp(candle[6]) as Time,
-  }),
-);
-
-const candleTransformFunction = computed(() => ({
-  tradingView: transformChartCandlesToTradingViewCandles,
-  dxChart: transformChartCandlesToDxChartCandles,
-}[props.engine]));
-
-const computedCandles = computed(() => (
-  candleTransformFunction.value(props.candles)
-));
-
 const localDateFrom = useLocalValue<string>(props, emit, 'dateFrom');
 const localDateTo = useLocalValue<string>(props, emit, 'dateTo');
+
+const setCandles = (candles: ChartCandle[]) => {
+  engine.value.setCandles(candles);
+};
+
+const resetCandles = () => {
+  engine.value.resetCandles();
+};
+
+defineExpose({
+  setCandles,
+  resetCandles,
+});
 </script>
 
 <style lang="scss" module>

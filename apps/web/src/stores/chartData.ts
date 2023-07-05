@@ -4,6 +4,11 @@ import { useMarketStore } from '@/stores/market';
 import { getCandles } from '@/api/endpoints/marketdata/candles';
 import { processServerErrors } from '@/api/common';
 import { useCandleStorage } from '@/hooks/useCandleStorage';
+import { Candle } from '@/api/types/marketData';
+
+export type AppendCandlesListener = (
+    newCandles: Candle[],
+) => void
 
 export const useChartDataStore = defineStore('chartData', () => {
   const candleSize = ref<number>(900);
@@ -26,11 +31,30 @@ export const useChartDataStore = defineStore('chartData', () => {
     checkIsDataExistByPairId,
     get24HoursPercentChangeByPairId,
     clearCandles,
-    appendCandles,
+    appendCandles: candleStoreAppendCandles,
   } = useCandleStorage(
     activePair,
     'candlesMap',
   );
+
+  const onAppendCandlesListeners = ref<AppendCandlesListener[]>([]);
+
+  const listenForAppendCandles = (
+    callback: AppendCandlesListener,
+  ) => {
+    onAppendCandlesListeners.value.push(callback);
+
+    return () => {
+      onAppendCandlesListeners.value.filter((cb) => cb === callback);
+    };
+  };
+
+  const appendCandles = (
+    newCandles: Candle[],
+  ) => {
+    onAppendCandlesListeners.value.forEach((callback) => callback(newCandles));
+    candleStoreAppendCandles(newCandles);
+  };
 
   const isFetchingCandles = ref(false);
 
@@ -67,6 +91,7 @@ export const useChartDataStore = defineStore('chartData', () => {
     lastCandle,
     candlesWithinLast24Hours,
     appendCandles,
+    listenForAppendCandles,
     getCurrentPriceByPairId,
     checkIsDataExistByPairId,
     get24HoursPercentChangeByPairId,

@@ -20,4 +20,5 @@ export interface CandleChartProps {
 export interface CandleChartEmits {
   (e: 'update:dateFrom', value: string): void,
   (e: 'update:dateTo', value: string): void,
+  (e: 'update:candles', value: string): void,
 }

@@ -3,12 +3,23 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import {
+  onMounted,
+  ref, watch,
+} from 'vue';
 import { ChartBootstrap } from '@dx-private/dxchart5-light/dist';
 import { getCssRgbColor } from '@terminal/uikit/utils/style';
-import { DxChartProps } from './index';
+import { awaitTimeout } from '@terminal/common';
+import {
+  DxChartCandle,
+  DxChartProps,
+  transformChartCandlesToDxChartCandles,
+} from './index';
+import { ChartCandle } from '@/components/core/candleChart';
 
 const props = defineProps<DxChartProps>();
+
+const localCandles = ref(transformChartCandlesToDxChartCandles(props.candles));
 
 const chartContainer = ref();
 
@@ -54,15 +65,67 @@ const initChartInstance = () => {
   chartInstance.value = createChartInstance();
 };
 
-const setData = () => {
+const setCandlesToChart = (
+  candles: DxChartCandle[],
+) => {
   chartInstance.value?.chartComponent.setMainSeries({
-    candles: props.candles,
+    candles,
+  });
+};
+watch(localCandles, setCandlesToChart, { deep: true });
+
+const isSettingNewCandles = ref(false);
+const candleQueue = ref<ChartCandle[]>([]);
+const setCandles = async (newCandles: ChartCandle[]) => {
+  if (isSettingNewCandles.value) {
+    candleQueue.value = [
+      ...candleQueue.value,
+      ...newCandles,
+    ];
+
+    return;
+  }
+
+  isSettingNewCandles.value = true;
+
+  const transformedCandlesAndSortedCandles = transformChartCandlesToDxChartCandles(newCandles)
+    .sort((candleA, candleB) => (candleA.timestamp > candleB.timestamp ? 1 : -1));
+
+  await Promise.all(
+    transformedCandlesAndSortedCandles.map((candle, index) =>
+      (async () => {
+        await awaitTimeout(100 * index);
+
+        localCandles.value.push(candle);
+      })()),
+  );
+
+  if (candleQueue.value.length) {
+    setCandles(candleQueue.value);
+    candleQueue.value = [];
+  }
+
+  isSettingNewCandles.value = false;
+};
+
+const resetCandles = () => {
+  localCandles.value = [];
+  const unwatch = watch(() => props.candles, () => {
+    unwatch();
+    setCandlesToChart(
+      transformChartCandlesToDxChartCandles(props.candles),
+    );
   });
 };
 
 onMounted(() => {
   initChartInstance();
-  setData();
+  setCandlesToChart(localCandles.value);
+});
+
+defineExpose({
+  setCandles,
+  resetCandles,
 });
 </script>
 

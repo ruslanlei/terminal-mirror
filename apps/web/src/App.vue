@@ -24,7 +24,6 @@ import Layout from '@/components/app/layout/Layout.vue';
 import ToastLayer from '@/components/app/toastLayer/ToastLayer.vue';
 import ModalLayer from '@/components/app/modalLayer/ModalLayer.vue';
 import AppPreloader from '@/components/app/appPreloader/AppPreloader.vue';
-
 import { useApp } from '@/hooks/useApp';
 
 const { isPreparing } = useApp();

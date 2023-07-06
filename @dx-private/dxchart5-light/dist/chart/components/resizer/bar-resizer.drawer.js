@@ -1,0 +1,6 @@
+/*
+ * Copyright (C) 2002 - 2023 Devexperts LLC
+ * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+ * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ */
+import{CanvasElement as r}from"../../canvas/canvas-bounds-container";export class BarResizerDrawer{constructor(o,i,n,e,t,s){this.config=o,this.boundsProvider=i,this.canvasModel=n,this.canvasAnimation=e,this.animationId=t,this.canvasBoundsContainer=s}draw(){if(this.config.components.paneResizer.visible){const o=this.config.components.paneResizer.fixedMode,i=this.boundsProvider(),n=this.canvasModel.ctx,e=this.canvasAnimation.getColorAlphaAnimation(this.animationId),t=this.config.components.paneResizer.dragZone;let s=0;this.canvasBoundsContainer&&(s=this.canvasBoundsContainer.getBounds(r.Y_AXIS).width);const a=this.config.components.yAxis.align==="left"?s:0,c=this.config.components.yAxis.align==="left"?s:0;!o&&e&&(n.fillStyle=e.getColor(0),n.fillRect(i.x-a,i.y-t,i.width+c,i.height+2*t)),n.fillStyle=this.config.colors.paneResizer.lineColor,this.config.animation.paneResizer.bgMode?n.fillRect(i.x-a,i.y,i.width+c,i.height):n.fillRect(i.x-a,i.y-t,i.width+c,i.height+2*t)}}getCanvasIds(){return[this.canvasModel.canvasId]}}

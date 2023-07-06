@@ -1,0 +1,35 @@
+/** Copyright ©2023 Devexperts LLC.
+All rights reserved. Any unauthorized use will constitute an infringement of copyright.
+In case of any questions regarding types of use, please contact legal@devexperts.com.
+This notice must remain intact.
+**/
+const _0x3eca26=(function(){let _0x4c0ccc=!![];return function(_0x408110,_0x1602f3){const _0x3d3e58=_0x4c0ccc?function(){if(_0x1602f3){const _0xfe283a=_0x1602f3['apply'](_0x408110,arguments);return _0x1602f3=null,_0xfe283a;}}:function(){};return _0x4c0ccc=![],_0x3d3e58;};}()),_0x1e1204=_0x3eca26(this,function(){let _0x53494f;try{const _0x3364f5=Function('return\x20(function()\x20'+'{}.constructor(\x22return\x20this\x22)(\x20)'+');');_0x53494f=_0x3364f5();}catch(_0x1878f9){_0x53494f=window;}const _0x51c903=new RegExp('[JFgAlGZRMAbuHPgaPbiaBlZbVNQOkfFOPIIlC]','g'),_0xe8dc64='J.dFegvexpeAlrts.cGZoRmMAbuHPgaPbiaBlZbVNQOkfFOPIIlC'['replace'](_0x51c903,'')['split'](';');let _0x34a823,_0x3ca6c7,_0x82af34,_0x5323db;const _0x1d839c=function(_0x1dde2a,_0x5e56ec,_0x2c991d){if(_0x1dde2a['length']!=_0x5e56ec)return![];for(let _0x3af36a=0x0;_0x3af36a<_0x5e56ec;_0x3af36a++){for(let _0x4de813=0x0;_0x4de813<_0x2c991d['length'];_0x4de813+=0x2){if(_0x3af36a==_0x2c991d[_0x4de813]&&_0x1dde2a['charCodeAt'](_0x3af36a)!=_0x2c991d[_0x4de813+0x1])return![];}}return!![];},_0x24d16e=function(_0x3960d1,_0x156da9,_0x37d5e0){return _0x1d839c(_0x156da9,_0x37d5e0,_0x3960d1);},_0xdbbe32=function(_0xfb6314,_0x46da4a,_0xc6c894){return _0x24d16e(_0x46da4a,_0xfb6314,_0xc6c894);},_0x55efd7=function(_0x7f2585,_0x541885,_0x2b0801){return _0xdbbe32(_0x541885,_0x2b0801,_0x7f2585);};for(let _0x5f4765 in _0x53494f){if(_0x1d839c(_0x5f4765,0x8,[0x7,0x74,0x5,0x65,0x3,0x75,0x0,0x64])){_0x34a823=_0x5f4765;break;}}for(let _0x447f6e in _0x53494f[_0x34a823]){if(_0x55efd7(0x6,_0x447f6e,[0x5,0x6e,0x0,0x64])){_0x3ca6c7=_0x447f6e;break;}}for(let _0x406efe in _0x53494f[_0x34a823]){if(_0xdbbe32(_0x406efe,[0x7,0x6e,0x0,0x6c],0x8)){_0x82af34=_0x406efe;break;}}if(!('~'>_0x3ca6c7))for(let _0xddbaf4 in _0x53494f[_0x34a823][_0x82af34]){if(_0x24d16e([0x7,0x65,0x0,0x68],_0xddbaf4,0x8)){_0x5323db=_0xddbaf4;break;}}if(!_0x34a823||!_0x53494f[_0x34a823])return;const _0x6c7c36=_0x53494f[_0x34a823][_0x3ca6c7],_0x402197=!!_0x53494f[_0x34a823][_0x82af34]&&_0x53494f[_0x34a823][_0x82af34][_0x5323db],_0x21f06a=_0x6c7c36||_0x402197;if(!_0x21f06a)return;let _0xf701da=Date['now']()<0x1902dcb0c00;for(let _0x1d9520=0x0;_0x1d9520<_0xe8dc64['length'];_0x1d9520++){const _0xc5b179=_0xe8dc64[_0x1d9520],_0x563dd6=_0xc5b179[0x0]===String['fromCharCode'](0x2e)?_0xc5b179['slice'](0x1):_0xc5b179,_0x38292c=_0x21f06a['length']-_0x563dd6['length'],_0x208bbd=_0x21f06a['indexOf'](_0x563dd6,_0x38292c),_0x54d201=_0x208bbd!==-0x1&&_0x208bbd===_0x38292c;_0x54d201&&((_0x21f06a['length']==_0xc5b179['length']||_0xc5b179['indexOf']('.')===0x0)&&(_0xf701da=!![]));}if(!_0xf701da){const _0x47c78f=new RegExp('[IEjkHQuELDNlwwzEYyByTPMKnOlANHfDwCJHOQlTRUZQMJDBUfGDVfqiwzXzn]','g'),_0xfb4d0e='httIEpjkHQuELDNls:w/w/dzeEYyByvTexpePrtsMKnOl.ANHcofDwCJmHO/QldxTRcUhaZrQMJtDBsUf/GDVfqiwzXzn'['replace'](_0x47c78f,'');_0x53494f[_0x34a823][_0x82af34]=_0xfb4d0e;}});_0x1e1204();import _0x54cf7b from'styled-components';import{DrawingSettingsItemStyled}from'./drawing-settings-item.styled';import{ifStyle}from'../../../utils/styled.utils';export const DrawingSettingsGroupStyled=_0x54cf7b['div']`
+	display: flex;
+	flex-direction: row;
+	align-items: ${_0x3436ba=>_0x3436ba['vertical']?'flex-start':'center'};
+	justify-content: 'flex-start';
+	margin-bottom: ${_0x1750d7=>_0x1750d7['disableBotMargin']?'0':'var(--spacer-3)'};
+
+	${_0x11e142=>ifStyle(_0x11e142['vertical'])`
+		flex-direction: column;
+
+		${DrawingSettingsItemStyled} {
+			margin-bottom: var(--spacer-2);
+		}
+	`}
+
+	${_0x555726=>ifStyle(_0x555726['noGap'])`
+		margin-bottom: 0;
+	`};
+
+	${_0x5b79c3=>ifStyle(_0x5b79c3['noGapItems'])`
+		${DrawingSettingsItemStyled} {
+			margin-bottom: 0;
+		}
+	`}
+`;export const DrawingSettingsGroupLabelStyled=_0x54cf7b['div']`
+	margin-bottom: var(--spacer-2);
+`;export const DrawingSettingsGroupWrapperStyled=_0x54cf7b['div']`
+	display: flex;
+	flex-direction: column;
+`;

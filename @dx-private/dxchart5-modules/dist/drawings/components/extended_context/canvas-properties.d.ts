@@ -1,0 +1,52 @@
+/** Copyright ©2023 Devexperts LLC.
+All rights reserved. Any unauthorized use will constitute an infringement of copyright.
+In case of any questions regarding types of use, please contact legal@devexperts.com.
+This notice must remain intact.
+**/
+export declare enum canvasProperties {
+    PROP_VISIBLE = "visible",
+    PROP_LINE_COLOR = "lineColor",
+    PROP_LINE_CAP = "lineCap",
+    PROP_LINE_WIDTH = "lineWidth",
+    PROP_LINE_DASH = "lineDash",
+    PROP_FILL_STYLE = "fillStyle",
+    PROP_OPACITY = "opacity",
+    PROP_COEFFICIENT = "coefficient",
+    PROP_SHOW_PRICE_LABEL = "showPrice",
+    PROP_PRICE_LABEL_PLACEMENT = "pricePlacement",
+    PROP_SHOW_PRICE_CHANGE_ABS = "showPriceChangeAbs",
+    PROP_SHOW_PRICE_CHANGE_DISTANCE = "showPriceChangeDistance",
+    PROP_SHOW_PRICE_CHANGE_PERCENT = "showPriceChangePercent",
+    PROP_SHOW_COEF_LABEL = "showCoefficient",
+    PROP_COEF_LABEL_PLACEMENT = "coefficientPlacement",
+    PROP_LABELS_SIDE_PLACEMENT = "sidePlacement",
+    PROP_LABELS_TO_THE_LINE_PLACEMENT = "placementToTheLine",
+    PROP_EXTEND_LEFT = "extendLeft",
+    PROP_EXTEND_RIGHT = "extendRight",
+    PROP_ARROW_START = "start",
+    PROP_ARROW_END = "end",
+    PROP_ARROW_LENGTH = "length",
+    PROP_ARROW_ANGLE = "angle",
+    PROP_FILL_BACKGROUND = "fillBackground",
+    PROPERTY_PART_TYPE_BASE_LINE = "baseLine",
+    PROPERTY_PART_TYPE_COEF_LINE = "coefLine",
+    PROPERTY_BLOCK_TYPE_TEXT = "text",
+    PROPERTY_BLOCK_TYPE_LABELS = "labels",
+    PROPERTY_BLOCK_TYPE_FIGURE_STYLE = "figureStyle",
+    PROP_LABEL_PLACEMENT_LEFT = "left",
+    PROP_LABEL_PLACEMENT_RIGHT = "right",
+    PROP_LABEL_PLACEMENT_TOP = "top",
+    PROP_LABEL_PLACEMENT_BOTTOM = "bottom",
+    PROP_SHOW_BARS_BOX = "showBars",
+    PROP_SHOW_TIME_DIFF_BOX = "showTimeDiff",
+    PROP_SHOW_DISTANCE_BOX = "showDistance",
+    PROP_SHOW_ANGLE_BOX = "showAngle",
+    PROP_POSITION_BOX = "position",
+    PROP_POSITION_LEFT_BOX = "left",
+    PROP_POSITION_RIGHT_BOX = "right",
+    PROP_POSITION_CENTER_BOX = "center",
+    PROP_POSITION_MIDDLE_BOX = "middle",
+    PROP_TOP_PLACEMENT_BOX = "top",
+    PROP_BOTTOM_PLACEMENT_BOX = "bottom"
+}
+export default canvasProperties;

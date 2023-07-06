@@ -1,0 +1,42 @@
+{
+  "name": "@dx-private/dxchart5-modules",
+  "version": "5.4.0",
+  "description": "DXChart5 chart modules to extends the basic functionality of DXChart5 Light",
+  "scripts": {},
+  "author": "devexperts",
+  "license": "UNLICENSED",
+  "files": [
+    "dist/*"
+  ],
+  "devDependencies": {
+    "@types/color": "^3.0.1",
+    "@types/jest": "^24.9.0",
+    "@typescript-eslint/parser": "^5.59.8",
+    "esbuild-jest": "^0.5.0",
+    "esbuild-loader": "^3.0.1",
+    "eslint": "^8.41.0",
+    "eslint-plugin-node": "^11.1.0",
+    "fork-ts-checker-webpack-plugin": "^8.0.0",
+    "javascript-obfuscator": "^4.0.2",
+    "jest": "^24.9.0",
+    "prettier": "^2.8.0",
+    "rimraf": "^3.0.0",
+    "rxjs": "^7.5.7",
+    "ts-jest": "^24.1.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.4",
+    "webpack": "^5.84.1",
+    "webpack-cli": "^5.1.1",
+    "webpack-obfuscator": "^3.5.1"
+  },
+  "dependencies": {
+    "color": "^3.1.2"
+  },
+  "peerDependencies": {
+    "date-fns": "^2.30.0",
+    "rxjs": "^7.5.7"
+  },
+  "publishConfig": {
+    "registry": "https://nexus.in.devexperts.com/repository/npm-dx-private/"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "ui": {
+    "order": {
+      "direction": {
+        "long": "Long",
+        "short": "Short"
+      },
+      "takeProfit": {
+        "profit": "Take profit",
+        "amountOfOrders": "Amount of orders",
+        "price": "Price",
+        "income": "Income",
+        "percentOfOrder": "%",
+        "quantity": "Quantity",
+        "quantityPercent": "%",
+        "ratio": "Risk/profit ratio",
+        "risk": "Risk",
+        "profitValue": "TP +{profit}",
+        "riskValue": "SL -{risk}"
+      }
+    }
+  }
+}

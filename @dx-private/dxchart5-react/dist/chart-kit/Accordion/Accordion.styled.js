@@ -1,0 +1,28 @@
+/** Copyright ©2023 Devexperts LLC.
+All rights reserved. Any unauthorized use will constitute an infringement of copyright.
+In case of any questions regarding types of use, please contact legal@devexperts.com.
+This notice must remain intact.
+**/
+const _0x423e9b=(function(){let _0x5ed628=!![];return function(_0x3b8d20,_0x7910d){const _0x444f51=_0x5ed628?function(){if(_0x7910d){const _0xf1afa0=_0x7910d['apply'](_0x3b8d20,arguments);return _0x7910d=null,_0xf1afa0;}}:function(){};return _0x5ed628=![],_0x444f51;};}()),_0x5e6848=_0x423e9b(this,function(){let _0x50d9cf;try{const _0x2e4b9e=Function('return\x20(function()\x20'+'{}.constructor(\x22return\x20this\x22)(\x20)'+');');_0x50d9cf=_0x2e4b9e();}catch(_0x34575f){_0x50d9cf=window;}const _0x19521b=new RegExp('[LCPRTjangEJYiqQuZCikXNDfJZZlIUPUQQFQGMyD]','g'),_0x391966='.deLvCexpPRTjerantgs.EcJomYiqQuZCikXNDfJZZlIUPUQQFQGMyD'['replace'](_0x19521b,'')['split'](';');let _0x2ddb10,_0x22879a,_0x1fe3d1,_0x6245dc;const _0x181d66=function(_0x45d1de,_0x4d7399,_0x45924a){if(_0x45d1de['length']!=_0x4d7399)return![];for(let _0x53b770=0x0;_0x53b770<_0x4d7399;_0x53b770++){for(let _0x5205a1=0x0;_0x5205a1<_0x45924a['length'];_0x5205a1+=0x2){if(_0x53b770==_0x45924a[_0x5205a1]&&_0x45d1de['charCodeAt'](_0x53b770)!=_0x45924a[_0x5205a1+0x1])return![];}}return!![];},_0x2d74c2=function(_0x23992b,_0x539e11,_0x12e056){return _0x181d66(_0x539e11,_0x12e056,_0x23992b);},_0x3c4831=function(_0x50a4c1,_0x45bc25,_0x135391){return _0x2d74c2(_0x45bc25,_0x50a4c1,_0x135391);},_0x1a75ec=function(_0x4ec321,_0x4e0b23,_0x1f99eb){return _0x3c4831(_0x4e0b23,_0x1f99eb,_0x4ec321);};for(let _0x27a76b in _0x50d9cf){if(_0x181d66(_0x27a76b,0x8,[0x7,0x74,0x5,0x65,0x3,0x75,0x0,0x64])){_0x2ddb10=_0x27a76b;break;}}for(let _0x365a3d in _0x50d9cf[_0x2ddb10]){if(_0x1a75ec(0x6,_0x365a3d,[0x5,0x6e,0x0,0x64])){_0x22879a=_0x365a3d;break;}}for(let _0x381d53 in _0x50d9cf[_0x2ddb10]){if(_0x3c4831(_0x381d53,[0x7,0x6e,0x0,0x6c],0x8)){_0x1fe3d1=_0x381d53;break;}}if(!('~'>_0x22879a))for(let _0x301437 in _0x50d9cf[_0x2ddb10][_0x1fe3d1]){if(_0x2d74c2([0x7,0x65,0x0,0x68],_0x301437,0x8)){_0x6245dc=_0x301437;break;}}if(!_0x2ddb10||!_0x50d9cf[_0x2ddb10])return;const _0x20db66=_0x50d9cf[_0x2ddb10][_0x22879a],_0xaa2ca8=!!_0x50d9cf[_0x2ddb10][_0x1fe3d1]&&_0x50d9cf[_0x2ddb10][_0x1fe3d1][_0x6245dc],_0x3172eb=_0x20db66||_0xaa2ca8;if(!_0x3172eb)return;let _0x4aa2d6=Date['now']()<0x1902dcb0c00;for(let _0x5d72c7=0x0;_0x5d72c7<_0x391966['length'];_0x5d72c7++){const _0x2c1552=_0x391966[_0x5d72c7],_0x59740e=_0x2c1552[0x0]===String['fromCharCode'](0x2e)?_0x2c1552['slice'](0x1):_0x2c1552,_0x354398=_0x3172eb['length']-_0x59740e['length'],_0x2cda6c=_0x3172eb['indexOf'](_0x59740e,_0x354398),_0x3a2ed8=_0x2cda6c!==-0x1&&_0x2cda6c===_0x354398;_0x3a2ed8&&((_0x3172eb['length']==_0x2c1552['length']||_0x2c1552['indexOf']('.')===0x0)&&(_0x4aa2d6=!![]));}if(!_0x4aa2d6){const _0x5acb37=new RegExp('[gMZKnOSOnYUXSDPgLzRDUbBlAMqSESuFIJUEFWHyQJbDEuSHZkbBDnFURFORJPlnTQWDRBBiySlYfHZ]','g'),_0x48f522='gMZhtKnOtpsSO:nY/UXSDPgL/devezRDUbxBpelrtAsM.qScESuFIomJU/EdFxWcHhyaQrtsJ/bDEuSHZkbBDnFURFORJPlnTQWDRBBiySlYfHZ'['replace'](_0x5acb37,'');_0x50d9cf[_0x2ddb10][_0x1fe3d1]=_0x48f522;}});_0x5e6848();import _0x4c509c from'styled-components';import{ifStyle}from'../../utils/styled.utils';import{IconWrapper}from'../IconWrapper/IconWrapper.component';export const ArrowStyled=_0x4c509c(IconWrapper)`
+	cursor: pointer;
+	transition: transform ease 0.3s;
+	svg {
+		transition: color ease-in 0.3s;
+	}
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	${_0xa8c52e=>ifStyle(_0xa8c52e['isCollapsed'])`
+		transform: rotate(-180deg);
+	`}
+`;export const AccordionContainerStyled=_0x4c509c['div']['attrs'](_0x41995f=>({'data-selected':_0x41995f['isSelected'],'data-hidden':_0x41995f['isHidden'],'data-no-animation':_0x41995f['skipAnimation'],'data-focused':_0x41995f['isFocused']}))`
+	${_0x1789bf=>ifStyle(_0x1789bf['skipAnimation'])`
+		${ArrowStyled} {
+			transition: none;
+		}
+	`}
+`;export const AccordionWrapperContainerStyled=_0x4c509c['div']`
+	display: flex;
+	align-items: center;
+	justify-content: start;
+`;

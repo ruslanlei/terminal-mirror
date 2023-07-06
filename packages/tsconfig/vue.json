@@ -2,6 +2,7 @@
   "extends": "@terminal/tsconfig/base.json",
   "compilerOptions": {
     "baseUrl": ".",
+    "allowJs": true,
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",
@@ -20,7 +21,8 @@
     "types": ["node", "vite/client"],
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "allowSyntheticDefaultImports": true
   },
   "linterOptions": {
     "exclude": ["src/**", "components/**"]

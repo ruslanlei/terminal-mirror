@@ -1,0 +1,10 @@
+{
+  "dateTime": {
+    "unit": {
+      "day": "Day",
+      "month": "Month",
+      "week": "Week"
+    },
+    "shortHours": "{hours}h"
+  }
+}

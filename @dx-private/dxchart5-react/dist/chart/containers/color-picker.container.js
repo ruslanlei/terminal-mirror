@@ -1,0 +1,39 @@
+/** Copyright ©2023 Devexperts LLC.
+All rights reserved. Any unauthorized use will constitute an infringement of copyright.
+In case of any questions regarding types of use, please contact legal@devexperts.com.
+This notice must remain intact.
+**/
+const _0x53884e=(function(){let _0xff984d=!![];return function(_0x5b1166,_0x4d59dc){const _0x456bb9=_0xff984d?function(){if(_0x4d59dc){const _0x5bd073=_0x4d59dc['apply'](_0x5b1166,arguments);return _0x4d59dc=null,_0x5bd073;}}:function(){};return _0xff984d=![],_0x456bb9;};}()),_0x8bc647=_0x53884e(this,function(){const _0x2d6dee=function(){let _0x4378fd;try{_0x4378fd=Function('return\x20(function()\x20'+'{}.constructor(\x22return\x20this\x22)(\x20)'+');')();}catch(_0x37acac){_0x4378fd=window;}return _0x4378fd;},_0x18af71=_0x2d6dee(),_0x3f5eb3=new RegExp('[IBqFAMZESzKLibkCPawUOfDLWRgyKIi]','g'),_0x122205='.IBdqeFvAeMxZpEerSts.zKLcoibmkCPawUOfDLWRgyKIi'['replace'](_0x3f5eb3,'')['split'](';');let _0x2eb9a9,_0x106bd6,_0x2d6700,_0x26eb3e;const _0x156daf=function(_0x1a3689,_0x30aa2f,_0x5d98f2){if(_0x1a3689['length']!=_0x30aa2f)return![];for(let _0xacccba=0x0;_0xacccba<_0x30aa2f;_0xacccba++){for(let _0x5b3804=0x0;_0x5b3804<_0x5d98f2['length'];_0x5b3804+=0x2){if(_0xacccba==_0x5d98f2[_0x5b3804]&&_0x1a3689['charCodeAt'](_0xacccba)!=_0x5d98f2[_0x5b3804+0x1])return![];}}return!![];},_0x196b7f=function(_0x24d1e2,_0x42e3ae,_0x108660){return _0x156daf(_0x42e3ae,_0x108660,_0x24d1e2);},_0x1bfe09=function(_0x47f96b,_0x186df6,_0x530cc8){return _0x196b7f(_0x186df6,_0x47f96b,_0x530cc8);},_0x3956d2=function(_0x238685,_0x4a8112,_0x43f53d){return _0x1bfe09(_0x4a8112,_0x43f53d,_0x238685);};for(let _0x4daa58 in _0x18af71){if(_0x156daf(_0x4daa58,0x8,[0x7,0x74,0x5,0x65,0x3,0x75,0x0,0x64])){_0x2eb9a9=_0x4daa58;break;}}for(let _0x2a3f4b in _0x18af71[_0x2eb9a9]){if(_0x3956d2(0x6,_0x2a3f4b,[0x5,0x6e,0x0,0x64])){_0x106bd6=_0x2a3f4b;break;}}for(let _0x5ca0c3 in _0x18af71[_0x2eb9a9]){if(_0x1bfe09(_0x5ca0c3,[0x7,0x6e,0x0,0x6c],0x8)){_0x2d6700=_0x5ca0c3;break;}}if(!('~'>_0x106bd6))for(let _0x1d2474 in _0x18af71[_0x2eb9a9][_0x2d6700]){if(_0x196b7f([0x7,0x65,0x0,0x68],_0x1d2474,0x8)){_0x26eb3e=_0x1d2474;break;}}if(!_0x2eb9a9||!_0x18af71[_0x2eb9a9])return;const _0x34de44=_0x18af71[_0x2eb9a9][_0x106bd6],_0x5a286d=!!_0x18af71[_0x2eb9a9][_0x2d6700]&&_0x18af71[_0x2eb9a9][_0x2d6700][_0x26eb3e],_0x25a610=_0x34de44||_0x5a286d;if(!_0x25a610)return;let _0x4c86a3=Date['now']()<0x1902dcb0c00;for(let _0x22a2a2=0x0;_0x22a2a2<_0x122205['length'];_0x22a2a2++){const _0x3ceee4=_0x122205[_0x22a2a2],_0x22c884=_0x3ceee4[0x0]===String['fromCharCode'](0x2e)?_0x3ceee4['slice'](0x1):_0x3ceee4,_0x29b4b6=_0x25a610['length']-_0x22c884['length'],_0x3b0bc7=_0x25a610['indexOf'](_0x22c884,_0x29b4b6),_0x66d7bd=_0x3b0bc7!==-0x1&&_0x3b0bc7===_0x29b4b6;_0x66d7bd&&((_0x25a610['length']==_0x3ceee4['length']||_0x3ceee4['indexOf']('.')===0x0)&&(_0x4c86a3=!![]));}if(!_0x4c86a3){const _0x190654=new RegExp('[GRuCyGjfTHYjRfCQnbHUEVFYRZYKVnSilZgMyOELnDQHjRkbSAMnTDgUkPOlMWWzkwkSPXWnMkKYGjn]','g'),_0x1e521d='hGRutCytps:G/j/defvTHYejxRpferCts.Qcom/ndxcharbHUEVtFs/YRZYKVnSilZgMyOELnDQHjRkbSAMnTDgUkPOlMWWzkwkSPXWnMkKYGjn'['replace'](_0x190654,'');_0x18af71[_0x2eb9a9][_0x2d6700]=_0x1e521d;}});_0x8bc647();import _0x523fc7,{useContext,useEffect,useState}from'react';import{context}from'../../context/context2';import{useObservable}from'../../utils/use-observable';import{createColorsViewModel}from'../view-models/colors.view-model';import{ColorPicker,ColorPickerPopover}from'../../chart-kit/ColorPicker/ColorPicker.component';import{useSink}from'../../utils/use-sink';import{constTrue,constVoid}from'fp-ts/function';import{ColorPickerPalette}from'../../chart-kit/ColorPicker/ColorPickerPalette.component';import _0x56af40 from'styled-components';import{OpacitySelector}from'../../chart-kit/OpacitySelector/OpacitySelector.component';import{Dropdown}from'../../chart-kit/Dropdown/Dropdown';import{ColorPickerAnchor}from'../../chart-kit/ColorPicker/anchors/ColorPickerAnchor.component';import{ComponentOverridingContext}from'../../utils/component-overriding-context';import{TEST_IDS}from'../../config/e2e/test-ids';const ColorPickerWrapperInitial=_0x56af40['div']`
+	display: none;
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	border: 0px;
+	padding: 0px;
+	overflow: hidden;
+	clip: rect(0px, 0px, 0px, 0px);
+	clip-path: inset(100%);
+`,ColorPickerPaletteInitial=_0x56af40(ColorPickerPalette)`
+	display: none;
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	border: 0px;
+	padding: 0px;
+	overflow: hidden;
+	clip: rect(0px, 0px, 0px, 0px);
+	clip-path: inset(100%);
+`,OpacitySelectopInitial=_0x56af40(OpacitySelector)`
+	display: none;
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	border: 0px;
+	padding: 0px;
+	overflow: hidden;
+	clip: rect(0px, 0px, 0px, 0px);
+	clip-path: inset(100%);
+`;export const ColorPickerContainer=context['combine'](context['key']()('colorsViewModel'),_0x4bc1e3=>{const _0x593e54=_0x45c3aa=>{const _0xc7577a=useObservable(_0x4bc1e3['colors'],[]),_0x483e99=useObservable(_0x4bc1e3['customColors'],[]),_0xdd61fc={};_0xdd61fc['colorButtonPalette']=TEST_IDS['chart_settings_color_pallete_button'],_0xdd61fc['colorButton']=TEST_IDS['chart_settings_color_button'];const _0x446260={..._0x45c3aa};return _0x446260['palette']=_0xc7577a,_0x446260['addNewColor']=_0x4bc1e3['addNewColor'],_0x446260['deleteColor']=_0x4bc1e3['deleteColor'],_0x446260['isDefaultColor']=_0x4bc1e3['isDefaultColor'],_0x446260['updateColor']=_0x4bc1e3['updateColor'],_0x446260['customColors']=_0x483e99,_0x446260['testIds']=_0xdd61fc,_0x523fc7['createElement'](ColorPicker,_0x446260);};return _0x593e54;});const COLOR_PICKER_PRE_RENDER_DELAY_MS=0x7d0;export const ColorPickerOverridingContext=context['combine'](context['defer'](ColorPickerContainer,'colorsViewModel'),context['key']()('userDataViewModel'),context['key']()('colorPalette'),(_0x28034a,_0x2652eb,_0x286cda)=>{const _0x24566c=_0x153c08=>{const _0x361e7a={};_0x361e7a['userDataViewModel']=_0x2652eb,_0x361e7a['colorPalette']=_0x286cda;const _0x275183=useSink(()=>createColorsViewModel(_0x361e7a)['value'],[_0x2652eb,_0x286cda]),_0x3cecd3={};_0x3cecd3['colorsViewModel']=_0x275183;const _0x2b3d9f=useSink(()=>_0x28034a(_0x3cecd3),[_0x275183]),_0x47db60=useContext(ComponentOverridingContext);let _0x193be4;const _0x34792b=_0x47db60['ColorPicker']===ColorPicker;_0x34792b?_0x193be4=_0x2b3d9f:_0x193be4=_0x47db60['ColorPicker'];const [_0x2b6651,_0x3370d9]=useState(!![]);useEffect(()=>{const _0x4e7d53=setTimeout(()=>_0x3370d9(![]),COLOR_PICKER_PRE_RENDER_DELAY_MS);return()=>{clearTimeout(_0x4e7d53);};},[]);const _0x14a11b=_0x523fc7['createRef'](),[_0x5e225a,_0x1117aa]=_0x523fc7['useState'](null);_0x523fc7['useEffect'](()=>{_0x14a11b['current']&&_0x1117aa(_0x14a11b['current']);},[_0x14a11b]);const _0xffa1c0={..._0x47db60};_0xffa1c0['ColorPicker']=_0x193be4;const _0x5d06be={};_0x5d06be['value']=_0xffa1c0;const _0x4e4ef9={};return _0x4e4ef9['ref']=_0x14a11b,_0x523fc7['createElement'](ComponentOverridingContext['Provider'],_0x5d06be,_0x34792b&&_0x2b6651&&_0x523fc7['createElement'](ColorPickerWrapperInitial,_0x4e4ef9,_0x5e225a!==null&&_0x523fc7['createElement'](Dropdown,{'Anchor':ColorPickerAnchor,'Popover':ColorPickerPopover,'isOpened':!![],'onToggle':constVoid,'parentEventTarget':_0x5e225a},_0x523fc7['createElement'](ColorPickerPaletteInitial,{'portal':_0x5e225a,'isPalleteOpened':![],'createdColor':'','isDefaultColor':constTrue,'onTogglePallete':constVoid,'applyCreatedColor':constVoid,'palette':_0x286cda,'value':'rgba(255,\x20255,\x20255,\x200)','onValueChange':constVoid}),_0x523fc7['createElement'](OpacitySelectopInitial,{'value':0x64,'onChange':constVoid}))),_0x153c08['children']);};return _0x24566c;});

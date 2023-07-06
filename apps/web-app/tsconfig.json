@@ -1,6 +1,0 @@
-{
-  "extends": "@terminal/tsconfig/vue.json",
-  "compilerOptions": {
-    "baseUrl": "."
-  }
-}

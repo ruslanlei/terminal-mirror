@@ -26,7 +26,11 @@
 </template>
 
 <script setup lang="ts">
-import {computed, defineAsyncComponent, ref, watch} from 'vue';
+import {
+  ref,
+  defineAsyncComponent,
+  computed,
+} from 'vue';
 import { UiTypography } from '@terminal/uikit/components/typography';
 import { useLocalValue } from '@terminal/uikit/hooks/useLocalValue';
 import { CandleChartEmits, CandleChartProps, ChartCandle } from './index';

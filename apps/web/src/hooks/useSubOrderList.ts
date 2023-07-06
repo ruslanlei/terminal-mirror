@@ -3,13 +3,13 @@ import {
   ActiveSubOrderRecord,
   SubOrderListProps,
   SubOrderTableItem,
-} from 'src/components/app/orderList/subOrderList';
+} from '@/components/orderList/subOrderList';
 import { compose } from '@terminal/common/utils/fp';
 import { createEmptyRecord } from '@terminal/uikit/components/table/helpers';
 import {
   collectActiveSubOrderRecord,
   collectClosedSubOrderRecord,
-} from '@/components/app/orderList/subOrderList/collectTableRecord';
+} from '@/components/orderList/subOrderList/collectTableRecord';
 
 export const useSubOrderList = (
   props: SubOrderListProps,

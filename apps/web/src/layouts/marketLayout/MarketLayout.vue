@@ -9,8 +9,8 @@
 </template>
 
 <script setup lang="ts">
-import MarketHeader from '@/components/app/marketHeader/MarketHeader.vue';
-import OrderEventsToastLayer from '@/components/app/orderEventsToastLayer/OrderEventsToastLayer.vue';
+import MarketHeader from '@/components/marketHeader/MarketHeader.vue';
+import OrderEventsToastLayer from '@/components/orderEventsToastLayer/OrderEventsToastLayer.vue';
 </script>
 
 <style lang="scss" module>

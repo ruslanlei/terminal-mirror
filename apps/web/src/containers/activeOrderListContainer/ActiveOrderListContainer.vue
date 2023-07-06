@@ -32,7 +32,7 @@
 </template>
 
 <script setup lang="ts">
-import ListSkeleton from '@/components/app/listSkeleton/ListSkeleton.vue';
+import ListSkeleton from '@/components/listSkeleton/ListSkeleton.vue';
 import { ActiveOrderListContainerProps } from './index';
 
 defineProps<ActiveOrderListContainerProps>();

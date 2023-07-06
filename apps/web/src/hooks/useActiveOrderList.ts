@@ -7,7 +7,7 @@ import {
 import {
   ActiveOrdersTableRecord,
   ClosedOrdersTableRecord,
-} from 'src/components/app/orderList';
+} from 'src/components/orderList';
 import { awaitTimeout } from '@terminal/common/utils/promise';
 import { storeToRefs } from 'pinia';
 import { findAndDelete, findAndUpdateObject } from '@terminal/common/utils/array';

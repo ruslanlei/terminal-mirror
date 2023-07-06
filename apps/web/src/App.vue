@@ -20,10 +20,10 @@
 import UiCoinLogoMap from '@terminal/uikit/components/coinLogo/CoinLogoMap.vue';
 import UiIconsMap from '@terminal/uikit/components/icon/IconsMap.vue';
 import { UiLevitatingLayer } from '@terminal/uikit/components/leviatingLayer';
-import Layout from '@/components/app/layout/Layout.vue';
-import ToastLayer from '@/components/app/toastLayer/ToastLayer.vue';
-import ModalLayer from '@/components/app/modalLayer/ModalLayer.vue';
-import AppPreloader from '@/components/app/appPreloader/AppPreloader.vue';
+import Layout from '@/components/layout/Layout.vue';
+import ToastLayer from '@/components/toastLayer/ToastLayer.vue';
+import ModalLayer from '@/components/modalLayer/ModalLayer.vue';
+import AppPreloader from '@/components/appPreloader/AppPreloader.vue';
 import { useApp } from '@/hooks/useApp';
 
 const { isPreparing } = useApp();

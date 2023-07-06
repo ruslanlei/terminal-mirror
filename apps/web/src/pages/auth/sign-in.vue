@@ -9,5 +9,5 @@ meta:
 </route>
 
 <script setup lang="ts">
-import SignIn from '@/components/app/signIn/SignIn.vue';
+import SignIn from '@/components/signIn/SignIn.vue';
 </script>

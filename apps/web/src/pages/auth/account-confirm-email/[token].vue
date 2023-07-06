@@ -9,5 +9,5 @@ meta:
 </route>
 
 <script setup lang="ts">
-import ConfirmEmail from '@/components/app/confirmEmail/ConfirmEmail.vue';
+import ConfirmEmail from '@/components/confirmEmail/ConfirmEmail.vue';
 </script>

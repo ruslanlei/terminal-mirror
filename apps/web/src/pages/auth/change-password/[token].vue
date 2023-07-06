@@ -9,5 +9,5 @@ meta:
 </route>
 
 <script setup lang="ts">
-import ChangePassword from '@/components/app/changePassword/ChangePassword.vue';
+import ChangePassword from '@/components/changePassword/ChangePassword.vue';
 </script>

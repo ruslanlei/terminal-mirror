@@ -8,7 +8,7 @@ meta:
 </route>
 
 <script setup lang="ts">
-import EcosystemCap from '@/components/app/ecosystemCap/EcosystemCap.vue';
+import EcosystemCap from '@/components/ecosystemCap/EcosystemCap.vue';
 </script>
 
 <style lang="scss" module>

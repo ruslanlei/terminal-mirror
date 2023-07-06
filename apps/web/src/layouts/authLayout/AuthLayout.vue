@@ -57,9 +57,9 @@ import { UiButton } from '@terminal/uikit/components/button';
 import { UiTypography } from '@terminal/uikit/components/typography';
 import { UiLogo } from '@terminal/uikit/components/logo';
 import { UiPicture } from '@terminal/uikit/components/picture';
-import Link from '@/components/app/link/Link.vue';
-import LanguageSelect from '@/components/app/languageSelect/LanguageSelect.vue';
-import AuthIllustration from '@/components/app/authIllustration/AuthIllustration.vue';
+import Link from '@/components/link/Link.vue';
+import LanguageSelect from '@/components/languageSelect/LanguageSelect.vue';
+import AuthIllustration from '@/components/authIllustration/AuthIllustration.vue';
 import { useDiscordLink } from '@/hooks/useDiscordLink';
 import DemiGroupLogo from './assets/demiGroup.png';
 

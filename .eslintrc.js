@@ -34,6 +34,8 @@ module.exports = {
     'no-param-reassign': 'off',
     'vue/multi-word-component-names': 'off',
     'no-nested-ternary': 'off',
+    'no-underscore-dangle': 'off',
+    'implicit-arrow-linebreak': 'off',
 
     'vuejs-accessibility/click-events-have-key-events': 'off',
     'vuejs-accessibility/form-control-has-label': 'off',
@@ -55,6 +57,7 @@ module.exports = {
       alias: {
         map: [
           ['@', './src'],
+          ['@terminal/common', './package/common'],
         ],
         extensions: ['.vue', '.ts', '.js', '.jsx', '.json'],
       },

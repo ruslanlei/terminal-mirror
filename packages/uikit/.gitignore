@@ -1,0 +1,13 @@
+*
+!scripts
+!scripts/**
+!src
+!src/**
+!.gitignore
+!plugins
+!plugins/**
+!package.json
+!tsconfig.json
+!vite.config.ts
+!yarn.lock
+!README.md

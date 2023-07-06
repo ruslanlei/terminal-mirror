@@ -1,8 +1,17 @@
 node_modules
 .DS_Store
 dist
+!local_modules/dxchart5-light/dist
 dist-ssr
 *.local
+.turbo
+
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
 
 .idea
 bundleVisualizer.html

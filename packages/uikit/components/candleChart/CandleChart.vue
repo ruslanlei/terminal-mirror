@@ -31,16 +31,16 @@ import {
   defineAsyncComponent,
   computed,
 } from 'vue';
-import { UiTypography } from '@terminal/uikit/components/typography';
-import { useLocalValue } from '@terminal/uikit/hooks/useLocalValue';
+import { UiTypography } from '../typography';
+import { useLocalValue } from '../../hooks/useLocalValue';
 import { CandleChartEmits, CandleChartProps, ChartCandle } from './index';
 
 const TradingView = defineAsyncComponent(() => (
-  import('@/components/core/candleChart/engines/tradingView/TradingView.vue')
+  import('./engines/tradingView/TradingView.vue')
 ));
 
 const DxChart = defineAsyncComponent(() => (
-  import('@/components/core/candleChart/engines/dxChart/DxChart.vue')
+  import('./engines/dxChart/DxChart.vue')
 ));
 
 const engine = ref();
@@ -116,5 +116,5 @@ defineExpose({
 </style>
 
 <style lang="scss">
-@import "@terminal/uikit/assets/styles/transitions.scss";
+@import "../../assets/styles/transitions";
 </style>

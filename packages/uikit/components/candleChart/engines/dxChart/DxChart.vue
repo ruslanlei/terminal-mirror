@@ -8,14 +8,14 @@ import {
   ref, watch,
 } from 'vue';
 import { ChartBootstrap } from '@dx-private/dxchart5-light/dist';
-import { getCssRgbColor } from '@terminal/uikit/utils/style';
+import { getCssRgbColor } from '../../../../utils/style';
 import { awaitTimeout } from '@terminal/common';
 import {
   DxChartCandle,
   DxChartProps,
   transformChartCandlesToDxChartCandles,
 } from './index';
-import { ChartCandle } from '@/components/core/candleChart';
+import { ChartCandle } from '../../index';
 
 const props = defineProps<DxChartProps>();
 

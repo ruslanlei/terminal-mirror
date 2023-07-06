@@ -1,5 +1,5 @@
 import { toSecondsTimestamp } from '@terminal/common/utils/date';
-import { ChartCandle } from '@/components/core/candleChart';
+import { ChartCandle } from '../../index';
 
 export interface DxChartCandle {
     hi: number,

@@ -1,7 +1,7 @@
 import { Time } from 'lightweight-charts';
 import { toSecondsTimestamp } from '@terminal/common';
-import { AbstractCandleChartEngineProps } from '@/components/core/candleChart/engines';
-import { ChartCandle } from '@/components/core/candleChart';
+import { AbstractCandleChartEngineProps } from '../index';
+import { ChartCandle } from '../../index';
 
 export interface TradingViewCandle {
   high: number,

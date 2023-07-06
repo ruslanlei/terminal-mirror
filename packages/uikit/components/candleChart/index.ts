@@ -1,3 +1,5 @@
+export { default as UiCandleChart } from './CandleChart.vue';
+
 export type ChartCandle = [
   number, // open price
   number, // low price

@@ -1,5 +1,5 @@
 <template>
-  <CandleChart
+  <UiCandleChart
     ref="chart"
     v-model:date-from="chartDateFrom"
     v-model:date-to="chartDateTo"
@@ -14,11 +14,10 @@
 import { useI18n } from 'vue-i18n';
 import { ref, watch } from 'vue';
 import { storeToRefs } from 'pinia';
-import CandleChart from '@/components/core/candleChart/CandleChart.vue';
+import { UiCandleChart, ChartCandle } from '@terminal/uikit/components/candleChart';
 import { useMarketChart } from '@/hooks/useMarketChart';
 import { useEmulator } from '@/hooks/useEmulator';
 import { useMarketStore } from '@/stores/market';
-import { ChartCandle } from '@/components/core/candleChart';
 
 const { t } = useI18n();
 

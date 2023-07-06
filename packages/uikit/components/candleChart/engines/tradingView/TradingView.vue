@@ -17,19 +17,19 @@ import {
   ITimeScaleApi,
 } from 'lightweight-charts';
 
-import { useLocalValue } from '@terminal/uikit/hooks/useLocalValue';
+import { useLocalValue } from '../../../../hooks/useLocalValue';
 import { toISOString } from '@terminal/common/utils/date';
 import { compose } from '@terminal/common/utils/fp';
 import { multiply } from '@terminal/common/utils/number';
-import { getCssRgbColor } from '@terminal/uikit/utils/style';
+import { getCssRgbColor } from '../../../../utils/style';
 import {
   AbstractCandleChartEngineEmits,
-} from '@/components/core/candleChart/engines';
+} from '../index';
 import {
   TradingViewProps,
   transformChartCandlesToTradingViewCandles,
   transformTradingViewCandlesToChartCandles,
-} from '@/components/core/candleChart/engines/tradingView/index';
+} from './index';
 
 const props = defineProps<TradingViewProps>();
 const emit = defineEmits<AbstractCandleChartEngineEmits>();
